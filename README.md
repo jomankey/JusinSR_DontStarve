@@ -15,7 +15,8 @@
   - $(DXSDK_DIR)lib\x86
 
 ### C/C++
-##### General
+## General
+* Additonal Include Directries
   - ../Header
   - ../../Base
   - ../../Reference/Header
