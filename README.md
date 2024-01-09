@@ -11,3 +11,10 @@
 ## VC++Directory 
 - Include Directories : $(DXSDK_DIR)Include
 - Library Directories : $(DXSDK_DIR)lib\x86
+
+## C/C++
+- General
+
+* ../Header
+* ../../Base
+* ../../Reference/Header
