@@ -2,6 +2,7 @@
  쥬신5개월차SR프로젝트
 
 # Client 설정
+-------------------
 ## General
 1. 속성 -> 일반 : output directory ../Bin\
 2. 추가디렉토리 : ../../Base; ../Header; ../../Reference/Header
