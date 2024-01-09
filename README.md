@@ -9,5 +9,5 @@
 4. 입력 :시스템라이브러리
 
 ## VC++Directory 
-Include Directories : $(DXSDK_DIR)Include
-Library Directories : $(DXSDK_DIR)lib\x86
+Include Directories :$(DXSDK_DIR)Include
+Library Directories :$(DXSDK_DIR)lib\x86
