@@ -8,12 +8,12 @@
 3. 링커-> 일반 : 추가포함디렉토 ../../Reference/Library
 4. 입력 :시스템라이브러리
 
-## VC++Directory 
+### VC++Directory 
 - Include Directories : $(DXSDK_DIR)Include
 - Library Directories : $(DXSDK_DIR)lib\x86
 
-## C/C++
-* General
+### C/C++
+#### General
   - ../Header
   - ../../Base
   - ../../Reference/Header
