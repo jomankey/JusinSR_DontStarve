@@ -13,8 +13,8 @@
 - Library Directories : $(DXSDK_DIR)lib\x86
 
 ## C/C++
-- General
+* General
 
-* ../Header
-* ../../Base
-* ../../Reference/Header
+- ../Header
+- ../../Base
+- ../../Reference/Header
