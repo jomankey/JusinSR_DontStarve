@@ -14,7 +14,6 @@
 
 ## C/C++
 * General
-
-- ../Header
-- ../../Base
-- ../../Reference/Header
+  - ../Header
+  - ../../Base
+  - ../../Reference/Header
