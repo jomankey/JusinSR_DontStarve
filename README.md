@@ -17,12 +17,16 @@
   - $(DXSDK_DIR)lib\x86
 
 ### 1.3. C/C++
-General
-* Additonal Include Directries
-  - ../Header
-  - ../../Base
-  - ../../Reference/Header
+* General
+  - Additonal Include Directries
+    + ../Header
+    - ../../Base
+    - ../../Reference/Header
 
 ### 1.4. Linker
 
-
+함수
+----
+* ProtoMgr
+  - 컴포넌트 (리소스매니저와같음)
+  - 
