@@ -24,6 +24,16 @@
     - ../../Reference/Header
 
 ### 1.4. Linker
+* General
+  - Additional Library Directories
+    ../../Reference/Library
+* Input
+  - Additional Dependencies(추가종속성)
+    + d3d9.lib
+    + d3dx9.lib
+    + dxguid.lib
+    + System.lib
+    + Utility.lib
 
 함수
 ----
