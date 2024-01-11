@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="99. Header">
+      <UniqueIdentifier>{4d645310-f03c-4f39-854f-b2f7bad45094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. Header\Default">
+      <UniqueIdentifier>{6c94e82e-5109-492e-80e1-e5f1c4a5e40d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainApp">
+      <UniqueIdentifier>{7badfcc5-ad1f-4e75-b898-8c0d1b196fd9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99. Header\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99. Header\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="JusinSR.h">
+      <Filter>99. Header\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>99. Header\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainApp.h">
+      <Filter>MainApp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>99. Header</Filter>
+    </ClCompile>
+    <ClCompile Include="JusinSR.cpp" />
+    <ClCompile Include="..\Code\MainApp.cpp">
+      <Filter>MainApp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="JusinSR.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="JusinSR.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
