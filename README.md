@@ -22,7 +22,7 @@
     + ../Header
     + ../../Base
     + ../../Reference/Header
-
+  
 ### 1.3. Linker
 * General
   - Additional Library Directories
@@ -34,6 +34,8 @@
     + dxguid.lib
     + System.lib
     + Utility.lib
+    + dinpu8.lib
+      
 ## 2. System(dll),Utillity 프로젝트 설정
 ### 2.1. Property
 * General
