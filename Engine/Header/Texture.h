@@ -15,6 +15,7 @@ public:
 
 public:
 	HRESULT		Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt, const _uint& iNum);
+
 	void		Set_Texture(const _uint& iIndex = 0);
 	
 
@@ -25,7 +26,7 @@ private:
 public:
 	virtual CComponent*	Clone();
 	// iNum°ª Ãß°¡ 
-	static CTexture*	Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const _tchar* pPath, const _uint& iCnt = 1, const _uint& iNum = 1);
+	static CTexture*	Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const _tchar* pPath, const _uint& iCnt = 1, const _uint& iNum = 0);
 
 public:
 	virtual void		Free();
