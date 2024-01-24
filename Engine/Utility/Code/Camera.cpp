@@ -49,8 +49,8 @@ void CCamera::BeginOrtho()
 	_matrix matOrthoView;
 
 	_vec3 vEye, vAt, vUp;
-	vEye = _vec3(0.f, 0.f, 0.f);  // 눈의 위치
-	vAt = _vec3(0.f, 1.f, 1.f);    // 바라보는 지점
+	vEye = _vec3(30.f, 0.f, 30.f);  // 눈의 위치
+	vAt = _vec3(31.f, -1.f, 31.f);    // 바라보는 지점
 	vUp = _vec3(0.f, 1.f, 0.f);    // 위쪽 방향
 	ZeroMemory(&matOrtho, sizeof(_matrix));
 

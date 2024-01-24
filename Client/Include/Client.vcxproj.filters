@@ -46,6 +46,9 @@
     <Filter Include="02. GameObject\06. Effect">
       <UniqueIdentifier>{69e88a4c-ddb1-4a70-a8a5-7d9df5c571a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07.UICamera">
+      <UniqueIdentifier>{49910186-6ded-4668-949a-5858558cae48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -90,6 +93,9 @@
     <ClInclude Include="..\Header\Logo.h">
       <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UICamera.h">
+      <Filter>02. GameObject\07.UICamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -124,6 +130,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Logo.cpp">
       <Filter>01. Scene\00. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UICamera.cpp">
+      <Filter>02. GameObject\07.UICamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -71,7 +71,7 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 
 			pVertex[dwIndex].vPosition = 
 			{ 
-				float(j) * dwVtxItv, 
+				float(j) * dwVtxItv-400.f, 
 				(pPixel[dwIndex] & 0x000000ff) / 20.f, 
 				float(i) * dwVtxItv };
 
@@ -84,8 +84,6 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 			};
 		}
 	}
-
-
 	Engine::Safe_Delete_Array(pPixel);
 
 	INDEX32*		pIndex = nullptr;

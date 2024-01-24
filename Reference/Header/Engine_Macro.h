@@ -5,7 +5,7 @@ namespace Engine
 {
 #define	VTXCNTX		129
 #define VTXCNTZ		129
-#define VTXITV		1
+#define VTXITV		3
 
 
 

@@ -28,13 +28,8 @@ HRESULT CTerrain::Ready_GameObject()
 
 Engine::_int CTerrain::Update_GameObject(const _float& fTimeDelta)
 {
-
-
-
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	CGameObject::Update_GameObject(fTimeDelta);
-
-
 	return 0;
 }
 
@@ -45,7 +40,9 @@ void CTerrain::LateUpdate_GameObject()
 
 void CTerrain::Render_GameObject()
 {
+
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+	Get_Scene()->BeginOrtho();
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pTextureCom->Set_Texture(0);
@@ -53,6 +50,7 @@ void CTerrain::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+	Get_Scene()->EndOrtho();
 }
 
 HRESULT CTerrain::Add_Component()
@@ -66,11 +64,12 @@ HRESULT CTerrain::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_TerrainTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
-
+	
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Transform", pComponent });
 
+	m_pTransformCom->Set_Scale(_vec3(150.f, 150.f, 150.f));
 	return S_OK;
 }
 

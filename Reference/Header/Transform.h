@@ -17,7 +17,7 @@ public:
 	virtual void	LateUpdate_Component() {}
 
 public:
-	_matrix*		Get_WorldMatrix() { return &m_matWorld; }
+	_matrix* Get_WorldMatrix() { return &m_matWorld; }
 	void		Get_WorldMatrix(_matrix* pWorld) { *pWorld = m_matWorld; }
 	void				Set_Pos(const _vec3& vPos)
 	{
@@ -26,6 +26,7 @@ public:
 
 	void	Set_WorldMatrix(const _matrix* pWorld) { m_matWorld = *pWorld; }
 
+	void	Set_Scale(_vec3 _vScale) { m_vScale = _vScale; }
 	void				Set_Pos(_float fX, _float fY, _float fZ)
 	{
 		m_vInfo[INFO_POS].x = fX;
@@ -55,7 +56,7 @@ public:
 	}
 
 	void		Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
-	const _matrix*	Compute_LookAtTarget(const _vec3* pTargetPos);
+	const _matrix* Compute_LookAtTarget(const _vec3* pTargetPos);
 
 
 
@@ -66,8 +67,8 @@ public:
 	_matrix		m_matWorld;
 
 public:
-	static CTransform*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual CComponent*		Clone();
+	static CTransform* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual CComponent* Clone();
 
 private:
 	virtual void		Free();
