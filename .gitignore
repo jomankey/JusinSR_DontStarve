@@ -34,3 +34,5 @@ ipch/
 *.lib
 *.exp
 *.recipe
+/Engine/System/Bin/System.lib
+/Reference/Library/System.lib
