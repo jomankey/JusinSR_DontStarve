@@ -44,6 +44,7 @@ CComponent * CProtoMgr::Find_Prototype(const _tchar * pProtoTag)
 
 void CProtoMgr::Free()
 {
+	auto iter = Find_Prototype(L"Proto_PlayerStat");
 	for_each(m_mapProto.begin(), m_mapProto.end(), CDeleteMap());
 	m_mapProto.clear();
 

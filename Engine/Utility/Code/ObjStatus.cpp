@@ -2,13 +2,13 @@
 
 CObjStatus::CObjStatus()
 {
-	ZeroMemory(m_Stat, sizeof(m_Stat));
+	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 
 CObjStatus::CObjStatus(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)
 {
-	ZeroMemory(m_Stat, sizeof(m_Stat));
+	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 
 CObjStatus::CObjStatus(const CObjStatus& rhs)
@@ -27,5 +27,7 @@ CComponent* CObjStatus::Clone()
 
 void CObjStatus::Free()
 {
+	
+	m_Stat = nullptr;
 	CComponent::Free();
 }

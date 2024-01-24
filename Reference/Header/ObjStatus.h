@@ -24,7 +24,7 @@ protected:
 
 public:
 
-    CComponent* Clone() override;
+    virtual CComponent* Clone() override;
     virtual void Free();
 };
 
