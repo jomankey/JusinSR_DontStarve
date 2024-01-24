@@ -13,7 +13,6 @@
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
-	//test
 }
 
 CStage::~CStage()
