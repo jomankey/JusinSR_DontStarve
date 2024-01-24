@@ -23,6 +23,6 @@ namespace Engine
 		IDLE, MOVE_DOWN, MOVE_UP, MOVE_RIGHT, MOVE_LEFT,  //플레이어 행동상태
 		ATTACK, USINGTOOL, DIALOG, SLEEP, HIT, DEAD, STATE_END
 	};
-
+	enum PLAYERLOOK { LOOK_DOWN, LOOK_RIGHT,LOOK_LEFT, LOOK_UP, LOOK_END };
 }
 #endif // Engine_Enum_h__

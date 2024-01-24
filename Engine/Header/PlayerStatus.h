@@ -1,10 +1,10 @@
 #pragma once
-#include "ObjStatus.h"
+#include "Component.h"
 
 BEGIN(Engine)
 
 class ENGINE_DLL CPlayerStatus :
-    public CObjStatus
+    public CComponent
 {
 private:
     explicit CPlayerStatus();
@@ -13,15 +13,26 @@ private:
     virtual ~CPlayerStatus();
 public:
     HRESULT		Ready_PlayerStatus();
-    PLAYERSTATE Get_Player_State() { return m_ePreState; }
-    static CPlayerStatus* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-    void Set_Player_State(PLAYERSTATE _State) { m_eCurState = _State; }
-    
+    virtual _int	Update_Component(const _float& fTimeDelta);
+    virtual void	LateUpdate_Component();
+public:
 
-private:
-    PLAYERSTATE m_eCurState;
-    PLAYERSTATE m_ePreState;
+    static CPlayerStatus* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+    virtual CComponent* Clone(void);
+    virtual void Free();
+   /* PLAYERSTATE Get_Player_State() { return m_ePreState; }
+    void Set_Player_State(PLAYERSTATE _State) { m_eCurState = _State; }
+    void Set_Player_Look_Dir(PLAYERLOOK _DIR) { m_ePlayerLookAt = _DIR; }*/
     
+//private:
+//    void State_Change();
+//
+//private:
+//    PLAYERSTATE m_eCurState;
+//    PLAYERSTATE m_ePreState;
+//
+//    PLAYERLOOK  m_ePlayerLookAt;
+//    _int        m_iFrameCnt;
 };
 
 END

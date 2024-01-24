@@ -16,9 +16,11 @@ public:
 public:
 	HRESULT		Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt, const _uint& iNum);
 	void		Set_Texture(const _uint& iIndex = 0);
+	
 
 private:
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;
+	
 
 public:
 	virtual CComponent*	Clone();

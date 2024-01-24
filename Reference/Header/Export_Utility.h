@@ -17,6 +17,8 @@
 #include "Camera.h"
 #include "Pipeline.h"
 #include "Calculator.h"
+#include "ObjStatus.h"
+#include "PlayerStatus.h"
 
 BEGIN(Engine)
 

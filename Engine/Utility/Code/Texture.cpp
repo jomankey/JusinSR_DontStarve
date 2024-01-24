@@ -24,7 +24,7 @@ CTexture::~CTexture()
 HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _uint & iCnt, const _uint& iNum)
 {
 	m_vecTexture.reserve(iCnt);
-
+	
 	IDirect3DBaseTexture9*		pTexture = NULL;
 
 	for (_uint i = 0 + iNum; i < iCnt + iNum; ++i)
