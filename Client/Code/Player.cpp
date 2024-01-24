@@ -6,7 +6,7 @@
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
-{
+{//sss
 }
 
 CPlayer::CPlayer(const CPlayer& rhs)
