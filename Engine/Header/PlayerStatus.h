@@ -12,13 +12,16 @@ private:
     explicit CPlayerStatus(const CPlayerStatus& rhs);
     virtual ~CPlayerStatus();
 public:
-    PLAYERSTATE Get_Player_State() { return m_eState; }
-    void Set_Player_State(PLAYERSTATE _State) { m_eState = _State; }
+    HRESULT		Ready_PlayerStatus();
+    PLAYERSTATE Get_Player_State() { return m_ePreState; }
+    static CPlayerStatus* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+    void Set_Player_State(PLAYERSTATE _State) { m_eCurState = _State; }
     
 
 private:
-    PLAYERSTATE m_eState;
-
+    PLAYERSTATE m_eCurState;
+    PLAYERSTATE m_ePreState;
+    
 };
 
 END

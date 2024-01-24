@@ -24,3 +24,8 @@ CComponent* CObjStatus::Clone()
 {
 	return new CObjStatus(*this);
 }
+
+void CObjStatus::Free()
+{
+	CComponent::Free();
+}
