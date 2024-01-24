@@ -12,7 +12,7 @@ class CCalculator;
 
 END
 
-class CPlayer :	public Engine::CGameObject //fuck
+class CPlayer :	public Engine::CGameObject
 {
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
