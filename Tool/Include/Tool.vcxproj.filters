@@ -34,6 +34,12 @@
     <Filter Include="02. Object\ToolTerrain">
       <UniqueIdentifier>{136b493d-7b8d-4c7a-9247-7491f75cecbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\ToolCamera">
+      <UniqueIdentifier>{c18c0c8f-ed0c-420c-bccd-bb8eaa84164d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. ToolMgr">
+      <UniqueIdentifier>{ddf7bbd0-01e5-4704-b84b-f8f0a8d0e8d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -78,6 +84,15 @@
     <ClInclude Include="..\Header\ToolTerrain.h">
       <Filter>02. Object\ToolTerrain</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\TerrainScene.h">
+      <Filter>01. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolCamera.h">
+      <Filter>02. Object\ToolCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolMgr.h">
+      <Filter>03. ToolMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -109,6 +124,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolTerrain.cpp">
       <Filter>02. Object\ToolTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainScene.cpp">
+      <Filter>01. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolCamera.cpp">
+      <Filter>02. Object\ToolCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolMgr.cpp">
+      <Filter>03. ToolMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

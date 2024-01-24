@@ -7,6 +7,8 @@
 #include "MainTool.h"
 #include "imgui_impl_win32.h"
 
+#include "Export_System.h"
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -14,6 +16,7 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND g_hWnd;
+HINSTANCE g_hInst;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -47,8 +50,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
     msg.message = NULL;
 
+    FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_Immediate"), FALSE);
+    FAILED_CHECK_RETURN(Engine::Ready_Timer(L"Timer_FPS60"), FALSE);
+    FAILED_CHECK_RETURN(Engine::Ready_Frame(L"Frame60", 60.f), FALSE);
+
     CMainTool* pMainTool = CMainTool::Create();
 
+    // 기본 메시지 루프입니다.
     while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -64,10 +72,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            pMainTool->Update_MainTool();
-            pMainTool->Render_MainTool();
+            Engine::Update_TimeDelta(L"Timer_Immediate");
+
+            float fTimer_Immediate = Engine::Get_TimeDelta(L"Timer_Immediate");
+
+            if (Engine::IsPermit_Call(L"Frame60", fTimer_Immediate))
+            {
+                Engine::Update_TimeDelta(L"Timer_FPS60");
+                float fTimer_FPS60 = Engine::Get_TimeDelta(L"Timer_FPS60");
+
+                pMainTool->Update_MainTool(fTimer_FPS60);
+                pMainTool->LateUpdate_MainTool();
+                pMainTool->Render_MainTool();
+            }
         }
     }
+
+    DWORD	dwRefCnt = 0;
+
+    if (dwRefCnt = Engine::Safe_Release(pMainTool))
+    {
+        MSG_BOX("pMainApp Release Failed");
+        return FALSE;
+    }
+
 
     return (int) msg.wParam;
 }
@@ -112,7 +140,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+    g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    RECT rc{ 0,0, 1280, 800 };
 

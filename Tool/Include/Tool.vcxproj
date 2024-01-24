@@ -166,6 +166,9 @@
     <ClInclude Include="..\..\imgui\imgui\imstb_textedit.h" />
     <ClInclude Include="..\..\imgui\imgui\imstb_truetype.h" />
     <ClInclude Include="..\Header\MainTool.h" />
+    <ClInclude Include="..\Header\TerrainScene.h" />
+    <ClInclude Include="..\Header\ToolCamera.h" />
+    <ClInclude Include="..\Header\ToolMgr.h" />
     <ClInclude Include="..\Header\ToolTerrain.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -181,6 +184,9 @@
     <ClCompile Include="..\..\imgui\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\..\imgui\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\Code\MainTool.cpp" />
+    <ClCompile Include="..\Code\TerrainScene.cpp" />
+    <ClCompile Include="..\Code\ToolCamera.cpp" />
+    <ClCompile Include="..\Code\ToolMgr.cpp" />
     <ClCompile Include="..\Code\ToolTerrain.cpp" />
     <ClCompile Include="Tool.cpp" />
   </ItemGroup>

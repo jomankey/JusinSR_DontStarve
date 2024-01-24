@@ -23,6 +23,8 @@ CTerrainTex::~CTerrainTex()
 {
 }
 
+// 높이맵 구현 제거
+// 타일 하나 당 텍스쳐 하나 출력되도록 수정
 HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, 
 									const _ulong& dwCntZ, 
 									const _ulong& dwVtxItv)
@@ -39,7 +41,7 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
 
-	m_hFile = CreateFile(L"../Bin/Resource/Texture/Terrain/Height.bmp",
+	/*m_hFile = CreateFile(L"../Bin/Resource/Texture/Terrain/Height.bmp",
 		GENERIC_READ, 0,
 		NULL, 
 		OPEN_EXISTING, 
@@ -55,7 +57,7 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 
 	ReadFile(m_hFile, pPixel, sizeof(_ulong) * m_iH.biHeight * m_iH.biWidth, &dwByte, NULL);
 
-	CloseHandle(m_hFile);
+	CloseHandle(m_hFile);*/
 	
 	VTXTEX*		pVertex = nullptr;
 
@@ -72,21 +74,21 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 			pVertex[dwIndex].vPosition = 
 			{ 
 				float(j) * dwVtxItv, 
-				(pPixel[dwIndex] & 0x000000ff) / 20.f, 
+				0.f, 
 				float(i) * dwVtxItv };
 
 			m_pPos[dwIndex] = pVertex[dwIndex].vPosition;
 
 			pVertex[dwIndex].vNormal = { 0.f, 0.f, 0.f };
 			pVertex[dwIndex].vTexUV = { 
-				float(j) / (dwCntX - 1) * 20.f,
-				float(i) / (dwCntZ - 1) * 20.f 
+				(_float)j,
+				(_float)i
 			};
 		}
 	}
 
 
-	Engine::Safe_Delete_Array(pPixel);
+	//Engine::Safe_Delete_Array(pPixel);
 
 	INDEX32*		pIndex = nullptr;
 

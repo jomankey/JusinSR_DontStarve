@@ -3,6 +3,7 @@
 //#include "framework.h"
 #include "Engine_Define.h"
 #include "ToolTerrain.h"
+#include "ToolMgr.h"
 
 BEGIN(Engine)
 class CManagement;
@@ -19,15 +20,9 @@ private:
 
 public:
     HRESULT Ready_MainTool();
-    void Update_MainTool();
+    void Update_MainTool(const _float& fTimeDelta);
     void LateUpdate_MainTool();
     void Render_MainTool();
-
-public:
-    void Setup_ImGui();
-
-private:
-    void Window_Tile();
 
 private:
     HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
@@ -37,14 +32,7 @@ private:
     Engine::CGraphicDev* m_pDeviceClass;
     Engine::CManagement* m_pManagementClass;
     LPDIRECT3DDEVICE9			m_pGraphicDev;
-
-    vector<Engine::CTexture*> m_pTileTexture;
-    //CToolTerrain* m_pTerrain;
-
-private:
-    char* ConvertWCtoC(_tchar* str);
-
-    HRESULT Ready_Layer_GameLogic(const _tchar* pLayerTag);
+    CToolMgr* m_pToolMgr;
 
 public:
     static CMainTool* Create();
