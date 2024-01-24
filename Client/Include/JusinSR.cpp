@@ -72,7 +72,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
     wcex.lpszMenuName   = NULL;
-    wcex.lpszClassName  = L"JusinSR";
+    wcex.lpszClassName  = L"DirectSR";
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
@@ -98,7 +98,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ::AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, false);
 
 
-    g_hWnd = CreateWindowW(L"JusinSR", L"Client", WS_OVERLAPPEDWINDOW,
+    g_hWnd = CreateWindowW(L"DirectSR", L"Client", WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, winRect.right - winRect.left, winRect.bottom - winRect.top,nullptr, nullptr, nullptr, hInstance, nullptr);
 
    if (!g_hWnd)

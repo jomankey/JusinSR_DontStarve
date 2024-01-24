@@ -16,9 +16,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>99. Header</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>99. Header\Default</Filter>
     </ClInclude>
@@ -36,9 +33,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>99. Header</Filter>
-    </ClCompile>
     <ClCompile Include="JusinSR.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp">
       <Filter>MainApp</Filter>
