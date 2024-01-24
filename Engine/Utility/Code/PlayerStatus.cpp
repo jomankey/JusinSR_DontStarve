@@ -2,6 +2,7 @@
 
 CPlayerStatus::CPlayerStatus()
 {
+	//s
 }
 
 CPlayerStatus::CPlayerStatus(LPDIRECT3DDEVICE9 pGraphicDev)
