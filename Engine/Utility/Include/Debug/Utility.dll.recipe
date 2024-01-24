@@ -2,11 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-<<<<<<< HEAD
-      <FullPath>C:\Users\yeeun\OneDrive\dev\jusin\팀과제\JusinSR\Engine\Utility\Bin\Utility.dll</FullPath>
-=======
-      <FullPath>C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Bin\Utility.dll</FullPath>
->>>>>>> becb709d2fb4760671b950d310fbf04530834c7d
+      <FullPath>C:\SR\Engine\Utility\Bin\Utility.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

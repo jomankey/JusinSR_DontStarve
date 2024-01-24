@@ -28,16 +28,18 @@ HRESULT CPlayer::Ready_GameObject()
 
 	return S_OK;
 }
-
 Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	m_fFrame += 22.f * fTimeDelta;
 
+	if (22.f < m_fFrame)
+		m_fFrame = 0.f;
 	Key_Input(fTimeDelta);
-	
+
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	CGameObject::Update_GameObject(fTimeDelta);
-
+	/*Engine::IsPermit_Call(L"Unarmed_IDLE", fTimeDelta);*/
 	return 0;
 }
 
@@ -49,28 +51,28 @@ void CPlayer::LateUpdate_GameObject()
 }
 
 void CPlayer::Render_GameObject()
-{	
+{
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
-	m_pTextureCom->Set_Texture(0);
 
+	/*m_pTextureCom->Set_Texture(0);*/
+	m_pTextureCom->Set_Texture((_uint)m_fFrame);
 	m_pBufferCom->Render_Buffer();
 
 }
 
 HRESULT CPlayer::Add_Component()
 {
-	CComponent*		pComponent = nullptr;
-	
+	CComponent* pComponent = nullptr;
+
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_PlayerTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_idle_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_PlayerTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_down", pComponent });
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -79,7 +81,7 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
-		
+
 	return S_OK;
 }
 

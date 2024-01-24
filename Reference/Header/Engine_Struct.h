@@ -48,5 +48,12 @@ namespace Engine
 		_ulong	_2;
 
 	}INDEX32;	
+
+	typedef struct tagObjStat		//오브젝트들이 공통으로 가지고 있을 스탯 정보(컴포넌트에 하나씩 보유)
+	{
+		_float fHP;
+		_float fSpeed;
+
+	}OBJSTAT;
 }
 #endif // Engine_Struct_h__
