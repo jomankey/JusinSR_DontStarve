@@ -12,7 +12,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 CPlayer::CPlayer(const CPlayer& rhs)
 	: Engine::CGameObject(rhs)
 {
-
+	//TestPsw
 }
 
 CPlayer::~CPlayer()
