@@ -48,7 +48,7 @@ void CTerrain::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(0);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 
 	m_pBufferCom->Render_Buffer();
