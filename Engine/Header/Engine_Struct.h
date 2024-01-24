@@ -7,7 +7,7 @@ namespace Engine
 {
 	typedef struct tagVertexColor
 	{
-		_vec3		vPosition;		
+		_vec3		vPosition;	
 		_ulong		dwColor;
 
 	}VTXCOL;
@@ -17,11 +17,12 @@ namespace Engine
 	typedef struct tagVertexTexture
 	{
 		_vec3		vPosition;
+		_vec3		vNormal;
 		_vec2		vTexUV;
 
 	}VTXTEX;
 
-	const _ulong	FVF_TEX = D3DFVF_XYZ | D3DFVF_TEX1;
+	const _ulong	FVF_TEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
 	typedef struct tagVertexCubeTexture
 	{
@@ -46,9 +47,6 @@ namespace Engine
 		_ulong	_1;
 		_ulong	_2;
 
-	}INDEX32;
-	
+	}INDEX32;	
 }
-
-
 #endif // Engine_Struct_h__

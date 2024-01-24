@@ -1,5 +1,7 @@
-#include "pch.h"
+#include "..\Include\stdafx.h"
 #include "..\Header\MainApp.h"
+#include "Logo.h"
+#include "Stage.h"
 
 CMainApp::CMainApp() : m_pDeviceClass(nullptr)
 {
@@ -13,22 +15,19 @@ HRESULT CMainApp::Ready_MainApp()
 {
 	FAILED_CHECK_RETURN(SetUp_Setting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
-	
-	_matrix		matView, matProj;
-
-	D3DXMatrixLookAtLH(&matView, &_vec3(0.f, 0.f, -5.f), &_vec3(0.f, 0.f, 1.f), &_vec3(0.f, 1.f, 0.f));
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
-
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(60.f), (_float)WINCX / WINCY, 0.1f, 1000.f);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-
-
-
+	//01:23
+	//test
 	return S_OK;
 }
 
 int CMainApp::Update_MainApp(const float & fTimeDelta)
 {
+
+	Engine::Update_InputDev();
+
+	long dwMouse(0);
+
+	
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -41,7 +40,6 @@ void CMainApp::LateUpdate_MainApp()
 
 void CMainApp::Render_MainApp()
 {
-
 	Engine::Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
 
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
@@ -57,6 +55,7 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement
 	pScene = CLogo::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pScene, E_FAIL);
 
+	//매니지먼트 싱글톤의 주소 받아오기
 	FAILED_CHECK_RETURN(Engine::Create_Management(pGraphicDev, ppManagement), E_FAIL);
 	(*ppManagement)->AddRef();
 
@@ -75,7 +74,15 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	(*ppGraphicDev)->SetRenderState(D3DRS_LIGHTING, FALSE);
 	
+	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);		  // Z버퍼에 깊이 값을 기록은 하지만 자동 정렬을 수행할지 말지 결정
+	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정
+	
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕체", 30, 30, FW_HEAVY), E_FAIL);
 
+	// Dinput
+	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
+	
+	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	return S_OK;
 }
@@ -102,4 +109,7 @@ void CMainApp::Free()
 
 	Engine::Release_Utility();
 	Engine::Release_System();
+
+	
+
 }

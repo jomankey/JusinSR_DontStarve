@@ -40,16 +40,20 @@ public:
 private:
 	virtual		void		Free();
 
+
+	
+
 };
 
 
 // 엔진 헤더에 있는 파일들을 레퍼런스 헤더에 복사 붙여넣기
 // 엔진 bin 폴더에 있는 dll과 lib 파일을 복사해서 레퍼런스 라이브러리에 클라이언트의 bin 복사 붙여넣기
 
-//D3DXMatrixLookAtLH();
-//D3DXMatrixPerspectiveFovLH();
+// ax + by + cz + d = 0
+// D3DXPLANE Plane;
+// D3DXPlaneFromPoints();
 
-//
-//m_pGraphicDev->SetTransform(D3DTS_WORLD, ? );
-//m_pGraphicDev->SetTransform(D3DTS_VIEW, ? );
-//m_pGraphicDev->SetTransform(D3DTS_PROJECTION, ? );
+//D3DXIntersectTri()
+
+// 마우스 윈도우 좌표 -> viewport
+// 로컬이냐 월드냐
