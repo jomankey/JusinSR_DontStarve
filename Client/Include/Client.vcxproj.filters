@@ -46,6 +46,18 @@
     <Filter Include="02. GameObject\06. Effect">
       <UniqueIdentifier>{69e88a4c-ddb1-4a70-a8a5-7d9df5c571a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects">
+      <UniqueIdentifier>{ce830462-3c8b-44d1-95bf-64eb4aeffe12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\01. Rock">
+      <UniqueIdentifier>{a79119ca-1881-4e96-9482-232fcc60a3f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\07. CUI">
+      <UniqueIdentifier>{aff6ba5e-a29b-47bf-8fce-4cfdea7ae58d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\02. Grass">
+      <UniqueIdentifier>{f5e58aac-cdd7-4314-ba1e-b4b68eec513e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -90,6 +102,15 @@
     <ClInclude Include="..\Header\Logo.h">
       <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI.h">
+      <Filter>01. Scene\07. CUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CObjectGrass.h">
+      <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CObjectRock.h">
+      <Filter>02. GameObject\08. ResObjects\01. Rock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -124,6 +145,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Logo.cpp">
       <Filter>01. Scene\00. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI.cpp">
+      <Filter>01. Scene\07. CUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CObjectGrass.cpp">
+      <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CObjectRock.cpp">
+      <Filter>02. GameObject\08. ResObjects\01. Rock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

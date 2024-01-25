@@ -1,5 +1,6 @@
 #include "..\..\Header\Renderer.h"
 
+#include "Export_Utility.h"
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer()
@@ -82,8 +83,20 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 {
+	//Get_Scene()->BeginOrtho();
+
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 		iter->Render_GameObject();
+	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+
+	//Get_Scene()->EndOrtho();
 }
 
 void CRenderer::Free()

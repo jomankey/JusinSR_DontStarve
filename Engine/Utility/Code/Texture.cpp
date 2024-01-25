@@ -5,8 +5,9 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CTexture::CTexture(const CTexture & rhs)
+CTexture::CTexture(const CTexture& rhs)
 	: CComponent(rhs)
+	, m_TexInfo(rhs.m_TexInfo)
 {
 	_uint	iSize = rhs.m_vecTexture.size();
 	m_vecTexture.reserve(iSize);
@@ -21,13 +22,13 @@ CTexture::~CTexture()
 {
 }
 
-HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _uint & iCnt, const _uint& iNum)
+HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt)
 {
 	m_vecTexture.reserve(iCnt);
 
-	IDirect3DBaseTexture9*		pTexture = NULL;
+	IDirect3DBaseTexture9* pTexture = NULL;
 
-	for (_uint i = 0 + iNum; i < iCnt + iNum; ++i)
+	for (_uint i = 0; i < iCnt; ++i)
 	{
 		TCHAR	szFileName[128] = L"";
 
@@ -37,6 +38,8 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _ui
 		{
 		case TEX_NORMAL:
 			FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture), E_FAIL);
+			((LPDIRECT3DTEXTURE9)pTexture)->GetLevelDesc(0, &m_TexInfo);
+			m_TexInfo;
 			break;
 
 		case TEX_CUBE:
@@ -50,7 +53,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _ui
 	return S_OK;
 }
 
-void CTexture::Set_Texture(const _uint & iIndex)
+void CTexture::Set_Texture(const _uint& iIndex)
 {
 	if (m_vecTexture.size() < iIndex)
 		return;
@@ -58,16 +61,16 @@ void CTexture::Set_Texture(const _uint & iIndex)
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
 
-CComponent * CTexture::Clone()
+CComponent* CTexture::Clone()
 {
 	return new CTexture(*this);
 }
 
-CTexture * CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const _tchar * pPath, const _uint & iCnt, const _uint& iNum)
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const _tchar* pPath, const _uint& iCnt, const _uint& iNum)
 {
-	CTexture *	pInstance = new CTexture(pGraphicDev);
+	CTexture* pInstance = new CTexture(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt, iNum)))
+	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("Texture Create Failed");
