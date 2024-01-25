@@ -1,5 +1,5 @@
 #include "ToolTerrain.h"
-#include "framework.h"
+
 #include "Export_Utility.h"
 #include "ToolMgr.h"
 
@@ -51,7 +51,6 @@ void CToolTerrain::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_FORCE_DWORD);
 }
-
 
 HRESULT CToolTerrain::Add_Component()
 {

@@ -40,18 +40,6 @@
     <Filter Include="03. ToolMgr">
       <UniqueIdentifier>{ddf7bbd0-01e5-4704-b84b-f8f0a8d0e8d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Etc">
-      <UniqueIdentifier>{a544806b-9e6a-4e1a-a94f-89d6bdd3a409}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Etc\Tree">
-      <UniqueIdentifier>{f1f7e049-5dd2-46bb-8f69-b4a591b0a80e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Etc\Rock">
-      <UniqueIdentifier>{e227bb02-7ec9-4017-b6dc-e7e7df1a64b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Etc\Grass">
-      <UniqueIdentifier>{b05d2684-fa59-42d6-ad64-10806fff4fcb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -105,15 +93,6 @@
     <ClInclude Include="..\Header\ToolMgr.h">
       <Filter>03. ToolMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ToolTree.h">
-      <Filter>02. Object\Etc\Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolRock.h">
-      <Filter>02. Object\Etc\Rock</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolGrass.h">
-      <Filter>02. Object\Etc\Grass</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -154,15 +133,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolMgr.cpp">
       <Filter>03. ToolMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolTree.cpp">
-      <Filter>02. Object\Etc\Tree</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolRock.cpp">
-      <Filter>02. Object\Etc\Rock</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolGrass.cpp">
-      <Filter>02. Object\Etc\Grass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

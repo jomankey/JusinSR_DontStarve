@@ -1,13 +1,8 @@
 #include "TerrainScene.h"
-#include "framework.h"
 #include "Export_Utility.h"
 #include "ToolTerrain.h"
 #include "ToolCamera.h"
 #include "ToolMgr.h"
-#include "Engine_Define.h"
-#include "ToolTree.h"
-#include "ToolRock.h"
-#include "ToolGrass.h"
 
 CTerrainScene::CTerrainScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -26,21 +21,13 @@ HRESULT CTerrainScene::Ready_Scene()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tile_Grass_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Terrain/Grass2/grass2_%d.png", 80)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tile1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Terrain/Tile/tile000.png")), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Obejct_Tree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/IDLE_1/IDLE__000.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Obejct_Stone", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/기본바위/FULL.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Obejct_Grass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Stone/IDLE/IDLE__000.png")), E_FAIL);
-
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"UI"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
-
-	m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
 
 	return S_OK;
 }
@@ -48,9 +35,6 @@ HRESULT CTerrainScene::Ready_Scene()
 _int CTerrainScene::Update_Scene(const _float& fTimeDelta)
 {
 	Ready_LightInfo();
-
-	Input_Mouse();
-
 	return __super::Update_Scene(fTimeDelta);
 }
 
@@ -130,60 +114,6 @@ HRESULT CTerrainScene::Ready_LightInfo()
 
 	return S_OK;
 }
-
-HRESULT CTerrainScene::Input_Mouse()
-{
-	//test
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
-	{
-		if (CToolMgr::bObjectAdd)
-		{
-			_vec3	vPickPos = Picking_Terrain();
-
-			Engine::CLayer* pLayer = Get_Layer(L"GameLogic");
-			NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-			Engine::CGameObject* pGameObject = nullptr;
-
-			switch (CToolMgr::iItemCurrentEtcIdx)
-			{
-			case 0:
-				pGameObject = CToolTree::Create(m_pGraphicDev, vPickPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
-				break;
-			case 1:
-				pGameObject = CToolRock::Create(m_pGraphicDev, vPickPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
-				break;
-			case 2:
-				pGameObject = CToolGrass::Create(m_pGraphicDev, vPickPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Grass", pGameObject), E_FAIL);
-				break;
-			case 3:
-				break;
-			default:
-				break;
-			}
-
-			CToolMgr::bObjectAdd = false;
-		}
-	}
-}
-
-_vec3 CTerrainScene::Picking_Terrain()
-{
-	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
-	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3());
-
-	CTransform* pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Terrain", L"Proto_Transform"));
-	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
-
-	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
-}
-
 
 CTerrainScene* CTerrainScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

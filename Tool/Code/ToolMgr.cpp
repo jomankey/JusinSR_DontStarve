@@ -3,6 +3,7 @@
 
 #include "Export_Utility.h"
 
+//TODO:: 타일 클래스 따로 뺴기
 _float CToolMgr::m_fMtrlDiffuseColor[3] = { 0.f, 0.f, 0.f };
 _float CToolMgr::m_fMtrlAmbientColor[3] = { 0.f, 0.f, 0.f };
 _float CToolMgr::m_fMtrlSpecularColor[3] = { 0.f, 0.f, 0.f };
@@ -11,15 +12,8 @@ _float CToolMgr::m_fDirectionDiffuseColor[3] = { 0.f, 0.f, 0.f };
 _float CToolMgr::m_fDirectionAmbientColor[3] = { 0.f, 0.f, 0.f };
 _float CToolMgr::m_fDirectionSpecularColor[3] = { 0.f, 0.f, 0.f };
 
-int CToolMgr::iItemCurrentMonsterIdx = 0;
-int CToolMgr::iItemCurrentEtcIdx = 0;
-int CToolMgr::iItemCurrentItemIdx = 0;
-
-_bool CToolMgr::bObjectAdd = false;
-
 CToolMgr::CToolMgr(LPDIRECT3DDEVICE9 pGraphicDev)
-	: m_pGraphicDev(pGraphicDev), 
-    item_current_idx(0)
+	: m_pGraphicDev(pGraphicDev), item_current_idx(0)
 {
 }
 
@@ -63,10 +57,9 @@ void CToolMgr::Update_ToolMgr()
     static float f = 0.0f;
     static int counter = 0;
 
-   // ImGui::ShowDemoWindow(&show_demo_window);
+    //ImGui::ShowDemoWindow(&show_demo_window);
     Window_Tile();
     Window_Light();
-    Window_Object();
 }
 
 void CToolMgr::Render_ToolMgr()
@@ -85,6 +78,7 @@ void CToolMgr::Window_Tile()
 
     const char* Items[] = { "grass", "grass2" };
 
+
     if (ImGui::BeginListBox("Tile List"))
     {
         for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
@@ -92,6 +86,7 @@ void CToolMgr::Window_Tile()
             const bool bSelected = (item_current_idx == i);
             if (ImGui::Selectable(Items[i], bSelected))
                 item_current_idx = i;
+
 
             if (bSelected)
                 ImGui::SetItemDefaultFocus();
@@ -128,93 +123,17 @@ void CToolMgr::Window_Light()
 {
     ImGui::Begin("Light");
 
-    ImGui::Text("Terrain Mtrl");
+    ImGui::Text("Mtrl");
     ImGui::ColorEdit3("MtrlDiffuse", m_fMtrlDiffuseColor);
     ImGui::ColorEdit3("MtrlAmbient", m_fMtrlAmbientColor);
     ImGui::ColorEdit3("MtrlSpecular", m_fMtrlSpecularColor);
 
     ImGui::NewLine();
-    ImGui::Text("Scene Direction");
+    ImGui::Text("Direction");
     ImGui::ColorEdit3("DirectionDiffuse", m_fDirectionDiffuseColor);
     ImGui::ColorEdit3("DirectionAmbient", m_fDirectionAmbientColor);
     ImGui::ColorEdit3("DirectionSpecular", m_fDirectionSpecularColor);
 
-    ImGui::End();
-}
-
-//오브젝트 배치 툴 
-void CToolMgr::Window_Object()
-{
-    //지형지물
-    //몬스터
-    //플레이어 
-    //아이템 
-    ImGui::Begin("Object Tool");
-    if (ImGui::CollapsingHeader("Monster", ImGuiTreeNodeFlags_None))
-    {
-        /*ImGui::Text("IsItemHovered: %d", ImGui::IsItemHovered());
-        for (int i = 0; i < 5; i++)
-            ImGui::Text("Some content %d", i);*/
-
-        if (ImGui::BeginListBox("Monster List"))
-        {
-            const char* Items[] = { "Spider", "Pig", "Buffalo", "Boss"};
-
-            for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
-            {
-                const bool bSelected = (CToolMgr::iItemCurrentMonsterIdx == i);
-                if (ImGui::Selectable(Items[i], bSelected))
-                    CToolMgr::iItemCurrentMonsterIdx = i;
-
-                if (bSelected)
-                    ImGui::SetItemDefaultFocus();
-            }
-            ImGui::EndListBox();
-        }
-    }
-    if (ImGui::CollapsingHeader("Etc", ImGuiTreeNodeFlags_None))
-    {
-        if (ImGui::BeginListBox("Etc List"))
-        {
-            const char* Items[] = { "Tree", "Stone", "Rock", "Grass" };
-
-            for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
-            {
-                const bool bSelected = (CToolMgr::iItemCurrentEtcIdx == i);
-                if (ImGui::Selectable(Items[i], bSelected))
-                    CToolMgr::iItemCurrentEtcIdx = i;
-
-                if (bSelected)
-                    ImGui::SetItemDefaultFocus();
-            }
-            ImGui::EndListBox();
-        }
-
-
-        if (ImGui::SmallButton("Add"))
-        {
-            bObjectAdd = true;
-        }
-    }
-
-    if (ImGui::CollapsingHeader("Item", ImGuiTreeNodeFlags_None))
-    {
-        if (ImGui::BeginListBox("Item List"))
-        {
-            const char* Items[] = { "Tree", "Stone", "Rock", "Grass" };
-
-            for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
-            {
-                const bool bSelected = (iItemCurrentItemIdx == i);
-                if (ImGui::Selectable(Items[i], bSelected))
-                    iItemCurrentItemIdx = i;
-
-                if (bSelected)
-                    ImGui::SetItemDefaultFocus();
-            }
-            ImGui::EndListBox();
-        }
-    }
     ImGui::End();
 }
 

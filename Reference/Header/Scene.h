@@ -17,8 +17,6 @@ public:
 	CComponent*			Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag);
 	void	BeginOrtho();
 	void	EndOrtho();
-	CLayer* Get_Layer(const _tchar* pKey);
-
 public:
 	virtual HRESULT		Ready_Scene();
 	virtual _int		Update_Scene(const _float& fTimeDelta);

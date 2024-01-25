@@ -32,7 +32,6 @@ private:
     Engine::CTransform* m_pTransformCom;
     Engine::CTexture* m_pTextureCom;
 
-
 public:
     static CToolTerrain* Create(LPDIRECT3DDEVICE9	pGraphicDev);
 
