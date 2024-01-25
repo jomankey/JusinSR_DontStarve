@@ -57,8 +57,8 @@ void CTerrain::Render_GameObject()
 
 HRESULT CTerrain::Add_Component()
 {
-
 	CComponent* pComponent = nullptr;
+
 	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(Engine::Clone_Proto(L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
