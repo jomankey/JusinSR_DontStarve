@@ -14,7 +14,6 @@ private:
     explicit CToolGrass(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
     explicit CToolGrass(const CToolGrass& rhs);
     virtual ~CToolGrass();
-
 public:
     virtual HRESULT Ready_GameObject()						 override;
     virtual _int Update_GameObject(const _float& fTimeDelta) override;
