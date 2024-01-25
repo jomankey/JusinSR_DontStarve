@@ -35,16 +35,6 @@ void CScene::EndOrtho()
 		m_pCamera->EndOrtho();
 }
 
-CLayer* CScene::Get_Layer(const _tchar* pKey)
-{
-	CLayer* pSecond = m_mapLayer.find(pKey)->second;
-
-	if (nullptr == pSecond)
-		return nullptr;
-
-	return pSecond;
-}
-
 HRESULT CScene::Ready_Scene()
 {
 	return S_OK;
