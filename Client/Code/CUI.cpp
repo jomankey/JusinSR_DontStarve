@@ -71,7 +71,6 @@ void CUI::Render_GameObject()
 	m_matWorld._41 = m_fX - (WINCX>>1);
 	m_matWorld._42 = -m_fY + (WINCY >> 1);
 
-	GetCursorPos()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 
 	m_pBufferCom->Render_Buffer();
