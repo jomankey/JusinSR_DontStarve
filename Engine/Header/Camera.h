@@ -22,6 +22,9 @@ protected:
 	_float			m_fFov, m_fAspect, m_fNear, m_fFar;
 	_matrix			m_matView, m_matProj;
 
+	//직교투영 카메라 월드행렬
+	_matrix			m_matWorld;
+
 protected:
 	virtual void	Free();
 };
