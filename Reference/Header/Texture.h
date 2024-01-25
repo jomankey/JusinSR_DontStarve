@@ -13,9 +13,8 @@ protected:
 public:
 	HRESULT		Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt);
 	void		Set_Texture(const _uint& iIndex = 0);
+	D3DSURFACE_DESC Get_TexInfo() { return m_TexInfo; }
 
-private:
-	vector<IDirect3DBaseTexture9*>		m_vecTexture;
 
 public:
 	virtual CComponent*	Clone();
@@ -24,7 +23,9 @@ public:
 
 public:
 	virtual void		Free();
-
+private:
+	vector<IDirect3DBaseTexture9*>		m_vecTexture;
+	D3DSURFACE_DESC	m_TexInfo;
 };
 
 END

@@ -157,7 +157,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header\CItemObject.h" />
+    <ClInclude Include="..\Header\CObjectGrass.h" />
+    <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
@@ -174,7 +175,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Code\CItemObject.cpp" />
+    <ClCompile Include="..\Code\CObjectGrass.cpp" />
+    <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />

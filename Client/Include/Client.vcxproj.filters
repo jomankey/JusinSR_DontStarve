@@ -55,6 +55,9 @@
     <Filter Include="01. Scene\07. CUI">
       <UniqueIdentifier>{aff6ba5e-a29b-47bf-8fce-4cfdea7ae58d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\02. Grass">
+      <UniqueIdentifier>{f5e58aac-cdd7-4314-ba1e-b4b68eec513e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -99,11 +102,14 @@
     <ClInclude Include="..\Header\Logo.h">
       <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CItemObject.h">
-      <Filter>02. GameObject\08. ResObjects\01. Rock</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUI.h">
       <Filter>01. Scene\07. CUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CObjectGrass.h">
+      <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CObjectRock.h">
+      <Filter>02. GameObject\08. ResObjects\01. Rock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,11 +146,14 @@
     <ClCompile Include="..\Code\Logo.cpp">
       <Filter>01. Scene\00. Logo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CItemObject.cpp">
-      <Filter>02. GameObject\08. ResObjects\01. Rock</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUI.cpp">
       <Filter>01. Scene\07. CUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CObjectGrass.cpp">
+      <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CObjectRock.cpp">
+      <Filter>02. GameObject\08. ResObjects\01. Rock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
