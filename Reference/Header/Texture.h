@@ -11,10 +11,7 @@ protected:
 	virtual ~CTexture();
 
 public:
-	IDirect3DBaseTexture9* Get_Texture(int _iCnt) { return m_vecTexture[_iCnt]; }
-
-public:
-	HRESULT		Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt, const _uint& iNum);
+	HRESULT		Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt);
 	void		Set_Texture(const _uint& iIndex = 0);
 
 private:
@@ -23,7 +20,11 @@ private:
 public:
 	virtual CComponent*	Clone();
 	// iNum°ª Ãß°¡ 
+<<<<<<< HEAD
 	static CTexture*	Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const _tchar* pPath, const _uint& iCnt = 1, const _uint& iNum = 0);
+=======
+	static CTexture*	Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const _tchar* pPath, const _uint& iCnt = 1, const _uint& iNum =0);
+>>>>>>> bb1bf657de05d89d12a7a5547e0ecf374fc5ee4c
 
 public:
 	virtual void		Free();
