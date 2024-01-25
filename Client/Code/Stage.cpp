@@ -9,6 +9,11 @@
 #include "DynamicCamera.h"
 #include "SkyBox.h"
 #include "Effect.h"
+#include "CUI.h"
+
+// Monster/Resource/Object
+#include "CObjectRock.h"
+#include "CObjectGrass.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -25,6 +30,7 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"UI"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_GameRes(L"GameRes"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 
 
@@ -97,9 +103,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 
 	for (_int i = 0; i < 50; ++i)
 	{
-		pGameObject = CEffect::Create(m_pGraphicDev);
+		pGameObject = CObjectRock::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 0.f, _float(rand() % 20)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Effect", pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Obj_Rock", pGameObject), E_FAIL);
 	}
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
@@ -109,6 +115,21 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 }
 
 HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(0.f, 0.f, 0.f), _vec3(100.f, 100.f, 0.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_GameRes(const _tchar* pLayerTag)
 {
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
