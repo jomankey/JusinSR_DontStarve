@@ -37,3 +37,17 @@ ipch/
 Client/Bin/Utility.dll
 Engine/Utility/Bin/Utility.dll
 Tool/Bin/Utility.dll
+Tool/Include/Debug/Tool.exe.recipe
+Tool/Include/Debug/Tool.res
+Tool/Include/Debug/Tool.vcxproj.FileListAbsolute.txt
+Tool/Include/Debug/Tool.vcxproj.FileListAbsolute.txt
+Tool/Include/Debug/Tool.res
+Tool/Include/Debug/Tool.exe.recipe
+Engine/Utility/Include/Debug/Utility.vcxproj.FileListAbsolute.txt
+Engine/Utility/Include/Debug/Utility.dll.recipe
+Engine/System/Include/Debug/System.vcxproj.FileListAbsolute.txt
+Engine/System/Include/Debug/System.dll.recipe
+Client/Include/Debug/unity_HA030TJ9EALSY4Y3.cpp
+Client/Include/Debug/Client.vcxproj.FileListAbsolute.txt
+Client/Include/Debug/Client.res
+Client/Include/Debug/Client.exe.recipe
