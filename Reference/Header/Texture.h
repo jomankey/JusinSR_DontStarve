@@ -24,6 +24,9 @@ public:
 =======
 	// iNum�� �߰� 
 	static CTexture*	Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const _tchar* pPath, const _uint& iCnt = 1, const _uint& iNum = 1);
+<<<<<<< HEAD
+>>>>>>> parent of d3c060b (UI추가 카메라연동 완료)
+=======
 >>>>>>> parent of d3c060b (UI추가 카메라연동 완료)
 
 public:
