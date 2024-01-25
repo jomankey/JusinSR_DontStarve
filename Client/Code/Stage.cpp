@@ -9,6 +9,7 @@
 #include "DynamicCamera.h"
 #include "SkyBox.h"
 #include "Effect.h"
+#include "CUI.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -25,6 +26,7 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"GameLogic"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(L"UI"), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_GameRes(L"GameRes"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 
 
@@ -71,8 +73,6 @@ HRESULT CStage::Ready_Layer_Environment(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"SkyBox", pGameObject), E_FAIL);
 
-
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -104,7 +104,6 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
-
 	return S_OK;
 }
 
@@ -112,11 +111,27 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 {
 	Engine::CLayer* pLayer = Engine::CLayer::Create();
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
+	Engine::CGameObject* pGameObject = nullptr;
+
+<<<<<<< HEAD
+=======
+	pGameObject = CUI::Create(m_pGraphicDev,CUI::UI_STATE::UI_STATIC,_vec3(0.f,0.f,0.f),_vec3(100.f,100.f,0.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ pLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CStage::Ready_Layer_GameRes(const _tchar* pLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create();
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-
-
+>>>>>>> bb1bf657de05d89d12a7a5547e0ecf374fc5ee4c
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;

@@ -21,13 +21,13 @@ CTexture::~CTexture()
 {
 }
 
-HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _uint & iCnt, const _uint& iNum)
+HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _uint & iCnt)
 {
 	m_vecTexture.reserve(iCnt);
 
 	IDirect3DBaseTexture9*		pTexture = NULL;
 
-	for (_uint i = 0 + iNum; i < iCnt + iNum; ++i)
+	for (_uint i = 0; i < iCnt; ++i)
 	{
 		TCHAR	szFileName[128] = L"";
 
@@ -67,7 +67,7 @@ CTexture * CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, cons
 {
 	CTexture *	pInstance = new CTexture(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt, iNum)))
+	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("Texture Create Failed");
