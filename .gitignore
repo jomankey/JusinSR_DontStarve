@@ -34,3 +34,6 @@ ipch/
 *.lib
 *.exp
 *.recipe
+Client/Bin/Utility.dll
+Engine/Utility/Bin/Utility.dll
+Tool/Bin/Utility.dll
