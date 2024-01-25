@@ -1,5 +1,5 @@
 #include "..\Include\stdafx.h"
-#include "Player.h"
+#include "..\Header\Player.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -24,7 +24,7 @@ HRESULT CPlayer::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	//m_pTransformCom->m_vScale = { 2.f, 1.f, 1.f };
-	m_pTransformCom->Set_Pos(_vec3(1.f, 1.f, 1.f));
+
 
 	return S_OK;
 }
@@ -52,6 +52,7 @@ void CPlayer::LateUpdate_GameObject()
 
 void CPlayer::Render_GameObject()
 {
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -84,9 +85,9 @@ HRESULT CPlayer::Add_Component()
 	return S_OK;
 }
 
-CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayer* pInstance = new CPlayer(pGraphicDev);
+	CPlayer *	pInstance = new CPlayer(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -99,7 +100,7 @@ CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 void CPlayer::Free()
-{
+{	
 	__super::Free();
 }
 
@@ -128,7 +129,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
 		m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(-90.f * fTimeDelta));
-	}
+	}	
 
 	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
 	{
@@ -144,7 +145,7 @@ void CPlayer::Height_OnTerrain()
 	_vec3		vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
+	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
 	NULL_CHECK(pTerrainBufferCom);
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
@@ -154,10 +155,10 @@ void CPlayer::Height_OnTerrain()
 
 _vec3 CPlayer::Picking_OnTerrain()
 {
-	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
+	CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3());
 
-	CTransform* pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Terrain", L"Proto_Transform"));
+	CTransform*			pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Terrain", L"Proto_Transform"));
 	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
 
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
