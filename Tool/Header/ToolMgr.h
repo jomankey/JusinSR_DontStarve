@@ -25,6 +25,7 @@ private:
     //¿Ø¥÷√¢
     void Window_Tile();
     void Window_Light();
+    void Window_Object();
 
 public:
     static float m_fMtrlDiffuseColor[3];
@@ -39,6 +40,8 @@ public:
 
     vector<Engine::CTexture*> m_pTileTexture;
     int item_current_idx;
+    static int iItemCurrentMonsterIdx, iItemCurrentEtcIdx, iItemCurrentItemIdx;
+    static _bool bObjectAdd;
 
 public:
     static CToolMgr* Create(LPDIRECT3DDEVICE9 pGraphicDev);

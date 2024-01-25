@@ -15,10 +15,17 @@ public:
 	virtual void Render_Scene() override;
 
 private:
+	HRESULT Input_Mouse();
+	_vec3 Picking_Terrain();
+
+private:
 	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
 	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
 	HRESULT			Ready_LightInfo();
+
+private:
+	Engine::CCalculator* m_pCalculatorCom;
 
 public:
 	static CTerrainScene* Create(LPDIRECT3DDEVICE9 pGraphicDev);
