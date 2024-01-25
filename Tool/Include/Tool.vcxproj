@@ -168,8 +168,11 @@
     <ClInclude Include="..\Header\MainTool.h" />
     <ClInclude Include="..\Header\TerrainScene.h" />
     <ClInclude Include="..\Header\ToolCamera.h" />
+    <ClInclude Include="..\Header\ToolGrass.h" />
     <ClInclude Include="..\Header\ToolMgr.h" />
+    <ClInclude Include="..\Header\ToolRock.h" />
     <ClInclude Include="..\Header\ToolTerrain.h" />
+    <ClInclude Include="..\Header\ToolTree.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -186,8 +189,11 @@
     <ClCompile Include="..\Code\MainTool.cpp" />
     <ClCompile Include="..\Code\TerrainScene.cpp" />
     <ClCompile Include="..\Code\ToolCamera.cpp" />
+    <ClCompile Include="..\Code\ToolGrass.cpp" />
     <ClCompile Include="..\Code\ToolMgr.cpp" />
+    <ClCompile Include="..\Code\ToolRock.cpp" />
     <ClCompile Include="..\Code\ToolTerrain.cpp" />
+    <ClCompile Include="..\Code\ToolTree.cpp" />
     <ClCompile Include="Tool.cpp" />
   </ItemGroup>
   <ItemGroup>

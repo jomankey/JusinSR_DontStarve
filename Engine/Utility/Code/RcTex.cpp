@@ -64,7 +64,6 @@ HRESULT CRcTex::Ready_Buffer()
 
 	m_pIB->Unlock();
 
-
 	return S_OK;
 }
 
