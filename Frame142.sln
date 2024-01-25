@@ -37,10 +37,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Header", "02. Header", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "Engine\Utility\Include\Utility.vcxproj", "{F89C6B32-45CD-4E70-A4FF-D7028D062F15}"
 EndProject
+<<<<<<< HEAD
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Tool", "03. Tool", "{7E1DE8C5-833D-4B28-B872-BD0C4216E6F9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tool", "Tool\Include\Tool.vcxproj", "{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}"
 EndProject
+=======
+>>>>>>> 37a37d699a2b2ecb20d0da8e6ba2278fd69d7a8f
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -73,14 +76,6 @@ Global
 		{F89C6B32-45CD-4E70-A4FF-D7028D062F15}.Release|x64.Build.0 = Release|x64
 		{F89C6B32-45CD-4E70-A4FF-D7028D062F15}.Release|x86.ActiveCfg = Release|Win32
 		{F89C6B32-45CD-4E70-A4FF-D7028D062F15}.Release|x86.Build.0 = Release|Win32
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Debug|x64.ActiveCfg = Debug|x64
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Debug|x64.Build.0 = Debug|x64
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Debug|x86.ActiveCfg = Debug|Win32
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Debug|x86.Build.0 = Debug|Win32
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Release|x64.ActiveCfg = Release|x64
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Release|x64.Build.0 = Release|x64
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Release|x86.ActiveCfg = Release|Win32
-		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +87,9 @@ Global
 		{DE82B7A9-9B30-4965-B47A-BD2289001584} = {E0A63F8A-696E-4C47-98CA-EA7CD5ABDCAD}
 		{5D99DBDE-BDCD-47BF-8805-5320B3D2E4C8} = {0484E7C4-EBE5-41B0-983F-385491C83C83}
 		{F89C6B32-45CD-4E70-A4FF-D7028D062F15} = {5F3D7B7C-5008-4D25-A146-0690F623B6AE}
+<<<<<<< HEAD
 		{9942774C-BEBF-4CCC-8B2B-31BE0FB3D3BE} = {7E1DE8C5-833D-4B28-B872-BD0C4216E6F9}
+=======
+>>>>>>> 37a37d699a2b2ecb20d0da8e6ba2278fd69d7a8f
 	EndGlobalSection
 EndGlobal
