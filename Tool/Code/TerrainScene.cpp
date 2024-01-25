@@ -12,6 +12,7 @@
 CTerrainScene::CTerrainScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
+	//test
 }
 
 CTerrainScene::~CTerrainScene()
