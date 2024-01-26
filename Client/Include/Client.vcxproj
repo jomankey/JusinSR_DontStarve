@@ -160,8 +160,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
+    <ClInclude Include="..\Header\CGameItem.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
+    <ClInclude Include="..\Header\CObjectTree.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
@@ -179,8 +181,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
+    <ClCompile Include="..\Code\CGameItem.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
+    <ClCompile Include="..\Code\CObjectTree.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />

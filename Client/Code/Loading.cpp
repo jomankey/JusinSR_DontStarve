@@ -20,11 +20,11 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 	InitializeCriticalSection(&m_Crt);
 
 	m_hThread = (HANDLE)_beginthreadex(NULL,	// 디폴트 보안 속성
-		0,		// 디폴트 스택 사이즈(1바이트)
-		Thread_Main, // 동작 시킬 쓰레드 함수 이름(__stdcall 규약)
-		this,		// 쓰레드 함수의 매개 변수로 전달할 값
-		0,			// 쓰레드 생성 및 실행을 조절하기 위한 FLAG
-		NULL);		// 쓰레드 ID 반환..
+		0,										// 디폴트 스택 사이즈(1바이트)
+		Thread_Main,							// 동작 시킬 쓰레드 함수 이름(__stdcall 규약)
+		this,									// 쓰레드 함수의 매개 변수로 전달할 값
+		0,										// 쓰레드 생성 및 실행을 조절하기 위한 FLAG
+		NULL);									// 쓰레드 ID 반환..
 
 	m_eID = eID;
 

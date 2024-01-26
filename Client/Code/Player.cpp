@@ -54,18 +54,23 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
 	BillBoard();
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	__super::Compute_ViewZ(&vPos);
+
 	Height_OnTerrain();
 }
 
 void CPlayer::Render_GameObject()
 {
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	Set_Scale();
-	
+
 	m_pTextureCom[m_ePlayerLookAt][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 	if (m_Dirchange)
@@ -76,6 +81,13 @@ void CPlayer::Render_GameObject()
 	{
 		m_pBufferCom->Render_Buffer();
 	}
+
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+
+
+
 	
 }
 
@@ -355,7 +367,7 @@ void CPlayer::Height_OnTerrain()
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
 
-	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
+	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.5f, vPos.z);
 }
 
 _vec3 CPlayer::Picking_OnTerrain()
@@ -371,20 +383,27 @@ _vec3 CPlayer::Picking_OnTerrain()
 
 void CPlayer::BillBoard()
 {
-	_matrix	matWorld, matView, matBill;
+	_matrix	matWorld, matView, matBillY, matBillX;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
+	D3DXMatrixIdentity(&matBillY);
+	D3DXMatrixIdentity(&matBillX);
 
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
+	matBillY._11 = matView._11;
+	matBillY._13 = matView._13;
+	matBillY._31 = matView._31;
+	matBillY._33 = matView._33;
 
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
+	matBillX._21 = matView._21;
+	matBillX._22 = matView._22;
+	matBillX._32 = matView._32;
+	matBillX._33 = matView._33;
 
-	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
+	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
+
+	m_pTransformCom->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
 }
 
 void CPlayer::Check_State()

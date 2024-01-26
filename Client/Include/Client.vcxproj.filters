@@ -61,6 +61,12 @@
     <Filter Include="02. GameObject\01. Beefalo">
       <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\03. Tree">
+      <UniqueIdentifier>{a410062d-05e6-4c94-8fd6-5b51a506c468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09. Item">
+      <UniqueIdentifier>{720bec18-f636-416c-a5e4-1b7d13a87d45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -117,6 +123,12 @@
     <ClInclude Include="..\Header\Beefalo.h">
       <Filter>02. GameObject\01. Beefalo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CObjectTree.h">
+      <Filter>02. GameObject\08. ResObjects\03. Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGameItem.h">
+      <Filter>02. GameObject\09. Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -163,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Beefalo.cpp">
       <Filter>02. GameObject\01. Beefalo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CObjectTree.cpp">
+      <Filter>02. GameObject\08. ResObjects\03. Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGameItem.cpp">
+      <Filter>02. GameObject\09. Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

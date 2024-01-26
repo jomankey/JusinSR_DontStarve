@@ -28,7 +28,7 @@
 #include <string>
 #include <unordered_map>
 #include <ctime>
-
+#include <cassert>
 #include <process.h>
 
 #if defined(_DEBUG) && !defined(_TOOL)

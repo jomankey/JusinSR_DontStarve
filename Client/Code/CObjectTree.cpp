@@ -1,37 +1,36 @@
-#include "CObjectGrass.h"
+#include "CObjectTree.h"
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-CObjectGrass::CObjectGrass(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
+CObjectTree::CObjectTree(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	:CGameObject(pGraphicDev), m_vPos(vPos)
 {
 }
 
-CObjectGrass::CObjectGrass(const CObjectGrass& rhs)
+CObjectTree::CObjectTree(const CObjectTree& rhs)
 	:CGameObject(rhs.m_pGraphicDev), m_vPos(rhs.m_vPos)
 {
 }
 
-CObjectGrass::~CObjectGrass()
+CObjectTree::~CObjectTree()
 {
 }
 
-HRESULT CObjectGrass::Ready_GameObject()
+HRESULT CObjectTree::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	return S_OK;
 }
 
-_int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
+_int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-
-	_matrix matWorld, matView, matBillY, matBillX;
+	_matrix	matWorld, matView, matBillY, matBillX;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-
 	D3DXMatrixIdentity(&matBillY);
 	D3DXMatrixIdentity(&matBillX);
 
@@ -48,15 +47,12 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
 	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
 
-	// matBillY와 matBillX의 역행렬을 곱하는 순서를 변경
-	m_pTransformCom->Set_WorldMatrix(&(matBillX* matBillY * matWorld));
-
+	m_pTransformCom->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
 	return 0;
 }
 
-void CObjectGrass::LateUpdate_GameObject()
+void CObjectTree::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 	_vec3	vPos;
@@ -64,7 +60,7 @@ void CObjectGrass::LateUpdate_GameObject()
 	__super::Compute_ViewZ(&vPos);
 }
 
-void CObjectGrass::Render_GameObject()
+void CObjectTree::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -76,9 +72,10 @@ void CObjectGrass::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 }
 
-HRESULT CObjectGrass::Add_Component()
+HRESULT CObjectTree::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -86,22 +83,21 @@ HRESULT CObjectGrass::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Obejct_Grass"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Obejct_Tree"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree", pComponent });
 
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransformCom->Set_Scale(_vec3(1.f, 1.f, 1.f));
-	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
-
+	m_pTransformCom->Set_Scale(_vec3(1.5f, 1.8f, 1.5f));
+	m_pTransformCom->Set_Pos(m_vPos.x, 2.0f, m_vPos.z);
 	return S_OK;
 }
 
-CObjectGrass* CObjectGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
+CObjectTree* CObjectTree::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 {
-	CObjectGrass* pInstance = new CObjectGrass(pGraphicDev, vPos);
+	CObjectTree* pInstance = new CObjectTree(pGraphicDev, vPos);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -113,7 +109,7 @@ CObjectGrass* CObjectGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	return pInstance;
 }
 
-void CObjectGrass::Free()
+void CObjectTree::Free()
 {
 	CGameObject::Free();
 }

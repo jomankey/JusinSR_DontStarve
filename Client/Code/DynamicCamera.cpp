@@ -7,8 +7,8 @@
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
 	, m_fAngle(-180.f)
-	, m_fDistance(5.f)
-	, m_fHeight(2.f)
+	, m_fDistance(3.f)
+	, m_fHeight(4.f)
 	, m_bkeyInput(true)
 {
 }

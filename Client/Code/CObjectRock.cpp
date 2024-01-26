@@ -26,25 +26,28 @@ HRESULT CObjectRock::Ready_GameObject()
 _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-
-	_matrix	matWorld, matView, matBill;
+	_matrix	matWorld, matView, matBillY, matBillX;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
+	D3DXMatrixIdentity(&matBillY);
+	D3DXMatrixIdentity(&matBillX);
 
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
+	matBillY._11 = matView._11;
+	matBillY._13 = matView._13;
+	matBillY._31 = matView._31;
+	matBillY._33 = matView._33;
 
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
+	matBillX._21 = matView._21;
+	matBillX._22 = matView._22;
+	matBillX._32 = matView._32;
+	matBillX._33 = matView._33;
 
-	_matrix matTransform = matBill * matWorld;
-	m_pTransformCom->Set_WorldMatrix(&(matTransform));
+	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
+	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
 
+	m_pTransformCom->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
 	return 0;
 }
 
@@ -52,10 +55,8 @@ void CObjectRock::LateUpdate_GameObject()
 {
 
 	__super::LateUpdate_GameObject();
-
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
 	__super::Compute_ViewZ(&vPos);
 }
 
@@ -90,9 +91,8 @@ HRESULT CObjectRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransformCom->Set_Scale(_vec3(15.f, 1.5f, 1.5f));
-	//s
-	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
+	m_pTransformCom->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
+	m_pTransformCom->Set_Pos(m_vPos.x, 1.8f, m_vPos.z);
 	return S_OK;
 }
 
@@ -112,5 +112,5 @@ CObjectRock* CObjectRock::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 
 void CObjectRock::Free()
 {
-	__super::Free();
+	CGameObject::Free();
 }
