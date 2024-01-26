@@ -25,7 +25,7 @@ HRESULT CTerrainScene::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tile_Grass_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Terrain/Grass1/grass_%d.png", 80,1)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tile_Grass_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Terrain/Grass2/grass2_%d.png", 80,1)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tile1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Terrain/Tile/tile000.png",1,1)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Tile1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Terrain/Terrain.png",1,1)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Obejct_Tree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/IDLE_1/IDLE__000.png",1,1)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Obejct_Stone", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/Nomal_Rock/Nomal_Rock_%d.png",1,1)), E_FAIL);
@@ -130,6 +130,31 @@ HRESULT CTerrainScene::Ready_LightInfo()
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 
 	return S_OK;
+}
+
+void CTerrainScene::Save_File()
+{
+	//HANDLE	hFile = CreateFile(L"../Data/Tile.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	//if (INVALID_HANDLE_VALUE == hFile)
+	//	return;
+
+	//int		iDrawID(0), iOption(0);
+	//DWORD	dwByte(0);
+
+	//for (auto& iter : m_vecTile)
+	//{
+	//	iDrawID = dynamic_cast<CTile*>(iter)->Get_DrawID();
+	//	iOption = dynamic_cast<CTile*>(iter)->Get_Option();
+
+	//	WriteFile(hFile, &(iter->Get_Info()), sizeof(INFO), &dwByte, nullptr);
+	//	WriteFile(hFile, &iDrawID, sizeof(int), &dwByte, nullptr);
+	//	WriteFile(hFile, &iOption, sizeof(int), &dwByte, nullptr);
+	//}
+
+	//CloseHandle(hFile);
+
+	//MessageBox(g_hWnd, L"Tile Save", L"¼º°ø", MB_OK);
 }
 
 HRESULT CTerrainScene::Input_Mouse()

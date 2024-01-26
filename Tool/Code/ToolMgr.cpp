@@ -3,13 +3,13 @@
 
 #include "Export_Utility.h"
 
-_float CToolMgr::m_fMtrlDiffuseColor[3] = { 0.f, 0.f, 0.f };
-_float CToolMgr::m_fMtrlAmbientColor[3] = { 0.f, 0.f, 0.f };
-_float CToolMgr::m_fMtrlSpecularColor[3] = { 0.f, 0.f, 0.f };
+_float CToolMgr::m_fMtrlDiffuseColor[3] = { 1.f, 1.f, 1.f };
+_float CToolMgr::m_fMtrlAmbientColor[3] = { 1.f, 1.f, 1.f };
+_float CToolMgr::m_fMtrlSpecularColor[3] = { 1.f, 1.f, 1.f };
 
-_float CToolMgr::m_fDirectionDiffuseColor[3] = { 0.f, 0.f, 0.f };
-_float CToolMgr::m_fDirectionAmbientColor[3] = { 0.f, 0.f, 0.f };
-_float CToolMgr::m_fDirectionSpecularColor[3] = { 0.f, 0.f, 0.f };
+_float CToolMgr::m_fDirectionDiffuseColor[3] = { 1.f, 1.f, 1.f };
+_float CToolMgr::m_fDirectionAmbientColor[3] = { 1.f, 1.f, 1.f };
+_float CToolMgr::m_fDirectionSpecularColor[3] = { 1.f, 1.f, 1.f };
 
 int CToolMgr::iItemCurrentMonsterIdx = 0;
 int CToolMgr::iItemCurrentEtcIdx = 0;

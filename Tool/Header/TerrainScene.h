@@ -25,6 +25,9 @@ private:
 	HRESULT			Ready_LightInfo();
 
 private:
+	void Save_File();
+
+private:
 	Engine::CCalculator* m_pCalculatorCom;
 
 public:

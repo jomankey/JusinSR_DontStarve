@@ -25,11 +25,10 @@ CTerrainTex::~CTerrainTex()
 
 // 높이맵 구현 제거
 // 타일 하나 당 텍스쳐 하나 출력되도록 수정
-HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX, 
-									const _ulong& dwCntZ, 
-									const _ulong& dwVtxItv)
+HRESULT CTerrainTex::Ready_Buffer(const _ulong&		dwCntX, 
+									const _ulong&	dwCntZ, 
+									const _ulong&	dwVtxItv)
 {
-
 	m_dwFVF = FVF_TEX;
 	m_dwTriCnt = (dwCntX - 1) * (dwCntZ - 1) * 2;
 	m_dwVtxCnt = dwCntX * dwCntZ;
@@ -37,14 +36,14 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	m_pPos = new _vec3[m_dwVtxCnt];
 
 	m_dwIdxSize = sizeof(INDEX32);
-	m_IdxFmt = D3DFMT_INDEX32; 
-	
+	m_IdxFmt = D3DFMT_INDEX32;
+
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
 
 	/*m_hFile = CreateFile(L"../Bin/Resource/Texture/Terrain/Height.bmp",
 		GENERIC_READ, 0,
-		NULL, 
-		OPEN_EXISTING, 
+		NULL,
+		OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL,
 		0);
 
@@ -53,13 +52,13 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 	ReadFile(m_hFile, &m_fH, sizeof(BITMAPFILEHEADER), &dwByte, NULL);
 	ReadFile(m_hFile, &m_iH, sizeof(BITMAPINFOHEADER), &dwByte, NULL);
 
-	_ulong*		pPixel = new _ulong[m_iH.biHeight * m_iH.biWidth];
+	_ulong* pPixel = new _ulong[m_iH.biHeight * m_iH.biWidth];
 
 	ReadFile(m_hFile, pPixel, sizeof(_ulong) * m_iH.biHeight * m_iH.biWidth, &dwByte, NULL);
 
 	CloseHandle(m_hFile);*/
-	
-	VTXTEX*		pVertex = nullptr;
+
+	VTXTEX* pVertex = nullptr;
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
@@ -71,26 +70,25 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 		{
 			dwIndex = i * dwCntX + j;
 
-			pVertex[dwIndex].vPosition = 
-			{ 
-				float(j) * dwVtxItv, 
-				0.f, 
+			pVertex[dwIndex].vPosition =
+			{
+				float(j) * dwVtxItv,
+				0.f,
 				float(i) * dwVtxItv };
 
 			m_pPos[dwIndex] = pVertex[dwIndex].vPosition;
 
 			pVertex[dwIndex].vNormal = { 0.f, 0.f, 0.f };
-			pVertex[dwIndex].vTexUV = { 
-				(_float)j,
-				(_float)i
+			pVertex[dwIndex].vTexUV = {
+				float(j) / (dwCntX - 1),
+				float(i) / (dwCntZ - 1)
 			};
 		}
 	}
 
-
 	//Engine::Safe_Delete_Array(pPixel);
 
-	INDEX32*		pIndex = nullptr;
+	INDEX32* pIndex = nullptr;
 
 	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
 
@@ -106,19 +104,19 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 			pIndex[dwTriIdx]._0 = dwIndex + dwCntX;
 			pIndex[dwTriIdx]._1 = dwIndex + dwCntX + 1;
 			pIndex[dwTriIdx]._2 = dwIndex + 1;
-			
+
 			_vec3		vDest, vSrc, vNormal;
 
 			vDest = pVertex[pIndex[dwTriIdx]._1].vPosition - pVertex[pIndex[dwTriIdx]._0].vPosition;
 			vSrc = pVertex[pIndex[dwTriIdx]._2].vPosition - pVertex[pIndex[dwTriIdx]._1].vPosition;
-			
+
 			D3DXVec3Cross(&vNormal, &vDest, &vSrc);
 
 			pVertex[pIndex[dwTriIdx]._0].vNormal += vNormal;
 			pVertex[pIndex[dwTriIdx]._1].vNormal += vNormal;
 			pVertex[pIndex[dwTriIdx]._2].vNormal += vNormal;
 			dwTriIdx++;
-						
+
 			// 왼쪽 아래
 			pIndex[dwTriIdx]._0 = dwIndex + dwCntX;
 			pIndex[dwTriIdx]._1 = dwIndex + 1;
@@ -139,7 +137,6 @@ HRESULT CTerrainTex::Ready_Buffer(const _ulong& dwCntX,
 
 	for (_ulong i = 0; i < m_dwVtxCnt; ++i)
 		D3DXVec3Normalize(&pVertex[i].vNormal, &pVertex[i].vNormal);
-
 
 	m_pVB->Unlock();
 	m_pIB->Unlock();

@@ -48,6 +48,7 @@ void CMainTool::Render_MainTool()
 
     m_pManagementClass->Render_Scene(m_pGraphicDev);
     m_pToolMgr->Render_ToolMgr();
+
     Engine::Render_End();
 }
 

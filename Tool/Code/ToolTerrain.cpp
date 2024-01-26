@@ -26,7 +26,7 @@ HRESULT CToolTerrain::Ready_GameObject()
 
 _int CToolTerrain::Update_GameObject(const _float& fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
