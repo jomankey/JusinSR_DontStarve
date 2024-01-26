@@ -8,7 +8,6 @@
 #include "TriCol.h"
 #include "RcCol.h"
 #include "RcTex.h"
-#include "RvRcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
 

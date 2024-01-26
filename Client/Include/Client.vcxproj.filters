@@ -58,9 +58,6 @@
     <Filter Include="02. GameObject\08. ResObjects\02. Grass">
       <UniqueIdentifier>{1d8589b4-56d3-46d6-8aad-4b2022d312aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Beefalo">
-      <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -114,9 +111,6 @@
     <ClInclude Include="..\Header\CObjectGrass.h">
       <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Beefalo.h">
-      <Filter>02. GameObject\01. Beefalo</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -160,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CObjectGrass.cpp">
       <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Beefalo.cpp">
-      <Filter>02. GameObject\01. Beefalo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

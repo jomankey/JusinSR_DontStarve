@@ -141,9 +141,6 @@
     <ClInclude Include="..\..\Header\PlayerStatus.h">
       <Filter>04. Component\04. ObjStatus\00. PlayerStatus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\RvRcTex.h">
-      <Filter>04. Component\00. VIBuffer\02. RcTex</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Management.cpp">
@@ -211,9 +208,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerStatus.cpp">
       <Filter>04. Component\04. ObjStatus\00. PlayerStatus</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\RvRcTex.cpp">
-      <Filter>04. Component\00. VIBuffer\02. RcTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

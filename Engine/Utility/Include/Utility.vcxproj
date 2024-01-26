@@ -184,7 +184,6 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\RcCol.h" />
     <ClInclude Include="..\..\Header\RcTex.h" />
     <ClInclude Include="..\..\Header\Renderer.h" />
-    <ClInclude Include="..\..\Header\RvRcTex.h" />
     <ClInclude Include="..\..\Header\Scene.h" />
     <ClInclude Include="..\..\Header\TerrainTex.h" />
     <ClInclude Include="..\..\Header\Texture.h" />
@@ -209,7 +208,6 @@ call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\RcCol.cpp" />
     <ClCompile Include="..\Code\RcTex.cpp" />
     <ClCompile Include="..\Code\Renderer.cpp" />
-    <ClCompile Include="..\Code\RvRcTex.cpp" />
     <ClCompile Include="..\Code\Scene.cpp" />
     <ClCompile Include="..\Code\TerrainTex.cpp" />
     <ClCompile Include="..\Code\Texture.cpp" />

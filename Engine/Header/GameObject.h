@@ -27,7 +27,7 @@ public:
 
 protected:
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
-	multimap<const _tchar*, CComponent*>		m_mapComponent[ID_END];
+	map<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 	_float								m_fViewZ;
 
 private:
