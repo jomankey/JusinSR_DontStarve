@@ -24,7 +24,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 		Thread_Main, // 동작 시킬 쓰레드 함수 이름(__stdcall 규약)
 		this,		// 쓰레드 함수의 매개 변수로 전달할 값
 		0,			// 쓰레드 생성 및 실행을 조절하기 위한 FLAG
-		NULL);		// 쓰레드 ID 반환
+		NULL);		// 쓰레드 ID 반환..
 
 	m_eID = eID;
 
@@ -33,7 +33,9 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_ForStage()
 {
-	
+	Loading_OBJ_Texture();
+	Loading_UI_Texture();
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
@@ -103,6 +105,18 @@ _uint CLoading::Loading_Beefalo_Texture()
 	return 0;
 }
 
+_uint CLoading::Loading_UI_Texture()
+{
+	//s
+	//PS2
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Left_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Item_Inven_Slot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Inven_Slot.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Equipment", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Equipment.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Cloth", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Cloth.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Alive", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Alive.png")), E_FAIL);
+
+	return 0;
+}
 
 unsigned int CLoading::Thread_Main(void* pArg)
 {
