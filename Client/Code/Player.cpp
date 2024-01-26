@@ -249,7 +249,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('W'))
 	{
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransformCom->Move_Pos(&vDir, 10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_UP;
 		
@@ -258,7 +258,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('S'))
 	{
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransformCom->Move_Pos(&vDir, -10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vDir, -5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_DOWN;
 		
@@ -267,7 +267,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('A'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransformCom->Move_Pos(&vRight, -10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vRight, -5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_LEFT;
 		if (!m_Dirchange)
@@ -280,7 +280,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('D'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransformCom->Move_Pos(&vRight, +10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vRight, +5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_RIGHT;
 		if (m_Dirchange)
