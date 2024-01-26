@@ -33,7 +33,6 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_ForStage()
 {
-	Loading_OBJ_Texture();
 	Loading_UI_Texture();
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
