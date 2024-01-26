@@ -24,7 +24,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 		Thread_Main, // 동작 시킬 쓰레드 함수 이름(__stdcall 규약)
 		this,		// 쓰레드 함수의 매개 변수로 전달할 값
 		0,			// 쓰레드 생성 및 실행을 조절하기 위한 FLAG
-		NULL);		// 쓰레드 ID 반환
+		NULL);		// 쓰레드 ID 반환..
 
 	m_eID = eID;
 
