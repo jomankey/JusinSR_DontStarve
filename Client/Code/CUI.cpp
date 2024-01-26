@@ -5,10 +5,9 @@
 #include "Export_Utility.h"
 #include "Export_System.h"
 
-CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
+CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State)
 	: Engine::CGameObject(pGraphicDev)
 	, m_eUIState(_State)
-	, m_pUI_Name(_UiName)
 {
 
 }
@@ -47,17 +46,6 @@ Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 	//sss
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	CGameObject::Update_GameObject(fTimeDelta);
-	//m_fSizeX = m_fSizeX+ fTimeDelta*30;
-	//m_fSizeY = m_fSizeY+ fTimeDelta*30;
-	m_pTransformCom->Set_Scale(_vec3{ m_fSizeX ,m_fSizeY,0 });
-	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(90.f*0.01));
-	//m_pTransformCom->Get_WorldMatrix();
-	m_pTransformCom->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
-	m_pTransformCom->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
-
-	/*_vec3 vScale = { 100.0f,100.0f,100.0f };
-
-	m_pTransformCom->Set_Scale(vScale);*/
 
 	return 0;
 }
@@ -74,7 +62,14 @@ void CUI::Render_GameObject()
 
 	m_pTextureCom->Set_Texture(0);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	D3DXMatrixIdentity(&m_matWorld);
+	m_matWorld._11 = m_fSizeX;
+	m_matWorld._22 = m_fSizeY;
+
+	m_matWorld._41 = m_fX - (WINCX>>1);
+	m_matWorld._42 = -m_fY + (WINCY >> 1);
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 
 	m_pBufferCom->Render_Buffer();
 
@@ -91,13 +86,9 @@ HRESULT CUI::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(m_pUI_Name));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Nomal_Rock"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ m_pUI_Name, pComponent });
-
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Nomal_Rock", pComponent });
 
 
 	return S_OK;
@@ -105,9 +96,9 @@ HRESULT CUI::Add_Component()
 
 
 
-CUI* CUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UiName)
+CUI* CUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size)
 {
-	CUI* pInstance = new CUI(pGraphicDev, _State, _UiName);
+	CUI* pInstance = new CUI(pGraphicDev, _State);
 	if (FAILED(pInstance->Ready_GameObject(_pos, _size)))
 	{
 		Safe_Release(pInstance);

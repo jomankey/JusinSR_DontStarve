@@ -91,7 +91,7 @@ HRESULT CObjectRock::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	m_pTransformCom->Set_Scale(_vec3(15.f, 1.5f, 1.5f));
-	//s
+
 	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
 	return S_OK;
 }

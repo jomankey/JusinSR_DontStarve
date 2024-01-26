@@ -20,8 +20,11 @@ public:
 public:
 	HRESULT		Ready_Loading(LOADINGID eID);
 	_uint		Loading_ForStage();
+
+
 	_uint		Loading_OBJ_Texture();
-	_uint		Loading_UI_Texture();
+	_uint		Loading_Player_Texture();
+	_uint		Loading_Beefalo_Texture();
 	const _tchar*		Get_String() const { return m_szLoading; }
 
 public:
