@@ -44,7 +44,7 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size)
 
 Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 {
-
+	//sss
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	CGameObject::Update_GameObject(fTimeDelta);
 	//m_fSizeX = m_fSizeX+ fTimeDelta*30;

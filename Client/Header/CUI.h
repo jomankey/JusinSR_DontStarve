@@ -33,7 +33,7 @@ private:
 	Engine::CTexture* m_pTextureCom;
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
-
+	//sss
 	const _tchar* m_pUI_Name;
 
 protected:
