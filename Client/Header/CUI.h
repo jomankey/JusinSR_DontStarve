@@ -17,7 +17,7 @@ public:
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };
 
 private:
-	explicit CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name);
+	explicit CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState);
 	explicit CUI(const CUI& rhs);
 	virtual ~CUI();
 
@@ -28,13 +28,10 @@ public:
 	virtual void Render_GameObject()						 override;
 
 private:
-	virtual HRESULT			Add_Component();
+	HRESULT			Add_Component();
 	UI_STATE		m_eUIState;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
-
-	const _tchar* m_pUI_Name;
 
 protected:
 	_matrix m_matWorld;
@@ -48,7 +45,7 @@ protected:
 	_float m_fSizeY;
 
 public:
-	static CUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name);
+	static CUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size);
 
 private:
 	virtual void Free() override;
