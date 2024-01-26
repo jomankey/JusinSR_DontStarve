@@ -19,12 +19,12 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 {
 	InitializeCriticalSection(&m_Crt);
 
-	m_hThread = (HANDLE)_beginthreadex(NULL,	// ë””í´íŠ¸ ë³´ì•ˆ ì†ì„±
-		0,		// ë””í´íŠ¸ ìŠ¤íƒ ì‚¬ì´ì¦ˆ(1ë°”ì´íŠ¸)
-		Thread_Main, // ë™ì‘ ì‹œí‚¬ ì“°ë ˆë“œ í•¨ìˆ˜ ì´ë¦„(__stdcall ê·œì•½)
-		this,		// ì“°ë ˆë“œ í•¨ìˆ˜ì˜ ë§¤ê°œ ë³€ìˆ˜ë¡œ ì „ë‹¬í•  ê°’
-		0,			// ì“°ë ˆë“œ ìƒì„± ë° ì‹¤í–‰ì„ ì¡°ì ˆí•˜ê¸° ìœ„í•œ FLAG
-		NULL);		// ì“°ë ˆë“œ ID ë°˜í™˜..
+	m_hThread = (HANDLE)_beginthreadex(NULL,	// µğÆúÆ® º¸¾È ¼Ó¼º
+		0,		// µğÆúÆ® ½ºÅÃ »çÀÌÁî(1¹ÙÀÌÆ®)
+		Thread_Main, // µ¿ÀÛ ½ÃÅ³ ¾²·¹µå ÇÔ¼ö ÀÌ¸§(__stdcall ±Ô¾à)
+		this,		// ¾²·¹µå ÇÔ¼öÀÇ ¸Å°³ º¯¼ö·Î Àü´ŞÇÒ °ª
+		0,			// ¾²·¹µå »ı¼º ¹× ½ÇÇàÀ» Á¶ÀıÇÏ±â À§ÇÑ FLAG
+		NULL);		// ¾²·¹µå ID ¹İÈ¯..
 
 	m_eID = eID;
 
@@ -97,15 +97,6 @@ _uint CLoading::Loading_Player_Texture()
 	return 0;
 }
 
-_uint CLoading::Loading_UI_Texture()
-{
-	//PS2
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Left_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Item_Inven_Slot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Inven_Slot.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Equipment", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Equipment.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Cloth", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Cloth.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Alive", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Alive.png")), E_FAIL);
-}
 _uint CLoading::Loading_Beefalo_Texture()
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Beefalo_graze", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_graze/befalo_graze__%03d.png", 10)), E_FAIL);
