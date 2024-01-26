@@ -45,10 +45,19 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size)
 Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 {
 
-
-
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	CGameObject::Update_GameObject(fTimeDelta);
+	//m_fSizeX = m_fSizeX+ fTimeDelta*30;
+	//m_fSizeY = m_fSizeY+ fTimeDelta*30;
+	m_pTransformCom->Set_Scale(_vec3{ m_fSizeX ,m_fSizeY,0 });
+	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(90.f*0.01));
+	//m_pTransformCom->Get_WorldMatrix();
+	m_pTransformCom->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
+	m_pTransformCom->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
+
+	/*_vec3 vScale = { 100.0f,100.0f,100.0f };
+
+	m_pTransformCom->Set_Scale(vScale);*/
 
 	return 0;
 }
@@ -64,19 +73,6 @@ void CUI::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pTextureCom->Set_Texture(0);
-
-	D3DXMatrixIdentity(m_pTransformCom->Get_WorldMatrix());
-
-
-
-	m_pTransformCom->Get_WorldMatrix()->_11 = m_fSizeX;
-	m_pTransformCom->Get_WorldMatrix()->_22 = m_fSizeY;
-
-
-
-	m_pTransformCom->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
-	m_pTransformCom->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
-
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
