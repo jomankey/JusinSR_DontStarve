@@ -5,9 +5,10 @@
 #include "Export_Utility.h"
 #include "Export_System.h"
 
-CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State)
+CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev)
 	, m_eUIState(_State)
+	, m_pUI_Name(_UiName)
 {
 
 }
@@ -64,14 +65,20 @@ void CUI::Render_GameObject()
 
 	m_pTextureCom->Set_Texture(0);
 
-	D3DXMatrixIdentity(&m_matWorld);
-	m_matWorld._11 = m_fSizeX;
-	m_matWorld._22 = m_fSizeY;
+	D3DXMatrixIdentity(m_pTransformCom->Get_WorldMatrix());
 
-	m_matWorld._41 = m_fX - (WINCX>>1);
-	m_matWorld._42 = -m_fY + (WINCY >> 1);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+
+	m_pTransformCom->Get_WorldMatrix()->_11 = m_fSizeX;
+	m_pTransformCom->Get_WorldMatrix()->_22 = m_fSizeY;
+
+
+
+	m_pTransformCom->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
+	m_pTransformCom->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
+
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pBufferCom->Render_Buffer();
 
@@ -88,9 +95,13 @@ HRESULT CUI::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Nomal_Rock"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(m_pUI_Name));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Nomal_Rock", pComponent });
+	m_mapComponent[ID_STATIC].insert({ m_pUI_Name, pComponent });
+
+	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 
 	return S_OK;
@@ -98,9 +109,9 @@ HRESULT CUI::Add_Component()
 
 
 
-CUI* CUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size)
+CUI* CUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UiName)
 {
-	CUI* pInstance = new CUI(pGraphicDev, _State);
+	CUI* pInstance = new CUI(pGraphicDev, _State, _UiName);
 	if (FAILED(pInstance->Ready_GameObject(_pos, _size)))
 	{
 		Safe_Release(pInstance);
