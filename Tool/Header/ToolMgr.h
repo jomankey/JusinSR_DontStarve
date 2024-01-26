@@ -43,6 +43,9 @@ public:
     static int iItemCurrentMonsterIdx, iItemCurrentEtcIdx, iItemCurrentItemIdx;
     static _bool bObjectAdd;
 
+    static _bool bSaveData;
+    static _bool bLoadData;
+
 public:
     static CToolMgr* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

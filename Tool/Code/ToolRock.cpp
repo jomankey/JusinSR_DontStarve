@@ -60,7 +60,6 @@ void CToolRock::Render_GameObject()
 
 	m_pTextureCom->Set_Texture(0);
 
-
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

@@ -22,7 +22,5 @@ namespace Engine
 		IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	};
 	enum PLAYERLOOK { LOOK_DOWN, LOOK_RIGHT, LOOK_LEFT, LOOK_UP, LOOK_END };
-	
-
 }
 #endif // Engine_Enum_h__

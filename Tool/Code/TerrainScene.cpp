@@ -52,6 +52,17 @@ _int CTerrainScene::Update_Scene(const _float& fTimeDelta)
 
 	Input_Mouse();
 
+	if (CToolMgr::bSaveData)
+	{
+		Save_File();
+		CToolMgr::bSaveData = false;
+	}
+	if (CToolMgr::bLoadData)
+	{
+		FAILED_CHECK_RETURN( Load_File(), E_FAIL);
+		CToolMgr::bLoadData = false;
+	}
+
 	return __super::Update_Scene(fTimeDelta);
 }
 
@@ -103,7 +114,6 @@ HRESULT CTerrainScene::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 	pGameObject = CToolTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Terrain", pGameObject), E_FAIL);
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -134,27 +144,140 @@ HRESULT CTerrainScene::Ready_LightInfo()
 
 void CTerrainScene::Save_File()
 {
-	//HANDLE	hFile = CreateFile(L"../Data/Tile.dat", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE	hFile = CreateFile(
+		L"../../Data/mainMap.dat", 
+		GENERIC_WRITE, 
+		NULL, 
+		NULL, 
+		CREATE_ALWAYS, 
+		FILE_ATTRIBUTE_NORMAL, 
+		NULL);
 
-	//if (INVALID_HANDLE_VALUE == hFile)
-	//	return;
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
 
-	//int		iDrawID(0), iOption(0);
-	//DWORD	dwByte(0);
+	_vec3 vPos{};
+	_int iCount(0);
+	DWORD	dwByte(0), dwStrByte(0);
+	string pName;
 
-	//for (auto& iter : m_vecTile)
-	//{
-	//	iDrawID = dynamic_cast<CTile*>(iter)->Get_DrawID();
-	//	iOption = dynamic_cast<CTile*>(iter)->Get_Option();
+	for (auto& iter : m_mapLayer)
+	{
+		/*iDrawID = dynamic_cast<CTile*>(iter)->Get_DrawID();
+		iOption = dynamic_cast<CTile*>(iter)->Get_Option();
 
-	//	WriteFile(hFile, &(iter->Get_Info()), sizeof(INFO), &dwByte, nullptr);
-	//	WriteFile(hFile, &iDrawID, sizeof(int), &dwByte, nullptr);
-	//	WriteFile(hFile, &iOption, sizeof(int), &dwByte, nullptr);
-	//}
+		WriteFile(hFile, &(iter->Get_Info()), sizeof(INFO), &dwByte, nullptr);
+		WriteFile(hFile, &iDrawID, sizeof(int), &dwByte, nullptr);
+		WriteFile(hFile, &iOption, sizeof(int), &dwByte, nullptr);*/
 
-	//CloseHandle(hFile);
+		if (iter.first != L"GameLogic")
+			continue;
 
-	//MessageBox(g_hWnd, L"Tile Save", L"성공", MB_OK);
+		iCount = iter.second->Get_MapObject().size() - 1;
+		WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+
+		for (auto& objectIter : iter.second->Get_MapObject())
+		{
+			if (objectIter.first == L"Terrain")
+				continue;
+
+			dwStrByte = sizeof(TCHAR) * (_tcslen(objectIter.first) + 1);
+			
+			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+			WriteFile(hFile, objectIter.first, dwStrByte, &dwByte, nullptr);
+
+			vPos = objectIter.second->Get_Pos();
+			WriteFile(hFile, &vPos.x, sizeof(_float), &dwByte, nullptr);
+			WriteFile(hFile, &vPos.y, sizeof(_float), &dwByte, nullptr);
+			WriteFile(hFile, &vPos.z, sizeof(_float), &dwByte, nullptr);
+		}
+	}
+
+	CloseHandle(hFile);
+
+	MessageBox(g_hWnd, L"Terrain Save", L"성공", MB_OK);
+}
+
+HRESULT CTerrainScene::Load_File()
+{
+	HANDLE	hFile = CreateFile(
+		L"../../Data/mainMap.dat",
+		GENERIC_READ, 
+		NULL,
+		NULL, 
+		OPEN_EXISTING, 
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	
+
+	_vec3 vPos{};
+	_int iCount(0);
+	DWORD	dwByte(0), dwStrByte(0);
+
+	for (auto& iter : m_mapLayer)
+	{
+		if (iter.first != L"GameLogic")
+			continue;
+
+		for (auto& objectIter : iter.second->Get_MapObject())
+		{
+			if (objectIter.first == L"Terrain")
+				break;
+
+			Safe_Release(objectIter.second);
+		}
+			
+		ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+		
+		for (int i =0; i < iCount; ++i)
+		{
+			ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+
+			TCHAR* pName = new TCHAR[dwStrByte];
+
+			ReadFile(hFile, pName, dwStrByte, &dwByte, nullptr);
+			ReadFile(hFile, &vPos.x, sizeof(_float), &dwByte, nullptr);
+			ReadFile(hFile, &vPos.y, sizeof(_float), &dwByte, nullptr);
+			ReadFile(hFile, &vPos.z, sizeof(_float), &dwByte, nullptr);
+
+			dwStrByte = 0;
+
+			Engine::CLayer* pLayer = Get_Layer(L"GameLogic");;
+			NULL_CHECK_RETURN(pLayer, E_FAIL);
+			Engine::CGameObject* pGameObject = nullptr;
+
+			if (!_tcscmp(L"Tree", pName))
+			{
+				pGameObject = CToolTree::Create(m_pGraphicDev, vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
+			}
+			else if (!_tcscmp(L"Rock", pName))
+			{
+				pGameObject = CToolRock::Create(m_pGraphicDev, vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rock", pGameObject), E_FAIL);
+			}
+			else if (!_tcscmp(L"Grass", pName))
+			{
+				pGameObject = CToolGrass::Create(m_pGraphicDev, vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Grass", pGameObject), E_FAIL);
+			}
+
+			pGameObject->Set_Pos(vPos);
+		}
+	}
+
+	CloseHandle(hFile);
+
+	MessageBox(g_hWnd, L"Terrain Load", L"성공", MB_OK);
+
+	return S_OK;
 }
 
 HRESULT CTerrainScene::Input_Mouse()
@@ -181,7 +304,7 @@ HRESULT CTerrainScene::Input_Mouse()
 			case 1:
 				pGameObject = CToolRock::Create(m_pGraphicDev, vPickPos);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Stone", pGameObject), E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rock", pGameObject), E_FAIL);
 				break;
 			case 2:
 				pGameObject = CToolGrass::Create(m_pGraphicDev, vPickPos);
@@ -193,10 +316,11 @@ HRESULT CTerrainScene::Input_Mouse()
 			default:
 				break;
 			}
-
+			pGameObject->Set_Pos(vPickPos);
 			CToolMgr::bObjectAdd = false;
 		}
 	}
+	return S_OK;
 }
 
 _vec3 CTerrainScene::Picking_Terrain()

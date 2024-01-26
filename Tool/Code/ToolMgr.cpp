@@ -16,6 +16,8 @@ int CToolMgr::iItemCurrentEtcIdx = 0;
 int CToolMgr::iItemCurrentItemIdx = 0;
 
 _bool CToolMgr::bObjectAdd = false;
+_bool CToolMgr::bSaveData = false;
+_bool CToolMgr::bLoadData = false;
 
 CToolMgr::CToolMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), 
@@ -64,7 +66,7 @@ void CToolMgr::Update_ToolMgr()
     static int counter = 0;
 
    // ImGui::ShowDemoWindow(&show_demo_window);
-    Window_Tile();
+   // Window_Tile();
     Window_Light();
     Window_Object();
 }
@@ -215,6 +217,17 @@ void CToolMgr::Window_Object()
             ImGui::EndListBox();
         }
     }
+
+    if (ImGui::SmallButton("Save"))
+    {
+        bSaveData = true;
+    }
+
+    if (ImGui::SmallButton("Load"))
+    {
+        bLoadData = true;
+    }
+
     ImGui::End();
 }
 

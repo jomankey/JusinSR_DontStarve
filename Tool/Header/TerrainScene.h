@@ -26,6 +26,7 @@ private:
 
 private:
 	void Save_File();
+	HRESULT Load_File();
 
 private:
 	Engine::CCalculator* m_pCalculatorCom;
