@@ -331,7 +331,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_ePlayerLookAt = LOOK_DOWN;
 	}
 
-
 	//enum PLAYERSTATE {
 	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	//};
@@ -342,7 +341,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
 	}
-	
 }
 
 void CPlayer::Height_OnTerrain()

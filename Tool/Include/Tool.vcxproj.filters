@@ -52,6 +52,12 @@
     <Filter Include="02. Object\Etc\Grass">
       <UniqueIdentifier>{b05d2684-fa59-42d6-ad64-10806fff4fcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\ToolSkyBox">
+      <UniqueIdentifier>{80bec7bf-6b5d-43ae-9f6d-b409e86113e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\ToolTile">
+      <UniqueIdentifier>{c5d73a5b-583d-4dd4-a021-e4c48696c472}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -114,6 +120,12 @@
     <ClInclude Include="..\Header\ToolGrass.h">
       <Filter>02. Object\Etc\Grass</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ToolSkyBox.h">
+      <Filter>02. Object\ToolSkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolTile.h">
+      <Filter>02. Object\ToolTile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -163,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolGrass.cpp">
       <Filter>02. Object\Etc\Grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolSkyBox.cpp">
+      <Filter>02. Object\ToolSkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolTile.cpp">
+      <Filter>02. Object\ToolTile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

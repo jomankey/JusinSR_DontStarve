@@ -18,6 +18,10 @@ int CToolMgr::iItemCurrentItemIdx = 0;
 _bool CToolMgr::bObjectAdd = false;
 _bool CToolMgr::bSaveData = false;
 _bool CToolMgr::bLoadData = false;
+_bool CToolMgr::bTerrainWireFrame = false;
+
+_int CToolMgr::iPickingIndex = -1;
+vector<_int> CToolMgr::vecPickingIdex;
 
 CToolMgr::CToolMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), 
@@ -65,8 +69,8 @@ void CToolMgr::Update_ToolMgr()
     static float f = 0.0f;
     static int counter = 0;
 
-   // ImGui::ShowDemoWindow(&show_demo_window);
-   // Window_Tile();
+    //ImGui::ShowDemoWindow(&show_demo_window);
+    Window_Tile();
     Window_Light();
     Window_Object();
 }
@@ -83,45 +87,68 @@ void CToolMgr::Window_Tile()
 {
     ImGui::Begin("Tile Tool");
 
-    ImGui::Text("Choose the tile and pick it");
+    //ImGui::Text("Choose the tile and pick it");
 
-    const char* Items[] = { "grass", "grass2" };
+    //const char* Items[] = { "grass", "grass2" };
 
-    if (ImGui::BeginListBox("Tile List"))
+    //if (ImGui::BeginListBox("Tile List"))
+    //{
+    //    for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
+    //    {
+    //        const bool bSelected = (item_current_idx == i);
+    //        if (ImGui::Selectable(Items[i], bSelected))
+    //            item_current_idx = i;
+
+    //        if (bSelected)
+    //            ImGui::SetItemDefaultFocus();
+    //    }
+    //    ImGui::EndListBox();
+    //}
+
+    //for (int i = 0; i < 80; i++)
+    //{
+    //    ImTextureID my_tex_id = (LPDIRECT3DTEXTURE9*)m_pTileTexture[item_current_idx]->Get_Texture(i);
+    //    float my_tex_w = 128.f;
+    //    float my_tex_h = 128.f;
+
+    //    ImGui::PushID(i);
+    //    ImVec2 size = ImVec2(32.f, 32.f);
+    //    ImVec2 uv0 = ImVec2(0.f, 0.f);
+    //    ImVec2 uv1 = ImVec2(32.f / my_tex_w, 32.f / my_tex_h);
+    //    ImVec4 bg_col = ImVec4(255.f, 255.f, 255.f, 1.f); // 색상값 
+    //    ImVec4 tint_col = ImVec4(1.f, 1.f, 1.f, 1.f);
+    //    ImGui::ImageButton("", (void*)my_tex_id, size, uv0, uv1, bg_col, tint_col);
+
+    //    ImGui::PopID();
+    //    if (i % 5 == 0 && i != 0)
+    //        ImGui::NewLine();
+    //    else
+    //        ImGui::SameLine();
+    //}
+
+    ImGui::Checkbox("TerrainWireFrame", &bTerrainWireFrame);
+
+    ImGui::NewLine();
+    ImGui::Text("Picking VTX : (%d)", iPickingIndex);
+
+    if (ImGui::BeginListBox("Unused List"))
     {
-        for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
+        for (int i = 0; i < vecPickingIdex.size(); ++i)
         {
             const bool bSelected = (item_current_idx == i);
-            if (ImGui::Selectable(Items[i], bSelected))
+
+            char buf[32];
+            sprintf(buf, "%d", vecPickingIdex[i]);
+
+            if (ImGui::Selectable(buf, bSelected))
                 item_current_idx = i;
 
             if (bSelected)
                 ImGui::SetItemDefaultFocus();
         }
         ImGui::EndListBox();
-    }
 
-    for (int i = 0; i < 80; i++)
-    {
-        ImTextureID my_tex_id = (LPDIRECT3DTEXTURE9*)m_pTileTexture[item_current_idx]->Get_Texture(i);
-        float my_tex_w = 128.f;
-        float my_tex_h = 128.f;
-
-        ImGui::PushID(i);
-        ImVec2 size = ImVec2(32.f, 32.f);
-        ImVec2 uv0 = ImVec2(0.f, 0.f);
-        ImVec2 uv1 = ImVec2(32.f / my_tex_w, 32.f / my_tex_h);
-        ImVec4 bg_col = ImVec4(255.f, 255.f, 255.f, 1.f); // 색상값 
-        ImVec4 tint_col = ImVec4(1.f, 1.f, 1.f, 1.f);
-        ImGui::ImageButton("", (void*)my_tex_id, size, uv0, uv1, bg_col, tint_col);
-
-        ImGui::PopID();
-        if (i % 5 == 0 && i != 0)
-            ImGui::NewLine();
-        else
-            ImGui::SameLine();
-    }
-
+        }
     ImGui::End();
 }
 

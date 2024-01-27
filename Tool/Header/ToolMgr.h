@@ -46,6 +46,12 @@ public:
     static _bool bSaveData;
     static _bool bLoadData;
 
+    static _bool bTerrainWireFrame;
+
+    static _int iPickingIndex;
+    static vector<_int> vecPickingIdex;
+    
+
 public:
     static CToolMgr* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 

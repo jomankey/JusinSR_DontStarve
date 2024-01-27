@@ -22,6 +22,14 @@ public:
 		const _ulong& dwCntX = VTXCNTX, 
 		const _ulong& dwCntZ = VTXCNTZ);
 
+	//Tool용 마우스 피킹
+	_ulong Picking_OnTerrain_Tool(HWND hWnd,
+		CTerrainTex* pTerrainBufferCom,
+		CTransform* pTerrainTransCom,
+		const _ulong& dwCntX = VTXCNTX,
+		const _ulong& dwCntZ = VTXCNTZ,
+		const _ulong& dwVtxItv = VTXITV);
+
 public:
 	static CCalculator*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	CComponent*				Clone(void);
