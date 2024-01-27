@@ -22,7 +22,7 @@ private:
 	virtual ~CUI();
 
 public:
-	virtual HRESULT Ready_GameObject(_vec3 _pos, _vec3 _size);
+	virtual HRESULT Ready_GameObject(_vec3 _pos, _vec3 _size,float _Angle=0);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
@@ -51,17 +51,18 @@ protected:
 	_float m_fY;
 	_float m_fSizeX;
 	_float m_fSizeY;
-	
+	_float m_fAngle;
 	
 	_float m_OriginfX;
 	_float m_OriginfY;
 	_float m_OriginfSizeX;
 	_float m_OriginfSizeY;
+	_float m_OriginfAngle;
 
 	
 
 public:
-	static CUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name);
+	static CUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle= 0.f);
 
 private:
 	virtual void Free() override;

@@ -26,7 +26,7 @@ CUI::~CUI()
 {
 }
 
-HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size)
+HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
 {
 
 
@@ -42,10 +42,12 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size)
 	m_OriginfY = m_fY;
 	m_OriginfSizeX = m_fSizeX;
 	m_OriginfSizeY = m_fSizeY;
+	m_fAngle = _Angle;
 	D3DXMatrixIdentity(&m_matWorld);
+	
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	m_pTransformCom->Rotation(Engine::ROT_Z, D3DXToRadian(m_fAngle));
 
 
 	return S_OK;
@@ -94,6 +96,7 @@ void CUI::Render_GameObject()
 
 	m_pTransformCom->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
 	m_pTransformCom->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
+	
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pBufferCom->Render_Buffer();
@@ -149,10 +152,9 @@ HRESULT CUI::Add_Component()
 
 
 
-CUI* CUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UiName)
-{
-	CUI* pInstance = new CUI(pGraphicDev, _State, _UiName);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size)))
+CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name,float _Angle)
+{	CUI* pInstance = new CUI(pGraphicDev, _State, _UI_Name);
+	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");
