@@ -17,16 +17,8 @@ CObjectTree::~CObjectTree()
 {
 }
 
-HRESULT CObjectTree::Ready_GameObject()
+void CObjectTree::Billboard()
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	return S_OK;
-}
-
-_int CObjectTree::Update_GameObject(const _float& fTimeDelta)
-{
-	CGameObject::Update_GameObject(fTimeDelta);
 	_matrix	matWorld, matView, matBillY, matBillX;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
@@ -48,6 +40,20 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
 
 	m_pTransformCom->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
+
+}
+
+HRESULT CObjectTree::Ready_GameObject()
+{
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	return S_OK;
+}
+
+_int CObjectTree::Update_GameObject(const _float& fTimeDelta)
+{
+	CGameObject::Update_GameObject(fTimeDelta);
+	Billboard();
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }

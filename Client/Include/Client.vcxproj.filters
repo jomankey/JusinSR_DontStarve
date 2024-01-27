@@ -67,6 +67,12 @@
     <Filter Include="02. GameObject\09. Item">
       <UniqueIdentifier>{720bec18-f636-416c-a5e4-1b7d13a87d45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\09. Item\CItemFood">
+      <UniqueIdentifier>{fdb423ee-441e-41be-931e-1c82f3001f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09. Item\CItemTool">
+      <UniqueIdentifier>{f5be32f2-7b48-490e-ba7f-98d3204343d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -126,8 +132,11 @@
     <ClInclude Include="..\Header\CObjectTree.h">
       <Filter>02. GameObject\08. ResObjects\03. Tree</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CGameItem.h">
+    <ClInclude Include="..\Header\CItem.h">
       <Filter>02. GameObject\09. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemFood.h">
+      <Filter>02. GameObject\09. Item\CItemFood</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -179,8 +188,11 @@
     <ClCompile Include="..\Code\CObjectTree.cpp">
       <Filter>02. GameObject\08. ResObjects\03. Tree</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CGameItem.cpp">
+    <ClCompile Include="..\Code\CItem.cpp">
       <Filter>02. GameObject\09. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemFood.cpp">
+      <Filter>02. GameObject\09. Item\CItemFood</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

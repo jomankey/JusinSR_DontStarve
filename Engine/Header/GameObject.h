@@ -32,7 +32,6 @@ protected:
 
 private:
 	CComponent*		Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
-
 public:
 	virtual void		Free();
 };

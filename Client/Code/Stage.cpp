@@ -17,6 +17,11 @@
 #include "CObjectGrass.h"
 #include "CObjectTree.h"
 
+// Item/Object
+#include "CItem.h"
+#include "CItemFood.h"
+
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -106,25 +111,33 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Beefalo", pGameObject), E_FAIL);
 
+	//for (_int i = 0; i < 10; ++i)
+	//{
+	//	pGameObject = CObjectGrass::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_GRASS", pGameObject), E_FAIL);
+	//}
+	//for (_int i = 0; i < 10; ++i)
+	//{
+	//	pGameObject = CObjectRock::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
+	//}
+
+	//for (_int i = 0; i < 10; ++i)
+	//{
+	//	pGameObject = CObjectTree::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_TREE", pGameObject), E_FAIL);
+	//}
 	for (_int i = 0; i < 10; ++i)
 	{
-		pGameObject = CObjectGrass::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"Item_Log", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_GRASS", pGameObject), E_FAIL);
-	}
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CObjectRock::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Item_Log", pGameObject), E_FAIL);
 	}
 
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CObjectTree::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_TREE", pGameObject), E_FAIL);
-	}
+
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 

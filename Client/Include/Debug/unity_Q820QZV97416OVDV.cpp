@@ -2,7 +2,10 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\Beefalo.cpp"
 
 
-#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CGameItem.cpp"
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CItem.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CItemFood.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CObjectGrass.cpp"

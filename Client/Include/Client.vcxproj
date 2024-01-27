@@ -160,7 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
-    <ClInclude Include="..\Header\CGameItem.h" />
+    <ClInclude Include="..\Header\CItem.h" />
+    <ClInclude Include="..\Header\CItemFood.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
@@ -181,7 +182,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
-    <ClCompile Include="..\Code\CGameItem.cpp" />
+    <ClCompile Include="..\Code\CItem.cpp" />
+    <ClCompile Include="..\Code\CItemFood.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
