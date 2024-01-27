@@ -9,6 +9,7 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev)
 	, m_eUIState(_State)
 	, m_pUI_Name(_UiName)
+	, m_bIsCollision(false)
 {
 
 }
@@ -16,6 +17,7 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 CUI::CUI(const CUI& rhs)
 	: Engine::CGameObject(rhs),
 	m_eUIState(rhs.m_eUIState)
+	, m_bIsCollision(false)
 {
 
 }
@@ -30,10 +32,11 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size)
 
 	m_fSizeX = _size.x;
 	m_fSizeY = _size.y;
-
+	
 
 	m_fX = _pos.x;
 	m_fY = _pos.y;
+	D3DXMatrixIdentity(&m_matWorld);
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -44,44 +47,74 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size)
 
 Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 {
-	//sss
+	
 	Engine::Add_RenderGroup(RENDER_UI, this);
+	
 	CGameObject::Update_GameObject(fTimeDelta);
-	//m_fSizeX = m_fSizeX+ fTimeDelta*30;
-	//m_fSizeY = m_fSizeY+ fTimeDelta*30;
-	m_pTransformCom->Set_Scale(_vec3{ m_fSizeX ,m_fSizeY,0 });
-	//m_pTransformCom->Rotation(Engine::ROT_X, D3DXToRadian(90.f*0.01));
-	//m_pTransformCom->Get_WorldMatrix();
-	m_pTransformCom->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
-	m_pTransformCom->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
-
-	/*_vec3 vScale = { 100.0f,100.0f,100.0f };
-
-	m_pTransformCom->Set_Scale(vScale);*/
 
 	return 0;
 }
 
 void CUI::LateUpdate_GameObject()
 {
+	if (UI_Collision())
+	{
+		m_fX += 0.1f;
+	}
+	
 	__super::LateUpdate_GameObject();
 }
 
 void CUI::Render_GameObject()
 {
+
 	Get_Scene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pTextureCom->Set_Texture(0);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	
+	m_matWorld._11 = m_fSizeX;
+	m_matWorld._22 = m_fSizeY;
+	
+
+	m_matWorld._41 = m_fX - (WINCX >> 1);
+	m_matWorld._42 = -m_fY + (WINCY >> 1);
+
+
+
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
 
 	m_pBufferCom->Render_Buffer();
 
+
+
 	Get_Scene()->EndOrtho();
+
+
 }
 
 
+
+BOOL CUI::UI_Collision()
+{
+
+	POINT		ptMouse{};
+	GetCursorPos(&ptMouse);
+	ScreenToClient(g_hWnd, &ptMouse);
+
+	if(m_fX - (m_fSizeX ) < ptMouse.x && ptMouse.x < m_fX + (m_fSizeX ))
+		if (m_fY - (m_fSizeY ) < ptMouse.y && ptMouse.y < m_fY + (m_fSizeY ))
+		{
+			return true;
+		}
+		else
+			return false;
+	else
+		return false;
+
+
+}
 
 HRESULT CUI::Add_Component()
 {

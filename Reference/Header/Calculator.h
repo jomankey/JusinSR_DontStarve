@@ -5,6 +5,8 @@ BEGIN(Engine)
 
 class CTerrainTex;
 class CTransform;
+class CRcTex;
+
 
 class ENGINE_DLL CCalculator : public CComponent
 {
@@ -21,6 +23,8 @@ public:
 		CTransform* pTerrainTransCom,
 		const _ulong& dwCntX = VTXCNTX, 
 		const _ulong& dwCntZ = VTXCNTZ);
+
+	BOOL       Picking_OnUI(HWND hWnd, CRcTex* pUIBifferCom,CTransform* pUITransCom, const _float& dwCntX, const _float& dwCntZ, const _ulong& dwVtxItv = VTXITV);
 
 public:
 	static CCalculator*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

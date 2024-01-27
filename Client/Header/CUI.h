@@ -27,6 +27,8 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 
+
+	BOOL UI_Collision();
 private:
 	virtual HRESULT			Add_Component();
 	UI_STATE		m_eUIState;
@@ -34,13 +36,14 @@ private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
 	//sss
+
+	_matrix m_matWorld;
 	const _tchar* m_pUI_Name;
 
+
+	BOOL m_bIsCollision;
 protected:
-	_matrix m_matWorld;
-	_matrix m_matProj;
-	_matrix m_matView;
-	_matrix TransformMatrix;
+
 
 	_float m_fX;
 	_float m_fY;

@@ -73,7 +73,7 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 
 	vMousePos.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
 	vMousePos.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
-
+	
 	vMousePos.z = 0.f;
 
 	// 투영 -> 뷰스페이스
@@ -154,6 +154,19 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 
 
 	return _vec3(0.f, 0.f, 0.f);
+}
+
+BOOL CCalculator::Picking_OnUI(HWND hWnd, CRcTex* pUIBifferCom, CTransform* pUITransCom, const _float& dwCntX, const _float& dwCntZ, const _ulong& dwVtxItv)
+{
+
+
+
+	
+
+
+
+
+	return false;
 }
 
 CCalculator * CCalculator::Create(LPDIRECT3DDEVICE9 pGraphicDev)
