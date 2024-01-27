@@ -205,8 +205,8 @@ void CToolMgr::Window_Object()
     {
         if (ImGui::BeginListBox("Etc List"))
         {
-            const char* Items[] = { "Tree", "Stone", "Rock", "Grass" };
-
+            const char* Items[] = { "Tree", "Stone", "Rock", "Grass", "Pig_House", "Berry"};
+            
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
             {
                 const bool bSelected = (CToolMgr::iItemCurrentEtcIdx == i);
@@ -230,7 +230,12 @@ void CToolMgr::Window_Object()
     {
         if (ImGui::BeginListBox("Item List"))
         {
-            const char* Items[] = { "Tree", "Stone", "Rock", "Grass" };
+            const char* Items[] = { 
+                "Stick", 
+                "Stone", 
+                "Firestone", 
+                "Grass",
+                };
 
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
             {
