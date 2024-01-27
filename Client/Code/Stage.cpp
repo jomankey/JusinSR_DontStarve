@@ -130,11 +130,27 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_TREE", pGameObject), E_FAIL);
 	//}
-	for (_int i = 0; i < 10; ++i)
+	for (_int i = 0; i < 2; ++i)
 	{
-		pGameObject = CItem::Create(m_pGraphicDev, L"Item_Log", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"Meat_Monster", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Item_Log", pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Meat_Monster", pGameObject), E_FAIL);
+
+		pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rocks_0", pGameObject), E_FAIL);
+
+		pGameObject = CItem::Create(m_pGraphicDev, L"CutGlass", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CutGlass", pGameObject), E_FAIL);
+
+		pGameObject = CItem::Create(m_pGraphicDev, L"Berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Berries", pGameObject), E_FAIL);
+
+		pGameObject = CItem::Create(m_pGraphicDev, L"Log", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Log", pGameObject), E_FAIL);
 	}
 
 
