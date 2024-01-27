@@ -36,6 +36,12 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size)
 
 	m_fX = _pos.x;
 	m_fY = _pos.y;
+
+
+	m_OriginfX = m_fX;
+	m_OriginfY = m_fY;
+	m_OriginfSizeX = m_fSizeX;
+	m_OriginfSizeY = m_fSizeY;
 	D3DXMatrixIdentity(&m_matWorld);
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -49,7 +55,7 @@ Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 {
 	
 	Engine::Add_RenderGroup(RENDER_UI, this);
-	
+
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	return 0;
@@ -57,11 +63,24 @@ Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 
 void CUI::LateUpdate_GameObject()
 {
-	if (UI_Collision())
+	if (UI_Collision()&& m_eUIState== UI_DYNAMIC)
 	{
-		m_fX += 0.1f;
+		if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+		{
+			m_fX = m_MousePoint.x;
+			m_fY = m_MousePoint.y;
+			
+			//m_pTransformCom->Set_Scale(_vec3{ m_fSizeX*2.1f, m_fSizeY*12.1f, 1.f });
+		}
+
 	}
-	
+	else
+	{
+		m_fX = m_OriginfX;
+		m_fY = m_OriginfY;
+		m_fSizeX = m_OriginfSizeX;
+		m_fSizeY = m_OriginfSizeY;
+	}
 	__super::LateUpdate_GameObject();
 }
 
@@ -73,17 +92,9 @@ void CUI::Render_GameObject()
 
 	m_pTextureCom->Set_Texture(0);
 
-	
-	m_matWorld._11 = m_fSizeX;
-	m_matWorld._22 = m_fSizeY;
-	
-
-	m_matWorld._41 = m_fX - (WINCX >> 1);
-	m_matWorld._42 = -m_fY + (WINCY >> 1);
-
-
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_matWorld);
+	m_pTransformCom->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
+	m_pTransformCom->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pBufferCom->Render_Buffer();
 
@@ -99,12 +110,12 @@ void CUI::Render_GameObject()
 BOOL CUI::UI_Collision()
 {
 
-	POINT		ptMouse{};
-	GetCursorPos(&ptMouse);
-	ScreenToClient(g_hWnd, &ptMouse);
+	
+	GetCursorPos(&m_MousePoint);
+	ScreenToClient(g_hWnd, &m_MousePoint);
 
-	if(m_fX - (m_fSizeX ) < ptMouse.x && ptMouse.x < m_fX + (m_fSizeX ))
-		if (m_fY - (m_fSizeY ) < ptMouse.y && ptMouse.y < m_fY + (m_fSizeY ))
+	if(m_fX - (m_fSizeX ) < m_MousePoint.x && m_MousePoint.x < m_fX + (m_fSizeX ))
+		if (m_fY - (m_fSizeY ) < m_MousePoint.y && m_MousePoint.y < m_fY + (m_fSizeY ))
 		{
 			return true;
 		}

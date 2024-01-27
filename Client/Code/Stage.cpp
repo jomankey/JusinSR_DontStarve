@@ -128,19 +128,19 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(-380.f, 280.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Item_Inven_Slot");
+	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_DYNAMIC, _vec3(20.f, 280.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Item_Inven_Slot");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 	
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(-380.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
+	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_DYNAMIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 	
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(-380.f, -60.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
+	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_DYNAMIC, _vec3(20.f, 120.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 	
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(-380.f, -80.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
+	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_DYNAMIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 

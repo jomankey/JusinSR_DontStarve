@@ -39,6 +39,8 @@ private:
 
 	_matrix m_matWorld;
 	const _tchar* m_pUI_Name;
+	POINT m_MousePoint;
+
 
 
 	BOOL m_bIsCollision;
@@ -49,6 +51,14 @@ protected:
 	_float m_fY;
 	_float m_fSizeX;
 	_float m_fSizeY;
+	
+	
+	_float m_OriginfX;
+	_float m_OriginfY;
+	_float m_OriginfSizeX;
+	_float m_OriginfSizeY;
+
+	
 
 public:
 	static CUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name);
