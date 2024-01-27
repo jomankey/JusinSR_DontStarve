@@ -12,6 +12,9 @@ private:
 	virtual ~CLayer();
 
 public:
+	multimap<const _tchar*, CGameObject*> Get_MapObject() { return m_mapObject; } // Tool »ç¿ë
+
+public:
 	CComponent*		Get_Component(COMPONENTID eID, const _tchar* pObjTag, const _tchar* pComponentTag);
 
 public:

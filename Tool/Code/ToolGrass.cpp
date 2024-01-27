@@ -57,10 +57,15 @@ void CToolGrass::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);
 
+
 	m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CToolGrass::Add_Component()
@@ -78,7 +83,7 @@ HRESULT CToolGrass::Add_Component()
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
 
 	return S_OK;
 }

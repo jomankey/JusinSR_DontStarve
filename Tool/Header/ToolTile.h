@@ -5,17 +5,16 @@ BEGIN(Engine)
 
 class CTerrainTex;
 class CTexture;
-class CTransform;
+class CCalculator;
 
 END
 
-class CToolTerrain :
+class CToolTile :
     public CGameObject
 {
 private:
-    explicit CToolTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
-    explicit CToolTerrain(const CToolTerrain& rhs);
-    virtual ~CToolTerrain();
+    explicit CToolTile(LPDIRECT3DDEVICE9 pGraphicDev);
+    virtual ~CToolTile();
 
 public:
     virtual HRESULT Ready_GameObject()						 override;
@@ -25,22 +24,17 @@ public:
 
 private:
     HRESULT Add_Component();
-    HRESULT SetUp_Material();
-
-    void Input_Mouse();
-
-    HRESULT Picking_OnTerrain();
 
 private:
-    Engine::CTerrainTex* m_pBufferCom;
+    Engine::CRcTex* m_pBufferCom;
     Engine::CTransform* m_pTransformCom;
     Engine::CTexture* m_pTextureCom;
     Engine::CCalculator* m_pCalculatorCom;
 
 public:
-    static CToolTerrain* Create(LPDIRECT3DDEVICE9	pGraphicDev);
+    static CToolTile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-    virtual void Free() override;
+    virtual void Free();
 };
 

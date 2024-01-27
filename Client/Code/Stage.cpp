@@ -40,6 +40,7 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_GameRes(L"GameRes"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 
+	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
 	return S_OK;
 }
@@ -221,6 +222,80 @@ HRESULT CStage::Ready_LightInfo()
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
+
+	return S_OK;
+}
+
+HRESULT CStage::Load_Data()
+{
+	HANDLE	hFile = CreateFile(
+		L"../../Data/mainMap.dat",
+		GENERIC_READ,
+		NULL,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	_vec3 vPos{};
+	_int iCount(0);
+	DWORD	dwByte(0), dwStrByte(0);
+
+	for (auto& iter : m_mapLayer)
+	{
+		if (iter.first != L"GameLogic")
+			continue;
+		
+		//object delete
+
+		ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+
+		for (int i = 0; i < iCount; ++i)
+		{
+			ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+
+			TCHAR* pName = new TCHAR[dwStrByte];
+
+			ReadFile(hFile, pName, dwStrByte, &dwByte, nullptr);
+			ReadFile(hFile, &vPos.x, sizeof(_float), &dwByte, nullptr);
+			ReadFile(hFile, &vPos.y, sizeof(_float), &dwByte, nullptr);
+			ReadFile(hFile, &vPos.z, sizeof(_float), &dwByte, nullptr);
+
+			dwStrByte = 0;
+
+			Engine::CLayer* pLayer = Get_Layer(L"GameLogic");;
+			NULL_CHECK_RETURN(pLayer, E_FAIL);
+			Engine::CGameObject* pGameObject = nullptr;
+
+			if (!_tcscmp(L"Tree", pName))
+			{
+				/*pGameObject = CObjectGrass::Create(m_pGraphicDev, vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);*/
+			}
+			else if (!_tcscmp(L"Rock", pName))
+			{
+				pGameObject = CObjectRock::Create(m_pGraphicDev, vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rock", pGameObject), E_FAIL);
+			}
+			else if (!_tcscmp(L"Grass", pName))
+			{
+				pGameObject = CObjectGrass::Create(m_pGraphicDev, vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Grass", pGameObject), E_FAIL);
+			}
+
+			pGameObject->Set_Pos(vPos);
+		}
+	}
+
+	CloseHandle(hFile);
+
+	MessageBox(g_hWnd, L"Terrain Load", L"¼º°ø", MB_OK);
 
 	return S_OK;
 }
