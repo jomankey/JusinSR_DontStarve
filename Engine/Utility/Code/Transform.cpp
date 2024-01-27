@@ -95,13 +95,13 @@ LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& 
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];
 	if (fabs(vDir.x) >= fabs(vDir.z)) //side
 	{
-		if (vDir.x > 0) // right
-		{
-			eDir = LOOK_RIGHT;
-		}
-		else   //left
+		if (vDir.x > 0) // left
 		{
 			eDir = LOOK_LEFT;
+		}
+		else   //right
+		{
+			eDir = LOOK_RIGHT;
 		}
 	}
 	else   //up down
