@@ -58,7 +58,10 @@
     <Filter Include="02. GameObject\08. ResObjects\02. Grass">
       <UniqueIdentifier>{1d8589b4-56d3-46d6-8aad-4b2022d312aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Beefalo">
+    <Filter Include="02. GameObject\01. Monster">
+      <UniqueIdentifier>{91d043b9-f5ca-44ce-9230-5f48b73bc071}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Monster\01. Beefalo">
       <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\08. ResObjects\03. Tree">
@@ -72,6 +75,9 @@
     </Filter>
     <Filter Include="02. GameObject\09. Item\CItemTool">
       <UniqueIdentifier>{f5be32f2-7b48-490e-ba7f-98d3204343d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Monster\02. Spider">
+      <UniqueIdentifier>{d3a5b963-bd9d-44af-81c9-08fddd98540d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +133,13 @@
       <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Beefalo.h">
-      <Filter>02. GameObject\01. Beefalo</Filter>
+      <Filter>02. GameObject\01. Monster\01. Beefalo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Monster.h">
+      <Filter>02. GameObject\01. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Spider.h">
+      <Filter>02. GameObject\01. Monster\02. Spider</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CObjectTree.h">
       <Filter>02. GameObject\08. ResObjects\03. Tree</Filter>
@@ -183,7 +195,13 @@
       <Filter>02. GameObject\08. ResObjects\02. Grass</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Beefalo.cpp">
-      <Filter>02. GameObject\01. Beefalo</Filter>
+      <Filter>02. GameObject\01. Monster\01. Beefalo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. GameObject\01. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Spider.cpp">
+      <Filter>02. GameObject\01. Monster\02. Spider</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CObjectTree.cpp">
       <Filter>02. GameObject\08. ResObjects\03. Tree</Filter>

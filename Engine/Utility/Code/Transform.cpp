@@ -80,33 +80,62 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 
 	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 
-	_matrix		matScale, matRot, matTrans;
+	_matrix		matScale, matTrans;
 
 	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
-	matRot = *Compute_LookAtTarget(pTargetPos);
+	m_matWorld = matScale  * matTrans;
 
-	m_matWorld = matScale * matRot * matTrans;
+}
 
+LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta)
+{
+	LOOKDIR		eDir;
+	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];
+	if (fabs(vDir.x) >= fabs(vDir.z)) //side
+	{
+		if (vDir.x > 0) // right
+		{
+			eDir = LOOK_RIGHT;
+		}
+		else   //left
+		{
+			eDir = LOOK_LEFT;
+		}
+	}
+	else   //up down
+	{
+		if (vDir.z > 0)  //down
+		{
+			eDir = LOOK_DOWN;
+		}
+		else   //up
+		{
+			eDir = LOOK_UP;
+		}
+	}
+
+	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
+
+	
+	
+
+	_matrix		matScale, matTrans;
+
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matTrans;
+
+	return eDir;
 }
 
 const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 {
 	_vec3	vDir = *pTargetPos - m_vInfo[INFO_POS];
 
-	/*_vec3	vAxis = *D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vDir);
-
-	_vec3	vUp;
-	_matrix	matRot;
 	
-	float	fDot = D3DXVec3Dot(D3DXVec3Normalize(&vDir, &vDir), D3DXVec3Normalize(&vUp, &m_vInfo[INFO_POS]));
-	float	fAngle = acos(fDot);
-
-
-	D3DXMatrixRotationAxis(&matRot, &vAxis, fAngle);
-
-	return &matRot;*/
 
 	_vec3	vAxis, vUp;
 	_matrix matRot;

@@ -268,7 +268,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	}
 
 	if (GetAsyncKeyState('S'))
-	{
+	{ //f
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->Move_Pos(&vDir, -5.f, fTimeDelta);
 		m_eCurState = MOVE;

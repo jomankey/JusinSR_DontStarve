@@ -26,6 +26,7 @@ public:
 	HRESULT		Loading_Beefalo_Texture();
 	HRESULT		Loading_UI_Texture();
 	HRESULT		Loading_Item_Texture();
+	HRESULT		Loading_Spider_Texture();
 	const _tchar*		Get_String() const { return m_szLoading; }
 
 public:

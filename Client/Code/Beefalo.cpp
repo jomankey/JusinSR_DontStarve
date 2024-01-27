@@ -2,13 +2,13 @@
 #include "Beefalo.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-CBeefalo::CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
+CBeefalo::CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
+    :CMonster(pGraphicDev, _vPos)
 {
 }
 
 CBeefalo::CBeefalo(const CBeefalo& rhs)
-	: Engine::CGameObject(rhs)
+    :CMonster(rhs)
 {
 }
 
@@ -18,12 +18,14 @@ CBeefalo::~CBeefalo()
 
 HRESULT CBeefalo::Ready_GameObject()
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Pos(_float(rand() % 20), 0.f, _float(rand() % 20));
+    
+    FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+    m_pTransformCom->Set_Pos(m_vPos);
+    Set_ObjStat();
+    /*m_pTransformCom->m_vScale = { 1.f, 1.f, 1.f };*/
+    m_fFrameEnd = 10;
 
-	m_pTransformCom->m_vScale = { 3.f, 2.f, 1.f };
-	m_fFrameEnd = 10;
-	return S_OK;
+    return S_OK;
 }
 
 _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
@@ -33,10 +35,10 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 	if (m_fFrameEnd < m_fFrame)
 		m_fFrame = 0.f;
 
-	CGameObject::Update_GameObject(fTimeDelta);
-
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-	return 0;
+    CGameObject::Update_GameObject(fTimeDelta);
+    BillBoard();
+    Engine::Add_RenderGroup(RENDER_ALPHA, this);
+    return 0;
 }
 
 void CBeefalo::LateUpdate_GameObject()
@@ -45,9 +47,9 @@ void CBeefalo::LateUpdate_GameObject()
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-	__super::Compute_ViewZ(&vPos);
-	BillBoard();
-	Height_OnTerrain();
+    __super::Compute_ViewZ(&vPos);
+    
+    /*Height_OnTerrain();*/
 }
 
 void CBeefalo::Render_GameObject()
@@ -121,21 +123,38 @@ void CBeefalo::BillBoard()
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 }
 
-CBeefalo* CBeefalo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+void CBeefalo::Set_ObjStat()
 {
-	CBeefalo* pInstance = new CBeefalo(pGraphicDev);
+    m_Stat.fHP = 100.f;
+    m_Stat.fMxHP = 100.f;
+    m_Stat.fSpeed = 1.f;
+}
 
-	if (FAILED(pInstance->Ready_GameObject()))
-	{
-		Safe_Release(pInstance);
-		MSG_BOX("Effect Create Failed");
-		return nullptr;
-	}
+void CBeefalo::Player_Chase(const _float& fTimeDelta)
+{
+    _vec3 PlayerPos;
+    PlayerPos = Get_Player_Pos();
+
+    m_eCurLook = m_pTransformCom->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
+
+    Look_Change();
+}
+
+CBeefalo* CBeefalo::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
+{
+    CBeefalo* pInstance = new CBeefalo(pGraphicDev, _vPos);
+
+    if (FAILED(pInstance->Ready_GameObject()))
+    {
+        Safe_Release(pInstance);
+        MSG_BOX("Beefalo Create Failed");
+        return nullptr;
+    }
 
 	return pInstance;
 }
 
 void CBeefalo::Free()
 {
-	__super::Free();
+    CMonster::Free();
 }
