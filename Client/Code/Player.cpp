@@ -54,18 +54,23 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
+	_vec3	vPos;
 	BillBoard();
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	__super::Compute_ViewZ(&vPos);
+
 	Height_OnTerrain();
 }
 
 void CPlayer::Render_GameObject()
 {
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	Set_Scale();
-	
+
 	m_pTextureCom[m_ePlayerLookAt][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 	if (m_Dirchange)
@@ -76,6 +81,13 @@ void CPlayer::Render_GameObject()
 	{
 		m_pBufferCom->Render_Buffer();
 	}
+
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+
+
+
 	
 }
 
@@ -249,16 +261,16 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('W'))
 	{
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransformCom->Move_Pos(&vDir, 10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_UP;
 		
 	}
 
 	if (GetAsyncKeyState('S'))
-	{
+	{ //f
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransformCom->Move_Pos(&vDir, -10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vDir, -5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_DOWN;
 		
@@ -267,7 +279,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('A'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransformCom->Move_Pos(&vRight, -10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vRight, -5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_LEFT;
 		if (!m_Dirchange)
@@ -280,7 +292,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('D'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransformCom->Move_Pos(&vRight, +10.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vRight, +5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_RIGHT;
 		if (m_Dirchange)
@@ -331,7 +343,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_ePlayerLookAt = LOOK_DOWN;
 	}
 
-
 	//enum PLAYERSTATE {
 	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	//};
@@ -342,7 +353,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
 	}
-	
 }
 
 void CPlayer::Height_OnTerrain()
@@ -355,7 +365,7 @@ void CPlayer::Height_OnTerrain()
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
 
-	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
+	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.5f, vPos.z);
 }
 
 _vec3 CPlayer::Picking_OnTerrain()
@@ -368,7 +378,6 @@ _vec3 CPlayer::Picking_OnTerrain()
 
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
 }
-
 void CPlayer::BillBoard()
 {
 	_matrix	matWorld, matView, matBill;
@@ -386,7 +395,6 @@ void CPlayer::BillBoard()
 
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 }
-
 void CPlayer::Check_State()
 {
 	if (m_ePreState != m_eCurState)

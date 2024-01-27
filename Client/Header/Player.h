@@ -39,7 +39,7 @@ private:
 	Engine::CRcTex*		m_pBufferCom;
 	Engine::CRvRcTex*	m_pReverseCom;
 	Engine::CTransform*	m_pTransformCom;
-	Engine::CTexture*	m_pTextureCom[PLAYERLOOK::LOOK_END][PLAYERSTATE::STATE_END];
+	Engine::CTexture*	m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
 	Engine::CCalculator*	m_pCalculatorCom;
 	/*Engine::CPlayerStatus*  m_pStatusCom;*/
 	_float				m_fFrame = 0.f;
@@ -48,7 +48,7 @@ private:
 	PLAYERSTATE m_eCurState;
 	PLAYERSTATE m_ePreState;
 
-	PLAYERLOOK  m_ePlayerLookAt;
+	LOOKDIR  m_ePlayerLookAt;
 	_tchar*		m_cTex;
 	_bool		m_Dirchange;
 public:

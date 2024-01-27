@@ -26,7 +26,11 @@ HRESULT CToolTerrain::Ready_GameObject()
 
 _int CToolTerrain::Update_GameObject(const _float& fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	Input_Mouse();
+	if (CToolMgr::bTerrainWireFrame)
+		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	else
+		Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
@@ -42,14 +46,14 @@ void CToolTerrain::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	if (CToolMgr::bTerrainWireFrame) m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pTextureCom->Set_Texture(0);
 	
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 
 	m_pBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_FORCE_DWORD);
+	if (CToolMgr::bTerrainWireFrame) m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_FORCE_DWORD);
 }
 
 
@@ -69,6 +73,10 @@ HRESULT CToolTerrain::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+
 	return S_OK;
 }
 
@@ -85,6 +93,33 @@ HRESULT CToolTerrain::SetUp_Material()
 	tMtrl.Power = 0.f;
 
 	m_pGraphicDev->SetMaterial(&tMtrl);
+
+	return S_OK;
+}
+
+void CToolTerrain::Input_Mouse()
+{
+	if (Engine::Get_DIMouseState(DIM_LB) & 0x80 && CToolMgr::bTerrainWireFrame)
+	{
+		Picking_OnTerrain();
+	}
+}
+
+HRESULT CToolTerrain::Picking_OnTerrain()
+{
+	_ulong i = m_pCalculatorCom->Picking_OnTerrain_Tool(g_hWnd,
+		m_pBufferCom,
+		m_pTransformCom);
+
+	CToolMgr::iPickingIndex = i;
+
+	//씬에 있는 타일 저장하는 map에 tile 오브젝트 추가해주기.
+	auto iTemp = find_if(CToolMgr::vecPickingIdex.begin(), CToolMgr::vecPickingIdex.end(), [&](_int Dst) {
+			return !(CToolMgr::iPickingIndex != Dst);
+	});
+
+	if (iTemp == CToolMgr::vecPickingIdex.end())
+		CToolMgr::vecPickingIdex.push_back(i);
 
 	return S_OK;
 }

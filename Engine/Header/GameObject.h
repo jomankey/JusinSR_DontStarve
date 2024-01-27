@@ -18,6 +18,8 @@ public:
 	CComponent*		Get_Component(COMPONENTID eID, const _tchar* pComponentTag);
 	CTransform*		Get_TransForm();
 	void			Compute_ViewZ(const _vec3* pPos);
+	_vec3 Get_Pos() { return m_vPos; }
+	void Set_Pos(_vec3 _vPos) { m_vPos = _vPos; }
 
 public:
 	virtual HRESULT		Ready_GameObject();
@@ -30,9 +32,10 @@ protected:
 	multimap<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 	_float								m_fViewZ;
 
+	_vec3 m_vPos;
+
 private:
 	CComponent*		Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
-
 public:
 	virtual void		Free();
 };

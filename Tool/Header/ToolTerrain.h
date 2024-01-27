@@ -27,11 +27,15 @@ private:
     HRESULT Add_Component();
     HRESULT SetUp_Material();
 
+    void Input_Mouse();
+
+    HRESULT Picking_OnTerrain();
+
 private:
     Engine::CTerrainTex* m_pBufferCom;
     Engine::CTransform* m_pTransformCom;
     Engine::CTexture* m_pTextureCom;
-
+    Engine::CCalculator* m_pCalculatorCom;
 
 public:
     static CToolTerrain* Create(LPDIRECT3DDEVICE9	pGraphicDev);

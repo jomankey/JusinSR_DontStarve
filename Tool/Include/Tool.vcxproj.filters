@@ -52,6 +52,9 @@
     <Filter Include="02. Object\Etc\Grass">
       <UniqueIdentifier>{b05d2684-fa59-42d6-ad64-10806fff4fcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\ToolSkyBox">
+      <UniqueIdentifier>{80bec7bf-6b5d-43ae-9f6d-b409e86113e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -114,6 +117,9 @@
     <ClInclude Include="..\Header\ToolGrass.h">
       <Filter>02. Object\Etc\Grass</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ToolSkyBox.h">
+      <Filter>02. Object\ToolSkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -163,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolGrass.cpp">
       <Filter>02. Object\Etc\Grass</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolSkyBox.cpp">
+      <Filter>02. Object\ToolSkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

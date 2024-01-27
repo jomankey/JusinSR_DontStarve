@@ -3,7 +3,7 @@
 
 namespace Engine
 {
-#define	VTXCNTX		129
+#define	VTXCNTX		129		
 #define VTXCNTZ		129
 #define VTXITV		1
 

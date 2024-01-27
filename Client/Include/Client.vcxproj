@@ -30,15 +30,15 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>true</EnableUnitySupport>
+    <EnableUnitySupport>false</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -160,16 +160,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
+    <ClInclude Include="..\Header\CItem.h" />
+    <ClInclude Include="..\Header\CItemFood.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
+    <ClInclude Include="..\Header\CObjectTree.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
+    <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Player.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
+    <ClInclude Include="..\Header\Spider.h" />
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="Client.h" />
@@ -179,16 +184,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
+    <ClCompile Include="..\Code\CItem.cpp" />
+    <ClCompile Include="..\Code\CItemFood.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
+    <ClCompile Include="..\Code\CObjectTree.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />
     <ClCompile Include="..\Code\Logo.cpp" />
     <ClCompile Include="..\Code\MainApp.cpp" />
+    <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
+    <ClCompile Include="..\Code\Spider.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="Client.cpp" />
