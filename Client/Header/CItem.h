@@ -31,8 +31,6 @@ public:
 	{
 		if (m_tItemInfo.ItemCount > _num)
 			m_tItemInfo.ItemCount -= _num;
-		else
-			assert(false, L"ItemCountOverflow");
 	}
 
 	void SetPos(const _vec3& _vPos);

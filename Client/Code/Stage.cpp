@@ -290,6 +290,7 @@ HRESULT CStage::Load_Data()
 			}
 
 			pGameObject->Set_Pos(vPos);
+			delete[] pName;
 		}
 	}
 

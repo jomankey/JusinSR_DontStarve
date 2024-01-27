@@ -47,25 +47,14 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90)), E_FAIL);
 
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SkyBoxTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/burger%d.dds", 4)), E_FAIL);
-	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SkyBoxTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/Ocean.dds")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SkyBoxTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/Ocean.dds")), E_FAIL);
 
-
-	Loading_Player_Texture();
-	Loading_Beefalo_Texture();
-
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
-
-	//Objects Resource
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Obejct_Tree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/IDLE_1/IDLE__000.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Nomal_Rock", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/Nomal_Rock/Nomal_Rock_%d.png", 3)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Obejct_Grass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Stone/IDLE/IDLE__000.png")), E_FAIL);
 
 
 	m_bFinish = true;
 	lstrcpy(m_szLoading, L"Loading Complete");
 
+	return S_OK;
 }
 
 HRESULT CLoading::Loading_Componment()
@@ -109,11 +98,13 @@ HRESULT CLoading::Loading_Player_Texture()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Player_eat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/eat/eat__%03d.png", 36)), E_FAIL);
 
 
+	return S_OK;
 }
 
 HRESULT CLoading::Loading_Beefalo_Texture()
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Beefalo_graze", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_graze/befalo_graze__%03d.png", 10)), E_FAIL);
+	return S_OK;
 }
 
 HRESULT CLoading::Loading_UI_Texture()
@@ -124,6 +115,7 @@ HRESULT CLoading::Loading_UI_Texture()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Cloth", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Cloth.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UI_Alive", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Alive.png")), E_FAIL);
 
+	return S_OK;
 }
 
 HRESULT CLoading::Loading_Item_Texture()
@@ -148,6 +140,7 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Silk", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Silk.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Twigs", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Twigs.png")), E_FAIL);
 
+	return S_OK;
 }
 
 unsigned int CLoading::Thread_Main(void* pArg)
