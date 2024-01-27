@@ -52,6 +52,7 @@ namespace Engine
 	typedef struct tagObjStat		//오브젝트들이 공통으로 가지고 있을 스탯 정보(컴포넌트에 하나씩 보유)
 	{
 		_float fHP;
+		_float fMxHP;
 		_float fSpeed;
 
 	}OBJSTAT;
