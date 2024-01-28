@@ -27,21 +27,29 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
 
-	_matrix	matWorld, matView, matBill;
+	_matrix matWorld, matView, matBillY, matBillX;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
 
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
+	D3DXMatrixIdentity(&matBillY);
+	D3DXMatrixIdentity(&matBillX);
 
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
+	matBillY._11 = matView._11;
+	matBillY._13 = matView._13;
+	matBillY._31 = matView._31;
+	matBillY._33 = matView._33;
 
-	_matrix matTransform = matBill * matWorld;
-	m_pTransformCom->Set_WorldMatrix(&(matTransform));
+	matBillX._21 = matView._21;
+	matBillX._22 = matView._22;
+	matBillX._32 = matView._32;
+	matBillX._33 = matView._33;
+
+	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
+	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
+
+	// matBillY와 matBillX의 역행렬을 곱하는 순서를 변경
+	m_pTransformCom->Set_WorldMatrix(&(matBillX* matBillY * matWorld));
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -51,16 +59,23 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 void CObjectGrass::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	__super::Compute_ViewZ(&vPos);
 }
 
 void CObjectGrass::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);
 
 	m_pBufferCom->Render_Buffer();
+
+	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CObjectGrass::Add_Component()
@@ -78,7 +93,8 @@ HRESULT CObjectGrass::Add_Component()
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransformCom->Set_Pos(m_vPos.x, m_vPos.y, m_vPos.z);
+	m_pTransformCom->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
 
 	return S_OK;
 }
@@ -99,5 +115,5 @@ CObjectGrass* CObjectGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 
 void CObjectGrass::Free()
 {
-	__super::Free();
+	CGameObject::Free();
 }
