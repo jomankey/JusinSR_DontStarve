@@ -336,12 +336,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	//};
 
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
-	{
-		_vec3	vPickPos = Picking_OnTerrain();
-
-		m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
-	}
+	//if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	//{
+	//	_vec3	vPickPos = Picking_OnTerrain();
+	//
+	//	m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
+	//}
 	
 }
 

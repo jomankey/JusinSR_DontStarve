@@ -8,15 +8,11 @@ class CUITex;
 class CRcTex;
 class CTexture;
 class CTransform;
-
 END
 
 class CUI : public Engine::CGameObject
 {
-public:
-	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };
-
-private:
+protected:
 	explicit CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name);
 	explicit CUI(const CUI& rhs);
 	virtual ~CUI();
@@ -28,25 +24,17 @@ public:
 	virtual void Render_GameObject()						 override;
 
 
-	BOOL UI_Collision();
+
+	virtual BOOL UI_Collision();
+
 private:
 	virtual HRESULT			Add_Component();
-	UI_STATE		m_eUIState;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTransform* m_pTransformCom;
-	//sss
 
-	_matrix m_matWorld;
-	const _tchar* m_pUI_Name;
-	POINT m_MousePoint;
-
-
-
-	BOOL m_bIsCollision;
+	UI_STATE		m_eUIState;
 protected:
-
-
 	_float m_fX;
 	_float m_fY;
 	_float m_fSizeX;
@@ -58,6 +46,13 @@ protected:
 	_float m_OriginfSizeX;
 	_float m_OriginfSizeY;
 	_float m_OriginfAngle;
+
+
+	_matrix m_matWorld;
+	const _tchar* m_pUI_Name;
+
+	//¸¶¿ì½º´Â ½Ì±ÛÅæÀ¸·Î??
+	POINT m_MousePoint;
 
 	
 

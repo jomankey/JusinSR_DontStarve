@@ -2,6 +2,9 @@
 #include "C:\PortPolio\Client\Code\Beefalo.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CInven.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CObjectGrass.cpp"
 
 

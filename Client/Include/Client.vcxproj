@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
+    <ClInclude Include="..\Header\CInven.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CUI.h" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
+    <ClCompile Include="..\Code\CInven.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />

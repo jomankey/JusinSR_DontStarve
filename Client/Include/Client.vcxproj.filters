@@ -61,6 +61,9 @@
     <Filter Include="02. GameObject\01. Beefalo">
       <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven">
+      <UniqueIdentifier>{1171ca23-7313-4056-b32a-39c39a14c475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -117,6 +120,9 @@
     <ClInclude Include="..\Header\Beefalo.h">
       <Filter>02. GameObject\01. Beefalo</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CInven.h">
+      <Filter>02. GameObject\07. CUI\01. Inven</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -163,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Beefalo.cpp">
       <Filter>02. GameObject\01. Beefalo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInven.cpp">
+      <Filter>02. GameObject\07. CUI\01. Inven</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

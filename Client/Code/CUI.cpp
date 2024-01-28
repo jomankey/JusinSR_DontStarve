@@ -9,7 +9,6 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev)
 	, m_eUIState(_State)
 	, m_pUI_Name(_UiName)
-	, m_bIsCollision(false)
 {
 
 }
@@ -17,7 +16,7 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 CUI::CUI(const CUI& rhs)
 	: Engine::CGameObject(rhs),
 	m_eUIState(rhs.m_eUIState)
-	, m_bIsCollision(false)
+
 {
 
 }
@@ -43,7 +42,7 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
 	m_OriginfSizeX = m_fSizeX;
 	m_OriginfSizeY = m_fSizeY;
 	m_fAngle = _Angle;
-	D3DXMatrixIdentity(&m_matWorld);
+	//D3DXMatrixIdentity(&m_matWorld);
 	
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -69,10 +68,8 @@ void CUI::LateUpdate_GameObject()
 	{
 		if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
 		{
-			m_fX = m_MousePoint.x;
-			m_fY = m_MousePoint.y;
-			
-			//m_pTransformCom->Set_Scale(_vec3{ m_fSizeX*2.1f, m_fSizeY*12.1f, 1.f });
+			m_fX = (float)m_MousePoint.x;
+			m_fY = (float)m_MousePoint.y;
 		}
 
 	}
@@ -91,9 +88,8 @@ void CUI::Render_GameObject()
 
 	Get_Scene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
+	
 	m_pTextureCom->Set_Texture(0);
-
 	m_pTransformCom->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
 	m_pTransformCom->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
 	
@@ -130,6 +126,7 @@ BOOL CUI::UI_Collision()
 
 }
 
+
 HRESULT CUI::Add_Component()
 {
 	CComponent* pComponent = nullptr;
@@ -145,6 +142,8 @@ HRESULT CUI::Add_Component()
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+
 
 
 	return S_OK;
