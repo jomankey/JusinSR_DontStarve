@@ -95,7 +95,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_TOOL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>../../Base;../../Reference/Header;../../imgui/imgui;../../imgui/backend;../Header;./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -112,7 +112,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>../../Base;../../Reference/Header;../../imgui/imgui;../../imgui/backend;../Header;./</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -169,6 +169,7 @@
     <ClInclude Include="..\Header\TerrainScene.h" />
     <ClInclude Include="..\Header\ToolCamera.h" />
     <ClInclude Include="..\Header\ToolGrass.h" />
+    <ClInclude Include="..\Header\ToolItem.h" />
     <ClInclude Include="..\Header\ToolMgr.h" />
     <ClInclude Include="..\Header\ToolRock.h" />
     <ClInclude Include="..\Header\ToolSkyBox.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="..\Code\TerrainScene.cpp" />
     <ClCompile Include="..\Code\ToolCamera.cpp" />
     <ClCompile Include="..\Code\ToolGrass.cpp" />
+    <ClCompile Include="..\Code\ToolItem.cpp" />
     <ClCompile Include="..\Code\ToolMgr.cpp" />
     <ClCompile Include="..\Code\ToolRock.cpp" />
     <ClCompile Include="..\Code\ToolSkyBox.cpp" />

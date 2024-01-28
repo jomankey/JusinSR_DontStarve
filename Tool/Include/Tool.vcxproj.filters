@@ -55,6 +55,9 @@
     <Filter Include="02. Object\ToolSkyBox">
       <UniqueIdentifier>{80bec7bf-6b5d-43ae-9f6d-b409e86113e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Item">
+      <UniqueIdentifier>{dc895043-ec1d-4daf-b243-267d41b7956b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -120,6 +123,9 @@
     <ClInclude Include="..\Header\ToolSkyBox.h">
       <Filter>02. Object\ToolSkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ToolItem.h">
+      <Filter>02. Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -172,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolSkyBox.cpp">
       <Filter>02. Object\ToolSkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolItem.cpp">
+      <Filter>02. Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

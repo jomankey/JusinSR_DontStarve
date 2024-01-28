@@ -253,6 +253,19 @@ _ulong CCalculator::Picking_OnTerrain_Tool(HWND hWnd,
 	return  -1;
 }
 
+_bool CCalculator::Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> veciIndex, const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)
+{
+	_ulong	dwIndex = _ulong(pPos->z / dwVtxItv) * dwCntX + _ulong(pPos->x / dwVtxItv);
+
+	for (int i = 0; i < veciIndex.size(); ++i)
+	{
+		if (dwIndex == veciIndex[i])
+			return false;
+	}
+
+	return true;
+}
+
 CCalculator * CCalculator::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CCalculator*		pInstance = new CCalculator(pGraphicDev);

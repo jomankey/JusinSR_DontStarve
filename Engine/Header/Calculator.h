@@ -30,6 +30,9 @@ public:
 		const _ulong& dwCntZ = VTXCNTZ,
 		const _ulong& dwVtxItv = VTXITV);
 
+
+	_bool Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> veciIndex, const _ulong& dwCntX = VTXCNTX, const _ulong& dwCntZ = VTXCNTZ, const _ulong& dwVtxItv = VTXITV);
+
 public:
 	static CCalculator*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 	CComponent*				Clone(void);

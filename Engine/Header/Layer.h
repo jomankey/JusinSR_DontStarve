@@ -12,7 +12,7 @@ private:
 	virtual ~CLayer();
 
 public:
-	multimap<const _tchar*, CGameObject*> Get_MapObject() { return m_mapObject; } // Tool 사용
+	unordered_multimap<const _tchar*, CGameObject*> Get_MapObject() { return m_mapObject; } // Tool 사용
 
 public:
 	CComponent*		Get_Component(COMPONENTID eID, const _tchar* pObjTag, const _tchar* pComponentTag);
@@ -26,7 +26,7 @@ public:
 	void		LateUpdate_Layer();
 
 private:
-	multimap<const _tchar*, CGameObject*>		m_mapObject;
+	unordered_multimap<const _tchar*, CGameObject*>		m_mapObject;
 
 public:
 	static		CLayer*		Create();

@@ -16,6 +16,8 @@ int CToolMgr::iItemCurrentEtcIdx = 0;
 int CToolMgr::iItemCurrentItemIdx = 0;
 
 _bool CToolMgr::bObjectAdd = false;
+_bool CToolMgr::bItemAdd = false;
+_bool CToolMgr::bMonsterAdd = false;
 _bool CToolMgr::bSaveData = false;
 _bool CToolMgr::bLoadData = false;
 _bool CToolMgr::bTerrainWireFrame = false;
@@ -193,7 +195,12 @@ void CToolMgr::Window_Object()
             {
                 const bool bSelected = (CToolMgr::iItemCurrentMonsterIdx == i);
                 if (ImGui::Selectable(Items[i], bSelected))
+                {
                     CToolMgr::iItemCurrentMonsterIdx = i;
+                    CToolMgr::bItemAdd = false;
+                    CToolMgr::bObjectAdd = false;
+                }
+                    
 
                 if (bSelected)
                     ImGui::SetItemDefaultFocus();
@@ -205,25 +212,25 @@ void CToolMgr::Window_Object()
     {
         if (ImGui::BeginListBox("Etc List"))
         {
-            const char* Items[] = { "Tree", "Stone", "Rock", "Grass", "Pig_House", "Berry"};
+            const char* Items[] = { "Tree", "Rock", "Grass", "Pig_House", "Berry"};
             
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
             {
                 const bool bSelected = (CToolMgr::iItemCurrentEtcIdx == i);
                 if (ImGui::Selectable(Items[i], bSelected))
+                {
                     CToolMgr::iItemCurrentEtcIdx = i;
+                    CToolMgr::bItemAdd = false;
+                    CToolMgr::bMonsterAdd = false;
+                }
+                    
 
                 if (bSelected)
                     ImGui::SetItemDefaultFocus();
             }
             ImGui::EndListBox();
         }
-
-
-        if (ImGui::SmallButton("Add"))
-        {
-            bObjectAdd = true;
-        }
+        if (ImGui::SmallButton("Add")) bObjectAdd = true;
     }
 
     if (ImGui::CollapsingHeader("Item", ImGuiTreeNodeFlags_None))
@@ -233,32 +240,36 @@ void CToolMgr::Window_Object()
             const char* Items[] = { 
                 "Stick", 
                 "Stone", 
-                "Firestone", 
-                "Grass",
+                "Firestone", //ºÎ½Ëµ¹
+                "Grass_Cut",
                 };
 
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
             {
                 const bool bSelected = (iItemCurrentItemIdx == i);
                 if (ImGui::Selectable(Items[i], bSelected))
+                {
                     iItemCurrentItemIdx = i;
+                    CToolMgr::bMonsterAdd = false;
+                    CToolMgr::bObjectAdd = false;
+                }
+                    
 
                 if (bSelected)
                     ImGui::SetItemDefaultFocus();
             }
             ImGui::EndListBox();
         }
+        if (ImGui::SmallButton("Add")) bItemAdd = true;
     }
 
     if (ImGui::SmallButton("Save"))
-    {
         bSaveData = true;
-    }
+    
+    ImGui::SameLine();
 
     if (ImGui::SmallButton("Load"))
-    {
         bLoadData = true;
-    }
 
     ImGui::End();
 }

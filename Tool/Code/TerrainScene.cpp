@@ -9,6 +9,7 @@
 #include "ToolRock.h"
 #include "ToolGrass.h"
 #include <ToolSkyBox.h>
+#include <ToolItem.h>
 
 CTerrainScene::CTerrainScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
@@ -38,6 +39,14 @@ HRESULT CTerrainScene::Ready_Scene()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Berries", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Berries.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CookedMeat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CookedMeat.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CutGlass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CutGlass.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CutStone", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CutStone.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Rocks_0", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Rocks_0.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Rocks_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Rocks_1.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Twigs", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Twigs.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"GameLogic"), E_FAIL);
@@ -197,8 +206,16 @@ void CTerrainScene::Save_File()
 			WriteFile(hFile, &vPos.x, sizeof(_float), &dwByte, nullptr);
 			WriteFile(hFile, &vPos.y, sizeof(_float), &dwByte, nullptr);
 			WriteFile(hFile, &vPos.z, sizeof(_float), &dwByte, nullptr);
+
+			
 		}
 	}
+
+	iCount = CToolMgr::vecPickingIdex.size();
+	WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+
+	for (int i = 0; i < CToolMgr::vecPickingIdex.size(); ++i)
+		WriteFile(hFile, &CToolMgr::vecPickingIdex[i], sizeof(_int), &dwByte, nullptr);
 
 	CloseHandle(hFile);
 
@@ -253,37 +270,76 @@ HRESULT CTerrainScene::Load_File()
 
 			dwStrByte = 0;
 
-			Engine::CLayer* pLayer = Get_Layer(L"GameLogic");;
-			NULL_CHECK_RETURN(pLayer, E_FAIL);
-			Engine::CGameObject* pGameObject = nullptr;
-
-			if (!_tcscmp(L"Tree", pName))
-			{
-				pGameObject = CToolTree::Create(m_pGraphicDev, vPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
-			}
-			else if (!_tcscmp(L"Rock", pName))
-			{
-				pGameObject = CToolRock::Create(m_pGraphicDev, vPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rock", pGameObject), E_FAIL);
-			}
-			else if (!_tcscmp(L"Grass", pName))
-			{
-				pGameObject = CToolGrass::Create(m_pGraphicDev, vPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Grass", pGameObject), E_FAIL);
-			}
-
-			pGameObject->Set_Pos(vPos);
+			Create_Object(pName, vPos);
 		}
+	}
+	
+	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+
+	for (int i = 0; i < iCount; ++i)
+	{
+		int iTemp = 0;
+		ReadFile(hFile, &iTemp, sizeof(_int), &dwByte, nullptr);
+		CToolMgr::vecPickingIdex.push_back(iTemp);
 	}
 
 	CloseHandle(hFile);
 
 	MessageBox(g_hWnd, L"Terrain Load", L"성공", MB_OK);
 
+	return S_OK;
+}
+
+HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
+{
+	Engine::CLayer* pLayer = Get_Layer(L"GameLogic");
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+	Engine::CGameObject* pGameObject = nullptr;
+
+	if (!_tcscmp(L"Tree", pName))
+	{
+		pGameObject = CToolTree::Create(m_pGraphicDev, vPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Rock", pName))
+	{
+		pGameObject = CToolRock::Create(m_pGraphicDev, vPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rock", pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Grass", pName))
+	{
+		pGameObject = CToolGrass::Create(m_pGraphicDev, vPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Grass", pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"CutGlass", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, pName, vPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"CutGlass", pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Rocks_0", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, pName, vPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rocks_0", pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Rocks_1", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, pName, vPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rocks_1", pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Twigs", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, pName, vPos);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Twigs", pGameObject), E_FAIL);
+	}
+
+	pGameObject->Set_Pos(vPos);
 	return S_OK;
 }
 
@@ -295,36 +351,40 @@ HRESULT CTerrainScene::Input_Mouse()
 		if (CToolMgr::bObjectAdd)
 		{
 			_vec3	vPickPos = Picking_Terrain();
-
-			Engine::CLayer* pLayer = Get_Layer(L"GameLogic");
-			NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-			Engine::CGameObject* pGameObject = nullptr;
-
-			switch (CToolMgr::iItemCurrentEtcIdx)
+			switch (CToolMgr::iItemCurrentEtcIdx) // 지형지물 오브젝트 생성
 			{
 			case 0:
-				pGameObject = CToolTree::Create(m_pGraphicDev, vPickPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
-				break;
+				Create_Object(L"Tree", vPickPos); break;
 			case 1:
-				pGameObject = CToolRock::Create(m_pGraphicDev, vPickPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Rock", pGameObject), E_FAIL);
-				break;
+				Create_Object(L"Rock", vPickPos); break;
 			case 2:
-				pGameObject = CToolGrass::Create(m_pGraphicDev, vPickPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Grass", pGameObject), E_FAIL);
-				break;
+				Create_Object(L"Grass", vPickPos); break;
 			case 3:
 				break;
 			default:
 				break;
 			}
-			pGameObject->Set_Pos(vPickPos);
 			CToolMgr::bObjectAdd = false;
+		}
+		//"Stick",
+		//	"Stone",
+		//	"Firestone", //부싯돌
+		//	"Grass_Cut",
+		if (CToolMgr::bItemAdd)
+		{
+			_vec3	vPickPos = Picking_Terrain();
+			switch (CToolMgr::iItemCurrentItemIdx)
+			{
+			case 0:
+				Create_Object(L"Twigs", vPickPos); break;
+			case 1:
+				Create_Object(L"Rocks_0", vPickPos); break;
+			case 2:
+				//Create_Object(L"Firestone", vPickPos); break;
+			case 3:
+				Create_Object(L"CutGlass", vPickPos); break;
+			}
+			CToolMgr::bItemAdd = false;
 		}
 	}
 	return S_OK;

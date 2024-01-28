@@ -58,7 +58,7 @@ void CPlayer::LateUpdate_GameObject()
 	_vec3	vPos;
 	BillBoard();
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	//__super::Compute_ViewZ(&vPos);
 
 	Height_OnTerrain();
 }
@@ -84,11 +84,6 @@ void CPlayer::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
-
-
-
-	
 }
 
 HRESULT CPlayer::Add_Component()
@@ -255,22 +250,30 @@ void CPlayer::Free()
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
 	
-	_vec3		vDir,vRight;
+	_vec3		vDir,vRight , vCurPos;
+	CTerrainTex * pTerrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
+
 	if (GetAsyncKeyState('W'))
 	{
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
+		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+			m_pTransformCom->Move_Pos(&vDir, -5.f, fTimeDelta);
+
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_UP;
-		
 	}
 
 	if (GetAsyncKeyState('S'))
 	{ //f
 		D3DXVec3Normalize(&vDir, &vDir);
 		m_pTransformCom->Move_Pos(&vDir, -5.f, fTimeDelta);
+		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+			m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_DOWN;
 		
@@ -280,6 +283,11 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
 		m_pTransformCom->Move_Pos(&vRight, -5.f, fTimeDelta);
+		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		vCurPos.x += 0.5f;
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+			m_pTransformCom->Move_Pos(&vRight, 5.f, fTimeDelta);
+			
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_LEFT;
 		if (!m_Dirchange)
@@ -292,7 +300,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('D'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransformCom->Move_Pos(&vRight, +5.f, fTimeDelta);
+		m_pTransformCom->Move_Pos(&vRight, 5.f, fTimeDelta);
+		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		vCurPos.x -= 0.5f;
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+			m_pTransformCom->Set_Pos(vCurPos);
+			
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_RIGHT;
 		if (m_Dirchange)

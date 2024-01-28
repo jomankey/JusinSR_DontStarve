@@ -18,6 +18,17 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx9.h"
 
+#include <vector>
+#include <list>
+#include <map>
+#include <algorithm>
+#include <functional>
+#include <string>
+#include <unordered_map>
+#include <ctime>
+#include <cassert>
+#include <process.h>
+
 #define TOOL_WINCX 1280	
 #define TOOL_WINCY 800
 

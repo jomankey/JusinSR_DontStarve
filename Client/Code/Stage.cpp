@@ -283,9 +283,9 @@ HRESULT CStage::Load_Data()
 
 			if (!_tcscmp(L"Tree", pName))
 			{
-				/*pGameObject = CObjectGrass::Create(m_pGraphicDev, vPos);
+				pGameObject = CObjectTree::Create(m_pGraphicDev, vPos);
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);*/
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Tree", pGameObject), E_FAIL);
 			}
 			else if (!_tcscmp(L"Rock", pName))
 			{
@@ -304,6 +304,18 @@ HRESULT CStage::Load_Data()
 			delete[] pName;
 		}
 	}
+
+	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+	vector<_int> m_vecPos;
+	for (int i = 0; i < iCount; ++i)
+	{
+		int iTemp = 0;
+		ReadFile(hFile, &iTemp, sizeof(_int), &dwByte, nullptr);
+		m_vecPos.push_back(iTemp);
+	}
+
+	CTerrainTex* pTerrainTex = dynamic_cast<CTerrainTex*>(Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
+	pTerrainTex->Set_VecPos(m_vecPos);
 
 	CloseHandle(hFile);
 

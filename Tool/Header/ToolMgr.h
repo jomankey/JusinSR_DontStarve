@@ -41,7 +41,7 @@ public:
     vector<Engine::CTexture*> m_pTileTexture;
     int item_current_idx;
     static int iItemCurrentMonsterIdx, iItemCurrentEtcIdx, iItemCurrentItemIdx;
-    static _bool bObjectAdd;
+    static _bool bObjectAdd, bItemAdd, bMonsterAdd;
 
     static _bool bSaveData;
     static _bool bLoadData;

@@ -28,6 +28,8 @@ private:
 	void Save_File();
 	HRESULT Load_File();
 
+	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
+
 private:
 	Engine::CCalculator* m_pCalculatorCom;
 
