@@ -85,6 +85,9 @@
     <Filter Include="02. GameObject\01. Monster\04. Boss">
       <UniqueIdentifier>{404ed600-034b-4c9e-9bf7-4b0509556d7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven">
+      <UniqueIdentifier>{c210a81f-8a48-4b57-afc1-29776a1d58fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -156,6 +159,9 @@
     <ClInclude Include="..\Header\CItemFood.h">
       <Filter>02. GameObject\09. Item\CItemFood</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CInven.h">
+      <Filter>02. GameObject\07. CUI\01. Inven</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -217,6 +223,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CItemFood.cpp">
       <Filter>02. GameObject\09. Item\CItemFood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInven.cpp">
+      <Filter>02. GameObject\07. CUI\01. Inven</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

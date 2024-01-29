@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
+    <ClInclude Include="..\Header\CInven.h" />
     <ClInclude Include="..\Header\CItem.h" />
     <ClInclude Include="..\Header\CItemFood.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
@@ -184,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
+    <ClCompile Include="..\Code\CInven.cpp" />
     <ClCompile Include="..\Code\CItem.cpp" />
     <ClCompile Include="..\Code\CItemFood.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />

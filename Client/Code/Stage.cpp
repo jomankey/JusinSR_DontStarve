@@ -190,11 +190,11 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
-	
-		//인벤토리
-		pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+
+	//인벤토리
+	pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
 
 	//장비 슬롯
@@ -208,7 +208,7 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
 	//생존 슬롯
-	pGameObject = CUI::Create(m_pGraphicDev,UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
@@ -273,7 +273,7 @@ HRESULT CStage::Load_Data()
 	{
 		if (iter.first != L"GameLogic")
 			continue;
-		
+
 		//object delete
 
 		ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
