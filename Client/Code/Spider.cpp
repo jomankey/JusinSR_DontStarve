@@ -152,6 +152,7 @@ void CSpider::Player_Chase(const _float& fTimeDelta)
 
     m_eCurLook = m_pTransformCom->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
 
+    
     Look_Change();
 
 

@@ -13,7 +13,7 @@ class CCalculator;
 END
 class CBeefalo : public CMonster
 {
-	enum BEEFALOSTATE{ IDLE,GRAZE,WALK,RUN,MADRUN,ATTACK,SLEEP,DEAD,STATE_END};
+	enum BEEFALOSTATE { IDLE, GRAZE, WALK, RUN, MADRUN, SLEEP, DEAD, STATE_END };
 
 private:
 	explicit CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
@@ -30,17 +30,20 @@ private:
 	HRESULT			Add_Component();
 	void			Height_OnTerrain();
 	void			BillBoard();
-	virtual void			Set_ObjStat()					override;
+	virtual void	Set_ObjStat()					override;
 	void			Player_Chase(const _float& fTimeDelta);
+	void			State_Change();
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
 	Engine::CTransform* m_pTransformCom;
-	Engine::CTexture* m_pTextureCom;
+	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][BEEFALOSTATE::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
 
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
+	BEEFALOSTATE		m_eCurState;
+	BEEFALOSTATE		m_ePreState;
 public:
 	static CBeefalo* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 

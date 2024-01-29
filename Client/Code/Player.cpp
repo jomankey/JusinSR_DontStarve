@@ -60,7 +60,7 @@ void CPlayer::LateUpdate_GameObject()
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	__super::Compute_ViewZ(&vPos);
 
-	Height_OnTerrain();
+	/*Height_OnTerrain();*/
 }
 
 void CPlayer::Render_GameObject()
@@ -84,11 +84,6 @@ void CPlayer::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
-
-
-
-	
 }
 
 HRESULT CPlayer::Add_Component()

@@ -14,6 +14,8 @@ class CPlayerStatus;
 
 END
 
+
+
 class CPlayer :	public Engine::CGameObject
 {
 private:

@@ -36,6 +36,7 @@ void CMonster::LateUpdate_GameObject()
 
 void CMonster::Render_GameObject()
 {
+
 }
 
 HRESULT CMonster::Add_Component()
@@ -72,8 +73,12 @@ _vec3 CMonster::Get_Player_Pos()
 	Engine::CTransform* pPlayerTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Player", L"Proto_Transform"));
 	NULL_CHECK_RETURN(pPlayerTransformCom, _vec3());
 
+	
 	_vec3 PlayerPos;
 	pPlayerTransformCom->Get_Info(INFO_POS, &PlayerPos);
 
+
+
 	return PlayerPos;
 }
+

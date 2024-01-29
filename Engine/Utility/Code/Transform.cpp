@@ -93,6 +93,9 @@ LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& 
 {
 	LOOKDIR		eDir;
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];
+	
+	
+	
 	if (fabs(vDir.x) >= fabs(vDir.z)) //side
 	{
 		if (vDir.x > 0) // left
@@ -115,11 +118,8 @@ LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& 
 			eDir = LOOK_UP;
 		}
 	}
-
+	
 	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
-
-	
-	
 
 	_matrix		matScale, matTrans;
 
