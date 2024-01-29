@@ -3,13 +3,9 @@
 
 #include "Export_Utility.h"
 
-_float CToolMgr::m_fMtrlDiffuseColor[3] = { 1.f, 1.f, 1.f };
-_float CToolMgr::m_fMtrlAmbientColor[3] = { 1.f, 1.f, 1.f };
-_float CToolMgr::m_fMtrlSpecularColor[3] = { 1.f, 1.f, 1.f };
-
-_float CToolMgr::m_fDirectionDiffuseColor[3] = { 1.f, 1.f, 1.f };
-_float CToolMgr::m_fDirectionAmbientColor[3] = { 1.f, 1.f, 1.f };
-_float CToolMgr::m_fDirectionSpecularColor[3] = { 1.f, 1.f, 1.f };
+_vec3 CToolMgr::m_fDirectionDiffuseColor[3] = { {1.f, 1.f, 1.f} };
+_vec3 CToolMgr::m_fDirectionAmbientColor[3] = { {1.f, 1.f, 1.f} };
+_vec3 CToolMgr::m_fDirectionSpecularColor[3] = { {1.f, 1.f, 1.f} };
 
 int CToolMgr::iItemCurrentMonsterIdx = 0;
 int CToolMgr::iItemCurrentEtcIdx = 0;
@@ -24,6 +20,9 @@ _bool CToolMgr::bTerrainWireFrame = false;
 
 _int CToolMgr::iPickingIndex = -1;
 vector<_int> CToolMgr::vecPickingIdex;
+
+_int CToolMgr::iTimeLight = 0; // ¹ã, ³· Á¶¸í °ª ÀúÀåÇÏ±â 
+_int CToolMgr::iAUtoTime = 0;
 
 CToolMgr::CToolMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), 
@@ -159,16 +158,21 @@ void CToolMgr::Window_Light()
 {
     ImGui::Begin("Light");
 
-    ImGui::Text("Terrain Mtrl");
-    ImGui::ColorEdit3("MtrlDiffuse", m_fMtrlDiffuseColor);
-    ImGui::ColorEdit3("MtrlAmbient", m_fMtrlAmbientColor);
-    ImGui::ColorEdit3("MtrlSpecular", m_fMtrlSpecularColor);
+    ImGui::Text("Auto Time Set");
+    ImGui::RadioButton("AutoTime", &iAUtoTime, 0); ImGui::SameLine();
+    ImGui::RadioButton("SetLight", &iAUtoTime, 1);
+
+    ImGui::NewLine();
+
+    ImGui::RadioButton("Morning", &iTimeLight, 0); ImGui::SameLine();
+    ImGui::RadioButton("Afternoon", &iTimeLight, 1); ImGui::SameLine();
+    ImGui::RadioButton("Night", &iTimeLight, 2);
 
     ImGui::NewLine();
     ImGui::Text("Scene Direction");
-    ImGui::ColorEdit3("DirectionDiffuse", m_fDirectionDiffuseColor);
-    ImGui::ColorEdit3("DirectionAmbient", m_fDirectionAmbientColor);
-    ImGui::ColorEdit3("DirectionSpecular", m_fDirectionSpecularColor);
+    ImGui::ColorEdit3("DirectionDiffuse", m_fDirectionDiffuseColor[iTimeLight]);
+    ImGui::ColorEdit3("DirectionAmbient", m_fDirectionAmbientColor[iTimeLight]);
+    ImGui::ColorEdit3("DirectionSpecular", m_fDirectionSpecularColor[iTimeLight]);
 
     ImGui::End();
 }
@@ -201,7 +205,6 @@ void CToolMgr::Window_Object()
                     CToolMgr::bObjectAdd = false;
                 }
                     
-
                 if (bSelected)
                     ImGui::SetItemDefaultFocus();
             }
@@ -224,13 +227,12 @@ void CToolMgr::Window_Object()
                     CToolMgr::bMonsterAdd = false;
                 }
                     
-
                 if (bSelected)
                     ImGui::SetItemDefaultFocus();
             }
             ImGui::EndListBox();
         }
-        if (ImGui::SmallButton("Add")) bObjectAdd = true;
+        if (ImGui::SmallButton("ObjectAdd")) bObjectAdd = true;
     }
 
     if (ImGui::CollapsingHeader("Item", ImGuiTreeNodeFlags_None))
@@ -254,13 +256,13 @@ void CToolMgr::Window_Object()
                     CToolMgr::bObjectAdd = false;
                 }
                     
-
                 if (bSelected)
                     ImGui::SetItemDefaultFocus();
             }
             ImGui::EndListBox();
         }
-        if (ImGui::SmallButton("Add")) bItemAdd = true;
+        if (ImGui::SmallButton("ItemAdd")) 
+            bItemAdd = true;
     }
 
     if (ImGui::SmallButton("Save"))

@@ -29,6 +29,7 @@ private:
 	HRESULT Load_File();
 
 	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
+	HRESULT Change_LightInfo();
 
 private:
 	Engine::CCalculator* m_pCalculatorCom;

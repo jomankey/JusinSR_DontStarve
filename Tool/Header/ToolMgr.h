@@ -28,13 +28,9 @@ private:
     void Window_Object();
 
 public:
-    static float m_fMtrlDiffuseColor[3];
-    static float m_fMtrlAmbientColor[3];
-    static float m_fMtrlSpecularColor[3];
-
-    static float m_fDirectionDiffuseColor[3];
-    static float m_fDirectionAmbientColor[3];
-    static float m_fDirectionSpecularColor[3];
+    static _vec3 m_fDirectionDiffuseColor[3];
+    static _vec3 m_fDirectionAmbientColor[3];
+    static _vec3 m_fDirectionSpecularColor[3];
 
     LPDIRECT3DDEVICE9			m_pGraphicDev;
 
@@ -50,6 +46,9 @@ public:
 
     static _int iPickingIndex;
     static vector<_int> vecPickingIdex;
+
+    static _int iTimeLight;
+    static _int iAUtoTime;
     
 
 public:

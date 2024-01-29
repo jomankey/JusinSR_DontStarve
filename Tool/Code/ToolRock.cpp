@@ -62,6 +62,8 @@ void CToolRock::Render_GameObject()
 
 	m_pTextureCom->Set_Texture(0);
 
+	FAILED_CHECK_RETURN(SetUp_Material(), );
+
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -85,6 +87,23 @@ HRESULT CToolRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
+
+	return S_OK;
+}
+
+HRESULT CToolRock::SetUp_Material()
+{
+	D3DMATERIAL9			tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+
+	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
+	tMtrl.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&tMtrl);
 
 	return S_OK;
 }

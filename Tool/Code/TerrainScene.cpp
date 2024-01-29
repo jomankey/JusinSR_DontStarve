@@ -60,8 +60,8 @@ HRESULT CTerrainScene::Ready_Scene()
 
 _int CTerrainScene::Update_Scene(const _float& fTimeDelta)
 {
-	Ready_LightInfo();
-
+	
+	Change_LightInfo();
 	Input_Mouse();
 
 	if (CToolMgr::bSaveData)
@@ -147,9 +147,15 @@ HRESULT CTerrainScene::Ready_LightInfo()
 
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 
-	tLightInfo.Diffuse = D3DXCOLOR(CToolMgr::m_fDirectionDiffuseColor[0], CToolMgr::m_fDirectionDiffuseColor[1], CToolMgr::m_fDirectionDiffuseColor[2], 1.f);
-	tLightInfo.Specular = D3DXCOLOR(CToolMgr::m_fDirectionAmbientColor[0], CToolMgr::m_fDirectionAmbientColor[1], CToolMgr::m_fDirectionAmbientColor[2], 1.f);
-	tLightInfo.Ambient = D3DXCOLOR(CToolMgr::m_fDirectionSpecularColor[0], CToolMgr::m_fDirectionSpecularColor[1], CToolMgr::m_fDirectionSpecularColor[2], 1.f);
+	tLightInfo.Diffuse = D3DXCOLOR(CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].x, 
+		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].y,
+		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].z, 1.f);
+	tLightInfo.Specular = D3DXCOLOR(CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].x,
+		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].y,
+		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].z, 1.f);
+	tLightInfo.Ambient = D3DXCOLOR(CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].x,
+		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].y,
+		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].z, 1.f);
 	
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
@@ -340,6 +346,33 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	}
 
 	pGameObject->Set_Pos(vPos);
+	return S_OK;
+}
+
+HRESULT CTerrainScene::Change_LightInfo()
+{
+	D3DLIGHT9*			tLightInfo = Engine::Get_Light(0)->Get_Light();
+	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+
+	tLightInfo->Type = D3DLIGHT_DIRECTIONAL;
+
+	tLightInfo->Diffuse = D3DXCOLOR(CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].x,
+		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].y,
+		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].z, 
+		1.f);
+	tLightInfo->Specular = D3DXCOLOR(CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].x,
+		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].y,
+		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].z, 
+		1.f);
+	tLightInfo->Ambient = D3DXCOLOR(CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].x,
+		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].y,
+		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].z, 
+		1.f);
+
+	tLightInfo->Direction = _vec3(1.f, -1.f, 1.f);
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
+	Engine::Get_Light(0)->Update_Light();
 	return S_OK;
 }
 
