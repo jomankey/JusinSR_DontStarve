@@ -17,6 +17,8 @@ public:
 	CComponent*			Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag);
 	void	BeginOrtho();
 	void	EndOrtho();
+	_matrix*    Get_OrthoViewMatrix();
+	_matrix*	Get_OrthoMatrix();
 	CLayer* Get_Layer(const _tchar* pKey);
 
 public:

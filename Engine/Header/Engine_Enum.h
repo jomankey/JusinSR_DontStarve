@@ -23,6 +23,7 @@ namespace Engine
 	};
 	enum LOOKDIR { LOOK_DOWN, LOOK_RIGHT, LOOK_LEFT, LOOK_UP, LOOK_END };
 	
+	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };
 
 }
 #endif // Engine_Enum_h__

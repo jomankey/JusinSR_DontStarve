@@ -73,7 +73,7 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 
 	vMousePos.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
 	vMousePos.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
-
+	
 	vMousePos.z = 0.f;
 
 	// 투영 -> 뷰스페이스
@@ -264,6 +264,19 @@ _bool CCalculator::Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> v
 	}
 
 	return true;
+}
+
+BOOL CCalculator::Picking_OnUI(HWND hWnd, CRcTex* pUIBifferCom, CTransform* pUITransCom, const _float& dwCntX, const _float& dwCntZ, const _ulong& dwVtxItv)
+{
+
+
+
+	
+
+
+
+
+	return false;
 }
 
 CCalculator * CCalculator::Create(LPDIRECT3DDEVICE9 pGraphicDev)

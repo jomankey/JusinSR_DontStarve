@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include"CInven.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -360,12 +361,13 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	//};
 
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
-	{
-		_vec3	vPickPos = Picking_OnTerrain();
-
-		m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
-	}
+	//if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	//{
+	//	_vec3	vPickPos = Picking_OnTerrain();
+	//
+	//	m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
+	//}
+	
 }
 
 void CPlayer::Height_OnTerrain()
@@ -388,6 +390,7 @@ _vec3 CPlayer::Picking_OnTerrain()
 
 	CTransform*			pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Terrain", L"Proto_Transform"));
 	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
+
 
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
 }

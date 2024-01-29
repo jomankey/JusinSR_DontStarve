@@ -13,6 +13,7 @@
 #include "SkyBox.h"
 #include "Effect.h"
 #include "CUI.h"
+#include"CInven.h"
 
 // Monster/Resource/Object
 #include "CObjectRock.h"
@@ -179,25 +180,38 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(40.f, 300.f, 0.f), _vec3(40.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
+	//¿ÞÂÊ ÆÇ³Ú
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(30.f, 300.f, 0.f), _vec3(30.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(20.f, 300.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Item_Inven_Slot");
+	//¾Æ·¡ ÆÇ³Ú
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(400.f, 580.f, 0.f), _vec3(20.f, 300.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(20.f, 130.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
+	
+		//ÀÎº¥Åä¸®
+		pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+
+
+	//Àåºñ ½½·Ô
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(20.f, 200.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
+	//¿Ê ½½·Ô
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 120.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
-	pGameObject = CUI::Create(m_pGraphicDev, CUI::UI_STATE::UI_STATIC, _vec3(20.f, 300.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
+	//»ýÁ¸ ½½·Ô
+	pGameObject = CUI::Create(m_pGraphicDev,UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+
 
 
 	m_mapLayer.insert({ pLayerTag, pLayer });

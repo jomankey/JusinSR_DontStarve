@@ -32,6 +32,16 @@ void CScene::EndOrtho()
 	m_pCamera->EndOrtho();
 }
 
+_matrix* CScene::Get_OrthoViewMatrix()
+{
+	return m_pCamera->Get_OrthoViewMatrix();
+}
+
+_matrix* CScene::Get_OrthoMatrix()
+{
+	return m_pCamera->Get_OrthoMatrix();
+}
+
 CLayer* CScene::Get_Layer(const _tchar* pKey)
 {
 	CLayer* pSecond = m_mapLayer.find(pKey)->second;

@@ -90,6 +90,7 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 	//s
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 		iter->Render_GameObject();
+
 	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
