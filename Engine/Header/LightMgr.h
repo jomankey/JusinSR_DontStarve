@@ -25,9 +25,8 @@ public:
 
 private:
 	vector<CLight*>			m_vecLight;
-
 	_float m_fPreTime;
-	
+
 private:
 	virtual void	Free();
 

@@ -22,7 +22,7 @@ _int CToolMgr::iPickingIndex = -1;
 vector<_int> CToolMgr::vecPickingIdex;
 
 _int CToolMgr::iTimeLight = 0; // ¹ã, ³· Á¶¸í °ª ÀúÀåÇÏ±â 
-_int CToolMgr::iAUtoTime = 0;
+_int CToolMgr::iAUtoTime = 1;
 
 CToolMgr::CToolMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), 
@@ -159,7 +159,7 @@ void CToolMgr::Window_Light()
     ImGui::Begin("Light");
 
     ImGui::Text("Auto Time Set");
-    ImGui::RadioButton("AutoTime", &iAUtoTime, 0); ImGui::SameLine();
+        ImGui::RadioButton("AutoTime", &iAUtoTime, 0); ImGui::SameLine();
     ImGui::RadioButton("SetLight", &iAUtoTime, 1);
 
     ImGui::NewLine();

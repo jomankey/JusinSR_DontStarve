@@ -213,7 +213,6 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
 
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
 	return S_OK;
@@ -225,8 +224,6 @@ HRESULT CStage::Ready_Layer_GameRes(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
-
-
 
 	m_mapLayer.insert({ pLayerTag, pLayer });
 
