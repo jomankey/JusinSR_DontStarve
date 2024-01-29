@@ -167,6 +167,7 @@ call CopySystem.bat</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CollisionMgr.cpp" />
     <ClCompile Include="..\Code\FontMgr.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameMgr.cpp" />
@@ -177,6 +178,7 @@ call CopySystem.bat</Command>
     <ClCompile Include="..\Code\TimerMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Header\CollisionMgr.h" />
     <ClInclude Include="..\..\Header\Export_System.h" />
     <ClInclude Include="..\..\Header\FontMgr.h" />
     <ClInclude Include="..\..\Header\Frame.h" />

@@ -77,6 +77,12 @@ void		Update_InputDev(void)
 	CInputDev::GetInstance()->Update_InputDev();
 }
 
+//Collsion
+_bool Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale)
+{
+	return CCollisionMgr::GetInstance()->Collision_Item(pPlayerPos, pItemPos, vPlayerScale, vItemScale);
+}
+
 // Destroy
 void			Release_System()
 {
@@ -85,4 +91,5 @@ void			Release_System()
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CGraphicDev::GetInstance()->DestroyInstance();
+	CCollisionMgr::GetInstance()->DestroyInstance();
 }

@@ -33,6 +33,8 @@ public:
 		m_vInfo[INFO_POS].z = fZ;
 	}
 
+	_vec3 Get_Scale() { return m_vScale; }
+
 	void		Rotation(ROTATION eType, const _float& fAngle)
 	{
 		*(((_float*)&m_vAngle) + eType) += fAngle;

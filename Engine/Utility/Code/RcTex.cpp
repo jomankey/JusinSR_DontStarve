@@ -26,6 +26,7 @@ HRESULT CRcTex::Ready_Buffer()
 	m_dwTriCnt = 2;
 	m_dwVtxCnt = 4;
 	m_dwVtxSize = sizeof(VTXTEX);
+	m_pPos = new _vec3[m_dwVtxCnt];
 
 	m_dwIdxSize = sizeof(INDEX32);
 	m_IdxFmt = D3DFMT_INDEX32; 
@@ -51,6 +52,8 @@ HRESULT CRcTex::Ready_Buffer()
 	pVertex[3].vPosition = { -1.f, -1.f, 0.f };
 	pVertex[3].vTexUV = { 0.f, 1.f };
 	
+	for (int i = 0; i < 4; ++i)
+		m_pPos[i] = pVertex[i].vPosition;
 
 	m_pVB->Unlock();
 

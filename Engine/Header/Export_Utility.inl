@@ -5,6 +5,11 @@ CComponent * Get_Component(COMPONENTID eID, const _tchar * pLayerTag, const _tch
 	return CManagement::GetInstance()->Get_Component(eID, pLayerTag, pObjTag, pComponentTag);
 }
 
+CLayer* Get_Layer(const _tchar* pLayerTag)
+{
+	return CManagement::GetInstance()->Get_Layer(pLayerTag);
+}
+
 HRESULT Create_Management(LPDIRECT3DDEVICE9 pGraphicDev, CManagement ** ppManagementInstance)
 {
 	CManagement*		pManagement = CManagement::GetInstance();

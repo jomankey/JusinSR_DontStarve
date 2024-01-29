@@ -7,6 +7,7 @@
 #include "TimerMgr.h"
 #include "FontMgr.h"
 #include "InputDev.h"
+#include "CollisionMgr.h"
 
 BEGIN(Engine)
 
@@ -47,6 +48,9 @@ inline _byte	Get_DIMouseState(MOUSEKEYSTATE eMouse);
 inline _long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState);
 inline HRESULT	Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 inline void		Update_InputDev(void);
+
+//Collision
+inline _bool Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale);
 
 // Destroy
 inline void			Release_System();

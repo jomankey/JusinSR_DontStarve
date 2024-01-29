@@ -141,7 +141,7 @@ HRESULT CItem::Add_Component()
 void CItem::SetPos(const _vec3& _vPos)
 {
 	_vec3 vPos= _vPos;
-	vPos.y = 0.3f;
+	vPos.y = 1.f;
 	m_pTransformCom->Set_Pos(vPos);
 	m_pTransformCom->Set_Scale(_vec3(0.5f, .3f, .5f));
 }

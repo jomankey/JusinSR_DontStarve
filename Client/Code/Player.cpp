@@ -217,6 +217,7 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_pTransformCom->Set_Pos(0.f, 1.f, 0.f);
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -333,9 +334,29 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_eCurState = HIT;
 	}
-	if (GetAsyncKeyState('V'))
+	if (GetAsyncKeyState('V')) // ащ╠Б
 	{
 		m_eCurState = PICKUP;
+
+		auto pLayer = Engine::Get_Layer(L"GameLogic")->Get_MapObject();
+		_vec3 vPlayerPos, vPlayerScale, vItemPos, vItemScale;
+		m_pTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+		vPlayerScale = { 1.f, 1.f, 1.f };
+		for (auto& object : pLayer)
+		{
+			if (object.first == L"Meat_Monster" || object.first == L"Rocks_0"|| object.first == L"CutGlass")
+			{
+				//_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale
+				CTransform* pItemTransform = dynamic_cast<CTransform*>( object.second->Get_Component(ID_DYNAMIC, L"Proto_Transform"));
+				pItemTransform->Get_Info(INFO_POS, &vItemPos);
+				vItemScale = pItemTransform->Get_Scale();
+
+				if (Engine::Collision_Item(vPlayerPos, vItemPos, vPlayerScale, vItemScale))
+					m_pTransformCom->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
+				
+			}
+		}
+		
 	}
 	if (GetAsyncKeyState('B'))
 	{

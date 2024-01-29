@@ -20,6 +20,9 @@ public:
 	virtual CComponent*	Clone();
 
 private:
+	_vec3* m_pPos;
+
+private:
 	virtual void	Free();
 };
 

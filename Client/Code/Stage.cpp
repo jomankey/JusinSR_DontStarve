@@ -111,7 +111,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
-	for (_int i = 0; i < 5; ++i)
+	/*for (_int i = 0; i < 5; ++i)
 	{
 		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -142,7 +142,7 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 		pGameObject = CObjectTree::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"OBJ_TREE", pGameObject), E_FAIL);
-	}
+	}*/
 	for (_int i = 0; i < 2; ++i)
 	{
 		pGameObject = CItem::Create(m_pGraphicDev, L"Meat_Monster", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));

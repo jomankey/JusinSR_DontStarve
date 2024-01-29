@@ -24,6 +24,7 @@ BEGIN(Engine)
 // Management
 
 inline CComponent*		Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag);
+inline CLayer* Get_Layer(const _tchar* pLayerTag);
 
 inline HRESULT			Create_Management(LPDIRECT3DDEVICE9 pGraphicDev, CManagement** ppManagementInstance);
 
