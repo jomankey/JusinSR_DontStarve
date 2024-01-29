@@ -27,7 +27,7 @@ private:
 
 public:
 	void		SetTarget(CGameObject* _targetObj) { m_pTarget = _targetObj; }
-
+	_float		Get_Angle() { return m_fAngle; }
 private:
 	_bool		m_bFix = false;
 	_bool		m_bCheck = false;

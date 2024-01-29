@@ -61,7 +61,7 @@ void CPlayer::LateUpdate_GameObject()
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	//__super::Compute_ViewZ(&vPos);
 
-	Height_OnTerrain();
+	/*Height_OnTerrain();*/
 }
 
 void CPlayer::Render_GameObject()
