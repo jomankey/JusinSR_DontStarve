@@ -26,14 +26,18 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						override;
 
-	void Set_InvenSlot();
+	
 
+
+
+	
+	CUI* Get_InvenSlot(int _index) { return m_vecInvenSlot[_index]; }
 private:
 	virtual HRESULT			Add_Component();
 	CUI* m_vecInvenSlot[15];
 
 public:
-	static CInven* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size);
+	static CInven* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State);
 
 private:
 	virtual void Free() override;

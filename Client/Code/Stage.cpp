@@ -11,6 +11,7 @@
 #include "SkyBox.h"
 #include "Effect.h"
 #include "CUI.h"
+#include"CInven.h"
 
 // Monster/Resource/Object
 #include "CObjectRock.h"
@@ -134,16 +135,11 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
-	for (int i = 0; i < 15; ++i)
-	{
-		int PixelJump = 0;
-		if (i == 5 || i == 10 || i == 15)
-			PixelJump = 7;
-		//인벤토리 슬롯 이미지
-		pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
+	
+		//인벤토리
+		pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
-	}
 
 
 	//장비 슬롯

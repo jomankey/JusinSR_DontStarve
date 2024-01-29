@@ -23,6 +23,7 @@ CUI::CUI(const CUI& rhs)
 
 CUI::~CUI()
 {
+	
 }
 
 HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
