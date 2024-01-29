@@ -326,9 +326,46 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_eCurState = IDLE;
 	}
 
-	if (GetAsyncKeyState('F'))
+	if (GetAsyncKeyState('F')) // АјАн
 	{
 		m_eCurState = ATTACK;
+		/*
+			_vec3 vPlayerPos,
+			_vec3* vPlayerAxis,
+			_vec3 vMonsterPos,
+			_vec3* vMonsterAxis,
+			_vec3 vPlayerScale,
+			_vec3 vMonsterScale*/
+		auto pLayer = Engine::Get_Layer(L"GameLogic")->Get_MapObject();
+
+		_vec3* vPlayerAxis = new _vec3[3];
+		_vec3* vMonsterAxis = new _vec3[3];
+		_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+		m_pTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+		m_pTransformCom->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		m_pTransformCom->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		m_pTransformCom->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+		vPlayerScale = m_pTransformCom->Get_Scale();
+
+		for (auto& monster : pLayer)
+		{
+			if (monster.first == L"Beefalo" || monster.first == L"Spider")
+			{
+				CTransform* pItemTransform = dynamic_cast<CTransform*>(monster.second->Get_Component(ID_DYNAMIC, L"Proto_Transform"));
+				CRcTex* pMonsterTexture = dynamic_cast<CRcTex*>(monster.second->Get_Component(ID_STATIC, L"Proto_RcTex"));
+				pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
+				pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
+				pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
+				pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
+				vMonsterScale = pItemTransform->Get_Scale();
+
+				if (Engine::Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos,
+					vMonsterAxis, vPlayerScale, vMonsterScale))
+				{
+					m_pTransformCom->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
+				}
+			}
+		}
 	}
 	if (GetAsyncKeyState('G'))
 	{

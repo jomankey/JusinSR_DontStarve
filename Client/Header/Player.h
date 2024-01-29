@@ -44,6 +44,7 @@ private:
 	Engine::CTexture*	m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
 	Engine::CCalculator*	m_pCalculatorCom;
 	/*Engine::CPlayerStatus*  m_pStatusCom;*/
+	//Engine::CCubeTex* m_pColliderCom;
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
 

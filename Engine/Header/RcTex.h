@@ -12,6 +12,9 @@ private:
 	virtual ~CRcTex();
 
 public:
+	_vec3* Get_Pos() { return m_pPos; }
+
+public:
 	virtual HRESULT		Ready_Buffer();
 	virtual void		Render_Buffer();
 

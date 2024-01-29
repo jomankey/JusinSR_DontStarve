@@ -10,7 +10,7 @@ CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 CRcTex::CRcTex(const CRcTex & rhs)
-	:CVIBuffer(rhs)
+	:CVIBuffer(rhs), m_pPos(rhs.m_pPos)
 {
 }
 

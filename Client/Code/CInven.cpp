@@ -4,7 +4,7 @@
 
 
 #include "Export_Utility.h"
-#include "Export_System.h"
+//#include "Export_System.h"
 
 CInven::CInven(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State)
 	: Engine::CGameObject(pGraphicDev)

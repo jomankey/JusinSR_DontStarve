@@ -1,7 +1,7 @@
 #include "../Include/stdafx.h"
 #include "../Header/CItem.h"
 
-#include "Export_System.h"
+//#include "Export_System.h"
 #include "Export_Utility.h"
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _vPos)

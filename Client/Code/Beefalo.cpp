@@ -1,6 +1,6 @@
 #include "..\Include\stdafx.h"
 #include "Beefalo.h"
-#include "Export_System.h"
+//#include "Export_System.h"
 #include "Export_Utility.h"
 CBeefalo::CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos), m_eCurState(WALK), m_ePreState(STATE_END)

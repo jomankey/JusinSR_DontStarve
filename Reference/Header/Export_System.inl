@@ -83,7 +83,17 @@ _bool Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3
 	return CCollisionMgr::GetInstance()->Collision_Item(pPlayerPos, pItemPos, vPlayerScale, vItemScale);
 }
 
-// Destroy
+_bool Collision_Monster(
+	_vec3 vPlayerPos,
+	_vec3* vPlayerAxis,
+	_vec3 vMonsterPos,
+	_vec3* vMonsterAxis,
+	_vec3 vPlayerScale,
+	_vec3 vMonsterScale)
+{
+	return CCollisionMgr::GetInstance()->Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos, vMonsterAxis, vPlayerScale, vMonsterScale);
+}
+//Destroy
 void			Release_System()
 {
 	CInputDev::GetInstance()->DestroyInstance();
