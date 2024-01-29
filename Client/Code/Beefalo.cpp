@@ -145,9 +145,7 @@ void CBeefalo::BillBoard()
 	matBill._11 = matView._11;
 	matBill._13 = matView._13;
 	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-
+    matBill._33 = matView._33;
 
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
