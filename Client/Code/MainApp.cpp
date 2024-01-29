@@ -81,8 +81,12 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
+
+	//PathMgr
+	FAILED_CHECK_RETURN(Engine::Ready_PathMgr(), E_FAIL);
 	
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
 
 	return S_OK;
 }

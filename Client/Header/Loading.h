@@ -20,7 +20,6 @@ public:
 public:
 	HRESULT		Ready_Loading(LOADINGID eID);
 	_uint		Loading_ForStage();
-
 	HRESULT		Loading_Componment();
 	HRESULT		Loading_Player_Texture();
 	HRESULT		Loading_Beefalo_Texture();
@@ -29,6 +28,8 @@ public:
 	HRESULT		Loading_Spider_Texture();
 	const _tchar*		Get_String() const { return m_szLoading; }
 
+public:
+	HRESULT SaveLoadingTexture(const _tchar* _key,TEXTUREID _textureTag,const _tchar* _path, int num = 1);
 public:
 	static unsigned int CALLBACK Thread_Main(void* pArg);
 

@@ -7,6 +7,8 @@
 #include "TimerMgr.h"
 #include "FontMgr.h"
 #include "InputDev.h"
+#include "CPathMgr.h"
+#include "CResMgr.h"
 
 BEGIN(Engine)
 
@@ -48,9 +50,15 @@ inline _long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState);
 inline HRESULT	Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 inline void		Update_InputDev(void);
 
+// PathMgr
+inline HRESULT			Ready_PathMgr();
+inline wstring GetRelativePath(const wchar_t* filePath);
+inline const _tchar* GetResourcePath();
+//ResMgr
+inline void Save_TexturePath(wstring _key, TEXTUREID _textureTag, wstring _subPath, int num);
+
 // Destroy
 inline void			Release_System();
-
 
 #include "Export_System.inl"
 

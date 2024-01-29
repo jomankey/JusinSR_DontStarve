@@ -35,14 +35,19 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_ForStage()
 {
-	FAILED_CHECK_RETURN(Loading_UI_Texture());
-	FAILED_CHECK_RETURN(Loading_Item_Texture());
-	FAILED_CHECK_RETURN(Loading_Componment());
-	FAILED_CHECK_RETURN(Loading_Player_Texture());
-	FAILED_CHECK_RETURN(Loading_Beefalo_Texture());
+	FAILED_CHECK_RETURN(Loading_UI_Texture(), E_FAIL);
+	FAILED_CHECK_RETURN(Loading_Item_Texture(), E_FAIL);
+	FAILED_CHECK_RETURN(Loading_Componment(), E_FAIL);
+	FAILED_CHECK_RETURN(Loading_Player_Texture(), E_FAIL);
+	FAILED_CHECK_RETURN(Loading_Beefalo_Texture(), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HeightTerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png")), E_FAIL);
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png")), E_FAIL);
+//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HeightTerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png")), E_FAIL);
+	FAILED_CHECK_RETURN(SaveLoadingTexture(L"Proto_TerrainTexture", TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png"), E_FAIL);
+	FAILED_CHECK_RETURN(SaveLoadingTexture(L"Proto_HeightTerrainTexture", TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png"), E_FAIL);
+
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlayerTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player%d.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90)), E_FAIL);
 	Loading_Spider_Texture();
@@ -65,6 +70,8 @@ HRESULT CLoading::Loading_Componment()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
+
+	return S_OK;
 }
 
 HRESULT CLoading::Loading_Player_Texture()
@@ -152,6 +159,16 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Silk", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Silk.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Twigs", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Twigs.png")), E_FAIL);
 
+	return S_OK;
+}
+
+
+HRESULT CLoading::SaveLoadingTexture(const _tchar* _key, TEXTUREID _textureTag, const _tchar* _path, int num)
+{
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(_key, CTexture::Create(m_pGraphicDev, _textureTag, _path)), E_FAIL);
+
+	Save_TexturePath(_key, _textureTag, _path, num);
+	
 	return S_OK;
 }
 

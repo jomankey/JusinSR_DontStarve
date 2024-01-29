@@ -1,3 +1,4 @@
+#include "Export_System.h"
 // GraphicDev
 
 HRESULT			Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _ulong& dwSizeX, const _ulong& dwSizeY, CGraphicDev** ppGraphicDev)
@@ -76,6 +77,28 @@ void		Update_InputDev(void)
 {
 	CInputDev::GetInstance()->Update_InputDev();
 }
+// PathMgr
+
+inline HRESULT Ready_PathMgr()
+{
+	return CPathMgr::GetInstance()->Ready_Path();
+}
+
+inline wstring GetRelativePath(const wchar_t* filePath) 
+{
+	return CPathMgr::GetInstance()->GetRelativePath(filePath);
+}
+
+inline const _tchar* GetResourcePath()
+{
+	return CPathMgr::GetInstance()->GetResourcePath();
+}
+
+inline void Save_TexturePath(wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
+{
+	CResMgr::GetInstance()->Save_TexturePath(_key, _textureTag, _subPath, num);
+}
+
 
 // Destroy
 void			Release_System()
@@ -85,4 +108,7 @@ void			Release_System()
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CGraphicDev::GetInstance()->DestroyInstance();
+	CPathMgr::GetInstance()->DestroyInstance();
+	CResMgr::GetInstance()->DestroyInstance();
 }
+
