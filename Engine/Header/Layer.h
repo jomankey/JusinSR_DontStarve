@@ -14,6 +14,8 @@ private:
 public:
 	unordered_multimap<const _tchar*, CGameObject*> Get_MapObject() { return m_mapObject; } // Tool »ç¿ë
 
+
+	vector<CGameObject*> findObject(const _tchar* _pObjTagName,CGameObject* _ObjType);
 public:
 	CComponent*		Get_Component(COMPONENTID eID, const _tchar* pObjTag, const _tchar* pComponentTag);
 
@@ -28,6 +30,7 @@ public:
 private:
 	unordered_multimap<const _tchar*, CGameObject*>		m_mapObject;
 
+	
 public:
 	static		CLayer*		Create();
 

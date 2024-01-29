@@ -30,7 +30,8 @@ public:
 	virtual float Get_fY() { return m_fY; }
 	virtual float Get_fSizeX() { return m_fSizeX; }
 	virtual float Get_fSizeY() { return m_fSizeY; }
-
+	virtual BOOL IsItemOn() { return m_bItemChek; }
+	virtual void SetItemOn(BOOL _ItemPut) { m_bItemChek = _ItemPut; }
 	virtual HRESULT			Add_Component();
 private:
 	Engine::CTexture* m_pTextureCom;
@@ -59,7 +60,7 @@ protected:
 	POINT m_MousePoint;
 
 	
-
+	BOOL m_bItemChek;
 public:
 	static CUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle= 0.f);
 

@@ -8,6 +8,20 @@ CLayer::~CLayer()
 {
 }
 
+vector<CGameObject*> CLayer::findObject(const _tchar* _pObjTagName,CGameObject* _ObjType)
+{
+	vector<CGameObject*> vecObj;
+	for (auto iter : m_mapObject)
+	{
+		if(iter.first== _pObjTagName)
+		{
+			vecObj.push_back(iter.second);
+		}
+	}
+	return 	vecObj;
+
+}
+
 CComponent * CLayer::Get_Component(COMPONENTID eID, const _tchar * pObjTag, const _tchar * pComponentTag)
 {
 	auto	iter = find_if(m_mapObject.begin(), m_mapObject.end(), CTag_Finder(pObjTag));

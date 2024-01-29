@@ -53,6 +53,7 @@ private:
 	LOOKDIR  m_ePlayerLookAt;
 	_tchar*		m_cTex;
 	_bool		m_Dirchange;
+	
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev);
 

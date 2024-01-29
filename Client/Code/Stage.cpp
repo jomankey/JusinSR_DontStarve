@@ -213,8 +213,8 @@ HRESULT CStage::Ready_Layer_UI(const _tchar* pLayerTag)
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
 
 
-
 	m_mapLayer.insert({ pLayerTag, pLayer });
+	//m_mapLayer.find(L"UI")->second->findObject(L"Proto_UI_Left_Panel", nullptr);
 
 	return S_OK;
 }

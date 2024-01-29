@@ -9,6 +9,7 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev)
 	, m_eUIState(_State)
 	, m_pUI_Name(_UiName)
+	, m_bItemChek(false)
 {
 
 }
@@ -16,6 +17,7 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 CUI::CUI(const CUI& rhs)
 	: Engine::CGameObject(rhs),
 	m_eUIState(rhs.m_eUIState)
+	, m_bItemChek(rhs.m_bItemChek)
 
 {
 

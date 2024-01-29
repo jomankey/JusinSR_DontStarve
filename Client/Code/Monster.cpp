@@ -74,6 +74,7 @@ _vec3 CMonster::Get_Player_Pos()
 	NULL_CHECK_RETURN(pPlayerTransformCom, _vec3());
 
 	
+	
 	_vec3 PlayerPos;
 	pPlayerTransformCom->Get_Info(INFO_POS, &PlayerPos);
 
