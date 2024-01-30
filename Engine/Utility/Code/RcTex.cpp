@@ -51,7 +51,6 @@ HRESULT CRcTex::Ready_Buffer()
 	pVertex[3].vPosition = { -1.f, -1.f, 0.f };
 	pVertex[3].vTexUV = { 0.f, 1.f };
 	
-
 	m_pVB->Unlock();
 
 	INDEX32*		pIndex = nullptr;

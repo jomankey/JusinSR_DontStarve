@@ -70,6 +70,9 @@
     <Filter Include="04. Component\04. ObjStatus\00. PlayerStatus">
       <UniqueIdentifier>{9c746940-70ae-42d9-b76d-5c350f224ec8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\00. VIBuffer\05. CustomTex">
+      <UniqueIdentifier>{3c05a202-c69a-4037-95a2-efa3e3a614ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\Management.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="..\..\Header\RvRcTex.h">
       <Filter>04. Component\00. VIBuffer\02. RcTex</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\CustomTex.h">
+      <Filter>04. Component\00. VIBuffer\05. CustomTex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Management.cpp">
@@ -214,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\RvRcTex.cpp">
       <Filter>04. Component\00. VIBuffer\02. RcTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CustomTex.cpp">
+      <Filter>04. Component\00. VIBuffer\05. CustomTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

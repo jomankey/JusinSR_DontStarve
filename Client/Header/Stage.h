@@ -23,6 +23,8 @@ private:
 	HRESULT			Ready_Layer_GameRes(const _tchar* pLayerTag);
 	HRESULT			Ready_LightInfo();
 
+
+
 private:
 	HRESULT Load_Data();
 

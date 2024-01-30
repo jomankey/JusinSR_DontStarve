@@ -410,6 +410,7 @@ void CPlayer::BillBoard()
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+
 }
 void CPlayer::Check_State()
 {

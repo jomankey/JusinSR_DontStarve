@@ -8,6 +8,7 @@
 #include "Monster.h"
 #include "Beefalo.h"
 #include "Spider.h"
+#include "DeerClops.h"
 #include "Terrain.h"
 #include "DynamicCamera.h"
 #include "SkyBox.h"
@@ -110,6 +111,10 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Player", pGameObject), E_FAIL);
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+	
+	/*pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(10.f, 1.5f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
 	for (_int i = 0; i < 5; ++i)
 	{

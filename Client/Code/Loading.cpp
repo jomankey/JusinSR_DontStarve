@@ -40,15 +40,14 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(Loading_Componment());
 	FAILED_CHECK_RETURN(Loading_Player_Texture());
 	FAILED_CHECK_RETURN(Loading_Beefalo_Texture());
-
+	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HeightTerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlayerTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player%d.png")), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90)), E_FAIL);
 	Loading_Spider_Texture();
-
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SkyBoxTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/Ocean.dds")), E_FAIL);
-
+	
 
 
 	m_bFinish = true;
@@ -65,6 +64,8 @@ HRESULT CLoading::Loading_Componment()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_3_3_1_Tex", CustomizeTex::Create(m_pGraphicDev,3,3,1)), E_FAIL);
 }
 
 HRESULT CLoading::Loading_Player_Texture()
@@ -117,6 +118,31 @@ HRESULT CLoading::Loading_Spider_Texture()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Spider_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/spider/move/walk_up/walk_up__%03d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Spider_walk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/spider/move/walk_side/walk_side__%03d.png", 6)), E_FAIL);
 	return 0;
+}
+
+HRESULT CLoading::Loading_Boss_Texture()
+{
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_Idle_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/idle/down/down__%03d.png", 19)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_Idle_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/idle/side/side__%03d.png", 19)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_Idle_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/idle/up/up__%03d.png", 19)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_walk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/walk/down/walk_down_%d.png", 16)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_walk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/walk/side/side__%03d.png", 16)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/walk/up/up__%03d.png", 16)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_Atk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/attack/down/non_effect/non__%03d.png", 20)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_Atk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/attack/side/non_effect/non__%03d.png", 20)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_Atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/attack/up/non_effect/non__%03d.png", 20)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_hit_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/hit/down/down__%03d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_hit_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/hit/side/side__%03d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_hit_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/hit/up/up__%03d.png", 7)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_taunt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/taunt/taunt__%03d.png", 17)), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Deer_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/deerclops/dead/dead__%03d.png", 24)), E_FAIL);
+	return S_OK;
 }
 
 HRESULT CLoading::Loading_UI_Texture()
