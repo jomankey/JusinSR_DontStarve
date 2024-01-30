@@ -47,7 +47,7 @@ private:
 
 
 
-
+	const _tchar* pTextureName[15] = {};
 	int itemCount = 0;
 	map<const _tchar*, int> m_mapItem;
 	int CheckItemSlotCount = 0;

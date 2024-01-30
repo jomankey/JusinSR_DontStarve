@@ -116,19 +116,21 @@ void CInven::Render_GameObject()
 
 	Get_Scene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
+	
+	
 	for(int i=0; i< 15;i++)
 	{
 		//아이템이 맨 처음 들어왔는지 확인
 		if (ItemCreate)
 		{
-			//m_vecInvenSlot[t]번 째 칸에 아이템이 있는지 확인
-			if ([&]() {for(int t=0;t<15;t++){return m_vecInvenSlot[i]->IsItemOn();}}())
+			//m_vecInvenSlot[i]번 째 칸에 아이템이 있는지 확인,없으면 해당 칸에 아이템을 넣음, 있으면 다음 칸에 이미지를 넣어야 함 
+			if (m_vecInvenSlot[i]->IsItemOn())
 			{
-
-				Engine::CTexture* pTexture = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", m_pUI_Name, m_pUI_Name));
-				NULL_CHECK(pTexture);
-				pTexture->Set_Texture(0);
+				pTextureName[i] = m_pUI_Name;
+				m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", pTextureName[i], pTextureName[i]));
+				
+				NULL_CHECK(m_pTextureCom);
+				m_pTextureCom[i]->Set_Texture(0);
 				m_pTransformCom[i]->Set_Pos(m_fX[i] - (WINCX >> 1), -m_fY[i] + (WINCY >> 1), 0.f);
 
 				m_pTransformCom[i]->Set_Scale(_vec3{ 15, 15, 1.f });
@@ -137,6 +139,11 @@ void CInven::Render_GameObject()
 				continue;
 				//break;
 			}
+			else
+			{
+				continue;
+			}
+
 		}
 
 		//m_pTextureCom[i]->Set_Texture(0);
@@ -186,32 +193,40 @@ int CInven::Find_ItemCount(const _tchar* _ItemName)
 
 void CInven::CallFind_ItemCount(function<void()> func)
 {
-	//최초 진입시
+	//최초 진입시 체크용  
 	ItemCreate = true;
+
+	//아이템 카운트 초기화
 	itemCount = 0;
 	//아이템이 들어오면 해당 칸에 슬롯을 true로 만들고 다음 아이템이 들어왔어도 첫 번째 칸에 아이템이 있으니 다음
-	if([&](){for (int i = 0; i < 15; i++)
-			{
-				if (m_vecInvenSlot[i]->IsItemOn())
-				{
-				continue;
+	//if([&](){for (int i = 0; i < 15; i++)
+	//		{
+	//			if (m_vecInvenSlot[i]->IsItemOn())
+	//			{
+	//				continue;
+	//			}
+	//			else 
+	//			{
+	//				m_vecInvenSlot[i]->SetItemOn(true);
+	//				return true;
+	//			}
+	//		
+	//		};
+	//	
+	//	}())
+	for (int i = 0; i < 15; i++)
+	{
+		if (m_vecInvenSlot[i]->IsItemOn())
+		{
+			continue;
+		}
+		else
+		{
+			m_vecInvenSlot[i]->SetItemOn(true);
+			return;
 
-				}
-				else 
-				{
-					m_vecInvenSlot[i]->SetItemOn(true);
-					return true;
-				}
-			
-			};}())
-	//for (int i = 0; i < 15; i++)
-	//{
-	//	if (m_vecInvenSlot[i]->IsItemOn())
-	//		continue;
-	//
-	//	m_vecInvenSlot[i]->SetItemOn(true);
-	//	return;
-	//}
+		}
+	}
 
 	func();
 }
