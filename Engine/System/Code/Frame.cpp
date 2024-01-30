@@ -1,6 +1,8 @@
 #include "..\..\Header\Frame.h"
 
-CFrame::CFrame() : m_fCallLimit(0.f), m_fAccTimeDelta(0.f)
+CFrame::CFrame() 
+	: m_fCallLimit(0.f)
+	, m_fAccTimeDelta(0.f)
 {
 }
 

@@ -3,14 +3,14 @@
 #include "Base.h"
 #include "GameObject.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class CRcTex;
 class CTexture;
 class CTransform;
 class CCalculator;
 
-END
+}
 
 class CEffect :	public Engine::CGameObject
 {
@@ -31,7 +31,7 @@ private:
 
 private:
 	Engine::CRcTex*		m_pBufferCom;
-	Engine::CTransform*	m_pTransformCom;
+	Engine::CTransform*	m_pTransForm;
 	Engine::CTexture*	m_pTextureCom;
 	Engine::CCalculator*	m_pCalculatorCom;
 

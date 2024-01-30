@@ -176,9 +176,8 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\Layer.h" />
     <ClInclude Include="..\..\Header\Light.h" />
     <ClInclude Include="..\..\Header\LightMgr.h" />
-    <ClInclude Include="..\..\Header\Management.h" />
+    <ClInclude Include="..\..\Header\CSceneMgr.h" />
     <ClInclude Include="..\..\Header\ObjStatus.h" />
-    <ClInclude Include="..\..\Header\Pipeline.h" />
     <ClInclude Include="..\..\Header\PlayerStatus.h" />
     <ClInclude Include="..\..\Header\ProtoMgr.h" />
     <ClInclude Include="..\..\Header\RcCol.h" />
@@ -201,9 +200,8 @@ call CopyUtility.bat</Command>
     <ClCompile Include="..\Code\Layer.cpp" />
     <ClCompile Include="..\Code\Light.cpp" />
     <ClCompile Include="..\Code\LightMgr.cpp" />
-    <ClCompile Include="..\Code\Management.cpp" />
+    <ClCompile Include="..\Code\CSceneMgr.cpp" />
     <ClCompile Include="..\Code\ObjStatus.cpp" />
-    <ClCompile Include="..\Code\Pipeline.cpp" />
     <ClCompile Include="..\Code\PlayerStatus.cpp" />
     <ClCompile Include="..\Code\ProtoMgr.cpp" />
     <ClCompile Include="..\Code\RcCol.cpp" />

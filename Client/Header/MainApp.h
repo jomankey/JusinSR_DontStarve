@@ -5,12 +5,13 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-BEGIN(Engine)
+namespace Engine 
+{
 
 class CGraphicDev;
-class CManagement;
+class CSceneMgr;
 
-END
+}
 
 class CMainApp : public CBase
 {
@@ -25,12 +26,12 @@ public:			//public 함수, 변수 -> protected 함수, 변수 -> private 함수, 변수
 	void		Render_MainApp();
 
 private:
-	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
+	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr** ppManagement);
 	HRESULT		SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev);
 
 private:
 	Engine::CGraphicDev*		m_pDeviceClass;
-	Engine::CManagement*		m_pManagementClass;
+	Engine::CSceneMgr*		m_pManagementClass;
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 
 

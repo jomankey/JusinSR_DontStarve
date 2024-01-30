@@ -6,9 +6,10 @@
 
 
 #include "Stage.h"
+#include "Layer.h"
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CScene(pGraphicDev), m_pLoading(nullptr)
+	: Engine::CScene(pGraphicDev,L"LOGO"), m_pLoading(nullptr)
 {
 }
 
@@ -19,8 +20,12 @@ CLogo::~CLogo()
 HRESULT CLogo::Ready_Scene()
 {
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
 	
+	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
+	{
+		m_arrLayer[i] = CLayer::Create();
+	}
+
 	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 
@@ -35,15 +40,15 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 	{
 		if (GetAsyncKeyState(VK_RETURN))
 		{
-			Engine::CScene*		pScene = nullptr;
+			Engine::CScene* pScene = nullptr;
 
-			pScene = CStage::Create(m_pGraphicDev);
+			pScene = CStage::Create(m_pGraphicDev,L"STAGE");
 			NULL_CHECK_RETURN(pScene, -1);
 
-			FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+			FAILED_CHECK_RETURN(scenemgr::Change_CurScene(pScene), E_FAIL);
 
 			return 0;
-		}		
+		}
 	}
 
 	return iExit;
@@ -61,31 +66,16 @@ void CLogo::Render_Scene()
 
 HRESULT CLogo::Ready_Prototype()
 {
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RvRcTex", CRvRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg")), E_FAIL);
-	
-	
-	return S_OK;
-}
-
-HRESULT CLogo::Ready_Layer_Environment(const _tchar * pLayerTag)
-{
-	Engine::CLayer*		pLayer = Engine::CLayer::Create();
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	Engine::CGameObject*		pGameObject = nullptr;
-
-	
-	
-	m_mapLayer.insert({ pLayerTag, pLayer });
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RvRcTex", CRvRcTex::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_LogoTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg")), E_FAIL);
 
 	return S_OK;
 }
 
-CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CLogo* CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CLogo *	pInstance = new CLogo(pGraphicDev);
+	CLogo* pInstance = new CLogo(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Scene()))
 	{
@@ -94,7 +84,7 @@ CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 		MSG_BOX("Logo Create Failed");
 		return nullptr;
 	}
-	
+
 	return pInstance;
 }
 

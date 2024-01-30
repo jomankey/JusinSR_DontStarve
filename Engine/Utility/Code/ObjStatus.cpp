@@ -1,9 +1,5 @@
 #include "ObjStatus.h"
 
-CObjStatus::CObjStatus()
-{
-	ZeroMemory(m_Stat, sizeof(m_Stat));
-}
 
 CObjStatus::CObjStatus(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev)

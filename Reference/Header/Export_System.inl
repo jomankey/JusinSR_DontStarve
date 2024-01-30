@@ -94,9 +94,9 @@ inline const _tchar* GetResourcePath()
 	return CPathMgr::GetInstance()->GetResourcePath();
 }
 
-inline void Save_TexturePath(wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
+inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
 {
-	CResMgr::GetInstance()->Save_TexturePath(_key, _textureTag, _subPath, num);
+	CResMgr::GetInstance()->Save_TexturePath(_fileName,_key, _textureTag, _subPath, num);
 }
 
 

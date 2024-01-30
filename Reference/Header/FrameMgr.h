@@ -2,7 +2,7 @@
 
 #include "Frame.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CFrameMgr : public CBase
 {
@@ -26,4 +26,4 @@ private:
 	virtual void		Free();
 };
 
-END
+}

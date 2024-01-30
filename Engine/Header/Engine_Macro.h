@@ -17,10 +17,8 @@ namespace Engine
 #define			MSG_BOX(_message)			MessageBox(NULL, TEXT(_message), L"System Message", MB_OK)
 #endif
 
-#define			BEGIN(NAMESPACE)		namespace NAMESPACE {
-#define			END						}
+#define			DDDD						}
 
-#define			USING(NAMESPACE)	using namespace NAMESPACE;
 
 #ifdef	ENGINE_EXPORTS
 #define ENGINE_DLL		_declspec(dllexport)

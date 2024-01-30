@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Management.h"
+#include "CSceneMgr.h"
 #include "ProtoMgr.h"
 #include "Renderer.h"
 #include "LightMgr.h"
@@ -16,43 +16,52 @@
 
 #include "Transform.h"
 #include "Camera.h"
-#include "Pipeline.h"
 #include "Calculator.h"
 
-BEGIN(Engine)
+namespace Engine {
 
-// Management
+	// Management
+	namespace scenemgr
+	{
+		inline HRESULT			Create_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev, CSceneMgr** ppManagementInstance);
 
-inline CComponent*		Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag);
+		inline HRESULT			Change_CurScene(CScene* pScene);
+		inline CScene*			Get_CurScene();
 
-inline HRESULT			Create_Management(LPDIRECT3DDEVICE9 pGraphicDev, CManagement** ppManagementInstance);
+		inline _int				Update_Scene(const _float& fTimeDelta);
+		inline void				LateUpdate_Scene();
+		inline void				Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
+	}
 
-inline HRESULT			Set_Scene(CScene* pScene);
-inline CScene*			Get_Scene();
+	// ProtoMgr
+	namespace proto
+	{
 
-inline _int				Update_Scene(const _float& fTimeDelta);
-inline void				LateUpdate_Scene();
-inline void				Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
+		inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
+		inline CComponent*		Clone_Proto(const _tchar* pProtoTag);
+	}
 
-// ProtoMgr
-inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
-inline CComponent*		Clone_Proto(const _tchar* pProtoTag);
-
-// Renderer
-inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);
-inline void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
-inline void		Clear_RenderGroup();
-
-// LightMgr
-inline HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
-								const D3DLIGHT9* pLightInfo,
-								const _uint& iIndex);
+	// Renderer
+	namespace renderer
+	{
+		inline void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject);
+		inline void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev);
+		inline void		Clear_RenderGroup();
+	}
 
 
-// Release
-inline void				Release_Utility();
+	// LightMgr
+	namespace light
+	{
+		inline HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
+	}
+
+
+
+	// Release
+	inline void				Release_Utility();
 
 
 #include "Export_Utility.inl"
 
-END
+}

@@ -1,13 +1,13 @@
 #include "ToolRock.h"
 #include "Export_Utility.h"
 
-CToolRock::CToolRock(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
-	:CGameObject(pGraphicDev), m_vPos(vPos)
+CToolRock::CToolRock(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CGameObject(pGraphicDev)
 {
 }
 
 CToolRock::CToolRock(const CToolRock& rhs)
-	:CGameObject(rhs.m_pGraphicDev), m_vPos(rhs.m_vPos)
+	:CGameObject(rhs.m_pGraphicDev)
 {
 }
 
@@ -28,7 +28,7 @@ _int CToolRock::Update_GameObject(const _float& fTimeDelta)
 
 	_matrix	matWorld, matView, matBill;
 
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pTransForm->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
 
@@ -40,9 +40,9 @@ _int CToolRock::Update_GameObject(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	_matrix matTransform = matBill * matWorld;
-	m_pTransformCom->Set_WorldMatrix(&(matTransform));
+	m_pTransForm->Set_WorldMatrix(&(matTransform));
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -56,7 +56,7 @@ void CToolRock::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -72,26 +72,29 @@ void CToolRock::Render_GameObject()
 HRESULT CToolRock::Add_Component()
 {
 	CComponent* pComponent = nullptr;
+	_vec3 vPos;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Obejct_Stone"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Stone"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Stone", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
 
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos);
 	return S_OK;
 }
 
-CToolRock* CToolRock::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
+CToolRock* CToolRock::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CToolRock* pInstance = new CToolRock(pGraphicDev, vPos);
+	CToolRock* pInstance = new CToolRock(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

@@ -2,14 +2,14 @@
 
 #include "GameObject.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class CUITex;
 class CRcTex;
 class CTexture;
 class CTransform;
 
-END
+}
 
 class CUI : public Engine::CGameObject
 {
@@ -32,7 +32,7 @@ private:
 	UI_STATE		m_eUIState;
 	Engine::CTexture* m_pTextureCom;
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
+	Engine::CTransform* m_pTransForm;
 	//sss
 	const _tchar* m_pUI_Name;
 

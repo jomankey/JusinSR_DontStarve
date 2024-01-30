@@ -1,11 +1,12 @@
 #pragma once
 #include "GameObject.h"
 
-BEGIN(Engine)
+namespace Engine 
+{
 class CRcTex;
 class CTexture;
 class CTransform;
-END
+}
 
 struct ItemInfo
 {
@@ -17,7 +18,7 @@ struct ItemInfo
 };
 
 class CItem :
-	public CGameObject
+	public Engine::CGameObject
 {
 protected:
 	explicit CItem(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key,_vec3 _vPos);
@@ -60,7 +61,7 @@ private:
 
 protected:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
+	Engine::CTransform* m_pTransForm;
 	Engine::CTexture* m_pTextureCom;
 
 private:

@@ -2,16 +2,16 @@
 #include "GameObject.h"
 #include "Engine_Define.h"
 
-BEGIN(Engine)
+namespace Engine {
 class CRcTex;
 class CTexture;
 class CTransform;
-END
+}
 class CToolGrass :
     public CGameObject
 {
 private:
-    explicit CToolGrass(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+    explicit CToolGrass(LPDIRECT3DDEVICE9 pGraphicDev );
     explicit CToolGrass(const CToolGrass& rhs);
     virtual ~CToolGrass();
 public:
@@ -25,13 +25,11 @@ private:
 
 private:
     Engine::CRcTex* m_pBufferCom;
-    Engine::CTransform* m_pTransformCom;
     Engine::CTexture* m_pTextureCom;
 
-    _vec3 m_vPos;
 
 public:
-    static CToolGrass* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+    static CToolGrass* Create(LPDIRECT3DDEVICE9 pGraphicDev  );
 
 private:
     virtual void Free();

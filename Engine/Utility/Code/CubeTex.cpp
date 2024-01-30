@@ -1,9 +1,5 @@
 #include "..\..\Header\CubeTex.h"
 
-CCubeTex::CCubeTex()
-{
-}
-
 CCubeTex::CCubeTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CVIBuffer(pGraphicDev)
 {

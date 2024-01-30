@@ -3,12 +3,12 @@
 #include "VIBuffer.h"
 #include "Engine_Define.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CTerrainTex : public CVIBuffer
 {
 private:
-	explicit CTerrainTex();
+	explicit CTerrainTex()=delete;
 	explicit CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CTerrainTex(const CTerrainTex& rhs);
 	virtual ~CTerrainTex();
@@ -39,4 +39,4 @@ private:
 	virtual void	Free();
 };
 
-END
+}

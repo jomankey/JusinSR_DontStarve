@@ -1,13 +1,13 @@
 #pragma once
 #include "ObjStatus.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CPlayerStatus :
     public CObjStatus
 {
 private:
-    explicit CPlayerStatus();
+    explicit CPlayerStatus()= delete;
     explicit CPlayerStatus(LPDIRECT3DDEVICE9 pGraphicDev);
     explicit CPlayerStatus(const CPlayerStatus& rhs);
     virtual ~CPlayerStatus();
@@ -24,4 +24,4 @@ private:
     
 };
 
-END
+}

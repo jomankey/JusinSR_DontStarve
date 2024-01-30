@@ -4,44 +4,46 @@
 #include "Engine_Define.h"
 #include "Base.h"
 
-BEGIN(Engine)
+namespace Engine {
 
-class ENGINE_DLL CInputDev : public CBase
-{
-	DECLARE_SINGLETON(CInputDev)
+	class ENGINE_DLL CInputDev : public CBase
+	{
+		DECLARE_SINGLETON(CInputDev)
 
-private:
-	explicit CInputDev(void);
-	virtual ~CInputDev(void);
-	
-public:
-	_byte	Get_DIKeyState(_ubyte byKeyID)			{ return m_byKeyState[byKeyID]; }
-	_byte	Get_DIMouseState(MOUSEKEYSTATE eMouse) 	
-	{ 	return m_tMouseState.rgbButtons[eMouse]; 	}
+	private:
+		explicit CInputDev(void);
+		virtual ~CInputDev(void);
 
-	_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState)	
-	{	
-		return *(((_long*)&m_tMouseState) + eMouseState);	
-	}
-	
-public:
-	HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
-	void	Update_InputDev(void);
+	public:
+		_byte	Get_DIKeyState(_ubyte byKeyID) { return m_byKeyState[byKeyID]; }
+		_byte	Get_DIMouseState(MOUSEKEYSTATE eMouse)
+		{
+			return m_tMouseState.rgbButtons[eMouse];
+		}
 
-private:
-	LPDIRECTINPUT8			m_pInputSDK = nullptr;
+		_long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState)
+		{
+			return *(((_long*)&m_tMouseState) + eMouseState);
+		}
 
-private:
-	LPDIRECTINPUTDEVICE8	m_pKeyBoard = nullptr;
-	LPDIRECTINPUTDEVICE8	m_pMouse	= nullptr;
+	public:
+		HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
+		void	Update_InputDev(void);
 
-private:
-	_byte					m_byKeyState[256];		// 키보드에 있는 모든 키값을 저장하기 위한 변수
-	DIMOUSESTATE			m_tMouseState;	
+	private:
+		LPDIRECTINPUT8			m_pInputSDK = nullptr;
 
-public:
-	virtual void	Free(void);
+	private:
+		LPDIRECTINPUTDEVICE8	m_pKeyBoard = nullptr;
+		LPDIRECTINPUTDEVICE8	m_pMouse = nullptr;
 
-};
-END
+	private:
+		_byte					m_byKeyState[256];		// 키보드에 있는 모든 키값을 저장하기 위한 변수
+		DIMOUSESTATE			m_tMouseState;
+
+	public:
+		virtual void	Free(void);
+
+	};
+}
 #endif // InputDev_h__

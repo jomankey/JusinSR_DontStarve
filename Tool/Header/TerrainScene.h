@@ -19,9 +19,9 @@ private:
 	_vec3 Picking_Terrain();
 
 private:
-	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Environment();
+	HRESULT			Ready_Layer_GameLogic( );
+	HRESULT			Ready_Layer_UI();
 	HRESULT			Ready_LightInfo();
 
 private:

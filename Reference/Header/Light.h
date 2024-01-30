@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "Engine_Define.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CLight :	public CBase
 {
@@ -28,4 +28,4 @@ private:
 
 };
 
-END
+}
