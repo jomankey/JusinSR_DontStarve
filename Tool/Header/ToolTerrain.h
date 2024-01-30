@@ -5,8 +5,6 @@ namespace Engine {
 
 class CTerrainTex;
 class CTexture;
-class CTransform;
-
 }
 
 class CToolTerrain :
@@ -25,7 +23,6 @@ public:
 
 private:
     HRESULT Add_Component();
-    HRESULT SetUp_Material();
 
     void Input_Mouse();
 

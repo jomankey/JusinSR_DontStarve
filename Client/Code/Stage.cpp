@@ -12,7 +12,6 @@
 #include "DynamicCamera.h"
 #include "SkyBox.h"
 #include "Effect.h"
-#include "CUI.h"
 #include"CInven.h"
 
 #include "Transform.h"
@@ -27,9 +26,10 @@
 // Item/Object
 #include "CItem.h"
 #include "CItemFood.h"
+#include "CUI.h"
 
 
-CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strSceneName)
+CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
 {
 	//test
@@ -50,7 +50,7 @@ HRESULT CStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_UI(),E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
@@ -188,7 +188,7 @@ HRESULT CStage::Ready_Layer_UI()
 	//¿ÞÂÊ ÆÇ³Ú
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(30.f, 300.f, 0.f), _vec3(30.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"UI", pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//¾Æ·¡ ÆÇ³Ú
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(400.f, 580.f, 0.f), _vec3(20.f, 300.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
@@ -215,7 +215,7 @@ HRESULT CStage::Ready_Layer_UI()
 	//»ýÁ¸ ½½·Ô
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->Add_GameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 
 
@@ -260,13 +260,6 @@ HRESULT CStage::Load_Data()
 	_int iCount(0);
 	DWORD	dwByte(0), dwStrByte(0);
 
-	for (auto& iter : m_mapLayer)
-	{
-		if (iter.first != L"GameLogic")
-			continue;
-		
-		//object delete
-
 	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
 	for (int i = 0; i < iCount; ++i)
@@ -286,27 +279,26 @@ HRESULT CStage::Load_Data()
 
 		if (!_tcscmp(L"Tree", pName))
 		{
-			/*pGameObject = CObjectGrass::Create(m_pGraphicDev, vPos);
+			pGameObject = CObjectGrass::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"Tree", pGameObject), E_FAIL);*/
+			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+			pGameObject->GetTransForm()->Set_Pos(vPos);
 		}
 		else if (!_tcscmp(L"Rock", pName))
 		{
-			pGameObject = CObjectRock::Create(m_pGraphicDev );
+			pGameObject = CObjectRock::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+			pGameObject->GetTransForm()->Set_Pos(vPos);
 		}
 		else if (!_tcscmp(L"Grass", pName))
 		{
 			pGameObject = CObjectGrass::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		}
-
-		if (nullptr != pGameObject)
-		{
 			pGameObject->GetTransForm()->Set_Pos(vPos);
 		}
+
 		delete[] pName;
 	}
 
@@ -317,7 +309,7 @@ HRESULT CStage::Load_Data()
 	return S_OK;
 }
 
-CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strSceneName)
+CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 {
 	CStage* pInstance = new CStage(pGraphicDev, _strSceneName);
 

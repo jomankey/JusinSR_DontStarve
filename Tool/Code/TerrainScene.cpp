@@ -14,7 +14,7 @@
 
 
 CTerrainScene::CTerrainScene(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CScene(pGraphicDev, L"SceneTool")
+	: CScene(pGraphicDev, L"SceneTool")
 {
 	//test
 }
@@ -39,17 +39,14 @@ HRESULT CTerrainScene::Ready_Scene()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Tile1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Terrain/Terrain.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_SkyBoxTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../../Client/Bin/Resource/Texture/SkyBox/Ocean.dds")), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Berries", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Berries.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CookedMeat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CookedMeat.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CutGlass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CutGlass.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"CutStone", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CutStone.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Rocks_0", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Rocks_0.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Rocks_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Rocks_1.png")), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Twigs", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Twigs.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Berries", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Berries.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"CookedMeat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CookedMeat.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"CutGlass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CutGlass.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"CutStone", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/CutStone.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Rocks_0", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Rocks_0.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Rocks_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Rocks_1.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Twigs", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Twigs.png")), E_FAIL);
 
-	FAILED_CHECK_RETURN(Ready_Layer_Environment(L"Environment"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(L"GameLogic"), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_UI(L"UI"), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/IDLE_1/IDLE__000.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Stone", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/Nomal_Rock/Nomal_Rock_%d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Grass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Glass/IDLE/IDLE__000.png")), E_FAIL);
@@ -71,7 +68,7 @@ HRESULT CTerrainScene::Ready_Scene()
 
 _int CTerrainScene::Update_Scene(const _float& fTimeDelta)
 {
-	
+
 	Change_LightInfo();
 	Input_Mouse();
 
@@ -110,6 +107,7 @@ HRESULT CTerrainScene::Ready_Layer_Environment()
 	_vec3 vEye = { 0.f, 10.f, -5.f };
 	_vec3 vAt = { 0.f, 0.f, 1.f };
 	_vec3 vUp = { 0.f, 1.f, 0.f };
+
 	pGameObject = m_pCamera = CToolCamera::Create(m_pGraphicDev,
 		&vEye,
 		&vAt,
@@ -118,9 +116,9 @@ HRESULT CTerrainScene::Ready_Layer_Environment()
 		(_float)WINCX / WINCY,
 		0.1f,
 		1000.f);
-	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::BACK_GROUND]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
+	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
 
 	pGameObject = CToolSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -159,7 +157,7 @@ HRESULT CTerrainScene::Ready_LightInfo()
 	//tLightInfo.Specular = D3DXCOLOR(CToolMgr::m_fDirectionAmbientColor[0], CToolMgr::m_fDirectionAmbientColor[1], CToolMgr::m_fDirectionAmbientColor[2], 1.f);
 	//tLightInfo.Ambient = D3DXCOLOR(CToolMgr::m_fDirectionSpecularColor[0], CToolMgr::m_fDirectionSpecularColor[1], CToolMgr::m_fDirectionSpecularColor[2], 1.f);
 
-	tLightInfo.Diffuse = D3DXCOLOR(CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].x, 
+	tLightInfo.Diffuse = D3DXCOLOR(CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].x,
 		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].y,
 		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].z, 1.f);
 	tLightInfo.Specular = D3DXCOLOR(CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].x,
@@ -168,7 +166,7 @@ HRESULT CTerrainScene::Ready_LightInfo()
 	tLightInfo.Ambient = D3DXCOLOR(CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].x,
 		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].y,
 		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].z, 1.f);
-	
+
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
 	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
@@ -269,25 +267,26 @@ HRESULT CTerrainScene::Load_File()
 
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
+}
 
 HRESULT CTerrainScene::Change_LightInfo()
 {
-	D3DLIGHT9*			tLightInfo = Engine::Get_Light(0)->Get_Light();
+	D3DLIGHT9* tLightInfo = Engine::Get_Light(0)->Get_Light();
 	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
 	tLightInfo->Type = D3DLIGHT_DIRECTIONAL;
 
 	tLightInfo->Diffuse = D3DXCOLOR(CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].x,
 		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].y,
-		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].z, 
+		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].z,
 		1.f);
 	tLightInfo->Specular = D3DXCOLOR(CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].x,
 		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].y,
-		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].z, 
+		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].z,
 		1.f);
 	tLightInfo->Ambient = D3DXCOLOR(CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].x,
 		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].y,
-		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].z, 
+		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].z,
 		1.f);
 
 	tLightInfo->Direction = _vec3(1.f, -1.f, 1.f);
@@ -335,28 +334,30 @@ HRESULT CTerrainScene::Input_Mouse()
 			default:
 				break;
 			}
-			CToolMgr::bObjectAdd = false;
 		}
-		//"Stick",
-		//	"Stone",
-		//	"Firestone", //ºÎ½Ëµ¹
-		//	"Grass_Cut",
-		if (CToolMgr::bItemAdd)
+		CToolMgr::bObjectAdd = false;
+	}
+	//"Stick",
+	//	"Stone",
+	//	"Firestone", //ºÎ½Ëµ¹
+	//	"Grass_Cut",
+	if (CToolMgr::bItemAdd)
+	{
+		_vec3	vPickPos = Picking_Terrain();
+		switch (CToolMgr::iItemCurrentItemIdx)
 		{
-			_vec3	vPickPos = Picking_Terrain();
-			switch (CToolMgr::iItemCurrentItemIdx)
-			{
-			case 0:
-				Create_Object(L"Twigs", vPickPos); break;
-			case 1:
-				Create_Object(L"Rocks_0", vPickPos); break;
-			case 2:
-				//Create_Object(L"Firestone", vPickPos); break;
-			case 3:
-				Create_Object(L"CutGlass", vPickPos); break;
-			}
-			CToolMgr::bItemAdd = false;
+		case 0:
+			//Create_Object(L"Twigs", vPickPos); break;
+		case 1:
+			//Create_Object(L"Rocks_0", vPickPos); break;
+		case 2:
+			//Create_Object(L"Firestone", vPickPos); break;
+		case 3:
+			//Create_Object(L"CutGlass", vPickPos); break;
+		default:
+			break;
 		}
+		CToolMgr::bItemAdd = false;
 	}
 	return S_OK;
 }

@@ -85,9 +85,6 @@ _int Change_Light(const _float& fTimeDelta, _int _iIndex)
 }
 
 void Release_Utility()
-//Release
-
-void  Engine::Release_Utility()
 {
 	CLightMgr::DestroyInstance();
 	CRenderer::DestroyInstance();

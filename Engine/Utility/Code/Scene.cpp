@@ -34,12 +34,7 @@ _matrix* CScene::Get_OrthoMatrix()
 	return m_pCamera->Get_OrthoMatrix();
 }
 
-CLayer* CScene::Get_Layer(const _tchar* pKey)
-const vector<CGameObject*>& Engine::CScene::GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType)
-{
-	return 	m_arrLayer[(int)_eLayerType]->GetGroupObject(_eObjGroupType);
-}
-
+ 
 HRESULT CScene::Ready_Scene()
 {
 	return S_OK;

@@ -41,7 +41,7 @@ _int CToolItem::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 	MousePicking();
 	Billboard();
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return _int();
 }
 
@@ -119,18 +119,18 @@ HRESULT CToolItem::Add_Component()
 	CComponent* pComponent = nullptr;
 
 	//VIBUFFER
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 	assert(m_strItemKey.c_str() != L"");
 
 	//TEXTURE
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(m_strItemKey.c_str()));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(m_strItemKey.c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ m_strItemKey.c_str(), pComponent });
 
 	//TransForm
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 

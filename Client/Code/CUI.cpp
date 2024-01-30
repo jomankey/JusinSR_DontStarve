@@ -47,7 +47,7 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
 	
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransform->Rotation(Engine::ROT_Z, D3DXToRadian(m_fAngle));
+	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(m_fAngle));
 
 
 	return S_OK;
@@ -68,7 +68,7 @@ Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 
 	/*_vec3 vScale = { 100.0f,100.0f,100.0f };
 
-	m_pTransform->Set_Scale(vScale);*/
+	m_pTransForm->Set_Scale(vScale);*/
 
 	return 0;
 }
@@ -102,16 +102,16 @@ void CUI::Render_GameObject()
 	m_pTextureCom->Set_Texture(0);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	m_pTransform->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
-	m_pTransform->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
+	m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
+	m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
 	
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransform->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 
 	m_pBufferCom->Render_Buffer();
 
 
 
-	Get_Scene()->EndOrtho();
+	scenemgr::Get_CurScene()->EndOrtho();
 
 
 }

@@ -22,7 +22,6 @@ public:
 
 private:
 	HRESULT			Add_Component();
-	HRESULT SetUp_Material();
 
 private:
 	Engine::CRcTex* m_pBufferCom;

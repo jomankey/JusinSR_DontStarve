@@ -2,7 +2,8 @@
 
 #include "../Header/CItem.h"
 
-namespace Engine {
+namespace Engine
+{
 class CRcTex;
 class CTexture;
 class CTransform;

@@ -44,12 +44,12 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	Key_Input(fTimeDelta);
 	Check_State();
-	
+
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
-	
+
 	/*Engine::IsPermit_Call(L"Unarmed_IDLE", fTimeDelta);*/
 	return 0;
 }
@@ -92,11 +92,11 @@ void CPlayer::Render_GameObject()
 HRESULT CPlayer::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	
+
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
-	
+
 	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
@@ -214,7 +214,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
 
-	
+
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -231,9 +231,9 @@ HRESULT CPlayer::Add_Component()
 	return S_OK;
 }
 
-CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CPlayer *	pInstance = new CPlayer(pGraphicDev);
+	CPlayer* pInstance = new CPlayer(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -246,15 +246,17 @@ CPlayer * CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 }
 
 void CPlayer::Free()
-{	
+{
 	__super::Free();
 }
 
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	
-	_vec3		vDir,vRight , vCurPos;
-	CTerrainTex * pTerrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
+
+	_vec3		vDir, vRight, vCurPos;
+	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
+
+	CTerrainTex* pTerrainTex = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	m_pTransForm->Get_Info(INFO_LOOK, &vDir);
 	m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
 
@@ -279,7 +281,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_pTransForm->Move_Pos(&vDir, 5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_DOWN;
-		
+
 	}
 
 	if (GetAsyncKeyState('A'))
@@ -290,7 +292,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		vCurPos.x += 0.5f;
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Move_Pos(&vRight, 5.f, fTimeDelta);
-			
+
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_LEFT;
 		if (!m_Dirchange)
@@ -308,7 +310,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		vCurPos.x -= 0.5f;
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Set_Pos(vCurPos);
-			
+
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_RIGHT;
 		if (m_Dirchange)
@@ -323,7 +325,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		!GetAsyncKeyState('S') &&
 		!GetAsyncKeyState('D'))
 	{
-	
+
 		m_eCurState = IDLE;
 	}
 
@@ -377,7 +379,7 @@ void CPlayer::Height_OnTerrain()
 	_vec3		vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 
-	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
+	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	NULL_CHECK(pTerrainBufferCom);
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
@@ -389,10 +391,10 @@ _vec3 CPlayer::Picking_OnTerrain()
 {
 	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
 
-	CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
+	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3());
 
-	CTransform*			pTerrainTransCom = dynamic_cast<CTransform*>(pTerrain->GetTransForm());
+	CTransform* pTerrainTransCom = dynamic_cast<CTransform*>(pTerrain->GetTransForm());
 	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
 
 
@@ -422,7 +424,7 @@ void CPlayer::Check_State()
 		/*switch (m_eCurState)
 		{
 		case IDLE_DOWN:
-	
+
 			break;
 		case MOVE_DOWN:
 			m_ePlayerLookAt = LOOK_DOWN;
@@ -457,7 +459,7 @@ void CPlayer::Check_State()
 		{
 			m_fFrameEnd = 22;
 		}
-		else if(m_eCurState == HIT)
+		else if (m_eCurState == HIT)
 		{
 			m_fFrameEnd = 7;
 		}
@@ -491,7 +493,7 @@ void CPlayer::Check_State()
 
 void CPlayer::Set_Scale()
 {
-	if (m_eCurState == BUILD )
+	if (m_eCurState == BUILD)
 	{
 		m_pTransForm->m_vScale = { 1.5f, 1.0f,1.0f };
 	}
@@ -499,7 +501,7 @@ void CPlayer::Set_Scale()
 	{
 		m_pTransForm->m_vScale = { 1.5f, 1.0f,1.0f };
 	}
-	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT)&& m_eCurState == ATTACK)
+	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == ATTACK)
 	{
 		m_pTransForm->m_vScale = { 1.5f, 1.5f,1.0f };
 	}

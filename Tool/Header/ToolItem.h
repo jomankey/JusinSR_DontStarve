@@ -1,11 +1,12 @@
 #pragma once
 #include "GameObject.h"
 
-BEGIN(Engine)
-class CRcTex;
-class CTexture;
-class CTransform;
-END
+namespace Engine 
+{
+	class CRcTex;
+	class CTexture;
+	class CTransform;
+}
 
 struct ItemInfo
 {

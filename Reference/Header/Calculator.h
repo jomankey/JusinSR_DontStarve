@@ -1,10 +1,11 @@
 #pragma once
 #include "Component.h"
 
-namespace Engine {
-
+namespace Engine 
+{
 	class CTerrainTex;
 	class CTransform;
+	class CRcTex;
 
 	class ENGINE_DLL CCalculator : public CComponent
 	{
@@ -31,14 +32,14 @@ namespace Engine {
 			const _ulong& dwVtxItv = VTXITV);
 
 	public:
+		static CCalculator* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
-	_bool Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> veciIndex, const _ulong& dwCntX = VTXCNTX, const _ulong& dwCntZ = VTXCNTZ, const _ulong& dwVtxItv = VTXITV);
+		_bool Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> veciIndex, const _ulong& dwCntX = VTXCNTX, const _ulong& dwCntZ = VTXCNTZ, const _ulong& dwVtxItv = VTXITV);
 
-	BOOL       Picking_OnUI(HWND hWnd, CRcTex* pUIBifferCom,CTransform* pUITransCom, const _float& dwCntX, const _float& dwCntZ, const _ulong& dwVtxItv = VTXITV);
+		BOOL       Picking_OnUI(HWND hWnd, CRcTex* pUIBifferCom, CTransform* pUITransCom, const _float& dwCntX, const _float& dwCntZ, const _ulong& dwVtxItv = VTXITV);
 
-public:
-	static CCalculator*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	CComponent*				Clone(void);
+	public:
+		CComponent* Clone(void);
 
 	private:
 		virtual void	Free();

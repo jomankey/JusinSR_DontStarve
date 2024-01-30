@@ -1,10 +1,11 @@
 #include "..\Include\stdafx.h"
 #include "..\Header\CInven.h"
-#include"CUI.h"
 
 
 #include "Export_Utility.h"
 #include "Export_System.h"
+
+#include"CUI.h"
 
 CInven::CInven(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State)
 	: Engine::CGameObject(pGraphicDev)
@@ -59,7 +60,7 @@ HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 Engine::_int CInven::Update_GameObject(const _float& fTimeDelta)
 {
 
-	Engine::Add_RenderGroup(RENDER_UI, this);
+	renderer::Add_RenderGroup(RENDER_UI, this);
 	for (int i = 0; i < 15; i++)
 	m_vecInvenSlot[i]->Update_GameObject(fTimeDelta);
 
