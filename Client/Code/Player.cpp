@@ -43,11 +43,9 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	Key_Input(fTimeDelta);
 	Check_State();
-	
+	Set_Scale();
 	CGameObject::Update_GameObject(fTimeDelta);
-
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
-
 	
 	/*Engine::IsPermit_Call(L"Unarmed_IDLE", fTimeDelta);*/
 	return 0;
@@ -56,9 +54,9 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+	BillBoard();
 
 	_vec3	vPos;
-	BillBoard();
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 	//__super::Compute_ViewZ(&vPos);
 
@@ -72,11 +70,10 @@ void CPlayer::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	Set_Scale();
-
 	m_pTextureCom[m_ePlayerLookAt][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 	FAILED_CHECK_RETURN(SetUp_Material(), );
+
 	if (m_Dirchange)
 	{
 		m_pReverseCom->Render_Buffer();
@@ -255,8 +252,7 @@ void CPlayer::Free()
 
 void CPlayer::Key_Input(const _float& fTimeDelta)
 {
-	
-	_vec3		vDir,vRight , vCurPos;
+	_vec3		vDir, vDir2, vRight , vCurPos;
 	CTerrainTex * pTerrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
@@ -401,7 +397,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 				
 			}
 		}
-		
 	}
 	if (GetAsyncKeyState('B'))
 	{
@@ -479,41 +474,29 @@ _vec3 CPlayer::Picking_OnTerrain()
 }
 void CPlayer::BillBoard()
 {
-	//_matrix	matWorld, matView, matBillY, matBillX;
-
-	//m_pTransformCom->Get_WorldMatrix(&matWorld);
-	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	//D3DXMatrixIdentity(&matBillY);
-	//D3DXMatrixIdentity(&matBillX);
-
-	//matBillY._11 = matView._11;
-	//matBillY._13 = matView._13;
-	//matBillY._31 = matView._31;
-	//matBillY._33 = matView._33;
-
-	//matBillX._21 = matView._21;
-	//matBillX._22 = matView._22;
-	//matBillX._32 = matView._32;
-	//matBillX._33 = matView._33;
-
-	//D3DXMatrixInverse(&matBillY, NULL, &matBillY);
-	//D3DXMatrixInverse(&matBillX, NULL, &matBillX);
-
-	//m_pTransformCom->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
-
 	_matrix	matWorld, matView, matBill;
 
 	m_pTransformCom->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
-
+	
 	matBill._11 = matView._11;
 	matBill._13 = matView._13;
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
+	
+	//matBill._22 = matView._22;
+	matBill._23 = matView._23;
+	//matBill._32 = 0.f;
+	matBill._33 = matView._33;
 
+	matBill._11 = matView._11;
+	//matBill._12 = matView._12;
+	matBill._21 = matView._21;
+	//matBill._22 = matView._22;
+	
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
+	
 	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 }
 void CPlayer::Check_State()
