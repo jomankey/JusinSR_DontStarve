@@ -40,6 +40,7 @@ private:
 	//아이템 칸 슬롯 이미지
 	CUI* m_vecInvenSlot[15];
 
+	const _tchar* FindItemName(const _tchar* _ItemName);
 	int Find_ItemCount(const _tchar* _ItemName);
 	void CallFind_ItemCount(function<void()>func);
 
@@ -57,6 +58,9 @@ private :
 	Engine::CTransform* m_pTransformCom[15];
 
 	POINT m_MousePoint;
+
+
+
 	const _tchar* m_pUI_Name = nullptr;
 
 

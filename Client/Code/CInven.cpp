@@ -128,8 +128,8 @@ void CInven::Render_GameObject()
 
 				Engine::CTexture* pTexture = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", m_pUI_Name, m_pUI_Name));
 				NULL_CHECK(pTexture);
-				m_pTransformCom[i]->Set_Pos(m_fX[i] - (WINCX >> 1), -m_fY[i] + (WINCY >> 1), 0.f);
 				pTexture->Set_Texture(0);
+				m_pTransformCom[i]->Set_Pos(m_fX[i] - (WINCX >> 1), -m_fY[i] + (WINCY >> 1), 0.f);
 
 				m_pTransformCom[i]->Set_Scale(_vec3{ 15, 15, 1.f });
 				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[i]->Get_WorldMatrix());
@@ -168,6 +168,14 @@ int CInven::UI_Collision()
 
 }
 
+const _tchar* CInven::FindItemName(const _tchar* _ItemName)
+{
+	m_mapItem.find(_ItemName)->first;
+
+
+	return nullptr;
+}
+
 int CInven::Find_ItemCount(const _tchar* _ItemName)
 {
 	if(m_mapItem.find(_ItemName) == m_mapItem.end())
@@ -184,9 +192,26 @@ void CInven::CallFind_ItemCount(function<void()> func)
 	//아이템이 들어오면 해당 칸에 슬롯을 true로 만들고 다음 아이템이 들어왔어도 첫 번째 칸에 아이템이 있으니 다음
 	if([&](){for (int i = 0; i < 15; i++)
 			{
-			m_vecInvenSlot[i]->SetItemOn(true);
-			return true;
+				if (m_vecInvenSlot[i]->IsItemOn())
+				{
+				continue;
+
+				}
+				else 
+				{
+					m_vecInvenSlot[i]->SetItemOn(true);
+					return true;
+				}
+			
 			};}())
+	//for (int i = 0; i < 15; i++)
+	//{
+	//	if (m_vecInvenSlot[i]->IsItemOn())
+	//		continue;
+	//
+	//	m_vecInvenSlot[i]->SetItemOn(true);
+	//	return;
+	//}
 
 	func();
 }
