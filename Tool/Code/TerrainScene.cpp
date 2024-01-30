@@ -216,6 +216,21 @@ void CTerrainScene::Save_File()
 		}
 	}
 
+	for (int i = 0; i < 3; ++i)
+	{
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+	}
+
 	iCount = CToolMgr::vecPickingIdex.size();
 	WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
@@ -278,6 +293,22 @@ HRESULT CTerrainScene::Load_File()
 			Create_Object(pName, vPos);
 		}
 	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+		
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+	}
+
 	
 	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 

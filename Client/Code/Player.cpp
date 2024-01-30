@@ -4,6 +4,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include"CInven.h"
+#include <Monster.h>
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -66,6 +67,7 @@ void CPlayer::LateUpdate_GameObject()
 
 void CPlayer::Render_GameObject()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -74,6 +76,7 @@ void CPlayer::Render_GameObject()
 
 	m_pTextureCom[m_ePlayerLookAt][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
+	FAILED_CHECK_RETURN(SetUp_Material(), );
 	if (m_Dirchange)
 	{
 		m_pReverseCom->Render_Buffer();
@@ -85,6 +88,7 @@ void CPlayer::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CPlayer::Add_Component()
@@ -362,8 +366,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 				if (Engine::Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos,
 					vMonsterAxis, vPlayerScale, vMonsterScale))
 				{
+					// 몬스터와 공격 충돌 시
+					// 몬스터 채력이 깎임.
 					m_pTransformCom->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
+					dynamic_cast<CMonster*>(monster.second)->Set_Attack(10.f);
 				}
+				break;
 			}
 		}
 	}
@@ -426,6 +434,23 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	//	m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
 	//}
 	
+}
+
+HRESULT CPlayer::SetUp_Material()
+{
+	D3DMATERIAL9			tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+	
+	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	tMtrl.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&tMtrl);
+
+	return S_OK;
 }
 
 void CPlayer::Height_OnTerrain()

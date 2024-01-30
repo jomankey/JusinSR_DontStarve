@@ -25,6 +25,13 @@ private:
 
 private:
 	HRESULT Load_Data();
+	HRESULT Change_LightInfo(const _float& fTimeDelta);
+	HRESULT Change_PointLightInfo(const _float& fTimeDelta);
+
+private:
+	_vec3 m_vDirectionDiffuseColor[3] = {};
+	_vec3 m_vDirectionAmbientColor[3] = {};
+	_vec3 m_vDirectionSpecularColor[3] = {};
 
 public:
 	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

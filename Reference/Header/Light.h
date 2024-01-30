@@ -14,6 +14,7 @@ private:
 public:
 	D3DLIGHT9* Get_Light() { return &m_tLightInfo; }
 	void Update_Light() { m_pGraphicDev->SetLight(m_iIndex, &m_tLightInfo); }
+	void Close_Light();
 
 private:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;

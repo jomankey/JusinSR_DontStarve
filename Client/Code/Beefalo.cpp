@@ -30,6 +30,12 @@ HRESULT CBeefalo::Ready_GameObject()
 
 _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
+    //die
+    if (m_Stat.fHP <= 0)
+    {
+        //
+    }
+
 	m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	if (m_fFrameEnd < m_fFrame)
