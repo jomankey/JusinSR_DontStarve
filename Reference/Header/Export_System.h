@@ -10,7 +10,7 @@
 #include "CPathMgr.h"
 #include "CResMgr.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 // GraphicDev
 
@@ -55,11 +55,11 @@ inline HRESULT			Ready_PathMgr();
 inline wstring GetRelativePath(const wchar_t* filePath);
 inline const _tchar* GetResourcePath();
 //ResMgr
-inline void Save_TexturePath(wstring _key, TEXTUREID _textureTag, wstring _subPath, int num);
+inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num);
 
 // Destroy
 inline void			Release_System();
 
 #include "Export_System.inl"
 
-END
+}

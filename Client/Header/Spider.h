@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "Monster.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class CRcTex;
 class CRvRcTex;
@@ -11,7 +11,7 @@ class CTexture;
 class CTransform;
 class CCalculator;
 
-END
+}
 class CSpider : public CMonster
 {
 	enum SPIDERSTATE { IDLE, WALK,ATTACK, SLEEP, DEAD, STATE_END };
@@ -37,7 +37,7 @@ private:
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
-	Engine::CTransform* m_pTransformCom;
+	Engine::CTransform* m_pTransForm;
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END];
 	Engine::CCalculator* m_pCalculatorCom;
 

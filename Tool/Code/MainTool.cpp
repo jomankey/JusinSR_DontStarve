@@ -52,17 +52,17 @@ void CMainTool::Render_MainTool()
     Engine::Render_End();
 }
 
-HRESULT CMainTool::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement)
+HRESULT CMainTool::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr** ppManagement)
 {
     Engine::CScene* pScene = nullptr;
 
     pScene = CTerrainScene::Create(pGraphicDev);
     NULL_CHECK_RETURN(pScene, E_FAIL);
 
-    FAILED_CHECK_RETURN(Engine::Create_Management(pGraphicDev, ppManagement), E_FAIL);
+    FAILED_CHECK_RETURN(scenemgr::Create_SceneMgr(pGraphicDev, ppManagement), E_FAIL);
     (*ppManagement)->AddRef();
 
-    FAILED_CHECK_RETURN((*ppManagement)->Set_Scene(pScene), E_FAIL);
+    FAILED_CHECK_RETURN((*ppManagement)->Change_Scene(pScene), E_FAIL);
 
     return S_OK;
 }

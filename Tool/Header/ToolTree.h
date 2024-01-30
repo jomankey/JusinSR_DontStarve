@@ -3,17 +3,17 @@
 
 #include "Engine_Define.h"
 
-BEGIN(Engine)
+namespace Engine {
 class CTransform;
 class CRcTex;
 class CTexture;
-END
+}
 
 class CToolTree :
     public CGameObject
 {
 private:
-    explicit CToolTree(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+    explicit CToolTree(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CToolTree(const CToolTree& rhs);
     virtual ~CToolTree();
 
@@ -28,13 +28,10 @@ private:
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
 	Engine::CTexture* m_pTextureCom;
 
-	_vec3 m_vPos;
-
 public:
-	static CToolTree* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+	static CToolTree* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();

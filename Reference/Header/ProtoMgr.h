@@ -4,7 +4,7 @@
 #include "Base.h"
 #include "Component.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CProtoMgr : public CBase
 {
@@ -28,4 +28,4 @@ public:
 	virtual void	Free();
 };
 
-END
+}

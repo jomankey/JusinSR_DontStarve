@@ -1,8 +1,5 @@
 #include "..\..\Header\TerrainTex.h"
 
-CTerrainTex::CTerrainTex()
-{
-}
 
 CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CVIBuffer(pGraphicDev)

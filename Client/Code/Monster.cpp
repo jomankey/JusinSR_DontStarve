@@ -70,7 +70,8 @@ void CMonster::Look_Change()
 
 _vec3 CMonster::Get_Player_Pos()
 {
-	Engine::CTransform* pPlayerTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Player", L"Proto_Transform"));
+	auto pPlayer = dynamic_cast<CScene*>(scenemgr::Get_CurScene())->GetPlayerObject();
+	Engine::CTransform* pPlayerTransformCom = pPlayer->GetTransForm();
 	NULL_CHECK_RETURN(pPlayerTransformCom, _vec3());
 
 	

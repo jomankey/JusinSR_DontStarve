@@ -28,9 +28,9 @@ _int CToolTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	Input_Mouse();
 	if (CToolMgr::bTerrainWireFrame)
-		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+		renderer::Add_RenderGroup(RENDER_NONALPHA, this);
 	else
-		Engine::Add_RenderGroup(RENDER_ALPHA, this);
+		renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
@@ -45,7 +45,7 @@ void CToolTerrain::LateUpdate_GameObject()
 void CToolTerrain::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	if (CToolMgr::bTerrainWireFrame) m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	m_pTextureCom->Set_Texture(0);
 	
@@ -61,19 +61,19 @@ HRESULT CToolTerrain::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(Engine::Clone_Proto(L"Proto_TerrainTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(proto::Clone_Proto(L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Tile1"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Tile1"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Tile1", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
@@ -85,13 +85,15 @@ HRESULT CToolTerrain::SetUp_Material()
 	D3DMATERIAL9			tMtrl;
 	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
 
-	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Diffuse = D3DXCOLOR(CToolMgr::m_fMtrlDiffuseColor[0], CToolMgr::m_fMtrlDiffuseColor[1], CToolMgr::m_fMtrlDiffuseColor[2], 1.f);
+	tMtrl.Ambient = D3DXCOLOR(CToolMgr::m_fMtrlAmbientColor[0], CToolMgr::m_fMtrlAmbientColor[1], CToolMgr::m_fMtrlAmbientColor[2], 1.f);
+	tMtrl.Specular = D3DXCOLOR(CToolMgr::m_fMtrlSpecularColor[0], CToolMgr::m_fMtrlSpecularColor[1], CToolMgr::m_fMtrlSpecularColor[2], 1.f);
+	//tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	//tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	//tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
 	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
 	tMtrl.Power = 0.f;
-
 	m_pGraphicDev->SetMaterial(&tMtrl);
 
 	return S_OK;
@@ -109,7 +111,7 @@ HRESULT CToolTerrain::Picking_OnTerrain()
 {
 	_ulong i = m_pCalculatorCom->Picking_OnTerrain_Tool(g_hWnd,
 		m_pBufferCom,
-		m_pTransformCom);
+		m_pTransForm);
 
 	CToolMgr::iPickingIndex = i;
 

@@ -2,42 +2,49 @@
 
 #include "Engine_Define.h"
 #include "Base.h"
-#include "Layer.h"
-BEGIN(Engine)
 
-class CCamera;
 
-class ENGINE_DLL CScene :public CBase
+namespace Engine
 {
-protected:
-	explicit CScene(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CScene();
+	class CCamera;
+	class CLayer;
+	class CGameObject;
+	class ENGINE_DLL CScene :public CBase
+	{
 
-public:
-	CComponent*			Get_Component(COMPONENTID eID, const _tchar* pLayerTag, const _tchar* pObjTag, const _tchar* pComponentTag);
-	void	BeginOrtho();
-	void	EndOrtho();
-	_matrix*    Get_OrthoViewMatrix();
-	_matrix*	Get_OrthoMatrix();
-	CLayer* Get_Layer(const _tchar* pKey);
+	public:
+		const vector<CGameObject*>& GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType);
+	public:
+		void	BeginOrtho();
+		void	EndOrtho();
+		_matrix* Get_OrthoViewMatrix();
+		_matrix* Get_OrthoMatrix();
 
-public:
-	virtual HRESULT		Ready_Scene();
-	virtual _int		Update_Scene(const _float& fTimeDelta);
-	virtual void		LateUpdate_Scene();
-	virtual void		Render_Scene()PURE;
+		//나중에 싱글톤으로 교체
+		CGameObject* GetTerrainObject() { return m_pTerrain; }
+		CGameObject* GetPlayerObject() { return m_pPlayer; }
 
+	public:
+		virtual HRESULT		Ready_Scene();
+		virtual _int		Update_Scene(const _float& fTimeDelta);
+		virtual void		LateUpdate_Scene();
+		virtual void		Render_Scene()	PURE;
+		const CLayer& GetLayer(eLAYER_TYPE _eLayerType) { return *m_arrLayer[(int)_eLayerType]; }
+	public:
+		virtual void Free();
 
-protected:
-	LPDIRECT3DDEVICE9		m_pGraphicDev;
-	map<const _tchar*, CLayer*>	m_mapLayer;
+	protected:
+		explicit CScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName);
+		virtual ~CScene();
 
-	//카메라 게임오브젝트
-	CCamera* m_pCamera;
-public:
-	virtual void Free();
-public:
+	protected:
+		LPDIRECT3DDEVICE9		m_pGraphicDev;
+		CLayer* m_arrLayer[(int)eLAYER_TYPE::END];
+		wstring					m_strSceneName;
+		CCamera* m_pCamera;
 
-};
-
-END
+		//나중에 싱글톤으로 교체
+		CGameObject* m_pTerrain;
+		CGameObject* m_pPlayer;
+	};
+}

@@ -35,11 +35,8 @@ public:
 
 private:
 	HANDLE				m_hThread;
-
 	CRITICAL_SECTION	m_Crt;
-
 	LOADINGID			m_eID;
-
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 	bool				m_bFinish;
 	_tchar				m_szLoading[128];

@@ -79,6 +79,9 @@
     <Filter Include="02. GameObject\01. Monster\02. Spider">
       <UniqueIdentifier>{d3a5b963-bd9d-44af-81c9-08fddd98540d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager">
+      <UniqueIdentifier>{d6027554-dace-417e-8176-6fda9623380b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\01. Monster\03. Pig">
       <UniqueIdentifier>{46c4e956-d443-4fee-8037-f795bc37c842}</UniqueIdentifier>
     </Filter>

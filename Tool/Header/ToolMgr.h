@@ -4,10 +4,10 @@
 #include "Engine_Define.h"
 #include "Export_System.h"
 
-BEGIN(Engine)
+namespace Engine {
 class CTexture;
 
-END
+}
 class CToolMgr :
     public CBase
 {

@@ -22,7 +22,7 @@ HRESULT CSkyBox::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->m_vScale = { 40.f, 40.f, 40.f };
+	m_pTransForm->m_vScale = { 40.f, 40.f, 40.f };
 
 
 	return S_OK;
@@ -31,7 +31,7 @@ HRESULT CSkyBox::Ready_GameObject()
 Engine::_int CSkyBox::Update_GameObject(const _float& fTimeDelta)
 {
 
-	Engine::Add_RenderGroup(RENDER_PRIORITY, this);
+	renderer::Add_RenderGroup(RENDER_PRIORITY, this);
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
@@ -47,13 +47,13 @@ void CSkyBox::LateUpdate_GameObject()
 
 	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
 
-	m_pTransformCom->Set_Pos(matCamWorld._41, matCamWorld._42 + 3.f, matCamWorld._43);
+	m_pTransForm->Set_Pos(matCamWorld._41, matCamWorld._42 + 3.f, matCamWorld._43);
 
 }
 
 void CSkyBox::Render_GameObject()
 {	
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev ->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	m_pTextureCom->Set_Texture(0);
@@ -69,15 +69,15 @@ HRESULT CSkyBox::Add_Component()
 {
 	CComponent*		pComponent = nullptr;
 		
-	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(L"Proto_CubeTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(proto::Clone_Proto(L"Proto_CubeTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_CubeTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_SkyBoxTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_SkyBoxTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_SkyBoxTexture", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 		

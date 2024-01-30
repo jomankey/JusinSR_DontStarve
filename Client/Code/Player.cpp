@@ -5,6 +5,8 @@
 #include "Export_Utility.h"
 #include"CInven.h"
 
+#include "Component.h"
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -24,7 +26,7 @@ HRESULT CPlayer::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	/*m_pTransformCom->m_vScale = { 1.2f, 1.f, 1.f };*/
+	/*m_pTransForm->m_vScale = { 1.2f, 1.f, 1.f };*/
 	m_eCurState = IDLE;
 	m_ePreState = STATE_END;
 	m_ePlayerLookAt = LOOK_DOWN;
@@ -45,7 +47,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	
 	CGameObject::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
 	
 	/*Engine::IsPermit_Call(L"Unarmed_IDLE", fTimeDelta);*/
@@ -58,15 +60,15 @@ void CPlayer::LateUpdate_GameObject()
 
 	_vec3	vPos;
 	BillBoard();
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//__super::Compute_ViewZ(&vPos);
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	__super::Compute_ViewZ(&vPos);
 
 	/*Height_OnTerrain();*/
 }
 
 void CPlayer::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -91,11 +93,11 @@ HRESULT CPlayer::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 	
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 	
-	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(Engine::Clone_Proto(L"Proto_RvRcTex"));
+	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
@@ -104,125 +106,125 @@ HRESULT CPlayer::Add_Component()
 	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	//};
 	/*enum PLAYERLOOK { LOOK_DOWN, LOOK_RIGHT, LOOK_LEFT, LOOK_UP, LOOK_END };*/
-	pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_idle_down"));
+	pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_down", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_UP][IDLE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_idle_up"));
+	pComponent = m_pTextureCom[LOOK_UP][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_up", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_LEFT][IDLE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_idle_side"));
+	pComponent = m_pTextureCom[LOOK_LEFT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_RIGHT][IDLE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_idle_side"));
+	pComponent = m_pTextureCom[LOOK_RIGHT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][MOVE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_run_down"));
+	pComponent = m_pTextureCom[LOOK_DOWN][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_down", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_UP][MOVE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_run_up"));
+	pComponent = m_pTextureCom[LOOK_UP][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_up", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_RIGHT][MOVE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_run_side"));
+	pComponent = m_pTextureCom[LOOK_RIGHT][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_LEFT][MOVE] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_run_side"));
+	pComponent = m_pTextureCom[LOOK_LEFT][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][BUILD] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_build_down"));
+	pComponent = m_pTextureCom[LOOK_DOWN][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_down", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_UP][BUILD] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_build_up"));
+	pComponent = m_pTextureCom[LOOK_UP][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_up", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_RIGHT][BUILD] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_build_side"));
+	pComponent = m_pTextureCom[LOOK_RIGHT][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_LEFT][BUILD] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_build_side"));
+	pComponent = m_pTextureCom[LOOK_LEFT][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_UP][PICKUP] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_pickup_up"));
+	pComponent = m_pTextureCom[LOOK_UP][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_up", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][PICKUP] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_pickup_down"));
+	pComponent = m_pTextureCom[LOOK_DOWN][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_down", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_RIGHT][PICKUP] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_pickup_side"));
+	pComponent = m_pTextureCom[LOOK_RIGHT][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_LEFT][PICKUP] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_pickup_side"));
+	pComponent = m_pTextureCom[LOOK_LEFT][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][HIT] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_hit_down"));
+	pComponent = m_pTextureCom[LOOK_DOWN][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_down", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_UP][HIT] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_hit_up"));
+	pComponent = m_pTextureCom[LOOK_UP][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_up", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_RIGHT][HIT] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_hit_side"));
+	pComponent = m_pTextureCom[LOOK_RIGHT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_LEFT][HIT] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_hit_side"));
+	pComponent = m_pTextureCom[LOOK_LEFT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_punch_down"));
+	pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_down", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_UP][ATTACK] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_punch_up"));
+	pComponent = m_pTextureCom[LOOK_UP][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_up", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_RIGHT][ATTACK] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_punch_side"));
+	pComponent = m_pTextureCom[LOOK_RIGHT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_LEFT][ATTACK] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_Unarmed_punch_side"));
+	pComponent = m_pTextureCom[LOOK_LEFT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_side", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][FALLDOWN] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_falldown"));
+	pComponent = m_pTextureCom[LOOK_DOWN][FALLDOWN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_falldown"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_falldown", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][WAKEUP] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_wakeup"));
+	pComponent = m_pTextureCom[LOOK_DOWN][WAKEUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_wakeup"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_wakeup", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][EAT] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Player_eat"));
+	pComponent = m_pTextureCom[LOOK_DOWN][EAT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_eat"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
 
 	
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
-	/*pComponent = m_pStatusCom = dynamic_cast<CPlayerStatus*>(Engine::Clone_Proto(L"Proto_PlayerStat"));
+	/*pComponent = m_pStatusCom = dynamic_cast<CPlayerStatus*>(proto::Clone_Proto(L"Proto_PlayerStat"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_PlayerStat", pComponent });*/
 
@@ -253,16 +255,16 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	
 	_vec3		vDir,vRight , vCurPos;
 	CTerrainTex * pTerrainTex = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
-	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
-	m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
+	m_pTransForm->Get_Info(INFO_LOOK, &vDir);
+	m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
 
 	if (GetAsyncKeyState('W'))
 	{
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
-		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		m_pTransForm->Move_Pos(&vDir, 5.f, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransformCom->Move_Pos(&vDir, -5.f, fTimeDelta);
+			m_pTransForm->Move_Pos(&vDir, -5.f, fTimeDelta);
 
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_UP;
@@ -271,10 +273,10 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('S'))
 	{ //f
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransformCom->Move_Pos(&vDir, -5.f, fTimeDelta);
-		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		m_pTransForm->Move_Pos(&vDir, -5.f, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransformCom->Move_Pos(&vDir, 5.f, fTimeDelta);
+			m_pTransForm->Move_Pos(&vDir, 5.f, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_DOWN;
 		
@@ -283,11 +285,11 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('A'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransformCom->Move_Pos(&vRight, -5.f, fTimeDelta);
-		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		m_pTransForm->Move_Pos(&vRight, -5.f, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		vCurPos.x += 0.5f;
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransformCom->Move_Pos(&vRight, 5.f, fTimeDelta);
+			m_pTransForm->Move_Pos(&vRight, 5.f, fTimeDelta);
 			
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_LEFT;
@@ -295,17 +297,17 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			m_Dirchange = true;
 		}
-		/*m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(90.f * fTimeDelta));*/
+		/*m_pTransForm->Rotation(ROT_Y, D3DXToRadian(90.f * fTimeDelta));*/
 	}
 
 	if (GetAsyncKeyState('D'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransformCom->Move_Pos(&vRight, 5.f, fTimeDelta);
-		m_pTransformCom->Get_Info(INFO_POS, &vCurPos);
+		m_pTransForm->Move_Pos(&vRight, 5.f, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		vCurPos.x -= 0.5f;
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransformCom->Set_Pos(vCurPos);
+			m_pTransForm->Set_Pos(vCurPos);
 			
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_RIGHT;
@@ -313,7 +315,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			m_Dirchange = false;
 		}
-		/*m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(-90.f * fTimeDelta));*/
+		/*m_pTransForm->Rotation(ROT_Y, D3DXToRadian(-90.f * fTimeDelta));*/
 	}
 
 	if (!GetAsyncKeyState('W') &&
@@ -361,34 +363,36 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	//};
 
-	//if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
-	//{
-	//	_vec3	vPickPos = Picking_OnTerrain();
-	//
-	//	m_pTransformCom->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
-	//}
-	
+	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	{
+		_vec3	vPickPos = Picking_OnTerrain();
+
+		m_pTransForm->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
+	}
 }
 
 void CPlayer::Height_OnTerrain()
 {
+	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
 	_vec3		vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
 
-	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
+	Engine::CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	NULL_CHECK(pTerrainBufferCom);
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
 
-	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.5f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, fHeight + 1.5f, vPos.z);
 }
 
 _vec3 CPlayer::Picking_OnTerrain()
 {
-	CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(Engine::Get_Component(ID_STATIC, L"GameLogic", L"Terrain", L"Proto_TerrainTex"));
+	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
+
+	CTerrainTex*		pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3());
 
-	CTransform*			pTerrainTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Terrain", L"Proto_Transform"));
+	CTransform*			pTerrainTransCom = dynamic_cast<CTransform*>(pTerrain->GetTransForm());
 	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
 
 
@@ -398,7 +402,7 @@ void CPlayer::BillBoard()
 {
 	_matrix	matWorld, matView, matBill;
 
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pTransForm->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
 
@@ -409,7 +413,7 @@ void CPlayer::BillBoard()
 
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
-	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
 }
 void CPlayer::Check_State()
 {
@@ -489,35 +493,35 @@ void CPlayer::Set_Scale()
 {
 	if (m_eCurState == BUILD )
 	{
-		m_pTransformCom->m_vScale = { 1.5f, 1.0f,1.0f };
+		m_pTransForm->m_vScale = { 1.5f, 1.0f,1.0f };
 	}
 	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == PICKUP)
 	{
-		m_pTransformCom->m_vScale = { 1.5f, 1.0f,1.0f };
+		m_pTransForm->m_vScale = { 1.5f, 1.0f,1.0f };
 	}
 	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT)&& m_eCurState == ATTACK)
 	{
-		m_pTransformCom->m_vScale = { 1.5f, 1.5f,1.0f };
+		m_pTransForm->m_vScale = { 1.5f, 1.5f,1.0f };
 	}
 	else if (m_eCurState == BUILD || m_eCurState == HIT)
 	{
-		m_pTransformCom->m_vScale = { 1.5f, 1.5f,1.0f };
+		m_pTransForm->m_vScale = { 1.5f, 1.5f,1.0f };
 	}
 	else if (m_eCurState == FALLDOWN)
 	{
-		m_pTransformCom->m_vScale = { 1.5f, 5.0f,1.0f };
+		m_pTransForm->m_vScale = { 1.5f, 5.0f,1.0f };
 	}
 	else if (m_eCurState == WAKEUP)
 	{
-		m_pTransformCom->m_vScale = { 2.f, 2.0f,1.0f };
+		m_pTransForm->m_vScale = { 2.f, 2.0f,1.0f };
 	}
 	else if (m_eCurState == EAT)
 	{
-		m_pTransformCom->m_vScale = { 2.f, 1.5f,1.0f };
+		m_pTransForm->m_vScale = { 2.f, 1.5f,1.0f };
 	}
 	else
 	{
-		m_pTransformCom->m_vScale = { 1.0f, 1.0f,1.0f };
+		m_pTransForm->m_vScale = { 1.0f, 1.0f,1.0f };
 	}
 
 }

@@ -3,28 +3,29 @@
 #include "Engine_Define.h"
 #include "Base.h"
 
-BEGIN(Engine)
-
-class ENGINE_DLL CPathMgr : public CBase
+namespace Engine
 {
-	DECLARE_SINGLETON(CPathMgr)
 
-private:
-	explicit CPathMgr();
-	virtual ~CPathMgr();
+	class ENGINE_DLL CPathMgr : public CBase
+	{
+		DECLARE_SINGLETON(CPathMgr)
 
-public:
-	HRESULT			Ready_Path();
-	wstring CPathMgr::GetRelativePath(const wchar_t* filePath);
-	const _tchar* GetResourcePath() { return m_strBasePath; }
-private:
+	private:
+		explicit CPathMgr();
+		virtual ~CPathMgr();
 
-private:
-	virtual void		Free();
+	public:
+		HRESULT			Ready_Path();
+		wstring GetRelativePath(const wchar_t* filePath);
+		const _tchar* GetResourcePath() { return m_strBasePath; }
+	private:
 
-private:
-	_tchar		m_strBasePath[MAX_PATH];
+	private:
+		virtual void		Free();
 
-};
+	private:
+		_tchar		m_strBasePath[MAX_PATH];
 
-END
+	};
+
+}

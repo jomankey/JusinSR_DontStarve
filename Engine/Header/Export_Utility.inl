@@ -1,13 +1,13 @@
 #include "Export_Utility.h"
 
-CComponent * Get_Component(COMPONENTID eID, const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag)
-{
-	return CManagement::GetInstance()->Get_Component(eID, pLayerTag, pObjTag, pComponentTag);
-}
 
-HRESULT Create_Management(LPDIRECT3DDEVICE9 pGraphicDev, CManagement ** ppManagementInstance)
+
+
+
+//SceneMgr
+HRESULT scenemgr::Create_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev, CSceneMgr** ppManagementInstance)
 {
-	CManagement*		pManagement = CManagement::GetInstance();
+	CSceneMgr* pManagement = CSceneMgr::GetInstance();
 	NULL_CHECK_RETURN(pManagement, E_FAIL);
 
 	*ppManagementInstance = pManagement;
@@ -15,55 +15,59 @@ HRESULT Create_Management(LPDIRECT3DDEVICE9 pGraphicDev, CManagement ** ppManage
 	return S_OK;
 }
 
-HRESULT Set_Scene(CScene * pScene)
+HRESULT scenemgr::Change_CurScene(CScene * pScene)
 {
-	return CManagement::GetInstance()->Set_Scene(pScene);
+	return CSceneMgr::GetInstance()->Change_Scene(pScene);
 }
 
-CScene* Get_Scene()
+CScene* scenemgr::Get_CurScene()
 {
-	return CManagement::GetInstance()->Get_Scene();
+	return CSceneMgr::GetInstance()->Get_CurScene();
 }
 
-_int Update_Scene(const _float & fTimeDelta)
+_int scenemgr::Update_Scene(const _float & fTimeDelta)
 {
-	return CManagement::GetInstance()->Update_Scene(fTimeDelta);
+	return CSceneMgr::GetInstance()->Update_Scene(fTimeDelta);
 }
 
-void LateUpdate_Scene()
+void scenemgr::LateUpdate_Scene()
 {
-	CManagement::GetInstance()->LateUpdate_Scene();
+	CSceneMgr::GetInstance()->LateUpdate_Scene();
 }
 
-void Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
+void scenemgr::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CManagement::GetInstance()->Render_Scene(pGraphicDev);
+	CSceneMgr::GetInstance()->Render_Scene(pGraphicDev);
 }
 
-HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
+
+
+//ProtoMgr
+HRESULT	proto::Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
 	return CProtoMgr::GetInstance()->Ready_Proto(pProtoTag, pComponent);
 }
-CComponent*		Clone_Proto(const _tchar* pProtoTag)
+CComponent* proto::Clone_Proto(const _tchar* pProtoTag)
 {
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag);
 }
 
 // Renderer
-void		Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
+void		renderer::Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)
 {
 	CRenderer::GetInstance()->Add_RenderGroup(eID, pGameObject);
 }
-void		Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
+void		renderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	CRenderer::GetInstance()->Render_GameObject(pGraphicDev);
 }
-void		Clear_RenderGroup()
+void		renderer::Clear_RenderGroup()
 {
 	CRenderer::GetInstance()->Clear_RenderGroup();
 }
 
-HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
+// LightMgr
+HRESULT		light::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
 	const D3DLIGHT9* pLightInfo,
 	const _uint& iIndex)
 {
@@ -85,5 +89,5 @@ void Release_Utility()
 	CLightMgr::DestroyInstance();
 	CRenderer::DestroyInstance();
 	CProtoMgr::DestroyInstance();
-	CManagement::DestroyInstance();
+	CSceneMgr::DestroyInstance();
 }

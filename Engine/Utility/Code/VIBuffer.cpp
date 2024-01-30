@@ -2,11 +2,6 @@
 
 
 
-CVIBuffer::CVIBuffer()
-	: m_pVB(nullptr), m_pIB(nullptr), m_dwVtxCnt(0), m_dwTriCnt(0), m_dwVtxSize(0), m_dwFVF(0), m_dwIdxSize(0)
-{
-}
-
 CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev),
 	m_pVB(nullptr), m_pIB(nullptr), m_dwVtxCnt(0), m_dwTriCnt(0), m_dwVtxSize(0), m_dwFVF(0), m_dwIdxSize(0)
@@ -66,7 +61,6 @@ void CVIBuffer::Render_Buffer()
 	m_pGraphicDev->SetFVF(m_dwFVF);
 
 	m_pGraphicDev->SetIndices(m_pIB);
-
 
 	m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, m_dwVtxCnt, 0, m_dwTriCnt);
 

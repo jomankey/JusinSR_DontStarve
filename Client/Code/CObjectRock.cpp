@@ -1,14 +1,14 @@
 #include "CObjectRock.h"
 #include "Export_Utility.h"
+#include "Component.h"
 
-CObjectRock::CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
-	:CGameObject(pGraphicDev), m_vPos(vPos)
+CObjectRock::CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CGameObject(pGraphicDev)
 {
 }
 
 CObjectRock::CObjectRock(const CObjectRock& rhs)
 	:CGameObject(rhs.m_pGraphicDev)
-	, m_vPos(rhs.m_vPos)
 {
 }
 
@@ -28,7 +28,7 @@ _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 	_matrix	matWorld, matView, matBillY, matBillX;
 
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pTransForm->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBillY);
 	D3DXMatrixIdentity(&matBillX);
@@ -46,8 +46,8 @@ _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
 	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
 
-	m_pTransformCom->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	m_pTransForm->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
+	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 
@@ -56,13 +56,13 @@ void CObjectRock::LateUpdate_GameObject()
 
 	__super::LateUpdate_GameObject();
 	_vec3	vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	__super::Compute_ViewZ(&vPos);
 }
 
 void CObjectRock::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -78,28 +78,29 @@ void CObjectRock::Render_GameObject()
 HRESULT CObjectRock::Add_Component()
 {
 	CComponent* pComponent = nullptr;
+	_vec3 vPos;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Nomal_Rock"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Nomal_Rock"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Nomal_Rock", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransformCom->Set_Scale(_vec3(1.5f, 1.5f, 1.5f));
-	//s
-	m_pTransformCom->Set_Pos(m_vPos.x, 1.5f, m_vPos.z);
+	m_pTransForm->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.8f, vPos.z);
 	return S_OK;
 }
 
-CObjectRock* CObjectRock::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
+CObjectRock* CObjectRock::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CObjectRock* pInstance = new CObjectRock(pGraphicDev, vPos);
+	CObjectRock* pInstance = new CObjectRock(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
