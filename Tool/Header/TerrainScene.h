@@ -27,10 +27,14 @@ private:
 private:
 	void Save_File();
 	HRESULT Load_File();
-	HRESULT Change_LightInfo();
+
+	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
+	HRESULT Change_LightInfo(const _float& fTimeDelta);
 
 private:
 	Engine::CCalculator* m_pCalculatorCom;
+
+	_vec3 vLight[3] = { { 1.f, 1.f, 1.f} };
 
 public:
 	static CTerrainScene* Create(LPDIRECT3DDEVICE9 pGraphicDev);

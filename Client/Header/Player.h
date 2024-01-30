@@ -32,16 +32,21 @@ public:
 private:
 	HRESULT			Add_Component();
 	void			Key_Input(const _float& fTimeDelta);
+	HRESULT			SetUp_Material();
+
 	void			Height_OnTerrain();
 	_vec3			Picking_OnTerrain();
 	void			BillBoard();
 	void			Check_State();
 	void			Set_Scale();
+
 private:
 	Engine::CRcTex*		m_pBufferCom;
 	Engine::CRvRcTex*	m_pReverseCom;
 	Engine::CTexture*	m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
 	Engine::CCalculator*	m_pCalculatorCom;
+	/*Engine::CPlayerStatus*  m_pStatusCom;*/
+	//Engine::CCubeTex* m_pColliderCom;
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
 

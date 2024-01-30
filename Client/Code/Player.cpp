@@ -4,8 +4,10 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include"CInven.h"
+#include <Monster.h>
 
 #include "Component.h"
+#include "Layer.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -44,7 +46,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	Key_Input(fTimeDelta);
 	Check_State();
-
+	Set_Scale();
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -57,24 +59,25 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+	BillBoard();
 
 	_vec3	vPos;
-	BillBoard();
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	//__super::Compute_ViewZ(&vPos);
 
 	/*Height_OnTerrain();*/
 }
 
 void CPlayer::Render_GameObject()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	Set_Scale();
-
 	m_pTextureCom[m_ePlayerLookAt][m_ePreState]->Set_Texture((_uint)m_fFrame);
+
+	FAILED_CHECK_RETURN(SetUp_Material(), );
 
 	if (m_Dirchange)
 	{
@@ -87,6 +90,7 @@ void CPlayer::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CPlayer::Add_Component()
@@ -219,6 +223,7 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_pTransForm->Set_Pos(0.f, 1.f, 0.f);
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -329,17 +334,81 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_eCurState = IDLE;
 	}
 
-	if (GetAsyncKeyState('F'))
+	if (GetAsyncKeyState('F')) // 공격
 	{
 		m_eCurState = ATTACK;
+		/*
+			_vec3 vPlayerPos,
+			_vec3* vPlayerAxis,
+			_vec3 vMonsterPos,
+			_vec3* vMonsterAxis,
+			_vec3 vPlayerScale,
+			_vec3 vMonsterScale*/
+		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_PLAY, eOBJECT_GROUPTYPE::OBJECT);
+
+		_vec3* vPlayerAxis = new _vec3[3];
+		_vec3* vMonsterAxis = new _vec3[3];
+		_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+
+		
+		vPlayerScale = m_pTransForm->Get_Scale();
+
+		//<<<<수정필요
+		//for (auto& monster : pLayer)
+		//{
+		//	if (monster.first == L"Beefalo" || monster.first == L"Spider")
+		//	{
+		//		CTransform* pItemTransform = dynamic_cast<CTransform*>(monster.second->Get_Component(ID_DYNAMIC, L"Proto_Transform"));
+		//		CRcTex* pMonsterTexture = dynamic_cast<CRcTex*>(monster.second->Get_Component(ID_STATIC, L"Proto_RcTex"));
+		//		pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
+		//		pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
+		//		pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
+		//		pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
+		//		vMonsterScale = pItemTransform->Get_Scale();
+
+		//		if (Engine::Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos,
+		//			vMonsterAxis, vPlayerScale, vMonsterScale))
+		//		{
+		//			// 몬스터와 공격 충돌 시
+		//			// 몬스터 채력이 깎임.
+		//			m_pTransForm->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
+		//			dynamic_cast<CMonster*>(monster.second)->Set_Attack(10.f);
+		//		}
+		//		break;
+		//	}
+		//}
 	}
 	if (GetAsyncKeyState('G'))
 	{
 		m_eCurState = HIT;
 	}
-	if (GetAsyncKeyState('V'))
+	if (GetAsyncKeyState('V')) // 줍기
 	{
 		m_eCurState = PICKUP;
+
+		//<<<<수정필요
+		//auto pLayer = scenemgr::Get_CurScene::Get_Layer(L"GameLogic")->Get_MapObject();
+		//_vec3 vPlayerPos, vPlayerScale, vItemPos, vItemScale;
+		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		//vPlayerScale = { 1.f, 1.f, 1.f };
+		//for (auto& object : pLayer)
+		//{
+		//	if (object.first == L"Meat_Monster" || object.first == L"Rocks_0"|| object.first == L"CutGlass")
+		//	{
+		//		//_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale
+		//		CTransform* pItemTransform = dynamic_cast<CTransform*>( object.second->Get_Component(ID_DYNAMIC, L"Proto_Transform"));
+		//		pItemTransform->Get_Info(INFO_POS, &vItemPos);
+		//		vItemScale = pItemTransform->Get_Scale();
+
+		//		if (Engine::Collision_Item(vPlayerPos, vItemPos, vPlayerScale, vItemScale))
+		//			m_pTransForm->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
+		//		
+		//	}
+		//}
 	}
 	if (GetAsyncKeyState('B'))
 	{
@@ -365,12 +434,30 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
 	//};
 
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
-	{
-		_vec3	vPickPos = Picking_OnTerrain();
+	//if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	//{
+	//	_vec3	vPickPos = Picking_OnTerrain();
+	//
+	//	m_pTransForm->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
+	//}
+	
+}
 
-		m_pTransForm->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
-	}
+HRESULT CPlayer::SetUp_Material()
+{
+	D3DMATERIAL9			tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+	
+	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+	tMtrl.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&tMtrl);
+
+	return S_OK;
 }
 
 void CPlayer::Height_OnTerrain()
@@ -407,12 +494,17 @@ void CPlayer::BillBoard()
 	m_pTransForm->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
-
+	
 	matBill._11 = matView._11;
 	matBill._13 = matView._13;
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
-
+	
+	//matBill._22 = matView._22;
+	matBill._23 = matView._23;
+	//matBill._32 = 0.f;
+	matBill._33 = matView._33;
+	
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));

@@ -61,7 +61,7 @@ private:
 
 protected:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
+	Engine::CTransform* m_pTransForm;
 	Engine::CTexture* m_pTextureCom;
 
 private:

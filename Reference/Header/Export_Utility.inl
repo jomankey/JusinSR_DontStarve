@@ -74,12 +74,12 @@ HRESULT		light::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
 	return CLightMgr::GetInstance()->Ready_Light(pGraphicDev, pLightInfo, iIndex);
 }
 
-CLight* Get_Light(_int _iIndex)
+CLight* light::Get_Light(_int _iIndex)
 {
 	return CLightMgr::GetInstance()->Get_Light(_iIndex);
 }
 
-_int Change_Light(const _float& fTimeDelta, _int _iIndex)
+_int light::Change_Light(const _float& fTimeDelta, _int _iIndex)
 {
 	return CLightMgr::GetInstance()->Change_Light(fTimeDelta, _iIndex);
 }

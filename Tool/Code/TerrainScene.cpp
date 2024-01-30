@@ -68,8 +68,7 @@ HRESULT CTerrainScene::Ready_Scene()
 
 _int CTerrainScene::Update_Scene(const _float& fTimeDelta)
 {
-
-	Change_LightInfo();
+	Change_LightInfo(fTimeDelta);
 	Input_Mouse();
 
 	if (CToolMgr::bSaveData)
@@ -201,6 +200,23 @@ void CTerrainScene::Save_File()
 	WriteFile(hFile, &iOption, sizeof(int), &dwByte, nullptr);*/
 	;
 
+	for (int i = 0; i < 3; ++i)
+	{
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+	}
+
+	iCount = CToolMgr::vecPickingIdex.size();
+	WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
 
 	MessageBox(g_hWnd, L"Terrain Save", L"성공", MB_OK);
@@ -242,9 +258,47 @@ HRESULT CTerrainScene::Load_File()
 
 		dwStrByte = 0;
 
-		Engine::CLayer* pLayer = m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY];
-		NULL_CHECK_RETURN(pLayer, E_FAIL);
-		Engine::CGameObject* pGameObject = nullptr;
+			Create_Object(pName, vPos);
+		}
+	}
+
+	for (int i = 0; i < 3; ++i)
+	{
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+		
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+	}
+
+	
+	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+
+	for (int i = 0; i < iCount; ++i)
+	{
+		int iTemp = 0;
+		ReadFile(hFile, &iTemp, sizeof(_int), &dwByte, nullptr);
+		CToolMgr::vecPickingIdex.push_back(iTemp);
+	}
+
+	CloseHandle(hFile);
+
+	MessageBox(g_hWnd, L"Terrain Load", L"성공", MB_OK);
+
+	return S_OK;
+}
+
+HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
+{
+	Engine::CLayer* pLayer = Get_Layer(L"GameLogic");
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+	Engine::CGameObject* pGameObject = nullptr;
 
 		if (!_tcscmp(L"Tree", pName))
 		{
@@ -269,30 +323,74 @@ HRESULT CTerrainScene::Load_File()
 	}
 }
 
-HRESULT CTerrainScene::Change_LightInfo()
+	return S_OK;
+}
+
+HRESULT CTerrainScene::Change_LightInfo(const _float& fTimeDelta)
 {
-	D3DLIGHT9* tLightInfo = Engine::Get_Light(0)->Get_Light();
+	D3DLIGHT9*			tLightInfo = light::Get_Light(0)->Get_Light();
+	_float fSpeed = 1;
 	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
 	tLightInfo->Type = D3DLIGHT_DIRECTIONAL;
 
-	tLightInfo->Diffuse = D3DXCOLOR(CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].x,
-		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].y,
-		CToolMgr::m_fDirectionDiffuseColor[CToolMgr::iTimeLight].z,
+	int iIndex = 0;
+	if (CToolMgr::iAUtoTime == 0)
+	{
+		iIndex = Engine::Change_Light(fTimeDelta, 0);
+	}
+	else
+		iIndex = CToolMgr::iTimeLight;
+
+	// 낮, 오후, 밤 시간 별 조명 값이 다름.
+	// 시간이 변경될 때 마다 조명이 같아질 수 있도록 값을 시간에 따라 변경해줘야 함.
+
+	if (CToolMgr::iAUtoTime == 0)
+	{
+		vLight[0].x += (CToolMgr::m_fDirectionDiffuseColor[iIndex].x - vLight[0].x) * fTimeDelta;
+		vLight[0].y += (CToolMgr::m_fDirectionDiffuseColor[iIndex].y - vLight[0].y) * fTimeDelta;
+		vLight[0].z += (CToolMgr::m_fDirectionDiffuseColor[iIndex].z - vLight[0].z) * fTimeDelta;
+
+		vLight[1].x += (CToolMgr::m_fDirectionAmbientColor[iIndex].x - vLight[1].x) * fTimeDelta;
+		vLight[1].y += (CToolMgr::m_fDirectionAmbientColor[iIndex].y - vLight[1].y) * fTimeDelta;
+		vLight[1].z += (CToolMgr::m_fDirectionAmbientColor[iIndex].z - vLight[1].z) * fTimeDelta;
+
+		vLight[2].x += (CToolMgr::m_fDirectionSpecularColor[iIndex].x - vLight[2].x) * fTimeDelta;
+		vLight[2].y += (CToolMgr::m_fDirectionSpecularColor[iIndex].y - vLight[2].y) * fTimeDelta;
+		vLight[2].z += (CToolMgr::m_fDirectionSpecularColor[iIndex].z - vLight[2].z) * fTimeDelta;
+	}
+	else
+	{
+		vLight[0].x = CToolMgr::m_fDirectionDiffuseColor[iIndex].x; 
+		vLight[0].y = CToolMgr::m_fDirectionDiffuseColor[iIndex].y; 
+		vLight[0].z = CToolMgr::m_fDirectionDiffuseColor[iIndex].z; 
+	
+		vLight[1].x = CToolMgr::m_fDirectionAmbientColor[iIndex].x; 
+		vLight[1].y = CToolMgr::m_fDirectionAmbientColor[iIndex].y; 
+		vLight[1].z = CToolMgr::m_fDirectionAmbientColor[iIndex].z; 
+	
+		vLight[2].x = CToolMgr::m_fDirectionSpecularColor[iIndex].x;
+		vLight[2].y = CToolMgr::m_fDirectionSpecularColor[iIndex].y;
+		vLight[2].z = CToolMgr::m_fDirectionSpecularColor[iIndex].z;
+	}
+
+	tLightInfo->Diffuse = D3DXCOLOR(vLight[0].x,
+		vLight[0].y,
+		vLight[0].z,
 		1.f);
-	tLightInfo->Specular = D3DXCOLOR(CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].x,
-		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].y,
-		CToolMgr::m_fDirectionAmbientColor[CToolMgr::iTimeLight].z,
+	tLightInfo->Specular = D3DXCOLOR(vLight[1].x,
+		vLight[1].y,
+		vLight[1].z,
 		1.f);
-	tLightInfo->Ambient = D3DXCOLOR(CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].x,
-		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].y,
-		CToolMgr::m_fDirectionSpecularColor[CToolMgr::iTimeLight].z,
+	tLightInfo->Ambient = D3DXCOLOR(vLight[2].x,
+		vLight[2].y,
+		vLight[2].z,
 		1.f);
 
 	tLightInfo->Direction = _vec3(1.f, -1.f, 1.f);
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
-	Engine::Get_Light(0)->Update_Light();
+	light::Get_Light(0)->Update_Light();
 	return S_OK;
 }
 

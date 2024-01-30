@@ -20,7 +20,7 @@
 
 namespace Engine {
 
-	// Management
+	// SceneMgr
 	namespace scenemgr
 	{
 		inline HRESULT			Create_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev, CSceneMgr** ppManagementInstance);
@@ -49,14 +49,14 @@ namespace Engine {
 		inline void		Clear_RenderGroup();
 	}
 
-inline CLight* Get_Light(_int _iIndex);
-inline _int Change_Light(const _float& fTimeDelta, _int _iIndex);
 
 
 	// LightMgr
 	namespace light
 	{
 		inline HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
+		inline CLight* Get_Light(_int _iIndex);
+		inline _int Change_Light(const _float& fTimeDelta, _int _iIndex);
 	}
 
 

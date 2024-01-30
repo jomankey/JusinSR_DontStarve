@@ -59,6 +59,8 @@ HRESULT CStage::Ready_Scene()
 
 Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 {
+	Change_LightInfo(fTimeDelta);
+
 	return __super::Update_Scene(fTimeDelta);
 }
 
@@ -239,6 +241,21 @@ HRESULT CStage::Ready_LightInfo()
 
 	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 
+	//점광원
+	// 최초 생성 후 플레이어 횟불 사용 시에만 켜지도록 
+	D3DLIGHT9 tPointLightInfo;
+	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo.Type = D3DLIGHT_POINT;
+
+	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Attenuation0 = 0.00000001f;
+	tPointLightInfo.Range = 100.f;
+	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
+
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, 1), E_FAIL);
+	light::Get_Light(1)->Close_Light();
+
 	return S_OK;
 }
 
@@ -279,32 +296,151 @@ HRESULT CStage::Load_Data()
 
 		if (!_tcscmp(L"Tree", pName))
 		{
-			pGameObject = CObjectGrass::Create(m_pGraphicDev);
+			pGameObject = CObjectTree::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-			pGameObject->GetTransForm()->Set_Pos(vPos);
 		}
 		else if (!_tcscmp(L"Rock", pName))
 		{
 			pGameObject = CObjectRock::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-			pGameObject->GetTransForm()->Set_Pos(vPos);
 		}
 		else if (!_tcscmp(L"Grass", pName))
 		{
 			pGameObject = CObjectGrass::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-			pGameObject->GetTransForm()->Set_Pos(vPos);
+		}
+		else if (!_tcscmp(L"CutGlass", pName))
+		{
+			pGameObject = CItem::Create(m_pGraphicDev, pName, vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		}
+		else if (!_tcscmp(L"Rocks_0", pName))
+		{
+			pGameObject = CItem::Create(m_pGraphicDev, pName, vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		}
+		else if (!_tcscmp(L"Rocks_1", pName))
+		{
+			pGameObject = CItem::Create(m_pGraphicDev, pName,vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		}
+		else if (!_tcscmp(L"Twigs", pName))
+		{
+			pGameObject = CItem::Create(m_pGraphicDev, pName, vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 		}
 
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 		delete[] pName;
+	}
+
+
+	for (int i = 0; i < 3; ++i)
+	{
+		ReadFile(hFile, &m_vDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &m_vDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &m_vDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		ReadFile(hFile, &m_vDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &m_vDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &m_vDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		ReadFile(hFile, &m_vDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &m_vDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &m_vDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+	}
+
+	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+	vector<_int> m_vecPos;
+	for (int i = 0; i < iCount; ++i)
+	{
+		int iTemp = 0;
+		ReadFile(hFile, &iTemp, sizeof(_int), &dwByte, nullptr);
+		m_vecPos.push_back(iTemp);
 	}
 
 	CloseHandle(hFile);
 
 	MessageBox(g_hWnd, L"Terrain Load", L"성공", MB_OK);
+
+	return S_OK;
+}
+
+HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
+{
+	D3DLIGHT9* tLightInfo = light::Get_Light(0)->Get_Light();
+
+	static _vec3 vLight[3] = {
+		{m_vDirectionDiffuseColor[0].x, m_vDirectionDiffuseColor[0].y, m_vDirectionDiffuseColor[0].z },
+		{m_vDirectionAmbientColor[0].x, m_vDirectionAmbientColor[0].y, m_vDirectionAmbientColor[0].z },
+		{m_vDirectionSpecularColor[0].x, m_vDirectionSpecularColor[0].y, m_vDirectionSpecularColor[0].z } };
+
+	tLightInfo->Type = D3DLIGHT_DIRECTIONAL;
+
+	int iIndex(0);
+
+	iIndex = light::Change_Light(fTimeDelta, 0);
+
+	vLight[0].x += (m_vDirectionDiffuseColor[iIndex].x - vLight[0].x) * fTimeDelta;
+	vLight[0].y += (m_vDirectionDiffuseColor[iIndex].y - vLight[0].y) * fTimeDelta;
+	vLight[0].z += (m_vDirectionDiffuseColor[iIndex].z - vLight[0].z) * fTimeDelta;
+
+	vLight[1].x += (m_vDirectionAmbientColor[iIndex].x - vLight[1].x) * fTimeDelta;
+	vLight[1].y += (m_vDirectionAmbientColor[iIndex].y - vLight[1].y) * fTimeDelta;
+	vLight[1].z += (m_vDirectionAmbientColor[iIndex].z - vLight[1].z) * fTimeDelta;
+
+	vLight[2].x += (m_vDirectionSpecularColor[iIndex].x - vLight[2].x) * fTimeDelta;
+	vLight[2].y += (m_vDirectionSpecularColor[iIndex].y - vLight[2].y) * fTimeDelta;
+	vLight[2].z += (m_vDirectionSpecularColor[iIndex].z - vLight[2].z) * fTimeDelta;
+
+	tLightInfo->Diffuse = D3DXCOLOR(vLight[0].x,
+		vLight[0].y,
+		vLight[0].z,
+		1.f);
+	tLightInfo->Specular = D3DXCOLOR(vLight[1].x,
+		vLight[1].y,
+		vLight[1].z,
+		1.f);
+	tLightInfo->Ambient = D3DXCOLOR(vLight[2].x,
+		vLight[2].y,
+		vLight[2].z,
+		1.f);
+
+	tLightInfo->Direction = _vec3(1.f, -1.f, 1.f);
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
+	light::Get_Light(0)->Update_Light();
+
+	//Change_PointLightInfo(fTimeDelta);
+	return S_OK;
+}
+
+HRESULT CStage::Change_PointLightInfo(const _float& fTimeDelta)
+{
+	D3DLIGHT9* tPointLightInfo = light::Get_Light(1)->Get_Light();
+	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo->Type = D3DLIGHT_POINT;
+
+	tPointLightInfo->Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 0.7f);
+	tPointLightInfo->Attenuation0 = 0.1f;
+	tPointLightInfo->Range = 5.f;
+
+	CTransform* pPlayerTransform = m_pPlayer->GetTransForm();
+
+	_vec3 pPlayerPos;
+	pPlayerTransform->Get_Info(INFO_POS, &pPlayerPos); // player pos 값 설정
+	tPointLightInfo->Position = pPlayerPos;
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
+	light::Get_Light(1)->Update_Light();
 
 	return S_OK;
 }

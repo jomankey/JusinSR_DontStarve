@@ -29,7 +29,7 @@ namespace Engine
 		virtual _int		Update_Scene(const _float& fTimeDelta);
 		virtual void		LateUpdate_Scene();
 		virtual void		Render_Scene()	PURE;
-		const CLayer& GetLayer(eLAYER_TYPE _eLayerType) { return *m_arrLayer[(int)_eLayerType]; }
+		CLayer* GetLayer(eLAYER_TYPE _eLayerType) { return m_arrLayer[(int)_eLayerType]; }
 	public:
 		virtual void Free();
 
@@ -39,7 +39,7 @@ namespace Engine
 
 	protected:
 		LPDIRECT3DDEVICE9		m_pGraphicDev;
-		CLayer* m_arrLayer[(int)eLAYER_TYPE::END];
+		CLayer*					m_arrLayer[(int)eLAYER_TYPE::END];
 		wstring					m_strSceneName;
 		CCamera* m_pCamera;
 

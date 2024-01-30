@@ -1,6 +1,6 @@
 #include "..\Include\stdafx.h"
 #include "Beefalo.h"
-#include "Export_System.h"
+//#include "Export_System.h"
 #include "Export_Utility.h"
 CBeefalo::CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos)
@@ -32,13 +32,21 @@ HRESULT CBeefalo::Ready_GameObject()
 
 _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
+    //die
+    if (m_Stat.fHP <= 0)
+    {
+        //
+    }
+
 	m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	if (m_fFrameEnd < m_fFrame)
 		m_fFrame = 0.f;
 
     CGameObject::Update_GameObject(fTimeDelta);
-    BillBoard();
+    State_Change();
+    Player_Chase(fTimeDelta);
+    
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     return 0;
 }
@@ -47,9 +55,10 @@ void CBeefalo::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
+    BillBoard();
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 
-    __super::Compute_ViewZ(&vPos);
+    //__super::Compute_ViewZ(&vPos);
     
     /*Height_OnTerrain();*/
 }
@@ -138,18 +147,23 @@ void CBeefalo::Height_OnTerrain()
 
 void CBeefalo::BillBoard()
 {
-	_matrix	matWorld, matView, matBill;
+    _matrix	matWorld, matView, matBill;
 
 	m_pTransForm->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
 
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
+    matBill._11 = matView._11;
+    matBill._13 = matView._13;
+    matBill._31 = matView._31;
     matBill._33 = matView._33;
 
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
+    //matBill._22 = matView._22;
+    matBill._23 = matView._23;
+    //matBill._32 = 0.f;
+    matBill._33 = matView._33;
+
+    D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
 }
@@ -168,12 +182,12 @@ void CBeefalo::Player_Chase(const _float& fTimeDelta)
 
     m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
 
-  //  m_eCurLook = m_pTransformCom->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
+  //  m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
   
-   // m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
-   // m_pTransformCom->Get_Info(INFO_RIGHT, &vRight);
+   // m_pTransForm->Get_Info(INFO_LOOK, &vDir);
+   // m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
    // D3DXVec3Normalize(&vDir, &vDir);
-   // m_pTransformCom->Move_Pos(&vDir, 1.f, fTimeDelta);
+   // m_pTransForm->Move_Pos(&vDir, 1.f, fTimeDelta);
 
     /*NULL_CHECK_RETURN(pPlayerTransformCom, 0);*/
     Look_Change();

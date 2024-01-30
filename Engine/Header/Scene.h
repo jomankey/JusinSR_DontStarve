@@ -13,7 +13,10 @@ namespace Engine
 	{
 
 	public:
-		const vector<CGameObject*>& GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType);
+		const vector<CGameObject*>& GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType)
+		{
+			return	m_arrLayer[(int)_eLayerType]->GetGroupObject(_eObjGroupType);
+		}
 	public:
 		void	BeginOrtho();
 		void	EndOrtho();
@@ -29,7 +32,7 @@ namespace Engine
 		virtual _int		Update_Scene(const _float& fTimeDelta);
 		virtual void		LateUpdate_Scene();
 		virtual void		Render_Scene()	PURE;
-		const CLayer& GetLayer(eLAYER_TYPE _eLayerType) { return *m_arrLayer[(int)_eLayerType]; }
+		CLayer* GetLayer(eLAYER_TYPE _eLayerType) { return m_arrLayer[(int)_eLayerType]; }
 	public:
 		virtual void Free();
 
