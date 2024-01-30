@@ -489,11 +489,6 @@ void CPlayer::BillBoard()
 	matBill._23 = matView._23;
 	//matBill._32 = 0.f;
 	matBill._33 = matView._33;
-
-	matBill._11 = matView._11;
-	//matBill._12 = matView._12;
-	matBill._21 = matView._21;
-	//matBill._22 = matView._22;
 	
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 	

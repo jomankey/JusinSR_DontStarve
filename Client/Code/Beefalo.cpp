@@ -54,9 +54,9 @@ void CBeefalo::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 	_vec3	vPos;
     BillBoard();
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
-    __super::Compute_ViewZ(&vPos);
+    //__super::Compute_ViewZ(&vPos);
     
     /*Height_OnTerrain();*/
 }
@@ -142,20 +142,25 @@ void CBeefalo::Height_OnTerrain()
 
 void CBeefalo::BillBoard()
 {
-	_matrix	matWorld, matView, matBill;
+    _matrix	matWorld, matView, matBill;
 
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
+    m_pTransformCom->Get_WorldMatrix(&matWorld);
+    m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+    D3DXMatrixIdentity(&matBill);
 
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
+    matBill._11 = matView._11;
+    matBill._13 = matView._13;
+    matBill._31 = matView._31;
     matBill._33 = matView._33;
 
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
+    //matBill._22 = matView._22;
+    matBill._23 = matView._23;
+    //matBill._32 = 0.f;
+    matBill._33 = matView._33;
 
-	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+    D3DXMatrixInverse(&matBill, NULL, &matBill);
+
+    m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
 }
 
 void CBeefalo::Set_ObjStat()
