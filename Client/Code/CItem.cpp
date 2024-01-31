@@ -49,9 +49,9 @@ _int CItem::Update_GameObject(const _float& fTimeDelta)
 void CItem::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	//_vec3	vPos;
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
+	//__super::Compute_ViewZ(&vPos);
 
 }
 
@@ -107,16 +107,14 @@ HRESULT CItem::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-
-
 }
 
 void CItem::SetPos(const _vec3& _vPos)
 {
 	_vec3 vPos= _vPos;
-	vPos.y = 1.f;
+	vPos.y = .2f;
 	m_pTransForm->Set_Pos(vPos);
-	m_pTransForm->Set_Scale(_vec3(0.5f, .3f, .5f));
+	m_pTransForm->Set_Scale(_vec3(0.4f, .15f, .4f));
 }
 
 void CItem::Free()

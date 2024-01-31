@@ -153,10 +153,15 @@ void Engine::CTransform::BillBoard()
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
 
-	//matBill._22 = matView._22;
+	matBill._22 = matView._22;
 	matBill._23 = matView._23;
-	//matBill._32 = 0.f;
+	matBill._32 = matView._32;
 	matBill._33 = matView._33;
+
+	matBill._11 = matView._11;
+	matBill._12 = matView._12;
+	matBill._21 = matView._21;
+	matBill._22 = matView._22;
 
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 

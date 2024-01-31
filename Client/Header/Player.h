@@ -39,6 +39,8 @@ private:
 	void			Check_State();
 	void			Set_Scale();
 
+	void BillBoard();
+
 private:
 	Engine::CRcTex*		m_pBufferCom;
 	Engine::CRvRcTex*	m_pReverseCom;

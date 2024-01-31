@@ -14,8 +14,7 @@ private:
 	explicit CObjectTree(LPDIRECT3DDEVICE9 pGraphicDev );
 	explicit CObjectTree(const CObjectTree& rhs);
 	virtual ~CObjectTree();
-public:
-	void Billboard();
+
 public:
 	virtual HRESULT Ready_GameObject()						 override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;

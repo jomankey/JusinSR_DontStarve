@@ -253,8 +253,6 @@ HRESULT CTerrainScene::Load_File()
 	if (INVALID_HANDLE_VALUE == hFile)
 		return E_FAIL;
 
-
-
 	_vec3 vPos{};
 	_int iCount(0);
 	DWORD	dwByte(0), dwStrByte(0);

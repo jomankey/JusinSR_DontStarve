@@ -39,6 +39,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     Player_Chase(fTimeDelta);
     
     CGameObject::Update_GameObject(fTimeDelta);
+
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     return 0;
 }
@@ -47,10 +48,10 @@ void CSpider::LateUpdate_GameObject()
 {
     __super::LateUpdate_GameObject();
     m_pTransForm->BillBoard();
-    _vec3	vPos;
-    m_pTransForm->Get_Info(INFO_POS, &vPos);
+    //_vec3	vPos;
+    //m_pTransForm->Get_Info(INFO_POS, &vPos);
 
-    __super::Compute_ViewZ(&vPos);
+    //__super::Compute_ViewZ(&vPos);
    
     /*Height_OnTerrain();*/
 }
@@ -109,6 +110,7 @@ HRESULT CSpider::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+    m_pTransForm->Set_Scale({ 0.7f, 0.5f, 0.7f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);

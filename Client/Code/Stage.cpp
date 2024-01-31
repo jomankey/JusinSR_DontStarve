@@ -97,9 +97,6 @@ HRESULT CStage::Ready_Layer_Environment()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::BACK_GROUND, pGameObject), E_FAIL);
 
-
-
-
 	return S_OK;
 }
 
@@ -342,6 +339,7 @@ HRESULT CStage::Load_Data()
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 		}
 
+		vPos.y = 1.5f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 		delete[] pName;
 	}

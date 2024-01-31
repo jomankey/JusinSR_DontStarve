@@ -24,7 +24,7 @@ HRESULT CBeefalo::Ready_GameObject()
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
     Set_ObjStat();
-    /*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
+    
     m_fFrameEnd = 10;
 
     return S_OK;
@@ -125,6 +125,7 @@ HRESULT CBeefalo::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+    m_pTransForm->m_vScale = { 2.f, 2.f, 2.f };
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

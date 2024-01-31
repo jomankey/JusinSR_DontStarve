@@ -60,10 +60,10 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	m_pTransForm->BillBoard();
+	BillBoard();
 
-	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	//_vec3	vPos;
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 	//__super::Compute_ViewZ(&vPos);
 
 	/*Height_OnTerrain();*/
@@ -565,39 +565,78 @@ void CPlayer::Check_State()
 
 void CPlayer::Set_Scale()
 {
-	if (m_eCurState == BUILD)
+	if (m_eCurState == BUILD) //B
 	{
-		m_pTransForm->m_vScale = { 1.5f, 1.0f,1.0f };
+		m_pTransForm->m_vScale = { 0.85f, 0.7f, 0.85f };
 	}
 	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == PICKUP)
 	{
-		m_pTransForm->m_vScale = { 1.5f, 1.0f,1.0f };
+		m_pTransForm->m_vScale = { 1.0f, 0.1f, 1.0f };
+	}
+	else if (m_eCurState == PICKUP)
+	{
+		m_pTransForm->m_vScale = { 0.73f, 0.63f, 0.73f };
 	}
 	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == ATTACK)
 	{
-		m_pTransForm->m_vScale = { 1.5f, 1.5f,1.0f };
+		m_pTransForm->m_vScale = { 1.f, 0.3f, 1.f };
 	}
-	else if (m_eCurState == BUILD || m_eCurState == HIT)
+	else if (m_eCurState == ATTACK)
 	{
-		m_pTransForm->m_vScale = { 1.5f, 1.5f,1.0f };
+		m_pTransForm->m_vScale = { 0.85f, 0.8f, 0.85f };
+	}
+	else if (m_eCurState == HIT) //H
+	{
+		m_pTransForm->m_vScale = { 0.9f, 1.f, 0.9f };
 	}
 	else if (m_eCurState == FALLDOWN)
 	{
-		m_pTransForm->m_vScale = { 1.5f, 5.0f,1.0f };
+		m_pTransForm->m_vScale = { 1.f, 1.f,1.0f };
 	}
 	else if (m_eCurState == WAKEUP)
 	{
-		m_pTransForm->m_vScale = { 2.f, 2.0f,1.0f };
+		m_pTransForm->m_vScale = { 1.1f, 1.f, 1.1f };
 	}
-	else if (m_eCurState == EAT)
+	else if (m_eCurState == EAT) // H
 	{
-		m_pTransForm->m_vScale = { 2.f, 1.5f,1.0f };
+		m_pTransForm->m_vScale = { 1.1f, 0.3f, 1.1f };
+	}
+	else if (m_eCurState == MOVE && (m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT))
+	{
+		m_pTransForm->m_vScale = { 0.9f, 0.6f, 0.8f };
+	}
+	else if (m_eCurState == MOVE)
+	{
+		m_pTransForm->m_vScale = { 0.7f, 1.f, 0.7f };
 	}
 	else
 	{
-		m_pTransForm->m_vScale = { 0.8f, 0.8f, 0.8f };
+		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
 	}
 
+}
+
+void CPlayer::BillBoard()
+{
+	_matrix	matWorld, matView, matBill;
+
+	m_pTransForm->Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixIdentity(&matBill);
+
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+
+	//matBill._22 = matView._22;
+	matBill._23 = matView._23;
+	//matBill._32 = 0.f;
+	matBill._33 = matView._33;
+
+	D3DXMatrixInverse(&matBill, NULL, &matBill);
+
+	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
 }
 
 
