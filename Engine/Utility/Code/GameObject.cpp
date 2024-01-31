@@ -4,7 +4,7 @@
 #include "Transform.h"
 
 
-CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev,wstring _name)
+CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev )
 	: m_pGraphicDev(pGraphicDev)
 	, m_mapComponent{}
 	, m_fViewZ(1.f)
