@@ -26,27 +26,9 @@ HRESULT CObjectRock::Ready_GameObject()
 _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-	_matrix	matWorld, matView, matBillY, matBillX;
 
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBillY);
-	D3DXMatrixIdentity(&matBillX);
+	m_pTransForm->BillBoard();
 
-	matBillY._11 = matView._11;
-	matBillY._13 = matView._13;
-	matBillY._31 = matView._31;
-	matBillY._33 = matView._33;
-
-	matBillX._21 = matView._21;
-	matBillX._22 = matView._22;
-	matBillX._32 = matView._32;
-	matBillX._33 = matView._33;
-
-	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
-	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
-
-	m_pTransForm->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }

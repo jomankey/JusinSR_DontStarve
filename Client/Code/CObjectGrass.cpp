@@ -30,30 +30,7 @@ HRESULT CObjectGrass::Ready_GameObject()
 _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-
-	_matrix matWorld, matView, matBillY, matBillX;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-
-	D3DXMatrixIdentity(&matBillY);
-	D3DXMatrixIdentity(&matBillX);
-
-	matBillY._11 = matView._11;
-	matBillY._13 = matView._13;
-	matBillY._31 = matView._31;
-	matBillY._33 = matView._33;
-
-	matBillX._21 = matView._21;
-	matBillX._22 = matView._22;
-	matBillX._32 = matView._32;
-	matBillX._33 = matView._33;
-
-	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
-	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
-
-	// matBillY와 matBillX의 역행렬을 곱하는 순서를 변경
-	m_pTransForm->Set_WorldMatrix(&(matBillX* matBillY * matWorld));
+	m_pTransForm->BillBoard();
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 

@@ -30,7 +30,6 @@ public:
 private:
 	HRESULT			Add_Component();
 	void			Height_OnTerrain();
-	void			BillBoard();
 	void			Player_Chase(const _float& fTimeDelta); //플레이어 추격용 테스트 함수
 
 	virtual void			Set_ObjStat()					override;

@@ -65,6 +65,8 @@ public:
 	const _matrix* Compute_LookAtTarget(const _vec3* pTargetPos);
 	void Set_Scale(_vec3 _scale) { m_vScale = _scale; }
 
+	void			BillBoard();
+
 
 public:
 	_vec3		m_vInfo[INFO_END];

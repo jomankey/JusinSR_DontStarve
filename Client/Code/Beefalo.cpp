@@ -55,7 +55,7 @@ void CBeefalo::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 	_vec3	vPos;
-    BillBoard();
+    m_pTransForm->BillBoard();
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 
     //__super::Compute_ViewZ(&vPos);
@@ -71,7 +71,7 @@ void CBeefalo::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	/* Set_Scale();*/
 
-   // m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
+    m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 
     if (m_Dirchange)
@@ -143,29 +143,6 @@ void CBeefalo::Height_OnTerrain()
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
 
 	m_pTransForm->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
-}
-
-void CBeefalo::BillBoard()
-{
-    _matrix	matWorld, matView, matBill;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-    matBill._11 = matView._11;
-    matBill._13 = matView._13;
-    matBill._31 = matView._31;
-    matBill._33 = matView._33;
-
-    //matBill._22 = matView._22;
-    matBill._23 = matView._23;
-    //matBill._32 = 0.f;
-    matBill._33 = matView._33;
-
-    D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
 }
 
 void CBeefalo::Set_ObjStat()
