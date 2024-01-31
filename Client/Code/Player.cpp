@@ -237,9 +237,9 @@ HRESULT CPlayer::Add_Component()
 	return S_OK;
 }
 
-CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
 {
-	CPlayer* pInstance = new CPlayer(pGraphicDev);
+	CPlayer* pInstance = new CPlayer(pGraphicDev, _strName);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

@@ -160,7 +160,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 		pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Cooked_berries", pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 

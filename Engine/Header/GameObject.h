@@ -29,7 +29,8 @@ namespace Engine
 
 	protected:
 		explicit CGameObject() = delete;
-		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev);
+		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev)=delete;
+		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev,wstring _wstrName);
 		explicit CGameObject(const CGameObject& rhs);
 		virtual ~CGameObject();
 
@@ -42,6 +43,7 @@ namespace Engine
 
 		_float										m_fViewZ;	//z버퍼 소팅
 		_bool										m_bDelete;	//삭제예정일경우 True
+		wstring										m_wstrName;	//Key값
 
 	};
 }
