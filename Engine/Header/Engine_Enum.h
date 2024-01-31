@@ -31,8 +31,8 @@ namespace Engine
 	};
 	enum class eLAYER_TYPE
 	{
-		BACK_GROUND,
-		GAME_PLAY,
+		ENVIRONMENT,
+		GAME_LOGIC,
 		FORE_GROUND,
 		END,
 	};
@@ -42,6 +42,9 @@ namespace Engine
 		CAMERA,
 		BACK_GROUND,
 		ITEM,
+		MONSTER,
+		PLAYER,
+		RESOURCE_OBJECT,
 		OBJECT,
 		UI,
 		END = 32,

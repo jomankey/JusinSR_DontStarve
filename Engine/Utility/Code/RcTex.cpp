@@ -97,5 +97,7 @@ CComponent * CRcTex::Clone()
 
 void CRcTex::Free()
 {
+	if (false == m_bClone)
+		Safe_Delete_Array(m_pPos);
 	CVIBuffer::Free();
 }

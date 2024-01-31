@@ -12,6 +12,8 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 
+#include "CustomTex.h"
+
 #include "Texture.h"
 
 #include "Transform.h"

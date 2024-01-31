@@ -98,7 +98,7 @@ void CTerrainScene::Render_Scene()
 HRESULT CTerrainScene::Ready_Layer_Environment()
 {
 
-	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::BACK_GROUND], E_FAIL);
+	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT], E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
@@ -117,11 +117,11 @@ HRESULT CTerrainScene::Ready_Layer_Environment()
 		1000.f);
 
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
 
 	pGameObject = CToolSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::BACK_GROUND]->AddGameObject(eOBJECT_GROUPTYPE::BACK_GROUND, pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::BACK_GROUND, pGameObject), E_FAIL);
 
 
 	return S_OK;
@@ -129,13 +129,13 @@ HRESULT CTerrainScene::Ready_Layer_Environment()
 
 HRESULT CTerrainScene::Ready_Layer_GameLogic()
 {
-	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY], E_FAIL);
+	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
 	pGameObject = m_pTerrain = CToolTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 
 	return S_OK;
 }
@@ -258,8 +258,7 @@ HRESULT CTerrainScene::Load_File()
 
 		dwStrByte = 0;
 
-			Create_Object(pName, vPos);
-		}
+		Create_Object(pName, vPos);
 	}
 
 	for (int i = 0; i < 3; ++i)
@@ -271,13 +270,13 @@ HRESULT CTerrainScene::Load_File()
 		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
 		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
 		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
-		
+
 		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
 		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
 		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
 	}
 
-	
+
 	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
 	for (int i = 0; i < iCount; ++i)
@@ -296,39 +295,38 @@ HRESULT CTerrainScene::Load_File()
 
 HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 {
-	Engine::CLayer* pLayer = Get_Layer(L"GameLogic");
+	Engine::CLayer* pLayer = scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC);
+
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
-		if (!_tcscmp(L"Tree", pName))
-		{
-			pGameObject = CToolTree::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"Rock", pName))
-		{
-			pGameObject = CToolRock::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"Grass", pName))
-		{
-			pGameObject = CToolGrass::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		}
-
-		pGameObject->GetTransForm()->Set_Pos(vPos);
+	if (!_tcscmp(L"Tree", pName))
+	{
+		pGameObject = CToolTree::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
-}
+	else if (!_tcscmp(L"Rock", pName))
+	{
+		pGameObject = CToolRock::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Grass", pName))
+	{
+		pGameObject = CToolGrass::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
+
+	pGameObject->GetTransForm()->Set_Pos(vPos);
 
 	return S_OK;
 }
 
 HRESULT CTerrainScene::Change_LightInfo(const _float& fTimeDelta)
 {
-	D3DLIGHT9*			tLightInfo = light::Get_Light(0)->Get_Light();
+	D3DLIGHT9* tLightInfo = light::Get_Light(0)->Get_Light();
 	_float fSpeed = 1;
 	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
@@ -337,7 +335,7 @@ HRESULT CTerrainScene::Change_LightInfo(const _float& fTimeDelta)
 	int iIndex = 0;
 	if (CToolMgr::iAUtoTime == 0)
 	{
-		iIndex = Engine::Change_Light(fTimeDelta, 0);
+		iIndex = light::Change_Light(fTimeDelta, 0);
 	}
 	else
 		iIndex = CToolMgr::iTimeLight;
@@ -361,14 +359,14 @@ HRESULT CTerrainScene::Change_LightInfo(const _float& fTimeDelta)
 	}
 	else
 	{
-		vLight[0].x = CToolMgr::m_fDirectionDiffuseColor[iIndex].x; 
-		vLight[0].y = CToolMgr::m_fDirectionDiffuseColor[iIndex].y; 
-		vLight[0].z = CToolMgr::m_fDirectionDiffuseColor[iIndex].z; 
-	
-		vLight[1].x = CToolMgr::m_fDirectionAmbientColor[iIndex].x; 
-		vLight[1].y = CToolMgr::m_fDirectionAmbientColor[iIndex].y; 
-		vLight[1].z = CToolMgr::m_fDirectionAmbientColor[iIndex].z; 
-	
+		vLight[0].x = CToolMgr::m_fDirectionDiffuseColor[iIndex].x;
+		vLight[0].y = CToolMgr::m_fDirectionDiffuseColor[iIndex].y;
+		vLight[0].z = CToolMgr::m_fDirectionDiffuseColor[iIndex].z;
+
+		vLight[1].x = CToolMgr::m_fDirectionAmbientColor[iIndex].x;
+		vLight[1].y = CToolMgr::m_fDirectionAmbientColor[iIndex].y;
+		vLight[1].z = CToolMgr::m_fDirectionAmbientColor[iIndex].z;
+
 		vLight[2].x = CToolMgr::m_fDirectionSpecularColor[iIndex].x;
 		vLight[2].y = CToolMgr::m_fDirectionSpecularColor[iIndex].y;
 		vLight[2].z = CToolMgr::m_fDirectionSpecularColor[iIndex].z;
@@ -403,7 +401,7 @@ HRESULT CTerrainScene::Input_Mouse()
 		{
 			_vec3	vPickPos = Picking_Terrain();
 
-			Engine::CLayer* pLayer = m_arrLayer[(int)eLAYER_TYPE::GAME_PLAY];
+			Engine::CLayer* pLayer = m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC];
 			NULL_CHECK_RETURN(pLayer, E_FAIL);
 			Engine::CGameObject* pGameObject = nullptr;
 

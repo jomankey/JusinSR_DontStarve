@@ -252,6 +252,7 @@ CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CPlayer::Free()
 {
+
 	__super::Free();
 }
 
@@ -344,18 +345,19 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			_vec3* vMonsterAxis,
 			_vec3 vPlayerScale,
 			_vec3 vMonsterScale*/
-		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_PLAY, eOBJECT_GROUPTYPE::OBJECT);
+		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
 
-		_vec3* vPlayerAxis = new _vec3[3];
-		_vec3* vMonsterAxis = new _vec3[3];
-		_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
-		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
-		m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
-		m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+		//***메모리해제필요
+		//_vec3* vPlayerAxis = new _vec3[3];
+		//_vec3* vMonsterAxis = new _vec3[3];
+		//_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		//m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
 
 		
-		vPlayerScale = m_pTransForm->Get_Scale();
+		//vPlayerScale = m_pTransForm->Get_Scale();
 
 		//<<<<수정필요
 		//for (auto& monster : pLayer)

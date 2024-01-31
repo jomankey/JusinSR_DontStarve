@@ -21,6 +21,8 @@ private:
 	HRESULT			Ready_Layer_UI();
 	HRESULT			Ready_LightInfo();
 
+
+
 private:
 	HRESULT Load_Data();
 	HRESULT Change_LightInfo(const _float& fTimeDelta);

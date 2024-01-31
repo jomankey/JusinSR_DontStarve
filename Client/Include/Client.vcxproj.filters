@@ -165,6 +165,12 @@
     <ClInclude Include="..\Header\CInven.h">
       <Filter>02. GameObject\07. CUI\01. Inven</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Pig.h">
+      <Filter>02. GameObject\01. Monster\03. Pig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\DeerClops.h">
+      <Filter>02. GameObject\01. Monster\04. Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -212,9 +218,6 @@
     <ClCompile Include="..\Code\Beefalo.cpp">
       <Filter>02. GameObject\01. Monster\01. Beefalo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Monster.cpp">
-      <Filter>02. GameObject\01. Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Spider.cpp">
       <Filter>02. GameObject\01. Monster\02. Spider</Filter>
     </ClCompile>
@@ -229,6 +232,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CInven.cpp">
       <Filter>02. GameObject\07. CUI\01. Inven</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Pig.cpp">
+      <Filter>02. GameObject\01. Monster\03. Pig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\DeerClops.cpp">
+      <Filter>02. GameObject\01. Monster\04. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Monster.cpp">
+      <Filter>02. GameObject\01. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

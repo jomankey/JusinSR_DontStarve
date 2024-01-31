@@ -13,10 +13,8 @@ namespace Engine
 	{
 
 	public:
-		const vector<CGameObject*>& GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType)
-		{
-			return	m_arrLayer[(int)_eLayerType]->GetGroupObject(_eObjGroupType);
-		}
+		const vector<CGameObject*>& GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType);
+
 	public:
 		void	BeginOrtho();
 		void	EndOrtho();

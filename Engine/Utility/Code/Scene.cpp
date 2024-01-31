@@ -14,6 +14,10 @@ CScene::~CScene()
 {
 }
 
+const vector<CGameObject*>& Engine::CScene::GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType)
+{
+	return	m_arrLayer[(int)_eLayerType]->GetGroupObject(_eObjGroupType);
+}
 void CScene::BeginOrtho()
 {
 	m_pCamera->BeginOrtho();

@@ -29,12 +29,9 @@ HRESULT CTerrain::Ready_GameObject()
 Engine::_int CTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-<<<<<<< HEAD
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-=======
->>>>>>> pr/51
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }

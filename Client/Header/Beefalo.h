@@ -13,7 +13,7 @@ class CCalculator;
 }
 class CBeefalo : public CMonster
 {
-	enum BEEFALOSTATE { IDLE, GRAZE, WALK, RUN, MADRUN, SLEEP, DEAD, STATE_END };
+	enum BEEFALOSTATE { IDLE, GRAZE,ATTACK, WALK, RUN, MADRUN, SLEEP, DEAD, STATE_END };
 
 private:
 	explicit CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);

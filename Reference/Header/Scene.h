@@ -14,6 +14,7 @@ namespace Engine
 
 	public:
 		const vector<CGameObject*>& GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType);
+
 	public:
 		void	BeginOrtho();
 		void	EndOrtho();
@@ -39,7 +40,7 @@ namespace Engine
 
 	protected:
 		LPDIRECT3DDEVICE9		m_pGraphicDev;
-		CLayer*					m_arrLayer[(int)eLAYER_TYPE::END];
+		CLayer* m_arrLayer[(int)eLAYER_TYPE::END];
 		wstring					m_strSceneName;
 		CCamera* m_pCamera;
 
