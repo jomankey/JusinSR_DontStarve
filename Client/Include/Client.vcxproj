@@ -166,6 +166,7 @@
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
+    <ClInclude Include="..\Header\CPigHouse.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\DeerClops.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
+    <ClCompile Include="..\Code\CPigHouse.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\DeerClops.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
