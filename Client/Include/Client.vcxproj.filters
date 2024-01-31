@@ -61,9 +61,6 @@
     <Filter Include="02. GameObject\01. Monster">
       <UniqueIdentifier>{91d043b9-f5ca-44ce-9230-5f48b73bc071}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Monster\01. Beefalo">
-      <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\08. ResObjects\03. Tree">
       <UniqueIdentifier>{a410062d-05e6-4c94-8fd6-5b51a506c468}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,12 @@
     </Filter>
     <Filter Include="02. GameObject\07. CUI\01. Inven">
       <UniqueIdentifier>{c210a81f-8a48-4b57-afc1-29776a1d58fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\04. PigHouse">
+      <UniqueIdentifier>{806c614c-6b66-4f35-8839-f54d85b977ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Monster\01. Beefalo">
+      <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +174,9 @@
     <ClInclude Include="..\Header\DeerClops.h">
       <Filter>02. GameObject\01. Monster\04. Boss</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPigHouse.h">
+      <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -241,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
       <Filter>02. GameObject\01. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPigHouse.cpp">
+      <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

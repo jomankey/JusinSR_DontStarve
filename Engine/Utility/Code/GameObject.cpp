@@ -4,14 +4,26 @@
 #include "Transform.h"
 
 
-CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
+CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev )
 	: m_pGraphicDev(pGraphicDev)
 	, m_mapComponent{}
 	, m_fViewZ(1.f)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
+	, m_strObjName(L"NONE")
 {
 	m_pGraphicDev->AddRef();
+}
+
+Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
+	: m_pGraphicDev(pGraphicDev)
+	, m_mapComponent{}
+	, m_fViewZ(1.f)
+	, m_pTransForm(nullptr)
+	, m_bDelete(false)
+	, m_strObjName(_strName)
+{
+
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)

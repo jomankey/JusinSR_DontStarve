@@ -6,7 +6,7 @@
 #include "Scene.h"
 
 CPig::CPig(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
-	:CMonster(pGraphicDev, _vPos), m_eCurState(WALK), m_ePreState(STATE_END)
+	:CMonster(pGraphicDev, _vPos), m_eCurState(HAPPY), m_ePreState(STATE_END)
 {
 }
 
@@ -26,7 +26,7 @@ HRESULT CPig::Ready_GameObject()
 	m_pTransForm->Set_Pos(m_vPos);
 	Set_ObjStat();
 	/*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
-	m_fFrameEnd = 10;
+	m_fFrameEnd = 17;
 
 	return S_OK;
 }
@@ -40,8 +40,9 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
-	Player_Chase(fTimeDelta);
-
+	Look_Change(); // ÀÓÀÇ·Î
+	/*Player_Chase(fTimeDelta);*/
+	m_pTransForm->m_vScale = { 1.5f, 1.5f, 1.f };
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
@@ -54,8 +55,6 @@ void CPig::LateUpdate_GameObject()
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 
 	__super::Compute_ViewZ(&vPos);
-
-	/*Height_OnTerrain();*/
 }
 
 void CPig::Render_GameObject()
@@ -94,13 +93,12 @@ HRESULT CPig::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
-
-
-	/* pComponent = m_pTextureCom[LOOK_DOWN][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_down"));
+#pragma region TEXCOM
+	 pComponent = m_pTextureCom[LOOK_DOWN][HAPPY] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_happy"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_down", pComponent });
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_happy", pComponent });
 
-	 pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_up"));
+	 /*pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_up"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
 	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_up", pComponent });
 
@@ -111,6 +109,8 @@ HRESULT CPig::Add_Component()
 	 pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
 	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });*/
+#pragma endregion TEXCOM
+	
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -180,6 +180,9 @@ void CPig::State_Change()
 		case WALK:
 			m_fFrameEnd = 20;
 			break;
+
+		case HAPPY:
+			m_fFrameEnd = 17;
 		}
 
 		m_ePreState = m_eCurState;

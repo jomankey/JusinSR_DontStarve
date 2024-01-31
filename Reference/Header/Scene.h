@@ -40,9 +40,9 @@ namespace Engine
 
 	protected:
 		LPDIRECT3DDEVICE9		m_pGraphicDev;
-		CLayer* m_arrLayer[(int)eLAYER_TYPE::END];
+		CLayer*					m_arrLayer[(int)eLAYER_TYPE::END];
 		wstring					m_strSceneName;
-		CCamera* m_pCamera;
+		CCamera*				m_pCamera;
 
 		//나중에 싱글톤으로 교체
 		CGameObject* m_pTerrain;

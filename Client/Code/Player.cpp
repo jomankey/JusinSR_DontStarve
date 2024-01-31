@@ -14,7 +14,10 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 }
-
+CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
+	: Engine::CGameObject(pGraphicDev,_strName)
+{
+}
 CPlayer::CPlayer(const CPlayer& rhs)
 	: Engine::CGameObject(rhs)
 {
@@ -235,6 +238,20 @@ HRESULT CPlayer::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_PlayerStat", pComponent });*/
 
 	return S_OK;
+}
+
+CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
+{
+	CPlayer* pInstance = new CPlayer(pGraphicDev, _strName);
+
+	if (FAILED(pInstance->Ready_GameObject()))
+	{
+		Safe_Release(pInstance);
+		MSG_BOX("Player Create Failed");
+		return nullptr;
+	}
+
+	return pInstance;
 }
 
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
