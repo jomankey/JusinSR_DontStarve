@@ -28,6 +28,12 @@
     <Filter Include="04. InputDev">
       <UniqueIdentifier>{7ee13882-0bab-4d2b-9a7a-39bf2ea45597}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05. PathMgr">
+      <UniqueIdentifier>{e1f399b3-f5e2-4f5f-a009-a13cff3b6272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. ResourceMgr">
+      <UniqueIdentifier>{7aed7f4a-c97b-4ead-b220-580226b875b3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="05. Collision">
       <UniqueIdentifier>{ed84dca9-ad28-4806-8687-b9cdd36732d2}</UniqueIdentifier>
     </Filter>
@@ -60,6 +66,12 @@
     <ClCompile Include="..\Code\CollisionMgr.cpp">
       <Filter>05. Collision</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CPathMgr.cpp">
+      <Filter>05. PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CResMgr.cpp">
+      <Filter>06. ResourceMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\GraphicDev.h">
@@ -88,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\InputDev.h">
       <Filter>04. InputDev</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\CPathMgr.h">
+      <Filter>05. PathMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\CResMgr.h">
+      <Filter>06. ResourceMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Header\CollisionMgr.h">
       <Filter>05. Collision</Filter>

@@ -168,16 +168,19 @@ call CopySystem.bat</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CollisionMgr.cpp" />
+    <ClCompile Include="..\Code\CResMgr.cpp" />
     <ClCompile Include="..\Code\FontMgr.cpp" />
     <ClCompile Include="..\Code\Frame.cpp" />
     <ClCompile Include="..\Code\FrameMgr.cpp" />
     <ClCompile Include="..\Code\GraphicDev.cpp" />
     <ClCompile Include="..\Code\InputDev.cpp" />
     <ClCompile Include="..\Code\MyFont.cpp" />
+    <ClCompile Include="..\Code\CPathMgr.cpp" />
     <ClCompile Include="..\Code\Timer.cpp" />
     <ClCompile Include="..\Code\TimerMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Header\CResMgr.h" />
     <ClInclude Include="..\..\Header\CollisionMgr.h" />
     <ClInclude Include="..\..\Header\Export_System.h" />
     <ClInclude Include="..\..\Header\FontMgr.h" />
@@ -186,6 +189,7 @@ call CopySystem.bat</Command>
     <ClInclude Include="..\..\Header\GraphicDev.h" />
     <ClInclude Include="..\..\Header\InputDev.h" />
     <ClInclude Include="..\..\Header\MyFont.h" />
+    <ClInclude Include="..\..\Header\CPathMgr.h" />
     <ClInclude Include="..\..\Header\Timer.h" />
     <ClInclude Include="..\..\Header\TimerMgr.h" />
   </ItemGroup>

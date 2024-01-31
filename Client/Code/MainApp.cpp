@@ -24,10 +24,6 @@ int CMainApp::Update_MainApp(const float & fTimeDelta)
 {
 
 	Engine::Update_InputDev();
-
-	long dwMouse(0);
-
-	
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
 	return 0;
@@ -48,7 +44,7 @@ void CMainApp::Render_MainApp()
 	
 }
 
-HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement ** ppManagement)
+HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr ** ppManagement)
 {
 	Engine::CScene*		pScene = nullptr;
 
@@ -56,10 +52,10 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement
 	NULL_CHECK_RETURN(pScene, E_FAIL);
 
 	//매니지먼트 싱글톤의 주소 받아오기
-	FAILED_CHECK_RETURN(Engine::Create_Management(pGraphicDev, ppManagement), E_FAIL);
+	FAILED_CHECK_RETURN(scenemgr::Create_SceneMgr(pGraphicDev, ppManagement), E_FAIL);
 	(*ppManagement)->AddRef();
 
-	FAILED_CHECK_RETURN((*ppManagement)->Set_Scene(pScene), E_FAIL);
+	FAILED_CHECK_RETURN((*ppManagement)->Change_Scene(pScene), E_FAIL);
 	
 	return S_OK;
 }
@@ -81,8 +77,12 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
+
+	//PathMgr
+	FAILED_CHECK_RETURN(Engine::Ready_PathMgr(), E_FAIL);
 	
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
 
 	return S_OK;
 }

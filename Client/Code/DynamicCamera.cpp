@@ -45,7 +45,7 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 	if (m_pTarget != nullptr)
 	{
 		_vec3 vTarget;
-		m_pTarget->Get_TransForm()->Get_Info(INFO::INFO_POS, &vTarget);
+		m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
 		m_vAt = vTarget;
 		m_vEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance * m_fHeight;
 		m_vEye.y = vTarget.y + m_fHeight * m_fHeight;

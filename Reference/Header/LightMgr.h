@@ -4,7 +4,7 @@
 
 #include "Light.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CLightMgr : public CBase
 {
@@ -32,4 +32,4 @@ private:
 
 };
 
-END
+}

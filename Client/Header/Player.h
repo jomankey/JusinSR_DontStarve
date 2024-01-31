@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "GameObject.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class CRcTex;
 class CRvRcTex;
@@ -12,7 +12,7 @@ class CTransform;
 class CCalculator;
 class CPlayerStatus;
 
-END
+}
 
 
 
@@ -43,7 +43,6 @@ private:
 private:
 	Engine::CRcTex*		m_pBufferCom;
 	Engine::CRvRcTex*	m_pReverseCom;
-	Engine::CTransform*	m_pTransformCom;
 	Engine::CTexture*	m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
 	Engine::CCalculator*	m_pCalculatorCom;
 	/*Engine::CPlayerStatus*  m_pStatusCom;*/
@@ -57,6 +56,7 @@ private:
 	LOOKDIR  m_ePlayerLookAt;
 	_tchar*		m_cTex;
 	_bool		m_Dirchange;
+	
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev);
 

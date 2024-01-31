@@ -47,6 +47,9 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _ui
 		m_vecTexture.push_back(pTexture);
 	}
 
+
+	Save_Texture_Path(eType, pPath, iCnt);
+
 	return S_OK;
 }
 
@@ -56,6 +59,13 @@ void CTexture::Set_Texture(const _uint & iIndex)
 		return;
 
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
+}
+
+void CTexture::Save_Texture_Path(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt)
+{
+
+
+
 }
 
 CComponent * CTexture::Clone()

@@ -29,8 +29,9 @@ HRESULT CTerrain::Ready_GameObject()
 Engine::_int CTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
+	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+	//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;
 }
@@ -43,7 +44,7 @@ void CTerrain::LateUpdate_GameObject()
 void CTerrain::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 
 	m_pTextureCom->Set_Texture(0);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 	FAILED_CHECK_RETURN(SetUp_Material(), );
@@ -56,15 +57,15 @@ HRESULT CTerrain::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(Engine::Clone_Proto(L"Proto_TerrainTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(proto::Clone_Proto(L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_TerrainTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_TerrainTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 

@@ -1,8 +1,5 @@
 #include "..\..\Header\RcTex.h"
 
-CRcTex::CRcTex()
-{
-}
 
 CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CVIBuffer(pGraphicDev)
@@ -100,5 +97,7 @@ CComponent * CRcTex::Clone()
 
 void CRcTex::Free()
 {
+	if (false == m_bClone)
+		Safe_Delete_Array(m_pPos);
 	CVIBuffer::Free();
 }

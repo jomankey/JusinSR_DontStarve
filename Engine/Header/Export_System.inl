@@ -1,3 +1,4 @@
+#include "Export_System.h"
 // GraphicDev
 
 HRESULT			Ready_GraphicDev(HWND hWnd, WINMODE eMode, const _ulong& dwSizeX, const _ulong& dwSizeY, CGraphicDev** ppGraphicDev)
@@ -76,6 +77,22 @@ void		Update_InputDev(void)
 {
 	CInputDev::GetInstance()->Update_InputDev();
 }
+// PathMgr
+
+inline HRESULT Ready_PathMgr()
+{
+	return CPathMgr::GetInstance()->Ready_Path();
+}
+
+inline wstring GetRelativePath(const wchar_t* filePath) 
+{
+	return CPathMgr::GetInstance()->GetRelativePath(filePath);
+}
+
+inline const _tchar* GetResourcePath()
+{
+	return CPathMgr::GetInstance()->GetResourcePath();
+}
 
 //Collsion
 _bool Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale)
@@ -94,6 +111,13 @@ _bool Collision_Monster(
 	return CCollisionMgr::GetInstance()->Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos, vMonsterAxis, vPlayerScale, vMonsterScale);
 }
 //Destroy
+inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
+{
+	CResMgr::GetInstance()->Save_TexturePath(_fileName,_key, _textureTag, _subPath, num);
+}
+
+
+// Destroy
 void			Release_System()
 {
 	CInputDev::GetInstance()->DestroyInstance();
@@ -101,5 +125,7 @@ void			Release_System()
 	CFrameMgr::GetInstance()->DestroyInstance();
 	CTimerMgr::GetInstance()->DestroyInstance();
 	CGraphicDev::GetInstance()->DestroyInstance();
+	CPathMgr::GetInstance()->DestroyInstance();
+	CResMgr::GetInstance()->DestroyInstance();
 	CCollisionMgr::GetInstance()->DestroyInstance();
 }

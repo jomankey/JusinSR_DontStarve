@@ -5,11 +5,11 @@
 #include "ToolTerrain.h"
 #include "ToolMgr.h"
 
-BEGIN(Engine)
-class CManagement;
+namespace Engine {
+class CSceneMgr;
 class CGraphicDev;
 class CTexture;
-END
+}
 
 class CMainTool :
     public CBase
@@ -25,12 +25,12 @@ public:
     void Render_MainTool();
 
 private:
-    HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CManagement** ppManagement);
+    HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr** ppManagement);
     HRESULT		SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev);
 
 private:
     Engine::CGraphicDev* m_pDeviceClass;
-    Engine::CManagement* m_pManagementClass;
+    Engine::CSceneMgr* m_pManagementClass;
     LPDIRECT3DDEVICE9			m_pGraphicDev;
     CToolMgr* m_pToolMgr;
 

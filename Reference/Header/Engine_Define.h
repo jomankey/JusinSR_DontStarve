@@ -12,6 +12,7 @@
 #include <string>
 #include <unordered_map>
 #include <ctime>
+#include <fstream>
 
 #include "Engine_Enum.h"
 #include "Engine_Macro.h"
@@ -38,6 +39,7 @@
 #endif // defined(_DEBUG) && !defined(_TOOL)
 
 using namespace std;
+
 using namespace Engine;
 
 

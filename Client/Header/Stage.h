@@ -2,11 +2,10 @@
 
 #include "Scene.h"
 
-
 class CStage : public Engine::CScene
 {
 private:
-	explicit CStage(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName);
 	virtual ~CStage();
 
 public:
@@ -17,11 +16,12 @@ public:
 
 private:
 
-	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_GameRes(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Environment();
+	HRESULT			Ready_Layer_GameLogic();
+	HRESULT			Ready_Layer_UI();
 	HRESULT			Ready_LightInfo();
+
+
 
 private:
 	HRESULT Load_Data();
@@ -34,7 +34,7 @@ private:
 	_vec3 m_vDirectionSpecularColor[3] = {};
 
 public:
-	static CStage*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CStage* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName);
 
 private:
 	virtual void Free() override;

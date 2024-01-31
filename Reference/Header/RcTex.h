@@ -1,12 +1,12 @@
 #pragma once
 #include "VIBuffer.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CRcTex : public CVIBuffer
 {
 private:
-	explicit CRcTex();
+	explicit CRcTex() = delete;
 	explicit CRcTex(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CRcTex(const CRcTex& rhs);
 	virtual ~CRcTex();
@@ -29,4 +29,4 @@ private:
 	virtual void	Free();
 };
 
-END
+}

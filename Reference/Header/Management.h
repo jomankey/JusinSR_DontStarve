@@ -4,7 +4,7 @@
 #include "Base.h"
 #include "Scene.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CManagement :public CBase
 {

@@ -1,9 +1,5 @@
 #include "PlayerStatus.h"
 
-CPlayerStatus::CPlayerStatus()
-{
-	//s
-}
 
 CPlayerStatus::CPlayerStatus(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CObjStatus(pGraphicDev), m_ePreState(STATE_END), m_eCurState(IDLE)

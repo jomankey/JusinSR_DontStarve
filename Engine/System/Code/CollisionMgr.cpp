@@ -24,7 +24,7 @@ _bool CCollisionMgr::Collision_Monster(
 	_float d[3];
 	_float r0, r1, r;
 	int i;
-	const _float cutoff= 0.9999f;
+	const _float cutoff = 0.9999f;
 	bool existsParallelPair = false;
 	_vec3 diff = vPlayerPos - vMonsterPos;
 
@@ -50,7 +50,7 @@ _bool CCollisionMgr::Collision_Monster(
 		if (absC[1][i] > cutoff)
 			existsParallelPair = true;
 	}
-		
+
 	d[1] = D3DXVec3Dot(&diff, &vPlayerAxis[1]);
 	r = fabs(d[1]);
 	r0 = vPlayerScale.x;

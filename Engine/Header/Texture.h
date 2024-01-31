@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CTexture : public CComponent
 {
@@ -16,7 +16,7 @@ public:
 public:
 	HRESULT		Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt, const _uint& iNum);
 	void		Set_Texture(const _uint& iIndex = 0);
-
+	void		Save_Texture_Path(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt);
 private:
 	vector<IDirect3DBaseTexture9*>		m_vecTexture;
 
@@ -30,4 +30,4 @@ public:
 
 };
 
-END
+}
