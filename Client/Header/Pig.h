@@ -13,7 +13,7 @@ namespace Engine {
 }
 class CPig : public CMonster
 {
-	enum PiGSTATE { IDLE, ANGRY_IDLE, WALK, RUN, ATTACK, SLEEP, EAT, DEAD, STATE_END };
+	enum PiGSTATE { IDLE, ANGRY_IDLE,HAPPY, WALK, RUN, ATTACK, SLEEP, EAT, DEAD, STATE_END };
 
 private:
 	explicit CPig(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
@@ -36,7 +36,7 @@ private:
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
-	Engine::CTransform* m_pTransForm;
+	/*Engine::CTransform* m_pTransForm;*/
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][PiGSTATE::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
 
