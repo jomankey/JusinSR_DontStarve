@@ -71,7 +71,7 @@ void CBeefalo::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	/* Set_Scale();*/
 
-   // m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
+    m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 
     if (m_Dirchange)
