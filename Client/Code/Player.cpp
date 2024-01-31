@@ -60,7 +60,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	BillBoard();
+	m_pTransForm->BillBoard();
 
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -490,28 +490,7 @@ _vec3 CPlayer::Picking_OnTerrain()
 
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
 }
-void CPlayer::BillBoard()
-{
-	_matrix	matWorld, matView, matBill;
 
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	//matBill._22 = matView._22;
-	matBill._23 = matView._23;
-	//matBill._32 = 0.f;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
-}
 void CPlayer::Check_State()
 {
 	if (m_ePreState != m_eCurState)
@@ -585,7 +564,6 @@ void CPlayer::Check_State()
 
 }
 
-
 void CPlayer::Set_Scale()
 {
 	if (m_eCurState == BUILD)
@@ -618,7 +596,7 @@ void CPlayer::Set_Scale()
 	}
 	else
 	{
-		m_pTransForm->m_vScale = { 1.0f, 1.0f,1.0f };
+		m_pTransForm->m_vScale = { 0.8f, 0.8f, 0.8f };
 	}
 
 }

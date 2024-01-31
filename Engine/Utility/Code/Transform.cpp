@@ -140,6 +140,29 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 						 D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
 }
 
+void Engine::CTransform::BillBoard()
+{
+	_matrix	matWorld, matView, matBill;
+
+	Get_WorldMatrix(&matWorld);
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixIdentity(&matBill);
+
+	matBill._11 = matView._11;
+	matBill._13 = matView._13;
+	matBill._31 = matView._31;
+	matBill._33 = matView._33;
+
+	//matBill._22 = matView._22;
+	matBill._23 = matView._23;
+	//matBill._32 = 0.f;
+	matBill._33 = matView._33;
+
+	D3DXMatrixInverse(&matBill, NULL, &matBill);
+
+	Set_WorldMatrix(&(matBill * matWorld));
+}
+
 CTransform * CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CTransform *	pInstance = new CTransform(pGraphicDev);

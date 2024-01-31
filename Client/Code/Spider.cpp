@@ -39,7 +39,6 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     Player_Chase(fTimeDelta);
     
     CGameObject::Update_GameObject(fTimeDelta);
-    BillBoard();
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     return 0;
 }
@@ -47,6 +46,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
 void CSpider::LateUpdate_GameObject()
 {
     __super::LateUpdate_GameObject();
+    m_pTransForm->BillBoard();
     _vec3	vPos;
     m_pTransForm->Get_Info(INFO_POS, &vPos);
 
@@ -129,24 +129,6 @@ void CSpider::Height_OnTerrain()
     _float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
 
     m_pTransForm->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
-}
-
-void CSpider::BillBoard()
-{
-    _matrix	matWorld, matView, matBill;
-
-    m_pTransForm->Get_WorldMatrix(&matWorld);
-    m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-    D3DXMatrixIdentity(&matBill);
-
-    matBill._11 = matView._11;
-    matBill._13 = matView._13;
-    matBill._31 = matView._31;
-    matBill._33 = matView._33;
-
-    D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-    m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
 }
 
 void CSpider::Player_Chase(const _float& fTimeDelta)

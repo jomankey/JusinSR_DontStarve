@@ -54,7 +54,6 @@ public:
 private:
 	HRESULT			Add_Component();
 	virtual void MousePicking();
-	void Billboard();
 
 private:
 	virtual void Free();

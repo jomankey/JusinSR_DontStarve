@@ -36,7 +36,6 @@ private:
 
 	void			Height_OnTerrain();
 	_vec3			Picking_OnTerrain();
-	void			BillBoard();
 	void			Check_State();
 	void			Set_Scale();
 
