@@ -29,7 +29,7 @@ HRESULT CDeerClops::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
 	m_pTransForm->Set_Scale(_vec3(3.f, 3.f, 1.f));
-	m_fAcctime = rand() % 30;
+	m_fAcctime = float(rand() % 30);
 	return S_OK;
 }
 

@@ -13,7 +13,7 @@ CCamera::~CCamera()
 
 void Engine::CCamera::Free()
 {
-	CGameObject::Free();
+	__super::Free();
 }
 
 HRESULT Engine::CCamera::Ready_GameObject()

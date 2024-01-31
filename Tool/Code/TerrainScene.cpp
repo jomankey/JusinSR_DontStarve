@@ -203,15 +203,13 @@ void CTerrainScene::Save_File()
 
 	for (auto& objectIter : list)
 	{
-		dwStrByte = sizeof(TCHAR) * (_tcslen(objectIter->Get_Key()) + 1);
+		dwStrByte = sizeof(TCHAR) * objectIter->GetObjName().size();
 
 		WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		WriteFile(hFile, objectIter->Get_Key(), dwStrByte, &dwByte, nullptr);
+		WriteFile(hFile, objectIter->GetObjName().c_str(), dwStrByte, &dwByte, nullptr);
 
 		objectIter->GetTransForm()->Get_Info(INFO_POS, &vPos);
-		WriteFile(hFile, &vPos.x, sizeof(_float), &dwByte, nullptr);
-		WriteFile(hFile, &vPos.y, sizeof(_float), &dwByte, nullptr);
-		WriteFile(hFile, &vPos.z, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &vPos, sizeof(_vec3), &dwByte, nullptr);
 	}
 
 	for (int i = 0; i < 3; ++i)
@@ -237,6 +235,7 @@ void CTerrainScene::Save_File()
 		WriteFile(hFile, &CToolMgr::vecPickingIdex[i], sizeof(_int), &dwByte, nullptr);
 
 	MessageBox(g_hWnd, L"Terrain Save", L"¼º°ø", MB_OK);
+	CloseHandle(hFile);
 }
 
 HRESULT CTerrainScene::Load_File()
@@ -319,53 +318,59 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	if (!_tcscmp(L"Tree", pName))
 	{
 		pGameObject = CToolTree::Create(m_pGraphicDev);
-		pGameObject->Set_Key(L"Tree");
+		pGameObject->SetObjName(L"Tree");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Rock", pName))
 	{
 		pGameObject = CToolRock::Create(m_pGraphicDev);
-		pGameObject->Set_Key(L"Rock");
+		pGameObject->SetObjName(L"Rock");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Grass", pName))
 	{
 		pGameObject = CToolGrass::Create(m_pGraphicDev);
-		pGameObject->Set_Key(L"Grass");
+		pGameObject->SetObjName(L"Grass");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Twigs", pName))
 	{
 		pGameObject = CToolItem::Create(m_pGraphicDev, L"Twigs", vPos);
-		pGameObject->Set_Key(L"Twigs");
+		pGameObject->SetObjName(L"Twigs");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Rocks_0", pName))
 	{
 		pGameObject = CToolItem::Create(m_pGraphicDev, L"Rocks_0", vPos);
-		pGameObject->Set_Key(L"Rocks_0");
+		pGameObject->SetObjName(L"Rocks_0");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Firestone", pName))
 	{
 		pGameObject = CToolItem::Create(m_pGraphicDev, L"Firestone", vPos);
-		pGameObject->Set_Key(L"Firestone");
+		pGameObject->SetObjName(L"Firestone");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"CutGlass", pName))
 	{
 		pGameObject = CToolItem::Create(m_pGraphicDev, L"CutGlass",vPos);
-		pGameObject->Set_Key(L"CutGlass");
+		pGameObject->SetObjName(L"CutGlass");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
-	pGameObject->GetTransForm()->Set_Pos(vPos);
 
 	return S_OK;
 }
