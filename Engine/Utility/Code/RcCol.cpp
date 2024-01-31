@@ -1,9 +1,5 @@
 #include "..\..\Header\RcCol.h"
 
-CRcCol::CRcCol()
-{
-}
-
 CRcCol::CRcCol(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CVIBuffer(pGraphicDev)
 {

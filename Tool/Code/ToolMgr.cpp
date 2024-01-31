@@ -22,7 +22,7 @@ _int CToolMgr::iPickingIndex = -1;
 vector<_int> CToolMgr::vecPickingIdex;
 
 _int CToolMgr::iTimeLight = 0; // ¹ã, ³· Á¶¸í °ª ÀúÀåÇÏ±â 
-_int CToolMgr::iAUtoTime = 0;
+_int CToolMgr::iAUtoTime = 1;
 
 CToolMgr::CToolMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), 
@@ -50,8 +50,8 @@ HRESULT CToolMgr::Setup_Imgui()
     ImGui_ImplWin32_Init(g_hWnd);
     ImGui_ImplDX9_Init(m_pGraphicDev);
 
-    m_pTileTexture.push_back(dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Tile_Grass_1")));
-    m_pTileTexture.push_back(dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Tile_Grass_2")));
+    m_pTileTexture.push_back(dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Tile_Grass_1")));
+    m_pTileTexture.push_back(dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Tile_Grass_2")));
 
 	return S_OK;
 }
@@ -159,7 +159,7 @@ void CToolMgr::Window_Light()
     ImGui::Begin("Light");
 
     ImGui::Text("Auto Time Set");
-    ImGui::RadioButton("AutoTime", &iAUtoTime, 0); ImGui::SameLine();
+        ImGui::RadioButton("AutoTime", &iAUtoTime, 0); ImGui::SameLine();
     ImGui::RadioButton("SetLight", &iAUtoTime, 1);
 
     ImGui::NewLine();

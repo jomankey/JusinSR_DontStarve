@@ -270,7 +270,6 @@ BOOL CCalculator::Picking_OnUI(HWND hWnd, CRcTex* pUIBifferCom, CTransform* pUIT
 {
 
 
-
 	
 
 

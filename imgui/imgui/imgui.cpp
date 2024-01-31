@@ -15540,7 +15540,7 @@ void ImGui::ShowIDStackToolWindow(bool* p_open)
     tool->LastActiveFrame = g.FrameCount;
     if (tool->Results.Size > 0 && BeginTable("##table", 3, ImGuiTableFlags_Borders))
     {
-        const float id_width = CalcTextSize("0xDDDDDDDD").x;
+        const float id_width = CalcTextSize("0x}DDD").x;
         TableSetupColumn("Seed", ImGuiTableColumnFlags_WidthFixed, id_width);
         TableSetupColumn("PushID", ImGuiTableColumnFlags_WidthStretch);
         TableSetupColumn("Result", ImGuiTableColumnFlags_WidthFixed, id_width);

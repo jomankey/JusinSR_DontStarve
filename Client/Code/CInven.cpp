@@ -26,23 +26,7 @@ CInven::~CInven()
 
 }
 
-//HRESULT CInven::Ready_GameObject()
-//{
-//
-//	for (int i = 0; i < 15; i++)
-//	{
-//		int PixelJump = 0;
-//		if (i == 5 || i == 10 || i == 15)
-//			PixelJump = 7;
-//		m_vecInvenSlot[i]= CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
-//		
-//	}
-//	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-//	//m_vecInvenSlot
-//	return S_OK;
-//}
-
-HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
+HRESULT CInven::Ready_GameObject()
 {
 	for (int i = 0; i < 15; i++)
 	{
@@ -83,7 +67,7 @@ Engine::_int CInven::Update_GameObject(const _float& fTimeDelta)
 
 
 	CGameObject::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_UI, this);
+	renderer::Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
 

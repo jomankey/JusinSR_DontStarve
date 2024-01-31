@@ -12,6 +12,11 @@ CLight::~CLight()
 {
 }
 
+void CLight::Close_Light()
+{
+	m_pGraphicDev->LightEnable(m_iIndex, FALSE);
+}
+
 HRESULT CLight::Ready_Light(const D3DLIGHT9 * pLightInfo,
 							const _uint & iIndex)
 {

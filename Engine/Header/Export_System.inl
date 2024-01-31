@@ -94,9 +94,26 @@ inline const _tchar* GetResourcePath()
 	return CPathMgr::GetInstance()->GetResourcePath();
 }
 
-inline void Save_TexturePath(wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
+//Collsion
+_bool Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale)
 {
-	CResMgr::GetInstance()->Save_TexturePath(_key, _textureTag, _subPath, num);
+	return CCollisionMgr::GetInstance()->Collision_Item(pPlayerPos, pItemPos, vPlayerScale, vItemScale);
+}
+
+_bool Collision_Monster(
+	_vec3 vPlayerPos,
+	_vec3* vPlayerAxis,
+	_vec3 vMonsterPos,
+	_vec3* vMonsterAxis,
+	_vec3 vPlayerScale,
+	_vec3 vMonsterScale)
+{
+	return CCollisionMgr::GetInstance()->Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos, vMonsterAxis, vPlayerScale, vMonsterScale);
+}
+//Destroy
+inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
+{
+	CResMgr::GetInstance()->Save_TexturePath(_fileName,_key, _textureTag, _subPath, num);
 }
 
 
@@ -110,5 +127,5 @@ void			Release_System()
 	CGraphicDev::GetInstance()->DestroyInstance();
 	CPathMgr::GetInstance()->DestroyInstance();
 	CResMgr::GetInstance()->DestroyInstance();
+	CCollisionMgr::GetInstance()->DestroyInstance();
 }
-

@@ -19,9 +19,9 @@ private:
 	_vec3 Picking_Terrain();
 
 private:
-	HRESULT			Ready_Layer_Environment(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag);
-	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag);
+	HRESULT			Ready_Layer_Environment();
+	HRESULT			Ready_Layer_GameLogic( );
+	HRESULT			Ready_Layer_UI();
 	HRESULT			Ready_LightInfo();
 
 private:
@@ -29,10 +29,12 @@ private:
 	HRESULT Load_File();
 
 	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
-	HRESULT Change_LightInfo();
+	HRESULT Change_LightInfo(const _float& fTimeDelta);
 
 private:
 	Engine::CCalculator* m_pCalculatorCom;
+
+	_vec3 vLight[3] = { { 1.f, 1.f, 1.f} };
 
 public:
 	static CTerrainScene* Create(LPDIRECT3DDEVICE9 pGraphicDev);

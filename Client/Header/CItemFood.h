@@ -2,11 +2,12 @@
 
 #include "../Header/CItem.h"
 
-BEGIN(Engine)
+namespace Engine
+{
 class CRcTex;
 class CTexture;
 class CTransform;
-END
+}
 
 class CItemFood :
 	public CItem

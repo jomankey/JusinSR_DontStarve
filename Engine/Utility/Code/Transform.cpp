@@ -1,11 +1,5 @@
 #include "..\..\Header\Transform.h"
 
-CTransform::CTransform()
-: m_vAngle(0.f, 0.f, 0.f), m_vScale(1.f, 1.f, 1.f)
-{
-	ZeroMemory(m_vInfo, sizeof(m_vInfo));
-	D3DXMatrixIdentity(&m_matWorld);
-}
 
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev), m_vAngle(0.f, 0.f, 0.f), m_vScale(1.f,1.f, 1.f)

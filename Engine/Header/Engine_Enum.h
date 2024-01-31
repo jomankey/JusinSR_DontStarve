@@ -23,7 +23,40 @@ namespace Engine
 	};
 	enum LOOKDIR { LOOK_DOWN, LOOK_RIGHT, LOOK_LEFT, LOOK_UP, LOOK_END };
 	
+	enum class eSCENE_TYPE
+	{
+		LOGO,
+		STAGE,
+		END
+	};
+	enum class eLAYER_TYPE
+	{
+		ENVIRONMENT,
+		GAME_LOGIC,
+		FORE_GROUND,
+		END,
+	};
+	enum class eOBJECT_GROUPTYPE
+	{
+		TILE,
+		CAMERA,
+		BACK_GROUND,
+		ITEM,
+		MONSTER,
+		PLAYER,
+		RESOURCE_OBJECT,
+		OBJECT,
+		UI,
+		END = 32,
+	};
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };
 
 }
 #endif // Engine_Enum_h__
+//일단 scene안에 레이어를 3개만들거야 배경레이어,
+//게임플레이레이어,전경레이어 이렇게 그리고 각레이어들은 
+//열거형으로만든 오브젝트 리스트만큼 배열을 가지고있을거야 
+//UI,ITEM,MONSTER,PLAYER,TILE,BACKGROUND,EFFECT
+//그리고 많이 접근해야하는건 매니저로 두던가
+//Scene클래스에 멤버변수로 아예 가지게 만들어서
+//GetCurScene호출해서 멤버변수를 받아오게 할거야

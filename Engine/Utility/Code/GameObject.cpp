@@ -3,15 +3,25 @@
 #include "ProtoMgr.h"
 #include "Transform.h"
 
+
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
-	: m_pGraphicDev(pGraphicDev), m_fViewZ(0.f)
+	: m_pGraphicDev(pGraphicDev)
+	, m_mapComponent{}
+	, m_fViewZ(1.f)
+	, m_pTransForm(nullptr)
+	, m_bDelete(false)
 {
 	m_pGraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
-	: m_pGraphicDev(rhs.m_pGraphicDev), m_fViewZ(rhs.m_fViewZ)
+	: m_pGraphicDev(rhs.m_pGraphicDev)
+	, m_fViewZ(1.f)
+	, m_pTransForm(nullptr)
+	, m_bDelete(false)
 {
+	m_mapComponent[ID_DYNAMIC] = rhs.m_mapComponent[ID_DYNAMIC];
+
 	m_pGraphicDev->AddRef();
 }
 
@@ -62,18 +72,24 @@ CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponen
 
 	return iter->second;
 }
-CComponent* CGameObject::Get_Component(COMPONENTID eID, const _tchar* pComponentTag)
+
+HRESULT Engine::CGameObject::SetUp_Material()
 {
-	CComponent* pComponent = Find_Component(eID, pComponentTag);
+	D3DMATERIAL9			tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
 
-	NULL_CHECK_RETURN(pComponent, nullptr);
+	//tMtrl.Diffuse = D3DXCOLOR(CToolMgr::m_fMtrlDiffuseColor[0], CToolMgr::m_fMtrlDiffuseColor[1], CToolMgr::m_fMtrlDiffuseColor[2], 1.f);
+	//tMtrl.Ambient = D3DXCOLOR(CToolMgr::m_fMtrlAmbientColor[0], CToolMgr::m_fMtrlAmbientColor[1], CToolMgr::m_fMtrlAmbientColor[2], 1.f);
+	//tMtrl.Specular = D3DXCOLOR(CToolMgr::m_fMtrlSpecularColor[0], CToolMgr::m_fMtrlSpecularColor[1], CToolMgr::m_fMtrlSpecularColor[2], 1.f);
+	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-	return pComponent;
-}
+	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
+	tMtrl.Power = 0.f;
+	m_pGraphicDev->SetMaterial(&tMtrl);
 
-CTransform* CGameObject::Get_TransForm()
-{
-	return dynamic_cast<CTransform*>(Get_Component(COMPONENTID::ID_DYNAMIC, L"Proto_Transform"));
+	return S_OK;
 }
 
 void Engine::CGameObject::Compute_ViewZ(const _vec3* pPos)
@@ -86,6 +102,5 @@ void Engine::CGameObject::Compute_ViewZ(const _vec3* pPos)
 	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
 
 	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
-
 }
 

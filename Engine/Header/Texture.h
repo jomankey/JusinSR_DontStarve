@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CTexture : public CComponent
 {
@@ -30,4 +30,4 @@ public:
 
 };
 
-END
+}

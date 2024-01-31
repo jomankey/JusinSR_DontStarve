@@ -1,8 +1,5 @@
 #include "..\..\Header\TerrainTex.h"
 
-CTerrainTex::CTerrainTex()
-{
-}
 
 CTerrainTex::CTerrainTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CVIBuffer(pGraphicDev)
@@ -25,10 +22,14 @@ CTerrainTex::~CTerrainTex()
 
 // 높이맵 구현 제거
 // 타일 하나 당 텍스쳐 하나 출력되도록 수정
-HRESULT CTerrainTex::Ready_Buffer(const _ulong&		dwCntX, 
-									const _ulong&	dwCntZ, 
+HRESULT CTerrainTex::Ready_Buffer(const _ulong&		dwCntX,  
+									const _ulong&	dwCntZ,  
 									const _ulong&	dwVtxItv)
 {
+
+	/*VTXCNTX,
+	VTXCNTZ,
+	VTXITV*/
 	m_dwFVF = FVF_TEX;
 	m_dwTriCnt = (dwCntX - 1) * (dwCntZ - 1) * 2;
 	m_dwVtxCnt = dwCntX * dwCntZ;
