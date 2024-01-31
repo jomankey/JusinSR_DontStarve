@@ -196,13 +196,23 @@ void CTerrainScene::Save_File()
 	DWORD	dwByte(0), dwStrByte(0);
 	string pName;
 
-	/*iDrawID = dynamic_cast<CTile*>(iter)->Get_DrawID();
-	iOption = dynamic_cast<CTile*>(iter)->Get_Option();
+	auto list = GetLayer(eLAYER_TYPE::GAME_LOGIC)->GetGroupObject(eOBJECT_GROUPTYPE::OBJECT);
 
-	WriteFile(hFile, &(iter->Get_Info()), sizeof(INFO), &dwByte, nullptr);
-	WriteFile(hFile, &iDrawID, sizeof(int), &dwByte, nullptr);
-	WriteFile(hFile, &iOption, sizeof(int), &dwByte, nullptr);*/
-	;
+	iCount = list.size();
+	WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+
+	for (auto& objectIter : list)
+	{
+		dwStrByte = sizeof(TCHAR) * (_tcslen(objectIter->Get_Key()) + 1);
+
+		WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+		WriteFile(hFile, objectIter->Get_Key(), dwStrByte, &dwByte, nullptr);
+
+		objectIter->GetTransForm()->Get_Info(INFO_POS, &vPos);
+		WriteFile(hFile, &vPos.x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &vPos.y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &vPos.z, sizeof(_float), &dwByte, nullptr);
+	}
 
 	for (int i = 0; i < 3; ++i)
 	{
@@ -219,9 +229,12 @@ void CTerrainScene::Save_File()
 		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
 	}
 
+
 	iCount = CToolMgr::vecPickingIdex.size();
 	WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
+	for (int i = 0; i < CToolMgr::vecPickingIdex.size(); ++i)
+		WriteFile(hFile, &CToolMgr::vecPickingIdex[i], sizeof(_int), &dwByte, nullptr);
 
 	MessageBox(g_hWnd, L"Terrain Save", L"¼º°ø", MB_OK);
 }
@@ -280,7 +293,6 @@ HRESULT CTerrainScene::Load_File()
 		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
 	}
 
-
 	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
 	for (int i = 0; i < iCount; ++i)
@@ -307,22 +319,52 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	if (!_tcscmp(L"Tree", pName))
 	{
 		pGameObject = CToolTree::Create(m_pGraphicDev);
+		pGameObject->Set_Key(L"Tree");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Rock", pName))
 	{
 		pGameObject = CToolRock::Create(m_pGraphicDev);
+		pGameObject->Set_Key(L"Rock");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Grass", pName))
 	{
 		pGameObject = CToolGrass::Create(m_pGraphicDev);
+		pGameObject->Set_Key(L"Grass");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
-
+	else if (!_tcscmp(L"Twigs", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, L"Twigs", vPos);
+		pGameObject->Set_Key(L"Twigs");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Rocks_0", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, L"Rocks_0", vPos);
+		pGameObject->Set_Key(L"Rocks_0");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Firestone", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, L"Firestone", vPos);
+		pGameObject->Set_Key(L"Firestone");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"CutGlass", pName))
+	{
+		pGameObject = CToolItem::Create(m_pGraphicDev, L"CutGlass",vPos);
+		pGameObject->Set_Key(L"CutGlass");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
 	pGameObject->GetTransForm()->Set_Pos(vPos);
 
 	return S_OK;
@@ -412,22 +454,13 @@ HRESULT CTerrainScene::Input_Mouse()
 			switch (CToolMgr::iItemCurrentEtcIdx)
 			{
 			case 0:
-				pGameObject = CToolTree::Create(m_pGraphicDev);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-				pGameObject->GetTransForm()->Set_Pos(vPickPos);
+				Create_Object(L"Tree", vPickPos);
 				break;
 			case 1:
-				pGameObject = CToolRock::Create(m_pGraphicDev);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-				pGameObject->GetTransForm()->Set_Pos(vPickPos);
+				Create_Object(L"Rock", vPickPos);
 				break;
 			case 2:
-				pGameObject = CToolGrass::Create(m_pGraphicDev);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-				pGameObject->GetTransForm()->Set_Pos(vPickPos);
+				Create_Object(L"Grass", vPickPos);
 				break;
 			case 3:
 				break;
@@ -447,13 +480,13 @@ HRESULT CTerrainScene::Input_Mouse()
 		switch (CToolMgr::iItemCurrentItemIdx)
 		{
 		case 0:
-			//Create_Object(L"Twigs", vPickPos); break;
+			Create_Object(L"Twigs", vPickPos); break;
 		case 1:
-			//Create_Object(L"Rocks_0", vPickPos); break;
+			Create_Object(L"Rocks_0", vPickPos); break;
 		case 2:
-			//Create_Object(L"Firestone", vPickPos); break;
+			Create_Object(L"Firestone", vPickPos); break;
 		case 3:
-			//Create_Object(L"CutGlass", vPickPos); break;
+			Create_Object(L"CutGlass", vPickPos); break;
 		default:
 			break;
 		}

@@ -18,6 +18,10 @@ namespace Engine
 		HRESULT				SetUp_Material();
 		void				Compute_ViewZ(const _vec3* pPos);
 
+		//tool
+		void Set_Key(const _tchar* pKey) { memcpy(&m_pKey, &pKey, sizeof(pKey)); }
+		const _tchar* Get_Key() { return m_pKey; }
+
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
@@ -43,5 +47,6 @@ namespace Engine
 		_float										m_fViewZ;	//z버퍼 소팅
 		_bool										m_bDelete;	//삭제예정일경우 True
 
+		const _tchar* m_pKey;
 	};
 }

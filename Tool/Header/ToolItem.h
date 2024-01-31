@@ -54,14 +54,12 @@ public:
 private:
 	HRESULT			Add_Component();
 	virtual void MousePicking();
-	void Billboard();
 
 private:
 	virtual void Free();
 
 protected:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransForm;
 	Engine::CTexture* m_pTextureCom;
 
 private:

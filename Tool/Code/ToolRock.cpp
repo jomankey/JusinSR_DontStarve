@@ -26,21 +26,7 @@ _int CToolRock::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
 
-	_matrix	matWorld, matView, matBill;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-	_matrix matTransform = matBill * matWorld;
-	m_pTransForm->Set_WorldMatrix(&(matTransform));
+	m_pTransForm->BillBoard();
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 

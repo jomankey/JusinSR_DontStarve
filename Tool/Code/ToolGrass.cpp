@@ -27,22 +27,11 @@ _int CToolGrass::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
 
-	_matrix	matWorld, matView, matBill;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-	_matrix matTransform = matBill * matWorld;
-	m_pTransForm->Set_WorldMatrix(&(matTransform));
-
+	m_pTransForm->BillBoard();
+	_vec3 vPos;
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	vPos.y = 1.4f;
+	m_pTransForm->Set_Info(INFO_POS, &vPos);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
@@ -60,8 +49,6 @@ void CToolGrass::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);
-
-
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -86,8 +73,6 @@ HRESULT CToolGrass::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos);
 	return S_OK;
 }
 
