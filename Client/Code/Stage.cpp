@@ -30,6 +30,8 @@
 #include "CItem.h"
 #include "CItemFood.h"
 #include "CUI.h"
+#include"CInvenBox.h"
+#include "CInventoryMgr.h"
 
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
@@ -120,7 +122,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
-	
+
 	/*pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(10.f, 1.5f, 10.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
@@ -177,7 +179,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	}
 	for (_int i = 0; i < 2; ++i)
 	{
-		pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
@@ -185,21 +187,22 @@ HRESULT CStage::Ready_Layer_GameLogic()
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
 
-		pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
-		pGameObject = CItem::Create(m_pGraphicDev, L"CutGlass", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"CutGlass");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
-		pGameObject = CItem::Create(m_pGraphicDev, L"Berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"Berries");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
-		pGameObject = CItem::Create(m_pGraphicDev, L"Log", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"Log");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		CInventoryMgr::GetInstance()->AddItem((CItem*) pGameObject);
 	}
 
 
@@ -226,11 +229,24 @@ HRESULT CStage::Ready_Layer_UI()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
+	////인벤토리
+	//pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
-	//인벤토리
-	pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+	for (int i = 0; i < 15; i++)
+	{
+		int PixelJump = 0;
+		if (i == 5 || i == 10 || i == 15)
+			PixelJump = 7;
+
+		pGameObject = CInvenBox::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot", i);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+	}
+
+
+
 
 
 	//장비 슬롯
@@ -343,25 +359,25 @@ HRESULT CStage::Load_Data()
 		}
 		else if (!_tcscmp(L"CutGlass", pName))
 		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName, vPos);
+			pGameObject = CItem::Create(m_pGraphicDev, pName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 		}
 		else if (!_tcscmp(L"Rocks_0", pName))
 		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName, vPos);
+			pGameObject = CItem::Create(m_pGraphicDev, pName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 		}
 		else if (!_tcscmp(L"Rocks_1", pName))
 		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName,vPos);
+			pGameObject = CItem::Create(m_pGraphicDev, pName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 		}
 		else if (!_tcscmp(L"Twigs", pName))
 		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName, vPos);
+			pGameObject = CItem::Create(m_pGraphicDev, pName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 		}

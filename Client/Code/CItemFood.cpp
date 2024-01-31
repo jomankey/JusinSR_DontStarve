@@ -4,8 +4,8 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-CItemFood::CItemFood(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _vPos)
-	:CItem(pGraphicDev,_key, _vPos)
+CItemFood::CItemFood(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key)
+	:CItem(pGraphicDev, _key)
 {
 
 }
