@@ -24,11 +24,11 @@ namespace Engine
 
 		virtual void Free()override;
 		virtual HRESULT			Add_Component();
-		//¾ÆÀÌÅÛ Ä­ ½½·Ô ÀÌ¹ÌÁö
+		//Â¾Ã†Ã€ÃŒÃ…Ã› Ã„Â­ Â½Â½Â·Ã” Ã€ÃŒÂ¹ÃŒÃÃ¶
 		CUI* m_vecInvenSlot[15];
 		const _tchar* FindItemName(const _tchar* _ItemName);
 		int Find_ItemCount(const _tchar* _ItemName);
-		void CallFind_ItemCount(function<void()>func);
+		void CallFind_ItemCount(function<void()>func,const _tchar* _ItemName);
 		int CInven::UI_Collision();
 
 	private:
@@ -54,3 +54,4 @@ namespace Engine
 		//CItem* m_Item;
 	};
 }
+

@@ -77,7 +77,7 @@ Engine::_int CInven::Update_GameObject(const _float& fTimeDelta)
 
 void CInven::LateUpdate_GameObject()
 {
-	int collisionResult = UI_Collision(); // Ãæµ¹ Ã¼Å© ÇÑ ¹ø¸¸ ¼öÇà
+	int collisionResult = UI_Collision(); // ì¶©ëŒ ì²´í¬ í•œ ë²ˆë§Œ ìˆ˜í–‰
 
 	if (collisionResult != -99)
 	{
@@ -108,14 +108,15 @@ void CInven::Render_GameObject()
 
 	for (int i = 0; i < 15; i++)
 	{
-		//¾ÆÀÌÅÛÀÌ ¸Ç Ã³À½ µé¾î¿Ô´ÂÁö È®ÀÎ
+		//ì•„ì´í…œì´ ë§¨ ì²˜ìŒ ë“¤ì–´ì™”ëŠ”ì§€ í™•ì¸
 		if (ItemCreate)
 		{
-			//m_vecInvenSlot[i]¹ø Â° Ä­¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´ÂÁö È®ÀÎ,¾øÀ¸¸é ÇØ´ç Ä­¿¡ ¾ÆÀÌÅÛÀ» ³ÖÀ½, ÀÖÀ¸¸é ´ÙÀ½ Ä­¿¡ ÀÌ¹ÌÁö¸¦ ³Ö¾î¾ß ÇÔ 
+			//m_vecInvenSlot[i]ë²ˆ ì§¸ ì¹¸ì— ì•„ì´í…œì´ ìˆëŠ”ì§€ í™•ì¸,ì—†ìœ¼ë©´ í•´ë‹¹ ì¹¸ì— ì•„ì´í…œì„ ë„£ìŒ, ìˆìœ¼ë©´ ë‹¤ìŒ ì¹¸ì— ì´ë¯¸ì§€ë¥¼ ë„£ì–´ì•¼ í•¨ 
 			if (m_vecInvenSlot[i]->IsItemOn())
 			{
-				pTextureName[i] = m_pUI_Name;
-				//	m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", pTextureName[i], pTextureName[i]));
+				m_pUI_Name = pTextureName[i];
+				m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", m_pUI_Name, m_pUI_Name));
+				
 
 				NULL_CHECK(m_pTextureCom);
 				m_pTextureCom[i]->Set_Texture(0);
@@ -155,11 +156,11 @@ void CInven::Render_GameObject()
 //			m_fY[i] - 20 < m_MousePoint.y && m_MousePoint.y < m_fY[i] + 20)
 //		{
 //		
-//			return i; // Ãæµ¹ÀÌ ¹ß»ıÇÑ Ä­À» Ã£À¸¸é ÇØ´ç ÀÎµ¦½º¸¦ ¹İÈ¯ÇÏ°í ÇÔ¼ö Á¾·á
+//			return i; // ì¶©ëŒì´ ë°œìƒí•œ ì¹¸ì„ ì°¾ìœ¼ë©´ í•´ë‹¹ ì¸ë±ìŠ¤ë¥¼ ë°˜í™˜í•˜ê³  í•¨ìˆ˜ ì¢…ë£Œ
 //		}
 //	}
 //
-//	return -99; // ¸ğµç Ä­¿¡ ´ëÇÑ Ãæµ¹ Ã¼Å©¸¦ ¿Ï·áÇÏ°íµµ Ãæµ¹ÀÌ ¾øÀ¸¸é -99 ¹İÈ¯
+//	return -99; // ëª¨ë“  ì¹¸ì— ëŒ€í•œ ì¶©ëŒ ì²´í¬ë¥¼ ì™„ë£Œí•˜ê³ ë„ ì¶©ëŒì´ ì—†ìœ¼ë©´ -99 ë°˜í™˜
 //
 //}
 
@@ -179,50 +180,56 @@ int CInven::Find_ItemCount(const _tchar* _ItemName)
 		return itemCount = m_mapItem.find(_ItemName)->second;
 }
 
-void CInven::CallFind_ItemCount(function<void()> func)
+void CInven::CallFind_ItemCount(function<void()> func, const _tchar* _ItemName)
 {
-	//ÃÖÃÊ ÁøÀÔ½Ã Ã¼Å©¿ë  
+	//ìµœì´ˆ ì§„ì…ì‹œ ì²´í¬ìš©  
 	ItemCreate = true;
 
-	//¾ÆÀÌÅÛ Ä«¿îÆ® ÃÊ±âÈ­
+	//ì•„ì´í…œ ì¹´ìš´íŠ¸ ì´ˆê¸°í™”
 	itemCount = 0;
-	//¾ÆÀÌÅÛÀÌ µé¾î¿À¸é ÇØ´ç Ä­¿¡ ½½·ÔÀ» true·Î ¸¸µé°í ´ÙÀ½ ¾ÆÀÌÅÛÀÌ µé¾î¿Ô¾îµµ Ã¹ ¹øÂ° Ä­¿¡ ¾ÆÀÌÅÛÀÌ ÀÖÀ¸´Ï ´ÙÀ½
-	//if([&](){for (int i = 0; i < 15; i++)
-	//		{
-	//			if (m_vecInvenSlot[i]->IsItemOn())
-	//			{
-	//				continue;
-	//			}
-	//			else 
-	//			{
-	//				m_vecInvenSlot[i]->SetItemOn(true);
-	//				return true;
-	//			}
-	//		
-	//		};
-	//	
-	//	}())
-	for (int i = 0; i < 15; i++)
-	{
-		if (m_vecInvenSlot[i]->IsItemOn())
-		{
-			continue;
-		}
-		else
-		{
-			m_vecInvenSlot[i]->SetItemOn(true);
-			return;
-
-		}
-	}
+	//ì•„ì´í…œì´ ë“¤ì–´ì˜¤ë©´ í•´ë‹¹ ì¹¸ì— ìŠ¬ë¡¯ì„ trueë¡œ ë§Œë“¤ê³  ë‹¤ìŒ ì•„ì´í…œì´ ë“¤ì–´ì™”ì–´ë„ ì²« ë²ˆì§¸ ì¹¸ì— ì•„ì´í…œì´ ìˆìœ¼ë‹ˆ ë‹¤ìŒ
+	if([&](){for (int i = 0; i < 15; i++)
+			{
+				if (m_vecInvenSlot[i]->IsItemOn())
+				{
+					continue;
+				}
+				else 
+				{
+					m_vecInvenSlot[i]->SetItemOn(true);
+					pTextureName[i] = _ItemName;
+					return true;
+				}
+			
+			};
+		
+		}())
+	//for (int i = 0; i < 15; i++)
+	//{
+	//	if (m_vecInvenSlot[i]->IsItemOn())
+	//	{
+	//		continue;
+	//	}
+	//	else
+	//	{
+	//		m_vecInvenSlot[i]->SetItemOn(true);
+	//		return;
+	//
+	//	}
+	//}
 
 	func();
 }
 
 int Engine::CInven::UI_Collision()
 {
+
+	CallFind_ItemCount([&]() {
+		itemCount = Find_ItemCount(_ItemName); }, _ItemName);
+
 	GetCursorPos(&m_MousePoint);
 	ScreenToClient(g_hWnd, &m_MousePoint);
+
 
 	for (int i = 0; i < 15; i++)
 	{
