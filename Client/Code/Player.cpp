@@ -346,44 +346,43 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			_vec3* vMonsterAxis,
 			_vec3 vPlayerScale,
 			_vec3 vMonsterScale*/
-		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
 
-		//***메모리해제필요
-		//_vec3* vPlayerAxis = new _vec3[3];
-		//_vec3* vMonsterAxis = new _vec3[3];
-		//_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
-		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		//m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
-		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
-		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+		
+		_vec3* vMonsterAxis = new _vec3[3];
+		_vec3* vPlayerAxis = new _vec3[3];
+		_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
 
 
-		//vPlayerScale = m_pTransForm->Get_Scale();
+		vPlayerScale = m_pTransForm->Get_Scale();
 
-		//<<<<수정필요
-		//for (auto& monster : pLayer)
-		//{
-		//	if (monster.first == L"Beefalo" || monster.first == L"Spider")
-		//	{
-		//		CTransform* pItemTransform = dynamic_cast<CTransform*>(monster.second->Get_Component(ID_DYNAMIC, L"Proto_Transform"));
-		//		CRcTex* pMonsterTexture = dynamic_cast<CRcTex*>(monster.second->Get_Component(ID_STATIC, L"Proto_RcTex"));
-		//		pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
-		//		pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
-		//		pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
-		//		pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
-		//		vMonsterScale = pItemTransform->Get_Scale();
+		for (auto& monster : pLayer)
+		{
+			if (monster->Get_Key() == L"Beefalo" || monster->Get_Key() == L"Spider")
+			{
+				CTransform* pItemTransform = dynamic_cast<CTransform*>(monster.second->Get_Component(ID_DYNAMIC, L"Proto_Transform"));
+				CRcTex* pMonsterTexture = dynamic_cast<CRcTex*>(monster.second->Get_Component(ID_STATIC, L"Proto_RcTex"));
+				pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
+				pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
+				pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
+				pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
+				vMonsterScale = pItemTransform->Get_Scale();
 
-		//		if (Engine::Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos,
-		//			vMonsterAxis, vPlayerScale, vMonsterScale))
-		//		{
-		//			// 몬스터와 공격 충돌 시
-		//			// 몬스터 채력이 깎임.
-		//			m_pTransForm->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
-		//			dynamic_cast<CMonster*>(monster.second)->Set_Attack(10.f);
-		//		}
-		//		break;
-		//	}
-		//}
+				if (Engine::Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos,
+					vMonsterAxis, vPlayerScale, vMonsterScale))
+				{
+					// 몬스터와 공격 충돌 시
+					// 몬스터 채력이 깎임.
+					m_pTransForm->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
+					dynamic_cast<CMonster*>(monster.second)->Set_Attack(10.f);
+				}
+				break;
+			}
+		}
 	}
 	if (GetAsyncKeyState('G'))
 	{
