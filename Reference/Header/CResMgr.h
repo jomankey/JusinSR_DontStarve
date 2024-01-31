@@ -3,21 +3,20 @@
 #include "Engine_Define.h"
 #include "Base.h"
 
-BEGIN(Engine)
-
-class ENGINE_DLL CResMgr : public CBase
+namespace Engine 
 {
-	DECLARE_SINGLETON(CResMgr)
 
-private:
-	explicit CResMgr();
-	virtual ~CResMgr();
-public:
-	HRESULT Ready_Resource();
-	void Save_TexturePath(wstring _key, TEXTUREID _textureTag, wstring  _subPath, int num);
+	class ENGINE_DLL CResMgr : public CBase
+	{
+		DECLARE_SINGLETON(CResMgr)
+	public:
+		HRESULT Ready_Resource();
+		void Save_TexturePath(wstring _fileName,wstring _objKey, TEXTUREID _textureTag, wstring  _subPath, int num);
+	private:
+		explicit CResMgr();
+		virtual ~CResMgr();
+	private:
+		virtual void		Free();
+	};
 
-private:
-	virtual void		Free();
-};
-
-END
+}

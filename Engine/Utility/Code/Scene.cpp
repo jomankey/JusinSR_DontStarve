@@ -1,9 +1,11 @@
 #include "..\..\Header\Scene.h"
+#include "Layer.h"	
 #include "Camera.h"
 
 
-CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
+CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: m_pGraphicDev(pGraphicDev)
+	, m_strSceneName(_strSceneName)
 {
 	m_pGraphicDev->AddRef();
 }
@@ -12,16 +14,10 @@ CScene::~CScene()
 {
 }
 
-CComponent * CScene::Get_Component(COMPONENTID eID, const _tchar * pLayerTag, const _tchar * pObjTag, const _tchar * pComponentTag)
+const vector<CGameObject*>& Engine::CScene::GetGroupObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjGroupType)
 {
-	auto&		iter = find_if(m_mapLayer.begin(), m_mapLayer.end(), CTag_Finder(pLayerTag));
-
-	if (iter == m_mapLayer.end())
-		return nullptr;
-	
-	return iter->second->Get_Component(eID, pObjTag, pComponentTag);
+	return	m_arrLayer[(int)_eLayerType]->GetGroupObject(_eObjGroupType);
 }
-
 void CScene::BeginOrtho()
 {
 	m_pCamera->BeginOrtho();
@@ -42,16 +38,7 @@ _matrix* CScene::Get_OrthoMatrix()
 	return m_pCamera->Get_OrthoMatrix();
 }
 
-CLayer* CScene::Get_Layer(const _tchar* pKey)
-{
-	CLayer* pSecond = m_mapLayer.find(pKey)->second;
-
-	if (nullptr == pSecond)
-		return nullptr;
-
-	return pSecond;
-}
-
+ 
 HRESULT CScene::Ready_Scene()
 {
 	return S_OK;
@@ -59,24 +46,31 @@ HRESULT CScene::Ready_Scene()
 
 _int CScene::Update_Scene(const _float & fTimeDelta)
 {
-	for (auto& iter : m_mapLayer)
-		iter.second->Update_Layer(fTimeDelta);
+	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
+	{
+		m_arrLayer[i]->UpdateLayer(fTimeDelta);
+	}
 
 	return 0;
 }
 
 void CScene::LateUpdate_Scene()
 {
-	for (auto& iter : m_mapLayer)
-		iter.second->LateUpdate_Layer();
+	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
+	{
+		m_arrLayer[i]->LateUpdateLayer();
+	}
+
 }
 
 
 
 void CScene::Free()
 {
-	for_each(m_mapLayer.begin(), m_mapLayer.end(), CDeleteMap());
-	m_mapLayer.clear();
+	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
+	{
+		Safe_Release(m_arrLayer[i]);
+	}
 
 	Safe_Release(m_pGraphicDev);
 }

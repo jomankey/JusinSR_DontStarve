@@ -1,6 +1,7 @@
 #include "..\..\Header\Timer.h"
 
-CTimer::CTimer() : m_fTimeDelta(0.f)
+CTimer::CTimer() 
+	: m_fTimeDelta(0.f)
 {
 }
 

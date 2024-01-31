@@ -2,15 +2,17 @@
 #include "GameObject.h"
 #include "Engine_Define.h"
 
-BEGIN(Engine)
-class CRcTex;
-class CTexture;
-END
+namespace Engine
+{
+	class CComponent;
+	class CRcTex;
+	class CTexture;
+}
 class CObjectRock :
-	public CGameObject
+	public Engine::CGameObject
 {
 private:
-	explicit CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+	explicit CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CObjectRock(const CObjectRock& rhs);
 	virtual ~CObjectRock();
 
@@ -25,13 +27,10 @@ private:
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
 	Engine::CTexture* m_pTextureCom;
 
-	_vec3 m_vPos;
-
 public:
-	static CObjectRock* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+	static CObjectRock* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();

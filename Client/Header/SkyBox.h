@@ -3,13 +3,13 @@
 #include "Base.h"
 #include "GameObject.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class CCubeTex;
 class CTexture;
 class CTransform;
 
-END
+}
 
 class CSkyBox :	public Engine::CGameObject
 {
@@ -29,7 +29,7 @@ private:
 
 private:
 	Engine::CCubeTex*		m_pBufferCom;
-	Engine::CTransform*	m_pTransformCom;
+	Engine::CTransform*	m_pTransForm;
 	Engine::CTexture*	m_pTextureCom;
 
 public:

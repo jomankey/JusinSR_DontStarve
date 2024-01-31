@@ -5,6 +5,7 @@ IMPLEMENT_SINGLETON(CPathMgr)
 
 CPathMgr::CPathMgr()
 {
+	memset(m_strBasePath, 0, sizeof(m_strBasePath));
 }
 
 

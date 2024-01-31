@@ -26,6 +26,7 @@ public:
 	HRESULT		Loading_UI_Texture();
 	HRESULT		Loading_Item_Texture();
 	HRESULT		Loading_Spider_Texture();
+	HRESULT		Loading_Boss_Texture();
 	const _tchar*		Get_String() const { return m_szLoading; }
 
 public:
@@ -35,11 +36,8 @@ public:
 
 private:
 	HANDLE				m_hThread;
-
 	CRITICAL_SECTION	m_Crt;
-
 	LOADINGID			m_eID;
-
 	LPDIRECT3DDEVICE9	m_pGraphicDev;
 	bool				m_bFinish;
 	_tchar				m_szLoading[128];

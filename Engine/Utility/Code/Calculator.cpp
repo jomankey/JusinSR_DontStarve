@@ -257,7 +257,7 @@ _bool CCalculator::Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> v
 {
 	_ulong	dwIndex = _ulong(pPos->z / dwVtxItv) * dwCntX + _ulong(pPos->x / dwVtxItv);
 
-	for (int i = 0; i < veciIndex.size(); ++i)
+	for (int i = 0; i < (int)veciIndex.size(); ++i)
 	{
 		if (dwIndex == veciIndex[i])
 			return false;
@@ -268,7 +268,6 @@ _bool CCalculator::Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> v
 
 BOOL CCalculator::Picking_OnUI(HWND hWnd, CRcTex* pUIBifferCom, CTransform* pUITransCom, const _float& dwCntX, const _float& dwCntZ, const _ulong& dwVtxItv)
 {
-
 
 
 	

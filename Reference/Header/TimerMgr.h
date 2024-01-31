@@ -2,31 +2,31 @@
 #include "Base.h"
 #include "Timer.h"
 
-BEGIN(Engine)
+namespace Engine {
 
-class ENGINE_DLL CTimerMgr : public CBase
-{
+	class ENGINE_DLL CTimerMgr : public CBase
+	{
 
-	DECLARE_SINGLETON(CTimerMgr)
-private:
-	explicit CTimerMgr();
-	virtual ~CTimerMgr();
+		DECLARE_SINGLETON(CTimerMgr)
+	private:
+		explicit CTimerMgr();
+		virtual ~CTimerMgr();
 
-public:
-	_float		Get_TimeDelta(const _tchar* pTimerTag);
-	void		Update_TimeDelta(const _tchar* pTimerTag);
+	public:
+		_float		Get_TimeDelta(const _tchar* pTimerTag);
+		void		Update_TimeDelta(const _tchar* pTimerTag);
 
-public:
-	HRESULT		Ready_Timer(const _tchar* pTimerTag);
+	public:
+		HRESULT		Ready_Timer(const _tchar* pTimerTag);
 
-private:
-	CTimer*		Find_Timer(const _tchar* pTimerTag);
+	private:
+		CTimer* Find_Timer(const _tchar* pTimerTag);
 
-private:
-	map<const _tchar*, CTimer*>		m_mapTimers;
+	private:
+		map<const _tchar*, CTimer*>		m_mapTimers;
 
-private:
-	virtual void		Free(void);
-};
+	private:
+		virtual void		Free(void);
+	};
 
-END
+}
