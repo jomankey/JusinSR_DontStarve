@@ -32,20 +32,28 @@ HRESULT CBeefalo::Ready_GameObject()
 
 _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
-    //die
-    if (m_Stat.fHP <= 0)
+    m_fFrame += m_fFrameEnd * fTimeDelta;
+
+    if (m_fFrameEnd < m_fFrame)
     {
-        //
+        if (m_Stat.bDead)
+            return 0x8000000;
+
+        m_fFrame = 0.f;
     }
 
-	m_fFrame += m_fFrameEnd * fTimeDelta;
+    //die
+    if (m_Stat.fHP <= 0 && m_ePreState != DEAD)
+    {
+        m_eCurState = DEAD;
+        m_Stat.bDead = true;
 
-	if (m_fFrameEnd < m_fFrame)
-		m_fFrame = 0.f;
+        m_fFrame = 0.f;
+    }
 
     CGameObject::Update_GameObject(fTimeDelta);
     State_Change();
-    Player_Chase(fTimeDelta);
+    if (m_eCurState != DEAD) Player_Chase(fTimeDelta); // DEAD일때 진입 불가능
     
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     return 0;
@@ -54,11 +62,12 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 void CBeefalo::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
+
+	//_vec3	vPos;
     m_pTransForm->BillBoard();
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 
-    //__super::Compute_ViewZ(&vPos);
+   // __super::Compute_ViewZ(&vPos);
     
     /*Height_OnTerrain();*/
 }
@@ -70,6 +79,9 @@ void CBeefalo::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	/* Set_Scale();*/
+
+    if (m_eCurState == DEAD && m_ePreLook != LOOK_LEFT)
+        m_ePreLook = LOOK_RIGHT;
 
     m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
@@ -122,6 +134,14 @@ HRESULT CBeefalo::Add_Component()
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
 
+    pComponent = m_pTextureCom[LOOK_LEFT][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_dead"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
+
+    pComponent = m_pTextureCom[LOOK_RIGHT][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_dead"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
+
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
@@ -151,6 +171,7 @@ void CBeefalo::Set_ObjStat()
     m_Stat.fHP = 100.f;
     m_Stat.fMxHP = 100.f;
     m_Stat.fSpeed = 1.f;
+    m_Stat.bDead = false;
 }
 
 void CBeefalo::Player_Chase(const _float& fTimeDelta)
@@ -179,6 +200,9 @@ void CBeefalo::State_Change()
         {
         case WALK:
             m_fFrameEnd = 20;
+            break;
+        case DEAD:
+            m_fFrameEnd = 12;
             break;
         }
 

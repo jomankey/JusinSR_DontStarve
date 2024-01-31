@@ -10,7 +10,7 @@ protected:
 	virtual ~CMonster();
 
 public:
-	void Set_Attack(_float _fAttack) { m_Stat.fHP -= _fAttack; }
+	void Set_Attack(_float _fAttack) { if (!m_Stat.bDead) m_Stat.fHP -= _fAttack; }
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;
@@ -26,7 +26,6 @@ protected:
 	virtual void		Set_ObjStat() PURE;
 	void		Look_Change();
 	_vec3		Get_Player_Pos();
-
 protected:
 	_vec3 m_vPos;
 	

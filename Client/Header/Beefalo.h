@@ -20,8 +20,6 @@ private:
 	explicit CBeefalo(const CBeefalo& rhs);
 	virtual ~CBeefalo();
 
-
-
 public:
 	virtual HRESULT Ready_GameObject()						 override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;

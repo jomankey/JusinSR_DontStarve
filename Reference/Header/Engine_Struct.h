@@ -55,6 +55,8 @@ namespace Engine
 		_float fMxHP;
 		_float fSpeed;
 
+		_bool bDead;
+
 	}OBJSTAT;
 }
 #endif // Engine_Struct_h__

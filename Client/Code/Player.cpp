@@ -11,15 +11,15 @@
 #include "Scene.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
+	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
-	: Engine::CGameObject(pGraphicDev,_strName)
+	: Engine::CGameObject(pGraphicDev,_strName), m_bAttack(false)
 {
 }
 CPlayer::CPlayer(const CPlayer& rhs)
-	: Engine::CGameObject(rhs)
+	: Engine::CGameObject(rhs), m_bAttack(rhs.m_bAttack)
 {
 
 }
@@ -46,7 +46,11 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	if (m_fFrameEnd < m_fFrame)
+	{
+		if (m_eCurState == ATTACK)
+			m_bAttack = false;
 		m_fFrame = 0.f;
+	}
 
 	Key_Input(fTimeDelta);
 	Check_State();
@@ -54,7 +58,6 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
 
 	/*Engine::IsPermit_Call(L"Unarmed_IDLE", fTimeDelta);*/
 	return 0;
@@ -355,43 +358,48 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('F')) // 공격
 	{
-		//m_eCurState = ATTACK;
+		m_eCurState = ATTACK;
 
-		//auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+		auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
 
-		//_vec3* vMonsterAxis = new _vec3[3];
-		//_vec3* vPlayerAxis = new _vec3[3];
-		//_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+		_vec3* vMonsterAxis = new _vec3[3];
+		_vec3* vPlayerAxis = new _vec3[3];
+		_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
 
-		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		//m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
-		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
-		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
 
-		//vPlayerScale = m_pTransForm->Get_Scale();
+		vPlayerScale = m_pTransForm->Get_Scale();
 
-		//for (auto& monster : vecMonster)
-		//{
-		//	CTransform* pItemTransform = monster->GetTransForm();
-		//	//CRcTex* pMonsterTexture = dynamic_cast<CRcTex*>(monster);  몬스터 버텍스 상속받아서 사용
-		//	pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
-		//	pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
-		//	pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
-		//	pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
-		//	vMonsterScale = pItemTransform->Get_Scale();
+		for (auto& monster : vecMonster)
+		{
+			CTransform* pItemTransform = monster->GetTransForm();
+			pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
+			pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
+			pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
+			pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
+			vMonsterScale = pItemTransform->Get_Scale();
 
-		//	if (Engine::Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos,
-		//		vMonsterAxis, vPlayerScale, vMonsterScale))
-		//	{
-		//		// 몬스터와 공격 충돌 시
-		//		// 몬스터 채력이 깎임.
-		//		m_pTransForm->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
-		//		dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
-		//		break;
-		//	}
-		//}
-		//delete[] vMonsterAxis;
-		//delete[] vPlayerAxis;
+			if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
+				vPlayerAxis, 
+				vMonsterPos,
+				vMonsterAxis, 
+				vPlayerScale, 
+				vMonsterScale))
+			{
+				// 몬스터와 공격 충돌 시
+				// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
+
+				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
+				dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
+				m_bAttack = true;
+				break;
+			}
+		}
+		delete[] vMonsterAxis;
+		delete[] vPlayerAxis;
 	}
 
 	if (GetAsyncKeyState('G'))
@@ -402,25 +410,21 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_eCurState = PICKUP;
 
-		//<<<<수정필요
-		//auto pLayer = scenemgr::Get_CurScene::Get_Layer(L"GameLogic")->Get_MapObject();
-		//_vec3 vPlayerPos, vPlayerScale, vItemPos, vItemScale;
-		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		//vPlayerScale = { 1.f, 1.f, 1.f };
-		//for (auto& object : pLayer)
-		//{
-		//	if (object.first == L"Meat_Monster" || object.first == L"Rocks_0"|| object.first == L"CutGlass")
-		//	{
-		//		//_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale
-		//		CTransform* pItemTransform = dynamic_cast<CTransform*>( object.second->Get_Component(ID_DYNAMIC, L"Proto_Transform"));
-		//		pItemTransform->Get_Info(INFO_POS, &vItemPos);
-		//		vItemScale = pItemTransform->Get_Scale();
+		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM);
+		_vec3 vPlayerPos, vPlayerScale, vItemPos, vItemScale;
+		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		vPlayerScale = m_pTransForm->Get_Scale();
 
-		//		if (Engine::Collision_Item(vPlayerPos, vItemPos, vPlayerScale, vItemScale))
-		//			m_pTransForm->Set_Scale(_vec3{ 0.5f, 0.5f, 0.5f });
-		//		
-		//	}
-		//}
+		for (auto& object : pLayer)
+		{
+			//_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale
+			CTransform* pItemTransform = object->GetTransForm();
+			pItemTransform->Get_Info(INFO_POS, &vItemPos);
+			vItemScale = pItemTransform->Get_Scale();
+
+			if (Engine::Collision_Item(vPlayerPos, vItemPos, vPlayerScale, vItemScale))
+				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
+		}
 	}
 	if (GetAsyncKeyState('B'))
 	{
@@ -575,53 +579,43 @@ void CPlayer::Check_State()
 void CPlayer::Set_Scale()
 {
 	if (m_eCurState == BUILD) //B
-	{
 		m_pTransForm->m_vScale = { 0.85f, 0.7f, 0.85f };
-	}
+
 	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == PICKUP)
-	{
 		m_pTransForm->m_vScale = { 1.0f, 0.1f, 1.0f };
-	}
+
 	else if (m_eCurState == PICKUP)
-	{
 		m_pTransForm->m_vScale = { 0.73f, 0.63f, 0.73f };
-	}
+
 	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == ATTACK)
-	{
 		m_pTransForm->m_vScale = { 1.f, 0.3f, 1.f };
-	}
+	
+	else if (m_ePlayerLookAt == LOOK_UP && m_eCurState == ATTACK)
+		m_pTransForm->m_vScale = { 0.8f, 0.3f, 0.8f };
+	
 	else if (m_eCurState == ATTACK)
-	{
 		m_pTransForm->m_vScale = { 0.85f, 0.8f, 0.85f };
-	}
+	
 	else if (m_eCurState == HIT) //H
-	{
 		m_pTransForm->m_vScale = { 0.9f, 1.f, 0.9f };
-	}
+	
 	else if (m_eCurState == FALLDOWN)
-	{
 		m_pTransForm->m_vScale = { 1.f, 1.f,1.0f };
-	}
+	
 	else if (m_eCurState == WAKEUP)
-	{
 		m_pTransForm->m_vScale = { 1.1f, 1.f, 1.1f };
-	}
+	
 	else if (m_eCurState == EAT) // H
-	{
 		m_pTransForm->m_vScale = { 1.1f, 0.3f, 1.1f };
-	}
+	
 	else if (m_eCurState == MOVE && (m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT))
-	{
 		m_pTransForm->m_vScale = { 0.9f, 0.6f, 0.8f };
-	}
+	
 	else if (m_eCurState == MOVE)
-	{
 		m_pTransForm->m_vScale = { 0.7f, 1.f, 0.7f };
-	}
+	
 	else
-	{
 		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
-	}
 
 }
 

@@ -37,6 +37,9 @@
     <Filter Include="05. Collision">
       <UniqueIdentifier>{ed84dca9-ad28-4806-8687-b9cdd36732d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. SoundMgr">
+      <UniqueIdentifier>{c70fb68f-ac03-44c9-bb49-60567f832ed6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\GraphicDev.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CResMgr.cpp">
       <Filter>06. ResourceMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SoundMgr.cpp">
+      <Filter>07. SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\CollisionMgr.h">
       <Filter>05. Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\SoundMgr.h">
+      <Filter>07. SoundMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

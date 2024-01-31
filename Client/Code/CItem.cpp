@@ -7,7 +7,6 @@
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _vPos)
 	:CGameObject(pGraphicDev)
 	, m_pBufferCom(nullptr)
-	, m_pTransForm(nullptr)
 	, m_pTextureCom(nullptr)
 	, m_strItemKey(_key)
 	, m_tItemInfo{}
@@ -18,7 +17,6 @@ CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _vPos)
 CItem::CItem(const CItem& rhs)
 	:CGameObject(rhs.m_pGraphicDev)
 	, m_pBufferCom(rhs.m_pBufferCom)
-	, m_pTransForm(rhs.m_pTransForm)
 	, m_pTextureCom(rhs.m_pTextureCom)
 	, m_strItemKey(rhs.m_strItemKey)
 	, m_tItemInfo(rhs.m_tItemInfo)
@@ -49,9 +47,9 @@ _int CItem::Update_GameObject(const _float& fTimeDelta)
 void CItem::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	//_vec3	vPos;
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	//__super::Compute_ViewZ(&vPos);
+	_vec3	vPos;
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	__super::Compute_ViewZ(&vPos);
 
 }
 
