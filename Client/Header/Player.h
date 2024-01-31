@@ -19,7 +19,8 @@ class CPlayerStatus;
 class CPlayer :	public Engine::CGameObject
 {
 private:
-	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)=delete;
+	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName);
 	explicit CPlayer(const CPlayer& rhs);
 	virtual ~CPlayer();
 
@@ -57,7 +58,7 @@ private:
 	_bool		m_Dirchange;
 	
 public:
-	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev);
+	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev,wstring _strName);
 
 private:
 	virtual void Free() override;

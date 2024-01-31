@@ -10,7 +10,6 @@ class ENGINE_DLL CMyFont :	public CBase
 private:
 	explicit CMyFont(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CMyFont();
-
 public:
 	HRESULT		Ready_Font(const _tchar* pFontType, 
 							const _uint& iWidth, 
