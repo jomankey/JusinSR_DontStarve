@@ -4,10 +4,11 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include"CInven.h"
-#include <Monster.h>
+#include "Monster.h"
 
 #include "Component.h"
 #include "Layer.h"
+#include "Scene.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -356,7 +357,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
 		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
 
-		
+
 		//vPlayerScale = m_pTransForm->Get_Scale();
 
 		//<<<<수정필요
@@ -442,14 +443,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	//
 	//	m_pTransForm->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
 	//}
-	
+
 }
 
 HRESULT CPlayer::SetUp_Material()
 {
 	D3DMATERIAL9			tMtrl;
 	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-	
+
 	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
@@ -496,17 +497,17 @@ void CPlayer::BillBoard()
 	m_pTransForm->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
-	
+
 	matBill._11 = matView._11;
 	matBill._13 = matView._13;
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
-	
+
 	//matBill._22 = matView._22;
 	matBill._23 = matView._23;
 	//matBill._32 = 0.f;
 	matBill._33 = matView._33;
-	
+
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));

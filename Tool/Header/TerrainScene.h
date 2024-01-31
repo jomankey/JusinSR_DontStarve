@@ -1,5 +1,6 @@
 #pragma once
 #include "Export_Utility.h"
+#include "Scene.h"
 
 class CTerrainScene :
     public CScene

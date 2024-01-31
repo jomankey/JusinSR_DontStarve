@@ -5,6 +5,8 @@
 #include "Export_Utility.h"
 #include "Export_System.h"
 
+#include "Scene.h"
+
 CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev)
 	, m_eUIState(_State)

@@ -29,6 +29,7 @@ namespace Engine
 		STAGE,
 		END
 	};
+
 	enum class eLAYER_TYPE
 	{
 		ENVIRONMENT,

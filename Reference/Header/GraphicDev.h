@@ -3,7 +3,8 @@
 #include "Engine_Define.h"
 #include "Base.h"
 
-namespace Engine {
+namespace Engine 
+{
 
 	class ENGINE_DLL CGraphicDev : public CBase
 	{

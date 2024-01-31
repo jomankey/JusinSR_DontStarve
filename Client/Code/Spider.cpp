@@ -3,6 +3,8 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include "Scene.h"
+
 CSpider::CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos)
 {

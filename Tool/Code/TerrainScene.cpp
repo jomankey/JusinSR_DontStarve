@@ -1,6 +1,8 @@
 #include "TerrainScene.h"
 #include "framework.h"
 #include "Export_Utility.h"
+#include "Export_System.h"
+
 #include "ToolTerrain.h"
 #include "ToolCamera.h"
 #include "ToolMgr.h"
@@ -10,6 +12,8 @@
 #include "ToolGrass.h"
 #include <ToolSkyBox.h>
 #include <ToolItem.h>
+
+#include "Scene.h"
 #include "Layer.h"
 
 

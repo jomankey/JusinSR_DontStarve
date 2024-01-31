@@ -3,6 +3,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include "Scene.h"
 
 CPig::CPig(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	:CMonster(pGraphicDev, _vPos), m_eCurState(WALK), m_ePreState(STATE_END)
@@ -22,9 +23,9 @@ HRESULT CPig::Ready_GameObject()
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransForm->Set_Pos(m_vPos);
 	Set_ObjStat();
-	/*m_pTransformCom->m_vScale = { 1.f, 1.f, 1.f };*/
+	/*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
 	m_fFrameEnd = 10;
 
 	return S_OK;
@@ -50,7 +51,7 @@ void CPig::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 	_vec3	vPos;
 	BillBoard();
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
 
 	__super::Compute_ViewZ(&vPos);
 
@@ -60,7 +61,7 @@ void CPig::LateUpdate_GameObject()
 void CPig::Render_GameObject()
 {
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	/* Set_Scale();*/
@@ -111,7 +112,7 @@ HRESULT CPig::Add_Component()
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
 	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });*/
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
@@ -124,21 +125,21 @@ HRESULT CPig::Add_Component()
 void CPig::Height_OnTerrain()
 {
 	_vec3		vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
 	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	NULL_CHECK(pTerrainBufferCom);
 
 	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
 
-	m_pTransformCom->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
 }
 
 void CPig::BillBoard()
 {
 	_matrix	matWorld, matView, matBill;
 
-	m_pTransformCom->Get_WorldMatrix(&matWorld);
+	m_pTransForm->Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
 
@@ -149,7 +150,7 @@ void CPig::BillBoard()
 
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
-	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
+	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
 }
 
 void CPig::Set_ObjStat()
@@ -164,7 +165,7 @@ void CPig::Player_Chase(const _float& fTimeDelta)
 	_vec3 PlayerPos;
 	PlayerPos = Get_Player_Pos();
 
-	m_eCurLook = m_pTransformCom->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
+	m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
 
 
 	Look_Change();

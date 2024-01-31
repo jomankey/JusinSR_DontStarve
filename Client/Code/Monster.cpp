@@ -1,7 +1,8 @@
 #include "..\Include\stdafx.h"
-#include "Monster.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Monster.h"
+#include "Scene.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	: Engine::CGameObject(pGraphicDev), m_vPos(vPos), m_Dirchange(false),

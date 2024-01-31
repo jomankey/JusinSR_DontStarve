@@ -2,6 +2,8 @@
 #include "DeerClops.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Scene.h"
+
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	: Engine::CGameObject(pGraphicDev), m_vPos(vPos), m_eCurLook(LOOK_DOWN), m_ePreLook(LOOK_END),
 	m_eCurState(IDLE), m_ePreState(STATE_END), m_Dirchange(false), m_fAcctime(0.f), m_fFrameEnd(0.f), m_bMode(false)
