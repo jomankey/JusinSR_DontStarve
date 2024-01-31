@@ -362,14 +362,11 @@ HRESULT CStage::Load_Data()
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 		}
+
 		if (nullptr != pGameObject)
 			pGameObject->GetTransForm()->Set_Pos(vPos);
 
-<<<<<<< HEAD
 		vPos.y = 1.5f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-=======
->>>>>>> b4a417b1e2c16aba6e5f6526543e10aa64dc771a
 		delete[] pName;
 	}
 

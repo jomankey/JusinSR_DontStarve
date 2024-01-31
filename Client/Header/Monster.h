@@ -26,6 +26,7 @@ protected:
 	virtual void		Set_ObjStat() PURE;
 	void		Look_Change();
 	_vec3		Get_Player_Pos();
+
 protected:
 	_vec3 m_vPos;
 	
