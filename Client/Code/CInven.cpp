@@ -126,8 +126,8 @@ void CInven::Render_GameObject()
 			//m_vecInvenSlot[i]번 째 칸에 아이템이 있는지 확인,없으면 해당 칸에 아이템을 넣음, 있으면 다음 칸에 이미지를 넣어야 함 
 			if (m_vecInvenSlot[i]->IsItemOn())
 			{
-				pTextureName[i] = m_pUI_Name;
-				m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", pTextureName[i], pTextureName[i]));
+				m_pUI_Name = pTextureName[i];
+				m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", m_pUI_Name, m_pUI_Name));
 				
 				NULL_CHECK(m_pTextureCom);
 				m_pTextureCom[i]->Set_Texture(0);
@@ -191,7 +191,7 @@ int CInven::Find_ItemCount(const _tchar* _ItemName)
 	return itemCount = m_mapItem.find(_ItemName)->second;
 }
 
-void CInven::CallFind_ItemCount(function<void()> func)
+void CInven::CallFind_ItemCount(function<void()> func, const _tchar* _ItemName)
 {
 	//최초 진입시 체크용  
 	ItemCreate = true;
@@ -199,34 +199,35 @@ void CInven::CallFind_ItemCount(function<void()> func)
 	//아이템 카운트 초기화
 	itemCount = 0;
 	//아이템이 들어오면 해당 칸에 슬롯을 true로 만들고 다음 아이템이 들어왔어도 첫 번째 칸에 아이템이 있으니 다음
-	//if([&](){for (int i = 0; i < 15; i++)
-	//		{
-	//			if (m_vecInvenSlot[i]->IsItemOn())
-	//			{
-	//				continue;
-	//			}
-	//			else 
-	//			{
-	//				m_vecInvenSlot[i]->SetItemOn(true);
-	//				return true;
-	//			}
-	//		
-	//		};
-	//	
-	//	}())
-	for (int i = 0; i < 15; i++)
-	{
-		if (m_vecInvenSlot[i]->IsItemOn())
-		{
-			continue;
-		}
-		else
-		{
-			m_vecInvenSlot[i]->SetItemOn(true);
-			return;
-
-		}
-	}
+	if([&](){for (int i = 0; i < 15; i++)
+			{
+				if (m_vecInvenSlot[i]->IsItemOn())
+				{
+					continue;
+				}
+				else 
+				{
+					m_vecInvenSlot[i]->SetItemOn(true);
+					pTextureName[i] = _ItemName;
+					return true;
+				}
+			
+			};
+		
+		}())
+	//for (int i = 0; i < 15; i++)
+	//{
+	//	if (m_vecInvenSlot[i]->IsItemOn())
+	//	{
+	//		continue;
+	//	}
+	//	else
+	//	{
+	//		m_vecInvenSlot[i]->SetItemOn(true);
+	//		return;
+	//
+	//	}
+	//}
 
 	func();
 }
@@ -236,7 +237,7 @@ void CInven::CallFind_ItemCount(function<void()> func)
 void CInven::Push_Item(int _ItmeCount, const _tchar* _ItemName)
 {
 	CallFind_ItemCount([&]() {
-		itemCount = Find_ItemCount(_ItemName); });
+		itemCount = Find_ItemCount(_ItemName); }, _ItemName);
 
 	if (itemCount <= 0)
 	{

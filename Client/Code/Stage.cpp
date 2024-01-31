@@ -145,9 +145,9 @@ HRESULT CStage::Ready_Layer_GameLogic(const _tchar* pLayerTag)
 	}
 	for (_int i = 0; i < 2; ++i)
 	{
-		pGameObject = CItem::Create(m_pGraphicDev, L"Meat_Monster", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+		pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Meat_Monster", pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"Cooked_berries", pGameObject), E_FAIL);
 
 		pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);

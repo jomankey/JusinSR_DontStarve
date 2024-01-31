@@ -40,9 +40,10 @@ private:
 	//아이템 칸 슬롯 이미지
 	CUI* m_vecInvenSlot[15];
 
+
 	const _tchar* FindItemName(const _tchar* _ItemName);
 	int Find_ItemCount(const _tchar* _ItemName);
-	void CallFind_ItemCount(function<void()>func);
+	void CallFind_ItemCount(function<void()>func,const _tchar* _ItemName);
 
 
 
