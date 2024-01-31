@@ -26,40 +26,19 @@ HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
 _int CLightMgr::Change_Light(const _float& fTimeDelta, _int _iIndex)
 {
 	static _int iChangeIndex = 0;
-	//π„≥∑ √º¿Œ¡ˆ 
-	if (iChangeIndex == 0)
+	m_fPreTime += fTimeDelta * 1000;
+
+	if (10000 < m_fPreTime)
 	{
-		if (m_fPreTime + 10000 == fTimeDelta)
-		{
+		if (iChangeIndex < 2)
 			iChangeIndex += 1;
-			m_fPreTime = 0;
-			return iChangeIndex;
-		}
 		else
-			m_fPreTime += 1;
-	}
-	else if (iChangeIndex == 1)
-	{
-		if (m_fPreTime + 5000 == fTimeDelta)
-		{
-			iChangeIndex += 1;
-			m_fPreTime = 0;
-			return iChangeIndex;
-		}
-		else
-			m_fPreTime += 1;
-	}
-	else if (iChangeIndex == 2)
-	{
-		if (m_fPreTime + 3000 == fTimeDelta)
-		{
 			iChangeIndex = 0;
-			m_fPreTime = 0;
-			return iChangeIndex;
-		}
-		else
-			m_fPreTime += 1;
+
+		m_fPreTime = 0;
 	}
+
+	return iChangeIndex;
 }
 
 void CLightMgr::Free()

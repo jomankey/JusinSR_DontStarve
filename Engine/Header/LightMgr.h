@@ -4,7 +4,7 @@
 
 #include "Light.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CLightMgr : public CBase
 {
@@ -25,12 +25,11 @@ public:
 
 private:
 	vector<CLight*>			m_vecLight;
-
 	_float m_fPreTime;
-	
+
 private:
 	virtual void	Free();
 
 };
 
-END
+}

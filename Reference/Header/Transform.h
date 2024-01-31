@@ -1,12 +1,12 @@
 #pragma once
 #include "Component.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CTransform : public CComponent
 {
 private:
-	explicit CTransform();
+	explicit CTransform()= delete;
 	explicit CTransform(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CTransform(const CTransform& rhs);
 	virtual ~CTransform();
@@ -32,6 +32,8 @@ public:
 		m_vInfo[INFO_POS].y = fY;
 		m_vInfo[INFO_POS].z = fZ;
 	}
+
+	_vec3 Get_Scale() { return m_vScale; }
 
 	void		Rotation(ROTATION eType, const _float& fAngle)
 	{
@@ -63,6 +65,8 @@ public:
 	const _matrix* Compute_LookAtTarget(const _vec3* pTargetPos);
 	void Set_Scale(_vec3 _scale) { m_vScale = _scale; }
 
+	void			BillBoard();
+
 
 public:
 	_vec3		m_vInfo[INFO_END];
@@ -78,5 +82,5 @@ private:
 	virtual void		Free();
 };
 
-END
+}
 

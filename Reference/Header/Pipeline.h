@@ -2,7 +2,7 @@
 
 #include "Engine_Define.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CPipeline
 {
@@ -29,4 +29,4 @@ public:
 										const _float& fFar);
 };
 
-END
+}

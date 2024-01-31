@@ -2,17 +2,17 @@
 #include "GameObject.h"
 #include "Engine_Define.h"
 
-BEGIN(Engine)
-class CRcTex;
-class CTexture;
-END
+namespace Engine {
+	class CRcTex;
+	class CTexture;
+}
 class CToolRock :
-    public CGameObject
+	public CGameObject
 {
 private:
-    explicit CToolRock(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+	explicit CToolRock(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CToolRock(const CToolRock& rhs);
-    virtual ~CToolRock();
+	virtual ~CToolRock();
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;
@@ -22,17 +22,13 @@ public:
 
 private:
 	HRESULT			Add_Component();
-	HRESULT SetUp_Material();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
 	Engine::CTexture* m_pTextureCom;
 
-	_vec3 m_vPos;
-
 public:
-	static CToolRock* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+	static CToolRock* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();

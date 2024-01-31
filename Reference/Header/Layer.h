@@ -1,42 +1,31 @@
 #pragma once
-
+#include "Engine_Define.h"
 #include "Base.h"
-#include "GameObject.h"
 
-BEGIN(Engine)
-
-class ENGINE_DLL CLayer : public CBase
+namespace Engine
 {
-private:
-	explicit CLayer();
-	virtual ~CLayer();
+	class CGameObject;
 
-public:
-	unordered_multimap<const _tchar*, CGameObject*> Get_MapObject() { return m_mapObject; } // Tool 사용
+	class ENGINE_DLL CLayer : public CBase
+	{
+	public:
+		static		CLayer* Create();
 
+	public:
+		const vector<CGameObject*>& GetGroupObject(eOBJECT_GROUPTYPE _eType) { return m_vecObject[(int)_eType]; } // Tool 사용
+		HRESULT		AddGameObject(eOBJECT_GROUPTYPE _eObjType, CGameObject* pGameObject);
 
-	vector<CGameObject*> findObject(const _tchar* _pObjTagName,CGameObject* _ObjType);
-public:
-	CComponent*		Get_Component(COMPONENTID eID, const _tchar* pObjTag, const _tchar* pComponentTag);
+	public:
+		HRESULT					ReadyLayer();
+		_int					UpdateLayer(const _float& fTimeDelta);
+		void					LateUpdateLayer();
 
-public:
-	HRESULT		Add_GameObject(const _tchar* pObjTag, CGameObject* pGameObject);
+		virtual		void		Free();
+	private:
+		explicit CLayer();
+		virtual ~CLayer();
+	private:
+		vector<CGameObject*>		m_vecObject[(int)eOBJECT_GROUPTYPE::END];
+	};
 
-public:
-	HRESULT		Ready_Layer();
-	_int		Update_Layer(const _float& fTimeDelta);
-	void		LateUpdate_Layer();
-
-private:
-	unordered_multimap<const _tchar*, CGameObject*>		m_mapObject;
-
-	
-public:
-	static		CLayer*		Create();
-
-private:
-	virtual		void		Free();
-
-};
-
-END
+}

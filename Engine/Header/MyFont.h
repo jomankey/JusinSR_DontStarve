@@ -3,7 +3,7 @@
 #include "Base.h"
 #include "Engine_Define.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class ENGINE_DLL CMyFont :	public CBase
 {
@@ -35,4 +35,4 @@ private:
 	virtual void	Free();
 };
 
-END
+}

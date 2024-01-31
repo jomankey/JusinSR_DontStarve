@@ -1,8 +1,5 @@
 #include "..\..\Header\TriCol.h"
 
-CTriCol::CTriCol()
-{
-}
 
 CTriCol::CTriCol(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CVIBuffer(pGraphicDev)

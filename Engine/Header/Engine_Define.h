@@ -39,6 +39,7 @@
 #endif // defined(_DEBUG) && !defined(_TOOL)
 
 using namespace std;
+
 using namespace Engine;
 
 

@@ -3,13 +3,13 @@
 #include "Base.h"
 #include "GameObject.h"
 
-BEGIN(Engine)
+namespace Engine {
 
 class CTerrainTex;
 class CTexture;
 class CTransform;
 
-END
+}
 
 class CTerrain :	public Engine::CGameObject
 {
@@ -30,7 +30,6 @@ private:
 
 private:
 	Engine::CTerrainTex*		m_pBufferCom;
-	Engine::CTransform*	m_pTransformCom;
 	Engine::CTexture*	m_pTextureCom;
 
 public:

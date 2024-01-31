@@ -1,8 +1,5 @@
 #include "..\..\Header\RvRcTex.h"
 
-CRvRcTex::CRvRcTex()
-{
-}
 
 CRvRcTex::CRvRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CVIBuffer(pGraphicDev)

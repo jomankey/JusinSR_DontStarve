@@ -1,17 +1,19 @@
 #include "..\Include\stdafx.h"
 #include "..\Header\CInven.h"
-#include"CUI.h"
-#include"CItem.h"
-
 #include "Export_Utility.h"
 #include "Export_System.h"
 
+
+#include"CUI.h"
+#include"CItem.h"
+#include "Scene.h"
+
 CInven::CInven(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State)
 	: Engine::CGameObject(pGraphicDev)
-	,m_vecInvenSlot()
+	, m_vecInvenSlot()
 
 {
-	
+
 }
 
 CInven::CInven(const CInven& rhs)
@@ -26,31 +28,17 @@ CInven::~CInven()
 
 }
 
-//HRESULT CInven::Ready_GameObject()
-//{
-//
-//	for (int i = 0; i < 15; i++)
-//	{
-//		int PixelJump = 0;
-//		if (i == 5 || i == 10 || i == 15)
-//			PixelJump = 7;
-//		m_vecInvenSlot[i]= CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
-//		
-//	}
-//	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-//	//m_vecInvenSlot
-//	return S_OK;
-//}
 
-HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
+HRESULT Engine::CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 {
+
 	for (int i = 0; i < 15; i++)
 	{
 		int PixelJump = 0;
 		if (i == 5 || i == 10 || i == 15)
 			PixelJump = 7;
 		m_vecInvenSlot[i] = CUI::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
-		m_fX[i]= m_vecInvenSlot[i]->Get_fX();
+		m_fX[i] = m_vecInvenSlot[i]->Get_fX();
 		m_fY[i] = m_vecInvenSlot[i]->Get_fY();
 		m_vecInvenSlot[i]->SetItemOn(false);
 
@@ -70,26 +58,26 @@ Engine::_int CInven::Update_GameObject(const _float& fTimeDelta)
 	if (GetAsyncKeyState('W'))
 	{
 		//m_pUI_Name = L"Log";
-		Push_Item(3, L"Log");
+		//Push_Item(3, L"Log");
 
 		CheckItemSlotCount++;
 
 	}if (GetAsyncKeyState('S'))
 	{
-		Push_Item(1, L"Berries");
+		//Push_Item(1, L"Berries");
 		//m_pUI_Name = L"Berries";
 	}
 
 
 
 	CGameObject::Update_GameObject(fTimeDelta);
-	Engine::Add_RenderGroup(RENDER_UI, this);
+	renderer::Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
 
 void CInven::LateUpdate_GameObject()
 {
-	int collisionResult = UI_Collision(); // Ãæµ¹ Ã¼Å© ÇÑ ¹ø¸¸ ¼öÇà
+	int collisionResult = UI_Collision(); // ì¶©ëŒ ì²´í¬ í•œ ë²ˆë§Œ ìˆ˜í–‰
 
 	if (collisionResult != -99)
 	{
@@ -114,27 +102,28 @@ void CInven::Render_GameObject()
 		m_vecInvenSlot[i]->Render_GameObject();
 	}
 
-	Get_Scene()->BeginOrtho();
+	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
-	
-	for(int i=0; i< 15;i++)
+
+
+	for (int i = 0; i < 15; i++)
 	{
-		//¾ÆÀÌÅÛÀÌ ¸Ç Ã³À½ µé¾î¿Ô´ÂÁö È®ÀÎ
+		//ì•„ì´í…œì´ ë§¨ ì²˜ìŒ ë“¤ì–´ì™”ëŠ”ì§€ í™•ì¸
 		if (ItemCreate)
 		{
-			//m_vecInvenSlot[i]¹ø Â° Ä­¿¡ ¾ÆÀÌÅÛÀÌ ÀÖ´ÂÁö È®ÀÎ,¾øÀ¸¸é ÇØ´ç Ä­¿¡ ¾ÆÀÌÅÛÀ» ³ÖÀ½, ÀÖÀ¸¸é ´ÙÀ½ Ä­¿¡ ÀÌ¹ÌÁö¸¦ ³Ö¾î¾ß ÇÔ 
+			//m_vecInvenSlot[i]ë²ˆ ì§¸ ì¹¸ì— ì•„ì´í…œì´ ìˆëŠ”ì§€ í™•ì¸,ì—†ìœ¼ë©´ í•´ë‹¹ ì¹¸ì— ì•„ì´í…œì„ ë„£ìŒ, ìˆìœ¼ë©´ ë‹¤ìŒ ì¹¸ì— ì´ë¯¸ì§€ë¥¼ ë„£ì–´ì•¼ í•¨ 
 			if (m_vecInvenSlot[i]->IsItemOn())
 			{
 				m_pUI_Name = pTextureName[i];
 				m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", m_pUI_Name, m_pUI_Name));
 				
+
 				NULL_CHECK(m_pTextureCom);
 				m_pTextureCom[i]->Set_Texture(0);
-				m_pTransformCom[i]->Set_Pos(m_fX[i] - (WINCX >> 1), -m_fY[i] + (WINCY >> 1), 0.f);
+				m_pChildObj[i]->Set_Pos(m_fX[i] - (WINCX >> 1), -m_fY[i] + (WINCY >> 1), 0.f);
 
-				m_pTransformCom[i]->Set_Scale(_vec3{ 15, 15, 1.f });
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[i]->Get_WorldMatrix());
+				m_pChildObj[i]->Set_Scale(_vec3{ 15, 15, 1.f });
+				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pChildObj[i]->Get_WorldMatrix());
 				m_pBufferCom[i]->Render_Buffer();
 				continue;
 				//break;
@@ -151,29 +140,29 @@ void CInven::Render_GameObject()
 
 	}
 
-		Get_Scene()->EndOrtho();
+	scenemgr::Get_CurScene()->EndOrtho();
 
 
 }
-
-int CInven::UI_Collision()
-{
-	GetCursorPos(&m_MousePoint);
-	ScreenToClient(g_hWnd, &m_MousePoint);
-
-	for (int i = 0; i < 15; i++)
-	{
-		if (m_fX[i] - 20 < m_MousePoint.x && m_MousePoint.x < m_fX[i] + 20 &&
-			m_fY[i] - 20 < m_MousePoint.y && m_MousePoint.y < m_fY[i] + 20)
-		{
-		
-			return i; // Ãæµ¹ÀÌ ¹ß»ıÇÑ Ä­À» Ã£À¸¸é ÇØ´ç ÀÎµ¦½º¸¦ ¹İÈ¯ÇÏ°í ÇÔ¼ö Á¾·á
-		}
-	}
-
-	return -99; // ¸ğµç Ä­¿¡ ´ëÇÑ Ãæµ¹ Ã¼Å©¸¦ ¿Ï·áÇÏ°íµµ Ãæµ¹ÀÌ ¾øÀ¸¸é -99 ¹İÈ¯
-
-}
+//
+//int CInven::UI_Collision()
+//{
+//	GetCursorPos(&m_MousePoint);
+//	ScreenToClient(g_hWnd, &m_MousePoint);
+//
+//	for (int i = 0; i < 15; i++)
+//	{
+//		if (m_fX[i] - 20 < m_MousePoint.x && m_MousePoint.x < m_fX[i] + 20 &&
+//			m_fY[i] - 20 < m_MousePoint.y && m_MousePoint.y < m_fY[i] + 20)
+//		{
+//		
+//			return i; // ì¶©ëŒì´ ë°œìƒí•œ ì¹¸ì„ ì°¾ìœ¼ë©´ í•´ë‹¹ ì¸ë±ìŠ¤ë¥¼ ë°˜í™˜í•˜ê³  í•¨ìˆ˜ ì¢…ë£Œ
+//		}
+//	}
+//
+//	return -99; // ëª¨ë“  ì¹¸ì— ëŒ€í•œ ì¶©ëŒ ì²´í¬ë¥¼ ì™„ë£Œí•˜ê³ ë„ ì¶©ëŒì´ ì—†ìœ¼ë©´ -99 ë°˜í™˜
+//
+//}
 
 const _tchar* CInven::FindItemName(const _tchar* _ItemName)
 {
@@ -185,20 +174,20 @@ const _tchar* CInven::FindItemName(const _tchar* _ItemName)
 
 int CInven::Find_ItemCount(const _tchar* _ItemName)
 {
-	if(m_mapItem.find(_ItemName) == m_mapItem.end())
+	if (m_mapItem.find(_ItemName) == m_mapItem.end())
 		return itemCount = 0;
 	else
-	return itemCount = m_mapItem.find(_ItemName)->second;
+		return itemCount = m_mapItem.find(_ItemName)->second;
 }
 
 void CInven::CallFind_ItemCount(function<void()> func, const _tchar* _ItemName)
 {
-	//ÃÖÃÊ ÁøÀÔ½Ã Ã¼Å©¿ë  
+	//ìµœì´ˆ ì§„ì…ì‹œ ì²´í¬ìš©  
 	ItemCreate = true;
 
-	//¾ÆÀÌÅÛ Ä«¿îÆ® ÃÊ±âÈ­
+	//ì•„ì´í…œ ì¹´ìš´íŠ¸ ì´ˆê¸°í™”
 	itemCount = 0;
-	//¾ÆÀÌÅÛÀÌ µé¾î¿À¸é ÇØ´ç Ä­¿¡ ½½·ÔÀ» true·Î ¸¸µé°í ´ÙÀ½ ¾ÆÀÌÅÛÀÌ µé¾î¿Ô¾îµµ Ã¹ ¹øÂ° Ä­¿¡ ¾ÆÀÌÅÛÀÌ ÀÖÀ¸´Ï ´ÙÀ½
+	//ì•„ì´í…œì´ ë“¤ì–´ì˜¤ë©´ í•´ë‹¹ ì¹¸ì— ìŠ¬ë¡¯ì„ trueë¡œ ë§Œë“¤ê³  ë‹¤ìŒ ì•„ì´í…œì´ ë“¤ì–´ì™”ì–´ë„ ì²« ë²ˆì§¸ ì¹¸ì— ì•„ì´í…œì´ ìˆìœ¼ë‹ˆ ë‹¤ìŒ
 	if([&](){for (int i = 0; i < 15; i++)
 			{
 				if (m_vecInvenSlot[i]->IsItemOn())
@@ -232,29 +221,52 @@ void CInven::CallFind_ItemCount(function<void()> func, const _tchar* _ItemName)
 	func();
 }
 
-
-
-void CInven::Push_Item(int _ItmeCount, const _tchar* _ItemName)
+int Engine::CInven::UI_Collision()
 {
+
 	CallFind_ItemCount([&]() {
 		itemCount = Find_ItemCount(_ItemName); }, _ItemName);
 
-	if (itemCount <= 0)
+	GetCursorPos(&m_MousePoint);
+	ScreenToClient(g_hWnd, &m_MousePoint);
+
+
+	for (int i = 0; i < 15; i++)
 	{
-		itemCount = itemCount + _ItmeCount;
-		m_pUI_Name = _ItemName;
-		m_mapItem.insert(make_pair(_ItemName, itemCount));
-		return;
+		if (m_fX[i] - 20 < m_MousePoint.x && m_MousePoint.x < m_fX[i] + 20 &&
+			m_fY[i] - 20 < m_MousePoint.y && m_MousePoint.y < m_fY[i] + 20)
+		{
+
+			return i;
+		}
 	}
-	else
-	{
-		itemCount = itemCount + _ItmeCount;
-		m_pUI_Name = _ItemName;
-		m_mapItem[_ItemName] = itemCount;
-		return;
-	}
-	
+
+	return -99; 
 }
+
+
+//
+//void CInven::Push_Item(int _ItmeCount, const _tchar* _ItemName)
+//{
+//	CallFind_ItemCount([&]() {
+//		itemCount = Find_ItemCount(_ItemName); });
+//
+//	if (itemCount <= 0)
+//	{
+//		itemCount = itemCount + _ItmeCount;
+//		m_pUI_Name = _ItemName;
+//		m_mapItem.insert(make_pair(_ItemName, itemCount));
+//		return;
+//	}
+//	else
+//	{
+//		itemCount = itemCount + _ItmeCount;
+//		m_pUI_Name = _ItemName;
+//		m_mapItem[_ItemName] = itemCount;
+//		return;
+//	}
+//	
+//}
 
 HRESULT CInven::Add_Component()
 {
@@ -263,17 +275,17 @@ HRESULT CInven::Add_Component()
 
 		CComponent* pComponent = nullptr;
 
-		pComponent = m_pBufferCom[i] = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
+		pComponent = m_pBufferCom[i] = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
 		m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 
-		//pComponent = m_pTextureCom[i] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Meat_Monster"));
+		//pComponent = m_pTextureCom[i] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Meat_Monster"));
 		//NULL_CHECK_RETURN(pComponent, E_FAIL);
 		//m_mapComponent[ID_STATIC].insert({ L"Meat_Monster", pComponent });
 
 
-		pComponent = m_pTransformCom[i] = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+		pComponent = m_pChildObj[i] = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
 		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
@@ -303,9 +315,9 @@ void CInven::Free()
 {
 	for (int i = 0; i < 15; i++)
 	{
-	m_vecInvenSlot[i]->Free();
+		m_vecInvenSlot[i]->Free();
 
-	Safe_Release(m_vecInvenSlot[i]);
+		Safe_Release(m_vecInvenSlot[i]);
 	}
 	__super::Free();
 }

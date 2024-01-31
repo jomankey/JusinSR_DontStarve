@@ -1,7 +1,8 @@
 #include "..\Include\stdafx.h"
-#include "Monster.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Monster.h"
+#include "Scene.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	: Engine::CGameObject(pGraphicDev), m_vPos(vPos), m_Dirchange(false),
@@ -70,7 +71,8 @@ void CMonster::Look_Change()
 
 _vec3 CMonster::Get_Player_Pos()
 {
-	Engine::CTransform* pPlayerTransformCom = dynamic_cast<Engine::CTransform*>(Engine::Get_Component(ID_DYNAMIC, L"GameLogic", L"Player", L"Proto_Transform"));
+	auto pPlayer = dynamic_cast<CScene*>(scenemgr::Get_CurScene())->GetPlayerObject();
+	Engine::CTransform* pPlayerTransformCom = pPlayer->GetTransForm();
 	NULL_CHECK_RETURN(pPlayerTransformCom, _vec3());
 
 	
