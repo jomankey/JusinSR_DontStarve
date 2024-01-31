@@ -101,50 +101,50 @@ void CInven::Render_GameObject()
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
-	//각 컴포넌트를 돌면서 렌더링
-	for(int i=0; i< 15;i++)
-	{
-		//아이템이 맨 처음 들어왔는지 확인
-		if (ItemCreate)
-		{
-			//m_vecInvenSlot[i]번 째 칸에 아이템이 있는지 확인,없으면 해당 칸에 아이템을 넣음, 있으면 다음 칸에 이미지를 넣어야 함 
-			if (m_vecInvenSlot[i]->IsItemOn())
-			{
-				auto arrItem = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM);
-				for (auto iter : arrItem)
-				{
-					//if (iter == m_pUI_Name)
-					//{
-					//	m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(iter->Find_Component(ID_STATIC, m_pUI_Name));
-					//	break;
-					//}
-				}
-				
-				m_pUI_Name = pTextureName[i];
+	////각 컴포넌트를 돌면서 렌더링
+	//for(int i=0; i< 15;i++)
+	//{
+	//	//아이템이 맨 처음 들어왔는지 확인
+	//	if (ItemCreate)
+	//	{
+	//		//m_vecInvenSlot[i]번 째 칸에 아이템이 있는지 확인,없으면 해당 칸에 아이템을 넣음, 있으면 다음 칸에 이미지를 넣어야 함 
+	//		if (m_vecInvenSlot[i]->IsItemOn())
+	//		{
+	//			auto arrItem = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM);
+	//			for (auto iter : arrItem)
+	//			{
+	//				//if (iter == m_pUI_Name)
+	//				//{
+	//				//	m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(iter->Find_Component(ID_STATIC, m_pUI_Name));
+	//				//	break;
+	//				//}
+	//			}
+	//			
+	//			m_pUI_Name = pTextureName[i];
 
-				//m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", m_pUI_Name, m_pUI_Name));
-				
-				NULL_CHECK(m_pTextureCom);
-				m_pTextureCom[i]->Set_Texture(0);
-				m_pTransformCom[i]->Set_Pos(m_fX[i] - (WINCX >> 1), -m_fY[i] + (WINCY >> 1), 0.f);
+	//			//m_pTextureCom[i] = dynamic_cast<Engine::CTexture*>(Engine::Get_Component(ID_STATIC, L"GameLogic", m_pUI_Name, m_pUI_Name));
+	//			
+	//			NULL_CHECK(m_pTextureCom);
+	//			m_pTextureCom[i]->Set_Texture(0);
+	//			m_pTransformCom[i]->Set_Pos(m_fX[i] - (WINCX >> 1), -m_fY[i] + (WINCY >> 1), 0.f);
 
-				m_pTransformCom[i]->Set_Scale(_vec3{ 15, 15, 1.f });
-				m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[i]->Get_WorldMatrix());
-				m_pBufferCom[i]->Render_Buffer();
-				continue;
-				//break;
-			}
-			else
-			{
-				continue;
-			}
+	//			m_pTransformCom[i]->Set_Scale(_vec3{ 15, 15, 1.f });
+	//			m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom[i]->Get_WorldMatrix());
+	//			m_pBufferCom[i]->Render_Buffer();
+	//			continue;
+	//			//break;
+	//		}
+	//		else
+	//		{
+	//			continue;
+	//		}
 
-		}
+	//	}
 
-		//m_pTextureCom[i]->Set_Texture(0);
+	//	//m_pTextureCom[i]->Set_Texture(0);
 
 
-	}
+	//}
 
 	scenemgr::Get_CurScene()->EndOrtho();
 
