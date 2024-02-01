@@ -23,7 +23,7 @@ Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName
 	, m_bDelete(false)
 	, m_strObjName(_strName)
 {
-
+	m_pGraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
@@ -61,9 +61,6 @@ void CGameObject::LateUpdate_GameObject()
 		iter.second->LateUpdate_Component();
 }
 
-void CGameObject::Render_GameObject()
-{
-}
 void CGameObject::Free()
 {
 	for (size_t i = 0; i < ID_END; ++i)

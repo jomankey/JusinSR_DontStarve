@@ -11,6 +11,7 @@ class CTransform;
 class CCalculator;
 
 }
+
 class CBeefalo : public CMonster
 {
 	enum BEEFALOSTATE { IDLE, GRAZE,ATTACK, WALK, RUN, MADRUN, SLEEP, DEAD, STATE_END };

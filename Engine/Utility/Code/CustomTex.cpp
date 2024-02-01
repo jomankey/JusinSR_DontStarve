@@ -110,5 +110,6 @@ CComponent * CustomizeTex::Clone()
 
 void CustomizeTex::Free()
 {
+
 	CVIBuffer::Free();
 }

@@ -12,20 +12,22 @@ namespace Engine
 	{
 	public:
 		_float				Get_ViewZ() { return m_fViewZ; }
-		CTransform*			GetTransForm() { return m_pTransForm; }
+		CTransform* GetTransForm() { return m_pTransForm; }
 		HRESULT				SetUp_Material();
 		void				Compute_ViewZ(const _vec3* pPos);
-
 		virtual CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
 
 		wstring	GetObjName() { return m_strObjName; }
 		void	SetObjName(wstring _objName) { m_strObjName = _objName; }
 
+		void SetDeleteObj() { m_bDelete = true; }
+		_bool IsDelete() { return m_bDelete; }
+
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
 		virtual void		LateUpdate_GameObject();
-		virtual void		Render_GameObject();
+		virtual void		Render_GameObject()PURE;
 
 	protected:
 		explicit CGameObject() = delete;

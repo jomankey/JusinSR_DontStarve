@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "CInventoryMgr.h"
 #include"CItem.h"
 

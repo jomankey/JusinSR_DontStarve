@@ -24,13 +24,16 @@ namespace Engine
 		//³ªÁß¿¡ ½Ì±ÛÅæÀ¸·Î ±³Ã¼
 		CGameObject* GetTerrainObject() { return m_pTerrain; }
 		CGameObject* GetPlayerObject() { return m_pPlayer; }
+		CLayer* GetLayer(eLAYER_TYPE _eLayerType) { return m_arrLayer[(int)_eLayerType]; }
+		HRESULT		AddGameObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjType, CGameObject* pGameObject);
 
 	public:
 		virtual HRESULT		Ready_Scene();
 		virtual _int		Update_Scene(const _float& fTimeDelta);
 		virtual void		LateUpdate_Scene();
 		virtual void		Render_Scene()	PURE;
-		CLayer* GetLayer(eLAYER_TYPE _eLayerType) { return m_arrLayer[(int)_eLayerType]; }
+		virtual void		Update_Event();
+
 	public:
 		virtual void Free();
 
@@ -40,9 +43,9 @@ namespace Engine
 
 	protected:
 		LPDIRECT3DDEVICE9		m_pGraphicDev;
-		CLayer*					m_arrLayer[(int)eLAYER_TYPE::END];
+		CLayer* m_arrLayer[(int)eLAYER_TYPE::END];
 		wstring					m_strSceneName;
-		CCamera*				m_pCamera;
+		CCamera* m_pCamera;
 
 		//³ªÁß¿¡ ½Ì±ÛÅæÀ¸·Î ±³Ã¼
 		CGameObject* m_pTerrain;

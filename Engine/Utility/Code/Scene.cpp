@@ -1,3 +1,4 @@
+#include "Scene.h"
 #include "..\..\Header\Scene.h"
 #include "Layer.h"	
 #include "Camera.h"
@@ -39,6 +40,11 @@ _matrix* CScene::Get_OrthoMatrix()
 }
 
  
+HRESULT Engine::CScene::AddGameObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjType, CGameObject* pGameObject)
+{
+	return m_arrLayer[(_uint)_eLayerType]->AddGameObject(_eObjType, pGameObject);
+}
+
 HRESULT CScene::Ready_Scene()
 {
 	return S_OK;
@@ -62,6 +68,16 @@ void CScene::LateUpdate_Scene()
 	}
 
 }
+
+void Engine::CScene::Update_Event()
+{
+	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
+	{
+		m_arrLayer[i]->DeleteEvent();
+	}
+}
+
+
 
 
 

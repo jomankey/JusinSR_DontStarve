@@ -73,6 +73,8 @@ namespace Engine
 	//ResMgr
 	inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num);
 
+
+
 	//SoundMgr
 	//inline void Ready_Sound();
 	//inline void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume);

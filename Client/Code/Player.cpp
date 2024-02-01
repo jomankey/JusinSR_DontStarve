@@ -1,4 +1,4 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "..\Header\Player.h"
 
 #include "Export_System.h"
@@ -17,17 +17,21 @@
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
+	: Engine::CGameObject(pGraphicDev)
+	, m_bAttack(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
-	: Engine::CGameObject(pGraphicDev,_strName), m_bAttack(false)
+	: Engine::CGameObject(pGraphicDev,_strName)
+	, m_bAttack(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 CPlayer::CPlayer(const CPlayer& rhs)
-	: Engine::CGameObject(rhs), m_bAttack(rhs.m_bAttack) , m_Stat(rhs.m_Stat)
+	: Engine::CGameObject(rhs)
+	, m_bAttack(rhs.m_bAttack) 
+	, m_Stat(rhs.m_Stat)
 {
 
 }
@@ -84,7 +88,6 @@ void CPlayer::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
 	m_pTextureCom[m_ePlayerLookAt][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 	FAILED_CHECK_RETURN(SetUp_Material(), );
@@ -609,9 +612,7 @@ void CPlayer::BillBoard()
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
 
-	//matBill._22 = matView._22;
 	matBill._23 = matView._23;
-	//matBill._32 = 0.f;
 	matBill._33 = matView._33;
 
 	D3DXMatrixInverse(&matBill, NULL, &matBill);

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\Beefalo.cpp"
 
@@ -72,4 +73,7 @@
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Include\Client.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Include\FuncEvent.cpp"
 

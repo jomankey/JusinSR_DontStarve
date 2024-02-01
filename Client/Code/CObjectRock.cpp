@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "CObjectRock.h"
 #include "Export_Utility.h"
 #include "Component.h"

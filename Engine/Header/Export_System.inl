@@ -110,11 +110,12 @@ _bool Collision_Monster(
 {
 	return CCollisionMgr::GetInstance()->Collision_Monster(vPlayerPos, vPlayerAxis, vMonsterPos, vMonsterAxis, vPlayerScale, vMonsterScale);
 }
-//Destroy
+//Resource
 inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
 {
 	CResMgr::GetInstance()->Save_TexturePath(_fileName,_key, _textureTag, _subPath, num);
 }
+
 //
 ////Sound
 //void Ready_Sound()
@@ -151,12 +152,12 @@ inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _texture
 // Destroy
 void			Release_System()
 {
-	CInputDev::GetInstance()->DestroyInstance();
-	CFontMgr::GetInstance()->DestroyInstance();
-	CFrameMgr::GetInstance()->DestroyInstance();
-	CTimerMgr::GetInstance()->DestroyInstance();
-	CGraphicDev::GetInstance()->DestroyInstance();
-	CPathMgr::GetInstance()->DestroyInstance();
-	CResMgr::GetInstance()->DestroyInstance();
-	CCollisionMgr::GetInstance()->DestroyInstance();
+	CInputDev::DestroyInstance();
+	CFontMgr::DestroyInstance();
+	CFrameMgr::DestroyInstance();
+	CTimerMgr::DestroyInstance();
+	CGraphicDev::DestroyInstance();
+	CPathMgr::DestroyInstance();
+	CResMgr::DestroyInstance();
+	CCollisionMgr::DestroyInstance();
 }

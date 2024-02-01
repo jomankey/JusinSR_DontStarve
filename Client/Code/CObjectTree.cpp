@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "CObjectTree.h"
 
 #include "Export_System.h"

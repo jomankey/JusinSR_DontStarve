@@ -1,4 +1,4 @@
-#include "../Include/stdafx.h"
+#include "stdafx.h"
 #include "../Header/CItem.h"
 
 #include "Export_System.h"
@@ -50,6 +50,11 @@ _int CItem::Update_GameObject(const _float& fTimeDelta)
 	MousePicking();
 	m_pTransForm->BillBoard();
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
+	
+	if (GetAsyncKeyState('P'))
+	{
+		DeleteObject(this);
+	}
 	return _int();
 }
 

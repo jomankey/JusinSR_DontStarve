@@ -1,4 +1,7 @@
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\CEventMgr.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\CustomTex.cpp"
 
 

@@ -1,4 +1,4 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "..\Header\SkyBox.h"
 
 #include "Export_Utility.h"

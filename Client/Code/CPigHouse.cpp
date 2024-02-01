@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "CPigHouse.h"
 
 #include "Export_System.h"

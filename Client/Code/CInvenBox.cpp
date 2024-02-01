@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "CInvenBox.h"
 
 #include "CInventoryMgr.h"

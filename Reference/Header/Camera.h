@@ -13,6 +13,8 @@ namespace Engine
 		virtual HRESULT Ready_GameObject() override;
 		virtual _int Update_GameObject(const _float& fTimeDelta) override;
 		virtual void LateUpdate_GameObject() override;
+		virtual void		Render_GameObject() {};
+
 		_matrix* Get_ViewSpaceMatrix() { return &m_matView; }
 		_matrix* Get_ProjectionMatrix() { return &m_matProj; }
 		_matrix* Get_OrthoMatrix() { return &matOrtho; }

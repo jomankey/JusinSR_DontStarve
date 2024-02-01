@@ -1,4 +1,4 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "DeerClops.h"
 #include "Export_System.h"
 #include "Export_Utility.h"

@@ -3,12 +3,13 @@
 CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CComponent(pGraphicDev)
 {
+
 }
 
 CTexture::CTexture(const CTexture & rhs)
 	: CComponent(rhs)
 {
-	_uint	iSize = rhs.m_vecTexture.size();
+	size_t	iSize = rhs.m_vecTexture.size();
 	m_vecTexture.reserve(iSize);
 
 	m_vecTexture = rhs.m_vecTexture;
@@ -19,6 +20,7 @@ CTexture::CTexture(const CTexture & rhs)
 
 CTexture::~CTexture()
 {
+
 }
 
 HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar * pPath, const _uint & iCnt, const _uint& iNum)
@@ -91,4 +93,6 @@ void CTexture::Free()
 {
 	for_each(m_vecTexture.begin(), m_vecTexture.end(), CDeleteObj());
 	m_vecTexture.clear();
+
+	__super::Free();
 }

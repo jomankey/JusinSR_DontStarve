@@ -56,6 +56,26 @@ void CLayer::LateUpdateLayer()
 	}
 }
 
+void Engine::CLayer::DeleteEvent()
+{
+	for (size_t i = 0; i < (int)eOBJECT_GROUPTYPE::END; i++)
+	{
+		auto iter = m_vecObject[i].begin();
+		for (; iter != m_vecObject[i].end();)
+		{
+			if (!(*iter)->IsDelete())
+			{
+				++iter;
+			}
+			else
+			{
+				(*iter) = nullptr;
+				iter = m_vecObject[i].erase(iter);
+			}
+		}
+	}
+}
+
 
 CLayer* CLayer::Create()
 {
