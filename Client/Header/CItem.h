@@ -15,18 +15,19 @@ struct ItemInfo
 	_uint Hungry;
 	_uint Mental;
 	_uint Demage;
+	_bool Equipment;
 };
 
 class CItem :
 	public Engine::CGameObject
 {
 protected:
-	explicit CItem(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key,_vec3 _vPos);
+	explicit CItem(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CItem(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strObjName);
 	explicit CItem(const CItem& rhs);
 	virtual ~CItem();
 
 public:
-	const wstring& GetItemKey() const { return m_strItemKey; }
 	void AddItemCount(_uint _num) { m_tItemInfo.ItemCount += _num; }
 	void MinusItemCount(_uint _num)
 	{
@@ -34,10 +35,11 @@ public:
 			m_tItemInfo.ItemCount -= _num;
 	}
 
-	void SetPos(const _vec3& _vPos);
+	_bool			IsEquipment() { return m_tItemInfo.Equipment; }
+
 
 	const ItemInfo& GetItemInfo() { return m_tItemInfo; }
-	void SetItemInfo(const ItemInfo& _itemInfo) { m_tItemInfo = _itemInfo; }
+	void			SetItemInfo(const ItemInfo& _itemInfo) { m_tItemInfo = _itemInfo; }
 public:
 	//순수가상함수
 	virtual _bool UseItem() { return false; }
@@ -48,8 +50,7 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject()override;
 	virtual void		Render_GameObject()override;
-
-	static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _vPos);
+	static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName);
 
 private:
 	HRESULT			Add_Component();
@@ -64,7 +65,6 @@ protected:
 	Engine::CTexture* m_pTextureCom;
 
 private:
-	wstring	m_strItemKey;//텍스처 키값 및 아이템 키값
-	ItemInfo	m_tItemInfo;	//아이템개수
+	ItemInfo	m_tItemInfo;		//아이템개수
 };
 

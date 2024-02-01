@@ -75,9 +75,6 @@
     <ClCompile Include="..\Code\CResMgr.cpp">
       <Filter>06. ResourceMgr</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SoundMgr.cpp">
-      <Filter>07. SoundMgr</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\GraphicDev.h">
@@ -115,9 +112,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\CollisionMgr.h">
       <Filter>05. Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Header\SoundMgr.h">
-      <Filter>07. SoundMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

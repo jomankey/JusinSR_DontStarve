@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <ctime>
 #include <fstream>
+#include <cassert>
 
 #include "Engine_Enum.h"
 #include "Engine_Macro.h"
@@ -25,7 +26,7 @@
 
 #include "fmod.h"
 #include "fmod.hpp"
-//#pragma comment(lib, "fmodex_vc.lib")
+#pragma comment(lib, "fmodex_vc.lib")
 
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>

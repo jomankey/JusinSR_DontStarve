@@ -49,6 +49,10 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 			return 0;
 		}
+		else if (GetAsyncKeyState('P'))
+		{
+
+		}
 	}
 
 	return iExit;

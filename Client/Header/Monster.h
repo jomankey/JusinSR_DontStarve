@@ -24,6 +24,7 @@ public:
 
 protected:
 	virtual void		Set_ObjStat() PURE;
+	virtual void		State_Change() PURE;
 	void		Look_Change();
 	_vec3		Get_Player_Pos();
 protected:
@@ -34,5 +35,7 @@ protected:
 	OBJSTAT m_Stat;
 	_bool		m_Dirchange; //false 일때 오른쪽 보기
 	_float	m_fAcctime;
+	_float  m_fFrameChange = 0;
+	
 };
 

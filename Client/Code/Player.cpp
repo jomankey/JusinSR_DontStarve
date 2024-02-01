@@ -3,12 +3,18 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-#include"CInven.h"
+#include "CInven.h"
 #include "Monster.h"
 
 #include "Component.h"
 #include "Layer.h"
 #include "Scene.h"
+#include "CItem.h"
+
+//Manager
+#include "CInventoryMgr.h"
+
+
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev), m_bAttack(false), m_pTest(nullptr)
@@ -117,10 +123,7 @@ HRESULT CPlayer::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
 
-	//enum PLAYERSTATE {
-	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
-	//};
-	/*enum PLAYERLOOK { LOOK_DOWN, LOOK_RIGHT, LOOK_LEFT, LOOK_UP, LOOK_END };*/
+	
 	pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_down", pComponent });
@@ -247,7 +250,7 @@ HRESULT CPlayer::Add_Component()
 	return S_OK;
 }
 
-CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
+CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 {
 	CPlayer* pInstance = new CPlayer(pGraphicDev, _strName);
 
@@ -303,6 +306,10 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_ePlayerLookAt = LOOK_UP;
 	}
 
+	if (GetAsyncKeyState('X'))
+	{
+		CInventoryMgr::GetInstance()->AddItem(CItem::Create(m_pGraphicDev, L"Log"));
+	}
 	if (GetAsyncKeyState('S'))
 	{ //f
 		D3DXVec3Normalize(&vDir, &vDir);

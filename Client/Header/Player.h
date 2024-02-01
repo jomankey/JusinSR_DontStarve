@@ -4,7 +4,8 @@
 #include "GameObject.h"
 #include "ResObject.h"
 
-namespace Engine {
+namespace Engine 
+{
 
 class CRcTex;
 class CRvRcTex;

@@ -1,24 +1,33 @@
 #include "../Include/stdafx.h"
 #include "../Header/CItem.h"
 
-//#include "Export_System.h"
+#include "Export_System.h"
 #include "Export_Utility.h"
 
-CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _vPos)
-	:CGameObject(pGraphicDev)
+
+
+
+CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CGameObject(pGraphicDev, L"NONE")
 	, m_pBufferCom(nullptr)
 	, m_pTextureCom(nullptr)
-	, m_strItemKey(_key)
 	, m_tItemInfo{}
 {
 
+}
+
+CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
+	:CGameObject(pGraphicDev, _strObjName)
+	, m_pBufferCom(nullptr)
+	, m_pTextureCom(nullptr)
+	, m_tItemInfo{}
+{
 }
 
 CItem::CItem(const CItem& rhs)
 	:CGameObject(rhs.m_pGraphicDev)
 	, m_pBufferCom(rhs.m_pBufferCom)
 	, m_pTextureCom(rhs.m_pTextureCom)
-	, m_strItemKey(rhs.m_strItemKey)
 	, m_tItemInfo(rhs.m_tItemInfo)
 {
 
@@ -67,9 +76,9 @@ void CItem::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-CItem* CItem::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _vPos)
+CItem* CItem::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 {
-	CItem* pInstance = new CItem(pGraphicDev,_key, _vPos);
+	CItem* pInstance = new CItem(pGraphicDev, _strObjName);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -77,7 +86,6 @@ CItem* CItem::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key, _vec3 _v
 
 		return nullptr;
 	}
-	pInstance->SetPos(_vPos);
 	return pInstance;
 }
 
@@ -94,26 +102,25 @@ HRESULT CItem::Add_Component()
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
-	assert(m_strItemKey.c_str() != L"");
 
 	//TEXTURE
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(m_strItemKey.c_str()));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(GetObjName().c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ m_strItemKey.c_str(), pComponent });
+	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 
 	//TransForm
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 }
-
-void CItem::SetPos(const _vec3& _vPos)
-{
-	_vec3 vPos= _vPos;
-	vPos.y = .2f;
-	m_pTransForm->Set_Pos(vPos);
-	m_pTransForm->Set_Scale(_vec3(0.4f, .15f, .4f));
-}
+//
+//void CItem::SetPos(const _vec3& _vPos)
+//{
+//	_vec3 vPos= _vPos;
+//	vPos.y = .2f;
+//	m_pTransForm->Set_Pos(vPos);
+//	m_pTransForm->Set_Scale(_vec3(0.4f, .15f, .4f));
+//}
 
 void CItem::Free()
 {
