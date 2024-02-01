@@ -46,7 +46,7 @@ void CPigHouse::Billboard()
 HRESULT CPigHouse::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
+	m_pTransForm->Set_Pos(_vec3(float(rand() % 20), 1.5f, float(rand() % 20)));
 	return S_OK;
 }
 

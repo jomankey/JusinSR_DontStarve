@@ -284,7 +284,7 @@ void CDeerClops::Patroll(const _float& fTimeDelta)
 	if (m_fAcctime < m_fFrameChange)
 	{
 		m_fFrameChange = 0.f;
-		m_fAcctime = rand() % 30;
+		m_fAcctime = float(rand() % 30);
 
 		if (m_eCurState == IDLE)
 		{
@@ -292,7 +292,7 @@ void CDeerClops::Patroll(const _float& fTimeDelta)
 		}
 		else
 		{
-			m_eCurState == IDLE;
+			m_eCurState = IDLE;
 		}
 	}
 	else

@@ -26,7 +26,7 @@ HRESULT CSpider::Ready_GameObject()
     Set_ObjStat();
     /*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
     m_fFrameEnd = 6;
-    m_fFrameChange = rand() % 10;
+    m_fFrameChange = float(rand() % 10);
     return S_OK;
 }
 
@@ -239,7 +239,7 @@ void CSpider::Patroll(const _float& fTimeDelta)
     if (m_fFrameChange < m_fAcctime)
     {
         m_fAcctime = 0.f;
-        m_fFrameChange = rand() % 10;
+        m_fFrameChange = float(rand() % 10);
         m_vDir = { (float)(rand() % 360),0.f,(float)(rand() % 360) };
     }
     
