@@ -203,7 +203,7 @@ void CTerrainScene::Save_File()
 
 	for (auto& objectIter : list)
 	{
-		dwStrByte = sizeof(TCHAR) * objectIter->GetObjName().size();
+		dwStrByte = sizeof(TCHAR) * (objectIter->GetObjName().size() +1);
 
 		WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 		WriteFile(hFile, objectIter->GetObjName().c_str(), dwStrByte, &dwByte, nullptr);
@@ -252,8 +252,6 @@ HRESULT CTerrainScene::Load_File()
 	if (INVALID_HANDLE_VALUE == hFile)
 		return E_FAIL;
 
-
-
 	_vec3 vPos{};
 	_int iCount(0);
 	DWORD	dwByte(0), dwStrByte(0);
@@ -268,9 +266,7 @@ HRESULT CTerrainScene::Load_File()
 		TCHAR* pName = new TCHAR[dwStrByte];
 
 		ReadFile(hFile, pName, dwStrByte, &dwByte, nullptr);
-		ReadFile(hFile, &vPos.x, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &vPos.y, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &vPos.z, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &vPos, sizeof(_vec3), &dwByte, nullptr);
 
 		dwStrByte = 0;
 

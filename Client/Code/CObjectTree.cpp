@@ -17,32 +17,6 @@ CObjectTree::~CObjectTree()
 {
 }
 
-void CObjectTree::Billboard()
-{
-	_matrix	matWorld, matView, matBillY, matBillX;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBillY);
-	D3DXMatrixIdentity(&matBillX);
-
-	matBillY._11 = matView._11;
-	matBillY._13 = matView._13;
-	matBillY._31 = matView._31;
-	matBillY._33 = matView._33;
-
-	matBillX._21 = matView._21;
-	matBillX._22 = matView._22;
-	matBillX._32 = matView._32;
-	matBillX._33 = matView._33;
-
-	D3DXMatrixInverse(&matBillY, NULL, &matBillY);
-	D3DXMatrixInverse(&matBillX, NULL, &matBillX);
-
-	m_pTransForm->Set_WorldMatrix(&(matBillX * matBillY * matWorld));
-
-}
-
 HRESULT CObjectTree::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -53,7 +27,7 @@ HRESULT CObjectTree::Ready_GameObject()
 _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-	Billboard();
+	m_pTransForm->BillBoard();
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
@@ -61,9 +35,10 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 void CObjectTree::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	//_vec3	vPos;
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
+	//__super::Compute_ViewZ(&vPos);
+
 }
 
 void CObjectTree::Render_GameObject()
@@ -97,9 +72,7 @@ HRESULT CObjectTree::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.8f, vPos.z);
+	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	return S_OK;
 }
 
