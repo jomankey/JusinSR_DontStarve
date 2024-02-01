@@ -19,13 +19,15 @@
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
 {
+	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
 	: Engine::CGameObject(pGraphicDev,_strName), m_bAttack(false)
 {
+	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 CPlayer::CPlayer(const CPlayer& rhs)
-	: Engine::CGameObject(rhs), m_bAttack(rhs.m_bAttack)
+	: Engine::CGameObject(rhs), m_bAttack(rhs.m_bAttack) , m_Stat(rhs.m_Stat)
 {
 
 }
@@ -42,9 +44,10 @@ HRESULT CPlayer::Ready_GameObject()
 	m_eCurState = IDLE;
 	m_ePreState = STATE_END;
 	m_ePlayerLookAt = LOOK_DOWN;
-	m_cTex = nullptr;
+	
 	m_Dirchange = false;
 	m_fFrameEnd = 22;
+	Set_Stat();
 	return S_OK;
 }
 Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
@@ -73,12 +76,6 @@ void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 	BillBoard();
-
-	//_vec3	vPos;
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	//__super::Compute_ViewZ(&vPos);
-
-	/*Height_OnTerrain();*/
 }
 
 void CPlayer::Render_GameObject()
@@ -118,8 +115,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
-
-	
+#pragma region TEXCOM
 	pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_down", pComponent });
@@ -227,9 +223,9 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTextureCom[LOOK_DOWN][EAT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_eat"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
-
-
-
+#pragma endregion TEXCOM
+	
+	
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
@@ -293,10 +289,10 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('W'))
 	{
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransForm->Move_Pos(&vDir, 5.f, fTimeDelta);
+		m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
 		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransForm->Move_Pos(&vDir, -5.f, fTimeDelta);
+			m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
 
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_UP;
@@ -309,10 +305,10 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('S'))
 	{ //f
 		D3DXVec3Normalize(&vDir, &vDir);
-		m_pTransForm->Move_Pos(&vDir, -5.f, fTimeDelta);
+		m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
 		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransForm->Move_Pos(&vDir, 5.f, fTimeDelta);
+			m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_DOWN;
 
@@ -321,11 +317,11 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('A'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransForm->Move_Pos(&vRight, -5.f, fTimeDelta);
+		m_pTransForm->Move_Pos(&vRight, -m_Stat.fSpeed, fTimeDelta);
 		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		vCurPos.x += 0.5f;
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransForm->Move_Pos(&vRight, 5.f, fTimeDelta);
+			m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
 
 		m_eCurState = MOVE;
 		m_ePlayerLookAt = LOOK_LEFT;
@@ -339,7 +335,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('D'))
 	{
 		D3DXVec3Normalize(&vRight, &vRight);
-		m_pTransForm->Move_Pos(&vRight, 5.f, fTimeDelta);
+		m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
 		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		vCurPos.x -= 0.5f;
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
@@ -400,7 +396,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 				// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
 
 				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
-				dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
+				dynamic_cast<CMonster*>(monster)->Set_Attack(m_Stat.fATK);
 				m_bAttack = true;
 				break;
 			}
@@ -453,9 +449,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_ePlayerLookAt = LOOK_DOWN;
 	}
 
-	//enum PLAYERSTATE {
-	//	IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, STATE_END
-	//};
 
 	//if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
 	//{
@@ -514,40 +507,6 @@ void CPlayer::Check_State()
 {
 	if (m_ePreState != m_eCurState)
 	{
-		/*switch (m_eCurState)
-		{
-		case IDLE_DOWN:
-
-			break;
-		case MOVE_DOWN:
-			m_ePlayerLookAt = LOOK_DOWN;
-			m_fFrameEnd = 6;
-			m_cTex = L"Proto_Player_Unarmed_run_down";
-			break;
-		case MOVE_UP:
-			m_ePlayerLookAt = LOOK_UP;
-			m_fFrameEnd = 6;
-			m_cTex = L"Proto_Player_Unarmed_run_up";
-			break;
-		case MOVE_RIGHT:
-			m_ePlayerLookAt = LOOK_RIGHT;
-			m_fFrameEnd = 6;
-			m_cTex = L"Proto_Player_Unarmed_run_side";
-			break;
-		case MOVE_LEFT:
-			m_ePlayerLookAt = LOOK_LEFT;
-			m_fFrameEnd = 6;
-			m_cTex = L"Proto_Player_Unarmed_run_side";
-			break;
-
-		}*/
-		/*enum PLAYERSTATE {
-		IDLE_DOWN, IDLE_UP, IDLE_SIDE, MOVE_DOWN, MOVE_UP, MOVE_SIDE,
-		BUILD_DOWN, BUILD_UP, BUILD_SIDE, PICKUP_UP, PICKUP_DOWN, PICKUP_SIDE,
-		HIT_DOWN, HIT_UP, HIT_SIDE, ATTACK_DOWN, ATTACK_UP, ATTACK_SIDE,
-		FALLDOWN, WAKEUP, EAT,
-		STATE_END
-	};*/
 		if (m_eCurState == IDLE)
 		{
 			m_fFrameEnd = 22;
@@ -576,10 +535,11 @@ void CPlayer::Check_State()
 		{
 			m_fFrameEnd = 6;
 		}
-		/*Change_Texture();*/
 		m_ePreState = m_eCurState;
 		m_fFrame = 0.f;
 	}
+	else
+		return;
 
 }
 
@@ -624,6 +584,16 @@ void CPlayer::Set_Scale()
 	else
 		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
 
+}
+
+void CPlayer::Set_Stat()
+{
+	m_Stat.fHP = 150.f;
+	m_Stat.fMxHP = 150.f;
+	m_Stat.fSpeed = 5.f;
+	m_Stat.fATK = 10.f;
+	m_Stat.bDead = false;
+	
 }
 
 void CPlayer::BillBoard()

@@ -6,12 +6,12 @@
 #include "Scene.h"
 
 CSpider::CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
-    :CMonster(pGraphicDev, _vPos), m_bNextFrame(false), m_eCurstate(WALK), m_ePrestate(STATE_END)
+    :CMonster(pGraphicDev, _vPos), m_bModeChange(false), m_eCurstate(WALK), m_ePrestate(STATE_END)
 { 
 }
 
 CSpider::CSpider(const CSpider& rhs)
-    :CMonster(rhs), m_bNextFrame(rhs.m_bNextFrame)
+    :CMonster(rhs), m_bModeChange(rhs.m_bModeChange)
 {
 }
 
@@ -26,27 +26,33 @@ HRESULT CSpider::Ready_GameObject()
     Set_ObjStat();
     /*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
     m_fFrameEnd = 6;
-    m_fFrameChange = float(rand() % 10);
+    m_fFrameChange = rand() % 3;
+    D3DXVec3Normalize(&m_vDir, &m_vDir);
+    Look_Change();
     return S_OK;
 }
 
 _int CSpider::Update_GameObject(const _float& fTimeDelta)
 {
     m_fFrame += m_fFrameEnd * fTimeDelta;
-
-    if (m_fFrameEnd < m_fFrame)
-        m_fFrame = 0.f;
-    /*Player_Chase(fTimeDelta);*/
-    if (IsPlayer_Approach(3.f) == true)
+    Die_Check();        //죽었는지 검사
+    if (!m_Stat.bDead)      //죽지 않았을시 진입
     {
-
+        if (IsTarget_Approach(5.f) == true)     //플레이어와의 거리가 5보다 작으면 진입
+        {
+            Attacking(fTimeDelta);
+        }
+        else
+        {
+            Patroll(fTimeDelta);
+        }
     }
     else
     {
-        Patroll(fTimeDelta);
+        //아이템 드랍 메소드 추가
     }
     State_Change();
-    Look_Change();
+    Set_Scale();
     CGameObject::Update_GameObject(fTimeDelta);
 
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -57,12 +63,6 @@ void CSpider::LateUpdate_GameObject()
 {
     __super::LateUpdate_GameObject();
     m_pTransForm->BillBoard();
-    //_vec3	vPos;
-    //m_pTransForm->Get_Info(INFO_POS, &vPos);
-
-    //__super::Compute_ViewZ(&vPos);
-   
-    /*Height_OnTerrain();*/
 }
 
 void CSpider::Render_GameObject()
@@ -70,7 +70,7 @@ void CSpider::Render_GameObject()
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-    /* Set_Scale();*/
+    
 
     m_pTextureCom[m_ePreLook][m_ePrestate]->Set_Texture((_uint)m_fFrame);
 
@@ -136,6 +136,11 @@ HRESULT CSpider::Add_Component()
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_atk_side", pComponent });
 
+    //DEAD
+    pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_dead"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_dead", pComponent });
+
 #pragma endregion TEXCOM
     
     
@@ -166,18 +171,12 @@ void CSpider::Height_OnTerrain()
     m_pTransForm->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
 }
 
-void CSpider::Player_Chase(const _float& fTimeDelta)
-{
-    _vec3 PlayerPos;
-    PlayerPos = Get_Player_Pos();
-
-    m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
-
-    
-    Look_Change();
-
-
-}
+//void CSpider::Player_Chase(const _float& fTimeDelta)
+//{
+//    _vec3 PlayerPos;
+//    PlayerPos = Get_Player_Pos();
+//    m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
+//}
 
 void CSpider::State_Change()
 {
@@ -197,9 +196,11 @@ void CSpider::State_Change()
         case SLEEP:
             break;
         case DEAD:
+            m_fFrameEnd = 9.f;
             break;
         }
         m_ePrestate = m_eCurstate;
+        m_fFrame = 0.f;
     }
 }
 
@@ -208,43 +209,110 @@ void CSpider::Set_ObjStat()
     m_Stat.fHP = 100.f;
     m_Stat.fMxHP = 100.f;
     m_Stat.fSpeed = 1.5f;
+
+    m_Stat.fATK = 10.f;
+    m_Stat.bDead = false;
 }
 
-_bool CSpider::IsPlayer_Approach(float _fDistance)
+void CSpider::Set_Scale()
 {
-    _vec3 vPlayerPos , vPos;
-    vPlayerPos = Get_Player_Pos();
-    m_pTransForm->Get_Info(INFO_POS, &vPos);
-    if (D3DXVec3Length(&(vPlayerPos - vPos)) < _fDistance)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    if(m_ePrestate == ATTACK)
+        m_pTransForm->m_vScale = { 1.5f, 1.f, 1.5f };
+    else if(m_ePrestate == WALK)
+        m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
 }
 
 void CSpider::Attacking(const _float& fTimeDelta)
 {
-    
-    
+    if (!m_bModeChange)
+    {
+        m_bModeChange = true;
+    }
+    m_fAcctime += fTimeDelta;
+    m_Stat.fSpeed = 5.5f;
+
+    if (IsTarget_Approach(1) && m_eCurstate != ATTACK)
+    {
+        m_eCurstate = ATTACK;
+       
+    }
+    else if (m_eCurstate == ATTACK)
+    {
+        if (m_fFrameEnd < m_fFrame)
+        {
+            if (!IsTarget_Approach(1))
+            {
+                m_eCurstate = WALK;
+            }
+        }
+    }
+    else if (m_eCurstate == WALK)
+    {
+        Player_Chase(fTimeDelta);
+    }
+ 
+    if (m_fFrameEnd < m_fFrame)
+        m_fFrame = 0.f;
+    Look_Change();
 }
 
 void CSpider::Patroll(const _float& fTimeDelta)
 {
-    m_fAcctime += m_fFrameChange * fTimeDelta;
+
+    if (m_bModeChange)
+    {
+        m_bModeChange = false;
+    }
+    m_fAcctime +=  fTimeDelta;
     m_eCurstate = WALK;
+    m_Stat.fSpeed = 1.5f;
+
  
     if (m_fFrameChange < m_fAcctime)
     {
         m_fAcctime = 0.f;
-        m_fFrameChange = float(rand() % 10);
-        m_vDir = { (float)(rand() % 360),0.f,(float)(rand() % 360) };
+        m_fFrameChange = rand() % 3;
+        int randomValue = rand() % 360;
+        int randomValue2 = rand() % 360;
+        // 부호를 무작위로 선택 (-1 또는 1)
+        int sign = (rand() % 2 == 0) ? 1 : -1;
+        int sign2 = (rand() % 2 == 0) ? 1 : -1;
+
+        // 랜덤값에 부호를 적용
+        int result = randomValue * sign;
+        int result2 = randomValue2 * sign2;
+        m_vDir = { (float)result,0.f,(float)result2 };
+        D3DXVec3Normalize(&m_vDir, &m_vDir);
     }
-    
-    D3DXVec3Normalize(&m_vDir, &m_vDir);
-    m_pTransForm->Move_Pos(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+    else
+    {
+        m_pTransForm->Move_Pos(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+    }
+    if (m_fFrameEnd < m_fFrame)
+        m_fFrame = 0.f;
+
+
+    Look_Change();
+}
+
+void CSpider::Die_Check()
+{
+    if (m_Stat.fHP <= 0 && m_ePrestate != DEAD)
+    {
+        m_eCurstate = DEAD;
+        m_eCurLook = LOOK_DOWN;
+        m_Stat.bDead = true;
+        Look_Change();
+        m_fFrame = 0.f;
+    }
+    else if (m_ePrestate == DEAD)
+    {
+        if (m_fFrameEnd < m_fFrame)
+            m_fFrame = m_fFrameEnd;
+    }
+    else
+        return;
+        
 }
 
 CSpider* CSpider::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)

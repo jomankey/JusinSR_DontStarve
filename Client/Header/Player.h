@@ -40,6 +40,7 @@ private:
 	_vec3			Picking_OnTerrain();
 	void			Check_State();
 	void			Set_Scale();
+	void			Set_Stat();
 
 	void BillBoard();
 
@@ -48,8 +49,7 @@ private:
 	Engine::CRvRcTex*	m_pReverseCom;
 	Engine::CTexture*	m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
 	Engine::CCalculator*	m_pCalculatorCom;
-	/*Engine::CPlayerStatus*  m_pStatusCom;*/
-	//Engine::CCubeTex* m_pColliderCom;
+
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
 
@@ -57,11 +57,9 @@ private:
 	PLAYERSTATE m_ePreState;
 
 	LOOKDIR  m_ePlayerLookAt;
-	_tchar*		m_cTex;
 	_bool		m_Dirchange;
-
 	_bool m_bAttack;
-	
+	OBJSTAT  m_Stat;
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev,wstring _strName);
 	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev);

@@ -74,9 +74,12 @@ namespace Engine {
 		_vec3		m_vAngle;
 		_matrix		m_matWorld;
 
-	public:
-		static CTransform* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-		virtual CComponent* Clone();
+
+private:
+	float CalculateAngleBetweenVectors(const D3DXVECTOR3& vec1, const D3DXVECTOR3& vec2);
+public:
+	static CTransform* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual CComponent* Clone();
 
 	private:
 		virtual void		Free();
