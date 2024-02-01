@@ -24,7 +24,7 @@ HRESULT CMainTool::Ready_MainTool()
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
 	m_pToolMgr = CToolMgr::Create(m_pGraphicDev);
-	FAILED_CHECK_RETURN(m_pToolMgr, E_FAIL);
+	NULL_CHECK_RETURN(m_pToolMgr, E_FAIL);
 
 	return S_OK;
 }
