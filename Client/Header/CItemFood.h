@@ -2,18 +2,11 @@
 
 #include "../Header/CItem.h"
 
-namespace Engine
-{
-class CRcTex;
-class CTexture;
-class CTransform;
-}
-
 class CItemFood :
 	public CItem
 {
 public:
-	explicit CItemFood(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key,_vec3 _vPos);
+	explicit CItemFood(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _key);
 	virtual ~CItemFood();
 
 public:

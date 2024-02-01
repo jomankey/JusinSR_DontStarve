@@ -94,6 +94,9 @@
     <Filter Include="02. GameObject\01. Monster\01. Beefalo">
       <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CInvenBox">
+      <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -177,6 +180,12 @@
     <ClInclude Include="..\Header\CPigHouse.h">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CInventoryMgr.h">
+      <Filter>03. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInvenBox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -250,6 +259,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPigHouse.cpp">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInventoryMgr.cpp">
+      <Filter>03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInvenBox.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

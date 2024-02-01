@@ -8,9 +8,8 @@
 #include "Scene.h"
 
 CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
-	: Engine::CGameObject(pGraphicDev)
+	: Engine::CGameObject(pGraphicDev, _UiName)
 	, m_eUIState(_State)
-	, m_pUI_Name(_UiName)
 	, m_bItemChek(false)
 {
 
@@ -27,73 +26,44 @@ CUI::CUI(const CUI& rhs)
 
 CUI::~CUI()
 {
-	
+
 }
 
 HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
 {
-
-
-	m_fSizeX = _size.x;
-	m_fSizeY = _size.y;
-	
-
 	m_fX = _pos.x;
 	m_fY = _pos.y;
 
-
-	m_OriginfX = m_fX;
-	m_OriginfY = m_fY;
-	m_OriginfSizeX = m_fSizeX;
-	m_OriginfSizeY = m_fSizeY;
-	m_fAngle = _Angle;
-	//D3DXMatrixIdentity(&m_matWorld);
-	
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(m_fAngle));
+	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(_Angle));
 
-
+	m_pTransForm->Set_Pos(_pos);
+	m_pTransForm->Set_Scale(_size);
 	return S_OK;
 }
 
 Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 {
-	//sss
-	renderer::Add_RenderGroup(RENDER_UI, this);
-	CGameObject::Update_GameObject(fTimeDelta);
-	//m_fSizeX = m_fSizeX+ fTimeDelta*30;
-	//m_fSizeY = m_fSizeY+ fTimeDelta*30;
-	m_pTransForm->Set_Scale(_vec3{ m_fSizeX ,m_fSizeY,0 });
-	//m_pTransForm->Rotation(Engine::ROT_X, D3DXToRadian(90.f*0.01));
-	//m_pTransForm->Get_WorldMatrix();
+	__super::Update_GameObject(fTimeDelta);
 	m_pTransForm->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
 	m_pTransForm->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
 
-	/*_vec3 vScale = { 100.0f,100.0f,100.0f };
-
-	m_pTransForm->Set_Scale(vScale);*/
-
+	renderer::Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
 
 void CUI::LateUpdate_GameObject()
 {
-	if (UI_Collision()&& m_eUIState== UI_DYNAMIC)
+	if (m_eUIState == UI_DYNAMIC && UI_Collision())
 	{
 		if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
 		{
 			m_fX = (float)m_MousePoint.x;
 			m_fY = (float)m_MousePoint.y;
 		}
-
 	}
 	else
 	{
-		m_fX = m_OriginfX;
-		m_fY = m_OriginfY;
-		m_fSizeX = m_OriginfSizeX;
-		m_fSizeY = m_OriginfSizeY;
 	}
 	__super::LateUpdate_GameObject();
 }
@@ -102,14 +72,12 @@ void CUI::Render_GameObject()
 {
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
+
 	m_pTextureCom->Set_Texture(0);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
-	m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
-	
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+	//m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
+	//m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
 
 	m_pBufferCom->Render_Buffer();
 
@@ -125,12 +93,12 @@ void CUI::Render_GameObject()
 BOOL CUI::UI_Collision()
 {
 
-	
+
 	GetCursorPos(&m_MousePoint);
 	ScreenToClient(g_hWnd, &m_MousePoint);
 
-	if(m_fX - (m_fSizeX ) < m_MousePoint.x && m_MousePoint.x < m_fX + (m_fSizeX ))
-		if (m_fY - (m_fSizeY ) < m_MousePoint.y && m_MousePoint.y < m_fY + (m_fSizeY ))
+	if (m_fX - (m_fSizeX) < m_MousePoint.x && m_MousePoint.x < m_fX + (m_fSizeX))
+		if (m_fY - (m_fSizeY) < m_MousePoint.y && m_MousePoint.y < m_fY + (m_fSizeY))
 		{
 			return true;
 		}
@@ -151,9 +119,9 @@ HRESULT CUI::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(m_pUI_Name));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(GetObjName().c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ m_pUI_Name, pComponent });
+	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -167,8 +135,9 @@ HRESULT CUI::Add_Component()
 
 
 
-CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name,float _Angle)
-{	CUI* pInstance = new CUI(pGraphicDev, _State, _UI_Name);
+CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+{
+	CUI* pInstance = new CUI(pGraphicDev, _State, _UI_Name);
 	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
 	{
 		Safe_Release(pInstance);

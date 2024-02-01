@@ -3,12 +3,18 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-#include"CInven.h"
+#include "CInven.h"
 #include "Monster.h"
 
 #include "Component.h"
 #include "Layer.h"
 #include "Scene.h"
+#include "CItem.h"
+
+//Manager
+#include "CInventoryMgr.h"
+
+
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
@@ -240,7 +246,7 @@ HRESULT CPlayer::Add_Component()
 	return S_OK;
 }
 
-CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
+CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 {
 	CPlayer* pInstance = new CPlayer(pGraphicDev, _strName);
 
@@ -296,6 +302,10 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_ePlayerLookAt = LOOK_UP;
 	}
 
+	if (GetAsyncKeyState('X'))
+	{
+		CInventoryMgr::GetInstance()->AddItem(CItem::Create(m_pGraphicDev, L"Log"));
+	}
 	if (GetAsyncKeyState('S'))
 	{ //f
 		D3DXVec3Normalize(&vDir, &vDir);
