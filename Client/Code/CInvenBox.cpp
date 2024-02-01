@@ -24,16 +24,16 @@ CInvenBox::~CInvenBox()
 _int CInvenBox::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-	CItem* pItemBox = nullptr;
-	pItemBox = CInventoryMgr::GetInstance()->GetItemBox(m_iInvenIndex);
+	//CItem* pItemBox = nullptr;
+	//pItemBox = CInventoryMgr::GetInstance()->GetItemBox(m_iInvenIndex);
 
-	if (nullptr != pItemBox)
-	{
-		IDirect3DBaseTexture9* pTexture = dynamic_cast<CTexture*>(pItemBox->Find_Component(COMPONENTID::ID_STATIC, pItemBox->GetObjName().c_str()))->Get_Texture(0);
+	//if (nullptr != pItemBox)
+	//{
+	//	IDirect3DBaseTexture9* pTexture = dynamic_cast<CTexture*>(pItemBox->Find_Component(COMPONENTID::ID_STATIC, pItemBox->GetObjName().c_str()))->Get_Texture(0);
 
-		m_pGraphicDev->SetTexture(1, pTexture);
-		pItemBox->GetItemInfo().ItemCount;
-	}
+	//	m_pGraphicDev->SetTexture(1, pTexture);
+	//	pItemBox->GetItemInfo().ItemCount;
+	//}
 
 	return 0;
 }

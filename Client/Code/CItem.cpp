@@ -5,6 +5,8 @@
 #include "Export_Utility.h"
 
 
+
+
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev, L"NONE")
 	, m_pBufferCom(nullptr)
@@ -111,14 +113,14 @@ HRESULT CItem::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 }
-
-void CItem::SetPos(const _vec3& _vPos)
-{
-	_vec3 vPos= _vPos;
-	vPos.y = .2f;
-	m_pTransForm->Set_Pos(vPos);
-	m_pTransForm->Set_Scale(_vec3(0.4f, .15f, .4f));
-}
+//
+//void CItem::SetPos(const _vec3& _vPos)
+//{
+//	_vec3 vPos= _vPos;
+//	vPos.y = .2f;
+//	m_pTransForm->Set_Pos(vPos);
+//	m_pTransForm->Set_Scale(_vec3(0.4f, .15f, .4f));
+//}
 
 void CItem::Free()
 {

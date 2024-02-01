@@ -106,7 +106,6 @@ void CMainApp::Free()
 	Engine::Safe_Release(m_pDeviceClass);
 	Engine::Safe_Release(m_pManagementClass);
 	Engine::Safe_Release(m_pGraphicDev);
-
 	Engine::Release_Utility();
 	Engine::Release_System();
 
