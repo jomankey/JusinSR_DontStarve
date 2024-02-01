@@ -193,6 +193,7 @@
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\Pig.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\ResObject.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Spider.h" />
     <ClInclude Include="..\Header\Stage.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="..\Code\Monster.cpp" />
     <ClCompile Include="..\Code\Pig.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
+    <ClCompile Include="..\Code\ResObject.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Spider.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />

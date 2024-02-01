@@ -184,7 +184,10 @@
       <Filter>03. Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInvenBox.h">
-      <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ResObject.h">
+      <Filter>02. GameObject\08. ResObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,7 +267,10 @@
       <Filter>03. Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInvenBox.cpp">
-      <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ResObject.cpp">
+      <Filter>02. GameObject\08. ResObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
