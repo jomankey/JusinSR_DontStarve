@@ -13,7 +13,7 @@ CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pTextureCom(nullptr)
 	, m_tItemInfo{}
 {
-
+	m_tItemInfo.ItemCount = 1;
 }
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
@@ -22,6 +22,7 @@ CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 	, m_pTextureCom(nullptr)
 	, m_tItemInfo{}
 {
+	m_tItemInfo.ItemCount = 1;
 }
 
 CItem::CItem(const CItem& rhs)

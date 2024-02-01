@@ -302,9 +302,15 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_ePlayerLookAt = LOOK_UP;
 	}
 
+
+	//UIÃ¼Å©¿ë
 	if (GetAsyncKeyState('X'))
 	{
-		CInventoryMgr::GetInstance()->AddItem(CItem::Create(m_pGraphicDev, L"Log"));
+		CInventoryMgr::GetInstance()->AddItem(CItem::Create(m_pGraphicDev, L"CutGlass"));
+	}
+	if (GetAsyncKeyState('C'))
+	{
+		CInventoryMgr::GetInstance()->AddItem(CItem::Create(m_pGraphicDev, L"Rocks_0"));
 	}
 	if (GetAsyncKeyState('S'))
 	{ //f

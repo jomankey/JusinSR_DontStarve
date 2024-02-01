@@ -17,13 +17,13 @@ HRESULT CMyFont::Ready_Font(const _tchar * pFontType, const _uint & iWidth, cons
 {
 	D3DXFONT_DESC				Font_Desc;
 	ZeroMemory(&Font_Desc, sizeof(D3DXFONT_DESC));
-
+	
 	Font_Desc.CharSet = HANGEUL_CHARSET;
 	lstrcpy(Font_Desc.FaceName, pFontType);
 	Font_Desc.Width  = iWidth;
 	Font_Desc.Height = iHeight;
 	Font_Desc.Weight = iWeight;
-
+	//Font_Desc.
 	if (FAILED(D3DXCreateFontIndirect(m_pGraphicDev, &Font_Desc, &m_pFont)))
 	{
 		MSG_BOX("Font Created Failed");

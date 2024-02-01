@@ -11,6 +11,9 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev, _UiName)
 	, m_eUIState(_State)
 	, m_bItemChek(false)
+	, m_pTextureCom(nullptr)
+	, m_pBufferCom(nullptr)
+
 {
 
 }
@@ -33,7 +36,8 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
 {
 	m_fX = _pos.x;
 	m_fY = _pos.y;
-
+	m_fSizeX = _size.x;
+	m_fSizeY = _size.y;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(_Angle));
 
