@@ -26,7 +26,7 @@
 #define IMGUI_VERSION       "1.90.2 WIP"
 #define IMGUI_VERSION_NUM   19014
 #define IMGUI_HAS_TABLE
-
+#define IMGUI_DEFINE_MATH_OPERATORS
 /*
 
 Index of this file:
