@@ -24,7 +24,6 @@
 #include <io.h>
 #include <iostream>
 
-#include "fmod.h"
 #include "fmod.hpp"
 #pragma comment(lib, "fmod_vc.lib")
 

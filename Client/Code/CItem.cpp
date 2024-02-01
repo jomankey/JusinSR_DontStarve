@@ -112,6 +112,8 @@ HRESULT CItem::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+	return S_OK;
 }
 //
 //void CItem::SetPos(const _vec3& _vPos)
