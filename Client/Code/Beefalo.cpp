@@ -95,9 +95,11 @@ HRESULT CBeefalo::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom[LOOK_DOWN][GRAZE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_graze"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_graze", pComponent });
+#pragma region TEXCOM
+
+    pComponent = m_pTextureCom[LOOK_DOWN][GRAZE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_graze"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_graze", pComponent });
     pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
@@ -121,6 +123,8 @@ HRESULT CBeefalo::Add_Component()
     pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
+#pragma endregion TEXCOM
+	
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
