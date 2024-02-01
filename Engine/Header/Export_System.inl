@@ -115,37 +115,37 @@ inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _texture
 {
 	CResMgr::GetInstance()->Save_TexturePath(_fileName,_key, _textureTag, _subPath, num);
 }
-
-//Sound
-void Ready_Sound()
-{
-	return CSoundMgr::GetInstance()->Ready_Sound();
-}
-
-void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume)
-{
-	return CSoundMgr::GetInstance()->PlaySound(pSoundKey, eID, fVolume);
-}
-
-void PlayBGM(TCHAR* pSoundKey, float fVolume)
-{
-	return CSoundMgr::GetInstance()->PlayBGM(pSoundKey, fVolume);
-}
-
-void StopSound(CHANNELID eID)
-{
-	return CSoundMgr::GetInstance()->StopSound(eID);
-}
-
-void StopAll()
-{
-	return CSoundMgr::GetInstance()->StopAll();
-}
-
-void SetChannelVolume(CHANNELID eID, float fVolume)
-{
-	return CSoundMgr::GetInstance()->SetChannelVolume(eID, fVolume);
-}
+//
+////Sound
+//void Ready_Sound()
+//{
+//	return CSoundMgr::GetInstance()->Ready_Sound();
+//}
+//
+//void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume)
+//{
+//	return CSoundMgr::GetInstance()->PlaySound(pSoundKey, eID, fVolume);
+//}
+//
+//void PlayBGM(TCHAR* pSoundKey, float fVolume)
+//{
+//	return CSoundMgr::GetInstance()->PlayBGM(pSoundKey, fVolume);
+//}
+//
+//void StopSound(CHANNELID eID)
+//{
+//	return CSoundMgr::GetInstance()->StopSound(eID);
+//}
+//
+//void StopAll()
+//{
+//	return CSoundMgr::GetInstance()->StopAll();
+//}
+//
+//void SetChannelVolume(CHANNELID eID, float fVolume)
+//{
+//	return CSoundMgr::GetInstance()->SetChannelVolume(eID, fVolume);
+//}
 
 
 // Destroy
