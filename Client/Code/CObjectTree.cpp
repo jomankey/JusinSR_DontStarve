@@ -93,8 +93,8 @@ void CObjectTree::Check_FrameState()
 	if (m_ePreState == m_eCurState)
 		return;
 
-	if (m_eCurState == RES_IDLE)
-		m_fFrameEnd = 
+	//if (m_eCurState == RES_IDLE)
+		//m_fFrameEnd = 
 }
 
 void CObjectTree::Ready_Stat()

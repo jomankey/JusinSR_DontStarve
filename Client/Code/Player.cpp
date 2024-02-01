@@ -451,8 +451,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		//		break;
 		//	}
 		//}
-		delete[] vMonsterAxis;
-		delete[] vPlayerAxis;
+		//delete[] vMonsterAxis;
+		//delete[] vPlayerAxis;
 	}
 
 	if (GetAsyncKeyState('G'))
