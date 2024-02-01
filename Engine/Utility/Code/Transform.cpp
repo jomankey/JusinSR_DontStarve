@@ -87,32 +87,83 @@ LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& 
 {
 	LOOKDIR		eDir;
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];
+	vDir.y = 0.f;
+	_vec3		right, up, look;
+
+	Get_Info(INFO_RIGHT, &right);
+	Get_Info(INFO_UP, &up);
+	Get_Info(INFO_LOOK, &look);
+
+	D3DXVec3Normalize(&vDir, &vDir);
+	D3DXVec3Normalize(&right, &right);
+	D3DXVec3Normalize(&look, &look);
+
+	float lookDot = D3DXVec3Dot(&vDir, &look);
+	float rightDot = D3DXVec3Dot(&vDir, &right);
+
+	/*_float RAngle = CalculateAngleBetweenVectors(vDir, right);
+	_float LAngle = CalculateAngleBetweenVectors(vDir, look);*/
 	
-	
-	
-	if (fabs(vDir.x) >= fabs(vDir.z)) //side
-	{
-		if (vDir.x > 0) // left
-		{
-			eDir = LOOK_LEFT;
-		}
-		else   //right
-		{
-			eDir = LOOK_RIGHT;
-		}
-	}
-	else   //up down
-	{
-		if (vDir.z > 0)  //down
-		{
-			eDir = LOOK_DOWN;
-		}
-		else   //up
-		{
+	if (fabs(lookDot) > fabs(rightDot)) {
+		if (lookDot > 0.0f) {
 			eDir = LOOK_UP;
 		}
+		else {
+			eDir = LOOK_DOWN;
+		}
 	}
-	
+	else {
+		if (rightDot > 0.0f) {
+			eDir = LOOK_RIGHT;
+		}
+		else {
+			eDir = LOOK_LEFT;
+		}
+	}
+
+
+	/*if ((angle > 0.f && angle <45.f)||(angle > 315 && angle<= 360))
+	{
+		eDir = LOOK_RIGHT;
+	}
+	else if (angle >= 45.f && angle < 135.f)
+	{
+		eDir = LOOK_UP;
+	}
+	else if (angle >= 135.f && angle < 225.f)
+	{
+		eDir = LOOK_LEFT;
+	}
+	else if (angle >= 225.f && angle < 315)
+	{
+		eDir = LOOK_DOWN;
+	}*/
+
+
+
+	//if (fabs(vDir.x) >= fabs(vDir.z)) //side
+	//{
+	//	if (vDir.x > 0) // left
+	//	{
+	//		eDir = LOOK_LEFT;
+	//	}
+	//	else   //right
+	//	{
+	//		eDir = LOOK_RIGHT;
+	//	}
+	//}
+	//else   //up down
+	//{
+	//	if (vDir.z > 0)  //down
+	//	{
+	//		eDir = LOOK_DOWN;
+	//	}
+	//	else   //up
+	//	{
+	//		eDir = LOOK_UP;
+	//	}
+	//}
+	//
 	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 
 	_matrix		matScale, matTrans;
@@ -166,6 +217,24 @@ void Engine::CTransform::BillBoard()
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	Set_WorldMatrix(&(matBill * matWorld));
+}
+
+float Engine::CTransform::CalculateAngleBetweenVectors(const D3DXVECTOR3& vec1, const D3DXVECTOR3& vec2)
+{
+	float dotProduct = D3DXVec3Dot(&vec1, &vec2);
+	float magnitudeVec1 = D3DXVec3Length(&vec1);
+	float magnitudeVec2 = D3DXVec3Length(&vec2);
+
+	// 각도 계산 (라디안)
+	float angleRad = acos(dotProduct / (magnitudeVec1 * magnitudeVec2));
+
+	// 라디안을 0에서 360도로 변환
+	float angleDeg = angleRad * (180.0f / D3DX_PI);
+	if (vec1.y * vec2.x - vec1.x * vec2.y < 0) {
+		angleDeg = 360.0f - angleDeg;
+	}
+
+	return angleDeg;
 }
 
 CTransform * CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)

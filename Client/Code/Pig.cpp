@@ -50,11 +50,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 void CPig::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
-	BillBoard();
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-
-	__super::Compute_ViewZ(&vPos);
+	m_pTransForm->BillBoard();
 }
 
 void CPig::Render_GameObject()
@@ -122,52 +118,21 @@ HRESULT CPig::Add_Component()
 	return S_OK;
 }
 
-void CPig::Height_OnTerrain()
-{
-	_vec3		vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
-	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
-	NULL_CHECK(pTerrainBufferCom);
-
-	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
-
-	m_pTransForm->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
-}
-
-void CPig::BillBoard()
-{
-	_matrix	matWorld, matView, matBill;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
-}
 
 void CPig::Set_ObjStat()
 {
 	m_Stat.fHP = 100.f;
 	m_Stat.fMxHP = 100.f;
 	m_Stat.fSpeed = 1.f;
+	m_Stat.fATK = 10.f;
+	m_Stat.bDead = false;
 }
 
 void CPig::Player_Chase(const _float& fTimeDelta)
 {
 	_vec3 PlayerPos;
 	PlayerPos = Get_Player_Pos();
-
 	m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
-
-
 	Look_Change();
 }
 

@@ -5,15 +5,26 @@
 #include "Scene.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
-	: Engine::CGameObject(pGraphicDev), m_vPos(vPos), m_Dirchange(false),
-	m_eCurLook(LOOK_DOWN), m_ePreLook(LOOK_END), m_fAcctime(0.f)
+	: Engine::CGameObject(pGraphicDev), m_vPos(vPos)
+	, m_Dirchange(false)
+	, m_eCurLook(LOOK_DOWN)
+	, m_ePreLook(LOOK_END)
+	, m_fAcctime(0.f)
+	, m_vDir(0.f, 0.f, 0.f)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 
 CMonster::CMonster(const CMonster& rhs)
-	: Engine::CGameObject(rhs), m_vPos(rhs.m_vPos), m_Stat(rhs.m_Stat), m_Dirchange(rhs.m_Dirchange),
-	m_eCurLook(rhs.m_eCurLook), m_ePreLook(rhs.m_ePreLook), m_fAcctime(rhs.m_fAcctime)
+	: Engine::CGameObject(rhs)
+	, m_vPos(rhs.m_vPos)
+	, m_Stat(rhs.m_Stat)
+	, m_Dirchange(rhs.m_Dirchange)
+	, m_eCurLook(rhs.m_eCurLook)
+	, m_ePreLook(rhs.m_ePreLook)
+	, m_fAcctime(rhs.m_fAcctime)
+	, m_vDir(0.f, 0.f, 0.f)
+
 {
 }
 
@@ -51,6 +62,28 @@ void CMonster::Free()
 	CGameObject::Free();
 }
 
+void CMonster::Player_Chase(const _float& fTimeDelta)
+{
+	_vec3 PlayerPos;
+	PlayerPos = Get_Player_Pos();
+	m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
+}
+
+_bool CMonster::IsTarget_Approach(float _fDistance)
+{
+	_vec3 vTargetPos, vPos;
+	vTargetPos = Get_Player_Pos();
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	if (D3DXVec3Length(&(vTargetPos - vPos)) < _fDistance)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void CMonster::Look_Change()
 {
 	if (m_ePreLook != m_eCurLook)
@@ -63,7 +96,7 @@ void CMonster::Look_Change()
 		{
 			m_Dirchange = false;
 		}
-	
+
 		m_ePreLook = m_eCurLook;
 	}
 
@@ -75,12 +108,12 @@ _vec3 CMonster::Get_Player_Pos()
 	Engine::CTransform* pPlayerTransformCom = pPlayer->GetTransForm();
 	NULL_CHECK_RETURN(pPlayerTransformCom, _vec3());
 
-	
-	
+
+
 	_vec3 PlayerPos;
 	pPlayerTransformCom->Get_Info(INFO_POS, &PlayerPos);
 
-	
+
 
 
 

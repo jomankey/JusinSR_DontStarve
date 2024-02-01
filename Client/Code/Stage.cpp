@@ -128,6 +128,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
+	
 	for (_int i = 0; i < 5; ++i)
 	{
 		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));

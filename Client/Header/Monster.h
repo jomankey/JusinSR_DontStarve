@@ -18,6 +18,7 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 	virtual HRESULT			Add_Component();
+	OBJSTAT Get_Monster_Stat() { return m_Stat; }
 
 public:
 	virtual void Free() override;
@@ -25,17 +26,19 @@ public:
 protected:
 	virtual void		Set_ObjStat() PURE;
 	virtual void		State_Change() PURE;
+	void				Player_Chase(const _float& fTimeDelta);
+	_bool		IsTarget_Approach(float _fDistance);		//플레이어상대로
 	void		Look_Change();
 	_vec3		Get_Player_Pos();
 protected:
-	_vec3 m_vPos;
-	
+	_vec3		m_vPos;
+	_vec3		m_vDir; //현재 이동중인 방향
 	LOOKDIR m_eCurLook;
 	LOOKDIR m_ePreLook;
 	OBJSTAT m_Stat;
 	_bool		m_Dirchange; //false 일때 오른쪽 보기
 	_float	m_fAcctime;
-	_float  m_fFrameChange = 0;
+	_int  m_fFrameChange = 0;
 	
 };
 
