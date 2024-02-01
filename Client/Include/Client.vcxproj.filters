@@ -177,6 +177,9 @@
     <ClInclude Include="..\Header\CPigHouse.h">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ResObject.h">
+      <Filter>02. GameObject\08. ResObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPigHouse.cpp">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ResObject.cpp">
+      <Filter>02. GameObject\08. ResObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

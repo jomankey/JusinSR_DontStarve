@@ -131,6 +131,9 @@ HRESULT CLoading::Loading_Spider_Texture()
 HRESULT CLoading::Loading_Pig_Texture()
 {
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_PigHouse_IDLE", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Resource/pig_house/idle/idle__%d.png", 3)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_PigHouse_hit_run_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Resource/pig_house/hit/run_down/run_hit__%03d.png", 5)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_PigHouse_hit_std", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Resource/pig_house/hit/std/std_hit__%03d.png", 5)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_PigHouse_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Resource/pig_house/idle/rubble.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_happy", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/idle_happy/happy__%03d.png", 17)), E_FAIL);
 
@@ -176,10 +179,17 @@ HRESULT CLoading::Loading_UI_Texture()
 HRESULT CLoading::Loading_Item_Texture()
 {
 	//Objects Resource
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/IDLE_1/IDLE__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/IDLE_1/IDLE__%03d.png", 136)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Hit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/HIT/HIT__%03d.png", 30)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Left_Fall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/FALL_LEFT/FALL__%03d.png", 78)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Right_Fall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/FALL_RIGHT/FALL__%03d.png", 78)), E_FAIL);
+
+
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Nomal_Rock", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/Nomal_Rock/Nomal_Rock_%d.png", 3)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Grass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Glass/IDLE/IDLE__000.png")), E_FAIL);
 	
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Grass_idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Glass/IDLE/IDLE__%03d.png", 175)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Grass_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Glass/PICKING/PICKING__%03d.png", 40)), E_FAIL);
+
 	//Item Object
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Log", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Log.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Berries", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Berries.png")), E_FAIL);
