@@ -2,7 +2,7 @@
 #include "SoundMgr.h"
 
 
-CSoundMgr* CSoundMgr::m_pInstance = nullptr;
+IMPLEMENT_SINGLETON(CSoundMgr)
 CSoundMgr::CSoundMgr()
 {
 	m_pSystem = nullptr; 
@@ -11,34 +11,8 @@ CSoundMgr::CSoundMgr()
 
 CSoundMgr::~CSoundMgr()
 {
-	Release(); 
+	Free();
 }
-
-void CSoundMgr::Initialize()
-{
-	// 사운드를 담당하는 대표객체를 생성하는 함수
-	FMOD_System_Create(&m_pSystem);
-	
-	// 1. 시스템 포인터, 2. 사용할 가상채널 수 , 초기화 방식) 
-	FMOD_System_Init(m_pSystem, 32, FMOD_INIT_NORMAL, NULL);
-
-	LoadSoundFile(); 
-}
-void CSoundMgr::Release()
-{
-	for (auto& Mypair : m_mapSound)
-	{
-		delete[] Mypair.first;
-		FMOD_Sound_Release(Mypair.second);
-	}
-	m_mapSound.clear(); 
-
-	FMOD_System_Release(m_pSystem);
-	FMOD_System_Close(m_pSystem);
-}
-
-
-
 
 void CSoundMgr::PlaySound(TCHAR * pSoundKey, CHANNELID eID, float fVolume)
 {
@@ -64,6 +38,17 @@ void CSoundMgr::PlaySound(TCHAR * pSoundKey, CHANNELID eID, float fVolume)
 	FMOD_Channel_SetVolume(m_pChannelArr[eID], fVolume);
 
 	FMOD_System_Update(m_pSystem);
+}
+
+void CSoundMgr::Ready_Sound()
+{
+	// 사운드를 담당하는 대표객체를 생성하는 함수
+	FMOD_System_Create(&m_pSystem);
+
+	// 1. 시스템 포인터, 2. 사용할 가상채널 수 , 초기화 방식) 
+	FMOD_System_Init(m_pSystem, 32, FMOD_INIT_NORMAL, NULL);
+
+	LoadSoundFile();
 }
 
 void CSoundMgr::PlayBGM(TCHAR * pSoundKey, float fVolume)
@@ -109,7 +94,7 @@ void CSoundMgr::LoadSoundFile()
 	_finddata_t fd; 
 
 	// _findfirst : <io.h>에서 제공하며 사용자가 설정한 경로 내에서 가장 첫 번째 파일을 찾는 함수
-	long handle = _findfirst("../Sound/*.*", &fd);
+	long handle = _findfirst("../../../Client/Bin/Resource/Sound/*.*", &fd);
 
 	if (handle == -1)
 		return; 
@@ -149,4 +134,17 @@ void CSoundMgr::LoadSoundFile()
 	FMOD_System_Update(m_pSystem);
 
 	_findclose(handle);
+}
+
+void CSoundMgr::Free()
+{
+	for (auto& Mypair : m_mapSound)
+	{
+		delete[] Mypair.first;
+		FMOD_Sound_Release(Mypair.second);
+	}
+	m_mapSound.clear();
+
+	FMOD_System_Release(m_pSystem);
+	FMOD_System_Close(m_pSystem);
 }

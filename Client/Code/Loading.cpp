@@ -41,6 +41,8 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(Loading_Player_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Beefalo_Texture(), E_FAIL);
 
+	//Sound
+	//Engine::Ready_Sound();
 
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png")), E_FAIL);
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_HeightTerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png")), E_FAIL);
