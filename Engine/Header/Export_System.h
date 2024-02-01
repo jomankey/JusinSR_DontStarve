@@ -10,7 +10,7 @@
 #include "CPathMgr.h"
 #include "CResMgr.h"
 #include "CollisionMgr.h"
-#include "SoundMgr.h"
+#include "CSoundMgr.h"
 
 namespace Engine 
 {
@@ -74,12 +74,12 @@ namespace Engine
 	inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num);
 
 	//SoundMgr
-	inline void Ready_Sound();
-	inline void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume);
-	inline void PlayBGM(TCHAR* pSoundKey, float fVolume);
-	inline void StopSound(CHANNELID eID);
-	inline void StopAll();
-	inline void SetChannelVolume(CHANNELID eID, float fVolume);
+	//inline void Ready_Sound();
+	//inline void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume);
+	//inline void PlayBGM(TCHAR* pSoundKey, float fVolume);
+	//inline void StopSound(CHANNELID eID);
+	//inline void StopAll();
+	//inline void SetChannelVolume(CHANNELID eID, float fVolume);
 
 	// Destroy
 	inline void			Release_System();

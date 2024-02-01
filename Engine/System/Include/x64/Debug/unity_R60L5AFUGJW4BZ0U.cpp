@@ -1,4 +1,13 @@
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\System\Code\CollisionMgr.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\System\Code\CResMgr.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\System\Code\CSoundMgr.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\System\Code\FontMgr.cpp"
 
 
@@ -15,6 +24,9 @@
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\System\Code\MyFont.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\System\Code\CPathMgr.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\System\Code\Timer.cpp"

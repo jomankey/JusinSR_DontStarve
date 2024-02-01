@@ -1,4 +1,7 @@
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\CustomTex.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\Calculator.cpp"
 
 
@@ -23,13 +26,10 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\LightMgr.cpp"
 
 
-#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\Management.cpp"
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\CSceneMgr.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\ObjStatus.cpp"
-
-
-#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\Pipeline.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\PlayerStatus.cpp"

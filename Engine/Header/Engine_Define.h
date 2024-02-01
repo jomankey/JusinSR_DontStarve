@@ -26,7 +26,7 @@
 
 #include "fmod.h"
 #include "fmod.hpp"
-#pragma comment(lib, "fmodex_vc.lib")
+#pragma comment(lib, "fmod_vc.lib")
 
 #define DIRECTINPUT_VERSION	0x0800
 #include <dinput.h>

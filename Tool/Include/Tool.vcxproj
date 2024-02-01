@@ -83,8 +83,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>../Bin\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)Include;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>../Bin\</OutDir>
