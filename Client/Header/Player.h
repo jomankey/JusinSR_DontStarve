@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include "GameObject.h"
+#include "ResObject.h"
 
 namespace Engine 
 {
@@ -59,6 +60,8 @@ private:
 	LOOKDIR  m_ePlayerLookAt;
 	_tchar*		m_cTex;
 	_bool		m_Dirchange;
+
+	CResObject* m_pTest;
 
 	_bool m_bAttack;
 	

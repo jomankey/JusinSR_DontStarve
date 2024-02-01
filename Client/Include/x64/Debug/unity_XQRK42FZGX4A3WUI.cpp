@@ -59,6 +59,9 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\Player.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\ResObject.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\SkyBox.cpp"
 
 

@@ -4,12 +4,12 @@
 #include "Export_Utility.h"
 
 CObjectTree::CObjectTree(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev)
+	:CResObject(pGraphicDev)
 {
 }
 
 CObjectTree::CObjectTree(const CObjectTree& rhs)
-	:CGameObject(rhs.m_pGraphicDev)
+	:CResObject(rhs.m_pGraphicDev)
 {
 }
 
@@ -21,12 +21,16 @@ HRESULT CObjectTree::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_eCurState = RES_IDLE;
+	m_fFrame = 0;
 	return S_OK;
 }
 
 _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
+
+
 	m_pTransForm->BillBoard();
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
@@ -47,7 +51,7 @@ void CObjectTree::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom[m_eCurState]->Set_Texture((_uint)m_fFrame);
 
 	m_pBufferCom->Render_Buffer();
 
@@ -65,9 +69,17 @@ HRESULT CObjectTree::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree"));
+	pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree", pComponent });
+
+	//pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree", pComponent });
+
+	//pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -76,9 +88,22 @@ HRESULT CObjectTree::Add_Component()
 	return S_OK;
 }
 
-CObjectTree* CObjectTree::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+void CObjectTree::Check_FrameState()
 {
-	CObjectTree* pInstance = new CObjectTree(pGraphicDev);
+	if (m_ePreState == m_eCurState)
+		return;
+
+	//if (m_eCurState == RES_IDLE)
+		//m_fFrameEnd = 
+}
+
+void CObjectTree::Ready_Stat()
+{
+}
+
+CResObject* CObjectTree::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CResObject* pInstance = new CObjectTree(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -94,3 +119,5 @@ void CObjectTree::Free()
 {
 	CGameObject::Free();
 }
+
+

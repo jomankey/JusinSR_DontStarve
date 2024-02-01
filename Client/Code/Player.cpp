@@ -17,7 +17,7 @@
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
+	: Engine::CGameObject(pGraphicDev), m_bAttack(false), m_pTest(nullptr)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
@@ -54,7 +54,11 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	if (m_fFrameEnd < m_fFrame)
 	{
 		if (m_eCurState == ATTACK)
+		{
 			m_bAttack = false;
+			//m_pTest->Set_Attack_State(false); test
+		}
+			
 		m_fFrame = 0.f;
 	}
 
@@ -367,46 +371,88 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_eCurState = ATTACK;
 
-		auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+		//auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
 
-		_vec3* vMonsterAxis = new _vec3[3];
-		_vec3* vPlayerAxis = new _vec3[3];
-		_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+		//_vec3* vMonsterAxis = new _vec3[3];
+		//_vec3* vPlayerAxis = new _vec3[3];
+		//_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
 
-		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
-		m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
-		m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		//m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
 
-		vPlayerScale = m_pTransForm->Get_Scale();
+		//vPlayerScale = m_pTransForm->Get_Scale();
 
-		for (auto& monster : vecMonster)
-		{
-			CTransform* pItemTransform = monster->GetTransForm();
-			pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
-			pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
-			pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
-			pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
-			vMonsterScale = pItemTransform->Get_Scale();
+		//for (auto& monster : vecMonster)
+		//{
+		//	CTransform* pItemTransform = monster->GetTransForm();
+		//	pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
+		//	pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
+		//	pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
+		//	pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
+		//	vMonsterScale = pItemTransform->Get_Scale();
 
-			if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
-				vPlayerAxis, 
-				vMonsterPos,
-				vMonsterAxis, 
-				vPlayerScale, 
-				vMonsterScale))
-			{
-				// 몬스터와 공격 충돌 시
-				// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
+		//	if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
+		//		vPlayerAxis, 
+		//		vMonsterPos,
+		//		vMonsterAxis, 
+		//		vPlayerScale, 
+		//		vMonsterScale))
+		//	{
+		//		// 몬스터와 공격 충돌 시
+		//		// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
 
-				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
-				dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
-				m_bAttack = true;
-				break;
-			}
-		}
-		delete[] vMonsterAxis;
-		delete[] vPlayerAxis;
+		//		m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
+		//		dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
+		//		m_bAttack = true;
+		//		break;
+		//	}
+		//}
+
+		//auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
+
+		//_vec3* vMonsterAxis = new _vec3[3];
+		//_vec3* vPlayerAxis = new _vec3[3];
+		//_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+
+		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		//m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+
+		//vPlayerScale = m_pTransForm->Get_Scale();
+
+		//for (auto& monster : vecMonster)
+		//{
+		//	CTransform* pItemTransform = monster->GetTransForm();
+		//	pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
+		//	pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
+		//	pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
+		//	pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
+		//	vMonsterScale = pItemTransform->Get_Scale();
+
+		//	if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
+		//		vPlayerAxis,
+		//		vMonsterPos,
+		//		vMonsterAxis,
+		//		vPlayerScale,
+		//		vMonsterScale))
+		//	{
+		//		// 몬스터와 공격 충돌 시
+		//		// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
+
+		//		m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
+		//		m_pTest = dynamic_cast<CResObject*>(monster);
+		//		m_pTest->Set_Attack();
+		//		m_pTest->Set_Attack_State(true);
+		//		//dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
+		//		m_bAttack = true;
+		//		break;
+		//	}
+		//}
+		//delete[] vMonsterAxis;
+		//delete[] vPlayerAxis;
 	}
 
 	if (GetAsyncKeyState('G'))
