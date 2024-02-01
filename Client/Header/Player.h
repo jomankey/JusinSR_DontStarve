@@ -3,7 +3,8 @@
 #include "Base.h"
 #include "GameObject.h"
 
-namespace Engine {
+namespace Engine 
+{
 
 class CRcTex;
 class CRvRcTex;
