@@ -16,9 +16,6 @@ private:
 
 public:
 	CLight* Get_Light(_int _iIndex) { return m_vecLight[_iIndex]; }
-	TIME_STATE Get_TimeIndex() { return m_eChangeIndex; }
-
-	_int Get_Day() { return m_iDay; }
 
 public:
 	HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, 
@@ -29,9 +26,6 @@ public:
 private:
 	vector<CLight*>			m_vecLight;
 	_float m_fPreTime;
-
-	TIME_STATE m_eChangeIndex; // 0 : morning, 1 : afternoon, 2 : night
-	_int m_iDay;
 
 private:
 	virtual void	Free();

@@ -90,8 +90,6 @@ namespace Engine
 
 		MAXCHANNEL,
 	};
-	enum TIME_STATE { MORNING, AFTERNOON, NIGHT };
-
 }
 #endif // Engine_Enum_h__
 //일단 scene안에 레이어를 3개만들거야 배경레이어,

@@ -84,11 +84,6 @@ _int light::Change_Light(const _float& fTimeDelta, _int _iIndex)
 	return CLightMgr::GetInstance()->Change_Light(fTimeDelta, _iIndex);
 }
 
-TIME_STATE light::Get_TimeIndex()
-{
-	return CLightMgr::GetInstance()->Get_TimeIndex();
-}
-
 void Release_Utility()
 {
 	CLightMgr::DestroyInstance();

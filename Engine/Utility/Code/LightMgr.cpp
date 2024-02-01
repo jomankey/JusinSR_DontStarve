@@ -2,7 +2,7 @@
 
 IMPLEMENT_SINGLETON(CLightMgr)
 
-CLightMgr::CLightMgr() : m_fPreTime(0), m_eChangeIndex(MORNING)
+CLightMgr::CLightMgr() : m_fPreTime(0)
 {
 }
 
@@ -25,33 +25,20 @@ HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
 
 _int CLightMgr::Change_Light(const _float& fTimeDelta, _int _iIndex)
 {
+	static _int iChangeIndex = 0;
 	m_fPreTime += fTimeDelta * 1000;
 
-	if (m_eChangeIndex == MORNING)
+	if (10000 < m_fPreTime)
 	{
-		if (10000 >= m_fPreTime) //180000
-			return m_eChangeIndex;
+		if (iChangeIndex < 2)
+			iChangeIndex += 1;
+		else
+			iChangeIndex = 0;
 
-		m_eChangeIndex = AFTERNOON;
-	}
-	if (m_eChangeIndex == AFTERNOON)
-	{
-		if (10000 >= m_fPreTime) // 90000
-			return m_eChangeIndex;
-
-		m_eChangeIndex = AFTERNOON;
-	}
-	if (m_eChangeIndex == NIGHT)
-	{
-		if (10000 >= m_fPreTime) // 60000
-			return m_eChangeIndex;
-
-		m_eChangeIndex = MORNING;
-		m_iDay += 1;
+		m_fPreTime = 0;
 	}
 
-	m_fPreTime = 0;
-	return m_eChangeIndex;
+	return iChangeIndex;
 }
 
 void CLightMgr::Free()

@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "ResObject.h"
 
 namespace Engine {
 class CRcTex;
@@ -8,7 +7,7 @@ class CTexture;
 }
 
 class CObjectGrass :
-	public CResObject
+	public CGameObject
 {
 private:
 	explicit CObjectGrass(LPDIRECT3DDEVICE9 pGraphicDev );
@@ -19,23 +18,11 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						override;
-
 private:
 	HRESULT			Add_Component();
-	void			Check_FrameState();
-	void Ready_Stat();
-
 private:
 	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pTextureCom[RESOBJECT_END];
-
-	RESOBJECTSTATE m_eCurState;
-	RESOBJECTSTATE m_ePreState;
-
-	_float				m_fFrame = 0.f;
-	_float				m_fFrameEnd;
-
-	OBJSTAT m_Stat;
+	Engine::CTexture* m_pTextureCom;
 
 
 public:

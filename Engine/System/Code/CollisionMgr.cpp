@@ -15,7 +15,7 @@ _bool CCollisionMgr::Collision_Monster(
 	_vec3 vPlayerPos,
 	_vec3* vPlayerAxis,
 	_vec3 vMonsterPos,
-	_vec3* vMonsterAxis, //right, up, look
+	_vec3* vMonsterAxis,
 	_vec3 vPlayerScale,
 	_vec3 vMonsterScale)
 {
