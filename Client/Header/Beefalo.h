@@ -31,7 +31,7 @@ private:
 	void			Height_OnTerrain();
 	virtual void	Set_ObjStat()					override;
 	void			Player_Chase(const _float& fTimeDelta);
-	void			State_Change();
+	virtual void			State_Change()			override;
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
