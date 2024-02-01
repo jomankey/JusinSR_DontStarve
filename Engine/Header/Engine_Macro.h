@@ -26,32 +26,29 @@ namespace Engine
 #define ENGINE_DLL		_declspec(dllimport)
 #endif
 
-#define NULL_CHECK( _ptr)	\
-	{if( _ptr == 0){__asm { int 3 };return;}}
+#define NULL_CHECK(_ptr) \
+    { if (_ptr == nullptr) { assert(false && "NULL_CHECK failed"); return; } }
 
-#define NULL_CHECK_RETURN( _ptr, _return)	\
-	{if( _ptr == 0){__asm { int 3 };return _return;}}
+#define NULL_CHECK_RETURN(_ptr, _return) \
+    { if (_ptr == nullptr) { assert(false && "NULL_CHECK_RETURN failed"); return _return; } }
 
-#define NULL_CHECK_MSG( _ptr, _message )		\
-	{if( _ptr == 0){MessageBox(NULL, _message, L"System Message",MB_OK);__asm { int 3 };}}
+#define NULL_CHECK_MSG(_ptr, _message) \
+    { if (_ptr == nullptr) { MessageBox(NULL, _message, L"System Message", MB_OK); assert(false && "NULL_CHECK_MSG failed"); } }
 
-#define NULL_CHECK_RETURN_MSG( _ptr, _return, _message )	\
-	{if( _ptr == 0){MessageBox(NULL, _message, L"System Message",MB_OK);__asm { int 3 };return _return;}}
+#define NULL_CHECK_RETURN_MSG(_ptr, _return, _message) \
+    { if (_ptr == nullptr) { MessageBox(NULL, _message, L"System Message", MB_OK); assert(false && "NULL_CHECK_RETURN_MSG failed"); return _return; } }
 
+#define FAILED_CHECK(_hr) \
+    { if (FAILED(_hr)) { MessageBoxW(NULL, L"Failed", L"System Error", MB_OK); assert(false && "FAILED_CHECK failed"); return E_FAIL; } }
 
-#define FAILED_CHECK(_hr)	if( ((HRESULT)(_hr)) < 0 )	\
-	{ MessageBoxW(NULL, L"Failed", L"System Error",MB_OK); __asm { int 3 }; return E_FAIL;}
+#define FAILED_CHECK_RETURN(_hr, _return) \
+    { if (FAILED(_hr)) { MessageBoxW(NULL, L"Failed", L"System Error", MB_OK); assert(false && "FAILED_CHECK_RETURN failed"); return _return; } }
 
-#define FAILED_CHECK_RETURN(_hr, _return)	if( ((HRESULT)(_hr)) < 0 )		\
-	{ MessageBoxW(NULL, L"Failed", L"System Error",MB_OK); __asm { int 3 }; return _return;}
+#define FAILED_CHECK_MSG(_hr, _message) \
+    { if (FAILED(_hr)) { MessageBoxW(NULL, _message, L"System Message", MB_OK); assert(false && "FAILED_CHECK_MSG failed"); return E_FAIL; } }
 
-#define FAILED_CHECK_MSG( _hr, _message)	if( ((HRESULT)(_hr)) < 0 )	\
-	{ MessageBoxW(NULL, _message, L"System Message",MB_OK); __asm { int 3 };return E_FAIL;}
-
-#define FAILED_CHECK_RETURN_MSG( _hr, _return, _message)	if( ((HRESULT)(_hr)) < 0 )	\
-	{ MessageBoxW(NULL, _message, L"System Message",MB_OK); __asm { int 3 };return _return;}
-
-
+#define FAILED_CHECK_RETURN_MSG(_hr, _return, _message) \
+    { if (FAILED(_hr)) { MessageBoxW(NULL, _message, L"System Message", MB_OK); assert(false && "FAILED_CHECK_RETURN_MSG failed"); return _return; } }
 
 #define NO_COPY(CLASSNAME)								\
 		private:										\

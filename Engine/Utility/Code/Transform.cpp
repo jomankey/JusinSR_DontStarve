@@ -13,7 +13,7 @@ CTransform::CTransform(const CTransform & rhs)
 {
 	for (size_t i = 0; i < INFO_END; ++i)
 		m_vInfo[i] = rhs.m_vInfo[i];
-
+	//
 	m_matWorld = rhs.m_matWorld;
 }
 

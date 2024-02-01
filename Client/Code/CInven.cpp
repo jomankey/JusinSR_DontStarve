@@ -1,4 +1,4 @@
-//#include "..\Include\stdafx.h"
+#include "..\Include\stdafx.h"
 //#include "CInven.h"
 //
 //
