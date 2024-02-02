@@ -2,6 +2,9 @@
 #include "C:\PortPolio\Client\Code\Beefalo.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CAliveUI.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CEquiment.cpp"
 
 
@@ -36,6 +39,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CSlideUI.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CToolUI.cpp"
 
 
 #include "C:\PortPolio\Client\Code\CUI.cpp"

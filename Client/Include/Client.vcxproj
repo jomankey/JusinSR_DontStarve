@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
+    <ClInclude Include="..\Header\CAliveUI.h" />
     <ClInclude Include="..\Header\CEquiment.h" />
     <ClInclude Include="..\Header\CExplainPanel.h" />
     <ClInclude Include="..\Header\CInven.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="..\Header\CObjectTree.h" />
     <ClInclude Include="..\Header\CPigHouse.h" />
     <ClInclude Include="..\Header\CSlideUI.h" />
+    <ClInclude Include="..\Header\CToolUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\DeerClops.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
@@ -193,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
+    <ClCompile Include="..\Code\CAliveUI.cpp" />
     <ClCompile Include="..\Code\CEquiment.cpp" />
     <ClCompile Include="..\Code\CExplainPanel.cpp" />
     <ClCompile Include="..\Code\CInven.cpp" />
@@ -205,6 +208,7 @@
     <ClCompile Include="..\Code\CObjectTree.cpp" />
     <ClCompile Include="..\Code\CPigHouse.cpp" />
     <ClCompile Include="..\Code\CSlideUI.cpp" />
+    <ClCompile Include="..\Code\CToolUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\DeerClops.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />

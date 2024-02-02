@@ -39,18 +39,18 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
     return 0;
 }
 
-void CSlideUI::Render_GameObject()
-{
-
-  //if (UI_Collision())
-  //{
-  //
-  //
-  //
-  //}
-
-
-}
+//void CSlideUI::Render_GameObject()
+//{
+//
+//  //if (UI_Collision())
+//  //{
+//  //
+//  //
+//  //
+//  //}
+//
+//
+//}
 
 BOOL CSlideUI::UI_Collision(CUI* _TargetUI)
 {

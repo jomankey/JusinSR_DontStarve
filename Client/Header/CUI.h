@@ -25,6 +25,7 @@ public:
 
 	//자기 자신만 충돌 체크가능
 	virtual BOOL UI_Collision();
+	virtual BOOL MouseDistanceOver();
 	virtual BOOL IsItemOn() { return m_bItemChek; }
 	virtual void SetItemOn(BOOL _ItemPut) { m_bItemChek = _ItemPut; }
 

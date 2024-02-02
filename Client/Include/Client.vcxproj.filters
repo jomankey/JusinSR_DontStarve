@@ -97,14 +97,26 @@
     <Filter Include="02. GameObject\07. CUI\02. CInvenBox">
       <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\03. Equiment">
-      <UniqueIdentifier>{acfaeba5-8f82-4c34-9998-ae8b30ace7cd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. CUI\04. ExPlain_Panel_Ui">
       <UniqueIdentifier>{e95af169-719f-4b96-a5e9-de7cec11eb64}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\07. CUI\05. SlideUI">
       <UniqueIdentifier>{51794662-8f3f-48d7-b6c8-f396fbc6bd74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. ToolUI">
+      <UniqueIdentifier>{a7cc5f20-ca2f-41ec-9a6b-d649ee49dd58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. ToolUI\01. Equiment">
+      <UniqueIdentifier>{acfaeba5-8f82-4c34-9998-ae8b30ace7cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. ToolUI\02. Alive">
+      <UniqueIdentifier>{b08f2acd-c4b6-4c01-b678-cc68b2080e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\02. ItemToolMgr">
+      <UniqueIdentifier>{b4fe11ff-0b55-4537-b743-9afd08197260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\01. InvenMgr">
+      <UniqueIdentifier>{beb2c89a-cc6d-4829-add6-81e610935d54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -189,20 +201,26 @@
     <ClInclude Include="..\Header\CPigHouse.h">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CInventoryMgr.h">
-      <Filter>03. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CInvenBox.h">
       <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CEquiment.h">
-      <Filter>02. GameObject\07. CUI\03. Equiment</Filter>
+      <Filter>02. GameObject\07. CUI\03. ToolUI\01. Equiment</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CExplainPanel.h">
       <Filter>02. GameObject\07. CUI\04. ExPlain_Panel_Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSlideUI.h">
       <Filter>02. GameObject\07. CUI\05. SlideUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToolUI.h">
+      <Filter>02. GameObject\07. CUI\03. ToolUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CAliveUI.h">
+      <Filter>02. GameObject\07. CUI\03. ToolUI\02. Alive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInventoryMgr.h">
+      <Filter>03. Manager\01. InvenMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,20 +296,26 @@
     <ClCompile Include="..\Code\CPigHouse.cpp">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CInventoryMgr.cpp">
-      <Filter>03. Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CInvenBox.cpp">
       <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CEquiment.cpp">
-      <Filter>02. GameObject\07. CUI\03. Equiment</Filter>
+      <Filter>02. GameObject\07. CUI\03. ToolUI\01. Equiment</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CExplainPanel.cpp">
       <Filter>02. GameObject\07. CUI\04. ExPlain_Panel_Ui</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSlideUI.cpp">
       <Filter>02. GameObject\07. CUI\05. SlideUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CToolUI.cpp">
+      <Filter>02. GameObject\07. CUI\03. ToolUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAliveUI.cpp">
+      <Filter>02. GameObject\07. CUI\03. ToolUI\02. Alive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInventoryMgr.cpp">
+      <Filter>03. Manager\01. InvenMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

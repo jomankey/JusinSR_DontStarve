@@ -114,6 +114,17 @@ BOOL CUI::UI_Collision()
 
 }
 
+BOOL CUI::MouseDistanceOver()
+{
+	GetCursorPos(&m_MousePoint);
+	ScreenToClient(g_hWnd, &m_MousePoint);
+
+	if(m_MousePoint.x>300.f)
+		return true;
+	else
+		return false;
+}
+
 
 HRESULT CUI::Add_Component()
 {

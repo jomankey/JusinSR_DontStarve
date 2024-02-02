@@ -54,6 +54,13 @@ namespace Engine
 	};
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };
 
+	enum  eITEMTOOL_TYPE {
+		ITEM_TOOL,
+		ITEM_LIGHT,
+		ITEM_ALIVE,
+		ITEM_EQUIP,
+		ITEM_END
+	};
 }
 #endif // Engine_Enum_h__
 //일단 scene안에 레이어를 3개만들거야 배경레이어,
