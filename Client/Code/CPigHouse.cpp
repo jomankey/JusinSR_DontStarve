@@ -5,12 +5,14 @@
 #include "Export_Utility.h"
 
 CPigHouse::CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev), m_eHouseState(STANDARD)
+	:CGameObject(pGraphicDev)
+	, m_eHouseState(STANDARD)
 {
 }
 
 CPigHouse::CPigHouse(const CPigHouse& rhs)
-	:CGameObject(rhs.m_pGraphicDev), m_eHouseState(rhs.m_eHouseState)
+	:CGameObject(rhs.m_pGraphicDev)
+	, m_eHouseState(rhs.m_eHouseState)
 {
 }
 
@@ -54,18 +56,21 @@ HRESULT CPigHouse::Ready_GameObject()
 _int CPigHouse::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-	Billboard();
+	//Billboard(); 툴 머지후 수정예정
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 
 void CPigHouse::LateUpdate_GameObject()
 {
+
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	House_Change_Event(); // 피격 혹은 특정 이벤트 발생시 집의 형태 변환
-	__super::Compute_ViewZ(&vPos);
+	_vec3	vPos;
+	m_pTransForm->BillBoard();
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
+
 }
 
 void CPigHouse::Render_GameObject()
@@ -99,7 +104,7 @@ HRESULT CPigHouse::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.8f, vPos.z);
 	return S_OK;

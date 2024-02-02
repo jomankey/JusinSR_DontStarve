@@ -40,10 +40,10 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 
 void CObjectGrass::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
+	CGameObject::LateUpdate_GameObject();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	Compute_ViewZ(&vPos);
 }
 
 void CObjectGrass::Render_GameObject()

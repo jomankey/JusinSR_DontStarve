@@ -61,13 +61,17 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
 
 void CSpider::LateUpdate_GameObject()
 {
-    __super::LateUpdate_GameObject();
+    CGameObject::LateUpdate_GameObject();
     m_pTransForm->BillBoard();
+    _vec3	vPos;
+    m_pTransForm->Get_Info(INFO_POS, &vPos);
+    CGameObject::Compute_ViewZ(&vPos);
+
 }
 
 void CSpider::Render_GameObject()
 {
-    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+ /*   m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
     
@@ -85,6 +89,27 @@ void CSpider::Render_GameObject()
 
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+*/
+    //Test
+    //m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+    m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    m_pTextureCom[m_ePreLook][m_ePrestate]->Set_Texture((_uint)m_fFrame);
+
+    if (m_Dirchange)
+    {
+        m_pReverseCom->Render_Buffer();
+    }
+    else if (!m_Dirchange)
+    {
+        m_pBufferCom->Render_Buffer();
+    }
+
+    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+    m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    //m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CSpider::Add_Component()

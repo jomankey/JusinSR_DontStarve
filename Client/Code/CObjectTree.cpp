@@ -28,7 +28,6 @@ HRESULT CObjectTree::Ready_GameObject()
 _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-	m_pTransForm->BillBoard();
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
@@ -36,9 +35,10 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 void CObjectTree::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	//_vec3	vPos;
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	//__super::Compute_ViewZ(&vPos);
+	_vec3	vPos;
+	m_pTransForm->BillBoard();
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 
 }
 

@@ -30,7 +30,12 @@ Engine::_int CTerrain::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
+	
+	_vec3 vPos;
 
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+
+	Compute_ViewZ(&vPos);
 	//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	return 0;

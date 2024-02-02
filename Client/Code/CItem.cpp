@@ -120,14 +120,7 @@ HRESULT CItem::Add_Component()
 
 	return S_OK;
 }
-//
-//void CItem::SetPos(const _vec3& _vPos)
-//{
-//	_vec3 vPos= _vPos;
-//	vPos.y = .2f;
-//	m_pTransForm->Set_Pos(vPos);
-//	m_pTransForm->Set_Scale(_vec3(0.4f, .15f, .4f));
-//}
+
 
 void CItem::Free()
 {

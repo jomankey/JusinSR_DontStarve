@@ -68,7 +68,9 @@ void CBeefalo::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 
     m_pTransForm->BillBoard();
-	
+    _vec3	vPos;
+    m_pTransForm->Get_Info(INFO_POS, &vPos);
+    Compute_ViewZ(&vPos);
 }
 
 void CBeefalo::Render_GameObject()

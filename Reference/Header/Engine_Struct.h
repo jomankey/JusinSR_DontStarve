@@ -55,6 +55,8 @@ namespace Engine
 		_float fMxHP;
 		_float fSpeed;
 		_float fATK;
+		_float fATKRange;//공격범위
+		_float fAggroRange; //어그로범위or인식범위
 		_bool bDead;
 	}OBJSTAT;
 

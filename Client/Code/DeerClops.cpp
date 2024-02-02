@@ -58,9 +58,10 @@ void CDeerClops::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
-	_vec3	vPos;
 	BillBoard();
+	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 }
 
 void CDeerClops::Render_GameObject()
