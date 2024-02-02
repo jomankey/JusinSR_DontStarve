@@ -105,7 +105,7 @@ HRESULT CToolItem::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-
+	return S_OK;
 }
 
 void CToolItem::SetPos(const _vec3& _vPos)

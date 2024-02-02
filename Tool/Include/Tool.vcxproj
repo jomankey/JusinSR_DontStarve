@@ -133,6 +133,7 @@
       <PreprocessorDefinitions>_TOOL;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../../Base;../../Reference/Header;../../imgui/imgui;../../imgui/backend;../Header;./</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

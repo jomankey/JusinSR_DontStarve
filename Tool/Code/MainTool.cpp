@@ -86,6 +86,8 @@ HRESULT CMainTool::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
+	return S_OK;
 }
 
 CMainTool* CMainTool::Create()
