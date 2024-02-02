@@ -262,17 +262,17 @@
 //
 //		pComponent = m_pBufferCom[i] = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 //		NULL_CHECK_RETURN(pComponent, E_FAIL);
-//		m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+//		m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 //
 //
 //		//pComponent = m_pTextureCom[i] = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Meat_Monster"));
 //		//NULL_CHECK_RETURN(pComponent, E_FAIL);
-//		//m_mapComponent[ID_STATIC].insert({ L"Meat_Monster", pComponent });
+//		//m_MultiMap[ID_STATIC].insert({ L"Meat_Monster", pComponent });
 //
 //
 //		pComponent = m_pTransformCom[i] = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 //		NULL_CHECK_RETURN(pComponent, E_FAIL);
-//		m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+//		m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 //
 //
 //	}

@@ -100,6 +100,7 @@ void CLayer::Free()
 		{
 			Safe_Release(iter);
 		}
+
 		m_vecObject[i].clear();
 	}
 }

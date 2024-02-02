@@ -59,15 +59,15 @@ HRESULT CTerrain::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(proto::Clone_Proto(L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_TerrainTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	return S_OK;
 }

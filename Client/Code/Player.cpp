@@ -112,135 +112,135 @@ HRESULT CPlayer::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
 #pragma region TEXCOM
 	pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_down", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_up", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_down", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_up", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_down", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_up", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_up", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_down", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_down", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_up", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_down", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_up", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_side", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][FALLDOWN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_falldown"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_falldown", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_falldown", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][WAKEUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_wakeup"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_wakeup", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_wakeup", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_DOWN][EAT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_eat"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
 #pragma endregion TEXCOM
 	
 	
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Pos(0.f, 1.f, 0.f);
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 	/*pComponent = m_pStatusCom = dynamic_cast<CPlayerStatus*>(proto::Clone_Proto(L"Proto_PlayerStat"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_PlayerStat", pComponent });*/
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_PlayerStat", pComponent });*/
 
 	return S_OK;
 }
@@ -271,12 +271,6 @@ CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	}
 
 	return pInstance;
-}
-
-void CPlayer::Free()
-{
-
-	__super::Free();
 }
 
 void CPlayer::Key_Input(const _float& fTimeDelta)
@@ -621,3 +615,12 @@ void CPlayer::BillBoard()
 }
 
 
+
+void CPlayer::Free()
+{
+
+	__super::Free();
+}
+
+//DeleteObject(삭제할게임오브젝트포인터 (GameObject*));
+//CreateObject(레이어타입,오브젝트타입,생성한 오브젝트포인터);

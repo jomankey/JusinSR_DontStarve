@@ -123,7 +123,5 @@ void CMainApp::Free()
 	Engine::Safe_Release(m_pGraphicDev);
 	CInventoryMgr::DestroyInstance();
 	Engine::Release_System();
-
-
-
+	Engine::Release_Utility();
 }

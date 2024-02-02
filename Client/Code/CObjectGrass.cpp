@@ -67,15 +67,15 @@ HRESULT CObjectGrass::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
