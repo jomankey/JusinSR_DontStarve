@@ -27,14 +27,28 @@ _int CEquiment::Update_GameObject(const _float& fTimeDelta)
 
     __super::Update_GameObject(fTimeDelta);
 
+
+    Pop_SidePanel();
+
     return 0;
 }
 
-
-HRESULT CEquiment::Add_Component()
+void CEquiment::Pop_SidePanel()
 {
-    return S_OK;
+    if (UI_Collision())
+    {
+        const vector<CGameObject*>&  vecUi= scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
+
+        for (size_t i = 0; i < vecUi.size(); i++)
+        {
+           // vecUi[i]->GetObjName() == 
+        }
+    }
+
 }
+
+
+
 
 CEquiment* CEquiment::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {
@@ -47,8 +61,6 @@ CEquiment* CEquiment::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _ve
     }
 
     return pInstance;
-
-    return nullptr;
 }
 void CEquiment::Free()
 {

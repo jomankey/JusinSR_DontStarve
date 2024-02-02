@@ -23,10 +23,16 @@ public:
 	virtual void Render_GameObject()						 override;
 
 
-
+	//자기 자신만 충돌 체크가능
 	virtual BOOL UI_Collision();
 	virtual BOOL IsItemOn() { return m_bItemChek; }
 	virtual void SetItemOn(BOOL _ItemPut) { m_bItemChek = _ItemPut; }
+
+	_float GetX() { return m_fX; }
+	_float GetY() { return m_fY; }
+	_float GetSizeX() { return m_fSizeX; }
+	_float GetSizeY() { return m_fSizeY; }
+
 	virtual HRESULT			Add_Component();
 protected:
 	Engine::CTexture* m_pTextureCom;

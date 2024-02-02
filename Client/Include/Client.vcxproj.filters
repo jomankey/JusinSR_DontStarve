@@ -100,6 +100,12 @@
     <Filter Include="02. GameObject\07. CUI\03. Equiment">
       <UniqueIdentifier>{acfaeba5-8f82-4c34-9998-ae8b30ace7cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ExPlain_Panel_Ui">
+      <UniqueIdentifier>{e95af169-719f-4b96-a5e9-de7cec11eb64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\05. SlideUI">
+      <UniqueIdentifier>{51794662-8f3f-48d7-b6c8-f396fbc6bd74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -192,6 +198,12 @@
     <ClInclude Include="..\Header\CEquiment.h">
       <Filter>02. GameObject\07. CUI\03. Equiment</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CExplainPanel.h">
+      <Filter>02. GameObject\07. CUI\04. ExPlain_Panel_Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSlideUI.h">
+      <Filter>02. GameObject\07. CUI\05. SlideUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -274,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEquiment.cpp">
       <Filter>02. GameObject\07. CUI\03. Equiment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CExplainPanel.cpp">
+      <Filter>02. GameObject\07. CUI\04. ExPlain_Panel_Ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSlideUI.cpp">
+      <Filter>02. GameObject\07. CUI\05. SlideUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

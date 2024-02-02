@@ -13,10 +13,10 @@ protected:
 public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 
+	void Pop_SidePanel();
 
 public:
 	static CEquiment* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle = 0.f);
-	virtual HRESULT			Add_Component() override;
 	virtual void Free() override;
 
 

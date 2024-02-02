@@ -30,7 +30,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
+    <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\CEquiment.h" />
+    <ClInclude Include="..\Header\CExplainPanel.h" />
     <ClInclude Include="..\Header\CInven.h" />
     <ClInclude Include="..\Header\CInvenBox.h" />
     <ClInclude Include="..\Header\CInventoryMgr.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
     <ClInclude Include="..\Header\CPigHouse.h" />
+    <ClInclude Include="..\Header\CSlideUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\DeerClops.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
@@ -192,6 +194,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
     <ClCompile Include="..\Code\CEquiment.cpp" />
+    <ClCompile Include="..\Code\CExplainPanel.cpp" />
     <ClCompile Include="..\Code\CInven.cpp" />
     <ClCompile Include="..\Code\CInvenBox.cpp" />
     <ClCompile Include="..\Code\CInventoryMgr.cpp" />
@@ -201,6 +204,7 @@
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
     <ClCompile Include="..\Code\CPigHouse.cpp" />
+    <ClCompile Include="..\Code\CSlideUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\DeerClops.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
