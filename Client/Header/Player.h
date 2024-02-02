@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include "GameObject.h"
+#include "ResObject.h"
 
 namespace Engine 
 {
@@ -61,6 +62,8 @@ private:
 	_bool		m_Dirchange;
 
 	_bool m_bAttack;
+
+	CResObject* m_pTest; // 지형지물 상호작용 테스트용
 	
 public:
 	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev,wstring _strName);

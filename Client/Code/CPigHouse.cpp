@@ -40,7 +40,7 @@ _int CPigHouse::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_eCurState == RES_HIT_1 || m_eCurState == RES_HIT_2) // 피격 모션이 끝난 후 IDLE로 돌아감
 		{
-			m_eCurState == RES_IDLE;
+			m_eCurState = RES_IDLE;
 		}
 		m_fFrame = 0.f;
 	}
