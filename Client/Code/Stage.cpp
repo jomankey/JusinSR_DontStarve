@@ -1,4 +1,4 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "..\Header\Stage.h"
 
 #include "Export_System.h"
@@ -77,7 +77,7 @@ void CStage::LateUpdate_Scene()
 
 void CStage::Render_Scene()
 {
-	// DEBUG
+
 }
 
 HRESULT CStage::Ready_Layer_Environment()
@@ -129,12 +129,17 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
+<<<<<<< HEAD
 	/*for (_int i = 0; i < 5; ++i)
+=======
+
+	/*for (_int i = 0; i < 1; ++i)
+>>>>>>> 8a923e83ae43d5dfaa506da26a4f67fbf042a8d9
 	{
 		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	}
+	}*/
 	for (_int i = 0; i < 5; ++i)
 	{
 		pGameObject = CSpider::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
@@ -170,6 +175,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
 	//}
 
+<<<<<<< HEAD
 	/*for (_int i = 0; i < 10; ++i)
 	{
 		pGameObject = CObjectTree::Create(m_pGraphicDev);
@@ -193,19 +199,22 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+=======
+	//for (_int i = 0; i < 10; ++i)
+	//{
+	//	pGameObject = CObjectTree::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"CutGlass", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_TREE", pGameObject), E_FAIL);
+	//}
+	//for (_int i = 0; i < 10; ++i)
+	//{
+	//	pGameObject = CPigHouse::Create(m_pGraphicDev);
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	//}
+>>>>>>> 8a923e83ae43d5dfaa506da26a4f67fbf042a8d9
 
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+
 
 	pGameObject = CItem::Create(m_pGraphicDev, L"Log");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

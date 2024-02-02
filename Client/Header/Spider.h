@@ -30,18 +30,18 @@ public:
 private:
 	HRESULT			Add_Component();
 	void			Height_OnTerrain();
-	void			Player_Chase(const _float& fTimeDelta); //플레이어 추격용 테스트 함수
+	//void			Player_Chase(const _float& fTimeDelta); //플레이어 추격용 테스트 함수
 	virtual void			State_Change();
 	virtual void			Set_ObjStat()					override;
+	void					Set_Scale();
 
-
-	_bool			IsPlayer_Approach(float _fDistance);				//플레이어와 가까운지 검사하는 함수
+	
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
+	void			Die_Check();
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
-	/*Engine::CTransform* m_pTransForm;*/
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][SPIDERSTATE::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
 
@@ -50,8 +50,8 @@ private:
 
 	SPIDERSTATE m_eCurstate;
 	SPIDERSTATE m_ePrestate;
-	_bool		m_bNextFrame;
-	_vec3 m_vDir;
+	_bool		m_bModeChange;
+	
 public:
 	static CSpider* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 

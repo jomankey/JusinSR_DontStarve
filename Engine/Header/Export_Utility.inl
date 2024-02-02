@@ -15,7 +15,7 @@ HRESULT scenemgr::Create_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev, CSceneMgr** ppM
 	return S_OK;
 }
 
-HRESULT scenemgr::Change_CurScene(CScene * pScene)
+HRESULT scenemgr::Change_CurScene(CScene* pScene)
 {
 	return CSceneMgr::GetInstance()->Change_Scene(pScene);
 }
@@ -25,7 +25,7 @@ CScene* scenemgr::Get_CurScene()
 	return CSceneMgr::GetInstance()->Get_CurScene();
 }
 
-_int scenemgr::Update_Scene(const _float & fTimeDelta)
+_int scenemgr::Update_Scene(const _float& fTimeDelta)
 {
 	return CSceneMgr::GetInstance()->Update_Scene(fTimeDelta);
 }
@@ -84,6 +84,7 @@ _int light::Change_Light(const _float& fTimeDelta, _int _iIndex)
 	return CLightMgr::GetInstance()->Change_Light(fTimeDelta, _iIndex);
 }
 
+<<<<<<< HEAD
 TIME_STATE light::Get_TimeIndex()
 {
 	return CLightMgr::GetInstance()->Get_TimeIndex();
@@ -92,12 +93,34 @@ TIME_STATE light::Get_TimeIndex()
 _int light::Get_Day()
 {
 	return CLightMgr::GetInstance()->Get_Day();
+=======
+//eventmgr
+HRESULT	eventmgr::EventUpdate()
+{
+	return CEventMgr::GetInstance()->EventUpdate();
+}
+HRESULT eventmgr::Create_EvnetMgr(LPDIRECT3DDEVICE9 pGraphicDev, CEventMgr** ppManagementInstance)
+{
+	CEventMgr* pManagement = CEventMgr::GetInstance();
+	NULL_CHECK_RETURN(pManagement, E_FAIL);
+
+	*ppManagementInstance = pManagement;
+
+	return S_OK;
+}
+void eventmgr::AddEvent(const tEvent& _eve)
+{
+	CEventMgr::GetInstance()->AddEvent(_eve);
+>>>>>>> 8a923e83ae43d5dfaa506da26a4f67fbf042a8d9
 }
 
 void Release_Utility()
 {
+
 	CLightMgr::DestroyInstance();
 	CRenderer::DestroyInstance();
 	CProtoMgr::DestroyInstance();
 	CSceneMgr::DestroyInstance();
+	CLightMgr::DestroyInstance();
+	CEventMgr::DestroyInstance();
 }

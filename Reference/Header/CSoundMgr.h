@@ -7,7 +7,7 @@ class CSound;
 
 namespace Engine
 {
-	class CSoundMgr :
+	class ENGINE_DLL CSoundMgr :
 		public CBase
 	{
 		DECLARE_SINGLETON(CSoundMgr)

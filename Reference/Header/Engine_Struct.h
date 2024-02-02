@@ -54,8 +54,18 @@ namespace Engine
 		_float fHP;
 		_float fMxHP;
 		_float fSpeed;
-
+		_float fATK;
 		_bool bDead;
 	}OBJSTAT;
+
+	struct tEvent
+	{
+		eEVENT_TYPE		eEven;
+		DWORD_PTR		lParam;
+		DWORD_PTR		wParam;
+		DWORD_PTR		pParam;
+	};
+
+
 }
 #endif // Engine_Struct_h__

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "CObjectGrass.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -80,19 +81,23 @@ HRESULT CObjectGrass::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass_idle"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
+<<<<<<< HEAD
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass_idle", pComponent });
 
 	pComponent = m_pTextureCom[RES_DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass_dead"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass_dead", pComponent });
+=======
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
+>>>>>>> 8a923e83ae43d5dfaa506da26a4f67fbf042a8d9
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	m_pTransForm->Set_Scale(_vec3(1.f, 1.5f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);

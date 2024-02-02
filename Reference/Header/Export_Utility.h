@@ -4,6 +4,7 @@
 #include "ProtoMgr.h"
 #include "Renderer.h"
 #include "LightMgr.h"
+#include "CEventMgr.h"
 
 #include "TriCol.h"
 #include "RcCol.h"
@@ -15,7 +16,6 @@
 #include "CustomTex.h"
 
 #include "Texture.h"
-
 #include "Transform.h"
 #include "Camera.h"
 #include "Calculator.h"
@@ -28,7 +28,7 @@ namespace Engine {
 		inline HRESULT			Create_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev, CSceneMgr** ppManagementInstance);
 
 		inline HRESULT			Change_CurScene(CScene* pScene);
-		inline CScene*			Get_CurScene();
+		inline CScene* Get_CurScene();
 
 		inline _int				Update_Scene(const _float& fTimeDelta);
 		inline void				LateUpdate_Scene();
@@ -40,7 +40,7 @@ namespace Engine {
 	{
 
 		inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
-		inline CComponent*		Clone_Proto(const _tchar* pProtoTag);
+		inline CComponent* Clone_Proto(const _tchar* pProtoTag);
 	}
 
 	// Renderer
@@ -63,7 +63,13 @@ namespace Engine {
 		inline _int Get_Day();
 	}
 
+	namespace eventmgr
+	{
+		inline HRESULT	EventUpdate();
+		inline HRESULT Create_EvnetMgr(LPDIRECT3DDEVICE9 pGraphicDev, CEventMgr** ppManagementInstance);
+		inline void AddEvent(const tEvent& _eve);
 
+	}
 
 	// Release
 	inline void				Release_Utility();

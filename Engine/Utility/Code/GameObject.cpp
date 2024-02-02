@@ -6,7 +6,7 @@
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev )
 	: m_pGraphicDev(pGraphicDev)
-	, m_mapComponent{}
+	, m_MultiMap{}
 	, m_fViewZ(1.f)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
@@ -17,13 +17,13 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev )
 
 Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	: m_pGraphicDev(pGraphicDev)
-	, m_mapComponent{}
+	, m_MultiMap{}
 	, m_fViewZ(1.f)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_strObjName(_strName)
 {
-
+	m_pGraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
@@ -32,7 +32,7 @@ CGameObject::CGameObject(const CGameObject& rhs)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 {
-	m_mapComponent[ID_DYNAMIC] = rhs.m_mapComponent[ID_DYNAMIC];
+	m_MultiMap[ID_DYNAMIC] = rhs.m_MultiMap[ID_DYNAMIC];
 
 	m_pGraphicDev->AddRef();
 }
@@ -49,7 +49,7 @@ HRESULT CGameObject::Ready_GameObject()
 
 _int CGameObject::Update_GameObject(const _float& fTimeDelta)
 {
-	for (auto& iter : m_mapComponent[ID_DYNAMIC])
+	for (auto& iter : m_MultiMap[ID_DYNAMIC])
 		iter.second->Update_Component(fTimeDelta);
 
 	return 0;
@@ -57,29 +57,16 @@ _int CGameObject::Update_GameObject(const _float& fTimeDelta)
 
 void CGameObject::LateUpdate_GameObject()
 {
-	for (auto& iter : m_mapComponent[ID_DYNAMIC])
+	for (auto& iter : m_MultiMap[ID_DYNAMIC])
 		iter.second->LateUpdate_Component();
 }
 
-void CGameObject::Render_GameObject()
-{
-}
-void CGameObject::Free()
-{
-	for (size_t i = 0; i < ID_END; ++i)
-	{
-		for_each(m_mapComponent[i].begin(), m_mapComponent[i].end(), CDeleteMap());
-		m_mapComponent[i].clear();
-	}
-
-	Safe_Release(m_pGraphicDev);
-}
 
 CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponentTag)
 {
-	auto	iter = find_if(m_mapComponent[eID].begin(), m_mapComponent[eID].end(), CTag_Finder(pComponentTag));
+	auto	iter = find_if(m_MultiMap[eID].begin(), m_MultiMap[eID].end(), CTag_Finder(pComponentTag));
 
-	if (iter == m_mapComponent[eID].end())
+	if (iter == m_MultiMap[eID].end())
 		return nullptr;
 
 	return iter->second;
@@ -116,3 +103,14 @@ void Engine::CGameObject::Compute_ViewZ(const _vec3* pPos)
 	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
 }
 
+
+void CGameObject::Free()
+{
+	for (size_t i = 0; i < ID_END; ++i)
+	{
+		for_each(m_MultiMap[i].begin(), m_MultiMap[i].end(), CDeleteMap());
+		m_MultiMap[i].clear();
+	}
+
+	Safe_Release(m_pGraphicDev);
+}

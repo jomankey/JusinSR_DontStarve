@@ -18,10 +18,10 @@ HRESULT CPathMgr::Ready_Path()
 {
 	GetCurrentDirectory(255, m_strBasePath);
 
-	int iLen = wcslen(m_strBasePath);
+	size_t iLen = wcslen(m_strBasePath);
 
 	//상위 폴더로
-	for (int i = iLen - 1; 0 <= i; --i)
+	for (size_t i = iLen - 1; 0 <= i; --i)
 	{
 		if ('\\' == m_strBasePath[i])
 		{

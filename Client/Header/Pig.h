@@ -28,8 +28,7 @@ public:
 
 private:
 	HRESULT			Add_Component();
-	void			Height_OnTerrain();
-	void			BillBoard();
+
 	virtual void	Set_ObjStat()					override;
 	void			Player_Chase(const _float& fTimeDelta);
 	virtual void			State_Change()			override;

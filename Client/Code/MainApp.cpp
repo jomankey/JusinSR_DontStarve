@@ -1,7 +1,9 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "..\Header\MainApp.h"
+
 #include "Logo.h"
 #include "Stage.h"
+#include "CInventoryMgr.h"
 
 CMainApp::CMainApp() : m_pDeviceClass(nullptr)
 {
@@ -15,12 +17,13 @@ HRESULT CMainApp::Ready_MainApp()
 {
 	FAILED_CHECK_RETURN(SetUp_Setting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
 	//01:23
 	//test
 	return S_OK;
 }
 
-int CMainApp::Update_MainApp(const float & fTimeDelta)
+int CMainApp::Update_MainApp(const float& fTimeDelta)
 {
 
 	Engine::Update_InputDev();
@@ -41,12 +44,14 @@ void CMainApp::Render_MainApp()
 	m_pManagementClass->Render_Scene(m_pGraphicDev);
 
 	Engine::Render_End();
-	
+
+	m_pEventMgrClass->EventUpdate();
+
 }
 
-HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr ** ppManagement)
+HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr** ppManagement)
 {
-	Engine::CScene*		pScene = nullptr;
+	Engine::CScene* pScene = nullptr;
 
 	pScene = CLogo::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pScene, E_FAIL);
@@ -56,11 +61,20 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr *
 	(*ppManagement)->AddRef();
 
 	FAILED_CHECK_RETURN((*ppManagement)->Change_Scene(pScene), E_FAIL);
-	
+
 	return S_OK;
 }
 
-HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9 * ppGraphicDev)
+HRESULT CMainApp::Ready_Event(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CEventMgr** ppEventMgr)
+{
+	//매니지먼트 싱글톤의 주소 받아오기
+	FAILED_CHECK_RETURN(eventmgr::Create_EvnetMgr(pGraphicDev, ppEventMgr), E_FAIL);
+	(*ppEventMgr)->AddRef();
+
+	return S_OK;
+}
+
+HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 {
 	FAILED_CHECK_RETURN(Engine::Ready_GraphicDev(g_hWnd, MODE_WIN, WINCX, WINCY, &m_pDeviceClass), E_FAIL);
 	m_pDeviceClass->AddRef();
@@ -69,10 +83,10 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 	(*ppGraphicDev)->AddRef();
 
 	(*ppGraphicDev)->SetRenderState(D3DRS_LIGHTING, FALSE);
-	
+
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);		  // Z버퍼에 깊이 값을 기록은 하지만 자동 정렬을 수행할지 말지 결정
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정
-	
+
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕체", 30, 30, FW_HEAVY), E_FAIL);
 
 	// Dinput
@@ -80,16 +94,16 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9 * ppGraphicDev)
 
 	//PathMgr
 	FAILED_CHECK_RETURN(Engine::Ready_PathMgr(), E_FAIL);
-	
+
 	(*ppGraphicDev)->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 
 	return S_OK;
 }
 
-CMainApp * CMainApp::Create()
+CMainApp* CMainApp::Create()
 {
-	CMainApp *		pInstance = new CMainApp;
+	CMainApp* pInstance = new CMainApp;
 
 	if (FAILED(pInstance->Ready_MainApp()))
 	{
@@ -106,9 +120,8 @@ void CMainApp::Free()
 	Engine::Safe_Release(m_pDeviceClass);
 	Engine::Safe_Release(m_pManagementClass);
 	Engine::Safe_Release(m_pGraphicDev);
-	Engine::Release_Utility();
+	Engine::Safe_Release(m_pGraphicDev);
+	CInventoryMgr::DestroyInstance();
 	Engine::Release_System();
-
-	
-
+	Engine::Release_Utility();
 }

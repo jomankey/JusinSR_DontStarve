@@ -1,7 +1,8 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "Beefalo.h"
 //#include "Export_System.h"
 #include "Export_Utility.h"
+
 CBeefalo::CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos)
     , m_eCurState(WALK)
@@ -24,7 +25,7 @@ HRESULT CBeefalo::Ready_GameObject()
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
     Set_ObjStat();
-    
+    Look_Change();
     m_fFrameEnd = 10;
 
     return S_OK;
@@ -53,8 +54,11 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 
     CGameObject::Update_GameObject(fTimeDelta);
     State_Change();
-    if (m_eCurState != DEAD) Player_Chase(fTimeDelta); // DEAD일때 진입 불가능
-    
+    if (m_eCurState != DEAD)
+    {
+        Player_Chase(fTimeDelta);
+        Look_Change();// DEAD일때 진입 불가능
+    }
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     return 0;
 }
@@ -63,13 +67,8 @@ void CBeefalo::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
-	//_vec3	vPos;
     m_pTransForm->BillBoard();
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-
-   // __super::Compute_ViewZ(&vPos);
-    
-    /*Height_OnTerrain();*/
+	
 }
 
 void CBeefalo::Render_GameObject()
@@ -105,55 +104,58 @@ HRESULT CBeefalo::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+    pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_MultiMap[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
 #pragma region TEXCOM
 
     pComponent = m_pTextureCom[LOOK_DOWN][GRAZE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_graze"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_graze", pComponent });
-    pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
-    NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_graze", pComponent });
+   
 
     pComponent = m_pTextureCom[LOOK_DOWN][GRAZE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_graze"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_graze", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_graze", pComponent });
 
+    //Walk
     pComponent = m_pTextureCom[LOOK_DOWN][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_down"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_down", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_down", pComponent });
 
     pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_up"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_up", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_up", pComponent });
 
     pComponent = m_pTextureCom[LOOK_LEFT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
 
     pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
 #pragma endregion TEXCOM
 	
 
     pComponent = m_pTextureCom[LOOK_LEFT][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_dead"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
 
     pComponent = m_pTextureCom[LOOK_RIGHT][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_dead"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
+    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
     m_pTransForm->m_vScale = { 2.f, 2.f, 2.f };
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 	return S_OK;
 }
 
@@ -178,23 +180,16 @@ void CBeefalo::Set_ObjStat()
     m_Stat.bDead = false;
 }
 
-void CBeefalo::Player_Chase(const _float& fTimeDelta)
-{
-    _vec3 PlayerPos;
-    PlayerPos = Get_Player_Pos();
-
-    m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
-
-  //  m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
-  
-   // m_pTransForm->Get_Info(INFO_LOOK, &vDir);
-   // m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
-   // D3DXVec3Normalize(&vDir, &vDir);
-   // m_pTransForm->Move_Pos(&vDir, 1.f, fTimeDelta);
-
-    /*NULL_CHECK_RETURN(pPlayerTransformCom, 0);*/
-    Look_Change();
-}
+//void CBeefalo::Player_Chase(const _float& fTimeDelta)
+//{
+//    _vec3 PlayerPos;
+//    PlayerPos = Get_Player_Pos();
+//
+//    m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
+//
+// 
+//    Look_Change();
+//}
 
 void CBeefalo::State_Change()
 {

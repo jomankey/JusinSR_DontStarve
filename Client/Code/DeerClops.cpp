@@ -1,4 +1,4 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "DeerClops.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -89,11 +89,11 @@ HRESULT CDeerClops::Add_Component()
 	//d
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 	/*Deer_Idle_down*/
 	//texture com
 
@@ -102,93 +102,93 @@ HRESULT CDeerClops::Add_Component()
 	//IDLE
 	pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Idle_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Idle_down", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Idle_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Idle_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Idle_up", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Idle_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Idle_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Idle_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Idle_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Idle_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Idle_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Idle_side", pComponent });
 
 
 	//WALK
 	pComponent = m_pTextureCom[LOOK_DOWN][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_walk_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_walk_down", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_walk_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_walk_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_walk_up", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_walk_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_walk_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_walk_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_walk_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_walk_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_walk_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_walk_side", pComponent });
 
 	//ATTACK
 	pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Atk_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Atk_down", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Atk_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Atk_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Atk_up", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Atk_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Atk_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Atk_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Atk_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Atk_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_Atk_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_Atk_side", pComponent });
 
 	//HIT
 	pComponent = m_pTextureCom[LOOK_DOWN][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_hit_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_hit_down", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_hit_down", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_UP][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_hit_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_hit_up", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_hit_up", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_RIGHT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_hit_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_hit_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_hit_side", pComponent });
 
 	pComponent = m_pTextureCom[LOOK_LEFT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_hit_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_hit_side", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_hit_side", pComponent });
 
 	//Taunt
 	pComponent = m_pTextureCom[LOOK_DOWN][TAUNT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_taunt"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_taunt", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_taunt", pComponent });
 
 
 	//DEAD
 	pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_dead"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Deer_dead", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Deer_dead", pComponent });
 #pragma endregion TEXCOM
 	
 
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 	return S_OK;
 }
 

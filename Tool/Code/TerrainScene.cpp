@@ -16,7 +16,6 @@
 #include "Scene.h"
 #include "Layer.h"
 
-
 CTerrainScene::CTerrainScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev, L"SceneTool")
 {
@@ -508,7 +507,6 @@ _vec3 CTerrainScene::Picking_Terrain()
 
 	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
 }
-
 
 CTerrainScene* CTerrainScene::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

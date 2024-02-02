@@ -44,6 +44,7 @@ void CSceneMgr::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 	NULL_CHECK(m_pCurScene);
 	//debug¿ë
 	m_pCurScene->Render_Scene();
+	m_pCurScene->Update_Event();
 
 }
 

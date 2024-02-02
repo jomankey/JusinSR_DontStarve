@@ -1,4 +1,4 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "Pig.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -50,11 +50,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 void CPig::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
-	BillBoard();
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-
-	__super::Compute_ViewZ(&vPos);
+	m_pTransForm->BillBoard();
 }
 
 void CPig::Render_GameObject()
@@ -87,87 +83,56 @@ HRESULT CPig::Add_Component()
 	//d
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
 #pragma region TEXCOM
 	 pComponent = m_pTextureCom[LOOK_DOWN][HAPPY] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_happy"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_happy", pComponent });
+	 m_MultiMap[ID_STATIC].insert({ L"Proto_Pig_happy", pComponent });
 
 	 /*pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_up"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_up", pComponent });
+	 m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_up", pComponent });
 
 	 pComponent = m_pTextureCom[LOOK_LEFT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
+	 m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
 
 	 pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });*/
+	 m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });*/
 #pragma endregion TEXCOM
 	
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 	return S_OK;
 }
 
-void CPig::Height_OnTerrain()
-{
-	_vec3		vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
-	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
-	NULL_CHECK(pTerrainBufferCom);
-
-	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
-
-	m_pTransForm->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
-}
-
-void CPig::BillBoard()
-{
-	_matrix	matWorld, matView, matBill;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
-}
 
 void CPig::Set_ObjStat()
 {
 	m_Stat.fHP = 100.f;
 	m_Stat.fMxHP = 100.f;
 	m_Stat.fSpeed = 1.f;
+	m_Stat.fATK = 10.f;
+	m_Stat.bDead = false;
 }
 
 void CPig::Player_Chase(const _float& fTimeDelta)
 {
 	_vec3 PlayerPos;
 	PlayerPos = Get_Player_Pos();
-
 	m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
-
-
 	Look_Change();
 }
 

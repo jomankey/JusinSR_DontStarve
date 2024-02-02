@@ -19,6 +19,7 @@ namespace Engine
 		HRESULT					ReadyLayer();
 		_int					UpdateLayer(const _float& fTimeDelta);
 		void					LateUpdateLayer();
+		void					DeleteEvent();
 
 		virtual		void		Free();
 	private:

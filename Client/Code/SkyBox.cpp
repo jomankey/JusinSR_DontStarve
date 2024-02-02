@@ -1,4 +1,4 @@
-#include "..\Include\stdafx.h"
+#include "stdafx.h"
 #include "..\Header\SkyBox.h"
 
 #include "Export_Utility.h"
@@ -71,15 +71,15 @@ HRESULT CSkyBox::Add_Component()
 		
 	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(proto::Clone_Proto(L"Proto_CubeTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_CubeTex", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_CubeTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_SkyBoxTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_SkyBoxTexture", pComponent });
+	m_MultiMap[ID_STATIC].insert({ L"Proto_SkyBoxTexture", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 		
 	return S_OK;
 }

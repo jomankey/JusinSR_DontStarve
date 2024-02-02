@@ -10,7 +10,7 @@ namespace Engine
 
 class CGraphicDev;
 class CSceneMgr;
-
+class CEventMgr;
 }
 
 class CMainApp : public CBase
@@ -27,11 +27,14 @@ public:			//public 함수, 변수 -> protected 함수, 변수 -> private 함수, 변수
 
 private:
 	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr** ppManagement);
+	HRESULT		Ready_Event(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CEventMgr** ppEventMgr);
 	HRESULT		SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev);
 
 private:
 	Engine::CGraphicDev*		m_pDeviceClass;
 	Engine::CSceneMgr*		m_pManagementClass;
+	Engine::CEventMgr*		m_pEventMgrClass;
+
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 
 
