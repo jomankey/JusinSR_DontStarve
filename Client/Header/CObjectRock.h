@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Engine_Define.h"
+#include "ResObject.h"
 
 namespace Engine
 {
@@ -9,7 +10,7 @@ namespace Engine
 	class CTexture;
 }
 class CObjectRock :
-	public Engine::CGameObject
+	public CResObject
 {
 private:
 	explicit CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -23,14 +24,13 @@ public:
 	virtual void Render_GameObject()						 override;
 
 private:
-	HRESULT			Add_Component();
-
-private:
-	Engine::CRcTex* m_pBufferCom;
-	Engine::CTexture* m_pTextureCom;
+	HRESULT	Add_Component() override;
+	void Change_Frame_Event() override;
+	void Check_FrameState() override;
+	void Ready_Stat() override;
 
 public:
-	static CObjectRock* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CResObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();

@@ -25,7 +25,7 @@ public:
 
 private:
 	HRESULT	Add_Component() override;
-	void House_Change_Event();
+	void Change_Frame_Event() override;
 	void Check_FrameState() override;
 	void Ready_Stat() override;
 
@@ -37,5 +37,4 @@ public:
 
 private:
 	virtual void Free();
-
 };

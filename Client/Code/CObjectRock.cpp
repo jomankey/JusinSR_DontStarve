@@ -3,12 +3,12 @@
 #include "Component.h"
 
 CObjectRock::CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev)
+	: CResObject(pGraphicDev)
 {
 }
 
 CObjectRock::CObjectRock(const CObjectRock& rhs)
-	:CGameObject(rhs.m_pGraphicDev)
+	: CResObject(rhs.m_pGraphicDev)
 {
 }
 
@@ -19,6 +19,9 @@ CObjectRock::~CObjectRock()
 HRESULT CObjectRock::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	Ready_Stat();
+	m_eCurState = RES_IDLE;
+	m_fFrame = 0;
 
 	return S_OK;
 }
@@ -35,11 +38,12 @@ _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 
 void CObjectRock::LateUpdate_GameObject()
 {
-
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	Change_Frame_Event();
+
+	//_vec3	vPos;
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
+	//__super::Compute_ViewZ(&vPos);
 }
 
 void CObjectRock::Render_GameObject()
@@ -48,13 +52,12 @@ void CObjectRock::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom[m_eCurState]->Set_Texture(m_fFrame);
 
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-
 }
 
 HRESULT CObjectRock::Add_Component()
@@ -66,7 +69,7 @@ HRESULT CObjectRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Nomal_Rock"));
+	pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Nomal_Rock"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Nomal_Rock", pComponent });
 
@@ -74,15 +77,39 @@ HRESULT CObjectRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.8f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
+
 	return S_OK;
 }
 
-CObjectRock* CObjectRock::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+void CObjectRock::Change_Frame_Event()
 {
-	CObjectRock* pInstance = new CObjectRock(pGraphicDev);
+	if (m_Stat.fHP <= 3.f && m_Stat.fHP != 0)
+	{
+		m_fFrame = 1;
+	}
+	if (m_Stat.fHP <= 0)
+		m_fFrame = 2;
+}
+
+void CObjectRock::Check_FrameState()
+{
+	
+}
+
+void CObjectRock::Ready_Stat()
+{
+	m_Stat.fHP = 6;
+	m_Stat.fMxHP = 6;
+	m_Stat.fSpeed = 1;
+	m_Stat.bDead = false;
+}
+
+CResObject* CObjectRock::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CResObject* pInstance = new CObjectRock(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -98,3 +125,4 @@ void CObjectRock::Free()
 {
 	CGameObject::Free();
 }
+

@@ -49,7 +49,6 @@ _int CPigHouse::Update_GameObject(const _float& fTimeDelta)
 
 
 	m_pTransForm->BillBoard();
-	if (m_eCurState != RES_IDLE && m_eCurState != RES_DEAD) Check_FrameState();
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
@@ -59,7 +58,7 @@ void CPigHouse::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
-	House_Change_Event(); // 피격 혹은 특정 이벤트 발생시 집의 형태 변환
+	Change_Frame_Event(); // 피격 혹은 특정 이벤트 발생시 집의 형태 변환
 	Check_FrameState();
 
 	//_vec3	vPos;
@@ -117,7 +116,7 @@ HRESULT CPigHouse::Add_Component()
 	return S_OK;
 }
 
-void CPigHouse::House_Change_Event()// 피격 혹은 특정 이벤트 발생시 집의 형태 변환
+void CPigHouse::Change_Frame_Event()
 {
 	//if () // 충돌 혹은 피격 혹은 아침저녁 바뀔때 메소드
 	//{
@@ -146,6 +145,7 @@ void CPigHouse::House_Change_Event()// 피격 혹은 특정 이벤트 발생시 집의 형태 변
 	if (m_Stat.fHP <= 0) // 체력이 0일때
 		m_eCurState = RES_DEAD;
 }
+
 
 void CPigHouse::Check_FrameState()
 {
@@ -198,3 +198,4 @@ void CPigHouse::Free()
 {
 	CGameObject::Free();
 }
+

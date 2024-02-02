@@ -4,17 +4,11 @@
 
 CObjectGrass::CObjectGrass(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CResObject(pGraphicDev)
-	, m_pBufferCom(nullptr)
-	, m_eCurState(RESOBJECT_END)
-	, m_ePreState(RESOBJECT_END)
 {
 }
 
 CObjectGrass::CObjectGrass(const CObjectGrass& rhs)
 	:CResObject(rhs.m_pGraphicDev)
-	, m_pBufferCom(nullptr)
-	, m_eCurState(rhs.m_eCurState)
-	, m_ePreState(rhs.m_ePreState)
 {
 }
 
@@ -41,14 +35,13 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 	if (m_fFrameEnd < m_fFrame)
 	{
 		if (m_eCurState == RES_DEAD)
-			return 0;
+			return 0x80000000;
 
 		m_fFrame = 0.f;
 	}
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	m_pTransForm->BillBoard();
-	Check_FrameState();
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -58,6 +51,8 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 void CObjectGrass::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+	Change_Frame_Event();
+	Check_FrameState();
 
 	//_vec3	vPos;
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -99,9 +94,9 @@ HRESULT CObjectGrass::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.5f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
 
 	return S_OK;
 }
@@ -117,19 +112,26 @@ void CObjectGrass::Check_FrameState()
 		m_fFrameEnd = 40;
 
 	m_ePreState = m_eCurState;
+	m_fFrame = 0;
+}
+
+void CObjectGrass::Change_Frame_Event()
+{
+	if (m_Stat.fHP <= 0)
+		m_eCurState = RES_DEAD;
 }
 
 void CObjectGrass::Ready_Stat()
 {
-	m_Stat.fHP = 10;
-	m_Stat.fMxHP = 10;
+	m_Stat.fHP = 1;
+	m_Stat.fMxHP = 1;
 	m_Stat.fSpeed = 1.f;
 	m_Stat.bDead = false;
 }
 
-CObjectGrass* CObjectGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CResObject* CObjectGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CObjectGrass* pInstance = new CObjectGrass(pGraphicDev);
+	CResObject* pInstance = new CObjectGrass(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

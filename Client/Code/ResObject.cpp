@@ -6,7 +6,8 @@ CResObject::CResObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_ePreState(RES_DEAD),
 	m_bHit(false),
 	m_fFrame(0),
-	m_fFrameEnd(0)
+	m_fFrameEnd(0),
+	m_ePlayerLook(LOOK_END)
 {
 }
 
@@ -15,8 +16,9 @@ CResObject::CResObject(const CResObject& rhs)
 	m_eCurState(rhs.m_eCurState),
 	m_ePreState(rhs.m_ePreState),
 	m_bHit(false),
-	m_fFrame(m_fFrame),
-	m_fFrameEnd(0)
+	m_fFrame(rhs.m_fFrame),
+	m_fFrameEnd(rhs.m_fFrameEnd),
+	m_ePlayerLook(rhs.m_ePlayerLook)
 {
 }
 

@@ -484,6 +484,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 				m_pTest = dynamic_cast<CResObject*>(monster);
 				m_pTest->Set_Attack();
 				m_pTest->Set_Attack_State(true);
+				m_pTest->Set_Player_Look(m_ePlayerLookAt);
 				//dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
 				m_bAttack = true;
 				break;
