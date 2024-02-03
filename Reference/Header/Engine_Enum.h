@@ -100,5 +100,12 @@ namespace Engine
 		NONE,
 	};
 
+	enum  eITEMTOOL_TYPE {
+		ITEM_TOOL,
+		ITEM_LIGHT,
+		ITEM_ALIVE,
+		ITEM_EQUIP,
+		ITEM_END
+	};
 }
 #endif // Engine_Enum_h__
