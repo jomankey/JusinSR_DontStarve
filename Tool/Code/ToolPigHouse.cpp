@@ -60,9 +60,9 @@ HRESULT CToolPigHouse::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Stone"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Pig_House"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Stone", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Pig_House", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -91,4 +91,5 @@ CToolPigHouse* CToolPigHouse::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CToolPigHouse::Free()
 {
+	__super::Free();
 }

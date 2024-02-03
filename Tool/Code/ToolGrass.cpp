@@ -28,12 +28,8 @@ _int CToolGrass::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	m_pTransForm->BillBoard();
-	_vec3 vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	vPos.y = 1.4f;
-	m_pTransForm->Set_Info(INFO_POS, &vPos);
-	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
+	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 

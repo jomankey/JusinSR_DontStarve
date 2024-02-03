@@ -15,6 +15,8 @@
 
 #include "Scene.h"
 #include "Layer.h"
+#include <ToolPigHouse.h>
+#include <ToolBerry.h>
 
 CTerrainScene::CTerrainScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev, L"SceneTool")
@@ -53,8 +55,8 @@ HRESULT CTerrainScene::Ready_Scene()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/idle/tree_idle__000.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Stone", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/Nomal_Rock/Nomal_Rock_%d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Grass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Glass/IDLE/IDLE__000.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Pig_House", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/Resource/pig_house/idle/idle__000.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Berry", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/idle/tree_idle__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Pig_House", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/pig_house/idle/idle__0.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Berry", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/berrybush/most/most_idle__000.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
@@ -318,6 +320,7 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->SetObjName(L"Tree");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 2.5f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Rock", pName))
@@ -326,6 +329,7 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->SetObjName(L"Rock");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Grass", pName))
@@ -334,6 +338,25 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->SetObjName(L"Grass");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
+		pGameObject->GetTransForm()->Set_Pos(vPos);
+	}
+	else if (!_tcscmp(L"PigHouse", pName))
+	{
+		pGameObject = CToolPigHouse::Create(m_pGraphicDev);
+		pGameObject->SetObjName(L"PigHouse");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
+		pGameObject->GetTransForm()->Set_Pos(vPos);
+	}
+	else if (!_tcscmp(L"Berry", pName))
+	{
+		pGameObject = CToolBerry::Create(m_pGraphicDev);
+		pGameObject->SetObjName(L"Berry");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Twigs", pName))
@@ -342,6 +365,7 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->SetObjName(L"Twigs");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Rocks_0", pName))
@@ -350,6 +374,7 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->SetObjName(L"Rocks_0");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"Firestone", pName))
@@ -358,6 +383,7 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->SetObjName(L"Firestone");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 	else if (!_tcscmp(L"CutGlass", pName))
@@ -366,6 +392,7 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->SetObjName(L"CutGlass");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
 
@@ -449,10 +476,6 @@ HRESULT CTerrainScene::Input_Mouse()
 		{
 			_vec3	vPickPos = Picking_Terrain();
 
-			Engine::CLayer* pLayer = m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC];
-			NULL_CHECK_RETURN(pLayer, E_FAIL);
-			Engine::CGameObject* pGameObject = nullptr;
-
 			switch (CToolMgr::iItemCurrentEtcIdx)
 			{
 			case 0:
@@ -465,35 +488,41 @@ HRESULT CTerrainScene::Input_Mouse()
 				Create_Object(L"Grass", vPickPos);
 				break;
 			case 3:
+				Create_Object(L"PigHouse", vPickPos);
+				break;
+			case 4:
+				Create_Object(L"Berry", vPickPos);
 				break;
 			default:
 				break;
 			}
+			CToolMgr::bObjectAdd = false;
 		}
-		CToolMgr::bObjectAdd = false;
+
+		if (CToolMgr::bItemAdd)
+		{
+			_vec3	vPickPos = Picking_Terrain();
+			switch (CToolMgr::iItemCurrentItemIdx)
+			{
+			case 0:
+				Create_Object(L"Twigs", vPickPos); break;
+			case 1:
+				Create_Object(L"Rocks_0", vPickPos); break;
+			case 2:
+				Create_Object(L"Firestone", vPickPos); break;
+			case 3:
+				Create_Object(L"CutGlass", vPickPos); break;
+			default:
+				break;
+			}
+			CToolMgr::bItemAdd = false;
+		}
 	}
 	//"Stick",
 	//	"Stone",
 	//	"Firestone", //ºÎ½Ëµ¹
 	//	"Grass_Cut",
-	if (CToolMgr::bItemAdd)
-	{
-		_vec3	vPickPos = Picking_Terrain();
-		switch (CToolMgr::iItemCurrentItemIdx)
-		{
-		case 0:
-			Create_Object(L"Twigs", vPickPos); break;
-		case 1:
-			Create_Object(L"Rocks_0", vPickPos); break;
-		case 2:
-			Create_Object(L"Firestone", vPickPos); break;
-		case 3:
-			Create_Object(L"CutGlass", vPickPos); break;
-		default:
-			break;
-		}
-		CToolMgr::bItemAdd = false;
-	}
+	
 	return S_OK;
 }
 
