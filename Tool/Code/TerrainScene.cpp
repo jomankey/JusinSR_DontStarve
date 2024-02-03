@@ -12,6 +12,7 @@
 #include "ToolGrass.h"
 #include <ToolSkyBox.h>
 #include <ToolItem.h>
+#include "ToolMonster.h"
 
 #include "Scene.h"
 #include "Layer.h"
@@ -57,6 +58,11 @@ HRESULT CTerrainScene::Ready_Scene()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Grass", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Glass/IDLE/IDLE__000.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Pig_House", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/pig_house/idle/idle__0.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Berry", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/berrybush/most/most_idle__000.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Beefalo", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/beefalo/beefalo_graze/befalo_graze__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Spider", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/spider/move/walk_down/walk_down__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Pig", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/pig/idle_happy/happy__000.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/berrybush/most/most_idle__000.png")), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
@@ -350,10 +356,10 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 		vPos.y = 1.f;
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 	}
-	else if (!_tcscmp(L"Berry", pName))
+	else if (!_tcscmp(L"BerryBush", pName))
 	{
 		pGameObject = CToolBerry::Create(m_pGraphicDev);
-		pGameObject->SetObjName(L"Berry");
+		pGameObject->SetObjName(L"BerryBush");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 		vPos.y = 1.f;
@@ -390,6 +396,15 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	{
 		pGameObject = CToolItem::Create(m_pGraphicDev, L"CutGlass",vPos);
 		pGameObject->SetObjName(L"CutGlass");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.f;
+		pGameObject->GetTransForm()->Set_Pos(vPos);
+	}
+	else if (!_tcscmp(L"Beefalo", pName) || !_tcscmp(L"Spider", pName) || !_tcscmp(L"Pig", pName) || !_tcscmp(L"Boss", pName))
+	{
+		pGameObject = CToolMonster::Create(m_pGraphicDev, pName);
+		pGameObject->SetObjName(pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 		vPos.y = 1.f;
@@ -472,7 +487,29 @@ HRESULT CTerrainScene::Input_Mouse()
 	//test
 	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
 	{
-		if (CToolMgr::bObjectAdd)
+		if (CToolMgr::bMonsterAdd)
+		{
+			_vec3	vPickPos = Picking_Terrain();
+			switch (CToolMgr::iItemCurrentMonsterIdx)
+			{
+			case 0:
+				Create_Object(L"Spider", vPickPos);
+				break;
+			case 1:
+				Create_Object(L"Pig", vPickPos);
+				break;
+			case 2:
+				Create_Object(L"Beefalo", vPickPos);
+				break;
+			case 3:
+				//Create_Object(L"Boss", vPickPos);
+				break;
+			default:
+				break;
+			}
+			CToolMgr::bMonsterAdd = false;
+		}
+		else if (CToolMgr::bObjectAdd)
 		{
 			_vec3	vPickPos = Picking_Terrain();
 
@@ -491,7 +528,7 @@ HRESULT CTerrainScene::Input_Mouse()
 				Create_Object(L"PigHouse", vPickPos);
 				break;
 			case 4:
-				Create_Object(L"Berry", vPickPos);
+				Create_Object(L"BerryBush", vPickPos);
 				break;
 			default:
 				break;
@@ -499,7 +536,7 @@ HRESULT CTerrainScene::Input_Mouse()
 			CToolMgr::bObjectAdd = false;
 		}
 
-		if (CToolMgr::bItemAdd)
+		else if (CToolMgr::bItemAdd)
 		{
 			_vec3	vPickPos = Picking_Terrain();
 			switch (CToolMgr::iItemCurrentItemIdx)

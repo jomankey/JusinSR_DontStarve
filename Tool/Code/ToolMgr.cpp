@@ -193,7 +193,7 @@ void CToolMgr::Window_Object()
 
         if (ImGui::BeginListBox("Monster List"))
         {
-            const char* Items[] = { "Spider", "Pig", "Buffalo", "Boss"};
+            const char* Items[] = { "Spider", "Pig", "Beefalo", "Boss"};
 
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
             {
@@ -210,6 +210,7 @@ void CToolMgr::Window_Object()
             }
             ImGui::EndListBox();
         }
+        if (ImGui::SmallButton("MonsterAdd")) bMonsterAdd = true;
     }
     if (ImGui::CollapsingHeader("Etc", ImGuiTreeNodeFlags_None))
     {

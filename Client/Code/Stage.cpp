@@ -16,6 +16,7 @@
 #include "CInven.h"
 #include "CPigHouse.h"
 #include "Pig.h"
+#include "BerryBush.h"
 
 #include "Transform.h"
 //Scene
@@ -268,10 +269,6 @@ HRESULT CStage::Ready_Layer_UI()
 		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 	}
 
-
-
-
-
 	//장비 슬롯
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -354,56 +351,8 @@ HRESULT CStage::Load_Data()
 		ReadFile(hFile, &vPos, sizeof(_vec3), &dwByte, nullptr);
 		dwStrByte = 0;
 
-		NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
-		Engine::CGameObject* pGameObject = nullptr;
+		Create_Object(pName, vPos);
 
-		if (!_tcscmp(L"Tree", pName))
-		{
-			pGameObject = CObjectTree::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"Rock", pName))
-		{
-			pGameObject = CObjectRock::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"Grass", pName))
-		{
-			pGameObject = CObjectGrass::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"CutGlass", pName))
-		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"Rocks_0", pName))
-		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"Rocks_1", pName))
-		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-		}
-		else if (!_tcscmp(L"Twigs", pName))
-		{
-			pGameObject = CItem::Create(m_pGraphicDev, pName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-		}
-
-		if (nullptr != pGameObject)
-			pGameObject->GetTransForm()->Set_Pos(vPos);
-
-		vPos.y = 1.5f;
 		delete[] pName;
 	}
 
@@ -437,6 +386,89 @@ HRESULT CStage::Load_Data()
 	MessageBox(g_hWnd, L"Terrain Load", L"성공", MB_OK);
 
 	return S_OK;
+}
+
+HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos)
+{
+	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
+	Engine::CGameObject* pGameObject = nullptr;
+
+	if (!_tcscmp(L"Tree", pName))
+	{
+		pGameObject = CObjectTree::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+		vPos.y = 2.3f;
+	}
+	else if (!_tcscmp(L"Rock", pName))
+	{
+		pGameObject = CObjectRock::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Grass", pName))
+	{
+		pGameObject = CObjectGrass::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"PigHouse", pName))
+	{
+		pGameObject = CPigHouse::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"BerryBush", pName))
+	{
+		pGameObject = CBerryBush::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"CutGlass", pName))
+	{
+		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Rocks_0", pName))
+	{
+		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Rocks_1", pName))
+	{
+		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Twigs", pName))
+	{
+		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Beefalo", pName))
+	{
+		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Spider", pName))
+	{
+		pGameObject = CSpider::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+	}
+	else if (!_tcscmp(L"Pig", pName))
+	{
+		pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+	}
+
+	if (nullptr != pGameObject)
+		pGameObject->GetTransForm()->Set_Pos(vPos);
 }
 
 HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
