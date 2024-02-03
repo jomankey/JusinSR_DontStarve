@@ -296,6 +296,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_ePlayerLookAt = LOOK_UP;
 	}
 
+	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
+	{
+		//Find_NeerObject: 못찾았을경우 nullptr반환
+		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
+		if (nullptr != findObj)
+			DeleteObject(findObj);
+	}
+
 	if (GetAsyncKeyState('Z'))
 	{
 		//Find_NeerObject: 못찾았을경우 nullptr반환
