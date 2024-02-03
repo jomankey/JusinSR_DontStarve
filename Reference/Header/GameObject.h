@@ -21,7 +21,7 @@ namespace Engine
 		void	SetObjName(wstring _objName) { m_strObjName = _objName; }
 
 		void SetDeleteObj() { m_bDelete = true; }
-		_bool IsDelete() { return m_bDelete; }//True일경우 삭제예정인 오브젝트
+		_bool IsDelete() { return m_bDelete; }
 
 	public:
 		virtual HRESULT		Ready_GameObject();

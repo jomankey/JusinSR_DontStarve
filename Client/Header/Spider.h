@@ -29,8 +29,6 @@ public:
 
 private:
 	HRESULT			Add_Component();
-	void			Height_OnTerrain();
-	//void			Player_Chase(const _float& fTimeDelta); //플레이어 추격용 테스트 함수
 	virtual void			State_Change();
 	virtual void			Set_ObjStat()					override;
 	void					Set_Scale();
@@ -45,8 +43,6 @@ private:
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][SPIDERSTATE::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
 
-	_float				m_fFrame = 0.f;
-	_float				m_fFrameEnd;
 
 	SPIDERSTATE m_eCurstate;
 	SPIDERSTATE m_ePrestate;

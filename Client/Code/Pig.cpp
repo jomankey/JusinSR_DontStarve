@@ -33,10 +33,21 @@ HRESULT CPig::Ready_GameObject()
 
 _int CPig::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fFrame += m_fFrameEnd * fTimeDelta;
+	if(!m_bFrameStop)
+		m_fFrame += m_fFrameEnd * fTimeDelta;
 
-	if (m_fFrameEnd < m_fFrame)
-		m_fFrame = 0.f;
+	Die_Check();
+	if (!m_Stat.bDead)      //죽은 상태가 아닐때 진입
+	{
+		if (m_Attacked)     //공격받았을때 진입
+		{
+			Attacking(fTimeDelta);
+		}
+		else                 //공격 받지 않은 상태
+		{
+			Patroll(fTimeDelta);
+		}
+	}
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
@@ -62,7 +73,6 @@ void CPig::Render_GameObject()
 	/* Set_Scale();*/
 
 	m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
-
 
 	if (m_Dirchange)
 	{
@@ -138,21 +148,78 @@ void CPig::Player_Chase(const _float& fTimeDelta)
 
 void CPig::State_Change()
 {
+	enum PiGSTATE { IDLE, HAPPY, WALK, EAT, ANGRY_IDLE, RUN, ATTACK, SLEEP, DEAD, STATE_END };
 	if (m_ePreState != m_eCurState)
 	{
 		switch (m_eCurState)
 		{
+		case IDLE:
+			break;
+		case HAPPY:
+			m_fFrameEnd = 17;
+			m_eCurLook = LOOK_DOWN;
+			break;
 		case WALK:
 			m_fFrameEnd = 20;
 			break;
+		case EAT:
+			m_eCurLook = LOOK_DOWN;
+			break;
+		case ANGRY_IDLE:
+			break;
+		case RUN:
+			break;
+		case ATTACK:
+			break;
+		case SLEEP:
+			break;
+	
 
-		case HAPPY:
-			m_fFrameEnd = 17;
+
+		case DEAD:
+			m_eCurLook = LOOK_DOWN;
+			break;
 		}
 
 		m_ePreState = m_eCurState;
 
 	}
+}
+
+void CPig::Die_Check()
+{
+	if (m_Stat.fHP <= 0 && m_ePreState != DEAD)
+	{
+		m_eCurState = DEAD;
+		m_Stat.bDead = true;
+		m_fFrame = 0.f;
+	}
+	else if (m_ePreState == DEAD)
+	{
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_fFrame = m_fFrameEnd;
+			m_bFrameStop;
+		}
+	}
+	else
+		return;
+}
+
+void CPig::Attacking(const _float& fTimeDelta)
+{
+
+
+	if (m_fFrameEnd < m_fFrame)
+		m_fFrame = 0.f;
+}
+
+void CPig::Patroll(const _float& fTimeDelta)
+{
+	if (m_fFrameEnd < m_fFrame)
+		m_fFrame = 0.f;
+
+
 }
 
 CPig* CPig::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)

@@ -113,9 +113,21 @@ HRESULT CLoading::Loading_Player_Texture()
 HRESULT CLoading::Loading_Beefalo_Texture()
 {
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_graze", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_graze/befalo_graze__%03d.png", 10)), E_FAIL);
+
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_idle/beefalo_idle__%03d.png", 16)), E_FAIL);
+
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_walk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_run/walk_down/down__%03d.png", 20)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_run/walk_up/up__%03d.png", 20)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_walk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_run/walk_side/side__%03d.png", 20)), E_FAIL);
+
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_run_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_run/run_down/run_down__%03d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_run_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_run/run_up/run_up__%03d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_run_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_run/run_side/run_side__%03d.png", 4)), E_FAIL);
+
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_atk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_atk_down/atk_down__%03d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_atk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_atk_side/atk_side__%03d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_atk_up/atk_up__%03d.png", 7)), E_FAIL);
+
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_dead/dead__%03d.png", 12)), E_FAIL);
 	return 0;
 }
@@ -142,6 +154,15 @@ HRESULT CLoading::Loading_Pig_Texture()
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_happy", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/idle_happy/happy__%03d.png", 17)), E_FAIL);
 
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_angry", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/idle_angry/angry__%03d.png", 17)), E_FAIL);
+
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_idle_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/idle_down/idle_down__%03d.png", 7)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_idle_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/idle_up/idle_up__%03d.png", 7)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_idle_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/idle_side/idle_side__%03d.png", 7)), E_FAIL);
+
+	/*FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_walk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/walk/down/idle_down__%03d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/pig/move/walk/up/idle_up__%03d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_walk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/walk/side/idle_side__%03d.png", 7)), E_FAIL);*/
 	return 0;
 }
 

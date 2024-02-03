@@ -34,7 +34,10 @@ HRESULT CSpider::Ready_GameObject()
 
 _int CSpider::Update_GameObject(const _float& fTimeDelta)
 {
-    m_fFrame += m_fFrameEnd * fTimeDelta;
+    if (!m_bFrameStop)
+    {
+        m_fFrame += m_fFrameEnd * fTimeDelta;
+    }
     Die_Check();        //죽었는지 검사
     if (!m_Stat.bDead)      //죽지 않았을시 진입
     {
@@ -156,27 +159,7 @@ HRESULT CSpider::Add_Component()
     return S_OK;
 }
 
-void CSpider::Height_OnTerrain()
-{
-    _vec3		vPos;
-    auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
 
-    m_pTransForm->Get_Info(INFO_POS, &vPos);
-
-    Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
-    NULL_CHECK(pTerrainBufferCom);
-
-    _float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
-
-    m_pTransForm->Set_Pos(vPos.x, fHeight + 1.f, vPos.z);
-}
-
-//void CSpider::Player_Chase(const _float& fTimeDelta)
-//{
-//    _vec3 PlayerPos;
-//    PlayerPos = Get_Player_Pos();
-//    m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
-//}
 
 void CSpider::State_Change()
 {
@@ -227,9 +210,10 @@ void CSpider::Attacking(const _float& fTimeDelta)
     if (!m_bModeChange)
     {
         m_bModeChange = true;
+        m_Stat.fSpeed = 5.5f;
     }
     m_fAcctime += fTimeDelta;
-    m_Stat.fSpeed = 5.5f;
+    
 
     if (IsTarget_Approach(1) && m_eCurstate != ATTACK)
     {
@@ -262,12 +246,11 @@ void CSpider::Patroll(const _float& fTimeDelta)
     if (m_bModeChange)
     {
         m_bModeChange = false;
+        m_Stat.fSpeed = 1.5f;
     }
     m_fAcctime +=  fTimeDelta;
     m_eCurstate = WALK;
-    m_Stat.fSpeed = 1.5f;
-
- 
+    
     if (m_fFrameChange < m_fAcctime)
     {
         m_fAcctime = 0.f;
@@ -286,7 +269,7 @@ void CSpider::Patroll(const _float& fTimeDelta)
     }
     else
     {
-        m_pTransForm->Move_Pos(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+        m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
     }
     if (m_fFrameEnd < m_fFrame)
         m_fFrame = 0.f;
@@ -308,7 +291,10 @@ void CSpider::Die_Check()
     else if (m_ePrestate == DEAD)
     {
         if (m_fFrameEnd < m_fFrame)
+        {
             m_fFrame = m_fFrameEnd;
+            m_bFrameStop = true;
+        }
     }
     else
         return;
