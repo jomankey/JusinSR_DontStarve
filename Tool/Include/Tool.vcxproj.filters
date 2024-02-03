@@ -135,6 +135,9 @@
     <ClInclude Include="..\Header\ToolPigHouse.h">
       <Filter>02. Object\Etc\PigHouse</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ToolBerry.h">
+      <Filter>02. Object\Etc\Berry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -193,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolPigHouse.cpp">
       <Filter>02. Object\Etc\PigHouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolBerry.cpp">
+      <Filter>02. Object\Etc\Berry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

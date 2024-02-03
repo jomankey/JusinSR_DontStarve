@@ -1,12 +1,11 @@
 #pragma once
 #include "Export_Utility.h"
-
-class CToolPigHouse :
+class CToolBerry :
     public CGameObject
 {
 private:
-    explicit CToolPigHouse(LPDIRECT3DDEVICE9 pGrahpicDev);
-    virtual ~CToolPigHouse();
+    explicit CToolBerry(LPDIRECT3DDEVICE9 pGraphicDev);
+    virtual ~CToolBerry();
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;
@@ -22,10 +21,9 @@ private:
 	Engine::CTexture* m_pTextureCom;
 
 public:
-	static CToolPigHouse* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CToolBerry* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();
-
 };
 

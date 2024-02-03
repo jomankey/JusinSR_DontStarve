@@ -1,22 +1,21 @@
-#include "ToolPigHouse.h"
+#include "ToolBerry.h"
 
-CToolPigHouse::CToolPigHouse(LPDIRECT3DDEVICE9 pGrahpicDev)
-	: CGameObject(pGrahpicDev)
+CToolBerry::CToolBerry(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CGameObject(pGraphicDev)
 {
 }
 
-CToolPigHouse::~CToolPigHouse()
+CToolBerry::~CToolBerry()
 {
 }
 
-HRESULT CToolPigHouse::Ready_GameObject()
+HRESULT CToolBerry::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
 	return S_OK;
 }
 
-_int CToolPigHouse::Update_GameObject(const _float& fTimeDelta)
+_int CToolBerry::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
 
@@ -27,12 +26,12 @@ _int CToolPigHouse::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-void CToolPigHouse::LateUpdate_GameObject()
+void CToolBerry::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CToolPigHouse::Render_GameObject()
+void CToolBerry::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 
@@ -51,7 +50,7 @@ void CToolPigHouse::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CToolPigHouse::Add_Component()
+HRESULT CToolBerry::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 	_vec3 vPos;
@@ -60,9 +59,9 @@ HRESULT CToolPigHouse::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Pig_House"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Berry"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Pig_House", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Berry", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -75,21 +74,21 @@ HRESULT CToolPigHouse::Add_Component()
 	return S_OK;
 }
 
-CToolPigHouse* CToolPigHouse::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CToolBerry* CToolBerry::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CToolPigHouse* pInstance = new CToolPigHouse(pGraphicDev);
+	CToolBerry* pInstnace = new CToolBerry(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstnace->Ready_GameObject()))
 	{
-		Safe_Release(pInstance);
+		Safe_Release(pInstnace);
 
 		return nullptr;
 	}
 
-	return pInstance;
+	return pInstnace;
 }
 
-void CToolPigHouse::Free()
+void CToolBerry::Free()
 {
 	__super::Free();
 }
