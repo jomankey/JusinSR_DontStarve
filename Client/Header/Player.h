@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include "GameObject.h"
+#include "ResObject.h"
 
 namespace Engine
 {
@@ -61,6 +62,7 @@ private:
 	_bool				m_Dirchange;
 	_bool				m_bAttack;
 	OBJSTAT				m_Stat;
+
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev);

@@ -59,6 +59,8 @@ namespace Engine {
 		inline HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev, const D3DLIGHT9* pLightInfo, const _uint& iIndex);
 		inline CLight* Get_Light(_int _iIndex);
 		inline _int Change_Light(const _float& fTimeDelta, _int _iIndex);
+		inline TIME_STATE Get_TimeIndex();
+		inline _int Get_Day();
 	}
 
 	namespace eventmgr

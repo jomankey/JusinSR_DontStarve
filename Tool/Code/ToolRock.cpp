@@ -76,7 +76,7 @@ HRESULT CToolRock::Add_Component()
 
 	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
 	return S_OK;
 }
 

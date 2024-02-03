@@ -37,17 +37,18 @@ HRESULT CToolItem::Ready_GameObject()
 _int CToolItem::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
-	MousePicking();
+
 	m_pTransForm->BillBoard();
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-	return _int();
+
+	return 0;
 }
 
 void CToolItem::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	//_vec3	vPos;
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 	//__super::Compute_ViewZ(&vPos);
 
 }
@@ -110,9 +111,9 @@ HRESULT CToolItem::Add_Component()
 
 void CToolItem::SetPos(const _vec3& _vPos)
 {
-	_vec3 vPos = _vPos;
-	vPos.y = .3f;
-	m_pTransForm->Set_Pos(vPos);
+	//_vec3 vPos = _vPos;
+	//vPos.y = .3f;
+	//m_pTransForm->Set_Pos(vPos);
 	m_pTransForm->Set_Scale(_vec3(0.5f, .3f, .5f));
 }
 
