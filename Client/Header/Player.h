@@ -4,25 +4,25 @@
 #include "GameObject.h"
 #include "ResObject.h"
 
-namespace Engine 
+namespace Engine
 {
 
-class CRcTex;
-class CRvRcTex;
-class CTexture;
-class CTransform;
-class CCalculator;
-class CPlayerStatus;
+	class CRcTex;
+	class CRvRcTex;
+	class CTexture;
+	class CTransform;
+	class CCalculator;
+	class CPlayerStatus;
 
 }
 
 
 
-class CPlayer :	public Engine::CGameObject
+class CPlayer : public Engine::CGameObject
 {
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName);
+	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName);
 	explicit CPlayer(const CPlayer& rhs);
 	virtual ~CPlayer();
 
@@ -36,40 +36,36 @@ private:
 	HRESULT			Add_Component();
 	void			Key_Input(const _float& fTimeDelta);
 	HRESULT			SetUp_Material();
-
 	void			Height_OnTerrain();
 	_vec3			Picking_OnTerrain();
 	void			Check_State();
 	void			Set_Scale();
 	void			Set_Stat();
 
+	CGameObject* Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget);
+
 	void BillBoard();
 
 private:
-	Engine::CRcTex*		m_pBufferCom;
-	Engine::CRvRcTex*	m_pReverseCom;
-	Engine::CTexture*	m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
-	Engine::CCalculator*	m_pCalculatorCom;
+	Engine::CRcTex* m_pBufferCom;
+	Engine::CRvRcTex* m_pReverseCom;
+	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
+	Engine::CCalculator* m_pCalculatorCom;
 
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
 
-	PLAYERSTATE m_eCurState;
-	PLAYERSTATE m_ePreState;
+	PLAYERSTATE			m_eCurState;
+	PLAYERSTATE			m_ePreState;
 
-	LOOKDIR  m_ePlayerLookAt;
-	_bool		m_Dirchange;
-	_bool m_bAttack;
-<<<<<<< HEAD
+	LOOKDIR				m_ePlayerLookAt;
+	_bool				m_Dirchange;
+	_bool				m_bAttack;
+	OBJSTAT				m_Stat;
 
-	CResObject* m_pTest; // 지형지물 상호작용 테스트용
-	
-=======
-	OBJSTAT  m_Stat;
->>>>>>> 8a923e83ae43d5dfaa506da26a4f67fbf042a8d9
 public:
-	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev,wstring _strName);
-	static CPlayer*		Create(LPDIRECT3DDEVICE9	pGraphicDev);
+	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
+	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev);
 
 private:
 	virtual void Free() override;

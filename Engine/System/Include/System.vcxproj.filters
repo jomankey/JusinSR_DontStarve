@@ -40,9 +40,6 @@
     <Filter Include="07. SoundMgr">
       <UniqueIdentifier>{c70fb68f-ac03-44c9-bb49-60567f832ed6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="08. EventMgr">
-      <UniqueIdentifier>{37202ffa-0bb4-4fe6-8415-772847da5ef2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\GraphicDev.cpp">

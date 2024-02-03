@@ -47,24 +47,22 @@ _int CPigHouse::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	CGameObject::Update_GameObject(fTimeDelta);
-
-
 	m_pTransForm->BillBoard();
-
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 
 void CPigHouse::LateUpdate_GameObject()
 {
+
 	__super::LateUpdate_GameObject();
 
 	Change_Frame_Event(); // 피격 혹은 특정 이벤트 발생시 집의 형태 변환
 	Check_FrameState();
+	_vec3	vPos;
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 
-	//_vec3	vPos;
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	//__super::Compute_ViewZ(&vPos);
 }
 
 void CPigHouse::Render_GameObject()
@@ -88,11 +86,11 @@ HRESULT CPigHouse::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_PigHouse_IDLE"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_PigHouse_IDLE", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_PigHouse_IDLE", pComponent });
 
 	pComponent = m_pTextureCom[RES_HIT_1] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_PigHouse_hit_std"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -109,13 +107,15 @@ HRESULT CPigHouse::Add_Component()
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-<<<<<<< HEAD
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
-=======
-	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+	//m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
->>>>>>> 8a923e83ae43d5dfaa506da26a4f67fbf042a8d9
+
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
+
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
 

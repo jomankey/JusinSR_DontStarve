@@ -21,7 +21,7 @@ namespace Engine
 		void	SetObjName(wstring _objName) { m_strObjName = _objName; }
 
 		void SetDeleteObj() { m_bDelete = true; }
-		_bool IsDelete() { return m_bDelete; }//True일경우 삭제예정인 오브젝트
+		_bool IsDelete() { return m_bDelete; }
 
 	public:
 		virtual HRESULT		Ready_GameObject();
@@ -40,7 +40,7 @@ namespace Engine
 	protected:
 		LPDIRECT3DDEVICE9							m_pGraphicDev;
 
-		multimap<const _tchar*, CComponent*>		m_MultiMap[ID_END];
+		multimap<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 		CTransform* m_pTransForm;
 
 		_float										m_fViewZ;	//z버퍼 소팅

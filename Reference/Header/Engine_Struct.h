@@ -55,6 +55,8 @@ namespace Engine
 		_float fMxHP;
 		_float fSpeed;
 		_float fATK;
+		_float fAggroRange;
+		_float fATKRange;
 		_bool bDead;
 	}OBJSTAT;
 

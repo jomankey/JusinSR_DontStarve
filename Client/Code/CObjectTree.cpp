@@ -50,9 +50,6 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	CGameObject::Update_GameObject(fTimeDelta);
-
-	m_pTransForm->BillBoard();
-
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
 	return 0;
@@ -64,9 +61,11 @@ void CObjectTree::LateUpdate_GameObject()
 
 	Change_Frame_Event();
 	Check_FrameState();
-	//_vec3	vPos;
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	//__super::Compute_ViewZ(&vPos);
+	_vec3	vPos;
+	m_pTransForm->BillBoard();
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
+
 }
 
 void CObjectTree::Render_GameObject()
@@ -90,11 +89,10 @@ HRESULT CObjectTree::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree_Idle"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-<<<<<<< HEAD
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree_Idle", pComponent });
 
 	pComponent = m_pTextureCom[RES_HIT_1] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree_Hit"));
@@ -112,13 +110,10 @@ HRESULT CObjectTree::Add_Component()
 	pComponent = m_pTextureCom[RES_FINAL] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree_Final"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree_Final", pComponent });
-=======
-	m_MultiMap[ID_STATIC].insert({ L"Proto_Obejct_Tree", pComponent });
->>>>>>> 8a923e83ae43d5dfaa506da26a4f67fbf042a8d9
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);

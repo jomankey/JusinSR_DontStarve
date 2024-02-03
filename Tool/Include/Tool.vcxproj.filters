@@ -58,6 +58,12 @@
     <Filter Include="02. Object\Item">
       <UniqueIdentifier>{dc895043-ec1d-4daf-b243-267d41b7956b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Object\Etc\PigHouse">
+      <UniqueIdentifier>{7ca0e969-4e73-48ca-952e-2971f704ac19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Etc\Berry">
+      <UniqueIdentifier>{6e6fc987-14b0-4376-8d8a-1881af79eb6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -126,6 +132,9 @@
     <ClInclude Include="..\Header\ToolItem.h">
       <Filter>02. Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ToolPigHouse.h">
+      <Filter>02. Object\Etc\PigHouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -181,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolItem.cpp">
       <Filter>02. Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolPigHouse.cpp">
+      <Filter>02. Object\Etc\PigHouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
