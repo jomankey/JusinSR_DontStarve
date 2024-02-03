@@ -53,6 +53,8 @@ namespace Engine
 	};
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };
 
+	enum TIME_STATE { MORNING, AFTERNOON, NIGHT };
+
 	enum class eCHANNELID
 	{
 		SOUND_EFFECT,

@@ -17,23 +17,21 @@
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
-	, m_bAttack(false)
+	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
-CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
-	: Engine::CGameObject(pGraphicDev, _strName)
-	, m_bAttack(false)
+CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
+	: Engine::CGameObject(pGraphicDev,_strName), m_bAttack(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
+
 CPlayer::CPlayer(const CPlayer& rhs)
 	: Engine::CGameObject(rhs)
 	, m_bAttack(rhs.m_bAttack)
 	, m_Stat(rhs.m_Stat)
 {
-
 }
 
 CPlayer::~CPlayer()
@@ -62,6 +60,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_eCurState == ATTACK)
 			m_bAttack = false;
+			
 		m_fFrame = 0.f;
 	}
 
@@ -393,21 +392,22 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			vMonsterScale = pItemTransform->Get_Scale();
 
 			if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
-				vPlayerAxis,
+				vPlayerAxis, 
 				vMonsterPos,
-				vMonsterAxis,
-				vPlayerScale,
+				vMonsterAxis, 
+				vPlayerScale, 
 				vMonsterScale))
 			{
 				// 몬스터와 공격 충돌 시
 				// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
 
 				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
-				dynamic_cast<CMonster*>(monster)->Set_Attack(m_Stat.fATK);
+				dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
 				m_bAttack = true;
 				break;
 			}
 		}
+
 		delete[] vMonsterAxis;
 		delete[] vPlayerAxis;
 	}

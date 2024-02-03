@@ -4,16 +4,12 @@
 #include "Export_Utility.h"
 
 CObjectGrass::CObjectGrass(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev)
-	, m_pBufferCom(nullptr)
-	, m_pTextureCom(nullptr)
+	:CResObject(pGraphicDev)
 {
 }
 
 CObjectGrass::CObjectGrass(const CObjectGrass& rhs)
-	:CGameObject(rhs.m_pGraphicDev)
-	, m_pBufferCom(nullptr)
-	, m_pTextureCom(nullptr)
+	:CResObject(rhs.m_pGraphicDev)
 {
 }
 
@@ -25,11 +21,26 @@ HRESULT CObjectGrass::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	Ready_Stat();
+
+	m_eCurState = RES_IDLE;
+	m_fFrame = 0;
+	m_fFrameEnd = 175;
 	return S_OK;
 }
 
 _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 {
+	m_fFrame += m_fFrameEnd * fTimeDelta;
+
+	if (m_fFrameEnd < m_fFrame)
+	{
+		if (m_eCurState == RES_DEAD)
+			return 0x80000000;
+
+		m_fFrame = 0.f;
+	}
+
 	CGameObject::Update_GameObject(fTimeDelta);
 	m_pTransForm->BillBoard();
 
@@ -40,6 +51,13 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 
 void CObjectGrass::LateUpdate_GameObject()
 {
+	__super::LateUpdate_GameObject();
+	Change_Frame_Event();
+	Check_FrameState();
+
+	//_vec3	vPos;
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
+	//__super::Compute_ViewZ(&vPos);
 	CGameObject::LateUpdate_GameObject();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -52,7 +70,7 @@ void CObjectGrass::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom[m_eCurState]->Set_Texture((_uint)m_fFrame);
 
 	m_pBufferCom->Render_Buffer();
 
@@ -69,24 +87,58 @@ HRESULT CObjectGrass::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass"));
+	pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass_idle"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass_idle", pComponent });
+
+	pComponent = m_pTextureCom[RES_DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass_dead"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass_dead", pComponent });
+	//m_MultiMap[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.5f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
 
 	return S_OK;
 }
 
-CObjectGrass* CObjectGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+void CObjectGrass::Check_FrameState()
 {
-	CObjectGrass* pInstance = new CObjectGrass(pGraphicDev);
+	if (m_ePreState == m_eCurState)
+		return;
+
+	if (m_eCurState == RES_IDLE)
+		m_fFrameEnd = 175;
+	if (m_eCurState == RES_DEAD)
+		m_fFrameEnd = 40;
+
+	m_ePreState = m_eCurState;
+	m_fFrame = 0;
+}
+
+void CObjectGrass::Change_Frame_Event()
+{
+	if (m_Stat.fHP <= 0)
+		m_eCurState = RES_DEAD;
+}
+
+void CObjectGrass::Ready_Stat()
+{
+	m_Stat.fHP = 1;
+	m_Stat.fMxHP = 1;
+	m_Stat.fSpeed = 1.f;
+	m_Stat.bDead = false;
+}
+
+CResObject* CObjectGrass::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CResObject* pInstance = new CObjectGrass(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

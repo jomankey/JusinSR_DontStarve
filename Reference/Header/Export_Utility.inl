@@ -83,12 +83,22 @@ _int light::Change_Light(const _float& fTimeDelta, _int _iIndex)
 {
 	return CLightMgr::GetInstance()->Change_Light(fTimeDelta, _iIndex);
 }
+TIME_STATE light::Get_TimeIndex()
+{
+	return CLightMgr::GetInstance()->Get_TimeIndex();
+}
+
+_int light::Get_Day()
+{
+	return CLightMgr::GetInstance()->Get_Day();
+}
 
 //eventmgr
 HRESULT	eventmgr::EventUpdate()
 {
 	return CEventMgr::GetInstance()->EventUpdate();
 }
+
 HRESULT eventmgr::Create_EvnetMgr(LPDIRECT3DDEVICE9 pGraphicDev, CEventMgr** ppManagementInstance)
 {
 	CEventMgr* pManagement = CEventMgr::GetInstance();
@@ -98,6 +108,7 @@ HRESULT eventmgr::Create_EvnetMgr(LPDIRECT3DDEVICE9 pGraphicDev, CEventMgr** ppM
 
 	return S_OK;
 }
+
 void eventmgr::AddEvent(const tEvent& _eve)
 {
 	CEventMgr::GetInstance()->AddEvent(_eve);
