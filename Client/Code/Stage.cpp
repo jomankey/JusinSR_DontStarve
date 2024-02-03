@@ -29,11 +29,18 @@
 // Item/Object
 #include "CItem.h"
 #include "CItemFood.h"
-#include "CUI.h"
-#include "CInvenBox.h"
 #include "CInventoryMgr.h"
 #include <BerryBush.h>
 
+
+//UI
+#include "CUI.h"
+#include"CInvenBox.h"
+#include"CEquiment.h"
+#include"CSlideUI.h"
+#include"CAliveUI.h"
+#include"CHpUI.h"
+#include"CMentalUI.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -145,21 +152,18 @@ HRESULT CStage::Ready_Layer_GameLogic()
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 	}
-	//for (_int i = 0; i < 5; ++i)
-	//{
-	//	pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	//}
+	for (_int i = 0; i < 5; ++i)
+	{
+		pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	}
 	//for (_int i = 0; i < 10; ++i)
 	//{
-	//	pGameObject = CObjectGrass::Create(m_pGraphicDev);
+	//	pGameObject = CObjectGrass::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_GRASS", pGameObject), E_FAIL);
 	//}
-	pGameObject = CObjectGrass::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 
 	/*for (_int i = 0; i < 10; ++i)
 	{
@@ -173,31 +177,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
 	//}
-	/*for (_int i = 0; i < 10; ++i)
-=======
-	for (_int i = 0; i < 10; ++i)
->>>>>>> 698df3f223e48fd452939c636f54f115096c7836
-	{
-		pGameObject = CObjectTree::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-<<<<<<< HEAD
-	}*/
-	//pGameObject = CObjectTree::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CPigHouse::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}*/
-	//for (_int i = 0; i < 2; ++i)
-	//{
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	//for (_int i = 0; i < 10; ++i)
@@ -212,8 +191,23 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	//}
-		//pGameObject->GetTransForm()->Set_Pos(_vec3(i, 1.5f, 2*i));
-	
+	//for (_int i = 0; i < 2; ++i)
+	//{
+	//	pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+
+
+	//	pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+
+	//	pGameObject = CItem::Create(m_pGraphicDev, L"CutGlass", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
 	for (_int i = 0; i < 10; ++i)
 	{
@@ -222,10 +216,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	}
 
-	pGameObject = CItem::Create(m_pGraphicDev, L"Log");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	CInventoryMgr::GetInstance()->AddItem((CItem*)pGameObject);
 
 
 
@@ -241,11 +231,13 @@ HRESULT CStage::Ready_Layer_UI()
 	NULL_CHECK_RETURN(uiLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
+	//Before UI struct 
+	//-------------------------------------------
 	//왼쪽 판넬
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(30.f, 300.f, 0.f), _vec3(30.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
+	
 	//아래 판넬
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(400.f, 580.f, 0.f), _vec3(20.f, 300.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -256,6 +248,20 @@ HRESULT CStage::Ready_Layer_UI()
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
+
+	//인벤토리 슬롯 이미지
+	for (int i = 0; i < 15; i++)
+	{
+		int PixelJump = 0;
+		if (i == 5 || i == 10 || i == 15)
+			PixelJump = 7;
+	
+		pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+	}
+
+	//인벤토리에 들어갈 아이템 이미지
 	for (int i = 0; i < 15; i++)
 	{
 		int PixelJump = 0;
@@ -267,14 +273,33 @@ HRESULT CStage::Ready_Layer_UI()
 		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 	}
 
-
-
-
-
-	//장비 슬롯
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
+	//HpUI
+	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(600.f, 40.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//Mental
+	pGameObject = CMentalUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 40.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Mental");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+
+
+
+
+
+
+
+
+
+
+	//After UI struct 
+	//-------------------------------------------
+
+	//장비 슬롯
+	//pGameObject = CEquiment::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//옷 슬롯
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 120.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
@@ -282,7 +307,13 @@ HRESULT CStage::Ready_Layer_UI()
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//생존 슬롯
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
+	//pGameObject = CAliveUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+
+	//마우스 피킹시 사이드 판넬
+	pGameObject = CSlideUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Left_Panel_Default");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
@@ -527,6 +558,6 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 
 void CStage::Free()
 {
-
+	CInventoryMgr::GetInstance()->Release();
 	__super::Free();
 }

@@ -15,6 +15,7 @@ CInventoryMgr::CInventoryMgr()
 
 CInventoryMgr::~CInventoryMgr()
 {
+
 }
 
 
@@ -68,4 +69,10 @@ CItem* CInventoryMgr::GetItemBox(_uint _uint)
 
 void CInventoryMgr::Free()
 {
+	for (auto iter : m_pItemArr)
+	{
+		
+	}
+	//m_pItemArr[0].
+	//__super::Free();
 }

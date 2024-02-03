@@ -14,7 +14,7 @@ protected:
 
 public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-
+	virtual void Render_GameObject()						 override;
 
 
 	virtual BOOL IsItemOn() { return m_bItemChek; }
@@ -22,11 +22,12 @@ public:
 
 public:
 	static CInvenBox* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, _uint _Index, float _Angle = 0.f);
-
-public:
+	virtual HRESULT			Add_Component() override;
 	virtual void Free() override;
 public:
 	_uint	m_iInvenIndex;
 
+
+	_uint m_ItmeCount;
 };
 
