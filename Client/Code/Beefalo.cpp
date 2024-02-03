@@ -110,11 +110,11 @@ HRESULT CBeefalo::Add_Component()
     //IDLE
     pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_idle"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_idle", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_idle", pComponent });
 
     pComponent = m_pTextureCom[LOOK_LEFT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_idle"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_idle", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_idle", pComponent });
 
     //Walk
     pComponent = m_pTextureCom[LOOK_DOWN][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_down"));
@@ -131,41 +131,41 @@ HRESULT CBeefalo::Add_Component()
 
     pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
 
     //RUN
     pComponent = m_pTextureCom[LOOK_DOWN][MADRUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_run_down"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_run_down", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_run_down", pComponent });
 
     pComponent = m_pTextureCom[LOOK_UP][MADRUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_run_up"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_run_up", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_run_up", pComponent });
 
     pComponent = m_pTextureCom[LOOK_LEFT][MADRUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_run_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_run_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_run_side", pComponent });
 
     pComponent = m_pTextureCom[LOOK_RIGHT][MADRUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_run_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_run_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_run_side", pComponent });
     
     //ATTACK
     pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_atk_down"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_atk_down", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_atk_down", pComponent });
 
     pComponent = m_pTextureCom[LOOK_UP][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_atk_up"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_atk_up", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_atk_up", pComponent });
 
     pComponent = m_pTextureCom[LOOK_LEFT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_atk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_atk_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_atk_side", pComponent });
 
     pComponent = m_pTextureCom[LOOK_RIGHT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_atk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_atk_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_atk_side", pComponent });
 
     //DEAD
     pComponent = m_pTextureCom[LOOK_LEFT][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_dead"));
@@ -174,7 +174,7 @@ HRESULT CBeefalo::Add_Component()
 
     pComponent = m_pTextureCom[LOOK_RIGHT][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_dead"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
 #pragma endregion TEXCOM
 	
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));

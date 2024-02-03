@@ -906,3 +906,5 @@
 [Proto_HeightTerrainTexture][0][../Bin/Resource/Texture/Terrain/Terrain0.png][1]
 =======
 >>>>>>> 698df3f223e48fd452939c636f54f115096c7836
+[Proto_TerrainTexture][0][../Bin/Resource/Texture/Terrain/Terrain.png][1]
+[Proto_HeightTerrainTexture][0][../Bin/Resource/Texture/Terrain/Terrain0.png][1]
