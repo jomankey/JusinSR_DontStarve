@@ -11,6 +11,8 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_ePreLook(LOOK_END)
 	, m_fAcctime(0.f)
 	, m_vDir(0.f, 0.f, 0.f)
+	, m_Attacked(false)
+	, m_bFrameStop(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
@@ -24,6 +26,8 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_ePreLook(rhs.m_ePreLook)
 	, m_fAcctime(rhs.m_fAcctime)
 	, m_vDir(0.f, 0.f, 0.f)
+	, m_Attacked(rhs.m_Attacked)
+	, m_bFrameStop(rhs.m_bFrameStop)
 
 {
 }
@@ -32,29 +36,18 @@ CMonster::~CMonster()
 {
 }
 
-HRESULT CMonster::Ready_GameObject()
+void CMonster::Set_Attack(_float _fAttack)
 {
-	return S_OK;
-}
-
-_int CMonster::Update_GameObject(const _float& fTimeDelta)
-{
-	return 0;
-}
-
-void CMonster::LateUpdate_GameObject()
-{
-}
-
-void CMonster::Render_GameObject()
-{
-
-}
-
-HRESULT CMonster::Add_Component()
-{
-
-	return S_OK;
+	if (!m_Stat.bDead)
+	{
+		m_Stat.fHP -= _fAttack;
+		if (!m_Attacked)
+		{
+			m_Attacked = true;
+		}
+	}
+	else
+		return;
 }
 
 void CMonster::Free()
@@ -108,14 +101,8 @@ _vec3 CMonster::Get_Player_Pos()
 	Engine::CTransform* pPlayerTransformCom = pPlayer->GetTransForm();
 	NULL_CHECK_RETURN(pPlayerTransformCom, _vec3());
 
-
-
 	_vec3 PlayerPos;
 	pPlayerTransformCom->Get_Info(INFO_POS, &PlayerPos);
-
-
-
-
 
 	return PlayerPos;
 }
