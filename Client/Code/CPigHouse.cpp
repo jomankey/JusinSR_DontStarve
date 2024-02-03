@@ -110,9 +110,6 @@ HRESULT CPigHouse::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 
-	//m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
-
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 

@@ -100,6 +100,9 @@
     <Filter Include="03. Manager\Event">
       <UniqueIdentifier>{a777b96b-dd5b-41a1-bd20-f91b4a2a02d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\05. BerryBush">
+      <UniqueIdentifier>{2a7c00b5-04b6-44e4-8357-cdcaa70fc47e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -192,6 +195,12 @@
     <ClInclude Include="FuncEvent.h">
       <Filter>03. Manager\Event</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BerryBush.h">
+      <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ResObject.h">
+      <Filter>02. GameObject\08. ResObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -274,6 +283,12 @@
     </ClCompile>
     <ClCompile Include="FuncEvent.cpp">
       <Filter>03. Manager\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BerryBush.cpp">
+      <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ResObject.cpp">
+      <Filter>02. GameObject\08. ResObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

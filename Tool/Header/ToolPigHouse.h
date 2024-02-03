@@ -5,7 +5,7 @@ class CToolPigHouse :
     public CGameObject
 {
 private:
-    explicit CToolPigHouse();
+    explicit CToolPigHouse(LPDIRECT3DDEVICE9 pGrahpicDev);
     virtual ~CToolPigHouse();
 
 public:
@@ -14,9 +14,18 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 
-public:
-	static CToolPigHouse* Create();
+private:
+	HRESULT			Add_Component();
 
+private:
+	Engine::CRcTex* m_pBufferCom;
+	Engine::CTexture* m_pTextureCom;
+
+public:
+	static CToolPigHouse* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+
+private:
+	virtual void Free();
 
 };
 
