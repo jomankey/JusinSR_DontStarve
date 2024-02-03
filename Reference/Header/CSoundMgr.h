@@ -13,7 +13,7 @@ namespace Engine
 		DECLARE_SINGLETON(CSoundMgr)
 
 	private:
-		CSoundMgr();
+		explicit CSoundMgr();
 		virtual ~CSoundMgr();
 	public:
 		void Initialize();

@@ -106,28 +106,21 @@ HRESULT CItem::Add_Component()
 	//VIBUFFER
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	//TEXTURE
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(GetObjName().c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
+	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 
 	//TransForm
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	return S_OK;
 }
-//
-//void CItem::SetPos(const _vec3& _vPos)
-//{
-//	_vec3 vPos= _vPos;
-//	vPos.y = .2f;
-//	m_pTransForm->Set_Pos(vPos);
-//	m_pTransForm->Set_Scale(_vec3(0.4f, .15f, .4f));
-//}
+
 
 void CItem::Free()
 {

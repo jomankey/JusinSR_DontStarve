@@ -57,6 +57,8 @@ void		Render_Font(const _tchar* pFontTag,
 	CFontMgr::GetInstance()->Render_Font(pFontTag, pString, pPos, Color);
 }
 
+//InputDev
+
 _byte	Get_DIKeyState(_ubyte byKeyID)
 {
 	return CInputDev::GetInstance()->Get_DIKeyState(byKeyID);
@@ -77,6 +79,11 @@ void		Update_InputDev(void)
 {
 	CInputDev::GetInstance()->Update_InputDev();
 }
+eKEY_STATE GetKeyState(_ubyte byKeyID)
+{
+	return CInputDev::GetInstance()->GetKeyState(byKeyID);
+}
+
 // PathMgr
 
 inline HRESULT Ready_PathMgr()

@@ -12,6 +12,11 @@ Engine::CInputDev::~CInputDev(void)
 	Free();
 }
 
+eKEY_STATE Engine::CInputDev::GetKeyState(_ubyte byKeyID)
+{
+	return m_vecKey[byKeyID].eState;
+}
+
 HRESULT Engine::CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 {
 
@@ -48,6 +53,13 @@ HRESULT Engine::CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 	m_pMouse->Acquire();
 
 
+	m_vecKey.reserve(DIK_END);
+
+	for (int i = 0; i < 256; ++i)
+	{
+		m_vecKey.push_back(tKeyInfo{ eKEY_STATE::NONE,false });
+	}
+
 	return S_OK;
 }
 
@@ -55,6 +67,39 @@ void Engine::CInputDev::Update_InputDev(void)
 {
 	m_pKeyBoard->GetDeviceState(256, m_byKeyState);
 	m_pMouse->GetDeviceState(sizeof(m_tMouseState), &m_tMouseState);
+
+	for (size_t i = 0; i < 256; i++)
+	{
+		if (m_byKeyState[i] & 0x80)
+		{
+			if (m_vecKey[i].bPrevPush)
+			{
+				//이전에도 눌려있었으면
+				m_vecKey[i].eState = eKEY_STATE::HOLD;
+			}
+			else
+			{
+				m_vecKey[i].eState = eKEY_STATE::TAP;
+			}
+			//현재프레임 눌려있었으니 true
+			m_vecKey[i].bPrevPush = true;
+		}
+		else// 키가 안눌려있었을때
+		{
+			if (m_vecKey[i].bPrevPush)
+			{
+				// 이전에 눌려있었다.
+				m_vecKey[i].eState = eKEY_STATE::AWAY;
+			}
+			else
+			{
+				m_vecKey[i].eState = eKEY_STATE::NONE;
+
+			}
+			m_vecKey[i].bPrevPush = false;
+		}
+
+	}
 }
 
 void Engine::CInputDev::Free(void)

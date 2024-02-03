@@ -61,13 +61,17 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
 
 void CSpider::LateUpdate_GameObject()
 {
-    __super::LateUpdate_GameObject();
+    CGameObject::LateUpdate_GameObject();
     m_pTransForm->BillBoard();
+    _vec3	vPos;
+    m_pTransForm->Get_Info(INFO_POS, &vPos);
+    CGameObject::Compute_ViewZ(&vPos);
+
 }
 
 void CSpider::Render_GameObject()
 {
-    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+ /*   m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
     
@@ -85,6 +89,27 @@ void CSpider::Render_GameObject()
 
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+*/
+    //Test
+    //m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+    m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    m_pTextureCom[m_ePreLook][m_ePrestate]->Set_Texture((_uint)m_fFrame);
+
+    if (m_Dirchange)
+    {
+        m_pReverseCom->Render_Buffer();
+    }
+    else if (!m_Dirchange)
+    {
+        m_pBufferCom->Render_Buffer();
+    }
+
+    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+    m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    //m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CSpider::Add_Component()
@@ -93,11 +118,11 @@ HRESULT CSpider::Add_Component()
 
     pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
     pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
     //Texturecom
 #pragma region TEXCOM
@@ -105,41 +130,41 @@ HRESULT CSpider::Add_Component()
     //WALK
     pComponent = m_pTextureCom[LOOK_DOWN][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_walk_down"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_walk_down", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_walk_down", pComponent });
 
     pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_walk_up"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_walk_up", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_walk_up", pComponent });
 
     pComponent = m_pTextureCom[LOOK_LEFT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_walk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_walk_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_walk_side", pComponent });
 
     pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_walk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_walk_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_walk_side", pComponent });
 
     //ATTACK
     pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_atk_down"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_atk_down", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_atk_down", pComponent });
 
     pComponent = m_pTextureCom[LOOK_UP][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_atk_up"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_atk_up", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_atk_up", pComponent });
 
     pComponent = m_pTextureCom[LOOK_LEFT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_atk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_atk_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_atk_side", pComponent });
 
     pComponent = m_pTextureCom[LOOK_RIGHT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_atk_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_atk_side", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_atk_side", pComponent });
 
     //DEAD
     pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_dead"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Spider_dead", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_dead", pComponent });
 
 #pragma endregion TEXCOM
     
@@ -147,12 +172,12 @@ HRESULT CSpider::Add_Component()
 
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+    m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
     m_pTransForm->Set_Scale({ 0.7f, 0.5f, 0.7f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_MultiMap[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
     return S_OK;
 }
 

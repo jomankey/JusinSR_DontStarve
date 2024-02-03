@@ -63,19 +63,19 @@ HRESULT CToolTerrain::Add_Component()
 
 	pComponent = m_pBufferCom = dynamic_cast<CTerrainTex*>(proto::Clone_Proto(L"Proto_TerrainTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Tile1"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_Tile1", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Tile1", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 	return S_OK;
 }

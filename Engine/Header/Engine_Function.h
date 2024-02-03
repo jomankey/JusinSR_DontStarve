@@ -111,24 +111,7 @@ namespace Engine
 				Pair.second = NULL;
 		}
 	};
-	// 연관컨테이너 삭제용
-	class CDeleteMultiMap
-	{
-	public:
-		explicit CDeleteMultiMap(void) {}
-		~CDeleteMultiMap(void) {}
-	public: // operator	
-		template <typename T>
-		void operator () (T& Pair)
-		{
-			_ulong dwRefCnt = 0;
-			
-			dwRefCnt = Pair.second->Release();
-
-			if (0 == dwRefCnt)
-				Pair.second = NULL;
-		}
-	};
+	
 }
 
 #endif // Engine_Function_h__
