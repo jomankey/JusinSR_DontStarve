@@ -7,12 +7,25 @@
 
 #include "Scene.h"
 
+#include"CToolUI.h"
+#include"CAliveUI.h"
+
+CUI* CUI::m_pToolUI = nullptr;
+CUI* CUI::m_pAliveUI = nullptr;
+CUI* CUI::m_pEquimentUI = nullptr;
+
+
 CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev, _UiName)
 	, m_eUIState(_State)
 	, m_bItemChek(false)
 	, m_pTextureCom(nullptr)
 	, m_pBufferCom(nullptr)
+	, m_fX(0)
+	, m_fY(0)
+	, m_fSizeX(0)
+	, m_fSizeY(0)
+
 
 {
 
@@ -22,6 +35,8 @@ CUI::CUI(const CUI& rhs)
 	: Engine::CGameObject(rhs),
 	m_eUIState(rhs.m_eUIState)
 	, m_bItemChek(rhs.m_bItemChek)
+	, m_pTextureCom(rhs.m_pTextureCom)
+	, m_pBufferCom(rhs.m_pBufferCom)
 
 {
 
@@ -43,6 +58,7 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
 
 	m_pTransForm->Set_Pos(_pos);
 	m_pTransForm->Set_Scale(_size);
+
 	return S_OK;
 }
 
@@ -51,8 +67,8 @@ Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 	m_pTransForm->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
 	m_pTransForm->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
-
 	renderer::Add_RenderGroup(RENDER_UI, this);
+
 	return 0;
 }
 
@@ -160,11 +176,29 @@ CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _ve
 		return nullptr;
 	}
 
+	if (m_pToolUI == nullptr)
+	{
+		m_pToolUI = CToolUI::Create(pGraphicDev, _State, _pos, _size, _UI_Name);
+	}
+	if (m_pAliveUI==nullptr)
+	{
+
+		m_pAliveUI = CAliveUI::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
+	}
+	if (m_pEquimentUI == nullptr)
+	{
+		m_pEquimentUI = CEquiment::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
+	}
+	
+
 	return pInstance;
 }
 
 void CUI::Free()
-{
+{	
+	m_pEquimentUI->Release();
+	m_pAliveUI->Release();
+	m_pToolUI->Release();
 	__super::Free();
 }
 

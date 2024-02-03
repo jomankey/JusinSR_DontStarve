@@ -45,5 +45,10 @@ CAliveUI* CAliveUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3
 }
 void CAliveUI::Free()
 {
+
+    //추후 오브젝트 생성, 삭제 기능으로 변경되면 해당 릴리즈 필요 없음
+    this->m_pBufferCom->Release();
+    this->m_pTextureCom->Release();
+    this->m_pTransForm->Release();
     __super::Free();
 }

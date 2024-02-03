@@ -185,6 +185,12 @@ HRESULT CLoading::Loading_UI_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_On", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_On.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Explain_PopUp_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Explain_PopUp_Panel.png")), E_FAIL);
 
+
+	//Right_Top UI
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_HP", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/HP/HP__%03d.png",20)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Hungry", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Hungry/Hunger__%03d.png",20)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Mental", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Mental/Sanity__%03d.png",20)), E_FAIL);
+
 	return S_OK;
 }
 

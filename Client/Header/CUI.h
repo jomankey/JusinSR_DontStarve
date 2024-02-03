@@ -8,6 +8,13 @@ namespace Engine
 	class CTexture;
 }
 
+
+class CToolUI;
+class CAliveUI;
+class CEquiment;
+
+
+
 class CUI
 	: public Engine::CGameObject
 {
@@ -29,12 +36,24 @@ public:
 	virtual BOOL IsItemOn() { return m_bItemChek; }
 	virtual void SetItemOn(BOOL _ItemPut) { m_bItemChek = _ItemPut; }
 
+
+	virtual HRESULT			Add_Component();
+
+
+
+
+
 	_float GetX() { return m_fX; }
 	_float GetY() { return m_fY; }
 	_float GetSizeX() { return m_fSizeX; }
 	_float GetSizeY() { return m_fSizeY; }
+public:
+	const CUI* GetToolUI() { return m_pToolUI; }
+	const CUI* GetAliveUI() { return m_pAliveUI; }
+	const CUI* GetEquimentI() { return m_pEquimentUI; }
 
-	virtual HRESULT			Add_Component();
+
+
 protected:
 	Engine::CTexture* m_pTextureCom;
 	Engine::CRcTex* m_pBufferCom;
@@ -53,5 +72,11 @@ public:
 
 public:
 	virtual void Free() override;
+
+private:
+	static  CUI* m_pToolUI;
+	static  CUI* m_pAliveUI;
+	static  CUI* m_pEquimentUI;
+
 };
 

@@ -5,6 +5,8 @@
 #include "Export_Utility.h"
 #include "Export_System.h"
 
+
+
 CToolUI::CToolUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
     :CUI(pGraphicDev, eUIState, _UI_Name)
     , m_pToolData{ nullptr }
@@ -18,6 +20,10 @@ CToolUI::CToolUI(const CToolUI& rhs)
 
 CToolUI::~CToolUI()
 {
+    /*for (size_t i = 0; i < ITEM_END; i++)
+    {
+		Safe_Release(m_pToolData[i]);
+	}*/
 }
 
 
@@ -52,8 +58,14 @@ void CToolUI::Pop_SidePanel()
 
 }
 
+CToolUI* CToolUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name)
+{
+    CToolUI* pInstance = new CToolUI(pGraphicDev, _State, _UI_Name);
+    return pInstance;
+}
+
 void CToolUI::Free()
 {
-    __super::Free();
+    CToolUI::~CToolUI();
 }
 

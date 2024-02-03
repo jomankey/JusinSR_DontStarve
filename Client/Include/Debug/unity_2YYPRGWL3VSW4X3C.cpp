@@ -11,6 +11,12 @@
 #include "C:\PortPolio\Client\Code\CExplainPanel.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CHpUI.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CHungryUI.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CInven.cpp"
 
 
@@ -24,6 +30,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CItemFood.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CMentalUI.cpp"
 
 
 #include "C:\PortPolio\Client\Code\CObjectGrass.cpp"
@@ -45,6 +54,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CUI.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CWorldUI.cpp"
 
 
 #include "C:\PortPolio\Client\Code\DeerClops.cpp"

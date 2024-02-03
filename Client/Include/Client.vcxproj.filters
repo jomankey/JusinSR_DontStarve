@@ -106,17 +106,32 @@
     <Filter Include="02. GameObject\07. CUI\03. ToolUI">
       <UniqueIdentifier>{a7cc5f20-ca2f-41ec-9a6b-d649ee49dd58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\03. ToolUI\01. Equiment">
-      <UniqueIdentifier>{acfaeba5-8f82-4c34-9998-ae8b30ace7cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\03. ToolUI\02. Alive">
-      <UniqueIdentifier>{b08f2acd-c4b6-4c01-b678-cc68b2080e61}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Manager\02. ItemToolMgr">
       <UniqueIdentifier>{b4fe11ff-0b55-4537-b743-9afd08197260}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Manager\01. InvenMgr">
       <UniqueIdentifier>{beb2c89a-cc6d-4829-add6-81e610935d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. ToolUI\01. EquimentUI">
+      <UniqueIdentifier>{acfaeba5-8f82-4c34-9998-ae8b30ace7cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. ToolUI\02. AliveUI">
+      <UniqueIdentifier>{b08f2acd-c4b6-4c01-b678-cc68b2080e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\06. StateUI">
+      <UniqueIdentifier>{61e047f5-7ed9-43c1-8dc4-92566441d0e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\06. StateUI\02. HungryUI">
+      <UniqueIdentifier>{cb4ef562-14fd-4ab7-915e-94f1e639ec7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\06. StateUI\01. HpUi">
+      <UniqueIdentifier>{26c919c2-11e1-4c59-8167-1a93f87c2c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\06. StateUI\03. WorldUI">
+      <UniqueIdentifier>{0736d743-c555-4606-8bc3-690b64f2852c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\06. StateUI\04. MentalUI">
+      <UniqueIdentifier>{3c06ef30-3627-49dd-967d-8cb01fabefc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -205,7 +220,7 @@
       <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CEquiment.h">
-      <Filter>02. GameObject\07. CUI\03. ToolUI\01. Equiment</Filter>
+      <Filter>02. GameObject\07. CUI\03. ToolUI\01. EquimentUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CExplainPanel.h">
       <Filter>02. GameObject\07. CUI\04. ExPlain_Panel_Ui</Filter>
@@ -217,10 +232,22 @@
       <Filter>02. GameObject\07. CUI\03. ToolUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CAliveUI.h">
-      <Filter>02. GameObject\07. CUI\03. ToolUI\02. Alive</Filter>
+      <Filter>02. GameObject\07. CUI\03. ToolUI\02. AliveUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInventoryMgr.h">
       <Filter>03. Manager\01. InvenMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHpUI.h">
+      <Filter>02. GameObject\07. CUI\06. StateUI\01. HpUi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHungryUI.h">
+      <Filter>02. GameObject\07. CUI\06. StateUI\02. HungryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWorldUI.h">
+      <Filter>02. GameObject\07. CUI\06. StateUI\03. WorldUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMentalUI.h">
+      <Filter>02. GameObject\07. CUI\06. StateUI\04. MentalUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -300,7 +327,7 @@
       <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CEquiment.cpp">
-      <Filter>02. GameObject\07. CUI\03. ToolUI\01. Equiment</Filter>
+      <Filter>02. GameObject\07. CUI\03. ToolUI\01. EquimentUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CExplainPanel.cpp">
       <Filter>02. GameObject\07. CUI\04. ExPlain_Panel_Ui</Filter>
@@ -312,10 +339,22 @@
       <Filter>02. GameObject\07. CUI\03. ToolUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CAliveUI.cpp">
-      <Filter>02. GameObject\07. CUI\03. ToolUI\02. Alive</Filter>
+      <Filter>02. GameObject\07. CUI\03. ToolUI\02. AliveUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInventoryMgr.cpp">
       <Filter>03. Manager\01. InvenMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHpUI.cpp">
+      <Filter>02. GameObject\07. CUI\06. StateUI\01. HpUi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHungryUI.cpp">
+      <Filter>02. GameObject\07. CUI\06. StateUI\02. HungryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWorldUI.cpp">
+      <Filter>02. GameObject\07. CUI\06. StateUI\03. WorldUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMentalUI.cpp">
+      <Filter>02. GameObject\07. CUI\06. StateUI\04. MentalUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
