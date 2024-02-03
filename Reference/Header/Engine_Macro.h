@@ -79,4 +79,12 @@ namespace Engine
 		}
 }
 
+
+#define KEY_CHECK( key , state) 	Engine::GetKeyState(key) == state
+#define KEY_HOLD(key) KEY_CHECK(key,eKEY_STATE::HOLD)
+#define KEY_TAP(key) KEY_CHECK(key, eKEY_STATE::TAP)
+#define KEY_AWAY(key) KEY_CHECK(key,eKEY_STATE::AWAY )
+#define KEY_NONE(key) KEY_CHECK(key,eKEY_STATE::NONE )
+
+
 #endif // Engine_Macro_h__

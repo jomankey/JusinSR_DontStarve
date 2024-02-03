@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "FuncEvent.h"
-
-
 
 void CreateObject(CGameObject* _pObj, eOBJECT_GROUPTYPE _eGroup)
 {

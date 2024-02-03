@@ -92,19 +92,19 @@ HRESULT CEffect::Add_Component()
 	
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_EffectTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_EffectTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_EffectTexture", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_MultiMap[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 		
 	return S_OK;
 }

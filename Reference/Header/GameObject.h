@@ -40,7 +40,7 @@ namespace Engine
 	protected:
 		LPDIRECT3DDEVICE9							m_pGraphicDev;
 
-		multimap<const _tchar*, CComponent*>		m_MultiMap[ID_END];
+		multimap<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 		CTransform* m_pTransForm;
 
 		_float										m_fViewZ;	//z버퍼 소팅
