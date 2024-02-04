@@ -176,6 +176,7 @@
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
     <ClInclude Include="..\Header\CAliveUI.h" />
+    <ClInclude Include="..\Header\CClothUI.h" />
     <ClInclude Include="..\Header\CEquiment.h" />
     <ClInclude Include="..\Header\CExplainPanel.h" />
     <ClInclude Include="..\Header\CHpUI.h" />
@@ -185,14 +186,17 @@
     <ClInclude Include="..\Header\CInventoryMgr.h" />
     <ClInclude Include="..\Header\CItem.h" />
     <ClInclude Include="..\Header\CItemFood.h" />
+    <ClInclude Include="..\Header\CLightUI.h" />
     <ClInclude Include="..\Header\CMentalUI.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
     <ClInclude Include="..\Header\CPigHouse.h" />
+    <ClInclude Include="..\Header\CScienceUI.h" />
     <ClInclude Include="..\Header\CSlideUI.h" />
     <ClInclude Include="..\Header\CToolUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
+    <ClInclude Include="..\Header\CWeaponUI.h" />
     <ClInclude Include="..\Header\CWorldUI.h" />
     <ClInclude Include="..\Header\DeerClops.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
@@ -217,6 +221,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
     <ClCompile Include="..\Code\CAliveUI.cpp" />
+    <ClCompile Include="..\Code\CClothUI.cpp" />
     <ClCompile Include="..\Code\CEquiment.cpp" />
     <ClCompile Include="..\Code\CExplainPanel.cpp" />
     <ClCompile Include="..\Code\CHpUI.cpp" />
@@ -227,14 +232,17 @@
     <ClCompile Include="..\Code\CInventoryMgr.cpp" />
     <ClCompile Include="..\Code\CItem.cpp" />
     <ClCompile Include="..\Code\CItemFood.cpp" />
+    <ClCompile Include="..\Code\CLightUI.cpp" />
     <ClCompile Include="..\Code\CMentalUI.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
     <ClCompile Include="..\Code\CPigHouse.cpp" />
+    <ClCompile Include="..\Code\CScienceUI.cpp" />
     <ClCompile Include="..\Code\CSlideUI.cpp" />
     <ClCompile Include="..\Code\CToolUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
+    <ClCompile Include="..\Code\CWeaponUI.cpp" />
     <ClCompile Include="..\Code\CWorldUI.cpp" />
     <ClCompile Include="..\Code\DeerClops.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />

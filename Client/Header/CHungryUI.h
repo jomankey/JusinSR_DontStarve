@@ -21,9 +21,8 @@ public:
 
 
 public:
-	void SetCurentHungry(float _CurentHungry) { m_fCurentHungry = _CurentHungry; }
-	void SetMaxHungry(float _MaxtHungry) { m_fMaxHungry = _MaxtHungry; }
-
+	void AddCurntHp(const _float _value);
+	void MinusCurntHp(const _float _value);
 private:
 	_float m_fCurentHungry;
 
@@ -32,5 +31,7 @@ private:
 
 
 
+
+	_float m_fImageMaxCount = 19.f;
 	_float m_fImageCount = 0.f;
 };

@@ -20,8 +20,6 @@ public:
 
 
 public:
-	void SetCurntHp(float _CurentHp) { m_fCurentHp = _CurentHp; }
-	void SetMaxHp(float _MaxHp) { m_fMaxHp = _MaxHp; }
 	void AddCurntHp(const _float _value);
 	void MinusCurntHp(const _float _value);
 	

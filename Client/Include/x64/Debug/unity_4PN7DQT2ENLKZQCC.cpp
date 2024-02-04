@@ -6,6 +6,9 @@
 #include "C:\PortPolio\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CClothUI.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CEquiment.cpp"
 
 
@@ -36,6 +39,9 @@
 #include "C:\PortPolio\Client\Code\CItemFood.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CLightUI.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CMentalUI.cpp"
 
 
@@ -51,6 +57,9 @@
 #include "C:\PortPolio\Client\Code\CPigHouse.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CScienceUI.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CSlideUI.cpp"
 
 
@@ -58,6 +67,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CUI.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CWeaponUI.cpp"
 
 
 #include "C:\PortPolio\Client\Code\CWorldUI.cpp"

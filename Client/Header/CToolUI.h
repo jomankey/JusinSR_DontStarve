@@ -4,6 +4,11 @@
 class CSlideUI;
 class CItemTool;
 class CSlideUI;
+class CLightUI;
+class CScienceUI;
+class CClothUI;
+class CWeaponUI;
+
 
 class CToolUI :public CUI
 {
@@ -45,6 +50,11 @@ protected:
 private:
 	static  CUI* m_pAliveUI;
 	static  CUI* m_pEquimentUI;
+	static  CUI* m_pLightUI;
+	static  CUI* m_pScienceUI;
+	static  CUI* m_pClothUI;
+	static  CUI* m_pWeaponUI;
+
 	static CUI* m_pSlideUI[5];
 };
 

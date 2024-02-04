@@ -118,6 +118,18 @@
     <Filter Include="02. GameObject\07. CUI\05. PopUpUI">
       <UniqueIdentifier>{935dda75-2859-451f-96cc-546f5f650ede}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ToolUI\03. WeaponUI">
+      <UniqueIdentifier>{b880d032-db7e-425f-9065-7f3a43cea928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ToolUI\04. ClothUI">
+      <UniqueIdentifier>{37cd9882-7ceb-463d-8fb8-744d84f3a36c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ToolUI\05. ScienceUI">
+      <UniqueIdentifier>{5159054e-0c9e-4bea-a905-70572c2f22f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ToolUI\06. LightUI">
+      <UniqueIdentifier>{c2050d54-2be3-459d-be04-97c92f88a8d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -243,6 +255,18 @@
     <ClInclude Include="..\Header\CAliveUI.h">
       <Filter>02. GameObject\07. CUI\04. ToolUI\02. Alive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CWeaponUI.h">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\03. WeaponUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CClothUI.h">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\04. ClothUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CScienceUI.h">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\05. ScienceUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CLightUI.h">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\06. LightUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -358,6 +382,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CExplainPanel.cpp">
       <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeaponUI.cpp">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\03. WeaponUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CClothUI.cpp">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\04. ClothUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CScienceUI.cpp">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\05. ScienceUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLightUI.cpp">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\06. LightUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -31,7 +31,15 @@ _int CHungryUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
+	if (GetAsyncKeyState('L')) // 공격
+	{
+		MinusCurntHp(10);
+	}
 
+	if (GetAsyncKeyState('K')) // 공격
+	{
+		AddCurntHp(10);
+	}
 
 
 	return 0;
@@ -71,4 +79,66 @@ CHungryUI* CHungryUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _ve
 void CHungryUI::Free()
 {
 	CUI::Free();
+}
+
+void CHungryUI::AddCurntHp(const _float _value)
+{
+
+
+	if (_value < 0)
+		return;
+
+	if (m_fImageCount <= 0)
+	{
+		m_fImageCount = 0;
+		return;
+	}
+
+
+	if (_value / 10 > m_fImageCount)
+	{
+		m_fImageCount = 0;
+		return;
+	}
+
+	if (m_fImageCount <= 19.f)
+	{
+		m_fImageCount -= _value / 10.f;
+	}
+
+}
+
+void CHungryUI::MinusCurntHp(const _float _value)
+{
+	if (_value < 0)
+		return;
+
+	if (m_fImageCount > m_fImageMaxCount)
+	{
+		m_fImageCount = m_fImageMaxCount;
+		return;
+	}
+	if (_value / 10 > (m_fImageMaxCount - m_fImageCount))
+	{
+		m_fImageCount = m_fImageMaxCount;
+		return;
+	}
+
+
+
+
+	if (m_fImageCount == 19)
+		return;
+
+	if (_value >= m_fImageMaxCount * 10.f)
+	{
+		m_fImageCount = 19.f;
+		return;
+	}
+
+	if (m_fImageCount < 19.f)
+	{
+		m_fImageCount += _value / 10.f;
+	}
+
 }

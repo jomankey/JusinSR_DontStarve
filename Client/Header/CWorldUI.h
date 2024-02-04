@@ -14,7 +14,7 @@ public:
 
 
 
-
+	//고정된 시간값이 들어와야함 
 	void SetWorldTime(_float _Time) { m_fWorldTime = _Time; }
 
 public:
@@ -25,7 +25,6 @@ public:
 
 private:
 
-	_float m_fRotateAngle = 0.f;
 	_float m_fWorldTime = 0.f;
 
 

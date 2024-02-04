@@ -42,6 +42,7 @@
 #include"CHpUI.h"
 #include"CMentalUI.h"
 #include"CWorldUI.h"
+#include"CHungryUI.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -276,28 +277,32 @@ HRESULT CStage::Ready_Layer_UI()
 	}
 
 	//HpUI
-	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(600.f, 40.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");
+	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(680.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//Mental
-	pGameObject = CMentalUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 40.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Mental");
+	pGameObject = CMentalUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(770.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Mental");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+	//Hunger
+	pGameObject = CHungryUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 130.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Hungry");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 
 	//WorldUI
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_World_1");
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(40.f, 40.f, 0.f), L"Proto_UI_World_1");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//WorldUI
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_World_2");
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(40.f, 40.f, 0.f), L"Proto_UI_World_2");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//WorldUIClock
-	pGameObject = CWorldUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(5.f, 20.f, 0.f), L"Proto_UI_World_10");
+	pGameObject = CWorldUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(10.f, 30.f, 0.f), L"Proto_UI_World_10");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
