@@ -59,12 +59,12 @@ _int CHpUI::Update_GameObject(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('L')) // 공격
 	{
-		MinusCurntHp(13);
+		MinusCurntHp(10);
 	}
 
 if (GetAsyncKeyState('K')) // 공격
 	{
-		AddCurntHp(13);
+		AddCurntHp(10);
 	}
 	return 0;
 }
