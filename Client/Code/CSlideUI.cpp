@@ -28,29 +28,65 @@ CSlideUI::~CSlideUI()
 
 _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 {
+    if (GetAsyncKeyState('K'))
+    {
+        m_bSlideOn = true;
+    }
+
+    if (GetAsyncKeyState('O'))
+    {
+        m_bSlideOn = false;
+    }
+
 
     __super::Update_GameObject(fTimeDelta);
-
-
-
-
-
+    if (m_bSlideOn)
+    {
+        m_bIsRender = false;
+        if (m_fMaxSlide <= m_fX)
+        {
+            return 0;
+        }
+        m_fX += fTimeDelta* m_fSlideSpeed;
+     
+    }
+    else
+    {
+        if(m_fMinSlide>= m_fX)
+		{
+            m_bIsRender = true;
+			return 0;
+		}
+        m_fX -= fTimeDelta* m_fSlideSpeed;
+      
+    }
+    
+    
 
     return 0;
 }
 
-//void CSlideUI::Render_GameObject()
-//{
-//
-//  //if (UI_Collision())
-//  //{
-//  //
-//  //
-//  //
-//  //}
-//
-//
-//}
+void CSlideUI::Render_GameObject()
+{
+    if (m_bIsRender)
+      return;
+
+    scenemgr::Get_CurScene()->BeginOrtho();
+    m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    m_pTextureCom->Set_Texture(0);
+
+    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+    //m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
+    //m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
+
+    m_pBufferCom->Render_Buffer();
+
+
+
+    scenemgr::Get_CurScene()->EndOrtho();
+
+
+}
 
 BOOL CSlideUI::UI_Collision(CUI* _TargetUI)
 {

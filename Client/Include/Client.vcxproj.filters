@@ -103,6 +103,21 @@
     <Filter Include="02. GameObject\08. ResObjects\05. BerryBush">
       <UniqueIdentifier>{2a7c00b5-04b6-44e4-8357-cdcaa70fc47e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. StateUI">
+      <UniqueIdentifier>{ca4e586d-d4ee-4d93-a0ef-58d49d511667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ToolUI">
+      <UniqueIdentifier>{3116b9ca-4620-4d9d-8e8f-f0102d81e6e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ToolUI\01. Equi">
+      <UniqueIdentifier>{4def1f3c-e189-4494-8c54-0feb2f23ca64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\04. ToolUI\02. Alive">
+      <UniqueIdentifier>{b4c47ae9-174a-4036-951b-d18fdec6f302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\05. PopUpUI">
+      <UniqueIdentifier>{935dda75-2859-451f-96cc-546f5f650ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -198,35 +213,35 @@
     <ClInclude Include="..\Header\ResObject.h">
       <Filter>02. GameObject\08. ResObjects</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CEquiment.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CExplainPanel.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\BerryBush.h">
       <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CWorldUI.h">
-      <Filter>02. GameObject\07. CUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CToolUI.h">
-      <Filter>02. GameObject\07. CUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSlideUI.h">
-      <Filter>02. GameObject\07. CUI</Filter>
+    <ClInclude Include="..\Header\CHungryUI.h">
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMentalUI.h">
-      <Filter>02. GameObject\07. CUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CHungryUI.h">
-      <Filter>02. GameObject\07. CUI</Filter>
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHpUI.h">
-      <Filter>02. GameObject\07. CUI</Filter>
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWorldUI.h">
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToolUI.h">
+      <Filter>02. GameObject\07. CUI\04. ToolUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CEquiment.h">
+      <Filter>02. GameObject\07. CUI\04. ToolUI\01. Equi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSlideUI.h">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CExplainPanel.h">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CAliveUI.h">
-      <Filter>02. GameObject\07. CUI</Filter>
+      <Filter>02. GameObject\07. CUI\04. ToolUI\02. Alive</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,32 +332,32 @@
     <ClCompile Include="..\Code\ResObject.cpp">
       <Filter>02. GameObject\08. ResObjects</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CWorldUI.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
+    <ClCompile Include="..\Code\CHungryUI.cpp">
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMentalUI.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CSlideUI.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CToolUI.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CHungryUI.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHpUI.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CExplainPanel.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
+    <ClCompile Include="..\Code\CWorldUI.cpp">
+      <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CToolUI.cpp">
+      <Filter>02. GameObject\07. CUI\04. ToolUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CEquiment.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
+      <Filter>02. GameObject\07. CUI\04. ToolUI\01. Equi</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CAliveUI.cpp">
-      <Filter>02. GameObject\07. CUI</Filter>
+      <Filter>02. GameObject\07. CUI\04. ToolUI\02. Alive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSlideUI.cpp">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CExplainPanel.cpp">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

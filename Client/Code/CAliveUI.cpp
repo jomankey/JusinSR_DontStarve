@@ -8,9 +8,10 @@
 
 
 CAliveUI::CAliveUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-    :CToolUI(pGraphicDev, eUIState, _UI_Name)
+    :CToolUI(pGraphicDev, _UI_Name)
 
 {
+    m_eUIState= eUIState;
 }
 
 CAliveUI::CAliveUI(const CAliveUI& rhs)
@@ -24,7 +25,6 @@ CAliveUI::~CAliveUI()
 
 _int CAliveUI::Update_GameObject(const _float& fTimeDelta)
 {
-
     __super::Update_GameObject(fTimeDelta);
 
 

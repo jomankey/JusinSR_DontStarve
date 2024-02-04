@@ -2,15 +2,16 @@
 #include "CUI.h"
 class CSlideUI : public CUI
 {
-	protected:
+protected:
 	explicit CSlideUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name);
 	explicit CSlideUI(const CSlideUI& rhs);
 	virtual ~CSlideUI();
 public:
 
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-	//virtual void Render_GameObject()						 override;
+	virtual void Render_GameObject()						 override;
 
+	void SetSlideOnAndOff(bool _State) { m_bSlideOn = _State; };
 
 	virtual BOOL UI_Collision(CUI* _TargetUI);
 	 
@@ -21,6 +22,14 @@ public:
 
 	queue<CUI*> m_qItemListQueue;
 
+private:
 
+	_float m_fMinSlide = 20.0f;
+	_float m_fMaxSlide = 200.0f;
+	_float m_fSlideSpeed = 200.0f;
+	BOOL m_bSlideOn = false; 
+	BOOL m_bSlideOff = false; 
+
+	BOOL m_bIsRender = false;
 };
 

@@ -17,6 +17,9 @@
 #include "C:\PortPolio\Client\Code\CHungryUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\BerryBush.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CInven.cpp"
 
 
@@ -86,6 +89,9 @@
 #include "C:\PortPolio\Client\Code\Player.cpp"
 
 
+#include "C:\PortPolio\Client\Code\ResObject.cpp"
+
+
 #include "C:\PortPolio\Client\Code\SkyBox.cpp"
 
 
@@ -99,4 +105,7 @@
 
 
 #include "C:\PortPolio\Client\Include\Client.cpp"
+
+
+#include "C:\PortPolio\Client\Include\FuncEvent.cpp"
 

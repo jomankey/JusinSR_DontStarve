@@ -8,11 +8,10 @@
 #include "Scene.h"
 
 #include"CToolUI.h"
-#include"CAliveUI.h"
+
 
 CUI* CUI::m_pToolUI = nullptr;
-CUI* CUI::m_pAliveUI = nullptr;
-CUI* CUI::m_pEquimentUI = nullptr;
+
 
 
 CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
@@ -64,6 +63,9 @@ HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)
 
 Engine::_int CUI::Update_GameObject(const _float& fTimeDelta)
 {
+	GetCursorPos(&m_MousePoint);
+	ScreenToClient(g_hWnd, &m_MousePoint);
+
 	__super::Update_GameObject(fTimeDelta);
 	m_pTransForm->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
 	m_pTransForm->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
@@ -114,8 +116,7 @@ BOOL CUI::UI_Collision()
 {
 
 
-	GetCursorPos(&m_MousePoint);
-	ScreenToClient(g_hWnd, &m_MousePoint);
+	
 
 	if (m_fX - (m_fSizeX) < m_MousePoint.x && m_MousePoint.x < m_fX + (m_fSizeX))
 		if (m_fY - (m_fSizeY) < m_MousePoint.y && m_MousePoint.y < m_fY + (m_fSizeY))
@@ -178,27 +179,20 @@ CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _ve
 
 	if (m_pToolUI == nullptr)
 	{
-		m_pToolUI = CToolUI::Create(pGraphicDev, _State, _pos, _size, _UI_Name);
+		m_pToolUI = CToolUI::Create(pGraphicDev, _UI_Name);
 	}
-	if (m_pAliveUI==nullptr)
-	{
 
-		m_pAliveUI = CAliveUI::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
-	}
-	if (m_pEquimentUI == nullptr)
-	{
-		m_pEquimentUI = CEquiment::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
-	}
-	
 
 	return pInstance;
 }
 
 void CUI::Free()
 {	
-	m_pEquimentUI->Release();
-	m_pAliveUI->Release();
-	m_pToolUI->Release();
+
+	Safe_Release(m_pToolUI);
+	//m_pEquimentUI->Release();
+	//m_pAliveUI->Release();
+	//m_pToolUI->Release();
 	__super::Free();
 }
 
