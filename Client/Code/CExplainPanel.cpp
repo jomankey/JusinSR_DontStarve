@@ -28,8 +28,13 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 {
 
     __super::Update_GameObject(fTimeDelta);
+   // if (m_bShow)
+   // {
+   //     m_fX = m_MousePoint.x + 50.f;
+   //     m_fY= m_MousePoint.y;
+   //
+   // }
 
-    if(UI_Collision())
 
 
 
@@ -38,13 +43,15 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 
 void CExplainPanel::Render_GameObject()
 {
-
-
-
+    if (!m_bShow)
+		return;
+ 
     __super::Render_GameObject();
 
 
+
 }
+
 
 CExplainPanel* CExplainPanel::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {
