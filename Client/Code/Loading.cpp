@@ -215,7 +215,7 @@ HRESULT CLoading::Loading_UI_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Mental", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Mental/Sanity__%03d.png",20)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_World_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/World_1.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_World_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/World_2.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_World_3", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/World_3.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_World_10", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/World_10.png")), E_FAIL);
 
 
 

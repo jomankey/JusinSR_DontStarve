@@ -296,7 +296,7 @@ HRESULT CStage::Ready_Layer_UI()
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//WorldUIClock
-	pGameObject = CWorldUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(10.f, 20.f, 0.f), L"Proto_UI_World_3");
+	pGameObject = CWorldUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(5.f, 20.f, 0.f), L"Proto_UI_World_10");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 

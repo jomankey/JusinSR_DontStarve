@@ -28,8 +28,11 @@ _int CWorldUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	m_fWorldTime += fTimeDelta;
-	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(m_fWorldTime));
+	//m_fWorldTime+=fTimeDelta;
+	//m_fRotateAngle = 30.f * m_fWorldTime;
+
+	m_fWorldTime = +0.1f;
+	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(-(m_fWorldTime/fTimeDelta)));
 
 
 	return 0;
@@ -41,7 +44,7 @@ void CWorldUI::Render_GameObject()
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pTextureCom->Set_Texture(m_fImageCount);
+	m_pTextureCom->Set_Texture(0);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pBufferCom->Render_Buffer();

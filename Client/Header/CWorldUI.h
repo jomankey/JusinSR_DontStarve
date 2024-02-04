@@ -25,8 +25,9 @@ public:
 
 private:
 
+	_float m_fRotateAngle = 0.f;
 	_float m_fWorldTime = 0.f;
-	_float m_fImageCount = 0.f;
+
 
 };
 
