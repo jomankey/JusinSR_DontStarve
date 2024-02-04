@@ -41,6 +41,7 @@
 #include"CAliveUI.h"
 #include"CHpUI.h"
 #include"CMentalUI.h"
+#include"CWorldUI.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -284,8 +285,20 @@ HRESULT CStage::Ready_Layer_UI()
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 
+	//WorldUI
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_World_1");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
+	//WorldUI
+	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_World_2");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
+	//WorldUIClock
+	pGameObject = CWorldUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(700.f, 300.f, 0.f), _vec3(10.f, 20.f, 0.f), L"Proto_UI_World_3");
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 
 
@@ -302,9 +315,9 @@ HRESULT CStage::Ready_Layer_UI()
 	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//옷 슬롯
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 120.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+	//pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 120.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//생존 슬롯
 	//pGameObject = CAliveUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
@@ -313,9 +326,9 @@ HRESULT CStage::Ready_Layer_UI()
 
 
 	//마우스 피킹시 사이드 판넬
-	pGameObject = CSlideUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Left_Panel_Default");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+	//pGameObject = CSlideUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Left_Panel_Default");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	return S_OK;
 }

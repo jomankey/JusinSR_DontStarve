@@ -22,8 +22,8 @@ public:
 public:
 	void SetCurntHp(float _CurentHp) { m_fCurentHp = _CurentHp; }
 	void SetMaxHp(float _MaxHp) { m_fMaxHp = _MaxHp; }
-	void AddCurntHp(const _int _value);
-	void MinusCurntHp(const _int _value);
+	void AddCurntHp(const _float _value);
+	void MinusCurntHp(const _float _value);
 	
 
 private:
@@ -36,7 +36,7 @@ private:
 	BOOL m_bHpPiusMInus = true; //true 체력이 증가 false면 체력이 감소
 
 
-
+	_float m_fImageMaxCount = 19.f;
 	_float m_fImageCount=0.f;
 };
 

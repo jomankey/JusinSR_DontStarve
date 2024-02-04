@@ -28,7 +28,8 @@ _int CWorldUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-
+	m_fWorldTime += fTimeDelta;
+	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(m_fWorldTime));
 
 
 	return 0;
@@ -49,6 +50,8 @@ void CWorldUI::Render_GameObject()
 
 	scenemgr::Get_CurScene()->EndOrtho();
 }
+
+
 
 CWorldUI* CWorldUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {

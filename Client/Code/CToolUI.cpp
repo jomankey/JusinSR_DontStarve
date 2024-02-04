@@ -1,3 +1,4 @@
+#include "stdafx.h"
 
 
 #include "CToolUI.h"
@@ -6,10 +7,18 @@
 #include "Export_System.h"
 
 
+#include "Scene.h"
+#include"CSlideUI.h"
+//#include"CAliveUI.h"
 
-CToolUI::CToolUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-    :CUI(pGraphicDev, eUIState, _UI_Name)
+CUI* CToolUI::m_pAliveUI = nullptr;
+CUI* CToolUI::m_pEquimentUI = nullptr;
+CUI* CToolUI::m_pSlideUI[5] = {};
+
+CToolUI::CToolUI(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _UI_Name)
+    :CUI(pGraphicDev, UI_NONE, _UI_Name)
     , m_pToolData{ nullptr }
+    , m_bSlideState(false)
 {
 }
 
@@ -20,10 +29,6 @@ CToolUI::CToolUI(const CToolUI& rhs)
 
 CToolUI::~CToolUI()
 {
-    /*for (size_t i = 0; i < ITEM_END; i++)
-    {
-		Safe_Release(m_pToolData[i]);
-	}*/
 }
 
 
@@ -31,11 +36,10 @@ _int CToolUI::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
 
-
-
-
     return 0;
 }
+
+
 void CToolUI::SetGameData(CItemTool* _ItemTool, eITEMTOOL_TYPE _ItemType)
 {
     if (nullptr != _ItemTool)
@@ -44,23 +48,48 @@ void CToolUI::SetGameData(CItemTool* _ItemTool, eITEMTOOL_TYPE _ItemType)
     }
 
 }
-void CToolUI::Pop_SidePanel()
-{
-    if (UI_Collision())
-    {
-        const vector<CGameObject*>& vecUi = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
 
-        for (size_t i = 0; i < vecUi.size(); i++)
+
+void CToolUI::Pop_SidePanel(bool _state)
+{
+        for (int i = 0; i < 5; i++)
         {
-            // vecUi[i]->GetObjName() == 
+            dynamic_cast<CSlideUI*>(m_pSlideUI[i])->SetSlideOnAndOff(_state);
         }
-    }
+
+    
+  
 
 }
 
-CToolUI* CToolUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name)
+CToolUI* CToolUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, const _tchar* _UI_Name)
 {
-    CToolUI* pInstance = new CToolUI(pGraphicDev, _State, _UI_Name);
+    CToolUI* pInstance = new CToolUI(pGraphicDev, _UI_Name);
+
+    if (m_pAliveUI == nullptr)
+    {
+        //상단에 헤더파일 없어서 오류 뜸/ 문제 없음
+        m_pAliveUI = CAliveUI::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
+        CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, m_pAliveUI);
+    }
+    if (m_pEquimentUI == nullptr)
+    {
+
+        //상단에 헤더파일 없어서 오류 뜸/ 문제 없음
+        m_pEquimentUI = CEquiment::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
+        CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, m_pEquimentUI);
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        m_pSlideUI[i]= CSlideUI::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 300.f - i * 50.f, 0.f), _vec3(40.f, 40.f, 0.f), L"Proto_UI_Item_Panel");
+    	CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, m_pSlideUI[i]);
+    
+    }
+
+
+
+
     return pInstance;
 }
 

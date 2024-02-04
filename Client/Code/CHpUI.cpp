@@ -59,8 +59,12 @@ _int CHpUI::Update_GameObject(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('L')) // 공격
 	{
-		m_fImageCount += fTimeDelta*100.f;
-		//MinusCurntHp(10);
+		MinusCurntHp(13);
+	}
+
+if (GetAsyncKeyState('K')) // 공격
+	{
+		AddCurntHp(13);
 	}
 	return 0;
 }
@@ -71,7 +75,7 @@ void CHpUI::Render_GameObject()
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pTextureCom->Set_Texture(m_fImageCount);
+	m_pTextureCom->Set_Texture((_uint)m_fImageCount);
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pBufferCom->Render_Buffer();
@@ -100,14 +104,28 @@ void CHpUI::Free()
 	CUI::Free();
 }
 
-void CHpUI::AddCurntHp(const _int _value)  //0이 풀피임
+void CHpUI::AddCurntHp(const _float _value)  //0이 풀피임
 {
+	if (_value < 0)
+		return;
+
+	if (m_fImageCount <= 0)
+	{
+		m_fImageCount = 0;
+		return;
+	}
 
 
+	if (_value / 10 > m_fImageCount)
+	{
+		m_fImageCount = 0;
+		return;
+	}
 
-
-
-
+	if (m_fImageCount <= 19.f)
+	{
+		m_fImageCount -= _value / 10.f;
+	}
 
 
 
@@ -136,22 +154,39 @@ void CHpUI::AddCurntHp(const _int _value)  //0이 풀피임
 
 }
 
-void CHpUI::MinusCurntHp(const _int _value)
+void CHpUI::MinusCurntHp(const _float _value)
 {
+	if (_value < 0)
+		return;
+
+	if (m_fImageCount > m_fImageMaxCount)
+	{
+		m_fImageCount = m_fImageMaxCount;
+		return;
+	}
+	if (_value / 10 > (m_fImageMaxCount - m_fImageCount))
+	{
+		m_fImageCount = m_fImageMaxCount;
+		return;
+	}
 
 
 
+	
+	if(m_fImageCount==19)
+		return;
 
+	if (_value >=m_fImageMaxCount*10.f)
+	{
+		m_fImageCount = 19.f;
+		return;
+	}
 
-
-
-
-
-
-
-
-
-
+	if (m_fImageCount<19.f)
+	{
+		m_fImageCount += _value / 10.f;
+	}
+	
 
 	//_float Scr = m_fCurentHp -_value;
 	//m_fCurentHp -= _value;

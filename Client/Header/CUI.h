@@ -49,8 +49,7 @@ public:
 	_float GetSizeY() { return m_fSizeY; }
 public:
 	const CUI* GetToolUI() { return m_pToolUI; }
-	const CUI* GetAliveUI() { return m_pAliveUI; }
-	const CUI* GetEquimentI() { return m_pEquimentUI; }
+
 
 
 
@@ -75,8 +74,7 @@ public:
 
 private:
 	static  CUI* m_pToolUI;
-	static  CUI* m_pAliveUI;
-	static  CUI* m_pEquimentUI;
+
 
 };
 
