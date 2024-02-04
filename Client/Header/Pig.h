@@ -13,7 +13,7 @@ namespace Engine {
 }
 class CPig : public CMonster
 {
-	enum PiGSTATE { IDLE, HAPPY, WALK, EAT, ANGRY_IDLE, RUN, ATTACK, SLEEP,  DEAD, STATE_END };
+	enum PiGSTATE { IDLE, HAPPY, WALK, EAT, ANGRY_IDLE, RUN, ATTACK, SLEEP, HIT,  DEAD, ERASE, STATE_END };
 
 private:
 	explicit CPig(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
@@ -34,6 +34,7 @@ private:
 	void			 Die_Check();
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
+
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
@@ -44,6 +45,7 @@ private:
 
 	PiGSTATE		m_eCurState;
 	PiGSTATE		m_ePreState;
+	_bool				m_bHit;
 public:
 	static CPig* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 

@@ -25,7 +25,7 @@ HRESULT CObjectGrass::Ready_GameObject()
 
 	m_eCurState = RES_IDLE;
 	m_fFrame = 0;
-	m_fFrameEnd = 175;
+	m_fFrameEnd = 28;
 	return S_OK;
 }
 
@@ -114,9 +114,9 @@ void CObjectGrass::Check_FrameState()
 		return;
 
 	if (m_eCurState == RES_IDLE)
-		m_fFrameEnd = 175;
+		m_fFrameEnd = 28;
 	if (m_eCurState == RES_DEAD)
-		m_fFrameEnd = 40;
+		m_fFrameEnd = 7;
 
 	m_ePreState = m_eCurState;
 	m_fFrame = 0;

@@ -120,50 +120,6 @@ LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& 
 			eDir = LOOK_LEFT;
 		}
 	}
-
-
-	/*if ((angle > 0.f && angle <45.f)||(angle > 315 && angle<= 360))
-	{
-		eDir = LOOK_RIGHT;
-	}
-	else if (angle >= 45.f && angle < 135.f)
-	{
-		eDir = LOOK_UP;
-	}
-	else if (angle >= 135.f && angle < 225.f)
-	{
-		eDir = LOOK_LEFT;
-	}
-	else if (angle >= 225.f && angle < 315)
-	{
-		eDir = LOOK_DOWN;
-	}*/
-
-
-
-	//if (fabs(vDir.x) >= fabs(vDir.z)) //side
-	//{
-	//	if (vDir.x > 0) // left
-	//	{
-	//		eDir = LOOK_LEFT;
-	//	}
-	//	else   //right
-	//	{
-	//		eDir = LOOK_RIGHT;
-	//	}
-	//}
-	//else   //up down
-	//{
-	//	if (vDir.z > 0)  //down
-	//	{
-	//		eDir = LOOK_DOWN;
-	//	}
-	//	else   //up
-	//	{
-	//		eDir = LOOK_UP;
-	//	}
-	//}
-	//
 	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 
 	_matrix		matScale, matTrans;

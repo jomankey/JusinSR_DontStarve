@@ -54,7 +54,9 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     {
         //아이템 드랍 메소드 추가
     }
+    
     State_Change();
+    Look_Change();
     Set_Scale();
     CGameObject::Update_GameObject(fTimeDelta);
 
@@ -164,11 +166,27 @@ HRESULT CSpider::Add_Component()
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_atk_side", pComponent });
 
+
+    //HIT
+    pComponent = m_pTextureCom[LOOK_DOWN][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_hit"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_hit", pComponent });
+
+    pComponent = m_pTextureCom[LOOK_LEFT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_hit"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_hit", pComponent });
+
+    
     //DEAD
     pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Spider_dead"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Spider_dead", pComponent });
 
+
+    //ERASE
+    pComponent = m_pTextureCom[LOOK_DOWN][ERASE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_Erase"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Erase", pComponent });
 #pragma endregion TEXCOM
     
     
@@ -188,7 +206,6 @@ HRESULT CSpider::Add_Component()
 
 void CSpider::State_Change()
 {
-    enum SPIDERSTATE { IDLE, WALK, ATTACK, SLEEP, DEAD, STATE_END };
     if (m_ePrestate != m_eCurstate)
     {
         switch (m_eCurstate)
@@ -203,8 +220,19 @@ void CSpider::State_Change()
             break;
         case SLEEP:
             break;
+        case HIT:
+            m_fFrameEnd = 6;
+            if (m_eCurLook != LOOK_LEFT)
+            {
+                m_eCurLook = LOOK_DOWN;
+            }
+            break;
         case DEAD:
             m_fFrameEnd = 9.f;
+            break;
+        case ERASE:
+            m_fFrameEnd = 5;
+            m_eCurLook = LOOK_DOWN;
             break;
         }
         m_ePrestate = m_eCurstate;
@@ -239,13 +267,11 @@ void CSpider::Attacking(const _float& fTimeDelta)
     }
     m_fAcctime += fTimeDelta;
     
-
-    if (IsTarget_Approach(1) && m_eCurstate != ATTACK)
+    if (IsTarget_Approach(1) && m_ePrestate != ATTACK)
     {
         m_eCurstate = ATTACK;
-       
     }
-    else if (m_eCurstate == ATTACK)
+    else if (m_ePrestate == ATTACK)
     {
         if (m_fFrameEnd < m_fFrame)
         {
@@ -253,16 +279,20 @@ void CSpider::Attacking(const _float& fTimeDelta)
             {
                 m_eCurstate = WALK;
             }
+            else
+            {
+                m_fFrame = 0.f;
+            }
         }
     }
-    else if (m_eCurstate == WALK)
+    else if (m_ePrestate == WALK)
     {
         Player_Chase(fTimeDelta);
+        if (m_fFrameEnd < m_fFrame)
+            m_fFrame = 0.f;
     }
- 
-    if (m_fFrameEnd < m_fFrame)
-        m_fFrame = 0.f;
-    Look_Change();
+   
+  
 }
 
 void CSpider::Patroll(const _float& fTimeDelta)
@@ -298,14 +328,12 @@ void CSpider::Patroll(const _float& fTimeDelta)
     }
     if (m_fFrameEnd < m_fFrame)
         m_fFrame = 0.f;
-
-
-    Look_Change();
+   
 }
 
 void CSpider::Die_Check()
 {
-    if (m_Stat.fHP <= 0 && m_ePrestate != DEAD)
+    if (m_Stat.fHP <= 0 && m_ePrestate != DEAD && m_ePrestate != ERASE)
     {
         m_eCurstate = DEAD;
         m_eCurLook = LOOK_DOWN;
@@ -317,14 +345,24 @@ void CSpider::Die_Check()
     {
         if (m_fFrameEnd < m_fFrame)
         {
+            m_eCurstate = ERASE;
+        }
+    }
+    else if (m_ePrestate == ERASE)
+    {
+        if (m_fFrameEnd < m_fFrame)
+        {
             m_fFrame = m_fFrameEnd;
             m_bFrameStop = true;
+            this->SetDeleteObj();
         }
     }
     else
         return;
         
 }
+
+
 
 CSpider* CSpider::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {

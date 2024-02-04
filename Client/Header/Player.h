@@ -20,6 +20,8 @@ namespace Engine
 
 class CPlayer : public Engine::CGameObject
 {
+
+	
 private:
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName);
@@ -41,6 +43,8 @@ private:
 	void			Check_State();
 	void			Set_Scale();
 	void			Set_Stat();
+	void			Weapon_To_State();
+	
 
 	CGameObject* Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget);
 
@@ -57,6 +61,9 @@ private:
 
 	PLAYERSTATE			m_eCurState;
 	PLAYERSTATE			m_ePreState;
+
+	WEAPON				m_eCurWeapon;			//현재 착용하고 있는 무기
+	WEAPON				m_ePreWeapon;			// 추후에 무기 스위칭할때 메소드를 위해 생성해둠
 
 	LOOKDIR				m_ePlayerLookAt;
 	_bool				m_Dirchange;

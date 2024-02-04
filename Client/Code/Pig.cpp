@@ -6,7 +6,7 @@
 #include "Scene.h"
 
 CPig::CPig(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
-	:CMonster(pGraphicDev, _vPos), m_eCurState(HAPPY), m_ePreState(STATE_END)
+	:CMonster(pGraphicDev, _vPos), m_eCurState(IDLE), m_ePreState(STATE_END)
 {
 }
 
@@ -26,8 +26,9 @@ HRESULT CPig::Ready_GameObject()
 	m_pTransForm->Set_Pos(m_vPos);
 	Set_ObjStat();
 	/*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
-	m_fFrameEnd = 17;
-
+	m_fFrameEnd = 7;
+	m_fFrameChange = rand() % 5;
+	Look_Change();
 	return S_OK;
 }
 
@@ -48,11 +49,9 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 			Patroll(fTimeDelta);
 		}
 	}
-
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
-	Look_Change(); // 임의로
-	/*Player_Chase(fTimeDelta);*/
+	Look_Change(); 
 	m_pTransForm->m_vScale = { 1.5f, 1.5f, 1.f };
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
@@ -107,17 +106,100 @@ HRESULT CPig::Add_Component()
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
 	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_happy", pComponent });
 
-	 /*pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_up"));
-	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_up", pComponent });
 
-	 pComponent = m_pTextureCom[LOOK_LEFT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
+	 //IDLE
+	 pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_idle_down"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_idle_down", pComponent });
 
-	 pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_walk_side"));
+	 pComponent = m_pTextureCom[LOOK_UP][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_idle_up"));
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
-	 m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_walk_side", pComponent });*/
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_idle_up", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_LEFT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_idle_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_idle_side", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_RIGHT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_idle_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_idle_side", pComponent });
+
+	 //WALK
+	 pComponent = m_pTextureCom[LOOK_DOWN][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_walk_down"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_walk_down", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_UP][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_walk_up"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_walk_up", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_LEFT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_walk_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_walk_side", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_RIGHT][WALK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_walk_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_walk_side", pComponent });
+
+	 //RUN
+	 pComponent = m_pTextureCom[LOOK_DOWN][RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_run_down"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_run_down", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_UP][RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_run_up"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_run_up", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_LEFT][RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_run_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_run_side", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_RIGHT][RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_run_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_run_side", pComponent });
+
+	 //ATTACK
+	 pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_atk_down"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_atk_down", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_UP][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_atk_up"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_atk_up", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_LEFT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_atk_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_atk_side", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_RIGHT][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_atk_side"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_atk_side", pComponent });
+
+	 //EAT
+	 pComponent = m_pTextureCom[LOOK_DOWN][EAT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_eat"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_eat", pComponent });
+
+	 //HIT
+	 pComponent = m_pTextureCom[LOOK_LEFT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_hit"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_hit", pComponent });
+
+	 pComponent = m_pTextureCom[LOOK_DOWN][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_hit"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_hit", pComponent });
+
+	 //DEAD
+	 pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_dead"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_dead", pComponent });
+
+	 //ANGRY
+	 pComponent = m_pTextureCom[LOOK_DOWN][ANGRY_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Pig_angry"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_angry", pComponent });
+
+
 #pragma endregion TEXCOM
 	
 
@@ -151,39 +233,55 @@ void CPig::Player_Chase(const _float& fTimeDelta)
 
 void CPig::State_Change()
 {
-	enum PiGSTATE { IDLE, HAPPY, WALK, EAT, ANGRY_IDLE, RUN, ATTACK, SLEEP, DEAD, STATE_END };
+	
 	if (m_ePreState != m_eCurState)
 	{
 		switch (m_eCurState)
 		{
 		case IDLE:
+			m_fFrameEnd = 7;
 			break;
 		case HAPPY:
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
 			break;
-		case WALK:
-			m_fFrameEnd = 20;
-			break;
-		case EAT:
+		case ANGRY_IDLE:
+			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
 			break;
-		case ANGRY_IDLE:
+		case WALK:
+			m_fFrameEnd = 8;
+			break;
+		case EAT:
+			m_fFrameEnd = 16;
+			m_eCurLook = LOOK_DOWN;
 			break;
 		case RUN:
+			m_fFrameEnd = 6;
 			break;
 		case ATTACK:
+			m_fFrameEnd = 10;
 			break;
 		case SLEEP:
+			m_eCurLook = LOOK_DOWN;
 			break;
-	
-
-
+		case HIT:
+			if (m_eCurLook != LOOK_LEFT)
+			{
+				m_eCurLook = LOOK_DOWN;
+			}
+			m_fFrameEnd = 6;
+			break;
 		case DEAD:
+			m_fFrameEnd = 11;
+			m_eCurLook = LOOK_DOWN;
+			break;
+		case ERASE:
+			m_fFrameEnd = 5;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		}
-
+		m_fFrame = 0.f;
 		m_ePreState = m_eCurState;
 
 	}
@@ -191,7 +289,7 @@ void CPig::State_Change()
 
 void CPig::Die_Check()
 {
-	if (m_Stat.fHP <= 0 && m_ePreState != DEAD)
+	if (m_Stat.fHP <= 0 && m_ePreState != DEAD && m_ePreState != ERASE)
 	{
 		m_eCurState = DEAD;
 		m_Stat.bDead = true;
@@ -201,8 +299,16 @@ void CPig::Die_Check()
 	{
 		if (m_fFrameEnd < m_fFrame)
 		{
+			m_eCurState = ERASE;
 			m_fFrame = m_fFrameEnd;
-			m_bFrameStop;
+		}
+	}
+	else if (m_ePreState == ERASE)
+	{
+		if (m_fFrameEnd <= m_fFrame)
+		{
+			m_bFrameStop = true;
+			this->SetDeleteObj();
 		}
 	}
 	else
@@ -211,7 +317,27 @@ void CPig::Die_Check()
 
 void CPig::Attacking(const _float& fTimeDelta)
 {
+	m_Stat.fSpeed = 5.f;
 
+	if (IsTarget_Approach(1.f) && m_ePreState != ATTACK && m_ePreState != HIT)
+	{
+		m_eCurState = ATTACK;
+	}
+	else if (m_ePreState == ATTACK)
+	{
+		if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(1.f))
+		{
+			m_eCurState = RUN;
+		}
+	}
+	else if (m_ePreState == RUN && !IsTarget_Approach(1.f))
+	{
+		Player_Chase(fTimeDelta);
+	}
+	else if (!IsTarget_Approach(1.f))
+	{
+		m_eCurState = RUN;
+	}
 
 	if (m_fFrameEnd < m_fFrame)
 		m_fFrame = 0.f;
@@ -219,11 +345,38 @@ void CPig::Attacking(const _float& fTimeDelta)
 
 void CPig::Patroll(const _float& fTimeDelta)
 {
+	m_fAcctime += fTimeDelta;
+	m_Stat.fSpeed = 1.f;
+	if (m_fFrameChange < m_fAcctime)
+	{
+		m_fAcctime = 0.f;
+		m_fFrameChange = rand() % 16;
+		int RandomPattern = rand() % 4;
+		m_eCurState = (PiGSTATE)RandomPattern;
+		if (m_eCurState == WALK)
+		{
+			int randomValue = rand() % 360;
+			int randomValue2 = rand() % 360;
+			int sign = (rand() % 2 == 0) ? 1 : -1;
+			int sign2 = (rand() % 2 == 0) ? 1 : -1;
+			int result = randomValue * sign;
+			int result2 = randomValue2 * sign2;
+			m_vDir = { (float)result,0.f,(float)result2 };
+			D3DXVec3Normalize(&m_vDir, &m_vDir);
+		}
+
+	}
+	else if (m_ePreState == WALK)           //걷기일때 방향으로 이동.
+	{
+		/*const _vec3* _vDir, const _float& fSpeed, const _float& fTimeDelta*/
+		m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+	}
+
 	if (m_fFrameEnd < m_fFrame)
 		m_fFrame = 0.f;
 
-
 }
+
 
 CPig* CPig::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {

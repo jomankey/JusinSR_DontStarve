@@ -14,8 +14,6 @@
 //Manager
 #include "CInventoryMgr.h"
 
-
-
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
 {
@@ -46,6 +44,9 @@ HRESULT CPlayer::Ready_GameObject()
 	m_eCurState = IDLE;
 	m_ePreState = STATE_END;
 	m_ePlayerLookAt = LOOK_DOWN;
+
+	m_eCurWeapon = UNARMED;
+	m_ePreWeapon = WEAPON_END;
 
 	m_Dirchange = false;
 	m_fFrameEnd = 22;
@@ -121,6 +122,8 @@ HRESULT CPlayer::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
 #pragma region TEXCOM
+
+	//IDLE
 	pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_down", pComponent });
@@ -128,7 +131,6 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTextureCom[LOOK_UP][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_up", pComponent });
-
 
 	pComponent = m_pTextureCom[LOOK_LEFT][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_idle_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -138,6 +140,8 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_idle_side", pComponent });
 
+
+	//RUN(UNARMED)
 	pComponent = m_pTextureCom[LOOK_DOWN][MOVE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_run_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_down", pComponent });
@@ -154,6 +158,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Player_Unarmed_run_side", pComponent });
 
+	//Build
 	pComponent = m_pTextureCom[LOOK_DOWN][BUILD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_build_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_down", pComponent });
@@ -170,6 +175,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_build_side", pComponent });
 
+	//Pickup
 	pComponent = m_pTextureCom[LOOK_UP][PICKUP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_pickup_up"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_up", pComponent });
@@ -186,6 +192,8 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_pickup_side", pComponent });
 
+
+	//Hit
 	pComponent = m_pTextureCom[LOOK_DOWN][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_hit_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_down", pComponent });
@@ -202,6 +210,8 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_hit_side", pComponent });
 
+
+	//Attack
 	pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Unarmed_punch_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_down", pComponent });
@@ -218,6 +228,42 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Unarmed_punch_side", pComponent });
 
+	//Torch(IDLE)
+	pComponent = m_pTextureCom[LOOK_DOWN][TORCH_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_idle_down"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_idle_down", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_UP][TORCH_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_idle_up"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_idle_up", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_RIGHT][TORCH_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_idle_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_idle_side", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_LEFT][TORCH_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_idle_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_idle_side", pComponent });
+
+	//Torch(Run)
+	pComponent = m_pTextureCom[LOOK_DOWN][TORCH_RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_run_down"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_run_down", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_UP][TORCH_RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_run_up"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_run_up", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_RIGHT][TORCH_RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_run_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_run_side", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_LEFT][TORCH_RUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_Torch_run_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_run_side", pComponent });
+
+
+	//Other
 	pComponent = m_pTextureCom[LOOK_DOWN][FALLDOWN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_falldown"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_falldown", pComponent });
@@ -292,7 +338,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
 
-		m_eCurState = MOVE;
+		if (m_eCurWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
+		}
+		else if (m_eCurWeapon == UNARMED)
+		{
+			m_eCurState = MOVE;
+		}
 		m_ePlayerLookAt = LOOK_UP;
 	}
 
@@ -321,7 +374,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-		m_eCurState = MOVE;
+		if (m_eCurWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
+		}
+		else if(m_eCurWeapon == UNARMED)
+		{
+			m_eCurState = MOVE;
+		}
 		m_ePlayerLookAt = LOOK_DOWN;
 
 	}
@@ -336,7 +396,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
 
-		m_eCurState = MOVE;
+		if (m_eCurWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
+		}
+		else if (m_eCurWeapon == UNARMED)
+		{
+			m_eCurState = MOVE;
+		}
 		m_ePlayerLookAt = LOOK_LEFT;
 		if (!m_Dirchange)
 		{
@@ -355,7 +422,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Set_Pos(vCurPos);
 
-		m_eCurState = MOVE;
+		if (m_eCurWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
+		}
+		else if (m_eCurWeapon == UNARMED)
+		{
+			m_eCurState = MOVE;
+		}
 		m_ePlayerLookAt = LOOK_RIGHT;
 		if (m_Dirchange)
 		{
@@ -370,7 +444,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		!GetAsyncKeyState('D'))
 	{
 
-		m_eCurState = IDLE;
+		if (m_eCurWeapon == TORCH)
+		{
+			m_eCurState = TORCH_IDLE;
+		}
+		else if (m_eCurWeapon == UNARMED)
+		{
+			m_eCurState = IDLE;
+		}
 	}
 
 	if (GetAsyncKeyState('F')) // 공격
@@ -422,7 +503,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('G'))
 	{
-		m_eCurState = HIT;
+		m_eCurWeapon = TORCH;
 	}
 	if (GetAsyncKeyState('V')) // 줍기
 	{
@@ -525,6 +606,7 @@ void CPlayer::Check_State()
 		if (m_eCurState == IDLE)
 		{
 			m_fFrameEnd = 22;
+			
 		}
 		else if (m_eCurState == HIT)
 		{
@@ -545,6 +627,18 @@ void CPlayer::Check_State()
 		else if (m_eCurState == EAT)
 		{
 			m_fFrameEnd = 36;
+		}
+		else if (m_eCurState == MOVE)
+		{
+			m_fFrameEnd = 6;
+		}
+		else if (m_eCurState == TORCH_IDLE)
+		{
+			m_fFrameEnd = 22;
+		}
+		else if (m_eCurState == TORCH_RUN)
+		{
+			m_fFrameEnd = 6;
 		}
 		else
 		{
@@ -612,6 +706,7 @@ void CPlayer::Set_Stat()
 	m_Stat.bDead = false;
 
 }
+
 
 //못찾았을경우 nullptr반환
 CGameObject* CPlayer::Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget)

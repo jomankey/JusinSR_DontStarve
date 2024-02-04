@@ -55,7 +55,7 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene()
 {
-
+	srand(unsigned(time(NULL)));
 	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
 	{
 		m_arrLayer[i] = CLayer::Create();
@@ -125,7 +125,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(3.f, 3.f, 3.f));
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
@@ -139,24 +139,25 @@ HRESULT CStage::Ready_Layer_GameLogic()
 
 	/*for (_int i = 0; i < 5; ++i)
 =======
-
-	for (_int i = 0; i < 1; ++i)
+*/
+	for (_int i = 0; i < 10; ++i)
 	{
-		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
+		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 	}
-	for (_int i = 0; i < 5; ++i)
+	
+	for (_int i = 0; i < 10; ++i)
 	{
-		pGameObject = CSpider::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
+		pGameObject = CSpider::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 	}
-	for (_int i = 0; i < 5; ++i)
+	for (_int i = 0; i < 10; ++i)
 	{
-		pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
+		pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 	}
 	//for (_int i = 0; i < 10; ++i)
 	//{

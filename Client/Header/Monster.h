@@ -19,6 +19,7 @@ public:
 protected:
 	virtual void		Set_ObjStat() PURE;
 	virtual void		State_Change() PURE;
+
 	void				Player_Chase(const _float& fTimeDelta);
 	_bool		IsTarget_Approach(float _fDistance);		//플레이어상대로 가까운지 검사하는 함수
 	void		Look_Change();
@@ -36,9 +37,9 @@ protected:
 	//프레임
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
-	_float				m_fAcctime;		//시간 누적용 변수
+	_float				m_fAcctime;				//시간 누적용 변수
 	_int				m_fFrameChange = 0;		//프레임이 바뀌어야 하는 경우에 사용함.
-	_bool				m_bFrameStop;		//프레임을 멈춰야 할 때 true로 바꿔줘
+	_bool				m_bFrameStop;			//프레임을 멈춰야 할 때 true로 바꿔줘
 	
 };
 

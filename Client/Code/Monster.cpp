@@ -43,7 +43,7 @@ void CMonster::Set_Attack(_float _fAttack)
 		m_Stat.fHP -= _fAttack;
 		if (!m_Attacked)
 		{
-			m_Attacked = true;
+			m_Attacked = true;		
 		}
 	}
 	else
@@ -64,9 +64,11 @@ void CMonster::Player_Chase(const _float& fTimeDelta)
 
 _bool CMonster::IsTarget_Approach(float _fDistance)
 {
-	_vec3 vTargetPos, vPos;
+	_vec3 vTargetPos, vPos,vDir;
 	vTargetPos = Get_Player_Pos();
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	vTargetPos.y = 0.f;
+	vPos.y = 0.f;
 	if (D3DXVec3Length(&(vTargetPos - vPos)) < _fDistance)
 	{
 		return true;
