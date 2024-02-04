@@ -88,23 +88,6 @@ void CSlideUI::Render_GameObject()
 
 }
 
-BOOL CSlideUI::UI_Collision(CUI* _TargetUI)
-{
-    GetCursorPos(&m_MousePoint);
-    ScreenToClient(g_hWnd, &m_MousePoint);
-
-    if (nullptr != _TargetUI) {
-        if (_TargetUI->GetX() - (_TargetUI->GetSizeX()) < m_MousePoint.x && m_MousePoint.x < _TargetUI->GetX() + (_TargetUI->GetSizeX()))
-            if (_TargetUI->GetY() - (_TargetUI->GetSizeY()) < m_MousePoint.y && m_MousePoint.y < _TargetUI->GetY() + (_TargetUI->GetSizeY()))
-            {
-                return true;
-            }
-            else
-                return false;
-        else
-            return false;
-    }
-}
 
 CSlideUI* CSlideUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {

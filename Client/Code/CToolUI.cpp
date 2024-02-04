@@ -134,7 +134,7 @@ CToolUI* CToolUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, const _tchar* _UI_Name)
 
 
 
-
+    
     return pInstance;
 }
 

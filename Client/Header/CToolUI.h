@@ -32,6 +32,11 @@ public:
 
 	const CUI* GetAliveUI() { return m_pAliveUI; }
 	const CUI* GetEquimentI() { return m_pEquimentUI; }
+	const CUI* GetLightUI() { return m_pLightUI; }
+	const CUI* GetScienceUI() { return m_pScienceUI; }
+	const CUI* GetClothUI() { return m_pClothUI; }
+	const CUI* GetWeaponUI() { return m_pWeaponUI; }
+
 
 
 

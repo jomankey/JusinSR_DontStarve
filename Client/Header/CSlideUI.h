@@ -13,7 +13,7 @@ public:
 
 	void SetSlideOnAndOff(bool _State) { m_bSlideOn = _State; };
 
-	virtual BOOL UI_Collision(CUI* _TargetUI);
+
 	 
 
 public:

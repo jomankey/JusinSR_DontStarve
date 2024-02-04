@@ -195,6 +195,7 @@ CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _ve
 	if (m_pToolUI == nullptr)
 	{
 		m_pToolUI = CToolUI::Create(pGraphicDev, _UI_Name);
+		
 	}
 
 
