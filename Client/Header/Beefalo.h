@@ -13,7 +13,7 @@ class CCalculator;
 }
 class CBeefalo : public CMonster
 {
-	enum BEEFALOSTATE { IDLE, GRAZE, WALK,ATTACK,RUN, MADRUN, SLEEP, DEAD, STATE_END };
+	enum BEEFALOSTATE { IDLE, GRAZE, WALK,ATTACK,RUN, MADRUN, SLEEP,HIT, DEAD,ERASE, STATE_END };
 private:
 	explicit CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
 	explicit CBeefalo(const CBeefalo& rhs);
@@ -31,6 +31,7 @@ private:
 	void			 Die_Check();
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
+	
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
@@ -39,6 +40,7 @@ private:
 
 	BEEFALOSTATE		m_eCurState;
 	BEEFALOSTATE		m_ePreState;
+	_bool				m_bHit;
 public:
 	static CBeefalo* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 

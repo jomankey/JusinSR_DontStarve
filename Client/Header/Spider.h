@@ -14,7 +14,7 @@ class CCalculator;
 }
 class CSpider : public CMonster
 {
-	enum SPIDERSTATE { IDLE, WALK,ATTACK, SLEEP, DEAD, STATE_END };
+	enum SPIDERSTATE { IDLE, WALK,ATTACK, SLEEP,HIT, DEAD, ERASE,STATE_END };
 
 private:
 	explicit CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
@@ -37,6 +37,7 @@ private:
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
 	void			Die_Check();
+	
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;

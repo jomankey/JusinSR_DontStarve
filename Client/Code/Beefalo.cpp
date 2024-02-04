@@ -6,6 +6,7 @@ CBeefalo::CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos)
     , m_eCurState(WALK)
     , m_ePreState(STATE_END)
+    , m_bHit(false)
 {
 }
 
@@ -224,9 +225,15 @@ void CBeefalo::State_Change()
         case MADRUN:
             m_fFrameEnd = 4;
             break;
+        case HIT:
+            break;
         case DEAD:
             m_fFrameEnd = 12;
             m_eCurLook = LOOK_RIGHT;
+            break;
+        case ERASE:
+            m_fFrameEnd = 5;
+            m_eCurLook = LOOK_DOWN;
             break;
         }
         m_fFrame = 0.f;
@@ -236,7 +243,7 @@ void CBeefalo::State_Change()
 
 void CBeefalo::Die_Check()
 {
-    if (m_Stat.fHP <= 0 && m_ePreState != DEAD)
+    if (m_Stat.fHP <= 0 && m_ePreState != DEAD && m_ePreState != ERASE)
     {
         m_eCurState = DEAD;
         m_Stat.bDead = true;
@@ -257,7 +264,7 @@ void CBeefalo::Die_Check()
 void CBeefalo::Attacking(const _float& fTimeDelta)
 {
     m_Stat.fSpeed = 5.f;
-    if (IsTarget_Approach(1.f) && m_ePreState != ATTACK)
+    if (IsTarget_Approach(1.f) && m_ePreState != ATTACK && m_ePreState != HIT)
     {
         m_eCurState = ATTACK;
     }
@@ -326,6 +333,7 @@ void CBeefalo::Patroll(const _float& fTimeDelta)
         m_fFrame = 0.f;
     
 }
+
 
 CBeefalo* CBeefalo::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {
