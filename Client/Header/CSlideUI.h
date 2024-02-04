@@ -25,7 +25,7 @@ public:
 private:
 
 	_float m_fMinSlide = 20.0f;
-	_float m_fMaxSlide = 200.0f;
+	_float m_fMaxSlide = 100.0f;
 	_float m_fSlideSpeed = 200.0f;
 	BOOL m_bSlideOn = false; 
 	BOOL m_bSlideOff = false; 

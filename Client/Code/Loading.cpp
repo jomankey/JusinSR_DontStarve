@@ -240,10 +240,8 @@ HRESULT CLoading::Loading_UI_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Equipment", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Equipment.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Cloth", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Cloth.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Armor_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Armor_Panel.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_Default", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_Default.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_Off", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_Off.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_On", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_On.png")), E_FAIL);
-
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Hand_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Hand_Panel.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Head_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Head_Panel.png")), E_FAIL);
 
 	//Right_Top UI
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_HP", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/HP/HP__%03d.png",20)), E_FAIL);
@@ -259,6 +257,11 @@ HRESULT CLoading::Loading_UI_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Linked_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Linked_Panel.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Panel.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Explain_PopUp_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Explain_PopUp_Panel.png")), E_FAIL);
+
+
+	//Pop_Up UI Botton
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_Button_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_Button__%03d.png", 3)), E_FAIL);
+
 	return S_OK;
 }
 

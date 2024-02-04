@@ -34,6 +34,16 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
     return 0;
 }
 
+void CExplainPanel::Render_GameObject()
+{
+
+
+
+    __super::Render_GameObject();
+
+
+}
+
 CExplainPanel* CExplainPanel::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {
     CExplainPanel* pInstance = new CExplainPanel(pGraphicDev, _State, _UI_Name);

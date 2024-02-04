@@ -28,20 +28,12 @@ _int CEquiment::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	//if (UI_Collision() && Engine::Get_DIMouseState(DIM_LB) & 0x80)
-	//{
-	//	if (m_bSlideState)
-	//	{
-	//		Pop_SidePanel(true);
-	//
-	//	}
-	//
-	//}
-	//else
-	//{
-	//	Pop_SidePanel(false);
-	//}
-	//
+	if (UI_Collision() && Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	{
+		Pop_SidePanel(true);
+	
+	}
+	
 	return 0;
 }
 

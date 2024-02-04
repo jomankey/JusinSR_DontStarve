@@ -131,6 +131,21 @@ BOOL CUI::UI_Collision()
 
 }
 
+BOOL CUI::UI_Collision(CUI* _Target)
+{
+
+if (_Target->m_fX - (_Target->m_fSizeX) < m_MousePoint.x && m_MousePoint.x < _Target->m_fX + (_Target->m_fSizeX))
+		if (_Target->m_fY - (_Target->m_fSizeY) < m_MousePoint.y && m_MousePoint.y < _Target->m_fY + (_Target->m_fSizeY))
+		{
+			return true;
+		}
+		else
+			return false;
+	else
+		return false;
+	
+}
+
 BOOL CUI::MouseDistanceOver()
 {
 	GetCursorPos(&m_MousePoint);
