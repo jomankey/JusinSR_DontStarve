@@ -109,7 +109,6 @@ HRESULT CBeefalo::Add_Component()
     m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
 
 #pragma region TEXCOM
-
     //Graze
     pComponent = m_pTextureCom[LOOK_DOWN][GRAZE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_graze"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
