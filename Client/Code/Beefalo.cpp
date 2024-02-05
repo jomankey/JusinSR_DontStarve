@@ -41,7 +41,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     {
         m_fFrame = m_fFrameEnd;
     }
-    HRESULT result = Die_Check();
+    Die_Check();
     if (!m_Stat.bDead)      //죽은 상태가 아닐때 진입
     {
         if (m_Attacked)     //공격받았을때 진입
@@ -58,7 +58,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     Look_Change();
     
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
-    return result;
+    return 0;
 }
 
 void CBeefalo::LateUpdate_GameObject()

@@ -139,9 +139,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
-<<<<<<< HEAD
-	/*for (_int i = 0; i < 1; ++i)
-=======
 	/*for (_int i = 0; i < 5; ++i)
 =======
 */
@@ -183,7 +180,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
 	//}
-<<<<<<< HEAD
 	/*for (_int i = 0; i < 10; ++i)
 	{
 		pGameObject = CObjectTree::Create(m_pGraphicDev);
@@ -205,9 +201,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-=======
->>>>>>> eef24bfbcde16923d9e79905c27c861e6f274dcc
-
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	//for (_int i = 0; i < 10; ++i)
 	//{
@@ -300,8 +293,6 @@ HRESULT CStage::Ready_Layer_UI()
 		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 	}
 
-<<<<<<< HEAD
-=======
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(680.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -341,7 +332,6 @@ HRESULT CStage::Ready_Layer_UI()
 	//After UI struct 
 	//-------------------------------------------
 
->>>>>>> eef24bfbcde16923d9e79905c27c861e6f274dcc
 	//장비 슬롯
 	//pGameObject = CEquiment::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
