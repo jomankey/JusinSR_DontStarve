@@ -14,7 +14,7 @@ public:
 	virtual void Render_GameObject()						 override;
 
 	void SetSlideOnAndOff(bool _State) { m_bSlideOn = _State; };
-
+	BOOL GetSlideOn() { return m_bSlideOn; };
 
 	 
 

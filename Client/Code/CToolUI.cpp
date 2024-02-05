@@ -60,11 +60,12 @@ void CToolUI::SetGameData(CItemTool* _ItemTool, eITEMTOOL_TYPE _ItemType)
 }
 
 
-void CToolUI::Pop_SidePanel(bool _state)
+void CToolUI::Pop_SidePanel()
 {
         for (int i = 0; i < 5; i++)
         {
-            dynamic_cast<CSlideUI*>(m_pSlideUI[i])->SetSlideOnAndOff(_state);
+            _bool bUI = dynamic_cast<CSlideUI*>(m_pSlideUI[i])->GetSlideOn();
+            dynamic_cast<CSlideUI*>(m_pSlideUI[i])->SetSlideOnAndOff(!bUI);
         }
 
     

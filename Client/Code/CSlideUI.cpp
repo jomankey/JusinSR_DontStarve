@@ -30,16 +30,16 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 {
 
 	//테스트용
-   // if (GetAsyncKeyState('K'))
-   // {
-   //     m_bSlideOn = true;
-   // }
-   //
-   // if (GetAsyncKeyState('O'))
-   // {
-   //     m_bSlideOn = false;
-   // }
-   //
+  if (GetAsyncKeyState('K'))
+  {
+      m_bSlideOn = true;
+  }
+  
+  if (GetAsyncKeyState('O'))
+  {
+      m_bSlideOn = false;
+  }
+  
 	__super::Update_GameObject(fTimeDelta);
 	FindExplainPanel();
 
