@@ -50,9 +50,6 @@ HRESULT CToolMgr::Setup_Imgui()
     ImGui_ImplWin32_Init(g_hWnd);
     ImGui_ImplDX9_Init(m_pGraphicDev);
 
-    m_pTileTexture.push_back(dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Tile_Grass_1")));
-    m_pTileTexture.push_back(dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Tile_Grass_2")));
-
 	return S_OK;
 }
 

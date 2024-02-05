@@ -1,7 +1,9 @@
 #include "ToolTile.h"
 #include "Export_Utility.h"
-CToolTile::CToolTile(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+#include "Export_System.h"
+
+CToolTile::CToolTile(LPDIRECT3DDEVICE9 pGraphicDev, _int iNum)
+	: CGameObject(pGraphicDev), m_iNum(iNum)
 {
 }
 
@@ -12,7 +14,6 @@ CToolTile::~CToolTile()
 HRESULT CToolTile::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
 	return S_OK;
 }
 
@@ -20,7 +21,7 @@ _int CToolTile::Update_GameObject(const _float& fTimeDelta)
 {
 
 	__super::Update_GameObject(fTimeDelta);
-
+	//renderer::Add_RenderGroup(RENDER_NONALPHA, this);
 	return 0;
 }
 
@@ -45,25 +46,24 @@ HRESULT CToolTile::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
+	pComponent = m_pBufferCom = dynamic_cast<CCubeTex*>(proto::Clone_Proto(L"Proto_CubeTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_CubeTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Object_Stone"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_BurgerCube"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Stone", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_BurgerCube", pComponent });
 
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransformCom->Set_Pos(m_vPos.x, 1.2f, m_vPos.z);
 
 	return S_OK;
 }
 
-CToolTile* CToolTile::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CToolTile* CToolTile::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iNum)
 {
-	CToolTile* pInstance = new CToolTile(pGraphicDev);
+	CToolTile* pInstance = new CToolTile(pGraphicDev, iNum);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

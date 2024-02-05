@@ -1,19 +1,11 @@
 #pragma once
 #include "Export_Utility.h"
 
-BEGIN(Engine)
-
-class CTerrainTex;
-class CTexture;
-class CCalculator;
-
-END
-
 class CToolTile :
     public CGameObject
 {
 private:
-    explicit CToolTile(LPDIRECT3DDEVICE9 pGraphicDev);
+    explicit CToolTile(LPDIRECT3DDEVICE9 pGraphicDev, _int iNum);
     virtual ~CToolTile();
 
 public:
@@ -26,15 +18,16 @@ private:
     HRESULT Add_Component();
 
 private:
-    Engine::CRcTex* m_pBufferCom;
+    Engine::CCubeTex* m_pBufferCom;
     Engine::CTransform* m_pTransformCom;
     Engine::CTexture* m_pTextureCom;
     Engine::CCalculator* m_pCalculatorCom;
 
+    _int m_iNum;
+
 public:
-    static CToolTile* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+    static CToolTile* Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iNum);
 
 private:
     virtual void Free();
 };
-

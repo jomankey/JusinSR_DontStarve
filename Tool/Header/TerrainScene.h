@@ -22,7 +22,6 @@ private:
 private:
 	HRESULT			Ready_Layer_Environment();
 	HRESULT			Ready_Layer_GameLogic( );
-	HRESULT			Ready_Layer_UI();
 	HRESULT			Ready_LightInfo();
 
 private:

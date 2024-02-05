@@ -37,7 +37,11 @@ _int CLayer::UpdateLayer(const _float& fTimeDelta)
 			iResult = iter->Update_GameObject(fTimeDelta);
 
 			if (iResult & 0x80000000)
+			{
+				
 				return iResult;
+			}
+				
 		}
 	}
 

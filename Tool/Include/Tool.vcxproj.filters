@@ -31,9 +31,6 @@
     <Filter Include="02. Object">
       <UniqueIdentifier>{34b5dd24-5558-429b-bc3b-1a7947e7ff90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\ToolTerrain">
-      <UniqueIdentifier>{136b493d-7b8d-4c7a-9247-7491f75cecbb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Object\ToolCamera">
       <UniqueIdentifier>{c18c0c8f-ed0c-420c-bccd-bb8eaa84164d}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,24 @@
     </Filter>
     <Filter Include="02. Object\02. Item">
       <UniqueIdentifier>{dc895043-ec1d-4daf-b243-267d41b7956b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Stage1">
+      <UniqueIdentifier>{97ac9209-92a9-4dd3-9e8b-07ba10195908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\Stage2">
+      <UniqueIdentifier>{0a24213e-5534-4993-a5bb-e1bc85562461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Terrain">
+      <UniqueIdentifier>{fbc69f4a-8083-4514-ab3e-11031f7cb0ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Terrain\ToolTerrain">
+      <UniqueIdentifier>{136b493d-7b8d-4c7a-9247-7491f75cecbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Terrain\ToolCubeTerrain">
+      <UniqueIdentifier>{818527b5-36d5-44f2-84ba-bddc83d8fca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Terrain\ToolCubeTerrain\Tile">
+      <UniqueIdentifier>{518debe5-496e-436d-948a-b6e5db6d39a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,10 +124,7 @@
       <Filter>00. MainTool</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolTerrain.h">
-      <Filter>02. Object\ToolTerrain</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TerrainScene.h">
-      <Filter>01. Scene</Filter>
+      <Filter>02. Object\Terrain\ToolTerrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolCamera.h">
       <Filter>02. Object\ToolCamera</Filter>
@@ -144,6 +156,18 @@
     <ClInclude Include="..\Header\ToolMonster.h">
       <Filter>02. Object\00. Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\TerrainScene.h">
+      <Filter>01. Scene\Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SubScene.h">
+      <Filter>01. Scene\Stage2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolCubeTerrain.h">
+      <Filter>02. Object\Terrain\ToolCubeTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolTile.h">
+      <Filter>02. Object\Terrain\ToolCubeTerrain\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Tool.cpp">
@@ -174,10 +198,7 @@
       <Filter>00. MainTool</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolTerrain.cpp">
-      <Filter>02. Object\ToolTerrain</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TerrainScene.cpp">
-      <Filter>01. Scene</Filter>
+      <Filter>02. Object\Terrain\ToolTerrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolCamera.cpp">
       <Filter>02. Object\ToolCamera</Filter>
@@ -208,6 +229,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\ToolMonster.cpp">
       <Filter>02. Object\00. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainScene.cpp">
+      <Filter>01. Scene\Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SubScene.cpp">
+      <Filter>01. Scene\Stage2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolCubeTerrain.cpp">
+      <Filter>02. Object\Terrain\ToolCubeTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolTile.cpp">
+      <Filter>02. Object\Terrain\ToolCubeTerrain\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
