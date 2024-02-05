@@ -31,6 +31,7 @@ private:
 	void			 Die_Check();
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
+	virtual void	Set_Hit()						override;
 	
 private:
 	Engine::CRcTex* m_pBufferCom;

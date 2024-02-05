@@ -14,14 +14,16 @@ public:
 
 public:
 	OBJSTAT Get_Monster_Stat() { return m_Stat; }
-public:
+	_bool		IsTarget_Approach(float _fDistance);
+protected:
 	virtual void Free() override;
 protected:
 	virtual void		Set_ObjStat() PURE;
 	virtual void		State_Change() PURE;
+	virtual void		Set_Hit()PURE;
 
 	void				Player_Chase(const _float& fTimeDelta);
-	_bool		IsTarget_Approach(float _fDistance);		//플레이어상대로 가까운지 검사하는 함수
+			//플레이어상대로 가까운지 검사하는 함수
 	void		Look_Change();
 	_vec3		Get_Player_Pos();
 protected:
@@ -32,7 +34,7 @@ protected:
 	OBJSTAT		m_Stat;		//스탯
 	_bool		m_Dirchange; //false 일때 오른쪽 보기
 	_bool		m_Attacked;	//공격당했는지 아닌지 검사하는 변수
-	
+	_bool		m_bHit;
 
 	//프레임
 	_float				m_fFrame = 0.f;

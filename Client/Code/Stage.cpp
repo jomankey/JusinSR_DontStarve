@@ -145,10 +145,9 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	/*for (_int i = 0; i < 5; ++i)
 =======
 */
-	for (_int i = 0; i < 10; ++i)
->>>>>>> eef24bfbcde16923d9e79905c27c861e6f274dcc
+	for (_int i = 0; i < 1; ++i)
 	{
-		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
+		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(64.f, 1.5f, 64.f));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 	}
