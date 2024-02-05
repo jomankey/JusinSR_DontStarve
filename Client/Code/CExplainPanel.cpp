@@ -28,8 +28,13 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 {
 
     __super::Update_GameObject(fTimeDelta);
+   // if (m_bShow)
+   // {
+   //     m_fX = m_MousePoint.x + 50.f;
+   //     m_fY= m_MousePoint.y;
+   //
+   // }
 
-    if(UI_Collision())
 
 
 
@@ -38,13 +43,19 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 
 void CExplainPanel::Render_GameObject()
 {
-
-
+    if (!m_bShow)
+		return;
+    m_pToolItemName= L"TestItemName";
+    m_pExplainName = L"TestExplainName";
+    Engine::Render_Font(L"Font_Count", m_pToolItemName, &_vec2(m_fX-40, m_fY-40.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Font_Count", m_pExplainName, &_vec2(m_fX-40, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
     __super::Render_GameObject();
 
 
+
 }
+
 
 CExplainPanel* CExplainPanel::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {

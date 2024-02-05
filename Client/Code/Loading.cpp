@@ -234,7 +234,7 @@ HRESULT CLoading::Loading_Boss_Texture()
 HRESULT CLoading::Loading_UI_Texture()
 {
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Inven_Slot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Inven_Slot.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Inven_Slot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Inven_Slot_%03d.png",2)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Weapon", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Weapon.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Light", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Light.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Alive", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Alive.png")), E_FAIL);
@@ -256,8 +256,8 @@ HRESULT CLoading::Loading_UI_Texture()
 
 
 	//Pop_Up UI
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Linked_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Linked_Panel.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Panel.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Linked_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Linked_Panel.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Panel_%03d.png",2)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Explain_PopUp_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Explain_PopUp_Panel.png")), E_FAIL);
 
 

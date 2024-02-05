@@ -48,6 +48,12 @@ public:
 	_float GetY() { return m_fY; }
 	_float GetSizeX() { return m_fSizeX; }
 	_float GetSizeY() { return m_fSizeY; }
+
+
+	void SetX(_float _x) { m_fX = _x; }
+	void SetY(_float _y) { m_fY = _y; }
+	void SetSizeX(_float _x) { m_fSizeX = _x; }
+	void SetSizeY(_float _y) { m_fSizeY = _y; }
 public:
 	const CUI* GetToolUI() { return m_pToolUI; }
 

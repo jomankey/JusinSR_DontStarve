@@ -176,6 +176,7 @@
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
     <ClInclude Include="..\Header\CAliveUI.h" />
+    <ClInclude Include="..\Header\CButtonUI.h" />
     <ClInclude Include="..\Header\CClothUI.h" />
     <ClInclude Include="..\Header\CEquiment.h" />
     <ClInclude Include="..\Header\CExplainPanel.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="..\Header\CObjectTree.h" />
     <ClInclude Include="..\Header\CPigHouse.h" />
     <ClInclude Include="..\Header\CScienceUI.h" />
+    <ClInclude Include="..\Header\CSlideBox.h" />
     <ClInclude Include="..\Header\CSlideUI.h" />
     <ClInclude Include="..\Header\CToolUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
@@ -221,6 +223,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
     <ClCompile Include="..\Code\CAliveUI.cpp" />
+    <ClCompile Include="..\Code\CButtonUI.cpp" />
     <ClCompile Include="..\Code\CClothUI.cpp" />
     <ClCompile Include="..\Code\CEquiment.cpp" />
     <ClCompile Include="..\Code\CExplainPanel.cpp" />
@@ -239,6 +242,7 @@
     <ClCompile Include="..\Code\CObjectTree.cpp" />
     <ClCompile Include="..\Code\CPigHouse.cpp" />
     <ClCompile Include="..\Code\CScienceUI.cpp" />
+    <ClCompile Include="..\Code\CSlideBox.cpp" />
     <ClCompile Include="..\Code\CSlideUI.cpp" />
     <ClCompile Include="..\Code\CToolUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />

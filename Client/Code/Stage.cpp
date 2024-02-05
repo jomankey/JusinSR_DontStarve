@@ -44,6 +44,7 @@
 #include"CMentalUI.h"
 #include"CWorldUI.h"
 #include"CHungryUI.h"
+#include"CExplainPanel.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -257,6 +258,11 @@ HRESULT CStage::Ready_Layer_UI()
 	
 	//아래 판넬
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(420.f, 580.f, 0.f), _vec3(20.f, 340.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//설명 판넬
+	pGameObject = CExplainPanel::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(400.f, 300.f, 0.f), _vec3(80.f, 80.f, 0.f), L"Proto_UI_Explain_PopUp_Panel");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 

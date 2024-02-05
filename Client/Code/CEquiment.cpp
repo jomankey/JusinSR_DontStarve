@@ -30,8 +30,10 @@ _int CEquiment::Update_GameObject(const _float& fTimeDelta)
 
 	if (UI_Collision() && Engine::Get_DIMouseState(DIM_LB) & 0x80)
 	{
-		Pop_SidePanel(true);
-	
+		Pop_SidePanel();
+
+		//Pop_SidePanel(false);
+		
 	}
 	
 	return 0;

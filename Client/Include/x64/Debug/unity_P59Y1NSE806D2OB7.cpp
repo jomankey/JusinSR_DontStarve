@@ -6,6 +6,9 @@
 #include "C:\PortPolio\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CButtonUI.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CClothUI.cpp"
 
 
@@ -58,6 +61,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CScienceUI.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CSlideBox.cpp"
 
 
 #include "C:\PortPolio\Client\Code\CSlideUI.cpp"
