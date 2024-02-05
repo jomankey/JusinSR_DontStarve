@@ -123,4 +123,5 @@ void Release_Utility()
 	CSceneMgr::DestroyInstance();
 	CLightMgr::DestroyInstance();
 	CEventMgr::DestroyInstance();
+
 }

@@ -8,6 +8,13 @@ namespace Engine
 	class CTexture;
 }
 
+
+class CToolUI;
+class CAliveUI;
+class CEquiment;
+
+
+
 class CUI
 	: public Engine::CGameObject
 {
@@ -23,11 +30,30 @@ public:
 	virtual void Render_GameObject()						 override;
 
 
-
+	//자기 자신만 충돌 체크가능
 	virtual BOOL UI_Collision();
+	virtual BOOL UI_Collision(CUI* _Target);
+	virtual BOOL MouseDistanceOver();
 	virtual BOOL IsItemOn() { return m_bItemChek; }
 	virtual void SetItemOn(BOOL _ItemPut) { m_bItemChek = _ItemPut; }
+
+
 	virtual HRESULT			Add_Component();
+
+
+
+
+
+	_float GetX() { return m_fX; }
+	_float GetY() { return m_fY; }
+	_float GetSizeX() { return m_fSizeX; }
+	_float GetSizeY() { return m_fSizeY; }
+public:
+	const CUI* GetToolUI() { return m_pToolUI; }
+
+
+
+
 protected:
 	Engine::CTexture* m_pTextureCom;
 	Engine::CRcTex* m_pBufferCom;
@@ -46,5 +72,10 @@ public:
 
 public:
 	virtual void Free() override;
+
+private:
+	static  CUI* m_pToolUI;
+
+
 };
 

@@ -120,50 +120,53 @@ LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& 
 			eDir = LOOK_LEFT;
 		}
 	}
+	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 
+	_matrix		matScale, matTrans;
 
-	/*if ((angle > 0.f && angle <45.f)||(angle > 315 && angle<= 360))
-	{
-		eDir = LOOK_RIGHT;
+	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
+	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
+
+	m_matWorld = matScale * matTrans;
+
+	return eDir;
+}
+
+LOOKDIR Engine::CTransform::Patroll_LookChange(const _vec3* _vDir, const _float& fSpeed, const _float& fTimeDelta)
+{
+	LOOKDIR		eDir;
+	_vec3		vDir = *_vDir;
+	vDir.y = 0.f;
+
+	_vec3		right, up, look;
+	Get_Info(INFO_RIGHT, &right);
+	Get_Info(INFO_UP, &up);
+	Get_Info(INFO_LOOK, &look);
+
+	D3DXVec3Normalize(&vDir, &vDir);
+	D3DXVec3Normalize(&right, &right);
+	D3DXVec3Normalize(&look, &look);
+
+	float lookDot = D3DXVec3Dot(&vDir, &look);
+	float rightDot = D3DXVec3Dot(&vDir, &right);
+
+	if (fabs(lookDot) > fabs(rightDot)) {
+		if (lookDot > 0.0f) {
+			eDir = LOOK_UP;
+		}
+		else {
+			eDir = LOOK_DOWN;
+		}
 	}
-	else if (angle >= 45.f && angle < 135.f)
-	{
-		eDir = LOOK_UP;
+	else {
+		if (rightDot > 0.0f) {
+			eDir = LOOK_RIGHT;
+		}
+		else {
+			eDir = LOOK_LEFT;
+		}
 	}
-	else if (angle >= 135.f && angle < 225.f)
-	{
-		eDir = LOOK_LEFT;
-	}
-	else if (angle >= 225.f && angle < 315)
-	{
-		eDir = LOOK_DOWN;
-	}*/
 
-
-
-	//if (fabs(vDir.x) >= fabs(vDir.z)) //side
-	//{
-	//	if (vDir.x > 0) // left
-	//	{
-	//		eDir = LOOK_LEFT;
-	//	}
-	//	else   //right
-	//	{
-	//		eDir = LOOK_RIGHT;
-	//	}
-	//}
-	//else   //up down
-	//{
-	//	if (vDir.z > 0)  //down
-	//	{
-	//		eDir = LOOK_DOWN;
-	//	}
-	//	else   //up
-	//	{
-	//		eDir = LOOK_UP;
-	//	}
-	//}
-	//
 	m_vInfo[INFO_POS] += *D3DXVec3Normalize(&vDir, &vDir) * fSpeed * fTimeDelta;
 
 	_matrix		matScale, matTrans;

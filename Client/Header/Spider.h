@@ -14,7 +14,7 @@ class CCalculator;
 }
 class CSpider : public CMonster
 {
-	enum SPIDERSTATE { IDLE, WALK,ATTACK, SLEEP, DEAD, STATE_END };
+	enum SPIDERSTATE { IDLE, WALK,ATTACK, SLEEP,HIT, DEAD, ERASE,STATE_END };
 
 private:
 	explicit CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
@@ -29,8 +29,6 @@ public:
 
 private:
 	HRESULT			Add_Component();
-	void			Height_OnTerrain();
-	//void			Player_Chase(const _float& fTimeDelta); //플레이어 추격용 테스트 함수
 	virtual void			State_Change();
 	virtual void			Set_ObjStat()					override;
 	void					Set_Scale();
@@ -39,14 +37,13 @@ private:
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
 	void			Die_Check();
+	
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][SPIDERSTATE::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
 
-	_float				m_fFrame = 0.f;
-	_float				m_fFrameEnd;
 
 	SPIDERSTATE m_eCurstate;
 	SPIDERSTATE m_ePrestate;

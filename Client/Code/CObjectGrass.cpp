@@ -25,7 +25,7 @@ HRESULT CObjectGrass::Ready_GameObject()
 
 	m_eCurState = RES_IDLE;
 	m_fFrame = 0;
-	m_fFrameEnd = 175;
+	m_fFrameEnd = 28;
 	return S_OK;
 }
 
@@ -94,7 +94,7 @@ HRESULT CObjectGrass::Add_Component()
 	pComponent = m_pTextureCom[RES_DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass_dead"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass_dead", pComponent });
-	//m_MultiMap[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
+	//m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
@@ -114,9 +114,9 @@ void CObjectGrass::Check_FrameState()
 		return;
 
 	if (m_eCurState == RES_IDLE)
-		m_fFrameEnd = 175;
+		m_fFrameEnd = 28;
 	if (m_eCurState == RES_DEAD)
-		m_fFrameEnd = 40;
+		m_fFrameEnd = 7;
 
 	m_ePreState = m_eCurState;
 	m_fFrame = 0;
