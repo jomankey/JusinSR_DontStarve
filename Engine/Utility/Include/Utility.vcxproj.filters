@@ -73,6 +73,9 @@
     <Filter Include="05. EventMgr">
       <UniqueIdentifier>{71ad15df-83a6-4c29-b541-5110503ad95e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\00. VIBuffer\06. TerrainCubeTex">
+      <UniqueIdentifier>{b1f26785-f015-477c-bbd1-807d9bc819c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\CSceneMgr.h">
@@ -150,6 +153,9 @@
     <ClInclude Include="..\..\Header\CEventMgr.h">
       <Filter>05. EventMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\TerrainCubeTex.h">
+      <Filter>04. Component\00. VIBuffer\06. TerrainCubeTex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CSceneMgr.cpp">
@@ -223,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CEventMgr.cpp">
       <Filter>05. EventMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TerrainCubeTex.cpp">
+      <Filter>04. Component\00. VIBuffer\06. TerrainCubeTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

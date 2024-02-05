@@ -12,6 +12,12 @@ HRESULT CToolCubeTerrain::Ready_GameObject()
 {
 	ZeroMemory(&m_pCubeCom, sizeof(m_pCubeCom));
 
+	for (int i = 0; i < (129 * 5 * 4); ++i)
+	{
+		m_pCubeCom[i] = CToolTile::Create(m_pGraphicDev, i);
+		FAILED_CHECK_RETURN(m_pCubeCom[i], E_FAIL);
+	}
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	return S_OK;
@@ -63,13 +69,6 @@ HRESULT CToolCubeTerrain::Add_Component()
 {
 	
 	CComponent* pComponent = nullptr;
-
-	for (int i = 0; i < (129 * 5 * 4); ++i)
-	{
-		m_pCubeCom[i] = CToolTile::Create(m_pGraphicDev, i);
-		FAILED_CHECK_RETURN(m_pCubeCom[i], E_FAIL);
-	}
-	
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

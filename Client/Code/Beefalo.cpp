@@ -22,7 +22,7 @@ CBeefalo::~CBeefalo()
 
 HRESULT CBeefalo::Ready_GameObject()
 {
-    
+
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
     Set_ObjStat();
@@ -34,14 +34,14 @@ HRESULT CBeefalo::Ready_GameObject()
 
 _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
-   
+
     if (!m_bFrameStop)
         m_fFrame += m_fFrameEnd * fTimeDelta;
     else
     {
         m_fFrame = m_fFrameEnd;
     }
-    Die_Check();
+   _int iResult = Die_Check();
     if (!m_Stat.bDead)      //죽은 상태가 아닐때 진입
     {
         if (m_Attacked)     //공격받았을때 진입
@@ -56,14 +56,14 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     CGameObject::Update_GameObject(fTimeDelta);
     State_Change();
     Look_Change();
-    
+
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
-    return 0;
+    return iResult;
 }
 
 void CBeefalo::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
+    __super::LateUpdate_GameObject();
     m_pTransForm->BillBoard();
     _vec3	vPos;
     m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -72,14 +72,14 @@ void CBeefalo::LateUpdate_GameObject()
 
 void CBeefalo::Render_GameObject()
 {
-    m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	/* Set_Scale();*/
+
+    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+    m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+    /* Set_Scale();*/
 
     m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
-    FAILED_CHECK_RETURN(SetUp_Material(), );
+
 
     if (m_Dirchange)
     {
@@ -90,18 +90,17 @@ void CBeefalo::Render_GameObject()
         m_pBufferCom->Render_Buffer();
     }
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-    m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+    m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+    m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 HRESULT CBeefalo::Add_Component()
 {
-	CComponent* pComponent = nullptr;
+    CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+    pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
     pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -113,7 +112,7 @@ HRESULT CBeefalo::Add_Component()
     pComponent = m_pTextureCom[LOOK_DOWN][GRAZE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_graze"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_graze", pComponent });
-   
+
     //IDLE
     pComponent = m_pTextureCom[LOOK_DOWN][IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_idle"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -156,7 +155,7 @@ HRESULT CBeefalo::Add_Component()
     pComponent = m_pTextureCom[LOOK_RIGHT][MADRUN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_run_side"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_run_side", pComponent });
-    
+
     //ATTACK
     pComponent = m_pTextureCom[LOOK_DOWN][ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_atk_down"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -199,16 +198,16 @@ HRESULT CBeefalo::Add_Component()
     m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Erase", pComponent });
 
 #pragma endregion TEXCOM
-	
-	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+    pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
     m_pTransForm->m_vScale = { 2.f, 2.f, 2.f };
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
-	return S_OK;
+    pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+    return S_OK;
 }
 
 
@@ -271,7 +270,7 @@ void CBeefalo::State_Change()
     }
 }
 
-void CBeefalo::Die_Check()
+_int CBeefalo::Die_Check()
 {
     if (m_Stat.fHP <= 0 && m_ePreState != DEAD && m_ePreState != ERASE)
     {
@@ -287,14 +286,15 @@ void CBeefalo::Die_Check()
     }
     else if (m_ePreState == ERASE)
     {
-        if ((m_fFrameEnd-1) <= m_fFrame)
+        if ((m_fFrameEnd - 1) <= m_fFrame)
         {
             m_bFrameStop = true;
             DeleteObject(this);
+            return 0x80000000;
         }
     }
-    else
-        return;
+
+    return 0;
 }
 
 void CBeefalo::Attacking(const _float& fTimeDelta)
@@ -328,14 +328,14 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
         {
             m_bHit = false;
         }
-          
+
     }
-   
-    if(!IsTarget_Approach(7.f))
+
+    if (!IsTarget_Approach(7.f))
     {
         m_Attacked = false;
     }
-    
+
 
     if (m_fFrameEnd < m_fFrame)
         m_fFrame = 0.f;
@@ -375,7 +375,7 @@ void CBeefalo::Patroll(const _float& fTimeDelta)
 
     if (m_fFrameEnd < m_fFrame)
         m_fFrame = 0.f;
-    
+
 }
 
 void CBeefalo::Set_Hit()
@@ -396,7 +396,7 @@ CBeefalo* CBeefalo::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
         return nullptr;
     }
 
-	return pInstance;
+    return pInstance;
 }
 
 void CBeefalo::Free()

@@ -28,7 +28,7 @@ private:
 	HRESULT			Add_Component();
 	virtual void	Set_ObjStat()					override;
 	virtual void	State_Change()					override;
-	void			 Die_Check();
+	_int			 Die_Check();
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
 	virtual void	Set_Hit()						override;

@@ -31,17 +31,16 @@ _int CLayer::UpdateLayer(const _float& fTimeDelta)
 
 	for (size_t i = 0; i < (int)eOBJECT_GROUPTYPE::END; i++)
 	{
-		for (auto iter : m_vecObject[i])
+		for (auto iter = m_vecObject[i].begin(); iter != m_vecObject[i].end(); )
 		{
-			iter;
-			iResult = iter->Update_GameObject(fTimeDelta);
+			iResult = (*iter)->Update_GameObject(fTimeDelta);
 
 			if (iResult & 0x80000000)
 			{
-				
-				return iResult;
+				(*iter) = nullptr;
+				iter = m_vecObject[i].erase(iter);
 			}
-				
+			else ++iter;
 		}
 	}
 
