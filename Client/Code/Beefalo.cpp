@@ -41,7 +41,8 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     {
         m_fFrame = m_fFrameEnd;
     }
-   _int iResult = Die_Check();
+    _int iResult = Die_Check();
+
     if (!m_Stat.bDead)      //죽은 상태가 아닐때 진입
     {
         if (m_Attacked)     //공격받았을때 진입
@@ -58,6 +59,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     Look_Change();
 
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
+    
     return iResult;
 }
 
@@ -289,7 +291,8 @@ _int CBeefalo::Die_Check()
         if ((m_fFrameEnd - 1) <= m_fFrame)
         {
             m_bFrameStop = true;
-            DeleteObject(this);
+            //DeleteObject(this);
+            SetDeleteObj();
             return 0x80000000;
         }
     }

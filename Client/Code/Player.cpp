@@ -461,7 +461,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_eCurState = ATTACK;
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
-		if (dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange) && findObj->IsDelete() != true)
+		if (findObj->IsDelete() != true && dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
 		}
