@@ -37,7 +37,8 @@ _int CLayer::UpdateLayer(const _float& fTimeDelta)
 
 			if (iResult & 0x80000000)
 			{
-				(*iter) = nullptr;
+				//(*iter) = nullptr;
+				Safe_Release(*iter);
 				iter = m_vecObject[i].erase(iter);
 			}
 			else ++iter;
@@ -72,7 +73,7 @@ void Engine::CLayer::DeleteEvent()
 			}
 			else
 			{
-				(*iter) = nullptr;
+				Safe_Release(*iter);
 				iter = m_vecObject[i].erase(iter);
 			}
 		}
