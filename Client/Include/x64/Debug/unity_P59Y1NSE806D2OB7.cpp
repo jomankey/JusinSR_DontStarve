@@ -63,6 +63,9 @@
 #include "C:\PortPolio\Client\Code\CScienceUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CSlideBox.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CSlideUI.cpp"
 
 

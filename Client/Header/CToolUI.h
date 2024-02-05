@@ -2,12 +2,15 @@
 #include "CUI.h"
 
 class CSlideUI;
+
 class CItemTool;
 class CSlideUI;
 class CLightUI;
 class CScienceUI;
 class CClothUI;
 class CWeaponUI;
+class CAliveUI;
+class CEquiment;
 
 
 class CToolUI :public CUI
@@ -30,12 +33,12 @@ public:
 	void SetGameData(CItemTool* _ItemTool, eITEMTOOL_TYPE _ItemType);
 	//virtual void UpdateItemTool(eITEMTOOL_TYPE _ItemToolState);
 
-	const CUI* GetAliveUI() { return m_pAliveUI; }
-	const CUI* GetEquimentI() { return m_pEquimentUI; }
-	const CUI* GetLightUI() { return m_pLightUI; }
-	const CUI* GetScienceUI() { return m_pScienceUI; }
-	const CUI* GetClothUI() { return m_pClothUI; }
-	const CUI* GetWeaponUI() { return m_pWeaponUI; }
+	const CAliveUI* GetAliveUI() { return m_pAliveUI; }
+	const CEquiment* GetEquimentI() { return m_pEquimentUI; }
+	const CLightUI* GetLightUI() { return m_pLightUI; }
+	const CScienceUI* GetScienceUI() { return m_pScienceUI; }
+	const CClothUI* GetClothUI() { return m_pClothUI; }
+	const CWeaponUI* GetWeaponUI() { return m_pWeaponUI; }
 
 
 
@@ -53,13 +56,13 @@ protected:
 
 	BOOL m_bSlideState;
 private:
-	static  CUI* m_pAliveUI;
-	static  CUI* m_pEquimentUI;
-	static  CUI* m_pLightUI;
-	static  CUI* m_pScienceUI;
-	static  CUI* m_pClothUI;
-	static  CUI* m_pWeaponUI;
+	static  CAliveUI* m_pAliveUI;
+	static  CEquiment* m_pEquimentUI;
+	static  CLightUI* m_pLightUI;
+	static  CScienceUI* m_pScienceUI;
+	static  CClothUI* m_pClothUI;
+	static  CWeaponUI* m_pWeaponUI;
 
-	static CUI* m_pSlideUI[5];
+	static CSlideUI* m_pSlideUI[5];
 };
 

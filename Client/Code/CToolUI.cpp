@@ -17,13 +17,13 @@
 #include"CClothUI.h"
 
 
-CUI* CToolUI::m_pEquimentUI = nullptr;
-CUI* CToolUI::m_pLightUI = nullptr;
-CUI* CToolUI::m_pAliveUI = nullptr;
-CUI* CToolUI::m_pScienceUI = nullptr;
-CUI* CToolUI::m_pWeaponUI = nullptr;
-CUI* CToolUI::m_pClothUI = nullptr;
-CUI* CToolUI::m_pSlideUI[5] = {};
+CEquiment* CToolUI::m_pEquimentUI = nullptr;
+CLightUI* CToolUI::m_pLightUI = nullptr;
+CAliveUI* CToolUI::m_pAliveUI = nullptr;
+CScienceUI* CToolUI::m_pScienceUI = nullptr;
+CWeaponUI* CToolUI::m_pWeaponUI = nullptr;
+CClothUI* CToolUI::m_pClothUI = nullptr;
+CSlideUI* CToolUI::m_pSlideUI[5] = {};
 
 CToolUI::CToolUI(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _UI_Name)
     :CUI(pGraphicDev, UI_NONE, _UI_Name)
@@ -68,8 +68,11 @@ void CToolUI::Pop_SidePanel()
             dynamic_cast<CSlideUI*>(m_pSlideUI[i])->SetSlideOnAndOff(!bUI);
         }
 
-    
- 
+
+        //test
+        dynamic_cast<CSlideUI*>(m_pSlideUI[0])->SetSlideBoxItemName(L"Proto_UI_HP");
+        dynamic_cast<CSlideUI*>(m_pSlideUI[1])->SetSlideBoxItemName(L"Proto_UI_Hungry");
+        dynamic_cast<CSlideUI*>(m_pSlideUI[1])->SetLockOn(1);
 }
 
 CToolUI* CToolUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, const _tchar* _UI_Name)

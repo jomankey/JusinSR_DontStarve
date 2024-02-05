@@ -5,7 +5,7 @@ class CSlideBox :public CUI
 
 
 protected:
-	explicit CSlideBox(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name, _uint _index);
+	explicit CSlideBox(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name);
 	explicit CSlideBox(const CSlideBox& rhs);
 	virtual ~CSlideBox();
 
@@ -15,14 +15,16 @@ public:
 
 
 public:
-	void Set_ItemName(const _tchar* _Name) { ItemName = (_tchar*)_Name; }
-
+	void SetShow(bool _bIsShow) { m_bIsShow = _bIsShow; }
 
 public:
-	static CSlideBox* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, _uint _Index, float _Angle = 0.f);
+	static CSlideBox* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name,  float _Angle = 0.f);
 	virtual HRESULT			Add_Component() override;
 	virtual void Free() override;
 
-	_tchar* ItemName;
+	const _tchar* ItemName;
+
+private:
+	BOOL m_bIsShow = true;
 };
 

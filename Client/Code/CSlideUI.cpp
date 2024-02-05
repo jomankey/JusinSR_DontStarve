@@ -5,7 +5,9 @@
 
 #include "Export_Utility.h"
 #include "Export_System.h"
+
 #include"CExplainPanel.h"
+#include"CSlideBox.h"
 
 
 
@@ -31,12 +33,14 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 	FindExplainPanel();
+
+
 	if (m_bSlideOn)
 	{
 		m_bIsRender = false;
 		if (m_fMaxSlide <= m_fX)
 		{
-			if (UI_Collision(this))
+			if (UI_Collision())
 			{
 				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->Set_Show(true);
 				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->SetX(this->m_fX+110);
@@ -52,16 +56,44 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 			return 0;
 		}
 		m_fX += fTimeDelta * m_fSlideSpeed;
+		if (m_pSlideBox == nullptr)
+		{
+			if (m_pBoxItemName != nullptr) {
+				m_pSlideBox = CSlideBox::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(m_fX, m_fY, 0.f), _vec3(this->m_fSizeX-10.f, this->m_fSizeY - 10.f, 0.f), m_pBoxItemName);
+				CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, m_pSlideBox);
+			}
+
+		
+		}
+		else {
+			m_pSlideBox->SetX(m_fX);
+			m_pSlideBox->SetY(m_fY);
+			m_pSlideBox->SetShow(true);
+		}
+
+
+	
+
 
 	}
 	else
 	{
 		if (m_fMinSlide >= m_fX)
 		{
+			if (m_pSlideBox != nullptr)
+			{
+				m_pSlideBox->SetShow(false);
+			}
 			m_bIsRender = true;
 			return 0;
 		}
 		m_fX -= fTimeDelta * m_fSlideSpeed;
+		if (m_pSlideBox != nullptr)
+		{
+			m_pSlideBox->SetX(m_fX);
+			m_pSlideBox->SetY(m_fY);
+			m_pSlideBox->SetShow(false);
+		}
 
 	}
 
@@ -78,7 +110,7 @@ void CSlideUI::Render_GameObject()
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pTextureCom->Set_Texture(0);
+	m_pTextureCom->Set_Texture(m_fItemLockON);
 
 	//item  ¶ç¿ì±â¿ë
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
@@ -108,6 +140,7 @@ CSlideUI* CSlideUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3
 		MSG_BOX("UI Create Failed");
 		return nullptr;
 	}
+
 
 	return pInstance;
 }

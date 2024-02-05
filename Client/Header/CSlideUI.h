@@ -31,8 +31,13 @@ public:
 
 
 
-
-
+	void SetLockOn(_float _Lock) 
+	{
+		if (_Lock < 0|| _Lock>=2)
+			return;
+		m_fItemLockON = _Lock;
+	};
+	void SetSlideBoxItemName(_tchar* _Name) { m_pBoxItemName = _Name; };
 	void FindExplainPanel();
 private:
 	queue<CUI*> m_qItemListQueue;
@@ -47,6 +52,10 @@ private:
 	CGameObject* m_pExplainPanel = nullptr;
 
 	CSlideBox* m_pSlideBox = nullptr;
+
+	_tchar* m_pBoxItemName = nullptr;
+
+	_float m_fItemLockON = 0.0f;
 
 
 

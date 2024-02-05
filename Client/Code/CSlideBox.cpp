@@ -10,9 +10,9 @@
 #include "CItem.h"
 #include "Texture.h"
 #include "Scene.h"
-CSlideBox::CSlideBox(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name, _uint _index)
+CSlideBox::CSlideBox(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
 	:CUI(pGraphicDev, eUIState, _UI_Name)
-	, ItemName(nullptr)
+	, ItemName(_UI_Name)
 
 {
 }
@@ -54,6 +54,10 @@ void CSlideBox::Render_GameObject()
 	if (m_pTextureCom == nullptr)
 		return;
 
+	if(!m_bIsShow)
+		return;
+
+
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
@@ -67,9 +71,9 @@ void CSlideBox::Render_GameObject()
 	scenemgr::Get_CurScene()->EndOrtho();
 }
 
-CSlideBox* CSlideBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, _uint _Index, float _Angle)
+CSlideBox* CSlideBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {
-	CSlideBox* pInstance = new CSlideBox(pGraphicDev, _State, _UI_Name, _Index);
+	CSlideBox* pInstance = new CSlideBox(pGraphicDev, _State, _UI_Name);
 	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
 	{
 		Safe_Release(pInstance);
