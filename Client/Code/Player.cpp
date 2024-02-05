@@ -19,8 +19,8 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
-CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev,wstring _strName)
-	: Engine::CGameObject(pGraphicDev,_strName), m_bAttack(false)
+CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
+	: Engine::CGameObject(pGraphicDev, _strName), m_bAttack(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
@@ -62,7 +62,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_ePreState == ATTACK)
 			m_bAttack = false;
-			
+
 		m_fFrame = 0.f;
 	}
 
@@ -381,7 +381,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			m_eCurState = TORCH_RUN;
 		}
-		else if(m_eCurWeapon == UNARMED)
+		else if (m_eCurWeapon == UNARMED)
 		{
 			m_eCurState = MOVE;
 		}
@@ -461,7 +461,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_eCurState = ATTACK;
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
-		if (findObj->IsDelete() != true && dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
+		if (nullptr != findObj && !findObj->IsDelete()
+			&& dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
 		}
@@ -613,7 +614,7 @@ void CPlayer::Check_State()
 		if (m_eCurState == IDLE)
 		{
 			m_fFrameEnd = 22;
-			
+
 		}
 		else if (m_eCurState == HIT)
 		{
@@ -736,7 +737,7 @@ HRESULT CPlayer::Ready_Light()
 void CPlayer::Fire_Light()
 {
 	if (m_eCurWeapon != TORCH)
-		return ;
+		return;
 
 	D3DLIGHT9* tPointLightInfo = light::Get_Light(1)->Get_Light();
 	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));

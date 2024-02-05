@@ -291,8 +291,7 @@ _int CBeefalo::Die_Check()
         if ((m_fFrameEnd - 1) <= m_fFrame)
         {
             m_bFrameStop = true;
-            //DeleteObject(this);
-            SetDeleteObj();
+            DeleteObject(this);
             return 0x80000000;
         }
     }

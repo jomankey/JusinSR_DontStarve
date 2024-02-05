@@ -6,6 +6,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\CButtonUI.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\CClothUI.cpp"
 
 
@@ -58,6 +61,9 @@
 
 
 #include "C:\GitHub\JusinSR\Client\Code\CScienceUI.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\Code\CSlideBox.cpp"
 
 
 #include "C:\GitHub\JusinSR\Client\Code\CSlideUI.cpp"

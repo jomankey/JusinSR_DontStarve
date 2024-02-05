@@ -55,6 +55,8 @@ void CLayer::LateUpdateLayer()
 	{
 		for (auto& iter : m_vecObject[i])
 		{
+			if (iter->IsDelete())
+				continue;
 			iter->LateUpdate_GameObject();
 		}
 	}
