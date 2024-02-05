@@ -2,6 +2,8 @@
 #include "CUI.h"
 
 class CExplainPanel;
+class CSlideBox;
+
 class CSlideUI : public CUI
 {
 protected:
@@ -9,9 +11,14 @@ protected:
 	explicit CSlideUI(const CSlideUI& rhs);
 	virtual ~CSlideUI();
 public:
-
+	//virtual HRESULT Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle = 0);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void Render_GameObject()						 override;
+
+
+
+
+
 
 	void SetSlideOnAndOff(bool _State) { m_bSlideOn = _State; };
 	BOOL GetSlideOn() { return m_bSlideOn; };
@@ -35,10 +42,11 @@ private:
 	_float m_fSlideSpeed = 200.0f;
 	BOOL m_bSlideOn = false; 
 	BOOL m_bSlideOff = false; 
-
 	BOOL m_bIsRender = false;
 
 	CGameObject* m_pExplainPanel = nullptr;
+
+	CSlideBox* m_pSlideBox = nullptr;
 
 
 

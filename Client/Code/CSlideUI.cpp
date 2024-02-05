@@ -26,28 +26,11 @@ CSlideUI::~CSlideUI()
 {
 }
 
+
 _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 {
-
-	//테스트용
-  if (GetAsyncKeyState('K'))
-  {
-      m_bSlideOn = true;
-  }
-  
-  if (GetAsyncKeyState('O'))
-  {
-      m_bSlideOn = false;
-  }
-  
 	__super::Update_GameObject(fTimeDelta);
 	FindExplainPanel();
-
-
-
-	
-
-
 	if (m_bSlideOn)
 	{
 		m_bIsRender = false;
@@ -56,7 +39,7 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 			if (UI_Collision(this))
 			{
 				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->Set_Show(true);
-				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->SetX(this->m_fX);
+				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->SetX(this->m_fX+110);
 				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->SetY(this->m_fY);
 
 			}
@@ -94,20 +77,25 @@ void CSlideUI::Render_GameObject()
 
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
 	m_pTextureCom->Set_Texture(0);
 
+	//item  띄우기용
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	//m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
 	//m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
 
 	m_pBufferCom->Render_Buffer();
 
+	//item  띄우기용
 
 
 	scenemgr::Get_CurScene()->EndOrtho();
 
 
 }
+
+
 
 
 CSlideUI* CSlideUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)

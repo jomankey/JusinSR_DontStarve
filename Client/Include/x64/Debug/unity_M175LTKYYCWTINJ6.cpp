@@ -6,6 +6,9 @@
 #include "C:\PortPolio\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CButtonUI.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CClothUI.cpp"
 
 

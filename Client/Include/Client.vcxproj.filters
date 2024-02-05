@@ -130,6 +130,15 @@
     <Filter Include="02. GameObject\07. CUI\04. ToolUI\06. LightUI">
       <UniqueIdentifier>{c2050d54-2be3-459d-be04-97c92f88a8d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\05. PopUpUI\01. PanelBox">
+      <UniqueIdentifier>{6300fd86-2137-41b4-93c3-6f9ce0a146f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI">
+      <UniqueIdentifier>{7d2f92fa-f6fb-4324-ad15-d81f6752a5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\05. PopUpUI\03. SildeBox">
+      <UniqueIdentifier>{e4da578b-353c-4c92-8a0c-4682c4d51258}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -267,6 +276,12 @@
     <ClInclude Include="..\Header\CLightUI.h">
       <Filter>02. GameObject\07. CUI\04. ToolUI\06. LightUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CButtonUI.h">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSlideBox.h">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -394,6 +409,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLightUI.cpp">
       <Filter>02. GameObject\07. CUI\04. ToolUI\06. LightUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CButtonUI.cpp">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSlideBox.cpp">
+      <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

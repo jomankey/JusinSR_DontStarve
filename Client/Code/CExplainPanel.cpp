@@ -45,7 +45,11 @@ void CExplainPanel::Render_GameObject()
 {
     if (!m_bShow)
 		return;
- 
+    m_pToolItemName= L"TestItemName";
+    m_pExplainName = L"TestExplainName";
+    Engine::Render_Font(L"Font_Count", m_pToolItemName, &_vec2(m_fX-40, m_fY-40.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Font_Count", m_pExplainName, &_vec2(m_fX-40, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
     __super::Render_GameObject();
 
 

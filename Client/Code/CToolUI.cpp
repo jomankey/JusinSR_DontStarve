@@ -126,7 +126,7 @@ CToolUI* CToolUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, const _tchar* _UI_Name)
 
     for (int i = 0; i < 5; i++)
     {
-        m_pSlideUI[i]= CSlideUI::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 400.f - i * 50.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Item_Panel");
+        m_pSlideUI[i]= CSlideUI::Create(pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 400.f - i * 60.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Item_Panel");
     	CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, m_pSlideUI[i]);
     
     }
