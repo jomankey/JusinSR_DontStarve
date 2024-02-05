@@ -1,5 +1,7 @@
 #pragma once
 #include "CUI.h"
+
+class CExplainPanel;
 class CSlideUI : public CUI
 {
 protected:
@@ -20,9 +22,13 @@ public:
 	static CSlideUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle = 0.f);
 	virtual void Free() override;
 
-	queue<CUI*> m_qItemListQueue;
 
+
+
+
+	void FindExplainPanel();
 private:
+	queue<CUI*> m_qItemListQueue;
 
 	_float m_fMinSlide = 20.0f;
 	_float m_fMaxSlide = 100.0f;
@@ -31,5 +37,10 @@ private:
 	BOOL m_bSlideOff = false; 
 
 	BOOL m_bIsRender = false;
+
+	CGameObject* m_pExplainPanel = nullptr;
+
+
+
 };
 
