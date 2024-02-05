@@ -34,11 +34,12 @@ HRESULT CSpider::Ready_GameObject()
 
 _int CSpider::Update_GameObject(const _float& fTimeDelta)
 {
+    
     if (!m_bFrameStop)
     {
         m_fFrame += m_fFrameEnd * fTimeDelta;
     }
-    Die_Check();        //죽었는지 검사
+    Die_Check();    //죽었는지 검사
     if (!m_Stat.bDead)      //죽지 않았을시 진입
     {
         if (IsTarget_Approach(5.f) == true)     //플레이어와의 거리가 5보다 작으면 진입
@@ -265,33 +266,38 @@ void CSpider::Attacking(const _float& fTimeDelta)
         m_bModeChange = true;
         m_Stat.fSpeed = 5.5f;
     }
-    m_fAcctime += fTimeDelta;
-    
-    if (IsTarget_Approach(1) && m_ePrestate != ATTACK)
+    if (!m_bHit)
     {
-        m_eCurstate = ATTACK;
+        
+        if (IsTarget_Approach(1) && m_ePrestate != ATTACK)
+        {
+            m_eCurstate = ATTACK;
+        }
+        else if (m_ePrestate == ATTACK)
+        {
+            if (m_fFrameEnd < m_fFrame)
+            {
+                if (!IsTarget_Approach(1))
+                {
+                    m_eCurstate = WALK;
+                }
+            }
+        }
+        else if (m_ePrestate == WALK)
+        {
+            Player_Chase(fTimeDelta);
+        }
     }
-    else if (m_ePrestate == ATTACK)
+    else
     {
         if (m_fFrameEnd < m_fFrame)
         {
-            if (!IsTarget_Approach(1))
-            {
-                m_eCurstate = WALK;
-            }
-            else
-            {
-                m_fFrame = 0.f;
-            }
+            m_bHit = false;
+            m_eCurstate = WALK;
         }
     }
-    else if (m_ePrestate == WALK)
-    {
-        Player_Chase(fTimeDelta);
-        if (m_fFrameEnd < m_fFrame)
-            m_fFrame = 0.f;
-    }
-   
+    if (m_fFrameEnd < m_fFrame)
+        m_fFrame = 0.f;
   
 }
 
@@ -333,12 +339,11 @@ void CSpider::Patroll(const _float& fTimeDelta)
 
 void CSpider::Die_Check()
 {
-    if (m_Stat.fHP <= 0 && m_ePrestate != DEAD && m_ePrestate != ERASE)
+    if (m_Stat.fHP <= 0 && m_ePrestate != DEAD && m_ePrestate != ERASE )
     {
         m_eCurstate = DEAD;
         m_eCurLook = LOOK_DOWN;
         m_Stat.bDead = true;
-        Look_Change();
         m_fFrame = 0.f;
     }
     else if (m_ePrestate == DEAD)
@@ -350,16 +355,22 @@ void CSpider::Die_Check()
     }
     else if (m_ePrestate == ERASE)
     {
-        if (m_fFrameEnd < m_fFrame)
+        if (m_fFrameEnd-1 < m_fFrame)
         {
-            m_fFrame = m_fFrameEnd;
+            
             m_bFrameStop = true;
-            this->SetDeleteObj();
+            DeleteObject(this);
         }
     }
     else
         return;
         
+}
+
+void CSpider::Set_Hit()
+{
+    m_eCurstate = HIT;
+    m_bHit = true;
 }
 
 
@@ -379,5 +390,5 @@ CSpider* CSpider::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 
 void CSpider::Free()
 {
-	CMonster::Free();
+    __super::Free();
 }

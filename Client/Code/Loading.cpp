@@ -144,6 +144,8 @@ HRESULT CLoading::Loading_Beefalo_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_atk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_atk_side/atk_side__%03d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_atk_up/atk_up__%03d.png", 7)), E_FAIL);
 
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_hit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_hit/hit__%03d.png", 5)), E_FAIL);
+
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Beefalo_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/beefalo/beefalo_dead/dead__%03d.png", 12)), E_FAIL);
 	return 0;
 }

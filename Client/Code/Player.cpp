@@ -59,7 +59,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_fFrameEnd < m_fFrame)
 	{
-		if (m_eCurState == ATTACK)
+		if (m_ePreState == ATTACK)
 			m_bAttack = false;
 			
 		m_fFrame = 0.f;
@@ -352,7 +352,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
 	{
 		//Find_NeerObject: 못찾았을경우 nullptr반환
-		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
+		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::ITEM);
+
 		if (nullptr != findObj)
 			DeleteObject(findObj);
 	}
@@ -457,48 +458,52 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('F')) // 공격
 	{
 		m_eCurState = ATTACK;
-
-		auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
-
-		_vec3* vMonsterAxis = new _vec3[3];
-		_vec3* vPlayerAxis = new _vec3[3];
-		_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
-
-		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
-		m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
-		m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
-
-		vPlayerScale = m_pTransForm->Get_Scale();
-
-		for (auto& monster : vecMonster)
+		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
+		if (dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange) && findObj->IsDelete() != true)
 		{
-			CTransform* pItemTransform = monster->GetTransForm();
-			pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
-			pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
-			pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
-			pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
-			vMonsterScale = pItemTransform->Get_Scale();
-
-			if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
-				vPlayerAxis, 
-				vMonsterPos,
-				vMonsterAxis, 
-				vPlayerScale, 
-				vMonsterScale))
-			{
-				// 몬스터와 공격 충돌 시
-				// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
-
-				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
-				dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
-				m_bAttack = true;
-				break;
-			}
+			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
 		}
+		//auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
 
-		delete[] vMonsterAxis;
-		delete[] vPlayerAxis;
+		//_vec3* vMonsterAxis = new _vec3[3];
+		//_vec3* vPlayerAxis = new _vec3[3];
+		//_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
+
+		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
+		//m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
+		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
+		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
+
+		//vPlayerScale = m_pTransForm->Get_Scale();
+
+		//for (auto& monster : vecMonster)
+		//{
+		//	CTransform* pItemTransform = monster->GetTransForm();
+		//	pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
+		//	pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
+		//	pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
+		//	pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
+		//	vMonsterScale = pItemTransform->Get_Scale();
+
+		//	if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
+		//		vPlayerAxis, 
+		//		vMonsterPos,
+		//		vMonsterAxis, 
+		//		vPlayerScale, 
+		//		vMonsterScale))
+		//	{
+		//		// 몬스터와 공격 충돌 시
+		//		// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
+
+		//		m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
+		//		dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
+		//		m_bAttack = true;
+		//		break;
+		//	}
+		//}
+
+		//delete[] vMonsterAxis;
+		//delete[] vPlayerAxis;
 	}
 
 	if (GetAsyncKeyState('G'))
@@ -548,9 +553,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	//if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
 	//{
-	//	_vec3	vPickPos = Picking_OnTerrain();
-	//
-	//	m_pTransForm->Move_Terrain(&vPickPos, fTimeDelta, 5.f);
+	//	m_eCurState = MOVE;
+	//	m_ePlayerLookAt = m_pTransForm->Patroll_LookChange(m_pCalculatorCom->Picking_PosVec(g_hWnd), m_Stat.fSpeed, fTimeDelta);
 	//}
 
 }
