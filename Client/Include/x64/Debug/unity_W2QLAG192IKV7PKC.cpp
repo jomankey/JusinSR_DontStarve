@@ -3,6 +3,24 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Beefalo.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CAliveUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CClothUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CEquiment.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CExplainPanel.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CHpUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CHungryUI.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\BerryBush.cpp"
 
 
@@ -21,6 +39,12 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CItemFood.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CLightUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CMentalUI.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CObjectGrass.cpp"
 
 
@@ -33,7 +57,22 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CPigHouse.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CScienceUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSlideUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CToolUI.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CWeaponUI.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CWorldUI.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\DeerClops.cpp"

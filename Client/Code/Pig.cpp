@@ -68,12 +68,12 @@ void CPig::LateUpdate_GameObject()
 
 void CPig::Render_GameObject()
 {
-
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	/* Set_Scale();*/
-
+	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 	if (m_Dirchange)
@@ -87,6 +87,7 @@ void CPig::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CPig::Add_Component()

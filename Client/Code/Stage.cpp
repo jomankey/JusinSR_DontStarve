@@ -63,11 +63,10 @@ HRESULT CStage::Ready_Scene()
 	{
 		m_arrLayer[i] = CLayer::Create();
 	}
-
+	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
 	return S_OK;
@@ -139,14 +138,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
-<<<<<<< HEAD
-	/*for (_int i = 0; i < 1; ++i)
-=======
-	/*for (_int i = 0; i < 5; ++i)
-=======
-*/
-	for (_int i = 0; i < 10; ++i)
->>>>>>> eef24bfbcde16923d9e79905c27c861e6f274dcc
+	/*for (_int i = 0; i < 10; ++i)
 	{
 		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -164,7 +156,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 		pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	}
+	}*/
 	//for (_int i = 0; i < 10; ++i)
 	//{
 	//	pGameObject = CObjectGrass::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
@@ -184,7 +176,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
 	//}
-<<<<<<< HEAD
 	/*for (_int i = 0; i < 10; ++i)
 	{
 		pGameObject = CObjectTree::Create(m_pGraphicDev);
@@ -206,8 +197,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-=======
->>>>>>> eef24bfbcde16923d9e79905c27c861e6f274dcc
 
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	//for (_int i = 0; i < 10; ++i)
@@ -240,12 +229,12 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 
-	for (_int i = 0; i < 10; ++i)
+	/*for (_int i = 0; i < 10; ++i)
 	{
 		pGameObject = CPigHouse::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
+	}*/
 
 
 	return S_OK;
@@ -300,9 +289,6 @@ HRESULT CStage::Ready_Layer_UI()
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 	}
-
-<<<<<<< HEAD
-=======
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(680.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -333,16 +319,9 @@ HRESULT CStage::Ready_Layer_UI()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
-
-
-
-
-
-
 	//After UI struct 
 	//-------------------------------------------
 
->>>>>>> eef24bfbcde16923d9e79905c27c861e6f274dcc
 	//장비 슬롯
 	//pGameObject = CEquiment::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -382,21 +361,6 @@ HRESULT CStage::Ready_LightInfo()
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
 	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
-
-	//점광원
-	// 최초 생성 후 플레이어 횟불 사용 시에만 켜지도록 
-	D3DLIGHT9 tPointLightInfo;
-	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
-
-	tPointLightInfo.Type = D3DLIGHT_POINT;
-
-	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Attenuation0 = 0.00000001f;
-	tPointLightInfo.Range = 100.f;
-	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
-
-	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, 1), E_FAIL);
-	light::Get_Light(1)->Close_Light();
 
 	return S_OK;
 }
@@ -595,30 +559,6 @@ HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 	light::Get_Light(0)->Update_Light();
-
-	//Change_PointLightInfo(fTimeDelta);
-	return S_OK;
-}
-
-HRESULT CStage::Change_PointLightInfo(const _float& fTimeDelta)
-{
-	D3DLIGHT9* tPointLightInfo = light::Get_Light(1)->Get_Light();
-	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
-
-	tPointLightInfo->Type = D3DLIGHT_POINT;
-
-	tPointLightInfo->Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 0.7f);
-	tPointLightInfo->Attenuation0 = 0.1f;
-	tPointLightInfo->Range = 5.f;
-
-	CTransform* pPlayerTransform = m_pPlayer->GetTransForm();
-
-	_vec3 pPlayerPos;
-	pPlayerTransform->Get_Info(INFO_POS, &pPlayerPos); // player pos 값 설정
-	tPointLightInfo->Position = pPlayerPos;
-
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
-	light::Get_Light(1)->Update_Light();
 
 	return S_OK;
 }

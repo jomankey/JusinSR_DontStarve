@@ -39,6 +39,7 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 
 	/*m_pTransForm->m_vScale = { 1.2f, 1.f, 1.f };*/
 	m_eCurState = IDLE;
@@ -68,6 +69,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Key_Input(fTimeDelta);
 	Check_State();
 	Set_Scale();
+	Fire_Light(); // 횃불 모션 시 켜짐 / 꺼짐 추가해야함
 	CGameObject::Update_GameObject(fTimeDelta);
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -501,10 +503,11 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		delete[] vPlayerAxis;
 	}
 
-	if (GetAsyncKeyState('G'))
+	if (GetAsyncKeyState('G')) // 횃불
 	{
 		m_eCurWeapon = TORCH;
 	}
+
 	if (GetAsyncKeyState('V')) // 줍기
 	{
 		m_eCurState = PICKUP;
@@ -705,6 +708,48 @@ void CPlayer::Set_Stat()
 	m_Stat.fAggroRange = 5.f;
 	m_Stat.bDead = false;
 
+}
+
+HRESULT CPlayer::Ready_Light()
+{
+	//점광원
+// 최초 생성 후 플레이어 횟불 사용 시에만 켜지도록 
+	D3DLIGHT9 tPointLightInfo;
+	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo.Type = D3DLIGHT_POINT;
+
+	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Attenuation0 = 0.00000001f;
+	tPointLightInfo.Range = 5.f;
+	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
+
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, 1), E_FAIL);
+	light::Get_Light(1)->Close_Light();
+
+}
+
+void CPlayer::Fire_Light()
+{
+	if (m_eCurWeapon != TORCH)
+		return ;
+
+	D3DLIGHT9* tPointLightInfo = light::Get_Light(1)->Get_Light();
+	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo->Type = D3DLIGHT_POINT;
+
+	tPointLightInfo->Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
+	tPointLightInfo->Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
+	tPointLightInfo->Attenuation0 = 0.000000001f;
+	tPointLightInfo->Range = 5.f;
+
+	_vec3 pPlayerPos;
+	m_pTransForm->Get_Info(INFO_POS, &pPlayerPos); // player pos 값 설정
+	tPointLightInfo->Position = pPlayerPos;
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
+	light::Get_Light(1)->Update_Light();
 }
 
 

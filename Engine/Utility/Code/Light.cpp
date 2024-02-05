@@ -12,6 +12,12 @@ CLight::~CLight()
 {
 }
 
+D3DLIGHT9* Engine::CLight::Get_Light()
+{
+	m_pGraphicDev->LightEnable(m_iIndex, TRUE);
+	 return &m_tLightInfo; 
+}
+
 void CLight::Close_Light()
 {
 	m_pGraphicDev->LightEnable(m_iIndex, FALSE);

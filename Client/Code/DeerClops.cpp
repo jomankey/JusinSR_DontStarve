@@ -66,11 +66,13 @@ void CDeerClops::LateUpdate_GameObject()
 
 void CDeerClops::Render_GameObject()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
+	FAILED_CHECK_RETURN(SetUp_Material(), );
 	if (m_Dirchange)
 	{
 		m_pReverseCom->Render_Buffer();
@@ -82,6 +84,7 @@ void CDeerClops::Render_GameObject()
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CDeerClops::Add_Component()

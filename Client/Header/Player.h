@@ -44,6 +44,9 @@ private:
 	void			Set_Scale();
 	void			Set_Stat();
 	void			Weapon_To_State();
+
+	HRESULT Ready_Light();
+	void Fire_Light();
 	
 
 	CGameObject* Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget);

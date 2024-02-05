@@ -70,16 +70,18 @@ void CItem::LateUpdate_GameObject()
 
 void CItem::Render_GameObject()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);
-
+	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 CItem* CItem::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
@@ -118,7 +120,7 @@ HRESULT CItem::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-
+	m_pTransForm->Set_Scale(_vec3(0.5f, 0.3f, 0.5f));
 	return S_OK;
 }
 

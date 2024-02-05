@@ -26,7 +26,6 @@ private:
 private:
 	HRESULT Load_Data();
 	HRESULT Change_LightInfo(const _float& fTimeDelta);
-	HRESULT Change_PointLightInfo(const _float& fTimeDelta);
 	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
 
 private:

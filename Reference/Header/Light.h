@@ -12,7 +12,7 @@ private:
 	virtual ~CLight();
 
 public:
-	D3DLIGHT9* Get_Light() { return &m_tLightInfo; }
+	D3DLIGHT9* Get_Light();
 	void Update_Light() { m_pGraphicDev->SetLight(m_iIndex, &m_tLightInfo); }
 	void Close_Light();
 
