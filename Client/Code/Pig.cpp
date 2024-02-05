@@ -34,10 +34,11 @@ HRESULT CPig::Ready_GameObject()
 
 _int CPig::Update_GameObject(const _float& fTimeDelta)
 {
+	
 	if(!m_bFrameStop)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
-
 	Die_Check();
+	
 	if (!m_Stat.bDead)      //죽은 상태가 아닐때 진입
 	{
 		if (m_Attacked)     //공격받았을때 진입
@@ -200,6 +201,11 @@ HRESULT CPig::Add_Component()
 	 NULL_CHECK_RETURN(pComponent, E_FAIL);
 	 m_mapComponent[ID_STATIC].insert({ L"Proto_Pig_angry", pComponent });
 
+	 //ERASE
+	 pComponent = m_pTextureCom[LOOK_DOWN][ERASE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_Erase"));
+	 NULL_CHECK_RETURN(pComponent, E_FAIL);
+	 m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Erase", pComponent });
+
 
 #pragma endregion TEXCOM
 	
@@ -301,15 +307,14 @@ void CPig::Die_Check()
 		if (m_fFrameEnd < m_fFrame)
 		{
 			m_eCurState = ERASE;
-			m_fFrame = m_fFrameEnd;
 		}
 	}
 	else if (m_ePreState == ERASE)
 	{
-		if (m_fFrameEnd <= m_fFrame)
+		if ((m_fFrameEnd-1) <= m_fFrame)
 		{
 			m_bFrameStop = true;
-			this->SetDeleteObj();
+			DeleteObject(this);
 		}
 	}
 	else
@@ -319,25 +324,35 @@ void CPig::Die_Check()
 void CPig::Attacking(const _float& fTimeDelta)
 {
 	m_Stat.fSpeed = 5.f;
-
-	if (IsTarget_Approach(1.f) && m_ePreState != ATTACK && m_ePreState != HIT)
+	if (!m_bHit)
 	{
-		m_eCurState = ATTACK;
-	}
-	else if (m_ePreState == ATTACK)
-	{
-		if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(1.f))
+		if (IsTarget_Approach(1.f) && m_ePreState != ATTACK)
+		{
+			m_eCurState = ATTACK;
+		}
+		else if (m_ePreState == ATTACK)
+		{
+			if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(1.f))
+			{
+				m_eCurState = RUN;
+			}
+		}
+		else if (m_ePreState == RUN && !IsTarget_Approach(1.f))
+		{
+			Player_Chase(fTimeDelta);
+		}
+		else if (!IsTarget_Approach(1.f))
 		{
 			m_eCurState = RUN;
 		}
 	}
-	else if (m_ePreState == RUN && !IsTarget_Approach(1.f))
+	else
 	{
-		Player_Chase(fTimeDelta);
-	}
-	else if (!IsTarget_Approach(1.f))
-	{
-		m_eCurState = RUN;
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_eCurState = RUN;
+			m_bHit = false;
+		}
 	}
 
 	if (m_fFrameEnd < m_fFrame)
@@ -378,6 +393,12 @@ void CPig::Patroll(const _float& fTimeDelta)
 
 }
 
+void CPig::Set_Hit()
+{
+	m_eCurState = HIT;
+	m_bHit = true;
+}
+
 
 CPig* CPig::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {
@@ -395,5 +416,5 @@ CPig* CPig::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 
 void CPig::Free()
 {
-	CMonster::Free();
+	__super::Free();
 }

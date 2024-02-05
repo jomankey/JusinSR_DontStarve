@@ -13,6 +13,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_vDir(0.f, 0.f, 0.f)
 	, m_Attacked(false)
 	, m_bFrameStop(false)
+	, m_bHit(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
@@ -28,6 +29,7 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_vDir(0.f, 0.f, 0.f)
 	, m_Attacked(rhs.m_Attacked)
 	, m_bFrameStop(rhs.m_bFrameStop)
+	, m_bHit(rhs.m_bHit)
 
 {
 }
@@ -45,6 +47,7 @@ void CMonster::Set_Attack(_float _fAttack)
 		{
 			m_Attacked = true;		
 		}
+		Set_Hit();
 	}
 	else
 		return;
@@ -52,7 +55,7 @@ void CMonster::Set_Attack(_float _fAttack)
 
 void CMonster::Free()
 {
-	CGameObject::Free();
+	__super::Free();
 }
 
 void CMonster::Player_Chase(const _float& fTimeDelta)

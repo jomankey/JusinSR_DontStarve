@@ -138,9 +138,16 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
+<<<<<<< HEAD
 	/*for (_int i = 0; i < 10; ++i)
+=======
+	/*for (_int i = 0; i < 5; ++i)
+=======
+*/
+	for (_int i = 0; i < 1; ++i)
+>>>>>>> 6a9ae0ef9fb2a2d481d70e3ad027380aaa7ba693
 	{
-		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
+		pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(64.f, 1.5f, 64.f));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 	}
@@ -197,7 +204,10 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6a9ae0ef9fb2a2d481d70e3ad027380aaa7ba693
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	//for (_int i = 0; i < 10; ++i)
 	//{
@@ -289,6 +299,10 @@ HRESULT CStage::Ready_Layer_UI()
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6a9ae0ef9fb2a2d481d70e3ad027380aaa7ba693
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(680.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);

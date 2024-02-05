@@ -17,6 +17,7 @@ CBeefalo::CBeefalo(const CBeefalo& rhs)
 
 CBeefalo::~CBeefalo()
 {
+
 }
 
 HRESULT CBeefalo::Ready_GameObject()
@@ -33,9 +34,13 @@ HRESULT CBeefalo::Ready_GameObject()
 
 _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
-    if(!m_bFrameStop)
+   
+    if (!m_bFrameStop)
         m_fFrame += m_fFrameEnd * fTimeDelta;
-    
+    else
+    {
+        m_fFrame = m_fFrameEnd;
+    }
     Die_Check();
     if (!m_Stat.bDead)      //Á×Àº »óÅÂ°¡ ¾Æ´Ò¶§ ÁøÀÔ
     {
@@ -177,6 +182,22 @@ HRESULT CBeefalo::Add_Component()
     pComponent = m_pTextureCom[LOOK_RIGHT][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_dead"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_dead", pComponent });
+
+    //HIT
+    pComponent = m_pTextureCom[LOOK_LEFT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_hit"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_hit", pComponent });
+
+    pComponent = m_pTextureCom[LOOK_RIGHT][HIT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Beefalo_hit"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Beefalo_hit", pComponent });
+
+
+    //ERASE
+    pComponent = m_pTextureCom[LOOK_DOWN][ERASE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_Erase"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Erase", pComponent });
+
 #pragma endregion TEXCOM
 	
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
@@ -227,10 +248,18 @@ void CBeefalo::State_Change()
             m_fFrameEnd = 4;
             break;
         case HIT:
+            if (m_eCurLook != LOOK_LEFT)
+            {
+                m_eCurLook = LOOK_RIGHT;
+            }
+            m_fFrameEnd = 5;
             break;
         case DEAD:
             m_fFrameEnd = 12;
-            m_eCurLook = LOOK_RIGHT;
+            if (m_eCurLook != LOOK_LEFT)
+            {
+                m_eCurLook = LOOK_RIGHT;
+            }
             break;
         case ERASE:
             m_fFrameEnd = 5;
@@ -248,14 +277,20 @@ void CBeefalo::Die_Check()
     {
         m_eCurState = DEAD;
         m_Stat.bDead = true;
-        m_fFrame = 0.f;
     }
     else if (m_ePreState == DEAD)
     {
-        if (m_fFrameEnd < m_fFrame)
+        if (m_fFrameEnd <= m_fFrame)
         {
-            m_fFrame = m_fFrameEnd;
-            m_bFrameStop;
+            m_eCurState = ERASE;
+        }
+    }
+    else if (m_ePreState == ERASE)
+    {
+        if ((m_fFrameEnd-1) <= m_fFrame)
+        {
+            m_bFrameStop = true;
+            DeleteObject(this);
         }
     }
     else
@@ -265,28 +300,36 @@ void CBeefalo::Die_Check()
 void CBeefalo::Attacking(const _float& fTimeDelta)
 {
     m_Stat.fSpeed = 5.f;
-    if (IsTarget_Approach(1.f) && m_ePreState != ATTACK && m_ePreState != HIT)
+    if (!m_bHit)
     {
-        m_eCurState = ATTACK;
-    }
-    else if (m_ePreState == ATTACK)
-    {
-        if ((m_fFrameEnd < m_fFrame)&& !IsTarget_Approach(1.f))
+        if (IsTarget_Approach(1.f) && m_ePreState != ATTACK)
+        {
+            m_eCurState = ATTACK;
+        }
+        else if (m_ePreState == ATTACK)
+        {
+            if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(1.f))
+            {
+                m_eCurState = MADRUN;
+            }
+        }
+        else if (m_ePreState == MADRUN && !IsTarget_Approach(1.f))
+        {
+            Player_Chase(fTimeDelta);
+        }
+        else if (!IsTarget_Approach(1.f))
         {
             m_eCurState = MADRUN;
         }
     }
-    else if (m_ePreState == MADRUN && !IsTarget_Approach(1.f))
+    else
     {
-        Player_Chase(fTimeDelta);
+        if (m_fFrameEnd < m_fFrame)
+        {
+            m_bHit = false;
+        }
+          
     }
-    else if (!IsTarget_Approach(1.f))
-    {
-        m_eCurState = MADRUN;
-    }
-   
-   
-
    
     if(!IsTarget_Approach(7.f))
     {
@@ -335,6 +378,12 @@ void CBeefalo::Patroll(const _float& fTimeDelta)
     
 }
 
+void CBeefalo::Set_Hit()
+{
+    m_eCurState = HIT;
+    m_bHit = true;
+}
+
 
 CBeefalo* CBeefalo::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {
@@ -352,5 +401,5 @@ CBeefalo* CBeefalo::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 
 void CBeefalo::Free()
 {
-    CMonster::Free();
+    __super::Free();
 }

@@ -6,14 +6,12 @@
 
 namespace Engine
 {
-
 	class CRcTex;
 	class CRvRcTex;
 	class CTexture;
 	class CTransform;
 	class CCalculator;
 	class CPlayerStatus;
-
 }
 
 

@@ -156,6 +156,8 @@ _vec3 CCalculator::Picking_OnTerrain(HWND hWnd,
 	return _vec3(0.f, 0.f, 0.f);
 }
 
+								
+
 _ulong CCalculator::Picking_OnTerrain_Tool(HWND hWnd,
 	CTerrainTex* pTerrainBufferCom,
 	CTransform* pTerrainTransCom,
@@ -251,6 +253,46 @@ _ulong CCalculator::Picking_OnTerrain_Tool(HWND hWnd,
 	}
 
 	return  -1;
+}
+
+_vec3* Engine::CCalculator::Picking_PosVec(HWND hWnd)
+{
+	POINT		ptMouse{};
+	GetCursorPos(&ptMouse);
+	ScreenToClient(hWnd, &ptMouse);
+
+	D3DVIEWPORT9		ViewPort;
+	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
+	m_pGraphicDev->GetViewport(&ViewPort);
+
+	_vec3		vMousePos;
+
+	vMousePos.x = ptMouse.x / (ViewPort.Width * 0.5f) - 1.f;
+	vMousePos.y = ptMouse.y / -(ViewPort.Height * 0.5f) + 1.f;
+
+	vMousePos.z = 0.f;
+
+	// 투영 -> 뷰스페이스
+	_matrix	matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
+
+	// 뷰 스페이스 -> 월드
+	_matrix	matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	_vec3	vRayPos;
+	vRayPos = { 0.f, 0.f, 0.f };
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
+	
+	vRayPos.y = 0.f;
+
+
+
+	return &vRayPos;
 }
 
 _bool CCalculator::Check_PlayerMoveIndex(const _vec3* pPos, const vector<_int> veciIndex, const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv)

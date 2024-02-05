@@ -31,6 +31,9 @@ namespace Engine
 			const _ulong& dwCntZ = VTXCNTZ,
 			const _ulong& dwVtxItv = VTXITV);
 
+		_vec3* Picking_PosVec(HWND hWnd);
+	
+
 	public:
 		static CCalculator* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
