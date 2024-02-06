@@ -2,6 +2,7 @@
 #include "Beefalo.h"
 //#include "Export_System.h"
 #include "Export_Utility.h"
+#include "Player.h"
 CBeefalo::CBeefalo(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos)
     , m_eCurState(WALK)
@@ -219,6 +220,7 @@ void CBeefalo::Set_ObjStat()
     m_Stat.fSpeed = 1.f;
     m_Stat.fATK = 20.f;
     m_Stat.bDead = false;
+    m_Stat.fATKRange = 1.3f;
 }
 
 void CBeefalo::State_Change()
@@ -310,8 +312,13 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
         else if (m_ePreState == ATTACK)
         {
             if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(1.f))
-            {
+            { 
                 m_eCurState = MADRUN;
+            }
+            else if ((3 < m_fFrame) && IsTarget_Approach(m_Stat.fATKRange) && !m_bAttacking)
+            {
+                dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+                m_bAttacking = true;
             }
         }
         else if (m_ePreState == MADRUN && !IsTarget_Approach(1.f))
@@ -339,7 +346,11 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
 
 
     if (m_fFrameEnd < m_fFrame)
+    {
         m_fFrame = 0.f;
+        if(m_bAttacking)
+            m_bAttacking = false;
+    }
 }
 
 void CBeefalo::Patroll(const _float& fTimeDelta)

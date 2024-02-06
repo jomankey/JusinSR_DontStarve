@@ -58,6 +58,7 @@ namespace Engine
 		RESOURCE_OBJECT,
 		OBJECT,
 		UI,
+		BOSS,
 		END = 32,
 	};
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };

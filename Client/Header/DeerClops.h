@@ -14,7 +14,8 @@ namespace Engine
 class CDeerClops :
 	public Engine::CGameObject
 {
-	enum DEERSTATE { IDLE, WALK, ATTACK, SLEEP, TAUNT, HIT, DEAD, STATE_END };
+	enum DEERSTATE { IDLE, WALK, ATTACK, SLEEP,SLEEP_PST, TAUNT, HIT, DEAD, STATE_END };
+	enum DEER_PHASE { FIRST, SECOND, THIRD, DIE, PHASE_END};
 private:
 	explicit CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
 	explicit CDeerClops(const CDeerClops& rhs);
@@ -26,17 +27,24 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 
+public:
+	void			Set_WakeUp();				//1페이즈 시작
+
+
 private:
 	virtual HRESULT			Add_Component();
 
 	void			Set_ObjStat();
 	void			Check_State();
-	void			Mode_Change();
-	void			Patroll(const _float& fTimeDelta);
-	void			Fight(const _float& fTimeDelta);
+	_bool		IsTarget_Approach(float _fDistance);
+	void			Sleep(const _float& fTimeDelta);
+	void			First_Phase(const _float& fTimeDelta);
+	void			Second_Phase(const _float& fTimeDelta);
 	void			Chase_Player(const _float& fTimeDelta);
-	CTransform* PlayerComponent();
-	void		Look_Change();
+	CTransform*		PlayerComponent();
+	_vec3			Player_Position();
+	CGameObject*	Player_Pointer();
+	void			Look_Change();
 
 public:
 	virtual void Free() override;
@@ -55,12 +63,16 @@ private:
 
 	DEERSTATE		m_eCurState;
 	DEERSTATE		m_ePreState;
+	
+	OBJSTAT		m_Stat;
+	_bool		m_Dirchange;			//false 일때 오른쪽 보기
+	_bool		m_bPhase[DEER_PHASE::PHASE_END];		//페이즈 변경용 bool 배열
+	_bool		m_bAttacking;			//공격시
+	//Frame
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
-	OBJSTAT m_Stat;
-	_bool	m_Dirchange;			//false 일때 오른쪽 보기
-	_bool	m_bMode;
 	_float	m_fAcctime;
 	_float	m_fFrameChange = 0;
+	_bool	m_bFrameStop;
 };
 

@@ -3,19 +3,24 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "Scene.h"
+#include "Player.h"
 
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	: Engine::CGameObject(pGraphicDev), m_vPos(vPos), m_eCurLook(LOOK_DOWN), m_ePreLook(LOOK_END),
-	m_eCurState(IDLE), m_ePreState(STATE_END), m_Dirchange(false), m_fAcctime(0.f), m_fFrameEnd(0.f), m_bMode(false)
+	m_eCurState(SLEEP), m_ePreState(STATE_END), m_Dirchange(false), m_fAcctime(0.f),
+	m_fFrameEnd(0.f), m_bFrameStop(false), m_bAttacking(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
+	
 }
 
 CDeerClops::CDeerClops(const CDeerClops& rhs)
 	:CGameObject(rhs.m_pGraphicDev)
 	, m_vPos(rhs.m_vPos), m_Stat(rhs.m_Stat), m_eCurLook(rhs.m_eCurLook), m_ePreLook(rhs.m_ePreLook), m_eCurState(rhs.m_eCurState),
-	m_ePreState(rhs.m_ePreState), m_Dirchange(rhs.m_Dirchange), m_fAcctime(rhs.m_fAcctime), m_fFrameEnd(rhs.m_fFrameEnd),
-	m_bMode(rhs.m_bMode)
+	m_ePreState(rhs.m_ePreState), m_Dirchange(rhs.m_Dirchange),
+	m_fAcctime(rhs.m_fAcctime), m_fFrameEnd(rhs.m_fFrameEnd),
+	m_bFrameStop(rhs.m_bFrameStop), m_bAttacking(rhs.m_bAttacking)
+	
 {
 }
 
@@ -28,8 +33,13 @@ HRESULT CDeerClops::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
-	m_pTransForm->Set_Scale(_vec3(3.f, 3.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(5.f, 5.f, 5.f));
 	m_fAcctime = float(rand() % 30);
+	for (auto i = 0; i < DEER_PHASE::PHASE_END; ++i)
+	{
+		m_bPhase[i] = false;
+	}
+
 	return S_OK;
 }
 
@@ -38,18 +48,30 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 	m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	CGameObject::Update_GameObject(fTimeDelta);
-	Mode_Change();	//플레이어 발견시
-	if (m_bMode)
+	if (m_bPhase[FIRST])
 	{
-		Fight(fTimeDelta);
+		if (m_bPhase[SECOND])
+		{
+			Second_Phase(fTimeDelta);
+		}
+		else
+		{
+			First_Phase(fTimeDelta);
+		}
 	}
 	else
 	{
-		Patroll(fTimeDelta);
+		Sleep(fTimeDelta);
 	}
 	
+	if (KEY_TAP(DIK_9))
+	{
+		Set_WakeUp();
+	}
+
+
 	Check_State();
-	this->Look_Change();
+	Look_Change();
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
@@ -85,6 +107,12 @@ void CDeerClops::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+}
+
+void CDeerClops::Set_WakeUp()
+{
+	m_bPhase[FIRST] = true;
+	m_eCurState = SLEEP_PST;
 }
 
 HRESULT CDeerClops::Add_Component()
@@ -171,6 +199,16 @@ HRESULT CDeerClops::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Deer_hit_side", pComponent });
 
+	//Sleep Loop
+	pComponent = m_pTextureCom[LOOK_DOWN][SLEEP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_sleep_loop"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Deer_sleep_loop", pComponent });
+
+	//Sleep Pst
+	pComponent = m_pTextureCom[LOOK_DOWN][SLEEP_PST] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_sleep_pst"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Deer_sleep_pst", pComponent });
+
 	//Taunt
 	pComponent = m_pTextureCom[LOOK_DOWN][TAUNT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_taunt"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -199,12 +237,15 @@ void CDeerClops::Set_ObjStat()
 {
 	m_Stat.fHP = 100.f;
 	m_Stat.fMxHP = 100.f;
-	m_Stat.fSpeed = 1.f;
+	m_Stat.fSpeed = 2.f;
+	m_Stat.fATK = 50.f;
+	m_Stat.fATKRange = 4.f;
+	m_Stat.fAggroRange = 10.f;
 }
 
 void CDeerClops::Check_State()
 {
-	/*enum DEERSTATE { IDLE, WALK, ATTACK, SLEEP, TAUNT, HIT, DEAD, STATE_END };*/
+	
 	if (m_ePreState != m_eCurState)
 	{
 		switch (m_eCurState)
@@ -220,122 +261,130 @@ void CDeerClops::Check_State()
 			break;
 		case SLEEP:
 			m_fFrameEnd = 23;
+			m_eCurLook = LOOK_DOWN;
+			break;
+		case SLEEP_PST:
+			m_fFrameEnd = 18;
+			m_eCurLook = LOOK_DOWN;
 			break;
 		case TAUNT:
 			m_fFrameEnd = 17;
+			m_eCurLook = LOOK_DOWN;
 			break;
 		case HIT:
 			m_fFrameEnd = 20;
 			break;
 		case DEAD:
 			m_fFrameEnd = 24;
+			m_eCurLook = LOOK_DOWN;
 			break;
 		}
 		m_fFrame = 0.f;
 		m_ePreState = m_eCurState;
-
 	}
 }
 
-void CDeerClops::Mode_Change()
+_bool CDeerClops::IsTarget_Approach(float _fDistance)
 {
-	_vec3 vPlayerPos, vThisPos,vDir;
-	PlayerComponent()->Get_Info(INFO_POS, &vPlayerPos);
-	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
-	vDir = vPlayerPos - vThisPos;
-
-	if (D3DXVec3Length(&vDir) < 5) 
+	_vec3 vTargetPos, vPos, vDir;
+	vTargetPos = Player_Position();
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	vTargetPos.y = 0.f;
+	vPos.y = 0.f;
+	if (D3DXVec3Length(&(vTargetPos - vPos)) < _fDistance)
 	{
-		if (!m_bMode)//발동, 최초발견시에
-		{
-			m_bMode = true;
-			m_eCurState = TAUNT;
-		}
+		return true;
 	}
 	else
 	{
-		m_bMode = false;
+		return false;
 	}
-	
+}
+void CDeerClops::Sleep(const _float& fTimeDelta)
+{
+	if (m_fFrameEnd < m_fFrame)
+	{
+		m_fFrame = 0.f;
+	}
 }
 
-void CDeerClops::Patroll(const _float& fTimeDelta)
+void CDeerClops::First_Phase(const _float& fTimeDelta)
 {
+	
+	if (m_ePreState == SLEEP_PST && m_fFrameEnd < m_fFrame)
+	{
+		m_eCurState = IDLE;
+	}
+	else if (m_ePreState == IDLE && m_fFrameEnd < m_fFrame)	//포효 지르기
+	{
+		m_eCurState = TAUNT;
+	}
+	else if (m_ePreState == TAUNT && m_fFrameEnd < m_fFrame)
+	{
+		m_eCurState = WALK;
+		m_bPhase[SECOND] = true;
+	}
+
+
 
 	if (m_fFrameEnd < m_fFrame)
-		m_fFrame = 0.f;
-
-	m_fFrameChange += m_fAcctime * fTimeDelta;
-	if (m_fAcctime < m_fFrameChange)
 	{
-		m_fFrameChange = 0.f;
-		m_fAcctime = float(rand() % 30);
-
-		if (m_eCurState == IDLE)
+		m_fFrame = 0.f;
+	}
+}
+void CDeerClops::Second_Phase(const _float& fTimeDelta)
+{
+	
+	if (IsTarget_Approach(m_Stat.fATKRange))
+	{
+		m_eCurState = ATTACK;
+	}
+	else if (m_eCurState == ATTACK && IsTarget_Approach(m_Stat.fATKRange + 1.f)&& !m_bAttacking)
+	{
+		if (12 < m_fFrame)
 		{
-			m_eCurState = WALK;
-		}
-		else
-		{
-			m_eCurState = IDLE;
+			dynamic_cast<CPlayer*>(Player_Pointer())->Set_Attack(m_Stat.fATK);
+			m_bAttacking = true;
 		}
 	}
 	else
 	{
-		return;
+		Chase_Player(fTimeDelta);
+		m_eCurState = WALK;
 	}
-	
-	
-}
 
-void CDeerClops::Fight(const _float& fTimeDelta)
-{
-	if (m_ePreState == TAUNT)	//포효 상태에선 리턴
+	if (m_fFrameEnd < m_fFrame)
 	{
-		if (m_fFrameEnd <= m_fFrame)
-		{
-			m_eCurState = WALK;
-			m_fFrame = 0;
-		}
-		return;
-	}
-	else                       //플레이어 향한 방향을 바라보는 메소드 추가해야함
-	{
-		if (m_fFrameEnd < m_fFrame)
-		{
-			Chase_Player(fTimeDelta);
-			m_fFrame = 0;
-		}
+		m_fFrame = 0.f;
 	}
 
 }
 
 void CDeerClops::Chase_Player(const _float& fTimeDelta)
 {
-	_vec3 vPlayerPos, vThisPos, vDir;
-	PlayerComponent()->Get_Info(INFO_POS, &vPlayerPos);
-	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
-	vDir = vPlayerPos - vThisPos;
-	if (D3DXVec3Length(&vDir) < 1)
-	{
-		m_eCurState = ATTACK;
-	}
-	else
-	{
-		m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-		m_eCurState = WALK;
-	}
-
+	_vec3 PlayerPos, vDir, vPos;
+	PlayerComponent()->Get_Info(INFO_POS, &PlayerPos);
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	vDir = PlayerPos - vPos;
+	vDir.y = 0;
+	m_eCurLook = m_pTransForm->For_Player_Direction(&vDir, m_Stat.fSpeed, fTimeDelta);
 }
-
-
-
 
 CTransform* CDeerClops::PlayerComponent()
 {
 	Engine::CTransform* pPlayerTransformCom = scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm();
 	NULL_CHECK_RETURN(pPlayerTransformCom, NULL);
 	return pPlayerTransformCom;
+}
+_vec3 CDeerClops::Player_Position()
+{
+	_vec3	pPos;
+	PlayerComponent()->Get_Info(INFO_POS, &pPos);
+	return pPos;
+}
+CGameObject* CDeerClops::Player_Pointer()
+{
+	return scenemgr::Get_CurScene()->GetPlayerObject();
 }
 
 void CDeerClops::Look_Change()

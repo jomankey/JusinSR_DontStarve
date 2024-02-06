@@ -2,7 +2,7 @@
 #include "Spider.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-
+#include "Player.h"
 #include "Scene.h"
 
 CSpider::CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
@@ -39,10 +39,10 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     {
         m_fFrame += m_fFrameEnd * fTimeDelta;
     }
-    Die_Check();    //죽었는지 검사
+    _int iResult = Die_Check();    //죽었는지 검사
     if (!m_Stat.bDead)      //죽지 않았을시 진입
     {
-        if (IsTarget_Approach(5.f) == true)     //플레이어와의 거리가 5보다 작으면 진입
+        if (IsTarget_Approach(m_Stat.fAggroRange) == true)     //플레이어와의 거리가 5보다 작으면 진입
         {
             Attacking(fTimeDelta);
         }
@@ -62,7 +62,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     CGameObject::Update_GameObject(fTimeDelta);
 
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
-    return 0;
+    return iResult;
 }
 
 void CSpider::LateUpdate_GameObject()
@@ -250,6 +250,8 @@ void CSpider::Set_ObjStat()
 
     m_Stat.fATK = 10.f;
     m_Stat.bDead = false;
+    m_Stat.fATKRange = 1.3f;
+    m_Stat.fAggroRange = 5.f;
 }
 
 void CSpider::Set_Scale()
@@ -270,15 +272,20 @@ void CSpider::Attacking(const _float& fTimeDelta)
     if (!m_bHit)
     {
         
-        if (IsTarget_Approach(1) && m_ePrestate != ATTACK)
+        if (IsTarget_Approach(m_Stat.fATKRange) && m_ePrestate != ATTACK)
         {
             m_eCurstate = ATTACK;
         }
         else if (m_ePrestate == ATTACK)
         {
-            if (m_fFrameEnd < m_fFrame)
+            if (6 < m_fFrame && IsTarget_Approach(m_Stat.fATKRange) && !m_bAttacking)
             {
-                if (!IsTarget_Approach(1))
+                dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+                m_bAttacking = true;
+            }
+            else if (m_fFrameEnd < m_fFrame)
+            {
+                if (!IsTarget_Approach(m_Stat.fATKRange))
                 {
                     m_eCurstate = WALK;
                 }
@@ -338,7 +345,7 @@ void CSpider::Patroll(const _float& fTimeDelta)
    
 }
 
-void CSpider::Die_Check()
+_int CSpider::Die_Check()
 {
     if (m_Stat.fHP <= 0 && m_ePrestate != DEAD && m_ePrestate != ERASE )
     {
@@ -358,13 +365,13 @@ void CSpider::Die_Check()
     {
         if (m_fFrameEnd-1 < m_fFrame)
         {
-            
             m_bFrameStop = true;
             DeleteObject(this);
+            return 0x80000000;
         }
     }
-    else
-        return;
+    
+    return 0;
         
 }
 

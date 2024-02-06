@@ -54,7 +54,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_Dirchange = false;
 	m_KeyLock = false;
 	m_bFrameLock = false;
-	m_bPlayerDead = false;
+	
 	m_vPlayerActing = false;
 	m_bIsRoadScene - false;
 	m_TargetObject = RSOBJ_END;
@@ -683,6 +683,9 @@ void CPlayer::Check_State()
 			m_fFrameEnd = 7;
 			m_KeyLock = true;
 			break;
+		case BUILD:
+			m_fFrameEnd = 6;
+			break;
 		case ATTACK:
 			m_fFrameEnd = 11;
 			m_KeyLock = true;
@@ -765,10 +768,13 @@ void CPlayer::Set_Scale()
 		m_pTransForm->m_vScale = { 0.7f, 1.f, 0.7f };
 
 	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT))
-		m_pTransForm->m_vScale = { 1.7f,0.05f,0.7f };
+		m_pTransForm->m_vScale = { 1.7f,0.05f,1.f };
 
 	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_UP || m_eCurLook == LOOK_DOWN))
 		m_pTransForm->m_vScale = { 1.2f,0.5f,1.f };
+
+	//else if (m_eCurState == AXE_CHOP_PRE)
+	//	m_pTransForm->m_vScale = { 1.f, 0.5f, 0.7f };
 
 	else
 		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
@@ -777,7 +783,7 @@ void CPlayer::Set_Scale()
 
 void CPlayer::Set_Stat()
 {
-	m_Stat.fHP = 150.f;
+	m_Stat.fHP = 200.f;
 	m_Stat.fMxHP = 150.f;
 	m_Stat.fSpeed = 5.f;
 	m_Stat.fATK = 10.f;
@@ -785,6 +791,16 @@ void CPlayer::Set_Stat()
 	m_Stat.fAggroRange = 5.f;
 	m_Stat.bDead = false;
 
+}
+
+void CPlayer::Set_Attack(int _Atk)
+{
+	if (!m_Stat.bDead && m_Stat.fHP > 0)
+	{
+		m_Stat.fHP -= _Atk;
+		m_eCurState = HIT;
+		m_KeyLock = true;
+	}
 }
 
 void CPlayer::Weapon_Change()
@@ -850,15 +866,31 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		}
 		break;
 	case TREE:
+		if (7.f < m_fFrame && !m_vPlayerActing)
+		{
+			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
+			m_vPlayerActing = true;
+		}
 		m_eCurState = AXE_CHOP_PRE;
 		break;
 	case PIG_HOUSE:
 		m_eCurState = HAMMERING;
 		break;
 	case GRASS:
+		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
+		{
+			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			m_vPlayerActing = true;
+		}
 		m_eCurState = BUILD;
 		break;
 	case BERRY_BUSH:
+		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
+		{
+			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			m_vPlayerActing = true;
+		}
 		m_eCurState = BUILD;
 		break;
 	}
