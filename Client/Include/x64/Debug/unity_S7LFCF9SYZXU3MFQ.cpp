@@ -48,6 +48,9 @@
 #include "C:\PortPolio\Client\Code\CMentalUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CObjectFireFlies.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CObjectGrass.cpp"
 
 

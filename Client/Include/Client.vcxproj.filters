@@ -139,6 +139,9 @@
     <Filter Include="02. GameObject\07. CUI\05. PopUpUI\03. SildeBox">
       <UniqueIdentifier>{e4da578b-353c-4c92-8a0c-4682c4d51258}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\06. FireFlies">
+      <UniqueIdentifier>{0c297e33-5d83-42df-b1f1-a7e214f64c7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -282,6 +285,9 @@
     <ClInclude Include="..\Header\CSlideBox.h">
       <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CObjectFireFlies.h">
+      <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -414,7 +420,10 @@
       <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BerryBush.cpp">
-      <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
+      <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CObjectFireFlies.cpp">
+      <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

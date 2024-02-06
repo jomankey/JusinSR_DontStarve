@@ -189,6 +189,7 @@
     <ClInclude Include="..\Header\CItemFood.h" />
     <ClInclude Include="..\Header\CLightUI.h" />
     <ClInclude Include="..\Header\CMentalUI.h" />
+    <ClInclude Include="..\Header\CObjectFireFlies.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="..\Code\CItemFood.cpp" />
     <ClCompile Include="..\Code\CLightUI.cpp" />
     <ClCompile Include="..\Code\CMentalUI.cpp" />
+    <ClCompile Include="..\Code\CObjectFireFlies.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
