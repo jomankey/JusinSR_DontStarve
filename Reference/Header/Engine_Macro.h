@@ -12,6 +12,8 @@ namespace Engine
 #define WINCX 800
 #define WINCY 600
 
+#define INVENCNT 15
+
 
 #ifndef			MSG_BOX
 #define			MSG_BOX(_message)			MessageBox(NULL, TEXT(_message), L"System Message", MB_OK)

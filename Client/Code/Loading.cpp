@@ -46,6 +46,7 @@ _uint CLoading::Loading_ForStage()
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png")), E_FAIL);
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_HeightTerrainTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png")), E_FAIL);
 	FAILED_CHECK_RETURN(SaveLoadingTexture(L"Proto_TerrainTexture", TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png"), E_FAIL);
+	FAILED_CHECK_RETURN(SaveLoadingTexture(L"Proto_BossTexture", TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/BossTerrain.png"), E_FAIL);
 	FAILED_CHECK_RETURN(SaveLoadingTexture(L"Proto_HeightTerrainTexture", TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain0.png"), E_FAIL);
 
 

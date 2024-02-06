@@ -14,6 +14,11 @@ CToolUI* CUI::m_pToolUI = nullptr;
 
 
 
+CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev)
+	: Engine::CGameObject(pGraphicDev)
+{
+}
+
 CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	: Engine::CGameObject(pGraphicDev, _UiName)
 	, m_eUIState(_State)
@@ -44,6 +49,11 @@ CUI::CUI(const CUI& rhs)
 CUI::~CUI()
 {
 
+}
+
+HRESULT CUI::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	return S_OK;
 }
 
 HRESULT CUI::Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle)

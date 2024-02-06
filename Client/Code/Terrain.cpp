@@ -4,13 +4,15 @@
 #include "Export_Utility.h"
 #include "Export_System.h"
 
-CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev)
+CTerrain::CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, wstring pKey)
+	: Engine::CGameObject(pGraphicDev),
+	m_pKey(pKey)
 {
 }
 
 CTerrain::CTerrain(const CTerrain& rhs)
-	: Engine::CGameObject(rhs)
+	: Engine::CGameObject(rhs),
+	m_pKey(rhs.m_pKey)
 {
 
 }
@@ -66,9 +68,9 @@ HRESULT CTerrain::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_TerrainTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(m_pKey.c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTexture", pComponent });
+	m_mapComponent[ID_STATIC].insert({ m_pKey.c_str(), pComponent});
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -94,9 +96,9 @@ HRESULT CTerrain::SetUp_Material()
 	return S_OK;
 }
 
-CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTerrain* CTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring pKey)
 {
-	CTerrain* pInstance = new CTerrain(pGraphicDev);
+	CTerrain* pInstance = new CTerrain(pGraphicDev, pKey);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

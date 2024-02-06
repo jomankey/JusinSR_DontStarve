@@ -14,7 +14,7 @@ class CTransform;
 class CTerrain :	public Engine::CGameObject
 {
 private:
-	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTerrain(LPDIRECT3DDEVICE9 pGraphicDev, wstring pKey);
 	explicit CTerrain(const CTerrain& rhs);
 	virtual ~CTerrain();
 
@@ -35,7 +35,7 @@ private:
 	wstring m_pKey;
 
 public:
-	static CTerrain*		Create(LPDIRECT3DDEVICE9	pGraphicDev);
+	static CTerrain*		Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring pKey);
 
 private:
 	virtual void Free() override;

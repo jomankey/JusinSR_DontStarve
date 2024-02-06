@@ -94,9 +94,6 @@
     <Filter Include="02. GameObject\01. Monster\01. Beefalo">
       <UniqueIdentifier>{f83f9163-d17a-4cdc-85ce-4c1b056c4f8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\02. CInvenBox">
-      <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Manager\Event">
       <UniqueIdentifier>{a777b96b-dd5b-41a1-bd20-f91b4a2a02d7}</UniqueIdentifier>
     </Filter>
@@ -150,6 +147,9 @@
     </Filter>
     <Filter Include="02. GameObject\03. Terrain\RunTerrain">
       <UniqueIdentifier>{e203e153-be4a-42bd-b0f3-95b24604e94d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven\CInvenBox">
+      <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +238,7 @@
       <Filter>03. Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInvenBox.h">
-      <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
+      <Filter>02. GameObject\07. CUI\01. Inven\CInvenBox</Filter>
     </ClInclude>
     <ClInclude Include="FuncEvent.h">
       <Filter>03. Manager\Event</Filter>
@@ -384,7 +384,7 @@
       <Filter>03. Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInvenBox.cpp">
-      <Filter>02. GameObject\07. CUI\02. CInvenBox</Filter>
+      <Filter>02. GameObject\07. CUI\01. Inven\CInvenBox</Filter>
     </ClCompile>
     <ClCompile Include="FuncEvent.cpp">
       <Filter>03. Manager\Event</Filter>

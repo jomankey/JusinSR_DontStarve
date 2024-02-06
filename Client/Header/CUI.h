@@ -17,11 +17,13 @@ class CUI
 	: public Engine::CGameObject
 {
 protected:
+	explicit CUI(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name);
 	explicit CUI(const CUI& rhs);
 	virtual ~CUI();
 
 public:
+	virtual HRESULT Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual HRESULT Ready_GameObject(_vec3 _pos, _vec3 _size, float _Angle = 0);
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;
@@ -35,13 +37,10 @@ public:
 	virtual BOOL IsItemOn() { return m_bItemChek; }
 	virtual void SetItemOn(BOOL _ItemPut) { m_bItemChek = _ItemPut; }
 
-
+protected:
 	virtual HRESULT			Add_Component();
 
-
-
-
-
+public:
 	_float GetX() { return m_fX; }
 	_float GetY() { return m_fY; }
 	_float GetSizeX() { return m_fSizeX; }
