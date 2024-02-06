@@ -178,6 +178,7 @@
     <ClInclude Include="..\Header\CAliveUI.h" />
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\CButtonUI.h" />
+    <ClInclude Include="..\Header\CCatapult.h" />
     <ClInclude Include="..\Header\CClothUI.h" />
     <ClInclude Include="..\Header\CEquiment.h" />
     <ClInclude Include="..\Header\CExplainPanel.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="..\Code\CAliveUI.cpp" />
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\CButtonUI.cpp" />
+    <ClCompile Include="..\Code\CCatapult.cpp" />
     <ClCompile Include="..\Code\CClothUI.cpp" />
     <ClCompile Include="..\Code\CEquiment.cpp" />
     <ClCompile Include="..\Code\CExplainPanel.cpp" />

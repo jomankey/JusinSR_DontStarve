@@ -151,6 +151,9 @@
     <Filter Include="02. GameObject\03. Terrain\RunTerrain">
       <UniqueIdentifier>{e203e153-be4a-42bd-b0f3-95b24604e94d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\06. CCatapult">
+      <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -306,6 +309,9 @@
     <ClInclude Include="..\Header\RunTerrain.h">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCatapult.h">
+      <Filter>02. GameObject\08. ResObjects\06. CCatapult</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -451,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\RunTerrain.cpp">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCatapult.cpp">
+      <Filter>02. GameObject\08. ResObjects\06. CCatapult</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

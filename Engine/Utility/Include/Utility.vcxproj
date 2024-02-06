@@ -178,6 +178,8 @@ call CopyUtility.bat</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Header\CAnimation.h" />
+    <ClInclude Include="..\..\Header\CAnimator.h" />
     <ClInclude Include="..\..\Header\CEventMgr.h" />
     <ClInclude Include="..\..\Header\CustomTex.h" />
     <ClInclude Include="..\..\Header\Calculator.h" />
@@ -206,6 +208,8 @@ call CopyUtility.bat</Command>
     <ClInclude Include="..\..\Header\VIBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CAnimation.cpp" />
+    <ClCompile Include="..\Code\CAnimator.cpp" />
     <ClCompile Include="..\Code\CEventMgr.cpp" />
     <ClCompile Include="..\Code\CustomTex.cpp" />
     <ClCompile Include="..\Code\Calculator.cpp" />

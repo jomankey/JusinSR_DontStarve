@@ -2,7 +2,6 @@
 #include "..\Header\Loading.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -75,6 +74,7 @@ HRESULT CLoading::Loading_Componment()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_3_3_1_Tex", CustomizeTex::Create(m_pGraphicDev, 3, 3, 1)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Anim", CAnimator::Create(m_pGraphicDev)), E_FAIL);
 
 	return S_OK;
 }
@@ -108,17 +108,17 @@ HRESULT CLoading::Loading_Player_Texture()
 
 	//È¶ºÒ
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_idle_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/torch/idle_down/torch_idle_down__%03d.png", 22)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_idle_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/torch/idle_up/torch_idle_up__%03d.png", 22)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_idle_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/torch/idle_up/torch_idle_up__%03d.png", 22)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_idle_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/torch/idle_side/torch_idle_side__%03d.png", 22)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_run_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/torch/run_down/torch_run_down__%03d.png", 6)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_run_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/torch/run_up/torch_run_up__%03d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_run_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/torch/run_up/torch_run_up__%03d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_Torch_run_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/torch/run_side/torch_run_side__%03d.png", 6)), E_FAIL);
 
 
 	//µµ³¢
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_predown/chop_predown__%03d.png", 15)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/axe/chop_preup/chop_preup__%03d.png", 15)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_preup/chop_preup__%03d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_preside/chop_preside__%03d.png", 15)), E_FAIL);
 
 	/*FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_axe_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_down/chop_down__%03d.png", 9)), E_FAIL);
@@ -127,17 +127,17 @@ HRESULT CLoading::Loading_Player_Texture()
 
 	//ÇØ¸Ó
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_hammer_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/hammer/hammer_down/hammer_down__%03d.png", 9)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_hammer_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/hammer/hammer_up/hammer_up__%03d.png", 9)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_hammer_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/hammer/hammer_up/hammer_up__%03d.png", 9)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_hammer_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/hammer/hammer_side/hammer_side__%03d.png", 9)), E_FAIL);
 
 	//°î±ªÀÌ
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_picking_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/pick/pick_down/pick_down__%03d.png", 9)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_picking_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/pick/pick_up/pick_up__%03d.png", 9)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_picking_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/pick/pick_up/pick_up__%03d.png", 9)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_picking_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/pick/pick_side/pick_side__%03d.png", 9)), E_FAIL);
 
 	//Ã¢
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_spear_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/spear/spear_down/spear_down__%03d.png", 8)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_spear_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/spear/spear_up/spear_up__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_spear_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/spear/spear_up/spear_up__%03d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_spear_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/spear/spear_side/spear_side__%03d.png", 8)), E_FAIL);
 
 	//º°°³ µ¿ÀÛ
@@ -213,15 +213,15 @@ HRESULT CLoading::Loading_Pig_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_idle_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/idle_side/side__%03d.png", 7)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_walk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/walk/down/walk_down__%03d.png", 8)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/pig/move/walk/up/walk_up__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/walk/up/walk_up__%03d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_walk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/walk/side/walk_side__%03d.png", 8)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_run_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/run/down/run_down__%03d.png", 6)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_run_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/pig/move/run/up/run_up__%03d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_run_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/run/up/run_up__%03d.png", 6)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_run_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/move/run/side/run_side__%03d.png", 6)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_atk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/attack/down/down__%03d.png", 10)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/pig/attack/up/up__%03d.png", 10)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/attack/up/up__%03d.png", 10)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_atk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/attack/side/side__%03d.png", 10)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/dead/dead__%03d.png", 11)), E_FAIL);
@@ -237,30 +237,30 @@ HRESULT CLoading::Loading_Boss_Texture()
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Idle_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/idle/down/down__%03d.png", 19)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Idle_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/idle/side/side__%03d.png", 19)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Idle_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/new_deerclops/idle/up/up__%03d.png", 19)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Idle_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/idle/up/up__%03d.png", 19)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_walk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/walk/down/walk_down_%d.png", 16)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_walk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/walk/side/side__%03d.png", 16)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/new_deerclops/walk/up/up__%03d.png", 16)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_walk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/walk/up/up__%03d.png", 16)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Atk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/attack/down/non__%03d.png", 20)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Atk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/attack/side/non__%03d.png", 20)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/new_deerclops/attack/up/non__%03d.png", 20)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/attack/up/non__%03d.png", 20)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_hit_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/hit/down/down__%03d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_hit_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/hit/side/side__%03d.png", 7)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_hit_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/new_deerclops/hit/up/up__%03d.png", 7)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_hit_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/hit/up/up__%03d.png", 7)), E_FAIL);
 
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_taunt", CTexture::Create(m_pGraphicDev, TEX_NORMAL,    L"../Bin/Resource/Texture/Monster/new_deerclops/taunt/taunt__%03d.png", 17)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_taunt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/taunt/taunt__%03d.png", 17)), E_FAIL);
 
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL,     L"../Bin/Resource/Texture/Monster/new_deerclops/dead/dead__%03d.png", 24)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/dead/dead__%03d.png", 24)), E_FAIL);
 	return S_OK;
 }
 
 HRESULT CLoading::Loading_UI_Texture()
 {
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Inven_Slot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Inven_Slot_%03d.png",2)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Inven_Slot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Inven_Slot_%03d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Weapon", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Weapon.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Light", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Light.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Alive", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Alive.png")), E_FAIL);
@@ -272,9 +272,9 @@ HRESULT CLoading::Loading_UI_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Head_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Head_Panel.png")), E_FAIL);
 
 	//Right_Top UI
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_HP", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/HP/HP__%03d.png",20)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Hungry", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Hungry/Hunger__%03d.png",20)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Mental", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Mental/Sanity__%03d.png",20)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_HP", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/HP/HP__%03d.png", 20)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Hungry", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Hungry/Hunger__%03d.png", 20)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Mental", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Mental/Sanity__%03d.png", 20)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_World_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/World_1.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_World_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/World_2.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_World_10", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/World_10.png")), E_FAIL);
@@ -283,7 +283,7 @@ HRESULT CLoading::Loading_UI_Texture()
 
 	//Pop_Up UI
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Linked_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Linked_Panel.png")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Panel_%03d.png",2)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Panel_%03d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Explain_PopUp_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Explain_PopUp_Panel.png")), E_FAIL);
 
 
@@ -303,7 +303,7 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Left_Fall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/fall_left/fall_left__%03d.png", 13)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Right_Fall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/fall_right/fall_right__%03d.png", 13)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Final", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/stump__000.png")), E_FAIL);
-	
+
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Nomal_Rock", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/Nomal_Rock/Nomal_Rock_%d.png", 3)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Grass_idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/grass_new/idle/grass_idle__%03d.png", 28)), E_FAIL);
@@ -313,7 +313,7 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_most_pick", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/berrybush/most_picked/most_picked__%03d.png", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_empty_idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/berrybush/empty_idle/empty_idle__000.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_empty_pick", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/berrybush/empty_picked/empty_picked__%03d.png", 5)), E_FAIL);
-	
+
 	//Item Object
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Log", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Log.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Berries", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Berries.png")), E_FAIL);
@@ -337,8 +337,8 @@ HRESULT CLoading::SaveLoadingTexture(const _tchar* _key, TEXTUREID _textureTag, 
 {
 	FAILED_CHECK_RETURN(proto::Ready_Proto(_key, CTexture::Create(m_pGraphicDev, _textureTag, _path)), E_FAIL);
 
-	Save_TexturePath(L"Scene_STAGE",_key, _textureTag, _path, num);
-	
+	Save_TexturePath(L"Scene_STAGE", _key, _textureTag, _path, num);
+
 	return S_OK;
 }
 

@@ -47,6 +47,6 @@ protected:
 
     OBJSTAT m_Stat;
 
-private:
-    virtual void Free();
+protected:
+    virtual void Free() override;
 };

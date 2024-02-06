@@ -33,15 +33,14 @@
 #include "DeerClops.h"
 
 //Environment
-
 #include "Terrain.h"
 //
 
 //Resource
 #include "CItem.h"
 #include "CItemFood.h"
-#include <BerryBush.h>
-
+#include "BerryBush.h""
+#include "CCatapult.h"
 
 //UI
 #include "CUI.h"
@@ -142,7 +141,8 @@ HRESULT CTestScene::Ready_Layer_GameLogic()
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
-	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+
+
 
 
 

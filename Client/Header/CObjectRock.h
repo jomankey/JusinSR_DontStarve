@@ -3,12 +3,6 @@
 #include "Engine_Define.h"
 #include "ResObject.h"
 
-namespace Engine
-{
-	class CComponent;
-	class CRcTex;
-	class CTexture;
-}
 class CObjectRock :
 	public CResObject
 {

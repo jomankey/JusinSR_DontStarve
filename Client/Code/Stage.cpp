@@ -32,7 +32,8 @@
 #include "CItem.h"
 #include "CItemFood.h"
 #include "CInventoryMgr.h"
-#include <BerryBush.h>
+#include "BerryBush.h"
+#include "CCatapult.h"
 
 
 //UI
@@ -70,6 +71,8 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
+
+
 
 	return S_OK;
 }
@@ -130,6 +133,11 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CCatapult::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	pGameObject->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
 	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -266,7 +274,7 @@ HRESULT CStage::Ready_Layer_UI()
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(30.f, 300.f, 0.f), _vec3(30.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-	
+
 	//아래 판넬
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(420.f, 580.f, 0.f), _vec3(20.f, 340.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -289,7 +297,7 @@ HRESULT CStage::Ready_Layer_UI()
 		int PixelJump = 0;
 		if (i == 5 || i == 10 || i == 15)
 			PixelJump = 7;
-	
+
 		pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(130.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);

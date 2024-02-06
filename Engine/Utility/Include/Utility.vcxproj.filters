@@ -76,6 +76,12 @@
     <Filter Include="03. GameObject\Tile">
       <UniqueIdentifier>{2a901e5d-2870-45c5-97ed-30973acdf2f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\05. Animator">
+      <UniqueIdentifier>{09dfb3f7-63c4-4dcb-84a6-39bf125a8a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Component\05. Animator\Animation">
+      <UniqueIdentifier>{3bfc2413-533c-4bed-9636-2b6354acf74c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\CSceneMgr.h">
@@ -156,6 +162,12 @@
     <ClInclude Include="..\..\Header\Tile.h">
       <Filter>03. GameObject\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\CAnimator.h">
+      <Filter>04. Component\05. Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\CAnimation.h">
+      <Filter>04. Component\05. Animator\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CSceneMgr.cpp">
@@ -232,6 +244,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Tile.cpp">
       <Filter>03. GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAnimator.cpp">
+      <Filter>04. Component\05. Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAnimation.cpp">
+      <Filter>04. Component\05. Animator\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

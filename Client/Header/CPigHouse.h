@@ -1,11 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "ResObject.h"
-namespace Engine {
-	class CRcTex;
-	class CTexture;
-	class CTransform;
-}
 
 class CPigHouse :
 	public CResObject
