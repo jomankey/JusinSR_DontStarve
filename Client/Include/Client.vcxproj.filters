@@ -145,6 +145,9 @@
     <Filter Include="01. Scene\03. BossScene">
       <UniqueIdentifier>{2f012643-0e89-4ed7-8bd5-e6bc37f2c758}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\04. RoadScene">
+      <UniqueIdentifier>{8f6ff8ba-c27e-48ac-951f-e644f0702358}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -294,6 +297,9 @@
     <ClInclude Include="..\Header\CBossScene.h">
       <Filter>01. Scene\03. BossScene</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CRoadScene.h">
+      <Filter>01. Scene\04. RoadScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -433,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBossScene.cpp">
       <Filter>01. Scene\03. BossScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRoadScene.cpp">
+      <Filter>01. Scene\04. RoadScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@
 
 
 #include "CBossScene.h"
+#include "CRoadScene.h"
 #include "CTestScene.h"
 
 #include "Stage.h"
@@ -56,6 +57,18 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 		{
 			Engine::CScene* pScene = nullptr;
 
+			pScene = CRoadScene::Create(m_pGraphicDev, L"ROAD");
+			NULL_CHECK_RETURN(pScene, -1);
+
+			FAILED_CHECK_RETURN(scenemgr::Change_CurScene(pScene), E_FAIL);
+
+			return 0;
+
+		}
+		else if (KEY_TAP(DIK_E))
+		{
+			Engine::CScene* pScene = nullptr;
+
 			pScene = CBossScene::Create(m_pGraphicDev, L"BOSS");
 			NULL_CHECK_RETURN(pScene, -1);
 
@@ -75,7 +88,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 			return 0;
 
-		}
+		}		
 	}
 
 	return iExit;

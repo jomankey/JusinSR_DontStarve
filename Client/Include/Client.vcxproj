@@ -194,6 +194,7 @@
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
     <ClInclude Include="..\Header\CPigHouse.h" />
+    <ClInclude Include="..\Header\CRoadScene.h" />
     <ClInclude Include="..\Header\CScienceUI.h" />
     <ClInclude Include="..\Header\CSlideBox.h" />
     <ClInclude Include="..\Header\CSlideUI.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
     <ClCompile Include="..\Code\CPigHouse.cpp" />
+    <ClCompile Include="..\Code\CRoadScene.cpp" />
     <ClCompile Include="..\Code\CScienceUI.cpp" />
     <ClCompile Include="..\Code\CSlideBox.cpp" />
     <ClCompile Include="..\Code\CSlideUI.cpp" />
