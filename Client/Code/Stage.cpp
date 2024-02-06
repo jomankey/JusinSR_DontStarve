@@ -18,6 +18,7 @@
 #include "Pig.h"
 #include "BerryBush.h"
 #include"CObjectFireFlies.h"
+#include"CTeleporterWorm.h"
 
 #include "Transform.h"
 //Scene
@@ -189,8 +190,8 @@ HRESULT CStage::Ready_Layer_GameLogic()
 
 	for (_int i = 0; i < 10; ++i)
 	{
-		pGameObject = CObjectFireFlies::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(64.f,1,64.f);
+		pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
+		pGameObject->GetTransForm()->Set_Pos(10.f,3,10.f);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	}
