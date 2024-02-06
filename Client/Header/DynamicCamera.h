@@ -36,6 +36,7 @@ private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Fix();
 	void		Mouse_Move();
+	void		CalDiff(const _float& fTimeDelta);
 
 public:
 	static CDynamicCamera* Create(LPDIRECT3DDEVICE9 pGraphicDev,
@@ -65,8 +66,8 @@ private:
 
 	_float	m_fDiff;		//차이값
 	_vec3	m_vTargetEye;	//카메라 목적지
-	_vec3	m_vCurEye;	//카메라 현재 위치
-	_vec3	m_vPrevEye;	//카메라 현재 위치
+	_vec3	m_vPrevEye;	//카메라 이전 위치
+	_bool	m_bMove;
 
 
 };

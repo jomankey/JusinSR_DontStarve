@@ -47,36 +47,47 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 	Mouse_Move();
 
-	if (m_pTarget != nullptr&& !m_pTarget->IsDelete())
+	if (KEY_TAP(DIK_U))
+	{
+		SetTarget(scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0]);
+		m_bMove = true;
+	}
+	if (KEY_TAP(DIK_I))
+	{
+		SetTarget(scenemgr::Get_CurScene()->GetPlayerObject());
+	}
+
+	if (m_pTarget != nullptr && !m_pTarget->IsDelete())
 	{
 		_vec3 vTarget;
 		m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
-		m_vAt = vTarget;
-		m_vEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance * m_fHeight;
-		m_vEye.y = vTarget.y + m_fHeight * m_fHeight;
-		m_vEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance * m_fHeight;
+
+		m_vAt = vTarget;//바라볼곳
+
+		m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance * m_fHeight;
+		m_vTargetEye.y = vTarget.y + m_fHeight * m_fHeight;
+		m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance * m_fHeight;//사실상 목적지
 	}
 
 	if (KEY_TAP(DIK_P))
 	{
 		m_fShakeAccTime = 0.f;
 	}
-	if (KEY_TAP(DIK_U))
-	{
-		m_fShakeAccTime = 0.f;
-		m_fIntensity -= 0.1f;
-	}
-	if (KEY_TAP(DIK_I))
-	{
-		m_fShakeAccTime = 0.f;
-		m_fIntensity += 0.1f;
-	}
+
 	if (m_fShakeTime > m_fShakeAccTime)
 	{
 		m_fShakeAccTime += fTimeDelta;
 		ShakeCamera();
 	}
 
+	if (m_bMove)
+	{
+		CalDiff(fTimeDelta);
+	}
+	else
+	{
+		m_vEye = m_vTargetEye;
+	}
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 
@@ -146,6 +157,27 @@ void CDynamicCamera::Mouse_Move()
 		}
 	}
 
+}
+
+void CDynamicCamera::CalDiff(const _float& fTimeDelta)
+{
+
+	//카메라이동할 거리와 방향
+
+	_vec3	vDir;
+	_float	fDistance;
+
+	D3DXVec3Normalize(&vDir, &(m_vTargetEye - m_vEye));
+	fDistance = D3DXVec3Length(&(m_vEye - m_vTargetEye));
+
+	if (fDistance <= 1.0f)
+	{
+		m_bMove = false;
+		return;
+	}
+	m_vEye += 10.f * vDir * fTimeDelta;
+
+	vDir.y = 0.f;
 }
 
 void CDynamicCamera::SetTarget(CGameObject* _targetObj)
