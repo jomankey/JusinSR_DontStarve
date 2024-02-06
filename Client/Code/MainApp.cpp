@@ -87,7 +87,8 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);		  // Z버퍼에 깊이 값을 기록은 하지만 자동 정렬을 수행할지 말지 결정
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정
 	
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Default", L"바탕체", 30, 30, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Loading_Key1", L"바탕체", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Loading_Key2", L"바탕체", 10, 22, FW_HEAVY), E_FAIL);
 
 	//owner Ui 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Count", L"굴림체", 7, 7, FW_THIN), E_FAIL);

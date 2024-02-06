@@ -5,6 +5,9 @@
 #include "Export_Utility.h"
 
 
+#include "CBossScene.h"
+#include "CTestScene.h"
+
 #include "Stage.h"
 #include "Layer.h"
 
@@ -38,7 +41,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 	if (true == m_pLoading->Get_Finish())
 	{
-		if (GetAsyncKeyState(VK_RETURN))
+		if (KEY_TAP(DIK_Q))
 		{
 			Engine::CScene* pScene = nullptr;
 
@@ -49,8 +52,28 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 
 			return 0;
 		}
-		else if (GetAsyncKeyState('P'))
+		else if (KEY_TAP(DIK_W))
 		{
+			Engine::CScene* pScene = nullptr;
+
+			pScene = CBossScene::Create(m_pGraphicDev, L"BOSS");
+			NULL_CHECK_RETURN(pScene, -1);
+
+			FAILED_CHECK_RETURN(scenemgr::Change_CurScene(pScene), E_FAIL);
+
+			return 0;
+
+		}
+		else if (KEY_TAP(DIK_T))
+		{
+			Engine::CScene* pScene = nullptr;
+
+			pScene = CTestScene::Create(m_pGraphicDev, L"TEST");
+			NULL_CHECK_RETURN(pScene, -1);
+
+			FAILED_CHECK_RETURN(scenemgr::Change_CurScene(pScene), E_FAIL);
+
+			return 0;
 
 		}
 	}
@@ -65,7 +88,7 @@ void CLogo::LateUpdate_Scene()
 
 void CLogo::Render_Scene()
 {
-	Engine::Render_Font(L"Font_Default", m_pLoading->Get_String(), &_vec2(10.f, 10.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	Engine::Render_Font(L"Loading_Key1", m_pLoading->Get_String(), &_vec2(10.f, 300.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CLogo::Ready_Prototype()

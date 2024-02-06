@@ -21,6 +21,7 @@
 #include "Transform.h"
 //Scene
 #include "Layer.h"
+#include "CTestScene.h"
 
 // Monster/Resource/Object
 #include "CObjectRock.h"
@@ -75,9 +76,17 @@ HRESULT CStage::Ready_Scene()
 
 Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 {
-	Change_LightInfo(fTimeDelta);
+	__super::Update_Scene(fTimeDelta);
 
-	return __super::Update_Scene(fTimeDelta);
+	Change_LightInfo(fTimeDelta);
+	if (KEY_TAP(DIK_Z))
+	{
+		CScene* pScene = CTestScene::Create(m_pGraphicDev, L"TestScene");
+		NULL_CHECK_RETURN(pScene, -1);
+		scenemgr::Change_CurScene(pScene);
+	}
+
+	return 0;
 }
 
 void CStage::LateUpdate_Scene()
@@ -589,6 +598,5 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 
 void CStage::Free()
 {
-	CInventoryMgr::GetInstance()->Release();
 	__super::Free();
 }
