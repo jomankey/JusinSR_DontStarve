@@ -12,8 +12,14 @@ namespace Engine {
 		virtual ~CCubeTex();
 
 	public:
+		_vec3* Get_Pos() { return m_pPos; }
+
+	public:
 		virtual HRESULT		Ready_Buffer();
 		virtual void		Render_Buffer();
+
+	private:
+		_vec3* m_pPos;
 
 	public:
 		static CCubeTex* Create(LPDIRECT3DDEVICE9 pGraphicDev);

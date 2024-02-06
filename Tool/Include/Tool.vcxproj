@@ -173,6 +173,8 @@
     <ClInclude Include="..\Header\SubScene.h" />
     <ClInclude Include="..\Header\TerrainScene.h" />
     <ClInclude Include="..\Header\ToolBerry.h" />
+    <ClInclude Include="..\Header\ToolBossScene.h" />
+    <ClInclude Include="..\Header\ToolBossTerrain.h" />
     <ClInclude Include="..\Header\ToolCamera.h" />
     <ClInclude Include="..\Header\ToolCubeTerrain.h" />
     <ClInclude Include="..\Header\ToolGrass.h" />
@@ -183,7 +185,6 @@
     <ClInclude Include="..\Header\ToolRock.h" />
     <ClInclude Include="..\Header\ToolSkyBox.h" />
     <ClInclude Include="..\Header\ToolTerrain.h" />
-    <ClInclude Include="..\Header\ToolTile.h" />
     <ClInclude Include="..\Header\ToolTree.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -202,6 +203,8 @@
     <ClCompile Include="..\Code\SubScene.cpp" />
     <ClCompile Include="..\Code\TerrainScene.cpp" />
     <ClCompile Include="..\Code\ToolBerry.cpp" />
+    <ClCompile Include="..\Code\ToolBossScene.cpp" />
+    <ClCompile Include="..\Code\ToolBossTerrain.cpp" />
     <ClCompile Include="..\Code\ToolCamera.cpp" />
     <ClCompile Include="..\Code\ToolCubeTerrain.cpp" />
     <ClCompile Include="..\Code\ToolGrass.cpp" />
@@ -212,7 +215,6 @@
     <ClCompile Include="..\Code\ToolRock.cpp" />
     <ClCompile Include="..\Code\ToolSkyBox.cpp" />
     <ClCompile Include="..\Code\ToolTerrain.cpp" />
-    <ClCompile Include="..\Code\ToolTile.cpp" />
     <ClCompile Include="..\Code\ToolTree.cpp" />
     <ClCompile Include="Tool.cpp" />
   </ItemGroup>

@@ -9,6 +9,7 @@
 #include "SubScene.h"
 
 #include "TerrainScene.h"
+#include <ToolBossScene.h>
 
 
 CMainTool::CMainTool() : m_pToolMgr(nullptr)

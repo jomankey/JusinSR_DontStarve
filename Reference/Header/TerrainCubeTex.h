@@ -14,11 +14,15 @@ namespace Engine
         virtual ~CTerrainCubeTex();
 
     public:
-        virtual HRESULT		Ready_Buffer();
+        virtual HRESULT		Ready_Buffer(const _ulong& dwCntX,
+            const _ulong& dwCntZ,
+            const _ulong& dwVtxItv);
         virtual void		Render_Buffer();
 
     private:
-        //        
+        //
+        _vec3* m_pPos;
+        VTXCUBE* m_pCube;
 
     public:
         static CTerrainCubeTex* Create(LPDIRECT3DDEVICE9 pGraphicDev);

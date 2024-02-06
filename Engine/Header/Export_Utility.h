@@ -19,6 +19,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "Calculator.h"
+#include "Tile.h"
 
 namespace Engine {
 
