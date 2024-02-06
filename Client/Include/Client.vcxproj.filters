@@ -148,6 +148,9 @@
     <Filter Include="01. Scene\04. RoadScene">
       <UniqueIdentifier>{8f6ff8ba-c27e-48ac-951f-e644f0702358}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\03. Terrain\RunTerrain">
+      <UniqueIdentifier>{e203e153-be4a-42bd-b0f3-95b24604e94d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -300,6 +303,9 @@
     <ClInclude Include="..\Header\CRoadScene.h">
       <Filter>01. Scene\04. RoadScene</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RunTerrain.h">
+      <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -442,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CRoadScene.cpp">
       <Filter>01. Scene\04. RoadScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RunTerrain.cpp">
+      <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

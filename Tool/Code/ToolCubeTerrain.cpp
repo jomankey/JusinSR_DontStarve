@@ -1,4 +1,6 @@
 #include "ToolCubeTerrain.h"
+#include "Export_Utility.h"
+
 CToolCubeTerrain::CToolCubeTerrain(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pGraphicDev(pGraphicDev)
 {
@@ -10,12 +12,33 @@ CToolCubeTerrain::~CToolCubeTerrain()
 
 HRESULT CToolCubeTerrain::Ready_GameObject()
 {
-	ZeroMemory(&m_pCubeCom, sizeof(m_pCubeCom));
+	m_pCubeCom.reserve(129 * 5 * 3);
 
-	for (int i = 0; i < (129 * 5 * 4); ++i)
+	_ulong iIndex(0);
+	_float fX(0), fY(0), fZ(0);
+
+	for (int y = 0; y < 5; ++y)
 	{
-		m_pCubeCom[i] = CToolTile::Create(m_pGraphicDev, i);
-		FAILED_CHECK_RETURN(m_pCubeCom[i], E_FAIL);
+		for (int i = 0; i < 5; ++i)
+		{
+			if (y > 0 && i != 0 && i != 4)
+				continue;
+
+			for (int j = 0; j < VTXCNTX; ++j)
+			{
+				//iIndex = i * VTXCNTX + j + (y * 5 * VTXCNTX);
+				CGameObject* pTile = Engine::CTile::Create(m_pGraphicDev);
+
+				m_pCubeCom.push_back(pTile);
+				//FAILED_CHECK_RETURN(pTile, E_FAIL);
+
+				fX = j * 2;
+				fZ = i * 2;
+				fY = y * 2;
+
+				pTile->GetTransForm()->Set_Pos(fX, fY, fZ);
+			}
+		}
 	}
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -67,7 +90,6 @@ void CToolCubeTerrain::Render_GameObject()
 
 HRESULT CToolCubeTerrain::Add_Component()
 {
-	
 	CComponent* pComponent = nullptr;
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
@@ -102,5 +124,10 @@ CToolCubeTerrain* CToolCubeTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CToolCubeTerrain::Free()
 {
+	for (int i = 0; i < m_pCubeCom.size(); ++i)
+	{
+		Safe_Release(m_pCubeCom[i]);
+	}
+
 	__super::Free();
 }

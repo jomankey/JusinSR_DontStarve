@@ -57,11 +57,11 @@ _uint CLoading::Loading_ForStage()
 	Loading_Pig_Texture();
 	/*Loading_Boss_Texture();*/
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_SkyBoxTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/Ocean.dds")), E_FAIL);
-
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_BurgerCube", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../../Client/Bin/Resource/Texture/SkyBox/burger0.dds")), E_FAIL);
 
 
 	m_bFinish = true;
-	lstrcpy(m_szLoading, L" Q : STAGE \n W : BOSS_STAGE \n T : TEST_STAGE");
+	lstrcpy(m_szLoading, L" Q : STAGE \n W : ROAD_STAGE  \n E : BOSS_STAGE \n T : TEST_STAGE");
 
 	return S_OK;
 }

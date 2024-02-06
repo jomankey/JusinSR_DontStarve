@@ -1,12 +1,12 @@
 #include "..\..\Header\CubeTex.h"
 
 CCubeTex::CCubeTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CVIBuffer(pGraphicDev)
+	:CVIBuffer(pGraphicDev), m_pPos(nullptr)
 {
 }
 
 CCubeTex::CCubeTex(const CCubeTex & rhs)
-	:CVIBuffer(rhs)
+	:CVIBuffer(rhs), m_pPos(rhs.m_pPos)
 {
 }
 
@@ -22,6 +22,7 @@ HRESULT CCubeTex::Ready_Buffer()
 	m_dwTriCnt = 12;
 	m_dwVtxCnt = 8;
 	m_dwVtxSize = sizeof(VTXCUBE);
+	m_pPos = new _vec3[m_dwVtxCnt];
 
 	m_dwIdxSize = sizeof(INDEX32);
 	m_IdxFmt = D3DFMT_INDEX32; 
@@ -55,6 +56,9 @@ HRESULT CCubeTex::Ready_Buffer()
 
 	pVertex[7].vPosition = { -1.f, -1.f, 1.f };
 	pVertex[7].vTexUV = pVertex[7].vPosition;
+
+	for (int i = 0; i < sizeof(m_pPos); ++i)
+		m_pPos[i] = pVertex[i].vPosition;
 
 	m_pVB->Unlock();
 
@@ -148,5 +152,7 @@ CComponent * CCubeTex::Clone()
 
 void CCubeTex::Free()
 {
+	if (false == m_bClone)
+		Safe_Delete_Array(m_pPos);
 	CVIBuffer::Free();
 }

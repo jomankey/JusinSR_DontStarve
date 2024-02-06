@@ -1,11 +1,11 @@
 #pragma once
 #include "Component.h"
-
 namespace Engine 
 {
 	class CTerrainTex;
 	class CTransform;
 	class CRcTex;
+	class CTile;
 
 	class ENGINE_DLL CCalculator : public CComponent
 	{
@@ -23,10 +23,23 @@ namespace Engine
 			const _ulong& dwCntX = VTXCNTX,
 			const _ulong& dwCntZ = VTXCNTZ);
 
+		_vec3		Picking_OnCubeTerrain(HWND hWnd,
+			vector<CGameObject*> pTileBufferCom,
+			CTransform* pTerrainTransCom,
+			const _ulong& dwCntX = VTXCNTX,
+			const _ulong& dwCntZ = VTXCNTZ);
+
 		//Tool용 마우스 피킹
 		_ulong Picking_OnTerrain_Tool(HWND hWnd,
 			CTerrainTex* pTerrainBufferCom,
 			CTransform* pTerrainTransCom,
+			const _ulong& dwCntX = VTXCNTX,
+			const _ulong& dwCntZ = VTXCNTZ,
+			const _ulong& dwVtxItv = VTXITV);
+
+		_ulong Picking_OnTerrain_Cube_Tool(HWND hWnd,
+			vector<CGameObject*> pTileBufferCom, 
+			CTransform* pTerrainTransCom, 
 			const _ulong& dwCntX = VTXCNTX,
 			const _ulong& dwCntZ = VTXCNTZ,
 			const _ulong& dwVtxItv = VTXITV);

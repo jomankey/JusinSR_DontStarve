@@ -1,6 +1,5 @@
 #pragma once
 #include "Export_Utility.h"
-#include "ToolTile.h"
 
 class CToolCubeTerrain :
     public CGameObject
@@ -8,6 +7,9 @@ class CToolCubeTerrain :
 private:
     explicit CToolCubeTerrain(LPDIRECT3DDEVICE9 pGraphicDev);
     virtual ~CToolCubeTerrain();
+
+public:
+    vector<CGameObject*> Get_TileList() { return m_pCubeCom; }
 
 public:
     virtual HRESULT Ready_GameObject()						 override;
@@ -23,7 +25,7 @@ private:
     HRESULT Picking_OnTerrain();
 
 private:
-    CToolTile* m_pCubeCom[129 * 5 * 4]; // 좌, 우, 위, 아래 4방향 큐브
+    vector<CGameObject*> m_pCubeCom; 
     Engine::CCalculator* m_pCalculatorCom;
 
     LPDIRECT3DDEVICE9 m_pGraphicDev;

@@ -79,8 +79,11 @@
     <Filter Include="02. Object\Terrain\ToolCubeTerrain">
       <UniqueIdentifier>{818527b5-36d5-44f2-84ba-bddc83d8fca4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Terrain\ToolCubeTerrain\Tile">
-      <UniqueIdentifier>{518debe5-496e-436d-948a-b6e5db6d39a4}</UniqueIdentifier>
+    <Filter Include="01. Scene\Stage3">
+      <UniqueIdentifier>{f6a83992-b0b9-46da-b7bb-38decd1365b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\Terrain\ToolBossTerrain">
+      <UniqueIdentifier>{8b69d06e-245c-482a-ab4c-7cf648d7c6d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,8 +168,11 @@
     <ClInclude Include="..\Header\ToolCubeTerrain.h">
       <Filter>02. Object\Terrain\ToolCubeTerrain</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ToolTile.h">
-      <Filter>02. Object\Terrain\ToolCubeTerrain\Tile</Filter>
+    <ClInclude Include="..\Header\ToolBossScene.h">
+      <Filter>01. Scene\Stage3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolBossTerrain.h">
+      <Filter>02. Object\Terrain\ToolBossTerrain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -239,8 +245,11 @@
     <ClCompile Include="..\Code\ToolCubeTerrain.cpp">
       <Filter>02. Object\Terrain\ToolCubeTerrain</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ToolTile.cpp">
-      <Filter>02. Object\Terrain\ToolCubeTerrain\Tile</Filter>
+    <ClCompile Include="..\Code\ToolBossScene.cpp">
+      <Filter>01. Scene\Stage3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolBossTerrain.cpp">
+      <Filter>02. Object\Terrain\ToolBossTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
