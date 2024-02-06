@@ -61,7 +61,7 @@ _uint CLoading::Loading_ForStage()
 
 
 	m_bFinish = true;
-	lstrcpy(m_szLoading, L" Q : STAGE \n W : BOSS_STAGE \n T : TEST_STAGE");
+	lstrcpy(m_szLoading, L" Q : STAGE \n W : ROAD_STAGE  \n E : BOSS_STAGE \n T : TEST_STAGE");
 
 	return S_OK;
 }
