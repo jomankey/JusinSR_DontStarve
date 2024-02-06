@@ -93,9 +93,11 @@ HRESULT CStage::Ready_Layer_Environment()
 {
 	Engine::CGameObject* pGameObject = nullptr;
 
+
+	//////카메라
 	m_pCamera = nullptr;
 	pGameObject = m_pCamera = CDynamicCamera::Create(m_pGraphicDev,
-		&_vec3(0.f, 10.f, -5.f),
+		&_vec3(64.f, 3.f, 64.f),
 		&_vec3(0.f, 0.f, 1.f),
 		&_vec3(0.f, 1.f, 0.f),
 		D3DXToRadian(60.f),
@@ -104,9 +106,9 @@ HRESULT CStage::Ready_Layer_Environment()
 		1000.f);
 
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
-
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
 
+	//////////스카이박스
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::BACK_GROUND, pGameObject), E_FAIL);

@@ -15,12 +15,14 @@
 #include "CInventoryMgr.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CGameObject(pGraphicDev), m_bAttack(false)
+	: Engine::CGameObject(pGraphicDev)
+	, m_bAttack(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
-	: Engine::CGameObject(pGraphicDev, _strName), m_bAttack(false)
+	: Engine::CGameObject(pGraphicDev, _strName)
+	, m_bAttack(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
