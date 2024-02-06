@@ -18,7 +18,7 @@ private:
 	HRESULT			SetUp_Material();
 
 private:
-	vector<CTile*> m_pCubeBufferCom;
+	vector<CGameObject*> m_pCubeCom;
 
 public:
 	static CRunTerrain* Create(LPDIRECT3DDEVICE9	pGraphicDev);

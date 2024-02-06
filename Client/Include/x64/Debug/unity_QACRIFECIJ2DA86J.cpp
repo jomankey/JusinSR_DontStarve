@@ -63,6 +63,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CPigHouse.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CRoadScene.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CScienceUI.cpp"
 
 

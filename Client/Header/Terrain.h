@@ -32,6 +32,8 @@ private:
 	Engine::CTerrainTex*		m_pBufferCom;
 	Engine::CTexture*	m_pTextureCom;
 
+	wstring m_pKey;
+
 public:
 	static CTerrain*		Create(LPDIRECT3DDEVICE9	pGraphicDev);
 

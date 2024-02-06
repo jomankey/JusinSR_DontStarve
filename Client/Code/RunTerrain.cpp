@@ -11,6 +11,35 @@ CRunTerrain::~CRunTerrain()
 
 HRESULT CRunTerrain::Ready_GameObject()
 {
+	m_pCubeCom.reserve(129 * 5 * 3);
+
+	_ulong iIndex(0);
+	_float fX(0), fY(0), fZ(0);
+
+	for (int y = 0; y < 5; ++y)
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			if (y > 0 && i != 0 && i != 4)
+				continue;
+
+			for (int j = 0; j < VTXCNTX; ++j)
+			{
+				//iIndex = i * VTXCNTX + j + (y * 5 * VTXCNTX);
+				CGameObject* pTile = Engine::CTile::Create(m_pGraphicDev);
+
+				m_pCubeCom.push_back(pTile);
+				//FAILED_CHECK_RETURN(pTile, E_FAIL);
+
+				fX = j * 2;
+				fZ = i * 2;
+				fY = y * 2;
+
+				pTile->GetTransForm()->Set_Pos(fX, fY, fZ);
+			}
+		}
+	}
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	return S_OK;
@@ -27,7 +56,7 @@ _int CRunTerrain::Update_GameObject(const _float& fTimeDelta)
 
 	Compute_ViewZ(&vPos);
 
-	for (auto& iter : m_pCubeBufferCom)
+	for (auto& iter : m_pCubeCom)
 		iter->Update_GameObject(fTimeDelta);
 
 	return 0;
@@ -35,7 +64,7 @@ _int CRunTerrain::Update_GameObject(const _float& fTimeDelta)
 
 void CRunTerrain::LateUpdate_GameObject()
 {
-	for (auto& iter : m_pCubeBufferCom)
+	for (auto& iter : m_pCubeCom)
 		iter->LateUpdate_GameObject();
 
 	__super::LateUpdate_GameObject();
@@ -43,7 +72,7 @@ void CRunTerrain::LateUpdate_GameObject()
 
 void CRunTerrain::Render_GameObject()
 {
-	for (auto& iter : m_pCubeBufferCom)
+	for (auto& iter : m_pCubeCom)
 		iter->Render_GameObject();
 }
 
@@ -79,7 +108,7 @@ CRunTerrain* CRunTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CRunTerrain* pInstance = new CRunTerrain(pGraphicDev);
 
-	if (pInstance->Ready_GameObject())
+	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
 		return nullptr;
@@ -90,7 +119,7 @@ CRunTerrain* CRunTerrain::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CRunTerrain::Free()
 {
-	for (auto& iter : m_pCubeBufferCom)
+	for (auto& iter : m_pCubeCom)
 		Safe_Release(iter);
 	//Safe_Delete_Vec(m_pCubeBufferCom);
 

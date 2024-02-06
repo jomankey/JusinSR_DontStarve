@@ -34,7 +34,7 @@
 
 //Environment
 
-#include "Terrain.h"
+#include "RunTerrain.h"
 //
 
 //Resource
@@ -73,11 +73,11 @@ HRESULT CRoadScene::Ready_Scene()
 		m_arrLayer[i] = CLayer::Create();
 	}
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
-
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	//FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
-	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
+	//FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
+
 
 	return S_OK;
 }
@@ -133,16 +133,16 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev);
+	pGameObject = m_pTerrain = CRunTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 
-	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
+	//pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+	//m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
-	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+	//dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
 
 
@@ -259,7 +259,7 @@ HRESULT CRoadScene::Ready_LightInfo()
 HRESULT CRoadScene::Load_Data()
 {
 	HANDLE	hFile = CreateFile(
-		L"../../Data/mainMap.dat",
+		L"../../Data/RunStage.dat",
 		GENERIC_READ,
 		NULL,
 		NULL,

@@ -25,7 +25,7 @@ private:
     HRESULT Picking_OnTerrain();
 
 private:
-    vector<CGameObject*> m_pCubeCom; // 좌, 우, 위, 아래 4방향 큐브
+    vector<CGameObject*> m_pCubeCom; 
     Engine::CCalculator* m_pCalculatorCom;
 
     LPDIRECT3DDEVICE9 m_pGraphicDev;
