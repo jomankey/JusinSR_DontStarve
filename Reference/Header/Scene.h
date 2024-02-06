@@ -26,6 +26,7 @@ namespace Engine
 		CGameObject* GetPlayerObject() { return m_pPlayer; }
 		CLayer* GetLayer(eLAYER_TYPE _eLayerType) { return m_arrLayer[(int)_eLayerType]; }
 		HRESULT		AddGameObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjType, CGameObject* pGameObject);
+		wstring Get_Scene_Name() { return m_strSceneName; }
 
 	public:
 		virtual HRESULT		Ready_Scene();

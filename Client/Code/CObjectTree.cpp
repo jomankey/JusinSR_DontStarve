@@ -94,6 +94,8 @@ HRESULT CObjectTree::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
+#pragma region TEXCOM
+
 	pComponent = m_pTextureCom[RES_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree_Idle"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree_Idle", pComponent });
@@ -113,6 +115,8 @@ HRESULT CObjectTree::Add_Component()
 	pComponent = m_pTextureCom[RES_FINAL] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Tree_Final"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree_Final", pComponent });
+
+#pragma endregion TEXCOM
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

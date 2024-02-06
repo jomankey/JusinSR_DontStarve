@@ -19,6 +19,7 @@ public:
     RESOBJID Get_Resourse_ID() { return m_eObject_id; }
     _bool Get_AttackState() { return m_bHit; }
 
+
 public:
     virtual HRESULT Ready_GameObject()						 override;
     virtual _int Update_GameObject(const _float& fTimeDelta) override;

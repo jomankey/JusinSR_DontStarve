@@ -118,13 +118,13 @@ HRESULT CLoading::Loading_Player_Texture()
 
 
 	//µµ³¢
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_predown/chop_predown__%03d.png", 6)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/axe/chop_preup/chop_preup__%03d.png", 6)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_preside/chop_preside__%03d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_predown/chop_predown__%03d.png", 15)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/axe/chop_preup/chop_preup__%03d.png", 15)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_preaxe_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_preside/chop_preside__%03d.png", 15)), E_FAIL);
 
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_axe_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_down/chop_down__%03d.png", 9)), E_FAIL);
+	/*FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_axe_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_down/chop_down__%03d.png", 9)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_axe_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Player/Armed/axe/chop_up/chop_up__%03d.png", 9)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_axe_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_side/chop_side__%03d.png", 9)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_axe_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/axe/chop_side/chop_side__%03d.png", 9)), E_FAIL);*/
 
 	//ÇØ¸Ó
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_hammer_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Armed/hammer/hammer_down/hammer_down__%03d.png", 9)), E_FAIL);

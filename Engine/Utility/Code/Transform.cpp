@@ -179,6 +179,44 @@ LOOKDIR Engine::CTransform::Patroll_LookChange(const _vec3* _vDir, const _float&
 	return eDir;
 }
 
+LOOKDIR Engine::CTransform::For_Player_Direction(const _vec3* _vDir, const _float& fSpeed, const _float& fTimeDelta)
+{
+	LOOKDIR		eDir;
+	_vec3		right,  look ,vDir;
+	vDir = *_vDir;
+	Get_Info(INFO_RIGHT, &right);
+	Get_Info(INFO_LOOK, &look);
+
+	D3DXVec3Normalize(&vDir, &vDir);
+	D3DXVec3Normalize(&right, &right);
+	D3DXVec3Normalize(&look, &look);
+	
+
+	float lookDot = D3DXVec3Dot(&vDir, &look);
+	float rightDot = D3DXVec3Dot(&vDir, &right);
+
+	if (fabs(lookDot) > fabs(rightDot)) {
+		if (lookDot > 0.0f) {
+			eDir = LOOK_UP;
+		}
+		else {
+			eDir = LOOK_DOWN;
+		}
+	}
+	else {
+		if (rightDot > 0.0f) {
+			eDir = LOOK_RIGHT;
+		}
+		else {
+			eDir = LOOK_LEFT;
+		}
+	}
+	
+	m_vInfo[INFO_POS] += vDir * fSpeed * fTimeDelta;
+
+	return eDir;
+}
+
 const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 {
 	_vec3	vDir = *pTargetPos - m_vInfo[INFO_POS];

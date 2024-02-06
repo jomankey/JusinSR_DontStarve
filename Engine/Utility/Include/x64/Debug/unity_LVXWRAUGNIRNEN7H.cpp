@@ -56,13 +56,13 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\Scene.cpp"
 
 
-#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\TerrainCubeTex.cpp"
-
-
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\TerrainTex.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\Texture.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\Tile.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Engine\Utility\Code\Transform.cpp"

@@ -63,6 +63,7 @@ namespace Engine {
 		void		Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 		LOOKDIR		Chase_Target_Monster(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta);
 		LOOKDIR		Patroll_LookChange(const _vec3* _vDir ,const _float& fSpeed, const _float& fTimeDelta);
+		LOOKDIR		For_Player_Direction(const _vec3* _vTarget, const _float& fSpeed, const _float& fTimeDelta);
 		const _matrix* Compute_LookAtTarget(const _vec3* pTargetPos);
 		void Set_Scale(_vec3 _scale) { m_vScale = _scale; }
 
