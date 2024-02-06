@@ -5,7 +5,7 @@
 #include "Export_Utility.h"
 #include "CInven.h"
 #include "Monster.h"
-
+#include "ResObject.h"
 #include "Component.h"
 #include "Layer.h"
 #include "Scene.h"
@@ -55,6 +55,8 @@ HRESULT CPlayer::Ready_GameObject()
 	m_KeyLock = false;
 	m_bFrameLock = false;
 	m_bPlayerDead = false;
+	m_vPlayerActing = false;
+	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 	Set_Stat();
 	return S_OK;
@@ -73,6 +75,10 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		{
 			m_KeyLock = false;
 			m_eCurState = IDLE;
+		}
+		if (m_vPlayerActing)
+		{
+			m_vPlayerActing = false;
 		}
 		m_fFrame = 0.f;
 	}
@@ -297,7 +303,7 @@ HRESULT CPlayer::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_side", pComponent });
 
 	//Axe loop
-	pComponent = m_pTextureCom[LOOK_DOWN][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_down"));
+	/*pComponent = m_pTextureCom[LOOK_DOWN][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_down"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_down", pComponent });
 
@@ -311,7 +317,7 @@ HRESULT CPlayer::Add_Component()
 
 	pComponent = m_pTextureCom[LOOK_LEFT][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_side"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });*/
 
 	//Hammer
 	pComponent = m_pTextureCom[LOOK_DOWN][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_down"));
@@ -452,6 +458,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 			m_eCurLook = LOOK_UP;
 		}
+
 	if (GetAsyncKeyState('S'))
 		{ //f
 			D3DXVec3Normalize(&vDir, &vDir);
@@ -516,13 +523,53 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		}
 
+
+	if (!GetAsyncKeyState('W') &&              //이동중이지 않을 때 IDLE로 변경
+		!GetAsyncKeyState('S') &&
+		!GetAsyncKeyState('A') &&
+		!GetAsyncKeyState('D'))
+	{
+		if (m_ePreWeapon == TORCH)				//횃불을 들고 있을 시에는 횃불모션으로 변경
+		{
+			m_eCurState = TORCH_IDLE;
+		}
+		else
+			m_eCurState = IDLE;
+
+	}
+
+
+
 	if (GetAsyncKeyState('Z'))
 	{
 		//Find_NeerObject: 못찾았을경우 nullptr반환
 
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
 		if (nullptr != findObj)
-			DeleteObject(findObj);
+		{
+			_vec3 vPos;
+			m_pTransForm->Get_Info(INFO_POS, &vPos);
+			findObj->GetTransForm()->Get_Info(INFO_POS, &m_vTargetPos);
+			m_TargetObject = dynamic_cast<CResObject*>(findObj)->Get_Resourse_ID();
+			m_vTargetDir = m_vTargetPos - vPos;
+			m_vTargetDir.y = 0.f;
+			if (D3DXVec3Length(&m_vTargetDir) < 1.f)
+			{
+				ResObj_Mining(m_TargetObject , findObj);
+			}
+			else
+			{
+				m_eCurLook = m_pTransForm->For_Player_Direction(&m_vTargetDir, m_Stat.fSpeed, fTimeDelta);
+				if (m_ePreWeapon == TORCH)
+				{
+					m_eCurState = TORCH_RUN;
+				}
+				else
+					m_eCurState = MOVE;
+			}
+
+			
+		}
 	}
 	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
 	{
@@ -629,7 +676,12 @@ void CPlayer::Check_State()
 		case TORCH_RUN:
 			m_fFrameEnd = 6;
 			break;
-
+		case PICKING_OBJECT:
+			m_fFrameEnd = 9;
+			break;
+		case AXE_CHOP_PRE:
+			m_fFrameEnd = 15;
+			break;
 		}
 		m_ePreState = m_eCurState;
 		m_fFrame = 0.f;
@@ -676,6 +728,12 @@ void CPlayer::Set_Scale()
 
 	else if (m_eCurState == MOVE)
 		m_pTransForm->m_vScale = { 0.7f, 1.f, 0.7f };
+
+	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT))
+		m_pTransForm->m_vScale = { 1.7f,0.05f,0.7f };
+
+	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_UP || m_eCurLook == LOOK_DOWN))
+		m_pTransForm->m_vScale = { 1.2f,0.5f,1.f };
 
 	else
 		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
@@ -742,6 +800,33 @@ void CPlayer::Look_Change()
 		m_ePreLook = m_eCurLook;
 	}
 
+}
+
+void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
+{
+	switch (_ObjID)
+	{
+	case ROCK:
+		m_eCurState = PICKING_OBJECT;
+		if ((m_fFrameEnd-1) < m_fFrame && !m_vPlayerActing)
+		{
+			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			m_vPlayerActing = true;
+		}
+		break;
+	case TREE:
+		m_eCurState = AXE_CHOP_PRE;
+		break;
+	case PIG_HOUSE:
+		m_eCurState = HAMMERING;
+		break;
+	case GRASS:
+		m_eCurState = BUILD;
+		break;
+	case BERRY_BUSH:
+		m_eCurState = BUILD;
+		break;
+	}
 }
 
 HRESULT CPlayer::Ready_Light()

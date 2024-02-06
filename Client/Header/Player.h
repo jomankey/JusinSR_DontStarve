@@ -38,6 +38,8 @@ private:
 	void			Set_Stat();
 	void			Weapon_Change();
 	void			Look_Change();
+	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);
+
 
 	HRESULT Ready_Light();
 	void Fire_Light();
@@ -71,7 +73,11 @@ private:
 	_bool				m_bFrameLock;
 
 
-	_vec3				m_vPickingDir;
+	_vec3				m_vTargetPos;
+	_vec3				m_vTargetDir;
+	_bool				m_vPlayerActing;
+
+	RESOBJID			m_TargetObject;
 	_bool				m_bPlayerDead;
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
