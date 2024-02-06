@@ -365,9 +365,6 @@
     <ClCompile Include="FuncEvent.cpp">
       <Filter>03. Manager\Event</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BerryBush.cpp">
-      <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ResObject.cpp">
       <Filter>02. GameObject\08. ResObjects</Filter>
     </ClCompile>
@@ -415,6 +412,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSlideBox.cpp">
       <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BerryBush.cpp">
+      <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

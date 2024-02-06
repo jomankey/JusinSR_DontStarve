@@ -22,9 +22,9 @@ public:
 	virtual HRESULT			Add_Component() override;
 	virtual void Free() override;
 
-	const _tchar* ItemName;
 
 private:
+	const _tchar* ItemName;
 	BOOL m_bIsShow = true;
 };
 
