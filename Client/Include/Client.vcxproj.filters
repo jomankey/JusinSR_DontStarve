@@ -414,7 +414,7 @@
       <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BerryBush.cpp">
-      <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
+      <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
