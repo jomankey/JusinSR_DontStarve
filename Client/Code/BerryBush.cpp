@@ -37,7 +37,6 @@ _int CBerryBush::Update_GameObject(const _float& fTimeDelta)
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
-	m_pTransForm->BillBoard();
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -49,6 +48,10 @@ void CBerryBush::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 	Change_Frame_Event();
 	Check_FrameState();
+	_vec3 vPos;
+	m_pTransForm->BillBoard();
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	Compute_ViewZ(&vPos);
 }
 
 void CBerryBush::Render_GameObject()

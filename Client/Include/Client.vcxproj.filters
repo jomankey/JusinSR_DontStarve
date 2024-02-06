@@ -139,6 +139,12 @@
     <Filter Include="02. GameObject\07. CUI\05. PopUpUI\03. SildeBox">
       <UniqueIdentifier>{e4da578b-353c-4c92-8a0c-4682c4d51258}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\99. Test">
+      <UniqueIdentifier>{1543790f-723a-4c2e-aeea-d9c1795e5951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\03. BossScene">
+      <UniqueIdentifier>{2f012643-0e89-4ed7-8bd5-e6bc37f2c758}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -282,6 +288,12 @@
     <ClInclude Include="..\Header\CSlideBox.h">
       <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTestScene.h">
+      <Filter>01. Scene\99. Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBossScene.h">
+      <Filter>01. Scene\03. BossScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -413,8 +425,14 @@
     <ClCompile Include="..\Code\CSlideBox.cpp">
       <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CTestScene.cpp">
+      <Filter>01. Scene\99. Test</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\BerryBush.cpp">
-      <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
+      <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBossScene.cpp">
+      <Filter>01. Scene\03. BossScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

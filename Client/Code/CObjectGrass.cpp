@@ -43,7 +43,6 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	CGameObject::Update_GameObject(fTimeDelta);
-	m_pTransForm->BillBoard();
 
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -56,10 +55,9 @@ void CObjectGrass::LateUpdate_GameObject()
 	Change_Frame_Event();
 	Check_FrameState();
 
-	//_vec3	vPos;
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	//__super::Compute_ViewZ(&vPos);
 	CGameObject::LateUpdate_GameObject();
+
+	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);

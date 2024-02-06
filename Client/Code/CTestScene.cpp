@@ -1,15 +1,9 @@
 #include "stdafx.h"
-#include "..\Header\Stage.h"
+#include "CTestScene.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-#include "player.h"
-#include "Monster.h"
-#include "Beefalo.h"
-#include "Spider.h"
-#include "DeerClops.h"
-#include "Terrain.h"
 #include "DynamicCamera.h"
 #include "SkyBox.h"
 #include "Effect.h"
@@ -18,20 +12,34 @@
 #include "Pig.h"
 #include "BerryBush.h"
 
-#include "Transform.h"
 //Scene
 #include "Layer.h"
-#include "CTestScene.h"
 
 // Monster/Resource/Object
 #include "CObjectRock.h"
 #include "CObjectGrass.h"
 #include "CObjectTree.h"
 
-// Item/Object
+//Component
+#include "Transform.h"
+
+// Object
+// Player/Monster
+#include "player.h"
+
+#include "Monster.h"
+#include "Beefalo.h"
+#include "Spider.h"
+#include "DeerClops.h"
+
+//Environment
+
+#include "Terrain.h"
+//
+
+//Resource
 #include "CItem.h"
 #include "CItemFood.h"
-#include "CInventoryMgr.h"
 #include <BerryBush.h>
 
 
@@ -47,58 +55,52 @@
 #include"CHungryUI.h"
 #include"CExplainPanel.h"
 
-CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
+CTestScene::CTestScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
 {
 	//test
 }
 
-CStage::~CStage()
+CTestScene::~CTestScene()
 {
 
 }
 
-HRESULT CStage::Ready_Scene()
+HRESULT CTestScene::Ready_Scene()
 {
-	srand(unsigned(time(NULL)));
 	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
 	{
 		m_arrLayer[i] = CLayer::Create();
 	}
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
+
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
+	//FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
 	return S_OK;
 }
 
-Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
+Engine::_int CTestScene::Update_Scene(const _float& fTimeDelta)
 {
-	__super::Update_Scene(fTimeDelta);
-
 	Change_LightInfo(fTimeDelta);
-	if (KEY_TAP(DIK_Z))
-	{
-		CScene* pScene = CTestScene::Create(m_pGraphicDev, L"TestScene");
-		NULL_CHECK_RETURN(pScene, -1);
-		scenemgr::Change_CurScene(pScene);
-	}
 
-	return 0;
+
+
+	return __super::Update_Scene(fTimeDelta);
 }
 
-void CStage::LateUpdate_Scene()
+void CTestScene::LateUpdate_Scene()
 {
 	__super::LateUpdate_Scene();
 }
 
-void CStage::Render_Scene()
+void CTestScene::Render_Scene()
 {
 }
 
-HRESULT CStage::Ready_Layer_Environment()
+HRESULT CTestScene::Ready_Layer_Environment()
 {
 	Engine::CGameObject* pGameObject = nullptr;
 
@@ -125,7 +127,7 @@ HRESULT CStage::Ready_Layer_Environment()
 	return S_OK;
 }
 
-HRESULT CStage::Ready_Layer_GameLogic()
+HRESULT CTestScene::Ready_Layer_GameLogic()
 {
 	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
@@ -142,117 +144,12 @@ HRESULT CStage::Ready_Layer_GameLogic()
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
-	//pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-
-	/*pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(10.f, 1.5f, 10.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
-
-	//for (_int i = 0; i < 1; ++i)
-	//{
-	//	pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(64.f, 1.5f, 64.f));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	//}
-	//
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CSpider::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CObjectGrass::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_GRASS", pGameObject), E_FAIL);
-	//}
-
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CObjectGrass::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	}*/
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CObjectRock::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
-	//}
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CObjectTree::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}*/
-	//pGameObject = CObjectTree::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CPigHouse::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}*/
-	//for (_int i = 0; i < 2; ++i)
-	//{
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CObjectTree::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_TREE", pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CPigHouse::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 2; ++i)
-	//{
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"CutGlass", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CPigHouse::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}*/
 
 
 	return S_OK;
 }
 
-HRESULT CStage::Ready_Layer_UI()
+HRESULT CTestScene::Ready_Layer_UI()
 {
 
 	auto& uiLayer = m_arrLayer[(int)eLAYER_TYPE::FORE_GROUND];
@@ -266,7 +163,7 @@ HRESULT CStage::Ready_Layer_UI()
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(30.f, 300.f, 0.f), _vec3(30.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-	
+
 	//아래 판넬
 	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(420.f, 580.f, 0.f), _vec3(20.f, 340.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -289,7 +186,7 @@ HRESULT CStage::Ready_Layer_UI()
 		int PixelJump = 0;
 		if (i == 5 || i == 10 || i == 15)
 			PixelJump = 7;
-	
+
 		pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(130.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
@@ -337,35 +234,11 @@ HRESULT CStage::Ready_Layer_UI()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
-	//After UI struct 
-	//-------------------------------------------
-
-	//장비 슬롯
-	//pGameObject = CEquiment::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 100.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Equipment");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
-	//옷 슬롯
-	//pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 120.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Cloth");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
-	//생존 슬롯
-	//pGameObject = CAliveUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Alive");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
-
-	//마우스 피킹시 사이드 판넬
-	//pGameObject = CSlideUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(20.f, 140.f, 0.f), _vec3(20.f, 20.f, 0.f), L"Proto_UI_Left_Panel_Default");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
 	return S_OK;
 }
 
 
-HRESULT CStage::Ready_LightInfo()
+HRESULT CTestScene::Ready_LightInfo()
 {
 	D3DLIGHT9			tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
@@ -383,7 +256,7 @@ HRESULT CStage::Ready_LightInfo()
 	return S_OK;
 }
 
-HRESULT CStage::Load_Data()
+HRESULT CTestScene::Load_Data()
 {
 	HANDLE	hFile = CreateFile(
 		L"../../Data/mainMap.dat",
@@ -450,7 +323,7 @@ HRESULT CStage::Load_Data()
 	return S_OK;
 }
 
-HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos)
+HRESULT CTestScene::Create_Object(const _tchar* pName, _vec3 vPos)
 {
 	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
@@ -533,7 +406,7 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos)
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 }
 
-HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
+HRESULT CTestScene::Change_LightInfo(const _float& fTimeDelta)
 {
 	D3DLIGHT9* tLightInfo = light::Get_Light(0)->Get_Light();
 
@@ -581,22 +454,22 @@ HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
 	return S_OK;
 }
 
-CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
+CTestScene* CTestScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 {
-	CStage* pInstance = new CStage(pGraphicDev, _strSceneName);
+	CTestScene* pInstance = new CTestScene(pGraphicDev, _strSceneName);
 
 	if (FAILED(pInstance->Ready_Scene()))
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("Stage Create Failed");
+		MSG_BOX("TestScene Create Failed");
 		return nullptr;
 	}
 
 	return pInstance;
 }
 
-void CStage::Free()
+void CTestScene::Free()
 {
 	__super::Free();
 }

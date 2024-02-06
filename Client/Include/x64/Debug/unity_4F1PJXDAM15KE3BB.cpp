@@ -6,6 +6,9 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CBossScene.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CButtonUI.cpp"
 
 
@@ -67,6 +70,9 @@
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CSlideUI.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CTestScene.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CToolUI.cpp"
