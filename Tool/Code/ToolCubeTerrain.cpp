@@ -12,7 +12,7 @@ CToolCubeTerrain::~CToolCubeTerrain()
 
 HRESULT CToolCubeTerrain::Ready_GameObject()
 {
-	m_pCubeCom.reserve(129 * 5 * 2);
+	m_pCubeCom.reserve(129 * 5 * 3);
 
 	_ulong iIndex(0);
 	_float fX(0), fY(0), fZ(0);
@@ -30,7 +30,7 @@ HRESULT CToolCubeTerrain::Ready_GameObject()
 				CGameObject* pTile = Engine::CTile::Create(m_pGraphicDev);
 
 				m_pCubeCom.push_back(pTile);
-				FAILED_CHECK_RETURN(pTile, E_FAIL);
+				//FAILED_CHECK_RETURN(pTile, E_FAIL);
 
 				fX = j * 2;
 				fZ = i * 2;

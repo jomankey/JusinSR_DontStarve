@@ -145,6 +145,9 @@
     <Filter Include="01. Scene\03. BossScene">
       <UniqueIdentifier>{2f012643-0e89-4ed7-8bd5-e6bc37f2c758}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\03. Terrain\RunTerrain">
+      <UniqueIdentifier>{b47280b2-13a7-4d96-a5f7-4d1f63b2ddd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -294,6 +297,9 @@
     <ClInclude Include="..\Header\CBossScene.h">
       <Filter>01. Scene\03. BossScene</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\RunTerrain.h">
+      <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -433,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBossScene.cpp">
       <Filter>01. Scene\03. BossScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\RunTerrain.cpp">
+      <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
