@@ -24,6 +24,7 @@ HRESULT CObjectGrass::Ready_GameObject()
 	Ready_Stat();
 
 	m_eCurState = RES_IDLE;
+	m_eObject_id = GRASS;
 	m_fFrame = 0;
 	m_fFrameEnd = 28;
 	return S_OK;

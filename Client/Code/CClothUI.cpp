@@ -6,8 +6,8 @@
 
 
 
-CClothUI::CClothUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-	:CToolUI(pGraphicDev, _UI_Name)
+CClothUI::CClothUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
+	:CToolUI(pGraphicDev, _UI_Name, _ItemToolType)
 
 {
 	m_eUIState = eUIState;
@@ -36,10 +36,10 @@ _int CClothUI::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-CClothUI* CClothUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+CClothUI* CClothUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
 {
-	CClothUI* pInstance = new CClothUI(pGraphicDev, _State, _UI_Name);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
+	CClothUI* pInstance = new CClothUI(pGraphicDev, _State, _UI_Name, _ItemToolType);
+	if (FAILED(pInstance->Ready_GameObject(_pos, _size)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");

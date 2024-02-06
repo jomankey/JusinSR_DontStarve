@@ -7,8 +7,8 @@
 
 
 
-CEquiment::CEquiment(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-	:CToolUI(pGraphicDev, _UI_Name)
+CEquiment::CEquiment(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
+	:CToolUI(pGraphicDev, _UI_Name, _ItemToolType)
 
 {
 	m_eUIState = eUIState;
@@ -23,26 +23,22 @@ CEquiment::~CEquiment()
 {
 }
 
-_int CEquiment::Update_GameObject(const _float& fTimeDelta)
+void CEquiment::LateUpdate_GameObject()
 {
-
-	__super::Update_GameObject(fTimeDelta);
-
 	if (UI_Collision() && Engine::Get_DIMouseState(DIM_LB) & 0x80)
 	{
 		Pop_SidePanel();
 
 		//Pop_SidePanel(false);
-		
+
 	}
-	
-	return 0;
 }
 
-CEquiment* CEquiment::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+
+CEquiment* CEquiment::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
 {
-	CEquiment* pInstance = new CEquiment(pGraphicDev, _State, _UI_Name);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
+	CEquiment* pInstance = new CEquiment(pGraphicDev, _State, _UI_Name, _ItemToolType);
+	if (FAILED(pInstance->Ready_GameObject(_pos, _size)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");

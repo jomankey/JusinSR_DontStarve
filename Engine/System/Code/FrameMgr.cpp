@@ -16,7 +16,9 @@ CFrameMgr::~CFrameMgr()
 _bool CFrameMgr::IsPermit_Call(const _tchar * pFrameTag, const _float & fTimeDelta)
 {
 	CFrame*		pFrame = Find_Frame(pFrameTag);
+
 	NULL_CHECK_RETURN(pFrame, false);
+
 	return pFrame->IsPermit_Call(fTimeDelta);
 }
 

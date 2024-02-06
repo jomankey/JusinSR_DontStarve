@@ -21,7 +21,6 @@ HRESULT Engine::CCamera::Ready_GameObject()
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 
-	//D3DXMatrixOrthoLH(&m_matProj, 800, 600, m_fNear, m_fFar);
 	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 	
@@ -32,7 +31,6 @@ Engine::_int Engine::CCamera::Update_GameObject(const _float& fTimeDelta)
 {
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
 	return 0;
 }

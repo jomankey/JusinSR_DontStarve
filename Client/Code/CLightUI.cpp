@@ -6,8 +6,8 @@
 
 
 
-CLightUI::CLightUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-	:CToolUI(pGraphicDev, _UI_Name)
+CLightUI::CLightUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
+	:CToolUI(pGraphicDev, _UI_Name, _ItemToolType)
 
 {
 	m_eUIState = eUIState;
@@ -26,18 +26,24 @@ _int CLightUI::Update_GameObject(const _float& fTimeDelta)
 {
 
 	__super::Update_GameObject(fTimeDelta);
+
+	return 0;
+}
+
+void CLightUI::LateUpdate_GameObject()
+{
 	if (UI_Collision() && Engine::Get_DIMouseState(DIM_LB) & 0x80)
 	{
 		Pop_SidePanel();
 
 	}
-	return 0;
+
 }
 
-CLightUI* CLightUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+CLightUI* CLightUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
 {
-	CLightUI* pInstance = new CLightUI(pGraphicDev, _State, _UI_Name);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
+	CLightUI* pInstance = new CLightUI(pGraphicDev, _State, _UI_Name, _ItemToolType);
+	if (FAILED(pInstance->Ready_GameObject(_pos, _size)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");

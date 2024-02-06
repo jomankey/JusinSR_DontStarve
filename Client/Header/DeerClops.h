@@ -28,7 +28,7 @@ public:
 
 private:
 	virtual HRESULT			Add_Component();
-	void			BillBoard();
+
 	void			Set_ObjStat();
 	void			Check_State();
 	void			Mode_Change();
@@ -52,6 +52,7 @@ private:
 	_vec3				m_vPos;
 	LOOKDIR m_eCurLook;
 	LOOKDIR m_ePreLook;
+
 	DEERSTATE		m_eCurState;
 	DEERSTATE		m_ePreState;
 	_float				m_fFrame = 0.f;
