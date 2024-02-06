@@ -145,8 +145,13 @@
     <Filter Include="01. Scene\03. BossScene">
       <UniqueIdentifier>{2f012643-0e89-4ed7-8bd5-e6bc37f2c758}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="02. GameObject\03. Terrain\RunTerrain">
       <UniqueIdentifier>{b47280b2-13a7-4d96-a5f7-4d1f63b2ddd7}</UniqueIdentifier>
+=======
+    <Filter Include="01. Scene\04. RoadScene">
+      <UniqueIdentifier>{8f6ff8ba-c27e-48ac-951f-e644f0702358}</UniqueIdentifier>
+>>>>>>> f94a32364b0d7a4dfc3e668b710c1380e062534f
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -297,8 +302,13 @@
     <ClInclude Include="..\Header\CBossScene.h">
       <Filter>01. Scene\03. BossScene</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\Header\RunTerrain.h">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+=======
+    <ClInclude Include="..\Header\CRoadScene.h">
+      <Filter>01. Scene\04. RoadScene</Filter>
+>>>>>>> f94a32364b0d7a4dfc3e668b710c1380e062534f
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -440,8 +450,13 @@
     <ClCompile Include="..\Code\CBossScene.cpp">
       <Filter>01. Scene\03. BossScene</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\Code\RunTerrain.cpp">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+=======
+    <ClCompile Include="..\Code\CRoadScene.cpp">
+      <Filter>01. Scene\04. RoadScene</Filter>
+>>>>>>> f94a32364b0d7a4dfc3e668b710c1380e062534f
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
