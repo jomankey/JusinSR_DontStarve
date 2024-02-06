@@ -44,30 +44,43 @@ HRESULT CPlayer::Ready_GameObject()
 	/*m_pTransForm->m_vScale = { 1.2f, 1.f, 1.f };*/
 	m_eCurState = IDLE;
 	m_ePreState = STATE_END;
-	m_ePlayerLookAt = LOOK_DOWN;
+	m_eCurLook = LOOK_DOWN;
 
 	m_eCurWeapon = UNARMED;
 	m_ePreWeapon = WEAPON_END;
 
 	m_Dirchange = false;
+	m_KeyLock = false;
+	m_bFrameLock = false;
+	m_bPlayerDead = false;
 	m_fFrameEnd = 22;
 	Set_Stat();
 	return S_OK;
 }
+
 Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fFrame += m_fFrameEnd * fTimeDelta;
-
-	if (m_fFrameEnd < m_fFrame)
+	if (!m_bFrameLock)		//프레임 락이 걸리면 프레임이 오르지 않음
 	{
-		if (m_ePreState == ATTACK)
-			m_bAttack = false;
-
-		m_fFrame = 0.f;
+		m_fFrame += m_fFrameEnd * fTimeDelta;
 	}
 
-	Key_Input(fTimeDelta);
+	if (m_fFrameEnd <= m_fFrame)		//프레임이 끝에 다다르면 진입
+	{
+		if (m_KeyLock == true)			//KeyLock을 풀고 IDLE 상태로 만듦
+		{
+			m_KeyLock = false;
+			m_eCurState = IDLE;
+		}
+		m_fFrame = 0.f;
+	}
+	if (!m_KeyLock)			//특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
+	{
+		Key_Input(fTimeDelta);
+	}
+	Weapon_Change();
 	Check_State();
+	Look_Change();
 	Set_Scale();
 	Fire_Light(); // 횃불 모션 시 켜짐 / 꺼짐 추가해야함
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -93,7 +106,7 @@ void CPlayer::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	m_pTextureCom[m_ePlayerLookAt][m_ePreState]->Set_Texture((_uint)m_fFrame);
+	m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
 
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 
@@ -264,6 +277,92 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_Torch_run_side", pComponent });
 
+	//Axe pre
+	pComponent = m_pTextureCom[LOOK_DOWN][AXE_CHOP_PRE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_preaxe_down"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_down", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_UP][AXE_CHOP_PRE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_preaxe_up"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_up", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_RIGHT][AXE_CHOP_PRE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_preaxe_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_side", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_LEFT][AXE_CHOP_PRE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_preaxe_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_side", pComponent });
+
+	//Axe loop
+	pComponent = m_pTextureCom[LOOK_DOWN][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_down"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_down", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_UP][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_up"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_up", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_RIGHT][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_LEFT][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });
+
+	//Hammer
+	pComponent = m_pTextureCom[LOOK_DOWN][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_down"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_hammer_down", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_UP][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_up"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_hammer_up", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_RIGHT][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_hammer_side", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_LEFT][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_hammer_side", pComponent });
+
+	//Pick
+	pComponent = m_pTextureCom[LOOK_DOWN][PICKING_OBJECT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_picking_down"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_picking_down", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_UP][PICKING_OBJECT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_picking_up"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_picking_up", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_RIGHT][PICKING_OBJECT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_picking_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_picking_side", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_LEFT][PICKING_OBJECT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_picking_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_picking_side", pComponent });
+
+
+	//Spear
+	pComponent = m_pTextureCom[LOOK_DOWN][SPEAR_ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_spear_down"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_spear_down", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_UP][SPEAR_ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_spear_up"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_spear_up", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_RIGHT][SPEAR_ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_spear_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_spear_side", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_LEFT][SPEAR_ATTACK] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_spear_side"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_spear_side", pComponent });
+
 
 	//Other
 	pComponent = m_pTextureCom[LOOK_DOWN][FALLDOWN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_falldown"));
@@ -331,34 +430,89 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	m_pTransForm->Get_Info(INFO_LOOK, &vDir);
 	m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
 
+
 	if (GetAsyncKeyState('W'))
-	{
-		D3DXVec3Normalize(&vDir, &vDir);
-		vDir.y = 0.f;
-		m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+		{
+			D3DXVec3Normalize(&vDir, &vDir);
+			vDir.y = 0.f;
+			m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
+			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+				m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
+
+			if (m_ePreWeapon == TORCH)
+			{
+				m_eCurState = TORCH_RUN;
+			}
+			else
+			{
+				m_eCurState = MOVE;
+			}
+			m_eCurLook = LOOK_UP;
+		}
+	if (GetAsyncKeyState('S'))
+		{ //f
+			D3DXVec3Normalize(&vDir, &vDir);
+			vDir.y = 0.f;
 			m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
+			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+				m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
 
-		if (m_eCurWeapon == TORCH)
-		{
-			m_eCurState = TORCH_RUN;
+			if (m_ePreWeapon == TORCH)
+			{
+				m_eCurState = TORCH_RUN;
+			}
+			else
+			{
+				m_eCurState = MOVE;
+			}
+			m_eCurLook = LOOK_DOWN;
+
 		}
-		else if (m_eCurWeapon == UNARMED)
+	if (GetAsyncKeyState('A'))
 		{
-			m_eCurState = MOVE;
+			D3DXVec3Normalize(&vRight, &vRight);
+			vDir.y = 0.f;
+			m_pTransForm->Move_Pos(&vRight, -m_Stat.fSpeed, fTimeDelta);
+			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+			vCurPos.x += 0.5f;
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+				m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
+
+
+			if (m_ePreWeapon == TORCH)
+			{
+				m_eCurState = TORCH_RUN;
+			}
+			else
+			{
+				m_eCurState = MOVE;
+			}
+			m_eCurLook = LOOK_LEFT;
+			/*m_pTransForm->Rotation(ROT_Y, D3DXToRadian(90.f * fTimeDelta));*/
 		}
-		m_ePlayerLookAt = LOOK_UP;
-	}
+	if (GetAsyncKeyState('D'))
+		{
+			D3DXVec3Normalize(&vRight, &vRight);
+			vDir.y = 0.f;
+			m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
+			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+			vCurPos.x -= 0.5f;
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+				m_pTransForm->Set_Pos(vCurPos);
 
-	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
-	{
-		//Find_NeerObject: 못찾았을경우 nullptr반환
-		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::ITEM);
+			if (m_ePreWeapon == TORCH)
+			{
+				m_eCurState = TORCH_RUN;
+			}
+			else
+			{
+				m_eCurState = MOVE;
+			}
+			m_eCurLook = LOOK_RIGHT;
 
-		if (nullptr != findObj)
-			DeleteObject(findObj);
-	}
+		}
 
 	if (GetAsyncKeyState('Z'))
 	{
@@ -368,93 +522,13 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		if (nullptr != findObj)
 			DeleteObject(findObj);
 	}
-
-	if (GetAsyncKeyState('S'))
-	{ //f
-		D3DXVec3Normalize(&vDir, &vDir);
-		vDir.y = 0.f;
-		m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
-		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-		if (m_eCurWeapon == TORCH)
-		{
-			m_eCurState = TORCH_RUN;
-		}
-		else if (m_eCurWeapon == UNARMED)
-		{
-			m_eCurState = MOVE;
-		}
-		m_ePlayerLookAt = LOOK_DOWN;
-
-	}
-
-	if (GetAsyncKeyState('A'))
+	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
 	{
-		D3DXVec3Normalize(&vRight, &vRight);
-		vDir.y = 0.f;
-		m_pTransForm->Move_Pos(&vRight, -m_Stat.fSpeed, fTimeDelta);
-		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-		vCurPos.x += 0.5f;
-		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
+		//Find_NeerObject: 못찾았을경우 nullptr반환
+		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::ITEM);
 
-		if (m_eCurWeapon == TORCH)
-		{
-			m_eCurState = TORCH_RUN;
-		}
-		else if (m_eCurWeapon == UNARMED)
-		{
-			m_eCurState = MOVE;
-		}
-		m_ePlayerLookAt = LOOK_LEFT;
-		if (!m_Dirchange)
-		{
-			m_Dirchange = true;
-		}
-		/*m_pTransForm->Rotation(ROT_Y, D3DXToRadian(90.f * fTimeDelta));*/
-	}
-
-	if (GetAsyncKeyState('D'))
-	{
-		D3DXVec3Normalize(&vRight, &vRight);
-		vDir.y = 0.f;
-		m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
-		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-		vCurPos.x -= 0.5f;
-		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-			m_pTransForm->Set_Pos(vCurPos);
-
-		if (m_eCurWeapon == TORCH)
-		{
-			m_eCurState = TORCH_RUN;
-		}
-		else if (m_eCurWeapon == UNARMED)
-		{
-			m_eCurState = MOVE;
-		}
-		m_ePlayerLookAt = LOOK_RIGHT;
-		if (m_Dirchange)
-		{
-			m_Dirchange = false;
-		}
-		/*m_pTransForm->Rotation(ROT_Y, D3DXToRadian(-90.f * fTimeDelta));*/
-	}
-
-	if (!GetAsyncKeyState('W') &&
-		!GetAsyncKeyState('A') &&
-		!GetAsyncKeyState('S') &&
-		!GetAsyncKeyState('D'))
-	{
-
-		if (m_eCurWeapon == TORCH)
-		{
-			m_eCurState = TORCH_IDLE;
-		}
-		else if (m_eCurWeapon == UNARMED)
-		{
-			m_eCurState = IDLE;
-		}
+		if (nullptr != findObj)
+			DeleteObject(findObj);
 	}
 
 	if (GetAsyncKeyState('F')) // 공격
@@ -465,48 +539,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			&& dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
+			
 		}
-		//auto vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
-
-		//_vec3* vMonsterAxis = new _vec3[3];
-		//_vec3* vPlayerAxis = new _vec3[3];
-		//_vec3 vPlayerPos, vMonsterPos, vPlayerScale, vMonsterScale;
-
-		//m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		//m_pTransForm->Get_Info(INFO_RIGHT, &vPlayerAxis[0]);
-		//m_pTransForm->Get_Info(INFO_UP, &vPlayerAxis[1]);
-		//m_pTransForm->Get_Info(INFO_LOOK, &vPlayerAxis[2]);
-
-		//vPlayerScale = m_pTransForm->Get_Scale();
-
-		//for (auto& monster : vecMonster)
-		//{
-		//	CTransform* pItemTransform = monster->GetTransForm();
-		//	pItemTransform->Get_Info(INFO_POS, &vMonsterPos);
-		//	pItemTransform->Get_Info(INFO_RIGHT, &vMonsterAxis[0]);
-		//	pItemTransform->Get_Info(INFO_UP, &vMonsterAxis[1]);
-		//	pItemTransform->Get_Info(INFO_LOOK, &vMonsterAxis[2]);
-		//	vMonsterScale = pItemTransform->Get_Scale();
-
-		//	if (!m_bAttack && Engine::Collision_Monster(vPlayerPos,
-		//		vPlayerAxis, 
-		//		vMonsterPos,
-		//		vMonsterAxis, 
-		//		vPlayerScale, 
-		//		vMonsterScale))
-		//	{
-		//		// 몬스터와 공격 충돌 시
-		//		// 몬스터 채력이 깎임. -> 몬스터 공격 한번만 되도록
-
-		//		m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
-		//		dynamic_cast<CMonster*>(monster)->Set_Attack(10.f);
-		//		m_bAttack = true;
-		//		break;
-		//	}
-		//}
-
-		//delete[] vMonsterAxis;
-		//delete[] vPlayerAxis;
 	}
 
 	if (GetAsyncKeyState('G')) // 횃불
@@ -517,7 +551,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('V')) // 줍기
 	{
 		m_eCurState = PICKUP;
-
 		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM);
 		_vec3 vPlayerPos, vPlayerScale, vItemPos, vItemScale;
 		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
@@ -534,33 +567,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
 		}
 	}
-	if (GetAsyncKeyState('B'))
-	{
-		m_eCurState = BUILD;
-	}
-	if (GetAsyncKeyState('N'))
-	{
-		m_eCurState = FALLDOWN;
-		m_ePlayerLookAt = LOOK_DOWN;
-	}
-	if (GetAsyncKeyState('M'))
-	{
-		m_eCurState = WAKEUP;
-		m_ePlayerLookAt = LOOK_DOWN;
-	}
-	if (GetAsyncKeyState('H'))
-	{
-		m_eCurState = EAT;
-		m_ePlayerLookAt = LOOK_DOWN;
-	}
-
-
-	//if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
-	//{
-	//	m_eCurState = MOVE;
-	//	m_ePlayerLookAt = m_pTransForm->Patroll_LookChange(m_pCalculatorCom->Picking_PosVec(g_hWnd), m_Stat.fSpeed, fTimeDelta);
-	//}
-
 }
 
 HRESULT CPlayer::SetUp_Material()
@@ -579,78 +585,49 @@ HRESULT CPlayer::SetUp_Material()
 	return S_OK;
 }
 
-void CPlayer::Height_OnTerrain()
-{
-	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
-	_vec3		vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-
-	Engine::CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
-	NULL_CHECK(pTerrainBufferCom);
-
-	_float	fHeight = m_pCalculatorCom->Compute_HeightOnTerrain(&vPos, pTerrainBufferCom->Get_VtxPos());
-
-	m_pTransForm->Set_Pos(vPos.x, fHeight + 1.5f, vPos.z);
-}
-
-_vec3 CPlayer::Picking_OnTerrain()
-{
-	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
-
-	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
-	NULL_CHECK_RETURN(pTerrainBufferCom, _vec3());
-
-	CTransform* pTerrainTransCom = dynamic_cast<CTransform*>(pTerrain->GetTransForm());
-	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
-
-
-	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
-}
 
 void CPlayer::Check_State()
 {
 	if (m_ePreState != m_eCurState)
 	{
-		if (m_eCurState == IDLE)
+		switch (m_eCurState)
 		{
+		case IDLE:
 			m_fFrameEnd = 22;
-
-		}
-		else if (m_eCurState == HIT)
-		{
+			break;
+		case HIT:
 			m_fFrameEnd = 7;
-		}
-		else if (m_eCurState == ATTACK)
-		{
+			m_KeyLock = true;
+			break;
+		case ATTACK:
 			m_fFrameEnd = 11;
-		}
-		else if (m_eCurState == FALLDOWN)
-		{
+			m_KeyLock = true;
+			break;
+		case FALLDOWN:
 			m_fFrameEnd = 8;
-		}
-		else if (m_eCurState == WAKEUP)
-		{
+			m_KeyLock = true;
+			m_eCurLook = LOOK_DOWN;
+			break;
+		case WAKEUP:
 			m_fFrameEnd = 32;
-		}
-		else if (m_eCurState == EAT)
-		{
+			m_KeyLock = true;
+			m_eCurLook = LOOK_DOWN;
+			break;
+		case EAT:
 			m_fFrameEnd = 36;
-		}
-		else if (m_eCurState == MOVE)
-		{
+			m_KeyLock = true;
+			m_eCurLook = LOOK_DOWN;
+			break;
+		case MOVE:
 			m_fFrameEnd = 6;
-		}
-		else if (m_eCurState == TORCH_IDLE)
-		{
+			break;
+		case TORCH_IDLE:
 			m_fFrameEnd = 22;
-		}
-		else if (m_eCurState == TORCH_RUN)
-		{
+			break;
+		case TORCH_RUN:
 			m_fFrameEnd = 6;
-		}
-		else
-		{
-			m_fFrameEnd = 6;
+			break;
+
 		}
 		m_ePreState = m_eCurState;
 		m_fFrame = 0.f;
@@ -665,16 +642,16 @@ void CPlayer::Set_Scale()
 	if (m_eCurState == BUILD) //B
 		m_pTransForm->m_vScale = { 0.85f, 0.7f, 0.85f };
 
-	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == PICKUP)
+	else if ((m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT) && m_eCurState == PICKUP)
 		m_pTransForm->m_vScale = { 1.0f, 0.1f, 1.0f };
 
 	else if (m_eCurState == PICKUP)
 		m_pTransForm->m_vScale = { 0.73f, 0.63f, 0.73f };
 
-	else if ((m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT) && m_eCurState == ATTACK)
+	else if ((m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT) && m_eCurState == ATTACK)
 		m_pTransForm->m_vScale = { 1.f, 0.3f, 1.f };
 
-	else if (m_ePlayerLookAt == LOOK_UP && m_eCurState == ATTACK)
+	else if (m_eCurLook == LOOK_UP && m_eCurState == ATTACK)
 		m_pTransForm->m_vScale = { 0.8f, 0.3f, 0.8f };
 
 	else if (m_eCurState == ATTACK)
@@ -692,7 +669,7 @@ void CPlayer::Set_Scale()
 	else if (m_eCurState == EAT) // H
 		m_pTransForm->m_vScale = { 1.1f, 0.3f, 1.1f };
 
-	else if (m_eCurState == MOVE && (m_ePlayerLookAt == LOOK_LEFT || m_ePlayerLookAt == LOOK_RIGHT))
+	else if (m_eCurState == MOVE && (m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT))
 		m_pTransForm->m_vScale = { 0.9f, 0.6f, 0.8f };
 
 	else if (m_eCurState == MOVE)
@@ -709,9 +686,59 @@ void CPlayer::Set_Stat()
 	m_Stat.fMxHP = 150.f;
 	m_Stat.fSpeed = 5.f;
 	m_Stat.fATK = 10.f;
-	m_Stat.fATKRange = 2.f;
+	m_Stat.fATKRange = 1.f;
 	m_Stat.fAggroRange = 5.f;
 	m_Stat.bDead = false;
+
+}
+
+void CPlayer::Weapon_Change()
+{
+	if (m_ePreWeapon != m_eCurWeapon)
+	{
+		switch (m_eCurWeapon)
+		{
+		case UNARMED:
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
+			break;
+		case AXE:
+			break;
+		case TORCH:
+			if (m_eCurState = IDLE)
+			{
+				m_eCurState = TORCH_IDLE;
+			}
+			break;
+		case HAMMER:
+			break;
+		case PICK:
+			break;
+		case SPEAR:
+			m_Stat.fATK = 50;
+			m_Stat.fATKRange = 2.f;
+			break;
+		}
+		m_ePreWeapon = m_eCurWeapon;
+	}
+
+}
+
+void CPlayer::Look_Change()
+{
+	if (m_ePreLook != m_eCurLook)
+	{
+		if (m_eCurLook == LOOK_LEFT)
+		{
+			m_Dirchange = true;
+		}
+		else
+		{
+			m_Dirchange = false;
+		}
+
+		m_ePreLook = m_eCurLook;
+	}
 
 }
 
@@ -736,7 +763,7 @@ HRESULT CPlayer::Ready_Light()
 
 void CPlayer::Fire_Light()
 {
-	if (m_eCurWeapon != TORCH)
+	if (m_ePreWeapon != TORCH)
 		return;
 
 	D3DLIGHT9* tPointLightInfo = light::Get_Light(1)->Get_Light();
@@ -828,7 +855,6 @@ void CPlayer::BillBoard()
 
 void CPlayer::Free()
 {
-
 	__super::Free();
 }
 

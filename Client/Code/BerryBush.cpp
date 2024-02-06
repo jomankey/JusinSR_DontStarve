@@ -15,6 +15,7 @@ HRESULT CBerryBush::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eBerryCurState = BERRY_IDLE;
+	m_eObject_id = BERRY_BUSH;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 0.f;
 	Ready_Stat();

@@ -16,7 +16,7 @@ public:
     void Set_Attack() { if (!m_bHit && m_Stat.fHP > 0) m_Stat.fHP -= 1.f; } // 오브젝트는 -1씩 감소
     void Set_Attack_State(_bool _bAttack) { m_bHit = _bAttack; } // 플레이어 어택 시작 시 true로 변경해주고 플레이어 어택 프레임이 끝날 시 false로 변경해준다.
     void Set_Player_Look(LOOKDIR _eLook) { m_ePlayerLook = _eLook; }
-    
+    RESOBJID Get_Resourse_ID() { return m_eObject_id; }
     _bool Get_AttackState() { return m_bHit; }
 
 public:
@@ -39,7 +39,7 @@ protected:
     RESOBJECTSTATE m_ePreState;
 
     LOOKDIR m_ePlayerLook;
-
+    RESOBJID            m_eObject_id;
     _float				m_fFrame = 0.f;
     _float				m_fFrameEnd;
     _bool m_bHit;

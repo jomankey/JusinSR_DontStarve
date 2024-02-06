@@ -22,6 +22,7 @@ HRESULT CObjectRock::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Ready_Stat();
 	m_eCurState = RES_IDLE;
+	m_eObject_id = ROCK;
 	m_fFrame = 0;
 
 	return S_OK;

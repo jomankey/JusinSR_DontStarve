@@ -57,8 +57,7 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 void CDeerClops::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-
-	BillBoard();
+	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
@@ -73,6 +72,7 @@ void CDeerClops::Render_GameObject()
 
 	m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
 	FAILED_CHECK_RETURN(SetUp_Material(), );
+
 	if (m_Dirchange)
 	{
 		m_pReverseCom->Render_Buffer();
@@ -98,8 +98,7 @@ HRESULT CDeerClops::Add_Component()
 	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
-	/*Deer_Idle_down*/
-	//texture com
+
 
 #pragma region TEXCOM
 
@@ -196,24 +195,6 @@ HRESULT CDeerClops::Add_Component()
 	return S_OK;
 }
 
-void CDeerClops::BillBoard()
-{
-	_matrix	matWorld, matView, matBill;
-
-	m_pTransForm->Get_WorldMatrix(&matWorld);
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
-	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
-}
-
 void CDeerClops::Set_ObjStat()
 {
 	m_Stat.fHP = 100.f;
@@ -250,7 +231,7 @@ void CDeerClops::Check_State()
 			m_fFrameEnd = 24;
 			break;
 		}
-
+		m_fFrame = 0.f;
 		m_ePreState = m_eCurState;
 
 	}

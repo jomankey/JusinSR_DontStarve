@@ -24,6 +24,7 @@ HRESULT CObjectTree::Ready_GameObject()
 	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
 
 	m_eCurState = RES_IDLE;
+	m_eObject_id = TREE;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 27.f;
 	Ready_Stat();
