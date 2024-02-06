@@ -6,6 +6,9 @@
 #include "C:\20240206\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\20240206\Client\Code\CBossScene.cpp"
+
+
 #include "C:\20240206\Client\Code\CButtonUI.cpp"
 
 
@@ -60,6 +63,9 @@
 #include "C:\20240206\Client\Code\CPigHouse.cpp"
 
 
+#include "C:\20240206\Client\Code\CRoadScene.cpp"
+
+
 #include "C:\20240206\Client\Code\CScienceUI.cpp"
 
 
@@ -67,6 +73,9 @@
 
 
 #include "C:\20240206\Client\Code\CSlideUI.cpp"
+
+
+#include "C:\20240206\Client\Code\CTestScene.cpp"
 
 
 #include "C:\20240206\Client\Code\CToolUI.cpp"
@@ -109,6 +118,9 @@
 
 
 #include "C:\20240206\Client\Code\ResObject.cpp"
+
+
+#include "C:\20240206\Client\Code\RunTerrain.cpp"
 
 
 #include "C:\20240206\Client\Code\SkyBox.cpp"

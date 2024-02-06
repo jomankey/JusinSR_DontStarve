@@ -56,13 +56,13 @@
 #include "C:\20240206\Engine\Utility\Code\Scene.cpp"
 
 
-#include "C:\20240206\Engine\Utility\Code\TerrainCubeTex.cpp"
-
-
 #include "C:\20240206\Engine\Utility\Code\TerrainTex.cpp"
 
 
 #include "C:\20240206\Engine\Utility\Code\Texture.cpp"
+
+
+#include "C:\20240206\Engine\Utility\Code\Tile.cpp"
 
 
 #include "C:\20240206\Engine\Utility\Code\Transform.cpp"

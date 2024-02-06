@@ -79,6 +79,7 @@ private:
 
 	RESOBJID			m_TargetObject;
 	_bool				m_bPlayerDead;
+	_bool				m_bIsRoadScene;
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev);
