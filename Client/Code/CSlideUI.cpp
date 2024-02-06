@@ -42,38 +42,34 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 		{
 			if (UI_Collision())
 			{
-				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->Set_Show(true);
-				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->SetX(this->m_fX+110);
-				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->SetY(this->m_fY);
-
+				m_pExplainPanel->Set_Show(true);
+				m_pExplainPanel->SetX(this->m_fX+110);
+				m_pExplainPanel->SetY(this->m_fY);
 			}
 			else
 			{
-				dynamic_cast<CExplainPanel*>(m_pExplainPanel)->Set_Show(false);
+				m_pExplainPanel->Set_Show(false);
 			}
-
-
 			return 0;
 		}
 		m_fX += fTimeDelta * m_fSlideSpeed;
 		if (m_pSlideBox == nullptr)
 		{
-			if (m_pBoxItemName != nullptr) {
-				m_pSlideBox = CSlideBox::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(m_fX, m_fY, 0.f), _vec3(this->m_fSizeX-10.f, this->m_fSizeY - 10.f, 0.f), m_pBoxItemName);
-				CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, m_pSlideBox);
-			}
+				if (m_pBoxItemName != nullptr)
+				{
 
-		
+				CSlideBox* TestSlideBox;
+				m_pSlideBox = CSlideBox::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(m_fX, m_fY-10.f, 0.f), _vec3(this->m_fSizeX-10.f, this->m_fSizeY - 10.f, 0.f), m_pBoxItemName);
+				CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, m_pSlideBox);
+				}
+
 		}
-		else {
+		else 
+		{
 			m_pSlideBox->SetX(m_fX);
 			m_pSlideBox->SetY(m_fY);
 			m_pSlideBox->SetShow(true);
 		}
-
-
-	
-
 
 	}
 	else
@@ -106,27 +102,9 @@ void CSlideUI::Render_GameObject()
 {
 	if (m_bIsRender)
 		return;
-
-	scenemgr::Get_CurScene()->BeginOrtho();
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pTextureCom->Set_Texture(m_fItemLockON);
-
-	//item  ¶ç¿ì±â¿ë
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	//m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
-	//m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
-
-	m_pBufferCom->Render_Buffer();
-
-	//item  ¶ç¿ì±â¿ë
-
-
-	scenemgr::Get_CurScene()->EndOrtho();
-
+	__super::Render_GameObject();
 
 }
-
 
 
 
@@ -149,6 +127,11 @@ void CSlideUI::Free()
 	__super::Free();
 }
 
+void CSlideUI::SetSlideBoxItemName(_tchar* _Name)
+{
+	m_pBoxItemName = _Name;
+}
+
 void CSlideUI::FindExplainPanel()
 {
 	if (m_pExplainPanel == nullptr)
@@ -158,7 +141,7 @@ void CSlideUI::FindExplainPanel()
 		{
 			if (iter->GetObjName() == L"Proto_UI_Explain_PopUp_Panel")
 			{
-				m_pExplainPanel = iter;
+				m_pExplainPanel = dynamic_cast<CExplainPanel*>(iter);
 				break;
 			}
 

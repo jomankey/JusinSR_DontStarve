@@ -10,7 +10,7 @@
 #include"CToolUI.h"
 
 
-CUI* CUI::m_pToolUI = nullptr;
+CToolUI* CUI::m_pToolUI = nullptr;
 
 
 

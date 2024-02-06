@@ -15,12 +15,12 @@ class CEquiment;
 
 class CToolUI :public CUI
 {
-	//이 객체는 부모를 통해 생성되고 관리는 데이터메니져를 통해 관리된다.
+	//이 클래스는 부모를 통해 생성되고 관리는 데이터매니져의 부모인 CUI를 통해 관리된다.
 	//데이터 매니져는 레이어에 있는 CUI를 찾아 Get을 통해 해당 객체의 데이터를 관리한다.
 	//이 객체는 각 탭에 대한 데이터를 뿌려주는 역할을 한다.
 
 protected:
-	explicit CToolUI(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _UI_Name);
+	explicit CToolUI(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType);
 	explicit CToolUI(const CToolUI& rhs);
 	virtual ~CToolUI();
 
@@ -29,9 +29,8 @@ public:
 	//각 자식들은 이 함수를 오버라이딩 해서 사용한다.
 	virtual void Pop_SidePanel();
 
-	//게임 데이터를 관리 하는 매니져를 통해 생성된 , CUI에서 
 	void SetGameData(CItemTool* _ItemTool, eITEMTOOL_TYPE _ItemType);
-	//virtual void UpdateItemTool(eITEMTOOL_TYPE _ItemToolState);
+
 
 	const CAliveUI* GetAliveUI() { return m_pAliveUI; }
 	const CEquiment* GetEquimentI() { return m_pEquimentUI; }
@@ -48,13 +47,11 @@ public:
 
 	virtual void Free() override;
 protected:
+	//데이터를 관리하기 위한 키값, 키값은 각 슬롯이 생성이 되면 고유의 키값을 가진다.
+	eITEMTOOL_TYPE m_eItemType;
 
-	//게임 데이터 상속
-	//자식들은 각 데이터를 소유 하고 있다
-	CItemTool* m_pToolData[ITEM_END];
-
-
-	BOOL m_bSlideState;
+	//각 슬롯에 데이터들은 이 클래스가 관리하고 생성
+	//각 슬롯이 주기적으로 도는 로직들은 CUI의 함수들을 오버라이딩 해서 사용한다.
 private:
 	static  CAliveUI* m_pAliveUI;
 	static  CEquiment* m_pEquimentUI;
@@ -63,6 +60,7 @@ private:
 	static  CClothUI* m_pClothUI;
 	static  CWeaponUI* m_pWeaponUI;
 
+private:
 	static CSlideUI* m_pSlideUI[5];
 };
 

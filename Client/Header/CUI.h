@@ -10,8 +10,6 @@ namespace Engine
 
 
 class CToolUI;
-class CAliveUI;
-class CEquiment;
 
 
 
@@ -55,7 +53,7 @@ public:
 	void SetSizeX(_float _x) { m_fSizeX = _x; }
 	void SetSizeY(_float _y) { m_fSizeY = _y; }
 public:
-	const CUI* GetToolUI() { return m_pToolUI; }
+	const CToolUI* GetToolUI() { return m_pToolUI; }
 
 
 
@@ -80,7 +78,7 @@ public:
 	virtual void Free() override;
 
 private:
-	static  CUI* m_pToolUI;
+	static  CToolUI* m_pToolUI;
 
 
 };

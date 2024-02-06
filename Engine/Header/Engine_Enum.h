@@ -110,10 +110,12 @@ namespace Engine
 	};
 
 	enum  eITEMTOOL_TYPE {
-		ITEM_TOOL,
+		ITEM_EQUIP,
 		ITEM_LIGHT,
 		ITEM_ALIVE,
-		ITEM_EQUIP,
+		ITEM_SCIENCE,
+		ITEM_WEAPON,
+		ITEM_CLOTH,
 		ITEM_END
 	};
 }

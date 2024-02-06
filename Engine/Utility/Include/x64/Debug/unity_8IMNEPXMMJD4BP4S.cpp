@@ -56,6 +56,9 @@
 #include "C:\PortPolio\Engine\Utility\Code\Scene.cpp"
 
 
+#include "C:\PortPolio\Engine\Utility\Code\TerrainCubeTex.cpp"
+
+
 #include "C:\PortPolio\Engine\Utility\Code\TerrainTex.cpp"
 
 

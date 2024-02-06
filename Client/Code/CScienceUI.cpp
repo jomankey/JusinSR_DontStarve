@@ -6,8 +6,8 @@
 
 
 
-CScienceUI::CScienceUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-	:CToolUI(pGraphicDev, _UI_Name)
+CScienceUI::CScienceUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
+	:CToolUI(pGraphicDev, _UI_Name, _ItemToolType)
 
 {
 	m_eUIState = eUIState;
@@ -34,10 +34,10 @@ _int CScienceUI::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-CScienceUI* CScienceUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+CScienceUI* CScienceUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, eITEMTOOL_TYPE _ItemToolType)
 {
-	CScienceUI* pInstance = new CScienceUI(pGraphicDev, _State, _UI_Name);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
+	CScienceUI* pInstance = new CScienceUI(pGraphicDev, _State, _UI_Name, _ItemToolType);
+	if (FAILED(pInstance->Ready_GameObject(_pos, _size)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");
