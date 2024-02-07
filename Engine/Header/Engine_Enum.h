@@ -56,6 +56,7 @@ namespace Engine
 		PLAYER,
 		RESOURCE_OBJECT,
 		OBJECT,
+		TRAP,
 		UI,
 		BOSS,
 		END = 32,
@@ -132,6 +133,19 @@ namespace Engine
 		WIDTH,
 		HEIGHT,
 		BOX_DIR_END
+	};
+
+
+
+	enum class eTRAP_STATE
+	{
+		HIDE,	//숨어있는상태
+		GROW,	//나오고있는상태
+		MOVE,	//움직이고있는상태
+		IDLE,	//나온상태
+		HIT,	//부딫힌상태
+		DEAD,	//죽은상태
+		NONE
 	};
 }
 #endif // Engine_Enum_h__

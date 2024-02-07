@@ -32,6 +32,13 @@
 #include "Spider.h"
 #include "DeerClops.h"
 
+
+//Trap//Object
+#include "CTrap.h"
+#include "CSpike.h"
+#include "CToothTrap.h"
+#include "CTumbleWeed.h"
+
 //Environment
 
 #include "RunTerrain.h"
@@ -117,7 +124,7 @@ HRESULT CRoadScene::Ready_Layer_Environment()
 
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
-
+	static_cast<CDynamicCamera*>(m_pCamera)->SetRoadScene(true);
 	//////////스카이박스
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -141,10 +148,41 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
 
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(2.5f, 2.f, 3.5f));
+	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
 
-	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+
+	srand(Engine::Get_TimeDelta(L"Timer_FPS60"));
 
 
+
+	//TRAP_OBJECT_SPIKE_BUSH
+
+	for (size_t i = 0; i < 40; i++)
+	{
+		pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(4.f + 4.f * i, 1.5f, (rand() % 3 + 2)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+	}
+
+	//TRAP_OBJECT_TOOTH
+	for (size_t i = 0; i < 40; i++)
+	{
+		pGameObject = CToothTrap::Create(m_pGraphicDev, L"TRAP_TOOTH", _vec3(3.f + 4.f * i, 1.5f, (rand() % 3 + 2)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+	}
+
+	//TRAP_OBJECT_TUMBLE_WEED
+	pGameObject = CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", _vec3(10.f, 1.5f, 3.5f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+
+	for (size_t i = 0; i < 10; i++)
+	{
+		pGameObject = CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", _vec3(10.f + 5.f * i, 1.5f, (rand() % 3 + 2.5f) ));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+	}
 
 	return S_OK;
 }

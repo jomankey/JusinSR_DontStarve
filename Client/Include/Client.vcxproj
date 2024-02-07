@@ -179,6 +179,10 @@
     <ClInclude Include="..\Header\ButtonUI.h" />
     <ClInclude Include="..\header\CBossDoor.h" />
     <ClInclude Include="..\Header\CCatapult.h" />
+    <ClInclude Include="..\Header\CSpike.h" />
+    <ClInclude Include="..\Header\CToothTrap.h" />
+    <ClInclude Include="..\Header\CTrap.h" />
+    <ClInclude Include="..\Header\CTumbleWeed.h" />
     <ClInclude Include="..\Header\ExplainPanel.h" />
     <ClInclude Include="..\Header\CHpUI.h" />
     <ClInclude Include="..\Header\CHungryUI.h" />
@@ -233,6 +237,10 @@
     <ClCompile Include="..\Code\ButtonUI.cpp" />
     <ClCompile Include="..\Code\CBossDoor.cpp" />
     <ClCompile Include="..\Code\CCatapult.cpp" />
+    <ClCompile Include="..\Code\CSpike.cpp" />
+    <ClCompile Include="..\Code\CToothTrap.cpp" />
+    <ClCompile Include="..\Code\CTrap.cpp" />
+    <ClCompile Include="..\Code\CTumbleWeed.cpp" />
     <ClCompile Include="..\Code\ExplainPanel.cpp" />
     <ClCompile Include="..\Code\CHpUI.cpp" />
     <ClCompile Include="..\Code\CHungryUI.cpp" />

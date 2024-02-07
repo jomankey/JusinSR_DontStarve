@@ -32,6 +32,8 @@ public:
 		m_fShakeAccTime = _fShakeTime;
 	}
 
+	void SetRoadScene(_bool _bRoad) { m_bRoad = _bRoad; }
+
 private:
 	void		Key_Input(const _float& fTimeDelta);
 	void		Mouse_Fix();
@@ -69,6 +71,11 @@ private:
 	_vec3	m_vPrevEye;	//카메라 이전 위치
 	_bool	m_bMove;
 
+	_bool	m_bRoad; //로드씬일경우 카메라고정
+
+	//로드씬전용 카메라위치
+	_float	m_fRoadDistance;	//거리
+	_float	m_fRoadHeight;		//높이
 
 };
 
