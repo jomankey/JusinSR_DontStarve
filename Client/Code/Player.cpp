@@ -69,6 +69,11 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_bIsRoadScene = true;
 	}
+	else if (scenemgr::Get_CurScene()->Get_Scene_Name() != L"ROAD" && m_bIsRoadScene)
+	{
+		m_bIsRoadScene = false;
+	}
+
 
 	if (!m_bFrameLock)		//프레임 락이 걸리면 프레임이 오르지 않음
 	{
@@ -90,7 +95,14 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	}
 	if (!m_KeyLock)			//특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
-		Key_Input(fTimeDelta);
+		if (!m_bIsRoadScene)
+		{
+			Key_Input(fTimeDelta);
+		}
+		else
+		{
+			Ket_Input_Road(fTimeDelta);
+		}
 	}
 	Weapon_Change();
 	Check_State();
@@ -451,16 +463,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			vDir.y = 0.f;
 			m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
 			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-			if (!m_bIsRoadScene)
-			{
-				if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-					m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
-			}
-			else
-			{
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 				m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
-			}
-
+	
 			if (m_ePreWeapon == TORCH)
 			{
 				m_eCurState = TORCH_RUN;
@@ -471,24 +476,15 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 			m_eCurLook = LOOK_UP;
 		}
-
 	if (GetAsyncKeyState('S'))
 		{ //f
 			D3DXVec3Normalize(&vDir, &vDir);
 			vDir.y = 0.f;
 			m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
 			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-
-			if (!m_bIsRoadScene)
-			{
-				if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-					m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-			}
-			else
-			{
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 				m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-			}
-
+		
 			if (m_ePreWeapon == TORCH)
 			{
 				m_eCurState = TORCH_RUN;
@@ -507,16 +503,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_pTransForm->Move_Pos(&vRight, -m_Stat.fSpeed, fTimeDelta);
 			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 			vCurPos.x += 0.5f;
-
-			if (!m_bIsRoadScene)
-			{
-				if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-					m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
-			}
-			else
-			{
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 				m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
-			}
+		
 
 			if (m_ePreWeapon == TORCH)
 			{
@@ -536,15 +525,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
 			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
 			vCurPos.x -= 0.5f;
-			if (!m_bIsRoadScene)
-			{
-				if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-					m_pTransForm->Set_Pos(vCurPos);
-			}
-			else
-			{
+			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 				m_pTransForm->Set_Pos(vCurPos);
-			}
+		
 
 			if (m_ePreWeapon == TORCH)
 			{
@@ -570,7 +553,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		}
 		else
 			m_eCurState = IDLE;
-
 	}
 
 
@@ -654,6 +636,56 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 				break;
 		}
 	}
+}
+
+void CPlayer::Ket_Input_Road(const _float& fTimeDelta)
+{
+	m_eCurWeapon = TORCH;
+	_vec3		vDir, vRight;
+	m_pTransForm->Get_Info(INFO_LOOK, &vDir);
+	m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
+
+	if (GetAsyncKeyState('W'))
+	{
+		D3DXVec3Normalize(&vDir, &vDir);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
+		m_eCurState = TORCH_RUN;
+		m_eCurLook = LOOK_UP;
+	}
+	if (GetAsyncKeyState('S'))
+	{
+		D3DXVec3Normalize(&vDir, &vDir);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
+		m_eCurState = TORCH_RUN;
+		m_eCurLook = LOOK_DOWN;
+	}
+	if (GetAsyncKeyState('A'))
+	{
+		D3DXVec3Normalize(&vRight, &vRight);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vRight, -m_Stat.fSpeed, fTimeDelta);
+		m_eCurState = TORCH_RUN;
+		m_eCurLook = LOOK_LEFT;
+	}
+	if (GetAsyncKeyState('D'))
+	{
+		D3DXVec3Normalize(&vRight, &vRight);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
+		m_eCurState = TORCH_RUN;
+		m_eCurLook = LOOK_RIGHT;
+	}
+
+	if (!GetAsyncKeyState('W') &&
+		!GetAsyncKeyState('S') &&
+		!GetAsyncKeyState('A') &&
+		!GetAsyncKeyState('D'))
+	{
+		m_eCurState = TORCH_IDLE;
+	}
+
 }
 
 HRESULT CPlayer::SetUp_Material()

@@ -5,22 +5,14 @@
 #include "Scene.h"
 #include "Player.h"
 
-CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
-	: Engine::CGameObject(pGraphicDev), m_vPos(vPos), m_eCurLook(LOOK_DOWN), m_ePreLook(LOOK_END),
-	m_eCurState(SLEEP), m_ePreState(STATE_END), m_Dirchange(false), m_fAcctime(0.f),
-	m_fFrameEnd(0.f), m_bFrameStop(false), m_bAttacking(false)
+CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
+	: CMonster(pGraphicDev, _vPos),
+	m_eCurState(SLEEP), m_ePreState(STATE_END)
 {
-	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
-	
 }
 
 CDeerClops::CDeerClops(const CDeerClops& rhs)
-	:CGameObject(rhs.m_pGraphicDev)
-	, m_vPos(rhs.m_vPos), m_Stat(rhs.m_Stat), m_eCurLook(rhs.m_eCurLook), m_ePreLook(rhs.m_ePreLook), m_eCurState(rhs.m_eCurState),
-	m_ePreState(rhs.m_ePreState), m_Dirchange(rhs.m_Dirchange),
-	m_fAcctime(rhs.m_fAcctime), m_fFrameEnd(rhs.m_fFrameEnd),
-	m_bFrameStop(rhs.m_bFrameStop), m_bAttacking(rhs.m_bAttacking)
-	
+	:CMonster(rhs)
 {
 }
 
@@ -33,7 +25,7 @@ HRESULT CDeerClops::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
-
+	Set_ObjStat();
 	m_fAcctime = float(rand() % 30);
 	for (auto i = 0; i < DEER_PHASE::PHASE_END; ++i)
 	{
@@ -45,14 +37,23 @@ HRESULT CDeerClops::Ready_GameObject()
 
 _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fFrame += m_fFrameEnd * fTimeDelta;
+	if (!m_bFrameStop)
+	{
+		m_fFrame += m_fFrameEnd * fTimeDelta;
+	}
 
-	CGameObject::Update_GameObject(fTimeDelta);
 	if (m_bPhase[FIRST])
 	{
 		if (m_bPhase[SECOND])
 		{
-			Second_Phase(fTimeDelta);
+			if (m_bPhase[THIRD])
+			{
+
+			}
+			else
+			{
+				Second_Phase(fTimeDelta); 
+			}
 		}
 		else
 		{
@@ -69,20 +70,20 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 		Set_WakeUp();
 	}
 
-
-	Check_State();
+	State_Change();
 	Look_Change();
+	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
 }
 
 void CDeerClops::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
+	CGameObject::LateUpdate_GameObject();
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	Compute_ViewZ(&vPos);
+	CGameObject::Compute_ViewZ(&vPos);
 }
 
 void CDeerClops::Render_GameObject()
@@ -91,10 +92,9 @@ void CDeerClops::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
 	m_pTextureCom[m_ePreLook][m_ePreState]->Set_Texture((_uint)m_fFrame);
-	FAILED_CHECK_RETURN(SetUp_Material(), );
 
+	FAILED_CHECK_RETURN(SetUp_Material(), );
 	if (m_Dirchange)
 	{
 		m_pReverseCom->Render_Buffer();
@@ -234,6 +234,12 @@ HRESULT CDeerClops::Add_Component()
 	return S_OK;
 }
 
+void CDeerClops::Set_Hit()
+{
+	m_eCurState = HIT;
+	m_bHit = true;
+}
+
 void CDeerClops::Set_ObjStat()
 {
 	m_Stat.fHP = 100.f;
@@ -242,11 +248,11 @@ void CDeerClops::Set_ObjStat()
 	m_Stat.fATK = 50.f;
 	m_Stat.fATKRange = 4.f;
 	m_Stat.fAggroRange = 10.f;
+	m_Stat.bDead = false;
 }
 
-void CDeerClops::Check_State()
+void CDeerClops::State_Change()
 {
-	
 	if (m_ePreState != m_eCurState)
 	{
 		switch (m_eCurState)
@@ -285,22 +291,7 @@ void CDeerClops::Check_State()
 	}
 }
 
-_bool CDeerClops::IsTarget_Approach(float _fDistance)
-{
-	_vec3 vTargetPos, vPos, vDir;
-	vTargetPos = Player_Position();
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	vTargetPos.y = 0.f;
-	vPos.y = 0.f;
-	if (D3DXVec3Length(&(vTargetPos - vPos)) < _fDistance)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+
 void CDeerClops::Sleep(const _float& fTimeDelta)
 {
 	if (m_fFrameEnd < m_fFrame)
@@ -344,13 +335,13 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	{
 		if (12 < m_fFrame)
 		{
-			dynamic_cast<CPlayer*>(Player_Pointer())->Set_Attack(m_Stat.fATK);
+			dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
 			m_bAttacking = true;
 		}
 	}
 	else
 	{
-		Chase_Player(fTimeDelta);
+		Player_Chase(fTimeDelta);
 		m_eCurState = WALK;
 	}
 
@@ -361,52 +352,9 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 
 }
 
-void CDeerClops::Chase_Player(const _float& fTimeDelta)
-{
-	_vec3 PlayerPos, vDir, vPos;
-	PlayerComponent()->Get_Info(INFO_POS, &PlayerPos);
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	vDir = PlayerPos - vPos;
-	vDir.y = 0;
-	m_eCurLook = m_pTransForm->For_Player_Direction(&vDir, m_Stat.fSpeed, fTimeDelta);
-}
-
-CTransform* CDeerClops::PlayerComponent()
-{
-	Engine::CTransform* pPlayerTransformCom = scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm();
-	NULL_CHECK_RETURN(pPlayerTransformCom, NULL);
-	return pPlayerTransformCom;
-}
-_vec3 CDeerClops::Player_Position()
-{
-	_vec3	pPos;
-	PlayerComponent()->Get_Info(INFO_POS, &pPos);
-	return pPos;
-}
-CGameObject* CDeerClops::Player_Pointer()
-{
-	return scenemgr::Get_CurScene()->GetPlayerObject();
-}
-
-void CDeerClops::Look_Change()
-{
-	if (m_ePreLook != m_eCurLook)
-	{
-		if (m_eCurLook == LOOK_LEFT)
-		{
-			m_Dirchange = true;
-		}
-		else
-		{
-			m_Dirchange = false;
-		}
-		m_ePreLook = m_eCurLook;
-	}
-}
-
 void CDeerClops::Free()
 {
-	CGameObject::Free();
+	__super::Free();
 }
 
 CDeerClops* CDeerClops::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
@@ -416,7 +364,7 @@ CDeerClops* CDeerClops::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
-
+		MSG_BOX("Boss Create Failed");
 		return nullptr;
 	}
 
