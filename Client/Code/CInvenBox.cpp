@@ -77,7 +77,7 @@ void CInvenBox::Render_GameObject()
 		_tchar strItemCount[32];
 		_itow_s(m_pItem->Get_ItemCount(), strItemCount, 10);
 		if (m_eType == INVEN)
-			Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY +7.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY +5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	}
 		
 
