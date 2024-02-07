@@ -106,35 +106,11 @@
     <Filter Include="02. GameObject\07. CUI\04. ToolUI">
       <UniqueIdentifier>{3116b9ca-4620-4d9d-8e8f-f0102d81e6e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\04. ToolUI\01. Equi">
-      <UniqueIdentifier>{4def1f3c-e189-4494-8c54-0feb2f23ca64}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\04. ToolUI\02. Alive">
-      <UniqueIdentifier>{b4c47ae9-174a-4036-951b-d18fdec6f302}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. CUI\05. PopUpUI">
       <UniqueIdentifier>{935dda75-2859-451f-96cc-546f5f650ede}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\04. ToolUI\03. WeaponUI">
-      <UniqueIdentifier>{b880d032-db7e-425f-9065-7f3a43cea928}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\04. ToolUI\04. ClothUI">
-      <UniqueIdentifier>{37cd9882-7ceb-463d-8fb8-744d84f3a36c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\04. ToolUI\05. ScienceUI">
-      <UniqueIdentifier>{5159054e-0c9e-4bea-a905-70572c2f22f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\04. ToolUI\06. LightUI">
-      <UniqueIdentifier>{c2050d54-2be3-459d-be04-97c92f88a8d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\05. PopUpUI\01. PanelBox">
-      <UniqueIdentifier>{6300fd86-2137-41b4-93c3-6f9ce0a146f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI">
       <UniqueIdentifier>{7d2f92fa-f6fb-4324-ad15-d81f6752a5de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\05. PopUpUI\03. SildeBox">
-      <UniqueIdentifier>{e4da578b-353c-4c92-8a0c-4682c4d51258}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\99. Test">
       <UniqueIdentifier>{1543790f-723a-4c2e-aeea-d9c1795e5951}</UniqueIdentifier>
@@ -148,8 +124,26 @@
     <Filter Include="02. GameObject\03. Terrain\RunTerrain">
       <UniqueIdentifier>{e203e153-be4a-42bd-b0f3-95b24604e94d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\01. Inven\CInvenBox">
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI">
+      <UniqueIdentifier>{8d7f24f5-2387-425c-a2e7-d2976dbba840}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09. Item\ItemBasic">
+      <UniqueIdentifier>{90a1a17a-8763-4126-b223-1ed003e6c433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven\TileBox">
       <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide">
+      <UniqueIdentifier>{e53cf79f-038a-43da-9983-6cc1ac68ccb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SildeBox">
+      <UniqueIdentifier>{a44aecaf-5ed9-4b5d-a71e-6d8bd0cc53f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\InvenBox">
+      <UniqueIdentifier>{229f5ab9-10d9-49f2-aa81-6b281a2ff640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel">
+      <UniqueIdentifier>{109cc02a-e6d7-495a-b0ec-f4b81ab66d76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -234,11 +228,11 @@
     <ClInclude Include="..\Header\CPigHouse.h">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CInventoryMgr.h">
+    <ClInclude Include="..\Header\UIMgr.h">
       <Filter>03. Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CInvenBox.h">
-      <Filter>02. GameObject\07. CUI\01. Inven\CInvenBox</Filter>
+      <Filter>02. GameObject\07. CUI\01. Inven\TileBox</Filter>
     </ClInclude>
     <ClInclude Include="FuncEvent.h">
       <Filter>03. Manager\Event</Filter>
@@ -264,35 +258,8 @@
     <ClInclude Include="..\Header\CToolUI.h">
       <Filter>02. GameObject\07. CUI\04. ToolUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CEquiment.h">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\01. Equi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSlideUI.h">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CExplainPanel.h">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CAliveUI.h">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\02. Alive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CWeaponUI.h">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\03. WeaponUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CClothUI.h">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\04. ClothUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CScienceUI.h">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\05. ScienceUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CLightUI.h">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\06. LightUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CButtonUI.h">
       <Filter>02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CSlideBox.h">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTestScene.h">
       <Filter>01. Scene\99. Test</Filter>
@@ -305,6 +272,27 @@
     </ClInclude>
     <ClInclude Include="..\Header\RunTerrain.h">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InvenBoxMgr.h">
+      <Filter>03. Manager\InvenBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CreateUI.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemTool.h">
+      <Filter>02. GameObject\09. Item\CItemTool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemBasic.h">
+      <Filter>02. GameObject\09. Item\ItemBasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SlideBox.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SildeBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SlideUI.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ExplainPanel.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -380,11 +368,11 @@
     <ClCompile Include="..\Code\CPigHouse.cpp">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CInventoryMgr.cpp">
+    <ClCompile Include="..\Code\UIMgr.cpp">
       <Filter>03. Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CInvenBox.cpp">
-      <Filter>02. GameObject\07. CUI\01. Inven\CInvenBox</Filter>
+      <Filter>02. GameObject\07. CUI\01. Inven\TileBox</Filter>
     </ClCompile>
     <ClCompile Include="FuncEvent.cpp">
       <Filter>03. Manager\Event</Filter>
@@ -407,35 +395,8 @@
     <ClCompile Include="..\Code\CToolUI.cpp">
       <Filter>02. GameObject\07. CUI\04. ToolUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CEquiment.cpp">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\01. Equi</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CAliveUI.cpp">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\02. Alive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CSlideUI.cpp">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CExplainPanel.cpp">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CWeaponUI.cpp">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\03. WeaponUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CClothUI.cpp">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\04. ClothUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CScienceUI.cpp">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\05. ScienceUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CLightUI.cpp">
-      <Filter>02. GameObject\07. CUI\04. ToolUI\06. LightUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CButtonUI.cpp">
       <Filter>02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CSlideBox.cpp">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI\03. SildeBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTestScene.cpp">
       <Filter>01. Scene\99. Test</Filter>
@@ -451,6 +412,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\RunTerrain.cpp">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InvenBoxMgr.cpp">
+      <Filter>03. Manager\InvenBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CreateUI.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemTool.cpp">
+      <Filter>02. GameObject\09. Item\CItemTool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemBasic.cpp">
+      <Filter>02. GameObject\09. Item\ItemBasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SlideBox.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SildeBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SlideUI.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ExplainPanel.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

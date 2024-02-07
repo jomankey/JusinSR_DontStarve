@@ -3,7 +3,8 @@
 
 #include "Logo.h"
 #include "Stage.h"
-#include "CInventoryMgr.h"
+#include "UIMgr.h"
+#include "InvenBoxMgr.h"
 
 CMainApp::CMainApp() : m_pDeviceClass(nullptr)
 {
@@ -125,7 +126,8 @@ void CMainApp::Free()
 	Engine::Safe_Release(m_pDeviceClass);
 	Engine::Safe_Release(m_pManagementClass);
 	Engine::Safe_Release(m_pGraphicDev);
-	CInventoryMgr::DestroyInstance();
+	CUIMgr::DestroyInstance();
+	CInvenBoxMgr::DestroyInstance();
 	Engine::Release_System();
 	Engine::Release_Utility();
 }

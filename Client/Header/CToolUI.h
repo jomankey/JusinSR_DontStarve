@@ -27,7 +27,7 @@ protected:
 public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	//각 자식들은 이 함수를 오버라이딩 해서 사용한다.
-	virtual void Pop_SidePanel();
+	//virtual void Pop_SidePanel();
 
 	void SetGameData(CItemTool* _ItemTool, eITEMTOOL_TYPE _ItemType);
 

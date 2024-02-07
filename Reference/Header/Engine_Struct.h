@@ -68,6 +68,19 @@ namespace Engine
 		DWORD_PTR		pParam;
 	};
 
+	typedef struct tagItemInfo
+	{
+		_tchar* strItemName;
+		_int iCount;
+	}ITEMINFO;
+
+	typedef struct tagCreateInfo
+	{
+		_tchar* strKeyName;
+		_tchar* strName;
+		_tchar* strInfo;
+		ITEMINFO tItemInfo[2]; // 아이템 key값 넣기
+	} CREATEINFO;
 
 }
 #endif // Engine_Struct_h__

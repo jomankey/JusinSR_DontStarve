@@ -1,0 +1,54 @@
+#pragma once
+#include "CUI.h"
+#include "Export_Utility.h"
+#include <ItemTool.h>
+
+class CExplainPanel;
+class CSlideBox;
+
+class CSlideUI : public CGameObject
+{
+protected:
+	explicit CSlideUI(LPDIRECT3DDEVICE9 pGraphicDevm, eITEMTOOL_TYPE eType);
+	explicit CSlideUI(const CSlideUI& rhs);
+	virtual ~CSlideUI();
+
+public:
+	void Set_ToolType(eITEMTOOL_TYPE eType) { m_eToolType = eType; }
+	void Set_Show(_bool bShow) { m_bShow = bShow; }
+
+	_bool Get_Show() { return m_bShow; }
+
+public:
+	virtual HRESULT Ready_GameObject() override;
+	virtual _int Update_GameObject(const _float& fTimeDelta) override;
+	virtual void LateUpdate_GameObject()					 override;
+	virtual void Render_GameObject() override;
+
+	//void SetSlideOnAndOff(bool _State) { m_bSlideOn = _State; };
+	//BOOL GetSlideOn() { return m_bSlideOn; };
+
+private:
+	HRESULT Add_Component();
+	 
+public:
+	static CSlideUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, eITEMTOOL_TYPE eType);
+	virtual void Free() override;
+
+private:
+	Engine::CTexture* m_pTextureCom;
+	Engine::CRcTex* m_pBufferCom;
+
+private:
+	vector<CSlideBox*> m_vecSlideBox;
+
+	_matrix				m_ViewMatrix, m_ProjMatrix;
+	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
+
+	LPDIRECT3DDEVICE9 m_pGraphicDev;
+
+	eITEMTOOL_TYPE m_eToolType;
+
+	_bool m_bShow;
+};
+

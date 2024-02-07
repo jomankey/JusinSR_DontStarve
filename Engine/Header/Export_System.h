@@ -63,6 +63,7 @@ namespace Engine
 		_vec3* vMonsterAxis,
 		_vec3 vPlayerScale,
 		_vec3 vMonsterScale);
+	inline _bool Collision_Mouse(_vec2 vMousePos, _float fX, _float fY, _float fSizeX, _float fSizeY);
 
 
 	// PathMgr

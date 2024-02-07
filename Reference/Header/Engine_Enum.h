@@ -111,12 +111,21 @@ namespace Engine
 
 	enum  eITEMTOOL_TYPE {
 		ITEM_EQUIP,
-		ITEM_LIGHT,
 		ITEM_ALIVE,
-		ITEM_SCIENCE,
 		ITEM_WEAPON,
-		ITEM_CLOTH,
 		ITEM_END
+	};
+
+	enum BOX_TYPE {
+		INVEN,
+		CREATE,
+		BOX_END
+	};
+	
+	enum BOX_DIR {
+		WIDTH,
+		HEIGHT,
+		BOX_DIR_END
 	};
 }
 #endif // Engine_Enum_h__

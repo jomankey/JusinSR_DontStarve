@@ -46,14 +46,13 @@
 //UI
 #include "CUI.h"
 #include"CInvenBox.h"
-#include"CEquiment.h"
-#include"CSlideUI.h"
-#include"CAliveUI.h"
+#include"SlideUI.h"
 #include"CHpUI.h"
 #include"CMentalUI.h"
 #include"CWorldUI.h"
 #include"CHungryUI.h"
-#include"CExplainPanel.h"
+#include"ExplainPanel.h"
+#include <ItemBasic.h>
 
 CRoadScene::CRoadScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -137,12 +136,12 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 
-	//pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	//m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
+	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
-	//dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
 
 
@@ -159,21 +158,6 @@ HRESULT CRoadScene::Ready_Layer_UI()
 
 	//Before UI struct 
 	//-------------------------------------------
-	//왼쪽 판넬
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(30.f, 300.f, 0.f), _vec3(30.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
-	//아래 판넬
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(420.f, 580.f, 0.f), _vec3(20.f, 340.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
-	//설명 판넬
-	pGameObject = CExplainPanel::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(400.f, 300.f, 0.f), _vec3(80.f, 80.f, 0.f), L"Proto_UI_Explain_PopUp_Panel");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
 	////인벤토리
 	//pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -365,25 +349,25 @@ HRESULT CRoadScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	}
 	else if (!_tcscmp(L"CutGlass", pName))
 	{
-		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Rocks_0", pName))
 	{
-		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Rocks_1", pName))
 	{
-		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Twigs", pName))
 	{
-		pGameObject = CItem::Create(m_pGraphicDev, pName);
+		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	}

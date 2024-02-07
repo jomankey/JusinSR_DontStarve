@@ -1,13 +1,21 @@
 #pragma once
 #include "Export_Utility.h"
+#include <CItem.h>
 
 class CInvenBox :public CGameObject
 {
 protected:
-	explicit CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec2 vFontPos);
-	//explicit CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name,_uint _index);
+	explicit CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec2 vFontPos, _vec3 vPos);
 	explicit CInvenBox(const CInvenBox& rhs);
 	virtual ~CInvenBox();
+
+public:
+	void Set_Item(CItem* pItem) { m_pItem = pItem; }
+	
+	_float Get_fX() { return m_fX; }
+	_float Get_fY() { return m_fY; }
+	_float Get_SizeX() { return m_fSizeX; }
+	_float Get_SizeY() { return m_fSizeY; }
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;
@@ -32,8 +40,11 @@ private:
 	_vec2 m_vFontPos;
 
 	_uint	m_iInvenIndex;
-
-
 	_uint m_ItmeCount;
+
+	_matrix				m_ViewMatrix, m_ProjMatrix;
+	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
+
+	CItem* m_pItem;
 };
 

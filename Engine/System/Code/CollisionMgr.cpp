@@ -165,6 +165,15 @@ _bool CCollisionMgr::Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPla
 	return true;
 }
 
+_bool Engine::CCollisionMgr::Collision_Mouse(_vec2 vMousePos, _float fX, _float fY, _float fSizeX, _float fSizeY)
+{
+	if (fX - (fSizeX) < vMousePos.x && vMousePos.x < fX + (fSizeX))
+		if (fY - (fSizeY) < vMousePos.y && vMousePos.y < fY + (fSizeY))
+			return true;
+
+	return false;
+}
+
 void CCollisionMgr::Free()
 {
 }

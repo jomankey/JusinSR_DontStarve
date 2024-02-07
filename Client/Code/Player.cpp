@@ -12,7 +12,7 @@
 #include "CItem.h"
 
 //Manager
-#include "CInventoryMgr.h"
+#include "UIMgr.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)

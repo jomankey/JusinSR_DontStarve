@@ -46,25 +46,24 @@ public:
 	virtual _bool DropItem() { return false; }
 
 public:
-	virtual HRESULT Ready_GameObject()						 override;
-	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-	virtual void		LateUpdate_GameObject()override;
-	virtual void		Render_GameObject()override;
-	static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName);
+	virtual HRESULT Ready_GameObject()			PURE			 ;
+	virtual _int Update_GameObject(const _float& fTimeDelta) ;
+	virtual void		LateUpdate_GameObject();
+	virtual void		Render_GameObject() PURE;
 
-private:
+protected:
 	HRESULT			Add_Component();
 	virtual void MousePicking();
 
-private:
+protected:
 	virtual void Free();
 
 protected:
 	Engine::CRcTex* m_pBufferCom;
-	//Engine::CTransform* m_pTransForm;
 	Engine::CTexture* m_pTextureCom;
 
-private:
-	ItemInfo	m_tItemInfo;		//아이템개수
+protected:
+	ItemInfo	m_tItemInfo;
+
 };
 

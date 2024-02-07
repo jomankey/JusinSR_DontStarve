@@ -113,21 +113,11 @@ void CUI::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
-
-
 	scenemgr::Get_CurScene()->EndOrtho();
-
-
 }
-
-
 
 BOOL CUI::UI_Collision()
 {
-
-
-	
-
 	if (m_fX - (m_fSizeX) < m_MousePoint.x && m_MousePoint.x < m_fX + (m_fSizeX))
 		if (m_fY - (m_fSizeY) < m_MousePoint.y && m_MousePoint.y < m_fY + (m_fSizeY))
 		{
@@ -137,13 +127,10 @@ BOOL CUI::UI_Collision()
 			return false;
 	else
 		return false;
-
-
 }
 
 BOOL CUI::UI_Collision(CUI* _Target)
 {
-
 if (_Target->m_fX - (_Target->m_fSizeX) < m_MousePoint.x && m_MousePoint.x < _Target->m_fX + (_Target->m_fSizeX))
 		if (_Target->m_fY - (_Target->m_fSizeY) < m_MousePoint.y && m_MousePoint.y < _Target->m_fY + (_Target->m_fSizeY))
 		{
@@ -153,7 +140,6 @@ if (_Target->m_fX - (_Target->m_fSizeX) < m_MousePoint.x && m_MousePoint.x < _Ta
 			return false;
 	else
 		return false;
-	
 }
 
 BOOL CUI::MouseDistanceOver()
@@ -166,7 +152,6 @@ BOOL CUI::MouseDistanceOver()
 	else
 		return false;
 }
-
 
 HRESULT CUI::Add_Component()
 {
@@ -184,13 +169,8 @@ HRESULT CUI::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-
-
-
 	return S_OK;
 }
-
-
 
 CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
 {
@@ -202,19 +182,17 @@ CUI* CUI::Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _ve
 		return nullptr;
 	}
 
-	if (m_pToolUI == nullptr)
-	{
-		m_pToolUI = CToolUI::Create(pGraphicDev, _UI_Name);
-		
-	}
-
+	//if (m_pToolUI == nullptr)
+	//{
+	//	m_pToolUI = CToolUI::Create(pGraphicDev, _UI_Name);
+	//	
+	//}
 
 	return pInstance;
 }
 
 void CUI::Free()
 {	
-
 	Safe_Release(m_pToolUI);
 	//m_pEquimentUI->Release();
 	//m_pAliveUI->Release();

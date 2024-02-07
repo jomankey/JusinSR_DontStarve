@@ -3,22 +3,13 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Beefalo.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CAliveUI.cpp"
-
-
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CBossScene.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CButtonUI.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CClothUI.cpp"
-
-
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CEquiment.cpp"
-
-
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CExplainPanel.cpp"
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\ExplainPanel.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CHpUI.cpp"
@@ -36,16 +27,13 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CInvenBox.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CInventoryMgr.cpp"
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\UIMgr.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CItem.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CItemFood.cpp"
-
-
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CLightUI.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CMentalUI.cpp"
@@ -63,16 +51,16 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CPigHouse.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CreateUI.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CRoadScene.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CScienceUI.cpp"
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\SlideBox.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSlideBox.cpp"
-
-
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSlideUI.cpp"
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\SlideUI.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CTestScene.cpp"
@@ -82,9 +70,6 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CUI.cpp"
-
-
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CWeaponUI.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CWorldUI.cpp"
@@ -97,6 +82,15 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Effect.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\InvenBoxMgr.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\ItemBasic.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\ItemTool.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Loading.cpp"
