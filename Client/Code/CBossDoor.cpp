@@ -25,7 +25,7 @@ HRESULT CBossDoor::Ready_GameObject()
 	
 
 	m_eObject_id = BOSS_DOOR;
-	m_eBossDoorCurState = BOSSDOOR_CLOSE;
+	m_eBossDoorCurState = BOSSDOOR_OPEN;
 	m_fFrame = 0.f;
 
 	//Ready_Stat();
@@ -111,10 +111,10 @@ HRESULT CBossDoor::Add_Component()
 }
 
 
-void CBossDoor::Change_Frame_Event()
-{
-
-}
+//void CBossDoor::Change_Frame_Event()
+//{
+//
+//}
 
 void CBossDoor::Check_FrameState()
 {
@@ -122,13 +122,27 @@ void CBossDoor::Check_FrameState()
 	{
 	case CBossDoor::BOSSDOOR_OPEN:
 	{
-
-		break;
+		//만약 플레이어가 충돌하지 않은 상태이면 맨 처음 이미지로 고정
+		//if ()
+		//{
+		//
+		//}
+		//else
+		//{
+		//	//플레이어가 충돌하면 열리는 이미지를 프레임 끝까지 띄운 후, Idle상태로 넘어가기
+		//	if (m_fFrame >= m_pBossDoorTextureCom[BOSSDOOR_OPEN]->Get_MaxFrame())
+		//	{
+		//		m_eBossDoorCurState = BOSSDOOR_IDLE;
+		//		m_fFrame = 0.f;
+		//	}
+		//}
+		//break;
 	}
 
 	case CBossDoor::BOSSDOOR_CLOSE:
 	{
 
+	
 
 		break;
 	}
