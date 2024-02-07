@@ -43,6 +43,9 @@ namespace Engine {
 
 		inline HRESULT			Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent);
 		inline CComponent* Clone_Proto(const _tchar* pProtoTag);
+
+		inline HRESULT			Ready_ProtoAnim(const _tchar* pProtoAnimTag, Engine::CAnimation* pAnim);
+		inline CAnimation*		Clone_ProtoAnim(const _tchar* pProtoAnimTag);
 	}
 
 	// Renderer

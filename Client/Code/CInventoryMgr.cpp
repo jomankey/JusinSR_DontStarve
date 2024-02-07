@@ -73,6 +73,4 @@ void CInventoryMgr::Free()
 	{
 		
 	}
-	//m_pItemArr[0].
-	//__super::Free();
 }

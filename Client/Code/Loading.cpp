@@ -2,6 +2,7 @@
 #include "..\Header\Loading.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_bFinish(false)
@@ -39,6 +40,7 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(Loading_Componment(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Player_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Beefalo_Texture(), E_FAIL);
+	FAILED_CHECK_RETURN(Loading_Anim_Texture(), E_FAIL);
 	//FAILED_CHECK_RETURN(Loading_Boss_Texture(), E_FAIL);
 	//Sound
 	//Engine::Ready_Sound();
@@ -253,12 +255,28 @@ HRESULT CLoading::Loading_Boss_Texture()
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_sleep_pst", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/sleep/pst/pst__%03d.png", 18)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_sleep_loop", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/sleep/loop/loop__%03d.png", 23)), E_FAIL);
-	
 
 
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_taunt", CTexture::Create(m_pGraphicDev, TEX_NORMAL,    L"../Bin/Resource/Texture/Monster/new_deerclops/taunt/taunt__%03d.png", 17)), E_FAIL);
+
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_taunt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/taunt/taunt__%03d.png", 17)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/dead/dead__%03d.png", 24)), E_FAIL);
+	return S_OK;
+}
+
+HRESULT CLoading::Loading_Anim_Texture()
+{
+	Engine::CAnimation* pAnim = nullptr;
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_UP", L"../Bin/Resource/Texture/Build/Catapult/IDLE_UP/IDLE_UP__%03d.png", 23, 0.1f);
+	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_UP", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_DOWN", L"../Bin/Resource/Texture/Build/Catapult/IDLE_DOWN/IDLE_DOWN__%03d.png", 23, 0.1f);
+	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_DOWN", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_SIDE", L"../Bin/Resource/Texture/Build/Catapult/IDLE_SIDE/IDLE_SIDE__%03d.png", 23, 0.1f);
+	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_SIDE", pAnim);
+	
 	return S_OK;
 }
 
@@ -309,7 +327,7 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Left_Fall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/fall_left/fall_left__%03d.png", 13)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Right_Fall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/fall_right/fall_right__%03d.png", 13)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Obejct_Tree_Final", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Tree/stump__000.png")), E_FAIL);
-	
+
 	//Obj_Rock
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Nomal_Rock", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Rock/Nomal_Rock/Nomal_Rock_%d.png", 3)), E_FAIL);
 	//Obj_Grass
@@ -330,7 +348,7 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Teleporter_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Teleporter_worm/Open/WormOpen__%03d.png", 6)), E_FAIL);
 
 
-	
+
 	//Item Object
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Log", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Log.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Berries", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Berries.png")), E_FAIL);

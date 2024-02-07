@@ -31,7 +31,6 @@ namespace Engine
 		STATE_END
 	};
 	enum LOOKDIR { LOOK_DOWN, LOOK_RIGHT, LOOK_LEFT, LOOK_UP, LOOK_END };
-
 	enum WEAPON { UNARMED, AXE, TORCH, HAMMER, PICK, SPEAR, WEAPON_END }; //플레이어 무기
 	enum class eSCENE_TYPE
 	{

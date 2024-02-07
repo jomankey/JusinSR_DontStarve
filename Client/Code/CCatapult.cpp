@@ -2,14 +2,21 @@
 #include "CCatapult.h"
 
 #include "Export_System.h"
+#include "Export_Utility.h"
 
 CCatapult::CCatapult(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
+	, m_pBufferCom(nullptr)
+	, m_pReverseCom(nullptr)
+	, m_pAnimCom(nullptr)
 {
 }
 
 CCatapult::CCatapult(const CCatapult& rhs)
 	: CGameObject(rhs.m_pGraphicDev)
+	, m_pBufferCom(nullptr)
+	, m_pReverseCom(nullptr)
+	, m_pAnimCom(nullptr)
 {
 }
 
@@ -29,9 +36,17 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
-	if (KEY_TAP(DIK_L))
+	if (KEY_TAP(DIK_RIGHT))
 	{
-		m_pAnimCom->ChangeAnimation(L"IDLE_LEFT");
+		m_pAnimCom->SetCurAnimation(L"IDLE_SIDE");
+	}
+	if (KEY_TAP(DIK_UP))
+	{
+		m_pAnimCom->SetCurAnimation(L"IDLE_UP");
+	}
+	if (KEY_TAP(DIK_DOWN))
+	{
+		m_pAnimCom->SetCurAnimation(L"IDLE_DOWN");
 	}
 	return 0;
 }
@@ -56,6 +71,7 @@ void CCatapult::Render_GameObject()
 
 	m_pAnimCom->SetAnimTexture();
 	FAILED_CHECK_RETURN(SetUp_Material(), );
+
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -72,6 +88,11 @@ HRESULT CCatapult::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
+	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
+
+
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
@@ -80,9 +101,10 @@ HRESULT CCatapult::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Anim", pComponent });
 
-	m_pAnimCom->CreateAnimation(m_pGraphicDev, L"IDLE_LEFT", L"../Bin/Resource/Texture/Player/UnArmed/idle_up/idle_up__%03d.png", 22, 0.05f);
-	m_pAnimCom->CreateAnimation(m_pGraphicDev, L"IDLE_DOWN", L"../Bin/Resource/Texture/Player/UnArmed/idle_down/idle_down__%03d.png", 22, 0.05f);
-	m_pAnimCom->ChangeAnimation(L"IDLE_DOWN");
+	m_pAnimCom->AddAnimation(L"IDLE_UP", proto::Clone_ProtoAnim(L"CATAPULT_IDLE_UP"));
+	m_pAnimCom->AddAnimation(L"IDLE_DOWN", proto::Clone_ProtoAnim(L"CATAPULT_IDLE_DOWN"));
+	m_pAnimCom->AddAnimation(L"IDLE_SIDE", proto::Clone_ProtoAnim(L"CATAPULT_IDLE_SIDE"));
+	m_pAnimCom->SetCurAnimation(L"IDLE_UP");
 
 
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));

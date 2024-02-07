@@ -28,6 +28,7 @@ public:
 	HRESULT		Loading_Spider_Texture();
 	HRESULT		Loading_Pig_Texture();
 	HRESULT		Loading_Boss_Texture();
+	HRESULT		Loading_Anim_Texture();
 	const _tchar*		Get_String() const { return m_szLoading; }
 
 public:

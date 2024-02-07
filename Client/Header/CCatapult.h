@@ -20,6 +20,7 @@ public:
 private:
 
 	CRcTex* m_pBufferCom;
+	CRvRcTex* m_pReverseCom;
 	CAnimator* m_pAnimCom;
 public:
 	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
