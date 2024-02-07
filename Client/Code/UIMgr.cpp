@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "UIMgr.h"
 #include"CItem.h"
-
+#include "InvenBoxMgr.h"
+#include <ItemTool.h>
 
 IMPLEMENT_SINGLETON(CUIMgr)
 
@@ -30,33 +31,54 @@ CREATEINFO CUIMgr::Get_CreateInfo(wstring pKey)
 }
 
 //아이템 습득실패시 false반환
-_bool CUIMgr::AddItem(CItem* _pItem)
+_bool CUIMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey)
 {
-	int i = 0;
+	//int i = 0;
 
-	for (auto& itemBox : m_pItemArr)
+	//for (auto& itemBox : m_pItemArr)
+	//{
+	//	if (nullptr == itemBox && _pItem->IsEquipment())// 아이템칸이 비었고 장비아이템을 습득했을경우
+	//	{
+	//		itemBox = _pItem;
+	//		return true;
+	//	}
+
+	//	if (nullptr != itemBox && (!_pItem->IsEquipment()))//아이템이있고 소모품을습득했을경우
+	//	{
+	//		if (itemBox->GetObjName()== _pItem->GetObjName())//해당칸의 이름이 같은 아이템이있을경우
+	//		{
+	//			itemBox->AddItemCount(_pItem->GetItemInfo().ItemCount);
+	//			return true;
+	//		}
+	//	}
+	//}
+
+	//for (auto& itemBox : m_pItemArr)
+	//{
+	//	if (itemBox == nullptr)
+	//	{
+	//		itemBox = _pItem;
+	//		return true;
+	//	}
+	//}
+	vector<CInvenBox*> vecBox = CInvenBoxMgr::GetInstance()->Get_BoxList(INVEN);
+
+	for (auto& box : vecBox) // 인벤토리 빈칸 있는지 없는지 체크
 	{
-		if (nullptr == itemBox && _pItem->IsEquipment())// 아이템칸이 비었고 장비아이템을 습득했을경우
+		if (box->Get_Item() == nullptr) // 아이템이 없다면 인벤에 아이템 생성
 		{
-			itemBox = _pItem;
+			_vec3 vPos;
+			vPos.x = box->Get_fX();
+			vPos.y = box->Get_fY();
+
+			CItem* pItem = CItemTool::Create(pGraphicDev, strItemKey, vPos, UI_ITEM_INVEN);
+			box->Set_Item(pItem);
 			return true;
 		}
 
-		if (nullptr != itemBox && (!_pItem->IsEquipment()))//아이템이있고 소모품을습득했을경우
+		if (box->Get_Item()->GetObjName() == strItemKey) // 같은 아이템이 있다면 아이템 카운트 증가
 		{
-			if (itemBox->GetObjName()== _pItem->GetObjName())//해당칸의 이름이 같은 아이템이있을경우
-			{
-				itemBox->AddItemCount(_pItem->GetItemInfo().ItemCount);
-				return true;
-			}
-		}
-	}
-
-	for (auto& itemBox : m_pItemArr)
-	{
-		if (itemBox == nullptr)
-		{
-			itemBox = _pItem;
+			box->Get_Item()->AddItemCount(1);
 			return true;
 		}
 	}

@@ -1,8 +1,8 @@
 #include "ItemTool.h"
 #include "Export_Utility.h"
 
-CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, _bool bFood)
-	: CItem(pGraphicDev, _strObjName), m_fX(vPos.x), m_fY(vPos.y), m_fSizeX(0.f), m_fSizeY(0.f), m_bFood(bFood)
+CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
+	: CItem(pGraphicDev, _strObjName), m_fX(vPos.x), m_fY(vPos.y), m_fSizeX(0.f), m_fSizeY(0.f), m_bFood(bFood), m_eItemType(eType)
 {
 	m_tItemInfo.ItemCount = 1;
 }
@@ -61,9 +61,9 @@ void CItemTool::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-CItem* CItemTool::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, _bool bFood)
+CItem* CItemTool::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
 {
-	CItem* pInstance = new CItemTool(pGraphicDev, _strObjName, vPos, bFood);
+	CItem* pInstance = new CItemTool(pGraphicDev, _strObjName, vPos, eType, bFood);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

@@ -5,13 +5,14 @@
 class CInvenBox :public CGameObject
 {
 protected:
-	explicit CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec2 vFontPos, _vec3 vPos);
+	explicit CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, BOX_TYPE eType);
 	explicit CInvenBox(const CInvenBox& rhs);
 	virtual ~CInvenBox();
 
 public:
 	void Set_Item(CItem* pItem) { m_pItem = pItem; }
 	
+	CItem* Get_Item() { return m_pItem; }
 	_float Get_fX() { return m_fX; }
 	_float Get_fY() { return m_fY; }
 	_float Get_SizeX() { return m_fSizeX; }
@@ -29,7 +30,7 @@ public:
 
 public:
 	//static CInvenBox* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, _uint _Index, float _Angle = 0.f);
-	static CInvenBox* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec2 vFontPos, _vec3 vPos);
+	static CInvenBox* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, BOX_TYPE eType = INVEN);
 	virtual HRESULT			Add_Component();
 	virtual void Free();
 
@@ -46,5 +47,7 @@ private:
 	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
 
 	CItem* m_pItem;
+
+	BOX_TYPE m_eType; // 아이템 숫자 띄워줄지, 띄워주지 않을지 구분하는 용도
 };
 

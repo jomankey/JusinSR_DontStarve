@@ -34,12 +34,16 @@ public:
 		if (m_tItemInfo.ItemCount > _num)
 			m_tItemInfo.ItemCount -= _num;
 	}
+	void Set_ItemCount(_uint _iNum) { m_tItemInfo.ItemCount = _iNum; }
 
 	_bool			IsEquipment() { return m_tItemInfo.Equipment; }
 
 
 	const ItemInfo& GetItemInfo() { return m_tItemInfo; }
 	void			SetItemInfo(const ItemInfo& _itemInfo) { m_tItemInfo = _itemInfo; }
+
+	_uint Get_ItemCount() { return m_tItemInfo.ItemCount; }
+
 public:
 	//순수가상함수
 	virtual _bool UseItem() { return false; }
