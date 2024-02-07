@@ -33,12 +33,12 @@ HRESULT CInvenBoxMgr::Add_InvenBoxList(LPDIRECT3DDEVICE9 pGraphicDev, BOX_TYPE e
 	if (eDir == WIDTH) // 세로 방향
 	{
 		for (int i = 0; i < _iNum; ++i)
-			pInvenBox.push_back(CInvenBox::Create(pGraphicDev, _vec2(10.f, 10.f), _vec3(120.f + (15.f + 20.f) * i, 582.f, 0.f)));
+			pInvenBox.push_back(CInvenBox::Create(pGraphicDev, _vec3(120.f + (15.f + 20.f) * i, 582.f, 0.f)));
 	}
 	if (eDir == HEIGHT) // 가로 방향
 	{
 		for (int i = 0; i < _iNum; ++i)
-			pInvenBox.push_back(CInvenBox::Create(pGraphicDev, _vec2(10.f, 10.f), _vec3(25.f, 140.f + 40.f*i, 0.f)));
+			pInvenBox.push_back(CInvenBox::Create(pGraphicDev, _vec3(25.f, 140.f + 40.f*i, 0.f), CREATE));
 	}
 	m_mapBox.emplace(eType, pInvenBox);
 	return S_OK;

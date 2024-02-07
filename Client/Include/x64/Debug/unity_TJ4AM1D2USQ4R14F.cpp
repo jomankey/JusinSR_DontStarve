@@ -6,7 +6,7 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CBossScene.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CButtonUI.cpp"
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\ButtonUI.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CBossDoor.cpp"

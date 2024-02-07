@@ -1,6 +1,6 @@
 #pragma once
 #include "CItem.h"
-class CItemBasic :
+class CItemBasic : // 기본 아이템. 월드상에 존재하는 아이템
     public CItem
 {
 private:

@@ -9,8 +9,8 @@
 #include "Texture.h"
 #include "Scene.h"
 #include <ItemTool.h>
-CInvenBox::CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec2 vFontPos, _vec3 vPos)
-	:CGameObject(pGraphicDev), m_vFontPos(vFontPos), m_fX(vPos.x), m_fY(vPos.y), m_pItem(nullptr)
+CInvenBox::CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, BOX_TYPE eType)
+	:CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y), m_pItem(nullptr), m_eType(eType)
 {
 }
 
@@ -72,14 +72,21 @@ void CInvenBox::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 
 	if (m_pItem != nullptr)
+	{
 		m_pItem->Render_GameObject();
+		_tchar strItemCount[32];
+		_itow_s(m_pItem->Get_ItemCount(), strItemCount, 10);
+		if (m_eType == INVEN)
+			Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY +5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+	}
+		
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-CInvenBox* CInvenBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec2 vFontPos, _vec3 vPos)
+CInvenBox* CInvenBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, BOX_TYPE eType)
 {
-	CInvenBox* pInstance = new CInvenBox(pGraphicDev, vFontPos, vPos);
+	CInvenBox* pInstance = new CInvenBox(pGraphicDev, vPos, eType);
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);

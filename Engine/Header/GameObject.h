@@ -13,7 +13,7 @@ namespace Engine
 	public:
 		_float				Get_ViewZ() { return m_fViewZ; }
 		CTransform* GetTransForm() { return m_pTransForm; }
-		HRESULT				SetUp_Material();
+		HRESULT				SetUp_Material(D3DXCOLOR vColor = D3DXCOLOR(0.f, 0.f, 0.f, 0.f));
 		void				Compute_ViewZ(const _vec3* pPos);
 		virtual CComponent* Find_Component(COMPONENTID eID, const _tchar* pComponentTag);
 

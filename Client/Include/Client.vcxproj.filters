@@ -103,12 +103,6 @@
     <Filter Include="02. GameObject\07. CUI\04. ToolUI">
       <UniqueIdentifier>{3116b9ca-4620-4d9d-8e8f-f0102d81e6e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\05. PopUpUI">
-      <UniqueIdentifier>{935dda75-2859-451f-96cc-546f5f650ede}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI">
-      <UniqueIdentifier>{7d2f92fa-f6fb-4324-ad15-d81f6752a5de}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\99. Test">
       <UniqueIdentifier>{1543790f-723a-4c2e-aeea-d9c1795e5951}</UniqueIdentifier>
     </Filter>
@@ -162,6 +156,9 @@
     </Filter>
     <Filter Include="03. Manager\InvenBoxMgr">
       <UniqueIdentifier>{fee9fa8e-3ef7-4825-afa4-120a3f1f6fd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI">
+      <UniqueIdentifier>{7d2f92fa-f6fb-4324-ad15-d81f6752a5de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -273,8 +270,8 @@
     <ClInclude Include="..\Header\CToolUI.h">
       <Filter>02. GameObject\07. CUI\04. ToolUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CButtonUI.h">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI</Filter>
+    <ClInclude Include="..\Header\ButtonUI.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTestScene.h">
       <Filter>01. Scene\99. Test</Filter>
@@ -425,8 +422,8 @@
     <ClCompile Include="..\Code\CToolUI.cpp">
       <Filter>02. GameObject\07. CUI\04. ToolUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CButtonUI.cpp">
-      <Filter>02. GameObject\07. CUI\05. PopUpUI\02. ButtonUI</Filter>
+    <ClCompile Include="..\Code\ButtonUI.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTestScene.cpp">
       <Filter>01. Scene\99. Test</Filter>

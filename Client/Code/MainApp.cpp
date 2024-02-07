@@ -92,7 +92,12 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Loading_Key2", L"πŸ≈¡√º", 10, 22, FW_HEAVY), E_FAIL);
 
 	//owner Ui 
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Count", L"±º∏≤√º", 7, 7, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Count", L"πŸ≈¡√º", 7, 7, FW_THIN), E_FAIL);
+
+	//UI
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Panel_Title", L"πŸ≈¡√º", 15, 15, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Panel_Info", L"πŸ≈¡√º", 6, 10, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Button_Make", L"πŸ≈¡√º", 10, 15, FW_THIN), E_FAIL);
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);

@@ -1,10 +1,12 @@
 #pragma once
 #include "CItem.h"
-class CItemTool :
+#include "Engine_Define.h"
+
+class CItemTool : // UI 용 아이템 
     public CItem
 {
 private:
-    explicit CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, _bool bFood);
+    explicit CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood);
     explicit CItemTool(const CItem& rhs);
     virtual ~CItemTool();
 
@@ -20,7 +22,7 @@ public:
     void Render_GameObject() override;
 
 public:
-    static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, _bool bFood = false);
+    static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType = UI_ITEM_CREATE, _bool bFood = false);
 
 private:
     virtual void Free();
@@ -30,5 +32,7 @@ private:
     _float m_fX, m_fY, m_fSizeX, m_fSizeY;
 
     _bool m_bFood;
+
+    UI_ITEM_TYPE m_eItemType;
 };
 

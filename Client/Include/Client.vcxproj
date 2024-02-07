@@ -176,7 +176,7 @@
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
     <ClInclude Include="..\Header\CBossScene.h" />
-    <ClInclude Include="..\Header\CButtonUI.h" />
+    <ClInclude Include="..\Header\ButtonUI.h" />
     <ClInclude Include="..\header\CBossDoor.h" />
     <ClInclude Include="..\Header\CCatapult.h" />
     <ClInclude Include="..\Header\ExplainPanel.h" />
@@ -230,7 +230,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
     <ClCompile Include="..\Code\CBossScene.cpp" />
-    <ClCompile Include="..\Code\CButtonUI.cpp" />
+    <ClCompile Include="..\Code\ButtonUI.cpp" />
     <ClCompile Include="..\Code\CBossDoor.cpp" />
     <ClCompile Include="..\Code\CCatapult.cpp" />
     <ClCompile Include="..\Code\ExplainPanel.cpp" />

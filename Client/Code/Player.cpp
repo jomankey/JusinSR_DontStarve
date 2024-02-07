@@ -594,7 +594,10 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::ITEM);
 
 		if (nullptr != findObj)
-			DeleteObject(findObj);
+		{
+			if (CUIMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
+				DeleteObject(findObj);
+		}
 	}
 
 	if (GetAsyncKeyState('F')) // АјАн
@@ -630,7 +633,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			vItemScale = pItemTransform->Get_Scale();
 
 			if (Engine::Collision_Item(vPlayerPos, vItemPos, vPlayerScale, vItemScale))
-				m_pTransForm->Set_Scale(_vec3{ 0.2f, 0.2f, 0.2f });
+				break;
 		}
 	}
 }

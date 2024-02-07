@@ -72,7 +72,7 @@ CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponen
 	return iter->second;
 }
 
-HRESULT Engine::CGameObject::SetUp_Material()
+HRESULT Engine::CGameObject::SetUp_Material(D3DXCOLOR vColor)
 {
 	D3DMATERIAL9			tMtrl;
 	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
@@ -84,7 +84,7 @@ HRESULT Engine::CGameObject::SetUp_Material()
 	tMtrl.Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
+	tMtrl.Emissive = vColor;
 	tMtrl.Power = 0.f;
 	m_pGraphicDev->SetMaterial(&tMtrl);
 

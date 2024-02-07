@@ -116,13 +116,19 @@ namespace Engine
 		ITEM_END
 	};
 
+	enum UI_ITEM_TYPE { // 인벤/ 생산용인지
+		UI_ITEM_INVEN,
+		UI_ITEM_CREATE,
+		UI_ITEM_END
+	};
+
 	enum BOX_TYPE {
 		INVEN,
 		CREATE,
 		BOX_END
 	};
 	
-	enum BOX_DIR {
+	enum BOX_DIR { // 나중에 지울것 
 		WIDTH,
 		HEIGHT,
 		BOX_DIR_END
