@@ -1,8 +1,11 @@
 #include "ItemTool.h"
 #include "Export_Utility.h"
-
+#include "Export_System.h"
+#include "stdafx.h"
+#include <CInvenBox.h>
+#include "InvenBoxMgr.h"
 CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
-	: CItem(pGraphicDev, _strObjName), m_fX(vPos.x), m_fY(vPos.y), m_fSizeX(0.f), m_fSizeY(0.f), m_bFood(bFood), m_eItemType(eType)
+	: CItem(pGraphicDev, _strObjName), m_fX(vPos.x), m_fY(vPos.y), m_fSizeX(0.f), m_fSizeY(0.f), m_bFood(bFood), m_eItemType(eType), m_fPreX(0.f), m_fPreY(0.f)
 {
 	m_tItemInfo.ItemCount = 1;
 }
@@ -23,6 +26,9 @@ HRESULT CItemTool::Ready_GameObject()
 	m_fSizeX = 15.f;
 	m_fSizeY = 15.f;
 
+	m_fPreX = m_fX;
+	m_fPreY = m_fY;
+
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	//m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(90.f));
@@ -38,6 +44,30 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	//CInvenBoxMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, INVEN);
+	POINT tPt;
+	GetCursorPos(&tPt);
+	ScreenToClient(g_hWnd, &tPt);
+	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
+
+	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	{
+		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY) && m_eItemType == INVEN)
+		{
+			m_fX += Engine::Get_DIMouseMove(DIMS_X);
+			m_fY += Engine::Get_DIMouseMove(DIMS_Y);
+
+			m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+			vector<CInvenBox*> vecBox = CInvenBoxMgr::GetInstance()->Get_BoxList(INVEN);
+			
+			for (auto& iter : vecBox)
+			{
+				//_vec3 vPos = 
+				//if (Engine::Collision_Mouse())
+			}
+			
+		}
+	}
+
 	return 0;
 }
 

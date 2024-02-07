@@ -30,6 +30,7 @@ private:
 private:
     _matrix				m_ViewMatrix, m_ProjMatrix;
     _float m_fX, m_fY, m_fSizeX, m_fSizeY;
+    _float m_fPreX, m_fPreY;
 
     _bool m_bFood;
 
