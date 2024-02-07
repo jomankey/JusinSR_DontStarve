@@ -9,7 +9,10 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CButtonUI.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\ExplainPanel.cpp"
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CBossDoor.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CCatapult.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CHpUI.cpp"
@@ -39,6 +42,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CMentalUI.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CObjectFireFlies.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CObjectGrass.cpp"
 
 
@@ -64,6 +70,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CTestScene.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CTeleporterWorm.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CToolUI.cpp"
@@ -124,6 +133,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Stage.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Tallbird.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Terrain.cpp"

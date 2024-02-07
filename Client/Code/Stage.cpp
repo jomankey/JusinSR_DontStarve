@@ -34,14 +34,9 @@
 // Item/Object
 #include "CItem.h"
 #include "CItemFood.h"
-<<<<<<< HEAD
 #include "UIMgr.h"
-#include <BerryBush.h>
-=======
-#include "CInventoryMgr.h"
 #include "BerryBush.h"
 #include "CCatapult.h"
->>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
 
 
 //UI
@@ -142,16 +137,12 @@ HRESULT CStage::Ready_Layer_GameLogic()
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-<<<<<<< HEAD
-	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev, L"Proto_TerrainTexture");
-=======
 	pGameObject = CCatapult::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	pGameObject->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
-	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev);
->>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
+	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev, L"Proto_TerrainTexture");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 
@@ -301,19 +292,6 @@ HRESULT CStage::Ready_Layer_UI()
 
 	//Before UI struct 
 	//-------------------------------------------
-<<<<<<< HEAD
-=======
-	//왼쪽 판넬
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(30.f, 300.f, 0.f), _vec3(30.f, 200.f, 0.f), L"Proto_UI_Left_Panel");
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
-	//아래 판넬
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(420.f, 580.f, 0.f), _vec3(20.f, 340.f, 0.f), L"Proto_UI_Left_Panel", 90.f);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
->>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
-
 	//설명 판넬
 	//pGameObject = CExplainPanel::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(400.f, 300.f, 0.f), _vec3(80.f, 80.f, 0.f), L"Proto_UI_Explain_PopUp_Panel");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -323,35 +301,10 @@ HRESULT CStage::Ready_Layer_UI()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
-<<<<<<< HEAD
 	pGameObject = CCreateUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-=======
-	//인벤토리 슬롯 이미지
-	for (int i = 0; i < 15; i++)
-	{
-		int PixelJump = 0;
-		if (i == 5 || i == 10 || i == 15)
-			PixelJump = 7;
 
-		pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(130.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-	}
-
-	//인벤토리에 들어갈 아이템 이미지
-	for (int i = 0; i < 15; i++)
-	{
-		int PixelJump = 0;
-		if (i == 5 || i == 10 || i == 15)
-			PixelJump = 7;
-
-		pGameObject = CInvenBox::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot", i);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-	}
->>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
 
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(680.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");

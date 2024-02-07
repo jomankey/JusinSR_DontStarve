@@ -70,9 +70,6 @@
     <Filter Include="02. GameObject\09. Item\CItemFood">
       <UniqueIdentifier>{fdb423ee-441e-41be-931e-1c82f3001f13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\09. Item\CItemTool">
-      <UniqueIdentifier>{f5be32f2-7b48-490e-ba7f-98d3204343d8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Monster\02. Spider">
       <UniqueIdentifier>{d3a5b963-bd9d-44af-81c9-08fddd98540d}</UniqueIdentifier>
     </Filter>
@@ -124,28 +121,6 @@
     <Filter Include="02. GameObject\03. Terrain\RunTerrain">
       <UniqueIdentifier>{e203e153-be4a-42bd-b0f3-95b24604e94d}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
-    <Filter Include="02. GameObject\07. CUI\02. CreateUI">
-      <UniqueIdentifier>{8d7f24f5-2387-425c-a2e7-d2976dbba840}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\09. Item\ItemBasic">
-      <UniqueIdentifier>{90a1a17a-8763-4126-b223-1ed003e6c433}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\01. Inven\TileBox">
-      <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide">
-      <UniqueIdentifier>{e53cf79f-038a-43da-9983-6cc1ac68ccb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SildeBox">
-      <UniqueIdentifier>{a44aecaf-5ed9-4b5d-a71e-6d8bd0cc53f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Manager\InvenBox">
-      <UniqueIdentifier>{229f5ab9-10d9-49f2-aa81-6b281a2ff640}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel">
-      <UniqueIdentifier>{109cc02a-e6d7-495a-b0ec-f4b81ab66d76}</UniqueIdentifier>
-=======
     <Filter Include="02. GameObject\08. ResObjects\06. FireFlies">
       <UniqueIdentifier>{0c297e33-5d83-42df-b1f1-a7e214f64c7f}</UniqueIdentifier>
     </Filter>
@@ -160,7 +135,27 @@
     </Filter>
     <Filter Include="02. GameObject\01. Monster\05. Tallbird">
       <UniqueIdentifier>{912e9267-1b95-48e6-ad0a-24922a520a47}</UniqueIdentifier>
->>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven\00. CInvenBox">
+      <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI">
+      <UniqueIdentifier>{ccce8bb0-9d51-48e5-bfd9-1f5d3f02736d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide">
+      <UniqueIdentifier>{3c104cfe-7125-421e-baf4-6bc8154ea71c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SlideBox">
+      <UniqueIdentifier>{de69e5bc-115c-4b10-a242-eedde2f6568b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel">
+      <UniqueIdentifier>{15fd1617-dec6-4af4-b5c4-5890e5a1f9cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09. Item\ItemTool">
+      <UniqueIdentifier>{8714d07b-5bed-4375-91cf-ba5af131ea55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\09. Item\ItemBasic">
+      <UniqueIdentifier>{41dbe8de-9bde-492c-b3d2-885b51fc10ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -245,11 +240,8 @@
     <ClInclude Include="..\Header\CPigHouse.h">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UIMgr.h">
-      <Filter>03. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CInvenBox.h">
-      <Filter>02. GameObject\07. CUI\01. Inven\TileBox</Filter>
+      <Filter>02. GameObject\07. CUI\01. Inven\00. CInvenBox</Filter>
     </ClInclude>
     <ClInclude Include="FuncEvent.h">
       <Filter>03. Manager\Event</Filter>
@@ -290,28 +282,6 @@
     <ClInclude Include="..\Header\RunTerrain.h">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="..\Header\InvenBoxMgr.h">
-      <Filter>03. Manager\InvenBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CreateUI.h">
-      <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ItemTool.h">
-      <Filter>02. GameObject\09. Item\CItemTool</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ItemBasic.h">
-      <Filter>02. GameObject\09. Item\ItemBasic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SlideBox.h">
-      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SildeBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SlideUI.h">
-      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ExplainPanel.h">
-      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
-=======
     <ClInclude Include="..\Header\CObjectFireFlies.h">
       <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
     </ClInclude>
@@ -326,7 +296,30 @@
     </ClInclude>
     <ClInclude Include="..\Header\Tallbird.h">
       <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
->>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
+    </ClInclude>
+    <ClInclude Include="..\Header\UIMgr.h">
+      <Filter>03. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CreateUI.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CExplainPanel.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SlideUI.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SlideBox.h">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SlideBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InvenBoxMgr.h">
+      <Filter>03. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemTool.h">
+      <Filter>02. GameObject\09. Item\ItemTool</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemBasic.h">
+      <Filter>02. GameObject\09. Item\ItemBasic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -402,11 +395,8 @@
     <ClCompile Include="..\Code\CPigHouse.cpp">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UIMgr.cpp">
-      <Filter>03. Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CInvenBox.cpp">
-      <Filter>02. GameObject\07. CUI\01. Inven\TileBox</Filter>
+      <Filter>02. GameObject\07. CUI\01. Inven\00. CInvenBox</Filter>
     </ClCompile>
     <ClCompile Include="FuncEvent.cpp">
       <Filter>03. Manager\Event</Filter>
@@ -447,28 +437,6 @@
     <ClCompile Include="..\Code\RunTerrain.cpp">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="..\Code\InvenBoxMgr.cpp">
-      <Filter>03. Manager\InvenBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CreateUI.cpp">
-      <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ItemTool.cpp">
-      <Filter>02. GameObject\09. Item\CItemTool</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ItemBasic.cpp">
-      <Filter>02. GameObject\09. Item\ItemBasic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SlideBox.cpp">
-      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SildeBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SlideUI.cpp">
-      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ExplainPanel.cpp">
-      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
-=======
     <ClCompile Include="..\Code\CObjectFireFlies.cpp">
       <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
     </ClCompile>
@@ -483,7 +451,30 @@
     </ClCompile>
     <ClCompile Include="..\Code\Tallbird.cpp">
       <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
->>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
+    </ClCompile>
+    <ClCompile Include="..\Code\UIMgr.cpp">
+      <Filter>03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CreateUI.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CExplainPanel.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SlideUI.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SlideBox.cpp">
+      <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SlideBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InvenBoxMgr.cpp">
+      <Filter>03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemTool.cpp">
+      <Filter>02. GameObject\09. Item\ItemTool</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ItemBasic.cpp">
+      <Filter>02. GameObject\09. Item\ItemBasic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

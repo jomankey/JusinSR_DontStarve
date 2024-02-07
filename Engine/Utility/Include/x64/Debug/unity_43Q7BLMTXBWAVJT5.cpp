@@ -1,4 +1,10 @@
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Engine\Utility\Code\CAnimation.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Engine\Utility\Code\CAnimator.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Engine\Utility\Code\CEventMgr.cpp"
 
 
