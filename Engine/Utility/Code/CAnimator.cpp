@@ -81,21 +81,13 @@ CAnimator* CAnimator::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CAnimator::SetCurAnimation(const _tchar* _strAnimKey)
-{
-	m_pCurAnimation = Find_Animation(_strAnimKey);
-	m_pCurAnimation->ResetFrame();
-}
+
 
 void Engine::CAnimator::SetCurAnimationFrame(const _tchar* _strAnimKey, _uint _iFrame)
 {
 	Find_Animation(_strAnimKey)->m_iCurFrm = _iFrame;
+	Find_Animation(_strAnimKey)->m_fAccTime = 0.f;
 }
-void CAnimator::SetAnimTexture()
-{
-	m_pCurAnimation->SetCurTexture();
-}
-
 
 void CAnimator::Free()
 {

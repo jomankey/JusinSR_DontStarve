@@ -9,10 +9,13 @@ CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_fAngle(-180.f)
 	, m_fDistance(2.f)
 	, m_fHeight(3.f)
+	, m_fRoadDistance(4.6f)
+	, m_fRoadHeight(4.7f)
 	, m_bkeyInput(true)
 	, m_fIntensity(3.f)
 	, m_fShakeTime(0.3f)
 	, m_fShakeAccTime(1.f)
+	, m_bRoad(false)
 {
 
 }
@@ -43,53 +46,97 @@ HRESULT CDynamicCamera::Ready_GameObject(const _vec3* pEye,
 
 Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 {
-	Key_Input(fTimeDelta);
-
-	Mouse_Move();
-
-	if (KEY_TAP(DIK_U))
+	if (!m_bRoad)
 	{
-		SetTarget(scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0]);
-		m_bMove = true;
+
+		Key_Input(fTimeDelta);
+
+		Mouse_Move();
+
+		if (KEY_TAP(DIK_U))
+		{
+			SetTarget(scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0]);
+			m_bMove = true;
+		}
+		if (KEY_TAP(DIK_I))
+		{
+			SetTarget(scenemgr::Get_CurScene()->GetPlayerObject());
+		}
+
+		if (m_pTarget != nullptr && !m_pTarget->IsDelete())
+		{
+			_vec3 vTarget;
+			m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
+
+			m_vAt = vTarget;//바라볼곳
+
+			m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance * m_fHeight;
+			m_vTargetEye.y = vTarget.y + m_fHeight * m_fHeight;
+			m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance * m_fHeight;//사실상 목적지
+		}
+
+		if (KEY_TAP(DIK_P))
+		{
+			m_fShakeAccTime = 0.f;
+		}
+
+		if (m_fShakeTime > m_fShakeAccTime)
+		{
+			m_fShakeAccTime += fTimeDelta;
+			ShakeCamera();
+		}
+
+		if (m_bMove)
+		{
+			CalDiff(fTimeDelta);
+		}
+		else
+		{
+			m_vEye = m_vTargetEye;
+		}
+
+		D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	}
-	if (KEY_TAP(DIK_I))
+	else//RoadScene
 	{
-		SetTarget(scenemgr::Get_CurScene()->GetPlayerObject());
-	}
+		if (KEY_TAP(DIK_O))
+		{
+			m_fRoadHeight += 0.1f;
+		}
+		if (KEY_TAP(DIK_P))
+		{
+			m_fRoadHeight -= 0.1f;
+		}
+		if (KEY_HOLD(DIK_K))
+		{
+			m_fRoadDistance += 0.1f;
+		}
+		if (KEY_HOLD(DIK_L))
+		{
+			m_fRoadDistance -= 0.1f;
+		}
 
-	if (m_pTarget != nullptr && !m_pTarget->IsDelete())
-	{
-		_vec3 vTarget;
-		m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
 
-		m_vAt = vTarget;//바라볼곳
+		if (m_pTarget != nullptr && !m_pTarget->IsDelete())
+		{
+			_vec3 vTarget;
+			m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
 
-		m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance * m_fHeight;
-		m_vTargetEye.y = vTarget.y + m_fHeight * m_fHeight;
-		m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance * m_fHeight;//사실상 목적지
-	}
+			m_vAt = vTarget;//바라볼곳
 
-	if (KEY_TAP(DIK_P))
-	{
-		m_fShakeAccTime = 0.f;
-	}
-
-	if (m_fShakeTime > m_fShakeAccTime)
-	{
-		m_fShakeAccTime += fTimeDelta;
-		ShakeCamera();
-	}
-
-	if (m_bMove)
-	{
-		CalDiff(fTimeDelta);
-	}
-	else
-	{
+			//카메라위치
+			m_vTargetEye.x = vTarget.x - m_fRoadDistance;//4.2 ~4.3
+			m_vTargetEye.y = vTarget.y + m_fRoadHeight;//2.4 ~ 4.8
+			m_vTargetEye.z = m_vAt.z;
+		}
 		m_vEye = m_vTargetEye;
 	}
+
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
+
+
 
 	return 0;
 }
