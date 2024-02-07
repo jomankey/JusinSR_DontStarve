@@ -163,6 +163,9 @@
     <Filter Include="02. GameObject\08. ResObjects\09. CCatapult">
       <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Monster\05. Tallbird">
+      <UniqueIdentifier>{912e9267-1b95-48e6-ad0a-24922a520a47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -330,6 +333,9 @@
     <ClInclude Include="..\header\CBossDoor.h">
       <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Tallbird.h">
+      <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -487,6 +493,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CBossDoor.cpp">
       <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tallbird.cpp">
+      <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

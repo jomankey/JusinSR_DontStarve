@@ -144,6 +144,9 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\Stage.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\Tallbird.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\Terrain.cpp"
 
 

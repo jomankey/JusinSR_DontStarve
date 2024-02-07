@@ -16,6 +16,7 @@
 #include "CInven.h"
 #include "CPigHouse.h"
 #include "Pig.h"
+#include "Tallbird.h"
 #include "BerryBush.h"
 #include"CObjectFireFlies.h"
 #include"CTeleporterWorm.h"
@@ -160,12 +161,12 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
-	//for (_int i = 0; i < 1; ++i)
-	//{
-	//	pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(64.f, 1.5f, 64.f));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	//}
+	for (_int i = 0; i < 5; ++i)
+	{
+		pGameObject = CTallbird::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 2.5f, _float(rand() % 120)));
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+	}
 	//
 	//for (_int i = 0; i < 10; ++i)
 	//{
@@ -205,7 +206,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	//}
 
-	for (_int i = 0; i < 10; ++i)
+	/*for (_int i = 0; i < 10; ++i)
 	{
 		pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
 		pGameObject->GetTransForm()->Set_Pos(64.f,1,64.f);
@@ -218,7 +219,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 		pGameObject->GetTransForm()->Set_Pos(64.f,1,70.f);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
+	}*/
 
 
 	//pGameObject = CObjectTree::Create(m_pGraphicDev);
