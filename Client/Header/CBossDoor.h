@@ -33,11 +33,13 @@ private:
 	virtual void Free();
 
 
-
+	tuple<_bool, _vec3> IsPlayerInRadius();
 private:
-	Engine::CTexture* m_pBossDoorTextureCom[BOSSDOOR_END];
+	//Engine::CTexture* m_pBossDoorTextureCom[BOSSDOOR_END];
+	CAnimator* m_pAnimCom;
 
 	BOSSDOOR_STATE m_eBossDoorCurState;
+	BOSSDOOR_STATE m_eBossDoorPrevState;
 
 
 

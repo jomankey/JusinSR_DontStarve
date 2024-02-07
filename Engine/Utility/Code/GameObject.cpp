@@ -96,11 +96,12 @@ void Engine::CGameObject::Compute_ViewZ(const _vec3* pPos)
 	_matrix		matCamWorld;
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matCamWorld);
 	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
-
+	_vec3 vPos= *pPos;
+	vPos.y = 0.f;
 	_vec3	vCamPos;
 	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
 
-	m_fViewZ = D3DXVec3Length(&(vCamPos - *pPos));
+	m_fViewZ = D3DXVec3Length(&(vCamPos - vPos));
 }
 
 
