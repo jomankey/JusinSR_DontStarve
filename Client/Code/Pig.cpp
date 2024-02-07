@@ -414,7 +414,7 @@ CPig* CPig::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("Beefalo Create Failed");
+		MSG_BOX("Pig Create Failed");
 		return nullptr;
 	}
 

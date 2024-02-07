@@ -32,6 +32,7 @@ public:
 private:
 	HRESULT			Add_Component();
 	void			Key_Input(const _float& fTimeDelta);
+	void			Ket_Input_Road(const _float& fTimeDelta);
 	HRESULT			SetUp_Material();
 	void			Check_State();				//상태 변경용 함수
 	void			Set_Scale();				//행동에 따른 스케일을 변경하기 위한 함수
