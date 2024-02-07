@@ -18,7 +18,7 @@ public:
 														//매개변수로 받은 float 값과 거리벡터를 비교한다
 protected:
 	virtual void Free() override;
-	CGameObject* Get_Player_Pointer();					//플레이어의 포인터를 받아오기 위한 함수
+	CGameObject* Get_Player_Pointer();								//플레이어의 포인터를 받아오기 위한 함수
 
 protected:
 	virtual void		Set_ObjStat() PURE;
@@ -27,7 +27,7 @@ protected:
 
 	void				Player_Chase(const _float& fTimeDelta);		//플레이어를 추격함과 동시에 방향도 변경해준다
 	void		Look_Change();
-	_vec3		Get_Player_Pos();		//플레이어의 포지션 벡터를 받아오는 함수
+	_vec3		Get_Player_Pos();									//플레이어의 포지션 벡터를 받아오는 함수
 protected:
 	_vec3		m_vPos;	//위치 저장용
 	_vec3		m_vDir; //현재 이동중인 방향

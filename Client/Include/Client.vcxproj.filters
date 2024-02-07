@@ -160,6 +160,18 @@
     <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI">
       <UniqueIdentifier>{7d2f92fa-f6fb-4324-ad15-d81f6752a5de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\10. Trap">
+      <UniqueIdentifier>{5d7d096e-d49e-4b91-b177-be4fdb8c5e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10. Trap\01. Spike">
+      <UniqueIdentifier>{457eb512-7745-499e-86b4-c2256ea80c0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10. Trap\02. ToothTrap">
+      <UniqueIdentifier>{996a8a18-c1c0-48fa-bf63-fce52a2f0338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10. Trap\03. TumbleWeed">
+      <UniqueIdentifier>{de22da1f-f23a-49ea-a5c0-3d9886c5fe16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -324,6 +336,18 @@
     <ClInclude Include="..\Header\UIMgr.h">
       <Filter>03. Manager\UIMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTrap.h">
+      <Filter>02. GameObject\10. Trap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSpike.h">
+      <Filter>02. GameObject\10. Trap\01. Spike</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CToothTrap.h">
+      <Filter>02. GameObject\10. Trap\02. ToothTrap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTumbleWeed.h">
+      <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -478,6 +502,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\UIMgr.cpp">
       <Filter>03. Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTrap.cpp">
+      <Filter>02. GameObject\10. Trap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSpike.cpp">
+      <Filter>02. GameObject\10. Trap\01. Spike</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CToothTrap.cpp">
+      <Filter>02. GameObject\10. Trap\02. ToothTrap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTumbleWeed.cpp">
+      <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

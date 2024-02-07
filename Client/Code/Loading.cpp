@@ -309,19 +309,44 @@ HRESULT CLoading::Loading_Anim_Texture()
 	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_SIDE", L"../Bin/Resource/Texture/Build/Catapult/IDLE_SIDE/IDLE_SIDE__%03d.png", 23, 0.1f);
 	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_SIDE", pAnim);
 
-
-	//BossDoor
-	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Open", L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19, 0.1f);
-	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Open", pAnim);
-	//
-	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Close", L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10, 0.1f);
-	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Close", pAnim);
-	//
-	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Idle", L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8, 0.1f);
-	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Idle", pAnim);
+	////////
+	//Trap//
+	////////
 	
 
+	//SPIKE
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_IDLE", L"../Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__%03d.png", 17, 0.1f);
+	proto::Ready_ProtoAnim(L"TRAP_SPIKE_IDLE", pAnim);
 
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_GROW", L"../Bin/Resource/Texture/Build/Trap/Spike/GROW/GROW__%03d.png", 23, 0.03f);
+	proto::Ready_ProtoAnim(L"TRAP_SPIKE_GROW", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_HIDE", L"../Bin/Resource/Texture/Build/Trap/Spike/PICKED/PICKED__%03d.png", 3, 10.f);
+	proto::Ready_ProtoAnim(L"TRAP_SPIKE_HIDE", pAnim);
+
+
+	//TOOTH_TRAP
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TOOTH_HIDE", L"../Bin/Resource/Texture/Build/Trap/ToothTrap/IDLE/IDLE__%03d.png", 9, 0.1f);
+	proto::Ready_ProtoAnim(L"TRAP_TOOTH_HIDE", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TOOTH_GROW", L"../Bin/Resource/Texture/Build/Trap/ToothTrap/TRAP/TRAP__%03d.png", 11, 0.04f);
+	proto::Ready_ProtoAnim(L"TRAP_TOOTH_GROW", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TOOTH_IDLE", L"../Bin/Resource/Texture/Build/Trap/ToothTrap/TRAP_IDLE/TRAP_IDLE__%03d.png", 5, 10.f);
+	proto::Ready_ProtoAnim(L"TRAP_TOOTH_IDLE", pAnim);
+
+	//TumbleWeed
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TUMBLE_BREAK", L"../Bin/Resource/Texture/Build/Trap/TumbleWeed/BREAK/BREAK__%03d.png", 12, 0.1f);
+	proto::Ready_ProtoAnim(L"TRAP_TUMBLE_BREAK", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TUMBLE_MOVE_DOWN", L"../Bin/Resource/Texture/Build/Trap/TumbleWeed/MOVE_DOWN/MOVE_DOWN__%03d.png", 17, 0.04f);
+	proto::Ready_ProtoAnim(L"TRAP_TUMBLE_MOVE_DOWN", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TUMBLE_MOVE_UP", L"../Bin/Resource/Texture/Build/Trap/TumbleWeed/MOVE_UP/MOVE_UP__%03d.png", 5, 10.f);
+	proto::Ready_ProtoAnim(L"TRAP_TUMBLE_MOVE_UP", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TUMBLE_MOVE_SIDE", L"../Bin/Resource/Texture/Build/Trap/TumbleWeed/MOVE_SIDE/MOVE_SIDE__%03d.png", 5, 10.f);
+	proto::Ready_ProtoAnim(L"TRAP_TUMBLE_MOVE_SIDE", pAnim);
 
 
 	return S_OK;

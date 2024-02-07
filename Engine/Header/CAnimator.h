@@ -25,6 +25,7 @@ namespace Engine
 
 		void SetLoopAnimator(_bool _bLoop) { m_bLoop = _bLoop; }
 		_bool IsLoop() { return m_bLoop; }
+		_bool IsFinish(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_bFinish; }
 
 		void AddAnimation(const _tchar* _strAnimKey, Engine::CAnimation* _pAnimation) { m_mapAnimation.insert({ _strAnimKey, _pAnimation }); }
 

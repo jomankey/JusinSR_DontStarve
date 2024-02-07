@@ -39,6 +39,12 @@
 #include "BerryBush.h"
 #include "CCatapult.h"
 
+//Trap//Object
+#include "CTrap.h"
+#include "CSpike.h"
+#include "CToothTrap.h"
+#include "CTumbleWeed.h"
+
 
 //UI
 #include "CUI.h"
@@ -141,7 +147,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	pGameObject = CCatapult::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	pGameObject->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
+	pGameObject->GetTransForm()->Set_Pos(_vec3(54.f, 3.f, 64.f));
 
 	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev, L"Proto_TerrainTexture");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -153,6 +159,11 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+
+	pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(61.f, 0.7f, 64.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+
 
 	//pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);

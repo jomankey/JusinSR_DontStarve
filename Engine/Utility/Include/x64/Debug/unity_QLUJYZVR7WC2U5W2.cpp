@@ -1,4 +1,10 @@
 
+#include "C:\GitHub\JusinSR\Engine\Utility\Code\CAnimation.cpp"
+
+
+#include "C:\GitHub\JusinSR\Engine\Utility\Code\CAnimator.cpp"
+
+
 #include "C:\GitHub\JusinSR\Engine\Utility\Code\CEventMgr.cpp"
 
 
@@ -56,13 +62,13 @@
 #include "C:\GitHub\JusinSR\Engine\Utility\Code\Scene.cpp"
 
 
-#include "C:\GitHub\JusinSR\Engine\Utility\Code\TerrainCubeTex.cpp"
-
-
 #include "C:\GitHub\JusinSR\Engine\Utility\Code\TerrainTex.cpp"
 
 
 #include "C:\GitHub\JusinSR\Engine\Utility\Code\Texture.cpp"
+
+
+#include "C:\GitHub\JusinSR\Engine\Utility\Code\Tile.cpp"
 
 
 #include "C:\GitHub\JusinSR\Engine\Utility\Code\Transform.cpp"

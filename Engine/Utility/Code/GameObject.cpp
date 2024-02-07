@@ -59,6 +59,8 @@ void CGameObject::LateUpdate_GameObject()
 {
 	for (auto& iter : m_mapComponent[ID_DYNAMIC])
 		iter.second->LateUpdate_Component();
+
+
 }
 
 
