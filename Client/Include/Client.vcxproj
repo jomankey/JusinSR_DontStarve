@@ -197,6 +197,7 @@
     <ClInclude Include="..\Header\CScienceUI.h" />
     <ClInclude Include="..\Header\CSlideBox.h" />
     <ClInclude Include="..\Header\CSlideUI.h" />
+    <ClInclude Include="..\Header\CTeleporterWorm.h" />
     <ClInclude Include="..\Header\CToolUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\CWeaponUI.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="..\Code\CScienceUI.cpp" />
     <ClCompile Include="..\Code\CSlideBox.cpp" />
     <ClCompile Include="..\Code\CSlideUI.cpp" />
+    <ClCompile Include="..\Code\CTeleporterWorm.cpp" />
     <ClCompile Include="..\Code\CToolUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\CWeaponUI.cpp" />
