@@ -279,14 +279,14 @@ HRESULT CLoading::Loading_Anim_Texture()
 
 
 	//BossDoor
-	pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Open", L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19, 0.1f);
-	proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Open", pAnim);
-
-	pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Close", L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10, 0.1f);
-	proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Close", pAnim);
-
-	pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Idle", L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8, 0.1f);
-	proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Idle", pAnim);
+	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Open", L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19, 0.1f);
+	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Open", pAnim);
+	//
+	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Close", L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10, 0.1f);
+	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Close", pAnim);
+	//
+	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Idle", L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8, 0.1f);
+	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Idle", pAnim);
 	
 	
 
@@ -365,9 +365,10 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Teleporter_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Teleporter_worm/Open/WormOpen__%03d.png", 6)), E_FAIL);
 
 	//Obj_BossDoor
-	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19)), E_FAIL);
-	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Close", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10)), E_FAIL);
-	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Close", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Off", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_off__000.png")), E_FAIL);
 
 
 	//Item Object

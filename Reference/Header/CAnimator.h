@@ -10,6 +10,10 @@ namespace Engine
 	public:
 		void SetCurAnimation(const _tchar* _strAnimKey);
 		void SetCurAnimationFrame(const _tchar* _strAnimKey,_uint _iFrame);
+		void SetAnimaReset(const _tchar* _strAnimKey)
+		{
+			Find_Animation(_strAnimKey)->ResetFrame();
+		}
 		_bool GetAnimFinish(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_bFinish; }
 		void SetAnimTexture();
 

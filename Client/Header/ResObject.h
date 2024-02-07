@@ -28,7 +28,7 @@ public:
 
 private:
     virtual HRESULT			Add_Component() PURE;
-    virtual void Change_Frame_Event() PURE;
+    virtual void            Change_Frame_Event() PURE;
     virtual void			Check_FrameState() PURE;
     virtual void Ready_Stat() PURE;
 

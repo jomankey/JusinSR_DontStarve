@@ -28,7 +28,8 @@ HRESULT CBossDoor::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
 	m_eObject_id = BOSS_DOOR;
-	m_eBossDoorCurState = BOSSDOOR_END;
+	m_eBossDoorPrevState = BOSSDOOR_END;
+	m_eBossDoorCurState = SLEEP;
 	//Ready_Stat();
 
 	return S_OK;
@@ -37,24 +38,33 @@ HRESULT CBossDoor::Ready_GameObject()
 _int CBossDoor::Update_GameObject(const _float& fTimeDelta)
 {
 
-	bool IsPlayerNear = get<0>(IsPlayerInRadius());
-	if (IsPlayerNear)
+	if (!m_bFrameStop)
 	{
-		if (m_eBossDoorPrevState != BOSSDOOR_OPEN)
+		m_fFrame += m_fFrameEnd * fTimeDelta;
+	}
+	if (get<0>(IsPlayerInRadius()) && !m_bStateChange[0])
+	{
+		m_bStateChange[0] = true;
+	}
+
+
+
+	if (m_bStateChange[0])
+	{
+		if (m_bStateChange[1])
 		{
-			m_eBossDoorCurState = BOSSDOOR_OPEN;
+			if (m_bStateChange[2])
+			{
+				Close(fTimeDelta);
+			}
+			else
+				IDLE(fTimeDelta);
 		}
+		else
+			Open(fTimeDelta);
 	}
 	else
-	{
-		m_eBossDoorCurState = BOSSDOOR_CLOSE;
-
-	}
-
-	if (m_pAnimCom->GetAnimFinish(L"OPEN"))
-	{
-		m_eBossDoorCurState = BOSSDOOR_IDLE;
-	}
+		Sleep(fTimeDelta);
 
 	Check_FrameState();
 
@@ -84,8 +94,8 @@ void CBossDoor::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	m_pAnimCom->SetAnimTexture();
-	//m_pBossDoorTextureCom[m_eBossDoorCurState]->Set_Texture((_uint)m_fFrame);
+	//m_pAnimCom->SetAnimTexture();
+	m_pBossDoorTextureCom[m_eBossDoorPrevState]->Set_Texture((_uint)m_fFrame);
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
@@ -103,35 +113,30 @@ HRESULT CBossDoor::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	//pComponent = m_pBossDoorTextureCom[BOSSDOOR_OPEN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Open"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Open", pComponent });
-	//
-	//
-	//pComponent = m_pBossDoorTextureCom[BOSSDOOR_CLOSE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Close"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Close", pComponent });
-	//
-	//pComponent = m_pBossDoorTextureCom[BOSSDOOR_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Idle"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Idle", pComponent });
-
-	pComponent = m_pAnimCom = dynamic_cast<CAnimator*>(proto::Clone_Proto(L"Proto_Anim"));
+	pComponent = m_pBossDoorTextureCom[BOSSDOOR_OPEN] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Open"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Anim", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Open", pComponent });
+	
+	
+	pComponent = m_pBossDoorTextureCom[BOSSDOOR_CLOSE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Close"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Close", pComponent });
+	
+	pComponent = m_pBossDoorTextureCom[BOSSDOOR_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Idle"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Idle", pComponent });
+
+	pComponent = m_pBossDoorTextureCom[SLEEP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Off"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Off", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pAnimCom->AddAnimation(L"OPEN", proto::Clone_ProtoAnim(L"Proto_Object_BossDoor_Open"));
-	m_pAnimCom->AddAnimation(L"CLOSE", proto::Clone_ProtoAnim(L"Proto_Object_BossDoor_Close"));
-	m_pAnimCom->AddAnimation(L"IDLE", proto::Clone_ProtoAnim(L"Proto_Object_BossDoor_Idle"));
-	m_pAnimCom->SetCurAnimation(L"CLOSE");
-	m_pAnimCom->SetCurAnimationFrame(L"CLOSE", m_pAnimCom->GetAnimMaxFrame(L"CLOSE"));
-	m_pAnimCom->SetLoopAnimator(false);
+	
 
-	//m_pAnimCom->SetLoopAnimator(true);
+	
 
 
 
@@ -144,51 +149,97 @@ HRESULT CBossDoor::Add_Component()
 
 void CBossDoor::Check_FrameState()
 {
-	switch (m_eBossDoorCurState)
+	if (m_eBossDoorPrevState != m_eBossDoorCurState)
 	{
-	case CBossDoor::BOSSDOOR_OPEN:
-	{
-		if (m_eBossDoorPrevState == BOSSDOOR_OPEN)
+		switch (m_eBossDoorCurState)
+		{
+		case CBossDoor::BOSSDOOR_OPEN:
+		{
+			m_fFrameEnd = 19.f;
 			break;
-
-		m_pAnimCom->SetCurAnimation(L"OPEN");
-		m_pAnimCom->SetLoopAnimator(false);
-		break;
-	}
-
-	case CBossDoor::BOSSDOOR_CLOSE:
-	{
-		if (m_eBossDoorPrevState == BOSSDOOR_CLOSE)
+		}
+		case CBossDoor::BOSSDOOR_CLOSE:
+		{
+			m_fFrameEnd = 10.f;
 			break;
-
-		m_pAnimCom->SetCurAnimation(L"CLOSE");
-		m_pAnimCom->SetLoopAnimator(false);
-
-		break;
-	}
-	case CBossDoor::BOSSDOOR_IDLE:
-	{
-		if (m_eBossDoorPrevState == BOSSDOOR_IDLE)
+		}
+		case CBossDoor::BOSSDOOR_IDLE:
+		{
+			m_fFrameEnd = 8.f;
 			break;
-
-		m_pAnimCom->SetCurAnimation(L"IDLE");
-		m_pAnimCom->SetLoopAnimator(true);
-
-		break;
+		}
+		case SLEEP:
+			m_fFrame = 0;
+			m_fFrameEnd = 0;
+			break;
+		default:
+			break;
+		}
+		m_fFrame = 0.f;
+		m_eBossDoorPrevState = m_eBossDoorCurState;
 	}
-	case CBossDoor::BOSSDOOR_END:
+	else
+		return;
+}
+
+void CBossDoor::Sleep(const _float& fTimeDelta)
+{
+
+	return;
+}
+
+void CBossDoor::Open(const _float& fTimeDelta)
+{
+	m_bFrameStop = false;
+
+	if (m_eBossDoorPrevState == SLEEP)
 	{
-
-
-
-		m_pAnimCom->SetCurAnimationFrame(L"OPEN", 0);
-		break;
+		m_eBossDoorCurState = BOSSDOOR_OPEN;
 	}
-	default:
-		break;
+	else if (m_eBossDoorPrevState == BOSSDOOR_OPEN)
+	{
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_eBossDoorCurState = BOSSDOOR_IDLE;
+			m_bStateChange[1] = true;
+		}
+	}
+	
+	if (m_fFrameEnd < m_fFrame)
+	{
+		m_fFrame = 0;
 	}
 
-	m_eBossDoorPrevState = m_eBossDoorCurState;
+}
+
+void CBossDoor::IDLE(const _float& fTimeDelta)
+{
+
+	if (!get<0>(IsPlayerInRadius()))
+	{
+		m_bStateChange[2] = true;
+		m_eBossDoorCurState = BOSSDOOR_CLOSE;
+	}
+
+
+	if (m_fFrameEnd < m_fFrame)
+	{
+		m_fFrame = 0;
+	}
+}
+
+void CBossDoor::Close(const _float& fTimeDelta)
+{
+	if (m_fFrameEnd < m_fFrame)
+	{
+		m_fFrame = 0;
+		m_bFrameStop = true;
+		m_eBossDoorCurState = SLEEP;
+		m_bStateChange[0] = false;
+		m_bStateChange[1] = false;
+		m_bStateChange[2] = false;
+	}
+
 }
 
 

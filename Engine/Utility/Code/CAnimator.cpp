@@ -83,7 +83,6 @@ CAnimator* CAnimator::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CAnimator::SetCurAnimation(const _tchar* _strAnimKey)
 {
-	m_pCurAnimation->ResetFrame();
 	m_pCurAnimation = Find_Animation(_strAnimKey);
 	m_pCurAnimation->ResetFrame();
 }
