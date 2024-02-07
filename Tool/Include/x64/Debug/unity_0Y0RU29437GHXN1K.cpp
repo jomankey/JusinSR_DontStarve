@@ -23,10 +23,25 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\MainTool.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\SubScene.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\TerrainScene.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolBerry.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolBossScene.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolBossTerrain.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolCamera.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolCubeTerrain.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolGrass.cpp"
@@ -36,6 +51,12 @@
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolMgr.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolMonster.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolPigHouse.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Tool\Code\ToolRock.cpp"
