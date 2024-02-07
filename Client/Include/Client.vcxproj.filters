@@ -157,6 +157,9 @@
     <Filter Include="02. GameObject\08. ResObjects\07. TeleporterWorm">
       <UniqueIdentifier>{fcf14d32-d8f6-47f3-9c10-0fdfa3a0dd20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\08. BossDoor">
+      <UniqueIdentifier>{aaf1ad01-3552-4107-9f17-97cfbb017412}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -318,6 +321,9 @@
     <ClInclude Include="..\Header\CTeleporterWorm.h">
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\CBossDoor.h">
+      <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -469,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTeleporterWorm.cpp">
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBossDoor.cpp">
+      <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
