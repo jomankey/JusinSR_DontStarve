@@ -41,7 +41,6 @@ void CAnimation::Ready_Animtion(const _tchar* _strTexturePath, _uint _iFrameCoun
 	m_iMaxFrameCount = _iFrameCount;
 	m_vecFrameInfo.reserve(m_iMaxFrameCount);
 
-
 	for (_uint i = 0; i < _iFrameCount; ++i)
 	{
 		TCHAR	szFileName[128] = L"";

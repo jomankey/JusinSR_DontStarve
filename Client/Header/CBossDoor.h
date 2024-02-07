@@ -32,14 +32,10 @@ public:
 private:
 	virtual void Free();
 
-
-
 private:
 	Engine::CTexture* m_pBossDoorTextureCom[BOSSDOOR_END];
 
 	BOSSDOOR_STATE m_eBossDoorCurState;
-
-
 
 };
 

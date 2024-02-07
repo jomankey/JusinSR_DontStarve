@@ -17,7 +17,7 @@ namespace Engine
 
 
 		virtual CComponent* Clone()PURE;
-		virtual void				Free();
+		virtual void		Free();
 
 	protected:
 		explicit CComponent() = delete;

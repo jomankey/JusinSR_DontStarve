@@ -8,25 +8,24 @@ namespace Engine
 		public CComponent
 	{
 	public:
-		void SetCurAnimation(const _tchar* _strAnimKey);
-		void SetCurAnimationFrame(const _tchar* _strAnimKey,_uint _iFrame);
-
-		void SetAnimTexture();
-
+		void SetCurAnimation(const _tchar* _strAnimKey) { m_pCurAnimation = Find_Animation(_strAnimKey);	m_pCurAnimation->ResetFrame(); }
+		void SetCurAnimationFrame(const _tchar* _strAnimKey, _uint _iFrame);
+		void ChangeAnimation(const _tchar* _strAnimKey)
+		{
+			m_pCurAnimation->ResetFrame();
+			m_pCurAnimation = Find_Animation(_strAnimKey);
+			m_pCurAnimation->ResetFrame();
+		}
 		//특정 애니메이션일때의 프레임 얻어오기 //걷는상태일때에 특정프레임을얻고싶을떄
-		_int	GetAnimFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iCurFrm; }
-		_int	GetAnimMaxFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iMaxFrameCount; }
+		_int GetAnimFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iCurFrm; }
+		_int GetAnimMaxFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iMaxFrameCount; }
 
-		//현재 업데이트중인 애니메이션 프레임
-		//현재 이동중일때 프레임을얻어와 회전시켰을때 
-		//다시 변경전 프레임값으로 변경한 회전애니메이션에 적용시킬수있음
-		// ex) 앞을보고 걷는 프레임이 15였을때 카메라가이동해 오른쪽을 보면 0프레임부터다시 걷는게아닌
-		//		15프레임을 오른쪽애니메이션에 15프레임으로 설정하도록
-		_int	GetCurAnimFrame(const _tchar* _strAnimKey) { return m_pCurAnimation->m_iCurFrm; }
+		void SetAnimTexture() { m_pCurAnimation->SetCurTexture(); }
 
-		void AddAnimation(const _tchar* _strAnimKey, Engine::CAnimation* _pAnimation) { m_mapAnimation.insert({ _strAnimKey, _pAnimation }); }
 		void SetLoopAnimator(_bool _bLoop) { m_bLoop = _bLoop; }
 		_bool IsLoop() { return m_bLoop; }
+
+		void AddAnimation(const _tchar* _strAnimKey, Engine::CAnimation* _pAnimation) { m_mapAnimation.insert({ _strAnimKey, _pAnimation }); }
 
 	public:
 		virtual HRESULT		Ready_Animation();
