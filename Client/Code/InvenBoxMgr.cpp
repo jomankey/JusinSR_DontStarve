@@ -10,6 +10,7 @@ CInvenBoxMgr::CInvenBoxMgr()
 
 CInvenBoxMgr::~CInvenBoxMgr()
 {
+	Free();
 }
 
 void CInvenBoxMgr::Set_Create_Menu(int _iNum, CItem* pItem)
@@ -69,5 +70,7 @@ void CInvenBoxMgr::Render_InvenBoxMgr(BOX_TYPE eType)
 
 void CInvenBoxMgr::Free()
 {
-	CDeleteMap(m_mapBox);
+	for (auto& vecBox : m_mapBox)
+		for (auto& iter : vecBox.second)
+			Safe_Release(iter);
 }

@@ -12,10 +12,12 @@ protected:
 	virtual ~CSlideBox();
 
 public:
-	void Set_Item(CItem* pItem) { m_pItem = pItem; }
+	void Set_Item(CItem* pItem);
 	
 	_float Get_fX() { return m_fX; }
 	_float Get_fY() { return m_fY; }
+
+	void SetShow(bool _bIsShow) { m_bIsShow = _bIsShow; }
 
 public:
 	virtual HRESULT Ready_GameObject() override;
@@ -23,15 +25,14 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject() override;
 
-
-public:
-	void SetShow(bool _bIsShow) { m_bIsShow = _bIsShow; }
+private:
+	virtual HRESULT			Add_Component();
 
 public:
 	static CSlideBox* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
-	virtual HRESULT			Add_Component();
-	virtual void Free() override;
 
+private:
+	virtual void Free();
 
 private:
 	Engine::CTexture* m_pTextureCom;

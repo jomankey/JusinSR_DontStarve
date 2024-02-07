@@ -46,7 +46,6 @@ HRESULT CExplainPanel::Ready_GameObject()
 
     m_pTransForm->Set_Pos(_vec3((m_fX - WINCX * 0.5f), -m_fY + WINCY * 0.5f, 0.f));
     m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
-    m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(90.f));
 
     D3DXMatrixIdentity(&m_ViewMatrix);
     D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
@@ -81,8 +80,8 @@ void CExplainPanel::Render_GameObject()
 
     m_pBufferCom->Render_Buffer();
 
-    Engine::Render_Font(L"Font_Count", m_tCreateInfo.strName, &_vec2(m_fX - 40, m_fY - 40.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-    Engine::Render_Font(L"Font_Count", m_tCreateInfo.strInfo, &_vec2(m_fX - 40, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Font_Count", m_tCreateInfo.strName, &_vec2(m_fX - 10, m_fY - 10.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Font_Count", m_tCreateInfo.strInfo, &_vec2(m_fX - 10, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

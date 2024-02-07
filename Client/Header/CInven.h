@@ -27,7 +27,7 @@ public:
 	static CInven* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	virtual void Free() override;
+	virtual void Free();
 
 private:
 	Engine::CTexture* m_pTextureCom;

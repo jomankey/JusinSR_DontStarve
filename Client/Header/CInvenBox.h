@@ -31,7 +31,7 @@ public:
 	//static CInvenBox* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, _uint _Index, float _Angle = 0.f);
 	static CInvenBox* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec2 vFontPos, _vec3 vPos);
 	virtual HRESULT			Add_Component();
-	virtual void Free() override;
+	virtual void Free();
 
 private:
 	Engine::CRcTex* m_pBufferCom;

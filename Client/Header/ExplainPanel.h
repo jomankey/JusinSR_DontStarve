@@ -22,7 +22,9 @@ private:
 
 public:
 	static CExplainPanel* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 vPos, wstring strItemKey);
-	virtual void Free() override;
+
+private:
+	virtual void Free();
 
 private:
 	_bool m_bShow = false;

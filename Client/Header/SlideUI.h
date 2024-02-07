@@ -33,7 +33,9 @@ private:
 	 
 public:
 	static CSlideUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, eITEMTOOL_TYPE eType);
-	virtual void Free() override;
+
+private:
+	virtual void Free();
 
 private:
 	Engine::CTexture* m_pTextureCom;

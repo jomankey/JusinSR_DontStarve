@@ -25,6 +25,14 @@ CSlideBox::~CSlideBox()
 {
 }
 
+void CSlideBox::Set_Item(CItem* pItem)
+{
+	m_pItem = pItem;
+
+	_vec3 vPos = _vec3(m_fX + 100.f, m_fY, 0.f);
+	m_pPanel = CExplainPanel::Create(m_pGraphicDev, vPos, m_pItem->GetObjName());
+}
+
 HRESULT CSlideBox::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -55,8 +63,18 @@ _int CSlideBox::Update_GameObject(const _float& fTimeDelta)
 
 	//	m_pTransForm->Set_Pos(_vec3(m_fX, m_fY, 0.f));
 	//}
+	POINT tPt;
+	GetCursorPos(&tPt);
+	ScreenToClient(g_hWnd, &tPt);
+	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
+
+	if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY) && m_pPanel != nullptr)
+		 m_pPanel->Set_Show(true);
+
+	else if (m_pPanel != nullptr) m_pPanel->Set_Show(false);
 
 	if (m_pItem) m_pItem->Update_GameObject(fTimeDelta);
+	if (m_pPanel) m_pPanel->Update_GameObject(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 
 	return 0;
@@ -65,6 +83,7 @@ _int CSlideBox::Update_GameObject(const _float& fTimeDelta)
 void CSlideBox::LateUpdate_GameObject()
 {
 	if (m_pItem) m_pItem->LateUpdate_GameObject();
+	if (m_pPanel) m_pPanel->LateUpdate_GameObject();
 	__super::LateUpdate_GameObject();
 }
 
@@ -80,6 +99,7 @@ void CSlideBox::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 	if (m_pItem) m_pItem->Render_GameObject();
+	if (m_pPanel) m_pPanel->Render_GameObject();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 

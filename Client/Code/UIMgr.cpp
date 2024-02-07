@@ -15,6 +15,7 @@ CUIMgr::CUIMgr()
 
 CUIMgr::~CUIMgr()
 {
+	Free();
 }
 
 CREATEINFO CUIMgr::Get_CreateInfo(wstring pKey)

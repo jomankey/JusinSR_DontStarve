@@ -1,12 +1,8 @@
-
 #include "..\Include\stdafx.h"
 #include"SlideUI.h"
 
-
 #include "Export_Utility.h"
 #include "Export_System.h"
-
-#include"ExplainPanel.h"
 #include"SlideBox.h"
 
 #include "InvenBoxMgr.h"
