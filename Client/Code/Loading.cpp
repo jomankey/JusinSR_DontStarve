@@ -320,8 +320,6 @@ HRESULT CLoading::Loading_Anim_Texture()
 	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Idle", L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8, 0.1f);
 	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Idle", pAnim);
 	
-	
-
 
 
 
