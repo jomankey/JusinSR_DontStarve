@@ -157,6 +157,12 @@
     <Filter Include="02. GameObject\09. Item\ItemBasic">
       <UniqueIdentifier>{41dbe8de-9bde-492c-b3d2-885b51fc10ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\UIMgr">
+      <UniqueIdentifier>{93eadb37-63e1-42d9-93aa-8f2d6cf38ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Manager\InvenBoxMgr">
+      <UniqueIdentifier>{fee9fa8e-3ef7-4825-afa4-120a3f1f6fd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -297,13 +303,10 @@
     <ClInclude Include="..\Header\Tallbird.h">
       <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UIMgr.h">
-      <Filter>03. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CreateUI.h">
       <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CExplainPanel.h">
+    <ClInclude Include="..\Header\ExplainPanel.h">
       <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SlideUI.h">
@@ -312,14 +315,17 @@
     <ClInclude Include="..\Header\SlideBox.h">
       <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SlideBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\InvenBoxMgr.h">
-      <Filter>03. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ItemTool.h">
       <Filter>02. GameObject\09. Item\ItemTool</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ItemBasic.h">
       <Filter>02. GameObject\09. Item\ItemBasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InvenBoxMgr.h">
+      <Filter>03. Manager\InvenBoxMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UIMgr.h">
+      <Filter>03. Manager\UIMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,13 +458,10 @@
     <ClCompile Include="..\Code\Tallbird.cpp">
       <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UIMgr.cpp">
-      <Filter>03. Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CreateUI.cpp">
       <Filter>02. GameObject\07. CUI\02. CreateUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CExplainPanel.cpp">
+    <ClCompile Include="..\Code\ExplainPanel.cpp">
       <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SlideUI.cpp">
@@ -467,14 +470,17 @@
     <ClCompile Include="..\Code\SlideBox.cpp">
       <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\00. SlideBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\InvenBoxMgr.cpp">
-      <Filter>03. Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ItemTool.cpp">
       <Filter>02. GameObject\09. Item\ItemTool</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ItemBasic.cpp">
       <Filter>02. GameObject\09. Item\ItemBasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InvenBoxMgr.cpp">
+      <Filter>03. Manager\InvenBoxMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UIMgr.cpp">
+      <Filter>03. Manager\UIMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

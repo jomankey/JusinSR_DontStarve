@@ -15,6 +15,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CCatapult.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\ExplainPanel.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CHpUI.cpp"
 
 

@@ -179,7 +179,7 @@
     <ClInclude Include="..\Header\CButtonUI.h" />
     <ClInclude Include="..\header\CBossDoor.h" />
     <ClInclude Include="..\Header\CCatapult.h" />
-    <ClInclude Include="..\Header\CExplainPanel.h" />
+    <ClInclude Include="..\Header\ExplainPanel.h" />
     <ClInclude Include="..\Header\CHpUI.h" />
     <ClInclude Include="..\Header\CHungryUI.h" />
     <ClInclude Include="..\Header\CInven.h" />
@@ -233,7 +233,7 @@
     <ClCompile Include="..\Code\CButtonUI.cpp" />
     <ClCompile Include="..\Code\CBossDoor.cpp" />
     <ClCompile Include="..\Code\CCatapult.cpp" />
-    <ClCompile Include="..\Code\CExplainPanel.cpp" />
+    <ClCompile Include="..\Code\ExplainPanel.cpp" />
     <ClCompile Include="..\Code\CHpUI.cpp" />
     <ClCompile Include="..\Code\CHungryUI.cpp" />
     <ClCompile Include="..\Code\BerryBush.cpp" />
