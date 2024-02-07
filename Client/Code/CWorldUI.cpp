@@ -32,7 +32,7 @@ _int CWorldUI::Update_GameObject(const _float& fTimeDelta)
 	//m_fRotateAngle = 30.f * m_fWorldTime;
 
 	//테스트용 시간 회전 1초에 1바퀴 회전// 들어온 값에 따라 회전하는 각도가 달라짐 
-	m_fWorldTime = 0.1f;
+	m_fWorldTime = 0.0003f;
 	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(-(m_fWorldTime /fTimeDelta)));
 
 

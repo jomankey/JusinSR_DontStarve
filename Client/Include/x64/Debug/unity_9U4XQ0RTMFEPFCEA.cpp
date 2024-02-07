@@ -48,6 +48,9 @@
 #include "C:\PortPolio\Client\Code\CMentalUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CObjectFireFlies.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CObjectGrass.cpp"
 
 
@@ -67,6 +70,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CSlideUI.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CTeleporterWorm.cpp"
 
 
 #include "C:\PortPolio\Client\Code\CToolUI.cpp"

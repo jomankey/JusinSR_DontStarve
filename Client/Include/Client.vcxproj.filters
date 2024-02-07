@@ -151,6 +151,12 @@
     <Filter Include="02. GameObject\03. Terrain\RunTerrain">
       <UniqueIdentifier>{e203e153-be4a-42bd-b0f3-95b24604e94d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\06. FireFlies">
+      <UniqueIdentifier>{0c297e33-5d83-42df-b1f1-a7e214f64c7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\07. TeleporterWorm">
+      <UniqueIdentifier>{fcf14d32-d8f6-47f3-9c10-0fdfa3a0dd20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -306,6 +312,12 @@
     <ClInclude Include="..\Header\RunTerrain.h">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CObjectFireFlies.h">
+      <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTeleporterWorm.h">
+      <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -451,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\RunTerrain.cpp">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CObjectFireFlies.cpp">
+      <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTeleporterWorm.cpp">
+      <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

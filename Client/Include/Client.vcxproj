@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\CItemFood.h" />
     <ClInclude Include="..\Header\CLightUI.h" />
     <ClInclude Include="..\Header\CMentalUI.h" />
+    <ClInclude Include="..\Header\CObjectFireFlies.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="..\Header\CSlideBox.h" />
     <ClInclude Include="..\Header\CSlideUI.h" />
     <ClInclude Include="..\Header\CTestScene.h" />
+    <ClInclude Include="..\Header\CTeleporterWorm.h" />
     <ClInclude Include="..\Header\CToolUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\CWeaponUI.h" />
@@ -242,6 +244,7 @@
     <ClCompile Include="..\Code\CItemFood.cpp" />
     <ClCompile Include="..\Code\CLightUI.cpp" />
     <ClCompile Include="..\Code\CMentalUI.cpp" />
+    <ClCompile Include="..\Code\CObjectFireFlies.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
@@ -251,6 +254,7 @@
     <ClCompile Include="..\Code\CSlideBox.cpp" />
     <ClCompile Include="..\Code\CSlideUI.cpp" />
     <ClCompile Include="..\Code\CTestScene.cpp" />
+    <ClCompile Include="..\Code\CTeleporterWorm.cpp" />
     <ClCompile Include="..\Code\CToolUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\CWeaponUI.cpp" />

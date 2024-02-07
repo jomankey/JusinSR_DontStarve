@@ -6,6 +6,9 @@
 #include "C:\Git\PortPolio\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\CButtonUI.cpp"
+
+
 #include "C:\Git\PortPolio\Client\Code\CClothUI.cpp"
 
 
@@ -45,6 +48,9 @@
 #include "C:\Git\PortPolio\Client\Code\CMentalUI.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\CObjectFireFlies.cpp"
+
+
 #include "C:\Git\PortPolio\Client\Code\CObjectGrass.cpp"
 
 
@@ -60,7 +66,13 @@
 #include "C:\Git\PortPolio\Client\Code\CScienceUI.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\CSlideBox.cpp"
+
+
 #include "C:\Git\PortPolio\Client\Code\CSlideUI.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\CTeleporterWorm.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\CToolUI.cpp"
