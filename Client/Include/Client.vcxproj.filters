@@ -160,6 +160,9 @@
     <Filter Include="02. GameObject\08. ResObjects\06. CCatapult">
       <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\08. BossDoor">
+      <UniqueIdentifier>{aaf1ad01-3552-4107-9f17-97cfbb017412}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -324,6 +327,9 @@
     <ClInclude Include="..\Header\CCatapult.h">
       <Filter>02. GameObject\08. ResObjects\06. CCatapult</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\CBossDoor.h">
+      <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -478,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCatapult.cpp">
       <Filter>02. GameObject\08. ResObjects\06. CCatapult</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBossDoor.cpp">
+      <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

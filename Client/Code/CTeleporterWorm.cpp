@@ -23,7 +23,7 @@ HRESULT CTeleporterWorm::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
 
-	
+
 	m_eObject_id = TELEPORTER;
 	m_eTelporterCurState = TELEPORTER_IDLE;
 	m_fFrame = 0.f;
@@ -41,7 +41,7 @@ _int CTeleporterWorm::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_fFrame = 0.f;
 	}
-	
+
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -56,7 +56,7 @@ void CTeleporterWorm::LateUpdate_GameObject()
 	//Change_Frame_Event();
 	Check_FrameState();
 
-	IsPlayerInRadius();
+	//IsPlayerInRadius();
 
 
 	_vec3	vPos;
@@ -98,12 +98,12 @@ HRESULT CTeleporterWorm::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Teleporter_Open", pComponent });
 
-	
+
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(15.f, 15.f, 15.f));
+	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 2.3f, vPos.z);
 
@@ -118,40 +118,50 @@ void CTeleporterWorm::Change_Frame_Event()
 
 void CTeleporterWorm::Check_FrameState()
 {
+	bool IsClose = get<0>(IsPlayerInRadius());
+	//플레이어 pos 저장용 , 나중에 멤버변수로 가지고 있어도 됨
+	_vec3 vPlayerPos = get<1>(IsPlayerInRadius());
 	switch (m_eTelporterCurState)
 	{
 	case CTeleporterWorm::TELEPORTER_IDLE:
 	{
-		bool IsClose= get<0>(IsPlayerInRadius());
-		//플레이어 pos 저장용 , 나중에 멤버변수로 가지고 있어도 됨
-		_vec3 vPlayerPos = get<1>(IsPlayerInRadius());
+
+
 		if (IsClose)
 		{
 			m_eTelporterCurState = TELEPORTER_OPEN;
 			//예) 플레이어 위치로 이동
 			//m_pTransForm->Set_Pos(vPlayerPos);
+			m_fFrame = 0.f;
 			break;
+		}
+
+
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_fFrame = 0.f;
 		}
 		m_fFrameEnd = 7.0f;
 		break;
 	}
 	case CTeleporterWorm::TELEPORTER_OPEN:
 	{
-		if (m_fFrameEnd <m_fFrame)
+		if (!IsClose)
 		{
 			m_eTelporterCurState = TELEPORTER_IDLE;
-			m_fFrame = 6.0f;
-			break;
+			m_fFrame = 0.f;
+		}
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_fFrame = 0.f;
 		}
 		m_fFrameEnd = 6.0f;
 		break;
 	}
-	case CTeleporterWorm::TELEPORTER_END:
-	{
-		
-		break;
-	}
 	default:
+		m_eTelporterCurState = TELEPORTER_IDLE;
+		m_fFrame = 0.0f;
+		m_fFrameEnd = 5.0f;
 		break;
 	}
 
@@ -163,9 +173,9 @@ void CTeleporterWorm::Check_FrameState()
 
 
 
-bool CTeleporterWorm::IsPlayerInRadius( _vec3& _PlayerPos, _vec3& _MyPos)
+bool CTeleporterWorm::IsPlayerInRadius(_vec3& _PlayerPos, _vec3& _MyPos)
 {
-	 _PlayerPos.y = 0.f;
+	_PlayerPos.y = 0.f;
 	_MyPos.y = 0.f;
 	if (D3DXVec3Length(&(_PlayerPos - _MyPos)) < 3.f)
 	{
@@ -175,30 +185,35 @@ bool CTeleporterWorm::IsPlayerInRadius( _vec3& _PlayerPos, _vec3& _MyPos)
 	{
 		return  false;
 	}
-	
-	
+
+
 }
 
 tuple<_bool, _vec3> CTeleporterWorm::IsPlayerInRadius()
 {
 
 	bool IsClose = false;
-	  _vec3 vPlayerPos;
-	  _vec3 vMyPos;
-	  decltype(auto) vPlayerTrans = scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm();
-	  vPlayerTrans->Get_Info(INFO_POS, &vPlayerPos);
-	  m_pTransForm->Get_Info(INFO_POS, &vMyPos);
-	  vPlayerPos.y = 0.f;
-	  vMyPos.y = 0.f;
+	_vec3 vPlayerPos;
+	_vec3 vMyPos;
+	decltype(auto) vPlayerTrans = scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm();
+	vPlayerTrans->Get_Info(INFO_POS, &vPlayerPos);
+	m_pTransForm->Get_Info(INFO_POS, &vMyPos);
+	vPlayerPos.y = 0.f;
+	vMyPos.y = 0.f;
 
-	  if (D3DXVec3Length(&(vPlayerPos - vMyPos)) < 3.f)
-	  {
-		  IsClose = true;
-	  }
-	  else
-	  {
-		  IsClose = false;
-	  }
+	_vec3 vDir = vPlayerPos - vMyPos;
+	float _test = D3DXVec3Length(&vDir);
+
+	if (D3DXVec3Length(&(vPlayerPos - vMyPos)) < 3.0f)
+	{
+		//m_eTelporterCurState = TELEPORTER_OPEN;
+		IsClose = true;
+	}
+	else
+	{
+		//m_eTelporterCurState = TELEPORTER_IDLE;
+		IsClose = false;
+	}
 	return make_tuple(IsClose, vPlayerPos);
 }
 

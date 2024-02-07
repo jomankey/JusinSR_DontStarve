@@ -6,6 +6,12 @@
 #include "C:\PortPolio\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CBossDoor.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CBossScene.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CButtonUI.cpp"
 
 
@@ -63,6 +69,9 @@
 #include "C:\PortPolio\Client\Code\CPigHouse.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CRoadScene.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CScienceUI.cpp"
 
 
@@ -70,6 +79,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CSlideUI.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CTestScene.cpp"
 
 
 #include "C:\PortPolio\Client\Code\CTeleporterWorm.cpp"
@@ -115,6 +127,9 @@
 
 
 #include "C:\PortPolio\Client\Code\ResObject.cpp"
+
+
+#include "C:\PortPolio\Client\Code\RunTerrain.cpp"
 
 
 #include "C:\PortPolio\Client\Code\SkyBox.cpp"

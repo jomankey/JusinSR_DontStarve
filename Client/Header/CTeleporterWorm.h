@@ -48,5 +48,6 @@ private:
 	TELEPORTER_STATE m_eTelporterPreState;
 
 
+
 };
 

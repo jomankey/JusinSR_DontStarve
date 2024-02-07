@@ -37,7 +37,7 @@ _int CObjectFireFlies::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_bIsCheckAfterDay)
 	{
-		m_fFrame += m_fFrameEnd * fTimeDelta;
+		m_fFrame += m_fFrameEnd * fTimeDelta*0.5;
 		if (m_fFrameEnd < m_fFrame)
 		{
 			m_fFrame = 0.f;
@@ -176,7 +176,7 @@ HRESULT CObjectFireFlies::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(15.f, 15.f, 15.f));
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 2.3f, vPos.z);
 
