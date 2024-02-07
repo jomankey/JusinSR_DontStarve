@@ -20,7 +20,7 @@ private:
 	virtual HRESULT			Add_Component() override;
 	virtual void Check_FrameState() override;
 	virtual void Ready_Stat() override {};
-	//virtual void Change_Frame_Event() override;
+	virtual void Change_Frame_Event() override {};
 
 
 
