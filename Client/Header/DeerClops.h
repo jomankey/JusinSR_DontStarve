@@ -1,6 +1,7 @@
 #pragma once
 #include "Base.h"
 #include "GameObject.h"
+#include "Monster.h"
 
 namespace Engine 
 {
@@ -12,12 +13,12 @@ namespace Engine
 }
 
 class CDeerClops :
-	public Engine::CGameObject
+	public CMonster
 {
 	enum DEERSTATE { IDLE, WALK, ATTACK, SLEEP,SLEEP_PST, TAUNT, HIT, DEAD, STATE_END };
 	enum DEER_PHASE { FIRST, SECOND, THIRD, DIE, PHASE_END};
 private:
-	explicit CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+	explicit CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
 	explicit CDeerClops(const CDeerClops& rhs);
 	virtual ~CDeerClops();
 
@@ -29,25 +30,28 @@ public:
 
 public:
 	void			Set_WakeUp();				//1페이즈 시작
-
+	void			Set_Phase(_bool _first, _bool _second, _bool _third, _bool _fourth, _bool _fifth) {
+		m_bPhase[FIRST] = _first;
+		m_bPhase[SECOND] = _second;
+		m_bPhase[THIRD] = _third;
+		m_bPhase[DIE] = _fourth;
+		m_bPhase[PHASE_END] = _fifth;
+	}
 
 private:
 	virtual HRESULT			Add_Component();
-
-	void			Set_ObjStat();
-	void			Check_State();
-	_bool		IsTarget_Approach(float _fDistance);
+	virtual void	Set_Hit()						override;
+	virtual void	Set_ObjStat();
+	virtual void	State_Change()				override;
+	
 	void			Sleep(const _float& fTimeDelta);
 	void			First_Phase(const _float& fTimeDelta);
 	void			Second_Phase(const _float& fTimeDelta);
-	void			Chase_Player(const _float& fTimeDelta);
-	CTransform*		PlayerComponent();
-	_vec3			Player_Position();
-	CGameObject*	Player_Pointer();
-	void			Look_Change();
+	void			Third_Phase(const _float& fTimeDelta);
+
+
 
 public:
-	virtual void Free() override;
 	static CDeerClops* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 
 private:
@@ -55,24 +59,13 @@ private:
 	Engine::CRvRcTex* m_pReverseCom;
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][DEERSTATE::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
-
 private:
-	_vec3				m_vPos;
-	LOOKDIR m_eCurLook;
-	LOOKDIR m_ePreLook;
-
+	virtual void Free() override;
+private:
 	DEERSTATE		m_eCurState;
 	DEERSTATE		m_ePreState;
-	
-	OBJSTAT		m_Stat;
-	_bool		m_Dirchange;			//false 일때 오른쪽 보기
 	_bool		m_bPhase[DEER_PHASE::PHASE_END];		//페이즈 변경용 bool 배열
-	_bool		m_bAttacking;			//공격시
-	//Frame
-	_float				m_fFrame = 0.f;
-	_float				m_fFrameEnd;
-	_float	m_fAcctime;
-	_float	m_fFrameChange = 0;
-	_bool	m_bFrameStop;
+
+	
 };
 

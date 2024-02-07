@@ -142,7 +142,7 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(2.5f, 2.f, 3.5f));
 
-	//dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
 
 

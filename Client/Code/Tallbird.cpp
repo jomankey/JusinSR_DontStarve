@@ -418,7 +418,7 @@ CTallbird* CTallbird::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     if (FAILED(pInstance->Ready_GameObject()))
     {
         Safe_Release(pInstance);
-        MSG_BOX("Beefalo Create Failed");
+        MSG_BOX("Tallbird Create Failed");
         return nullptr;
     }
     return pInstance;

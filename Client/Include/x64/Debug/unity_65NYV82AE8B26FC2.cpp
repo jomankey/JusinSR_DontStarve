@@ -6,10 +6,16 @@
 #include "C:\20240207\Client\Code\CAliveUI.cpp"
 
 
+#include "C:\20240207\Client\Code\CBossDoor.cpp"
+
+
 #include "C:\20240207\Client\Code\CBossScene.cpp"
 
 
 #include "C:\20240207\Client\Code\CButtonUI.cpp"
+
+
+#include "C:\20240207\Client\Code\CCatapult.cpp"
 
 
 #include "C:\20240207\Client\Code\CClothUI.cpp"

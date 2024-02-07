@@ -1,4 +1,10 @@
 
+#include "C:\20240207\Engine\Utility\Code\CAnimation.cpp"
+
+
+#include "C:\20240207\Engine\Utility\Code\CAnimator.cpp"
+
+
 #include "C:\20240207\Engine\Utility\Code\CEventMgr.cpp"
 
 
