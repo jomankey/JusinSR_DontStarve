@@ -16,6 +16,7 @@
 #include "CustomTex.h"
 
 #include "Texture.h"
+#include "CAnimator.h"
 #include "Transform.h"
 #include "Camera.h"
 #include "Calculator.h"

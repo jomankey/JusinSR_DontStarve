@@ -67,7 +67,11 @@ namespace Engine
 		DWORD_PTR		wParam;
 		DWORD_PTR		pParam;
 	};
-
+	struct tFrameInfo
+	{
+		IDirect3DBaseTexture9* Texture;
+		_float					Duration;
+	};
 
 }
 #endif // Engine_Struct_h__

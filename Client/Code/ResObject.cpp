@@ -47,4 +47,5 @@ void CResObject::Render_GameObject()
 
 void CResObject::Free()
 {
+	__super::Free();
 }

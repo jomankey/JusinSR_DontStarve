@@ -10,9 +10,8 @@ namespace Engine
 	class ENGINE_DLL CComponent : public CBase
 	{
 	public:
-		CGameObject* GetOwner() { return m_pOwner; }
+		CGameObject*		GetOwner() { return m_pOwner; }
 		void				SetOwner(CGameObject* _pOwner) { m_pOwner = _pOwner; }
-
 		virtual _int		Update_Component(const _float& fTimeDelta) { return 0; }
 		virtual void		LateUpdate_Component() {}
 
