@@ -308,7 +308,22 @@ HRESULT CLoading::Loading_Anim_Texture()
 
 	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_SIDE", L"../Bin/Resource/Texture/Build/Catapult/IDLE_SIDE/IDLE_SIDE__%03d.png", 23, 0.1f);
 	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_SIDE", pAnim);
+
+
+	//BossDoor
+	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Open", L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19, 0.1f);
+	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Open", pAnim);
+	//
+	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Close", L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10, 0.1f);
+	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Close", pAnim);
+	//
+	//pAnim = CAnimation::Create(m_pGraphicDev, L"Proto_Object_BossDoor_Idle", L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8, 0.1f);
+	//proto::Ready_ProtoAnim(L"Proto_Object_BossDoor_Idle", pAnim);
 	
+
+
+
+
 	return S_OK;
 }
 
@@ -384,6 +399,7 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Close", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Off", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_off__000.png")), E_FAIL);
 
 
 	//Item Object

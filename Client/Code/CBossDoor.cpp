@@ -6,12 +6,17 @@
 
 CBossDoor::CBossDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
+	, m_pAnimCom(nullptr)
+	, m_eBossDoorCurState(BOSSDOOR_END)
 {
 }
 
 CBossDoor::CBossDoor(const CBossDoor& rhs)
 	: CResObject(rhs.m_pGraphicDev)
+	, m_eBossDoorCurState(rhs.m_eBossDoorCurState)
+	, m_pAnimCom(nullptr)
 {
+
 }
 
 CBossDoor::~CBossDoor()
@@ -22,42 +27,64 @@ HRESULT CBossDoor::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
-	
-
 	m_eObject_id = BOSS_DOOR;
-	m_eBossDoorCurState = BOSSDOOR_OPEN;
-	m_fFrame = 0.f;
-
+	m_eBossDoorPrevState = BOSSDOOR_END;
+	m_eBossDoorCurState = SLEEP;
 	//Ready_Stat();
-	
+
 	return S_OK;
 }
 
 _int CBossDoor::Update_GameObject(const _float& fTimeDelta)
 {
 
-	m_fFrame += fTimeDelta;
+	if (!m_bFrameStop)
+	{
+		m_fFrame += m_fFrameEnd * fTimeDelta;
+	}
+	if (get<0>(IsPlayerInRadius()) && !m_bStateChange[0])
+	{
+		m_bStateChange[0] = true;
+	}
 
+
+
+	if (m_bStateChange[0])
+	{
+		if (m_bStateChange[1])
+		{
+			if (m_bStateChange[2])
+			{
+				Close(fTimeDelta);
+			}
+			else
+				IDLE(fTimeDelta);
+		}
+		else
+			Open(fTimeDelta);
+	}
+	else
+		Sleep(fTimeDelta);
+
+	Check_FrameState();
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
 	return 0;
 }
 
 void CBossDoor::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
 
 
 
-	Check_FrameState();
 
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
 
+	__super::LateUpdate_GameObject();
 }
 
 void CBossDoor::Render_GameObject()
@@ -67,7 +94,8 @@ void CBossDoor::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	m_pBossDoorTextureCom[m_eBossDoorCurState]->Set_Texture((_uint)m_fFrame);
+	//m_pAnimCom->SetAnimTexture();
+	m_pBossDoorTextureCom[m_eBossDoorPrevState]->Set_Texture((_uint)m_fFrame);
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
@@ -93,16 +121,25 @@ HRESULT CBossDoor::Add_Component()
 	pComponent = m_pBossDoorTextureCom[BOSSDOOR_CLOSE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Close"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Close", pComponent });
-
+	
 	pComponent = m_pBossDoorTextureCom[BOSSDOOR_IDLE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Idle"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Idle", pComponent });
 
-
+	pComponent = m_pBossDoorTextureCom[SLEEP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_BossDoor_Off"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_BossDoor_Off", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+	
+
+	
+
+
+
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 2.3f, vPos.z);
@@ -110,51 +147,98 @@ HRESULT CBossDoor::Add_Component()
 	return S_OK;
 }
 
-
-//void CBossDoor::Change_Frame_Event()
-//{
-//
-//}
-
 void CBossDoor::Check_FrameState()
 {
-	switch (m_eBossDoorCurState)
+	if (m_eBossDoorPrevState != m_eBossDoorCurState)
 	{
-	case CBossDoor::BOSSDOOR_OPEN:
-	{
-		//만약 플레이어가 충돌하지 않은 상태이면 맨 처음 이미지로 고정
-		//if ()
-		//{
-		//
-		//}
-		//else
-		//{
-		//	//플레이어가 충돌하면 열리는 이미지를 프레임 끝까지 띄운 후, Idle상태로 넘어가기
-		//	if (m_fFrame >= m_pBossDoorTextureCom[BOSSDOOR_OPEN]->Get_MaxFrame())
-		//	{
-		//		m_eBossDoorCurState = BOSSDOOR_IDLE;
-		//		m_fFrame = 0.f;
-		//	}
-		//}
-		//break;
+		switch (m_eBossDoorCurState)
+		{
+		case CBossDoor::BOSSDOOR_OPEN:
+		{
+			m_fFrameEnd = 19.f;
+			break;
+		}
+		case CBossDoor::BOSSDOOR_CLOSE:
+		{
+			m_fFrameEnd = 10.f;
+			break;
+		}
+		case CBossDoor::BOSSDOOR_IDLE:
+		{
+			m_fFrameEnd = 8.f;
+			break;
+		}
+		case SLEEP:
+			m_fFrame = 0;
+			m_fFrameEnd = 0;
+			break;
+		default:
+			break;
+		}
+		m_fFrame = 0.f;
+		m_eBossDoorPrevState = m_eBossDoorCurState;
 	}
+	else
+		return;
+}
 
-	case CBossDoor::BOSSDOOR_CLOSE:
+void CBossDoor::Sleep(const _float& fTimeDelta)
+{
+
+	return;
+}
+
+void CBossDoor::Open(const _float& fTimeDelta)
+{
+	m_bFrameStop = false;
+
+	if (m_eBossDoorPrevState == SLEEP)
 	{
-
+		m_eBossDoorCurState = BOSSDOOR_OPEN;
+	}
+	else if (m_eBossDoorPrevState == BOSSDOOR_OPEN)
+	{
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_eBossDoorCurState = BOSSDOOR_IDLE;
+			m_bStateChange[1] = true;
+		}
+	}
 	
-
-		break;
-	}
-	case CBossDoor::BOSSDOOR_IDLE:
+	if (m_fFrameEnd < m_fFrame)
 	{
+		m_fFrame = 0;
+	}
 
-		break;
+}
+
+void CBossDoor::IDLE(const _float& fTimeDelta)
+{
+
+	if (!get<0>(IsPlayerInRadius()))
+	{
+		m_bStateChange[2] = true;
+		m_eBossDoorCurState = BOSSDOOR_CLOSE;
 	}
-	default:
-		break;
+
+
+	if (m_fFrameEnd < m_fFrame)
+	{
+		m_fFrame = 0;
 	}
-	
+}
+
+void CBossDoor::Close(const _float& fTimeDelta)
+{
+	if (m_fFrameEnd < m_fFrame)
+	{
+		m_fFrame = 0;
+		m_bFrameStop = true;
+		m_eBossDoorCurState = SLEEP;
+		m_bStateChange[0] = false;
+		m_bStateChange[1] = false;
+		m_bStateChange[2] = false;
+	}
 
 }
 
@@ -173,7 +257,6 @@ CResObject* CBossDoor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
-
 		return nullptr;
 	}
 
@@ -183,6 +266,33 @@ CResObject* CBossDoor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CBossDoor::Free()
 {
 	CGameObject::Free();
+}
+
+tuple<_bool, _vec3> CBossDoor::IsPlayerInRadius()
+{
+	bool IsClose = false;
+	_vec3 vPlayerPos;
+	_vec3 vMyPos;
+	decltype(auto) vPlayerTrans = scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm();
+	vPlayerTrans->Get_Info(INFO_POS, &vPlayerPos);
+	m_pTransForm->Get_Info(INFO_POS, &vMyPos);
+	vPlayerPos.y = 0.f;
+	vMyPos.y = 0.f;
+
+	_vec3 vDir = vPlayerPos - vMyPos;
+	float _test = D3DXVec3Length(&vDir);
+
+	if (D3DXVec3Length(&(vPlayerPos - vMyPos)) < 3.0f)
+	{
+		//m_eTelporterCurState = TELEPORTER_OPEN;
+		IsClose = true;
+	}
+	else
+	{
+		//m_eTelporterCurState = TELEPORTER_IDLE;
+		IsClose = false;
+	}
+	return make_tuple(IsClose, vPlayerPos);
 }
 
 
