@@ -6,6 +6,7 @@
 #include "Export_System.h"
 
 #include "UIMgr.h"
+#include <ItemTool.h>
 
 CExplainPanel::CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strItemKey)
     : CGameObject(pGraphicDev), 
@@ -39,7 +40,17 @@ CExplainPanel::~CExplainPanel()
 HRESULT CExplainPanel::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+    ZeroMemory(&m_pItem, sizeof(m_pItem));
+
     m_tCreateInfo = CUIMgr::GetInstance()->Get_CreateInfo(m_strItemKey);
+
+    for (int i = 0; i < 2; ++i)
+    {
+        _vec3 vPos = _vec3(m_fX + 5.f * ((i+1) * (i *4) ), m_fY + 10.f, 0.f);
+        m_pItem[i] = CInvenBox::Create(m_pGraphicDev, _vec2{}, vPos);
+        CItem* pItem = CItemTool::Create(m_pGraphicDev, m_tCreateInfo.tItemInfo[i].strItemName, vPos);
+        m_pItem[i]->Set_Item(pItem);
+    }
 
     m_fSizeX = 80.f;
     m_fSizeY = 80.f;
@@ -55,13 +66,33 @@ HRESULT CExplainPanel::Ready_GameObject()
 
 _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 {
+    if (!m_bShow)
+        return 0;
+
     __super::Update_GameObject(fTimeDelta);
+
+    POINT tPt;
+    GetCursorPos(&tPt);
+    ScreenToClient(g_hWnd, &tPt);
+    _vec2 vMousePos = _vec2(tPt.x, tPt.y);
+
+    if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+        m_bShow = true;
+
+    for (int i = 0; i < 2; ++i)
+        m_pItem[i]->Update_GameObject(fTimeDelta);
 
     return 0;
 }
 
 void CExplainPanel::LateUpdate_GameObject()
 {
+    if (!m_bShow)
+        return;
+
+    for (int i = 0; i < 2; ++i)
+        m_pItem[i]->LateUpdate_GameObject();
+
     __super::LateUpdate_GameObject();
 }
 
@@ -80,8 +111,12 @@ void CExplainPanel::Render_GameObject()
 
     m_pBufferCom->Render_Buffer();
 
-    Engine::Render_Font(L"Font_Count", m_tCreateInfo.strName, &_vec2(m_fX - 10, m_fY - 10.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-    Engine::Render_Font(L"Font_Count", m_tCreateInfo.strInfo, &_vec2(m_fX - 10, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- 12.f, m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- 32.f, m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+    //아이템 2개 넣기
+    for (int i = 0; i < 2; ++i)
+        m_pItem[i]->Render_GameObject();
 
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -121,5 +156,8 @@ HRESULT CExplainPanel::Add_Component()
 
 void CExplainPanel::Free()
 {
+    for (int i = 0; i < 2; ++i)
+        Safe_Release(m_pItem[i]);
+
     __super::Free();
 }

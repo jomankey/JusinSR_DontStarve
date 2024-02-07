@@ -3,6 +3,7 @@
 #include <ItemTool.h>
 #include "Export_System.h"
 #include "stdafx.h"
+#include "UIMgr.h"
 
 CCreateUI::CCreateUI(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev), m_pGraphicDev(pGraphicDev)
@@ -15,6 +16,7 @@ CCreateUI::~CCreateUI()
 
 HRESULT CCreateUI::Ready_GameObject()
 {
+	CUIMgr::GetInstance()->Ready_CreateInfo();
 	CInvenBoxMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, CREATE, HEIGHT, 3);
 
 	// 고정 아이템 이미지 넣어주기 
@@ -79,6 +81,7 @@ void CCreateUI::LateUpdate_GameObject()
 
 void CCreateUI::Render_GameObject()
 {
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
@@ -86,13 +89,14 @@ void CCreateUI::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pTextureCom->Set_Texture(0);
-
+	FAILED_CHECK_RETURN(SetUp_Material(D3DXCOLOR(1.f, 1.f, 1.f, 1.f)), );
 	m_pBufferCom->Render_Buffer();
 
 	CInvenBoxMgr::GetInstance()->Render_InvenBoxMgr(CREATE);
 	for (auto& iter : m_vecSlide) iter->Render_GameObject();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 HRESULT CCreateUI::Add_Component()

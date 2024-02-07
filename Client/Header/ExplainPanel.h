@@ -1,5 +1,6 @@
 #pragma once
 #include "Export_Utility.h"
+#include <CInvenBox.h>
 
 class CExplainPanel : public CGameObject
 {
@@ -37,5 +38,7 @@ private:
 
 	CREATEINFO m_tCreateInfo;
 	wstring m_strItemKey;
+
+	CInvenBox* m_pItem[2];
 };
 

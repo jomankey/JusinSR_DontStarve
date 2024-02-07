@@ -94,6 +94,10 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	//owner Ui 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Font_Count", L"±¼¸²Ã¼", 7, 7, FW_THIN), E_FAIL);
 
+	//UI
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Panel_Title", L"±¼¸²Ã¼", 15, 15, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Panel_Info", L"±¼¸²Ã¼", 6, 10, FW_THIN), E_FAIL);
+
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
 
