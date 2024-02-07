@@ -20,6 +20,7 @@
 #include "BerryBush.h"
 #include"CObjectFireFlies.h"
 #include"CTeleporterWorm.h"
+#include"CBossDoor.h"
 
 #include "Transform.h"
 //Scene
@@ -137,10 +138,10 @@ HRESULT CStage::Ready_Layer_GameLogic()
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-	pGameObject = CCatapult::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	pGameObject->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
+	//pGameObject = CCatapult::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//pGameObject->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
 
 	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev, L"Proto_TerrainTexture");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -219,7 +220,11 @@ HRESULT CStage::Ready_Layer_GameLogic()
 		pGameObject->GetTransForm()->Set_Pos(64.f,1,70.f);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}*/
+	}
+	pGameObject = CBossDoor::Create(m_pGraphicDev);
+	pGameObject->GetTransForm()->Set_Pos(64.f, 1, 70.f);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 
 
 	//pGameObject = CObjectTree::Create(m_pGraphicDev);

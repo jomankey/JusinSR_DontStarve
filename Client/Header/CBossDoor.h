@@ -3,7 +3,7 @@
 class CBossDoor :
     public CResObject
 {
-	enum BOSSDOOR_STATE { BOSSDOOR_OPEN, BOSSDOOR_CLOSE,BOSSDOOR_IDLE, BOSSDOOR_END };
+	enum BOSSDOOR_STATE { SLEEP , BOSSDOOR_OPEN, BOSSDOOR_CLOSE,BOSSDOOR_IDLE, BOSSDOOR_END };
 
 private:
 	explicit CBossDoor(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -22,7 +22,10 @@ private:
 	virtual void Ready_Stat() override {};
 	virtual void Change_Frame_Event() override {};
 
-
+	void Sleep(const _float& fTimeDelta);
+	void Open(const _float& fTimeDelta);
+	void IDLE(const _float& fTimeDelta);
+	void Close(const _float& fTimeDelta);
 
 
 
@@ -32,10 +35,18 @@ public:
 private:
 	virtual void Free();
 
+
+	tuple<_bool, _vec3> IsPlayerInRadius();
 private:
-	Engine::CTexture* m_pBossDoorTextureCom[BOSSDOOR_END];
+	//Engine::CTexture* m_pBossDoorTextureCom[BOSSDOOR_END];
+	CAnimator* m_pAnimCom;
+
+	CTexture* m_pBossDoorTextureCom[BOSSDOOR_STATE::BOSSDOOR_END];
 
 	BOSSDOOR_STATE m_eBossDoorCurState;
+	BOSSDOOR_STATE m_eBossDoorPrevState;
 
+	_bool m_bStateChange[3] = { false,false,false };
+	_bool m_bFrameStop = true;
 };
 

@@ -1,4 +1,10 @@
 
+#include "C:\PortPolio\Engine\Utility\Code\CAnimation.cpp"
+
+
+#include "C:\PortPolio\Engine\Utility\Code\CAnimator.cpp"
+
+
 #include "C:\PortPolio\Engine\Utility\Code\CEventMgr.cpp"
 
 

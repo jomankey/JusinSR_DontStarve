@@ -12,13 +12,14 @@ namespace Engine
 		void SetCurAnimationFrame(const _tchar* _strAnimKey, _uint _iFrame);
 		void ChangeAnimation(const _tchar* _strAnimKey)
 		{
-			m_pCurAnimation->ResetFrame();
+			if (nullptr!= m_pCurAnimation)
+				m_pCurAnimation->ResetFrame();
 			m_pCurAnimation = Find_Animation(_strAnimKey);
 			m_pCurAnimation->ResetFrame();
 		}
 		//특정 애니메이션일때의 프레임 얻어오기 //걷는상태일때에 특정프레임을얻고싶을떄
-		_int GetAnimFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iCurFrm; }
-		_int GetAnimMaxFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iMaxFrameCount; }
+		_int	GetAnimFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iCurFrm; }
+		_int	GetAnimMaxFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iMaxFrameCount-1; }
 
 		void SetAnimTexture() { m_pCurAnimation->SetCurTexture(); }
 
