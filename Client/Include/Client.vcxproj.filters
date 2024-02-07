@@ -157,6 +157,9 @@
     <Filter Include="02. GameObject\08. ResObjects\07. TeleporterWorm">
       <UniqueIdentifier>{fcf14d32-d8f6-47f3-9c10-0fdfa3a0dd20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Monster\05. Tallbird">
+      <UniqueIdentifier>{912e9267-1b95-48e6-ad0a-24922a520a47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -318,6 +321,9 @@
     <ClInclude Include="..\Header\CTeleporterWorm.h">
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Tallbird.h">
+      <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -469,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTeleporterWorm.cpp">
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tallbird.cpp">
+      <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

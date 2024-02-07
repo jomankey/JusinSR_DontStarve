@@ -137,10 +137,10 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 
-	//pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	//m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
+	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(2.5f, 2.f, 3.5f));
 
 	//dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 

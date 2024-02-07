@@ -33,7 +33,7 @@ HRESULT CDeerClops::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
-	m_pTransForm->Set_Scale(_vec3(5.f, 5.f, 5.f));
+
 	m_fAcctime = float(rand() % 30);
 	for (auto i = 0; i < DEER_PHASE::PHASE_END; ++i)
 	{
@@ -226,6 +226,7 @@ HRESULT CDeerClops::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_pTransForm->Set_Scale({ 5.f, 5.f, 5.f });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

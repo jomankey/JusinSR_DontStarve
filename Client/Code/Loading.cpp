@@ -40,6 +40,7 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(Loading_Componment(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Player_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Beefalo_Texture(), E_FAIL);
+	FAILED_CHECK_RETURN(Loading_TallBird_Texture(), E_FAIL);
 	//FAILED_CHECK_RETURN(Loading_Boss_Texture(), E_FAIL);
 	//Sound
 	//Engine::Ready_Sound();
@@ -229,6 +230,36 @@ HRESULT CLoading::Loading_Pig_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_hit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/hit/hit__%03d.png", 6)), E_FAIL);
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Pig_eat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/pig/eat/eat__%03d.png", 16)), E_FAIL);
+	return 0;
+}
+
+HRESULT CLoading::Loading_TallBird_Texture()
+{
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_walkdown", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/walk_down/down__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_walkup", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/tallbird/walk_up/up__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_walkiside", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/walk_side/side__%03d.png", 8)), E_FAIL);
+
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_atk_down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/atk_predown/down__%03d.png", 12)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_atk_up", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Monster/tallbird/atk_preup/up__%03d.png", 12)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_atk_side", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/atk_preside/side__%03d.png", 12)), E_FAIL);
+
+	//idle
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/idle/idle__%03d.png", 14)), E_FAIL);
+
+	//hit
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_hit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/hit/hit__%03d.png", 6)), E_FAIL);
+
+	//sleep loop
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_sleep", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/sleep_loop__000.png", 1)), E_FAIL);
+
+	//wake_up
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_wakeup", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/wake_up/wake_up__%03d.png", 16)), E_FAIL);
+
+	//taunt
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_taunt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/taunt/taunt__%03d.png", 22)), E_FAIL);
+
+	//dead
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_tallbird_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/tallbird/dead/dead__%03d.png", 10)), E_FAIL);
 	return 0;
 }
 
