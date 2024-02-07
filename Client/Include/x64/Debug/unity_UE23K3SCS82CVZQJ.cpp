@@ -51,6 +51,9 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CMentalUI.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CObjectFireFlies.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CObjectGrass.cpp"
 
 
@@ -76,6 +79,9 @@
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CTestScene.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CTeleporterWorm.cpp"
 
 
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CToolUI.cpp"
