@@ -72,6 +72,9 @@
 #include "C:\PortPolio\Client\Code\CSlideUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CTeleporterWorm.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CToolUI.cpp"
 
 
