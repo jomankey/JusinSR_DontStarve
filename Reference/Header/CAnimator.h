@@ -15,6 +15,7 @@ namespace Engine
 
 		//특정 애니메이션일때의 프레임 얻어오기 //걷는상태일때에 특정프레임을얻고싶을떄
 		_int	GetAnimFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iCurFrm; }
+		_int	GetAnimMaxFrame(const _tchar* _strAnimKey) { return Find_Animation(_strAnimKey)->m_iMaxFrameCount; }
 
 		//현재 업데이트중인 애니메이션 프레임
 		//현재 이동중일때 프레임을얻어와 회전시켰을때 
