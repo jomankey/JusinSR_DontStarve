@@ -1,9 +1,6 @@
 #include "Export_Utility.h"
 
 
-
-
-
 //SceneMgr
 HRESULT scenemgr::Create_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev, CSceneMgr** ppManagementInstance)
 {
@@ -51,6 +48,18 @@ CComponent* proto::Clone_Proto(const _tchar* pProtoTag)
 {
 	return CProtoMgr::GetInstance()->Clone_Proto(pProtoTag);
 }
+
+HRESULT Engine::proto::Ready_ProtoAnim(const _tchar* pProtoAnimTag, CAnimation* pAnim)
+{
+	return CProtoMgr::GetInstance()->Ready_ProtoAnim(pProtoAnimTag, pAnim);
+}
+
+Engine::CAnimation* proto::Clone_ProtoAnim(const _tchar* pProtoAnimTag)
+{
+	return CProtoMgr::GetInstance()->Clone_ProtoAnim(pProtoAnimTag);
+}
+
+
 
 // Renderer
 void		renderer::Add_RenderGroup(RENDERID eID, CGameObject* pGameObject)

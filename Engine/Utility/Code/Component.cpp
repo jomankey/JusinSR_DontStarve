@@ -1,4 +1,4 @@
-#include "..\..\Header\Component.h"
+#include "Component.h"
 #include "Export_Utility.h"
 
 CComponent::CComponent(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -14,7 +14,7 @@ CComponent::CComponent(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* _pOwner)
 	, m_bClone(false)
 	, m_pOwner(_pOwner)
 {
-
+	m_pGraphicDev->AddRef();
 }
 
 CComponent::CComponent(const CComponent & rhs)

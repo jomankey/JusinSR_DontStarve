@@ -19,7 +19,6 @@ HRESULT CBerryBush::Ready_GameObject()
 	m_fFrame = 0.f;
 	m_fFrameEnd = 0.f;
 	Ready_Stat();
-
 	return S_OK;
 }
 

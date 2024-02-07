@@ -15,7 +15,7 @@ public:
 	virtual void Render_Scene() override;
 
 private:
-
+	HRESULT			Loading_Boss_Texture();
 	HRESULT			Ready_Layer_Environment();
 	HRESULT			Ready_Layer_GameLogic();
 	HRESULT			Ready_Layer_UI();

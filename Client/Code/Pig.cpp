@@ -2,7 +2,7 @@
 #include "Pig.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-
+#include "Player.h"
 #include "Scene.h"
 
 CPig::CPig(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
@@ -37,7 +37,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 	
 	if(!m_bFrameStop)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
-	Die_Check();
+	_int iResult = Die_Check();
 	
 	if (!m_Stat.bDead)      //Á×Àº »óÅÂ°¡ ¾Æ´Ò¶§ ÁøÀÔ
 	{
@@ -55,7 +55,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 	Look_Change(); 
 	m_pTransForm->m_vScale = { 1.5f, 1.5f, 1.f };
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-	return 0;
+	return iResult;
 }
 
 void CPig::LateUpdate_GameObject()
@@ -228,6 +228,8 @@ void CPig::Set_ObjStat()
 	m_Stat.fSpeed = 1.f;
 	m_Stat.fATK = 10.f;
 	m_Stat.bDead = false;
+	m_Stat.fAggroRange = 7.f;
+	m_Stat.fATKRange = 1.5f;
 }
 
 void CPig::Player_Chase(const _float& fTimeDelta)
@@ -294,7 +296,7 @@ void CPig::State_Change()
 	}
 }
 
-void CPig::Die_Check()
+_int CPig::Die_Check()
 {
 	if (m_Stat.fHP <= 0 && m_ePreState != DEAD && m_ePreState != ERASE)
 	{
@@ -315,10 +317,10 @@ void CPig::Die_Check()
 		{
 			m_bFrameStop = true;
 			DeleteObject(this);
+			return 0x80000000;
 		}
 	}
-	else
-		return;
+	return 0;
 }
 
 void CPig::Attacking(const _float& fTimeDelta)
@@ -326,22 +328,27 @@ void CPig::Attacking(const _float& fTimeDelta)
 	m_Stat.fSpeed = 5.f;
 	if (!m_bHit)
 	{
-		if (IsTarget_Approach(1.f) && m_ePreState != ATTACK)
+		if (IsTarget_Approach(m_Stat.fATKRange) && m_ePreState != ATTACK)
 		{
 			m_eCurState = ATTACK;
 		}
 		else if (m_ePreState == ATTACK)
 		{
-			if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(1.f))
+			if (5 < m_fFrame && IsTarget_Approach(m_Stat.fATKRange), !m_bAttacking)
+			{
+				dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+				m_bAttacking = true;
+			}
+			else if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(m_Stat.fATKRange))
 			{
 				m_eCurState = RUN;
 			}
 		}
-		else if (m_ePreState == RUN && !IsTarget_Approach(1.f))
+		else if (m_ePreState == RUN && !IsTarget_Approach(m_Stat.fATKRange))
 		{
 			Player_Chase(fTimeDelta);
 		}
-		else if (!IsTarget_Approach(1.f))
+		else if (!IsTarget_Approach(m_Stat.fATKRange))
 		{
 			m_eCurState = RUN;
 		}

@@ -4,6 +4,7 @@
 #include "Monster.h"
 #include "Scene.h"
 
+
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	: Engine::CGameObject(pGraphicDev), m_vPos(vPos)
 	, m_Dirchange(false)
@@ -14,6 +15,8 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_Attacked(false)
 	, m_bFrameStop(false)
 	, m_bHit(false)
+	, m_bAttacking(false)
+	
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
@@ -30,7 +33,7 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_Attacked(rhs.m_Attacked)
 	, m_bFrameStop(rhs.m_bFrameStop)
 	, m_bHit(rhs.m_bHit)
-
+	, m_bAttacking(rhs.m_bAttacking)
 {
 }
 
@@ -56,6 +59,12 @@ void CMonster::Set_Attack(_float _fAttack)
 void CMonster::Free()
 {
 	__super::Free();
+}
+
+CGameObject* CMonster::Get_Player_Pointer()
+{
+	CGameObject* pPlayer = scenemgr::Get_CurScene()->GetPlayerObject();
+	return pPlayer;
 }
 
 void CMonster::Player_Chase(const _float& fTimeDelta)

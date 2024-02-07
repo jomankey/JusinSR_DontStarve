@@ -2,11 +2,6 @@
 #include "GameObject.h"
 #include "ResObject.h"
 
-namespace Engine {
-	class CRcTex;
-	class CTexture;
-}
-
 class CObjectGrass :
 	public CResObject
 {

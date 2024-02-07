@@ -67,6 +67,7 @@ namespace Engine
 		DWORD_PTR		wParam;
 		DWORD_PTR		pParam;
 	};
+<<<<<<< HEAD
 
 	typedef struct tagItemInfo
 	{
@@ -81,6 +82,13 @@ namespace Engine
 		_tchar* strInfo;
 		ITEMINFO tItemInfo[2]; // 아이템 key값 넣기
 	} CREATEINFO;
+=======
+	struct tFrameInfo
+	{
+		IDirect3DBaseTexture9* Texture;
+		_float					Duration;
+	};
+>>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
 
 }
 #endif // Engine_Struct_h__

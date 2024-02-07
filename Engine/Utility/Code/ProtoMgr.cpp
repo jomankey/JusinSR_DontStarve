@@ -11,9 +11,9 @@ CProtoMgr::~CProtoMgr()
 	Free();
 }
 
-HRESULT CProtoMgr::Ready_Proto(const _tchar * pProtoTag, CComponent * pComponent)
+HRESULT CProtoMgr::Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 {
-	CComponent*		pInstance = Find_Prototype(pProtoTag);
+	CComponent* pInstance = Find_Prototype(pProtoTag);
 
 	if (nullptr != pInstance)
 		return E_FAIL;
@@ -23,16 +23,41 @@ HRESULT CProtoMgr::Ready_Proto(const _tchar * pProtoTag, CComponent * pComponent
 	return S_OK;
 }
 
-CComponent * CProtoMgr::Clone_Proto(const _tchar * pProtoTag)
+CComponent* CProtoMgr::Clone_Proto(const _tchar* pProtoTag)
 {
-	CComponent*		pComponent = Find_Prototype(pProtoTag);
-	
+	CComponent* pComponent = Find_Prototype(pProtoTag);
+
 	NULL_CHECK_RETURN(pComponent, nullptr);
 
 	return pComponent->Clone();
 }
 
-CComponent * CProtoMgr::Find_Prototype(const _tchar * pProtoTag)
+HRESULT CProtoMgr::Ready_ProtoAnim(const _tchar* pProtoAnimTag, CAnimation* pAnim)
+{
+
+	CAnimation* pInstance = Find_ProtoAnim(pProtoAnimTag);
+
+	if (nullptr != pInstance)
+	{
+		assert(false, const _tchar * = L"Animation Already exists");
+		return E_FAIL;
+	}
+
+	m_mapProtoAnim.insert({ pProtoAnimTag, pAnim });
+
+	return S_OK;
+}
+
+CAnimation* CProtoMgr::Clone_ProtoAnim(const _tchar* pProtoAnimTag)
+{
+	CAnimation* pComponent = Find_ProtoAnim(pProtoAnimTag);
+
+	NULL_CHECK_RETURN(pComponent, nullptr);
+
+	return pComponent->Clone();
+}
+
+CComponent* CProtoMgr::Find_Prototype(const _tchar* pProtoTag)
 {
 	auto	iter = find_if(m_mapProto.begin(), m_mapProto.end(), CTag_Finder(pProtoTag));
 
@@ -42,9 +67,20 @@ CComponent * CProtoMgr::Find_Prototype(const _tchar * pProtoTag)
 	return iter->second;
 }
 
+CAnimation* CProtoMgr::Find_ProtoAnim(const _tchar* pProtoAnimTag)
+{
+	auto	iter = find_if(m_mapProtoAnim.begin(), m_mapProtoAnim.end(), CTag_Finder(pProtoAnimTag));
+
+	if (iter == m_mapProtoAnim.end())
+		return nullptr;
+
+	return iter->second;
+}
+
 void CProtoMgr::Free()
 {
 	for_each(m_mapProto.begin(), m_mapProto.end(), CDeleteMap());
+	for_each(m_mapProtoAnim.begin(), m_mapProtoAnim.end(), CDeleteMap());
 	m_mapProto.clear();
-
+	m_mapProtoAnim.clear();
 }

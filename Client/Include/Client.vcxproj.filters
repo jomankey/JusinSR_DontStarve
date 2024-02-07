@@ -124,6 +124,7 @@
     <Filter Include="02. GameObject\03. Terrain\RunTerrain">
       <UniqueIdentifier>{e203e153-be4a-42bd-b0f3-95b24604e94d}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="02. GameObject\07. CUI\02. CreateUI">
       <UniqueIdentifier>{8d7f24f5-2387-425c-a2e7-d2976dbba840}</UniqueIdentifier>
     </Filter>
@@ -144,6 +145,22 @@
     </Filter>
     <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel">
       <UniqueIdentifier>{109cc02a-e6d7-495a-b0ec-f4b81ab66d76}</UniqueIdentifier>
+=======
+    <Filter Include="02. GameObject\08. ResObjects\06. FireFlies">
+      <UniqueIdentifier>{0c297e33-5d83-42df-b1f1-a7e214f64c7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\07. TeleporterWorm">
+      <UniqueIdentifier>{fcf14d32-d8f6-47f3-9c10-0fdfa3a0dd20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\08. BossDoor">
+      <UniqueIdentifier>{aaf1ad01-3552-4107-9f17-97cfbb017412}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\09. CCatapult">
+      <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Monster\05. Tallbird">
+      <UniqueIdentifier>{912e9267-1b95-48e6-ad0a-24922a520a47}</UniqueIdentifier>
+>>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +290,7 @@
     <ClInclude Include="..\Header\RunTerrain.h">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\Header\InvenBoxMgr.h">
       <Filter>03. Manager\InvenBox</Filter>
     </ClInclude>
@@ -293,6 +311,22 @@
     </ClInclude>
     <ClInclude Include="..\Header\ExplainPanel.h">
       <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
+=======
+    <ClInclude Include="..\Header\CObjectFireFlies.h">
+      <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTeleporterWorm.h">
+      <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCatapult.h">
+      <Filter>02. GameObject\08. ResObjects\09. CCatapult</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CBossDoor.h">
+      <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Tallbird.h">
+      <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
+>>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +447,7 @@
     <ClCompile Include="..\Code\RunTerrain.cpp">
       <Filter>02. GameObject\03. Terrain\RunTerrain</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\Code\InvenBoxMgr.cpp">
       <Filter>03. Manager\InvenBox</Filter>
     </ClCompile>
@@ -433,6 +468,22 @@
     </ClCompile>
     <ClCompile Include="..\Code\ExplainPanel.cpp">
       <Filter>02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel</Filter>
+=======
+    <ClCompile Include="..\Code\CObjectFireFlies.cpp">
+      <Filter>02. GameObject\08. ResObjects\06. FireFlies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTeleporterWorm.cpp">
+      <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCatapult.cpp">
+      <Filter>02. GameObject\08. ResObjects\09. CCatapult</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBossDoor.cpp">
+      <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Tallbird.cpp">
+      <Filter>02. GameObject\01. Monster\05. Tallbird</Filter>
+>>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

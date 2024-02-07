@@ -175,9 +175,20 @@
   <ItemGroup>
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
+<<<<<<< HEAD
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\CButtonUI.h" />
     <ClInclude Include="..\Header\ExplainPanel.h" />
+=======
+    <ClInclude Include="..\Header\CAliveUI.h" />
+    <ClInclude Include="..\header\CBossDoor.h" />
+    <ClInclude Include="..\Header\CBossScene.h" />
+    <ClInclude Include="..\Header\CButtonUI.h" />
+    <ClInclude Include="..\Header\CCatapult.h" />
+    <ClInclude Include="..\Header\CClothUI.h" />
+    <ClInclude Include="..\Header\CEquiment.h" />
+    <ClInclude Include="..\Header\CExplainPanel.h" />
+>>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
     <ClInclude Include="..\Header\CHpUI.h" />
     <ClInclude Include="..\Header\CHungryUI.h" />
     <ClInclude Include="..\Header\CInven.h" />
@@ -186,6 +197,7 @@
     <ClInclude Include="..\Header\CItem.h" />
     <ClInclude Include="..\Header\CItemFood.h" />
     <ClInclude Include="..\Header\CMentalUI.h" />
+    <ClInclude Include="..\Header\CObjectFireFlies.h" />
     <ClInclude Include="..\Header\CObjectGrass.h" />
     <ClInclude Include="..\Header\CObjectRock.h" />
     <ClInclude Include="..\Header\CObjectTree.h" />
@@ -195,6 +207,7 @@
     <ClInclude Include="..\Header\SlideBox.h" />
     <ClInclude Include="..\Header\SlideUI.h" />
     <ClInclude Include="..\Header\CTestScene.h" />
+    <ClInclude Include="..\Header\CTeleporterWorm.h" />
     <ClInclude Include="..\Header\CToolUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\CWorldUI.h" />
@@ -215,6 +228,7 @@
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Spider.h" />
     <ClInclude Include="..\Header\Stage.h" />
+    <ClInclude Include="..\Header\Tallbird.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="FuncEvent.h" />
@@ -224,9 +238,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\Beefalo.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\CButtonUI.cpp" />
     <ClCompile Include="..\Code\ExplainPanel.cpp" />
+=======
+    <ClCompile Include="..\Code\CAliveUI.cpp" />
+    <ClCompile Include="..\Code\CBossDoor.cpp" />
+    <ClCompile Include="..\Code\CBossScene.cpp" />
+    <ClCompile Include="..\Code\CButtonUI.cpp" />
+    <ClCompile Include="..\Code\CCatapult.cpp" />
+    <ClCompile Include="..\Code\CClothUI.cpp" />
+    <ClCompile Include="..\Code\CEquiment.cpp" />
+    <ClCompile Include="..\Code\CExplainPanel.cpp" />
+>>>>>>> 18b61b04787a4cfc81c4ea1792b9494cfd13fc3d
     <ClCompile Include="..\Code\CHpUI.cpp" />
     <ClCompile Include="..\Code\CHungryUI.cpp" />
     <ClCompile Include="..\Code\BerryBush.cpp" />
@@ -236,6 +261,7 @@
     <ClCompile Include="..\Code\CItem.cpp" />
     <ClCompile Include="..\Code\CItemFood.cpp" />
     <ClCompile Include="..\Code\CMentalUI.cpp" />
+    <ClCompile Include="..\Code\CObjectFireFlies.cpp" />
     <ClCompile Include="..\Code\CObjectGrass.cpp" />
     <ClCompile Include="..\Code\CObjectRock.cpp" />
     <ClCompile Include="..\Code\CObjectTree.cpp" />
@@ -245,6 +271,7 @@
     <ClCompile Include="..\Code\SlideBox.cpp" />
     <ClCompile Include="..\Code\SlideUI.cpp" />
     <ClCompile Include="..\Code\CTestScene.cpp" />
+    <ClCompile Include="..\Code\CTeleporterWorm.cpp" />
     <ClCompile Include="..\Code\CToolUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\CWorldUI.cpp" />
@@ -265,6 +292,7 @@
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Spider.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />
+    <ClCompile Include="..\Code\Tallbird.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="FuncEvent.cpp" />
