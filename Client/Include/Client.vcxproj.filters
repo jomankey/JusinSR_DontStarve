@@ -103,9 +103,6 @@
     <Filter Include="02. GameObject\07. CUI\04. ToolUI">
       <UniqueIdentifier>{3116b9ca-4620-4d9d-8e8f-f0102d81e6e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\05. PopUpUI">
-      <UniqueIdentifier>{935dda75-2859-451f-96cc-546f5f650ede}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\99. Test">
       <UniqueIdentifier>{1543790f-723a-4c2e-aeea-d9c1795e5951}</UniqueIdentifier>
     </Filter>

@@ -1,6 +1,6 @@
 #pragma once
 #include "CItem.h"
-class CItemTool :
+class CItemTool : // UI 용 아이템 
     public CItem
 {
 private:

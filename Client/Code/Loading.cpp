@@ -344,7 +344,7 @@ HRESULT CLoading::Loading_UI_Texture()
 
 
 	//Pop_Up UI Botton
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_Button_", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_Button__%03d.png", 3)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_Button__%03d.png", 3)), E_FAIL);
 	//Make_Button
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Make_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/UI/Make_Button_%03d.png", 2)), E_FAIL);
 

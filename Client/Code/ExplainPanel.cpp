@@ -15,6 +15,7 @@ CExplainPanel::CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring 
     m_strItemKey(strItemKey),
     m_pBufferCom(nullptr),
     m_pTextureCom(nullptr),
+    m_pButton(nullptr),
     m_fSizeX(0.f),
     m_fSizeY(0.f)
 {
@@ -28,6 +29,7 @@ CExplainPanel::CExplainPanel(const CExplainPanel& rhs)
     m_strItemKey(rhs.m_strItemKey),
     m_pBufferCom(rhs.m_pBufferCom),
     m_pTextureCom(rhs.m_pTextureCom),
+    m_pButton(rhs.m_pButton),
     m_fSizeX(rhs.m_fSizeX),
     m_fSizeY(rhs.m_fSizeY)
 {
@@ -46,11 +48,13 @@ HRESULT CExplainPanel::Ready_GameObject()
 
     for (int i = 0; i < 2; ++i)
     {
-        _vec3 vPos = _vec3(m_fX + 5.f * ((i+1) * (i *4) ), m_fY + 10.f, 0.f);
+        _vec3 vPos = _vec3(m_fX + 4.f * ((i+1) * (i *4) ), m_fY + 8.f, 0.f);
         m_pItem[i] = CInvenBox::Create(m_pGraphicDev, _vec2{}, vPos);
         CItem* pItem = CItemTool::Create(m_pGraphicDev, m_tCreateInfo.tItemInfo[i].strItemName, vPos);
         m_pItem[i]->Set_Item(pItem);
     }
+
+    m_pButton = CButtonUI::Create(m_pGraphicDev, _vec3(m_fX + 15.f, m_fY + 50.f, 0.f));
 
     m_fSizeX = 80.f;
     m_fSizeY = 80.f;
@@ -82,6 +86,8 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
     for (int i = 0; i < 2; ++i)
         m_pItem[i]->Update_GameObject(fTimeDelta);
 
+    m_pButton->Update_GameObject(fTimeDelta);
+
     return 0;
 }
 
@@ -93,6 +99,7 @@ void CExplainPanel::LateUpdate_GameObject()
     for (int i = 0; i < 2; ++i)
         m_pItem[i]->LateUpdate_GameObject();
 
+    m_pButton->LateUpdate_GameObject();
     __super::LateUpdate_GameObject();
 }
 
@@ -117,6 +124,8 @@ void CExplainPanel::Render_GameObject()
     //아이템 2개 넣기
     for (int i = 0; i < 2; ++i)
         m_pItem[i]->Render_GameObject();
+
+    m_pButton->Render_GameObject();
 
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -158,6 +167,7 @@ void CExplainPanel::Free()
 {
     for (int i = 0; i < 2; ++i)
         Safe_Release(m_pItem[i]);
+    Safe_Release(m_pButton);
 
     __super::Free();
 }
