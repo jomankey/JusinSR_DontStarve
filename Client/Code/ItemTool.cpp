@@ -49,9 +49,9 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 	ScreenToClient(g_hWnd, &tPt);
 	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
 
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	if ((Engine::Get_DIMouseState(DIM_LB) & 0x80) && m_eItemType == INVEN)
 	{
-		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY) && m_eItemType == INVEN)
+		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
 		{
 			m_fX += Engine::Get_DIMouseMove(DIMS_X);
 			m_fY += Engine::Get_DIMouseMove(DIMS_Y);
@@ -61,11 +61,20 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 			
 			for (auto& iter : vecBox)
 			{
-				//_vec3 vPos = 
-				//if (Engine::Collision_Mouse())
+				if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+				{
+					
+				}
 			}
 			
 		}
+	}
+	else if ((Engine::Get_DIMouseState(DIM_LB) & 0x0001) && m_eItemType == INVEN)
+	{
+		m_fX = m_fPreX;
+		m_fX = m_fPreY;
+
+		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
 	}
 
 	return 0;

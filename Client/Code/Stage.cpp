@@ -57,6 +57,7 @@
 #include"ExplainPanel.h"
 #include <CreateUI.h>
 #include <ItemBasic.h>
+#include <CRoadScene.h>
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -92,12 +93,13 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 	__super::Update_Scene(fTimeDelta);
 
 	Change_LightInfo(fTimeDelta);
-	if (KEY_TAP(DIK_Z))
-	{
-		CScene* pScene = CTestScene::Create(m_pGraphicDev, L"TestScene");
-		NULL_CHECK_RETURN(pScene, -1);
-		scenemgr::Change_CurScene(pScene);
-	}
+
+	//if (KEY_TAP(DIK_Z))
+	//{
+	//	CScene* pScene = CRoadScene::Create(m_pGraphicDev, L"RoadScene");
+	//	NULL_CHECK_RETURN(pScene, -1);
+	//	scenemgr::Change_CurScene(pScene);
+	//}
 
 	return 0;
 }
@@ -114,7 +116,6 @@ void CStage::Render_Scene()
 HRESULT CStage::Ready_Layer_Environment()
 {
 	Engine::CGameObject* pGameObject = nullptr;
-
 
 	//////카메라
 	m_pCamera = nullptr;

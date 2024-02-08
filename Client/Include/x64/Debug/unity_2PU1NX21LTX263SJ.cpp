@@ -15,6 +15,18 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CCatapult.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSpike.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CToothTrap.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CTrap.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CTumbleWeed.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\ExplainPanel.cpp"
 
 
