@@ -37,33 +37,30 @@ HRESULT CDeerClops::Ready_GameObject()
 
 _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 {
-	if (!m_bFrameStop)
+	if (!m_bFrameStop)//
 	{
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 	}
 
-	if (m_bPhase[FIRST])
+	if (m_bPhase[FIRST]) //m_bPhase 불 변수의 첫번째 인덱스부터 true로 켜질때마다 페이즈가 변경됨
 	{
-		if (m_bPhase[SECOND])
+		if (m_bPhase[SECOND])		//First Phase 에서 Second Phase 는 자동으로 연결됨
 		{
 			if (m_bPhase[THIRD])
 			{
-
+				if (m_bPhase[DIE])
+					Boss_Die(fTimeDelta);
+				else
+					Third_Phase(fTimeDelta);
 			}
 			else
-			{
-				Second_Phase(fTimeDelta); 
-			}
+				Second_Phase(fTimeDelta);
 		}
 		else
-		{
 			First_Phase(fTimeDelta);
-		}
 	}
 	else
-	{
 		Sleep(fTimeDelta);
-	}
 	
 	if (KEY_TAP(DIK_9))
 	{
@@ -331,25 +328,42 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	{
 		m_eCurState = ATTACK;
 	}
-	else if (m_eCurState == ATTACK && IsTarget_Approach(m_Stat.fATKRange + 1.f)&& !m_bAttacking)
+	else if (m_ePreState == ATTACK && IsTarget_Approach(m_Stat.fATKRange + 1.f)&& !m_bAttacking)
 	{
 		if (12 < m_fFrame)
 		{
-			dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+			dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);	//추후에 이펙트 만들면 버릴예정
 			m_bAttacking = true;
 		}
 	}
-	else
+	else if (m_ePreState == ATTACK && !IsTarget_Approach(m_Stat.fATKRange))
+	{
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_eCurState = WALK;
+		}
+	}
+	else if(m_ePreState == WALK)
 	{
 		Player_Chase(fTimeDelta);
-		m_eCurState = WALK;
 	}
 
 	if (m_fFrameEnd < m_fFrame)
 	{
 		m_fFrame = 0.f;
+		if(m_bAttacking)
+			m_bAttacking = false;
 	}
 
+}
+
+void CDeerClops::Third_Phase(const _float& fTimeDelta) //아직 제작중
+{
+	m_Stat.fSpeed = 3.5f;
+}
+
+void CDeerClops::Boss_Die(const _float& fTimeDelta)
+{
 }
 
 void CDeerClops::Free()
