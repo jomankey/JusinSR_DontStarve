@@ -130,9 +130,6 @@
     <Filter Include="02. GameObject\01. Monster\05. Tallbird">
       <UniqueIdentifier>{912e9267-1b95-48e6-ad0a-24922a520a47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\01. Inven\00. CInvenBox">
-      <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. CUI\02. CreateUI">
       <UniqueIdentifier>{ccce8bb0-9d51-48e5-bfd9-1f5d3f02736d}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,15 @@
     </Filter>
     <Filter Include="02. GameObject\10. Trap\03. TumbleWeed">
       <UniqueIdentifier>{de22da1f-f23a-49ea-a5c0-3d9886c5fe16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven\Slot">
+      <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven\Slot\Armor">
+      <UniqueIdentifier>{e6115616-4480-4378-9db3-ff7f11378e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\01. Inven\Slot\Inven">
+      <UniqueIdentifier>{106a57af-ce13-4208-bcf6-a300141c73ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,8 +261,8 @@
     <ClInclude Include="..\Header\CPigHouse.h">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CInvenBox.h">
-      <Filter>02. GameObject\07. CUI\01. Inven\00. CInvenBox</Filter>
+    <ClInclude Include="..\Header\Slot.h">
+      <Filter>02. GameObject\07. CUI\01. Inven\Slot</Filter>
     </ClInclude>
     <ClInclude Include="FuncEvent.h">
       <Filter>03. Manager\Event</Filter>
@@ -330,7 +336,7 @@
     <ClInclude Include="..\Header\ItemBasic.h">
       <Filter>02. GameObject\09. Item\ItemBasic</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\InvenBoxMgr.h">
+    <ClInclude Include="..\Header\SlotMgr.h">
       <Filter>03. Manager\InvenBoxMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UIMgr.h">
@@ -347,6 +353,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CTumbleWeed.h">
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ArmorSlot.h">
+      <Filter>02. GameObject\07. CUI\01. Inven\Slot\Armor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\InvenSlot.h">
+      <Filter>02. GameObject\07. CUI\01. Inven\Slot\Inven</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -422,8 +434,8 @@
     <ClCompile Include="..\Code\CPigHouse.cpp">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CInvenBox.cpp">
-      <Filter>02. GameObject\07. CUI\01. Inven\00. CInvenBox</Filter>
+    <ClCompile Include="..\Code\Slot.cpp">
+      <Filter>02. GameObject\07. CUI\01. Inven\Slot</Filter>
     </ClCompile>
     <ClCompile Include="FuncEvent.cpp">
       <Filter>03. Manager\Event</Filter>
@@ -497,7 +509,7 @@
     <ClCompile Include="..\Code\ItemBasic.cpp">
       <Filter>02. GameObject\09. Item\ItemBasic</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\InvenBoxMgr.cpp">
+    <ClCompile Include="..\Code\SlotMgr.cpp">
       <Filter>03. Manager\InvenBoxMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIMgr.cpp">
@@ -514,6 +526,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTumbleWeed.cpp">
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ArmorSlot.cpp">
+      <Filter>02. GameObject\07. CUI\01. Inven\Slot\Armor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\InvenSlot.cpp">
+      <Filter>02. GameObject\07. CUI\01. Inven\Slot\Inven</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

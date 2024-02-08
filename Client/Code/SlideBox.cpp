@@ -53,25 +53,8 @@ HRESULT CSlideBox::Ready_GameObject()
 
 _int CSlideBox::Update_GameObject(const _float& fTimeDelta)
 {
-	_vec3 vPos;
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 
-	//if (m_fX > vPos.x)
-	//{
-	//	_float fSpeed = 10.f * fTimeDelta;
-	//	m_fX += fSpeed;
-
-	//	m_pTransForm->Set_Pos(_vec3(m_fX, m_fY, 0.f));
-	//}
-	POINT tPt;
-	GetCursorPos(&tPt);
-	ScreenToClient(g_hWnd, &tPt);
-	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
-
-	if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY) && m_pPanel != nullptr)
-		 m_pPanel->Set_Show(true);
-
-	else if (m_pPanel != nullptr) m_pPanel->Set_Show(false);
+	Input_Mouse();
 
 	if (m_pItem) m_pItem->Update_GameObject(fTimeDelta);
 	if (m_pPanel) m_pPanel->Update_GameObject(fTimeDelta);
@@ -120,7 +103,6 @@ HRESULT CSlideBox::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	//VIBUFFER
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
@@ -134,6 +116,24 @@ HRESULT CSlideBox::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
 	return S_OK;
+}
+
+void CSlideBox::Input_Mouse()
+{
+	if (!m_pPanel) return;
+
+	POINT tPt;
+	GetCursorPos(&tPt);
+	ScreenToClient(g_hWnd, &tPt);
+	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
+
+	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
+	{
+		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+		{
+			m_pPanel->Set_Show(m_pPanel->Get_Show() ? false : true);
+		}
+	}
 }
 
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "CUI.h"
-#include "CInvenBox.h"
+#include "Slot.h"
 #include "Engine_Macro.h"
 
 namespace Engine

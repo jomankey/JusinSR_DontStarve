@@ -5,7 +5,7 @@ class CButtonUI :
     public CGameObject
 {
 private:
-	explicit CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos);
+	explicit CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strKeyName);
 	explicit CButtonUI(const CButtonUI& rhs);
 	virtual ~CButtonUI();
 
@@ -17,9 +17,10 @@ public:
 
 private:
 	HRESULT			Add_Component();
+	void Input_Mouse();
 
 public:
-	static CButtonUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 vPos);
+	static CButtonUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 vPos, wstring strKeyName);
 
 private:
 	virtual void Free();
@@ -31,6 +32,6 @@ private:
 	_matrix				m_ViewMatrix, m_ProjMatrix;
 	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
 
-
+	wstring m_strCreateItemKey;
 };
 

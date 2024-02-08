@@ -1,15 +1,16 @@
 #include "ButtonUI.h"
 #include "Export_System.h"
 #include "stdafx.h"
+#include "SlotMgr.h"
 
-CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
-	: CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y)
+CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strKeyName)
+	: CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y), m_strCreateItemKey(strKeyName)
 {
 
 }
 
 CButtonUI::CButtonUI(const CButtonUI& rhs)
-	: CGameObject(rhs), m_fX(rhs.m_fX), m_fY(rhs.m_fY)
+	: CGameObject(rhs), m_fX(rhs.m_fX), m_fY(rhs.m_fY), m_strCreateItemKey(rhs.m_strCreateItemKey)
 {
 }
 
@@ -37,15 +38,7 @@ _int CButtonUI::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
 
-    POINT tPt;
-    GetCursorPos(&tPt);
-    ScreenToClient(g_hWnd, &tPt);
-    _vec2 vMousePos = _vec2(tPt.x, tPt.y);
-
-    if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
-    {
-        // 생산 로직 구현 
-    }
+    Input_Mouse();
 
 	return 0;
 }
@@ -91,9 +84,27 @@ HRESULT CButtonUI::Add_Component()
 	return S_OK;
 }
 
-CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
+void CButtonUI::Input_Mouse()
 {
-    CButtonUI* pInstance = new CButtonUI(pGraphicDev, vPos);
+    POINT tPt;
+    GetCursorPos(&tPt);
+    ScreenToClient(g_hWnd, &tPt);
+    _vec2 vMousePos = _vec2(tPt.x, tPt.y);
+
+    if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
+    {
+        //아이템 제작 
+        if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+        {
+            // 생산 로직 구현 
+            CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strCreateItemKey);
+        }
+    }
+}
+
+CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strKeyName)
+{
+    CButtonUI* pInstance = new CButtonUI(pGraphicDev, vPos, strKeyName);
 
     if (FAILED(pInstance->Ready_GameObject()))
     {

@@ -4,7 +4,7 @@
 #include "Logo.h"
 #include "Stage.h"
 #include "UIMgr.h"
-#include "InvenBoxMgr.h"
+#include "SlotMgr.h"
 
 CMainApp::CMainApp() : m_pDeviceClass(nullptr)
 {
@@ -133,7 +133,7 @@ void CMainApp::Free()
 	Engine::Safe_Release(m_pManagementClass);
 	Engine::Safe_Release(m_pGraphicDev);
 	CUIMgr::DestroyInstance();
-	CInvenBoxMgr::DestroyInstance();
+	CSlotMgr::DestroyInstance();
 	Engine::Release_System();
 	Engine::Release_Utility();
 }

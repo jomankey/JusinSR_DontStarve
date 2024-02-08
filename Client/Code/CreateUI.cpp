@@ -1,5 +1,5 @@
 #include "CreateUI.h"
-#include "InvenBoxMgr.h"
+#include "SlotMgr.h"
 #include <ItemTool.h>
 #include "Export_System.h"
 #include "stdafx.h"
@@ -17,21 +17,21 @@ CCreateUI::~CCreateUI()
 HRESULT CCreateUI::Ready_GameObject()
 {
 	CUIMgr::GetInstance()->Ready_CreateInfo();
-	CInvenBoxMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, CREATE, HEIGHT, 3);
+	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, CREATE, HEIGHT, 3);
 
 	// 고정 아이템 이미지 넣어주기 
 	_vec3 vPos;
-	CInvenBoxMgr::GetInstance()->Get_BoxPos(CREATE, 0, &vPos);
+	CSlotMgr::GetInstance()->Get_BoxPos(CREATE, 0, &vPos);
 	CItem* pItem = CItemTool::Create(m_pGraphicDev, L"Proto_UI_Weapon", vPos);
-	CInvenBoxMgr::GetInstance()->Set_Create_Menu(0, pItem);
+	CSlotMgr::GetInstance()->Set_Create_Menu(0, pItem);
 
-	CInvenBoxMgr::GetInstance()->Get_BoxPos(CREATE, 1, &vPos);
+	CSlotMgr::GetInstance()->Get_BoxPos(CREATE, 1, &vPos);
 	pItem = CItemTool::Create(m_pGraphicDev, L"Proto_UI_Alive", vPos);
-	CInvenBoxMgr::GetInstance()->Set_Create_Menu(1, pItem);
+	CSlotMgr::GetInstance()->Set_Create_Menu(1, pItem);
 
-	CInvenBoxMgr::GetInstance()->Get_BoxPos(CREATE, 2, &vPos);
+	CSlotMgr::GetInstance()->Get_BoxPos(CREATE, 2, &vPos);
 	pItem = CItemTool::Create(m_pGraphicDev, L"Proto_UI_Equipment", vPos);
-	CInvenBoxMgr::GetInstance()->Set_Create_Menu(2, pItem);
+	CSlotMgr::GetInstance()->Set_Create_Menu(2, pItem);
 
 	for (size_t i = 0; i < 3; ++i)
 	{
@@ -62,7 +62,7 @@ _int CCreateUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	CInvenBoxMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, CREATE);
+	CSlotMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, CREATE);
 	for (auto& iter : m_vecSlide) iter->Update_GameObject(fTimeDelta);
 
 	renderer::Add_RenderGroup(RENDER_UI, this);
@@ -71,7 +71,7 @@ _int CCreateUI::Update_GameObject(const _float& fTimeDelta)
 
 void CCreateUI::LateUpdate_GameObject()
 {
-	CInvenBoxMgr::GetInstance()->LateUpdate_InvenBoxMgr(CREATE);
+	CSlotMgr::GetInstance()->LateUpdate_InvenBoxMgr(CREATE);
 	for (auto& iter : m_vecSlide) iter->LateUpdate_GameObject();
 
 	Picking_Mouse();
@@ -92,7 +92,7 @@ void CCreateUI::Render_GameObject()
 	FAILED_CHECK_RETURN(SetUp_Material(D3DXCOLOR(1.f, 1.f, 1.f, 1.f)), );
 	m_pBufferCom->Render_Buffer();
 
-	CInvenBoxMgr::GetInstance()->Render_InvenBoxMgr(CREATE);
+	CSlotMgr::GetInstance()->Render_InvenBoxMgr(CREATE);
 	for (auto& iter : m_vecSlide) iter->Render_GameObject();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -120,14 +120,14 @@ HRESULT CCreateUI::Add_Component()
 
 void CCreateUI::Picking_Mouse() // 제작 목록 클릭 시 설정
 {
-	if (Engine::Get_DIMouseState(DIM_LB) & 0x80)
+	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
 	{
 		POINT tPt;
 		GetCursorPos(&tPt);
 		ScreenToClient(g_hWnd, &tPt);
 		_vec2 vMousePos = _vec2(tPt.x, tPt.y);
 
-		vector<CInvenBox*> vecInvenBox = CInvenBoxMgr::GetInstance()->Get_BoxList(CREATE);
+		vector<CSlot*> vecInvenBox = CSlotMgr::GetInstance()->Get_BoxList(CREATE);
 
 		for (int i = 0; i < vecInvenBox.size(); ++i)
 		{

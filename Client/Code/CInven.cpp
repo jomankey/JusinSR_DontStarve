@@ -1,5 +1,5 @@
 #include "CInven.h"
-#include "InvenBoxMgr.h"
+#include "SlotMgr.h"
 CInven::CInven(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -11,7 +11,7 @@ CInven::~CInven()
 
 HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CInvenBoxMgr::GetInstance()->Add_InvenBoxList(pGraphicDev, INVEN, WIDTH, INVENCNT);
+	CSlotMgr::GetInstance()->Add_InvenBoxList(pGraphicDev, INVEN, WIDTH, INVENCNT);
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -38,7 +38,7 @@ _int CInven::Update_GameObject(const _float& fTimeDelta)
 	_vec3 vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 
-	CInvenBoxMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, INVEN);
+	CSlotMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, INVEN);
 
 	renderer::Add_RenderGroup(RENDER_UI, this);
 	return 0;
@@ -46,7 +46,7 @@ _int CInven::Update_GameObject(const _float& fTimeDelta)
 
 void CInven::LateUpdate_GameObject()
 {
-	CInvenBoxMgr::GetInstance()->LateUpdate_InvenBoxMgr(INVEN);
+	CSlotMgr::GetInstance()->LateUpdate_InvenBoxMgr(INVEN);
 
 	__super::LateUpdate_GameObject();
 }
@@ -64,7 +64,7 @@ void CInven::Render_GameObject()
 	FAILED_CHECK_RETURN(SetUp_Material(D3DXCOLOR(1.f, 1.f, 1.f, 1.f)),)
 	m_pBufferCom->Render_Buffer();
 
-	CInvenBoxMgr::GetInstance()->Render_InvenBoxMgr(INVEN);
+	CSlotMgr::GetInstance()->Render_InvenBoxMgr(INVEN);
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);

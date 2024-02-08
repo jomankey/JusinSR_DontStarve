@@ -5,7 +5,7 @@
 #include "Export_System.h"
 #include"SlideBox.h"
 
-#include "InvenBoxMgr.h"
+#include "SlotMgr.h"
 
 
 CSlideUI::CSlideUI(LPDIRECT3DDEVICE9 pGraphicDev, eITEMTOOL_TYPE eType)
@@ -83,6 +83,7 @@ HRESULT CSlideUI::Ready_GameObject()
 
 _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 {
+	if (!m_bShow) return 0;
 	__super::Update_GameObject(fTimeDelta);
 
 	for (auto& iter : m_vecSlideBox)
@@ -94,6 +95,8 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 
 void CSlideUI::LateUpdate_GameObject()
 {
+	if (!m_bShow) return;
+
 	for (auto& iter : m_vecSlideBox)
 		iter->LateUpdate_GameObject();
 

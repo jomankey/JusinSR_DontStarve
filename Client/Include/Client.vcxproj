@@ -173,6 +173,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\ArmorSlot.h" />
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
     <ClInclude Include="..\Header\CBossScene.h" />
@@ -187,7 +188,8 @@
     <ClInclude Include="..\Header\CHpUI.h" />
     <ClInclude Include="..\Header\CHungryUI.h" />
     <ClInclude Include="..\Header\CInven.h" />
-    <ClInclude Include="..\Header\CInvenBox.h" />
+    <ClInclude Include="..\Header\InvenSlot.h" />
+    <ClInclude Include="..\Header\Slot.h" />
     <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\CItem.h" />
     <ClInclude Include="..\Header\CItemFood.h" />
@@ -209,7 +211,7 @@
     <ClInclude Include="..\Header\DeerClops.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
-    <ClInclude Include="..\Header\InvenBoxMgr.h" />
+    <ClInclude Include="..\Header\SlotMgr.h" />
     <ClInclude Include="..\Header\ItemBasic.h" />
     <ClInclude Include="..\Header\ItemTool.h" />
     <ClInclude Include="..\Header\Loading.h" />
@@ -232,6 +234,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\ArmorSlot.cpp" />
     <ClCompile Include="..\Code\Beefalo.cpp" />
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
@@ -246,7 +249,8 @@
     <ClCompile Include="..\Code\CHungryUI.cpp" />
     <ClCompile Include="..\Code\BerryBush.cpp" />
     <ClCompile Include="..\Code\CInven.cpp" />
-    <ClCompile Include="..\Code\CInvenBox.cpp" />
+    <ClCompile Include="..\Code\InvenSlot.cpp" />
+    <ClCompile Include="..\Code\Slot.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="..\Code\CItem.cpp" />
     <ClCompile Include="..\Code\CItemFood.cpp" />
@@ -268,7 +272,7 @@
     <ClCompile Include="..\Code\DeerClops.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
-    <ClCompile Include="..\Code\InvenBoxMgr.cpp" />
+    <ClCompile Include="..\Code\SlotMgr.cpp" />
     <ClCompile Include="..\Code\ItemBasic.cpp" />
     <ClCompile Include="..\Code\ItemTool.cpp" />
     <ClCompile Include="..\Code\Loading.cpp" />

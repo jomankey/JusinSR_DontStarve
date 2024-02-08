@@ -12,7 +12,7 @@
 #include "CItem.h"
 
 //Manager
-#include "InvenBoxMgr.h"
+#include "SlotMgr.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -595,7 +595,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (nullptr != findObj)
 		{
-			if (CInvenBoxMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
+			if (CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
 				DeleteObject(findObj);
 		}
 	}
@@ -615,6 +615,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (GetAsyncKeyState('G')) // È¶ºÒ
 	{
 		m_eCurWeapon = TORCH;
+		Fire_Light();
 	}
 
 	if (GetAsyncKeyState('V')) // Áİ±â
@@ -961,7 +962,9 @@ void CPlayer::Fire_Light()
 	tPointLightInfo->Type = D3DLIGHT_POINT;
 
 	tPointLightInfo->Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
-	tPointLightInfo->Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
+	//tPointLightInfo->Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
+	//tPointLightInfo->Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+	
 	tPointLightInfo->Attenuation0 = 0.000000001f;
 	tPointLightInfo->Range = 5.f;
 

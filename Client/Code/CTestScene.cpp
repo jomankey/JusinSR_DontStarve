@@ -44,7 +44,7 @@
 
 //UI
 #include "CUI.h"
-#include"CInvenBox.h"
+#include"Slot.h"
 #include"SlideUI.h"
 #include"CHpUI.h"
 #include"CMentalUI.h"

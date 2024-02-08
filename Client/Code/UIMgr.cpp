@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "UIMgr.h"
 #include"CItem.h"
-#include "InvenBoxMgr.h"
+#include "SlotMgr.h"
 #include <ItemTool.h>
 
 IMPLEMENT_SINGLETON(CUIMgr)

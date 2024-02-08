@@ -27,6 +27,7 @@ public:
 
 private:
 	virtual HRESULT			Add_Component();
+	void Input_Mouse();
 
 public:
 	static CSlideBox* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);

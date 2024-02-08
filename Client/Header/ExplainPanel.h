@@ -1,6 +1,6 @@
 #pragma once
 #include "Export_Utility.h"
-#include <CInvenBox.h>
+#include <Slot.h>
 #include <ButtonUI.h>
 
 class CExplainPanel : public CGameObject
@@ -18,6 +18,7 @@ public:
 
 public:
 	void Set_Show(bool _bShow) { m_bShow = _bShow; }
+	_bool Get_Show() { return m_bShow; }
 
 private:
 	HRESULT			Add_Component();
@@ -40,7 +41,7 @@ private:
 	CREATEINFO m_tCreateInfo;
 	wstring m_strItemKey;
 
-	CInvenBox* m_pItem[2];
+	CSlot* m_pItem[2];
 	CButtonUI* m_pButton;
 };
 

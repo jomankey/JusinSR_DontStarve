@@ -7,6 +7,7 @@
 
 #include "UIMgr.h"
 #include <ItemTool.h>
+#include "InvenSlot.h"
 
 CExplainPanel::CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strItemKey)
     : CGameObject(pGraphicDev), 
@@ -49,13 +50,13 @@ HRESULT CExplainPanel::Ready_GameObject()
     for (int i = 0; i < 2; ++i)
     {
         _vec3 vPos = _vec3(m_fX + 4.f * ((i+1) * (i *4) ), m_fY + 8.f, 0.f);
-        m_pItem[i] = CInvenBox::Create(m_pGraphicDev, vPos, i, ITEM_VIEW);
+        m_pItem[i] = CInvenSlot::Create(m_pGraphicDev, vPos, i, INVEN);
         CItem* pItem = CItemTool::Create(m_pGraphicDev, m_tCreateInfo.tItemInfo[i].strItemName, vPos);
         pItem->Set_ItemCount(m_tCreateInfo.tItemInfo[i].iCount);
         m_pItem[i]->Set_Item(pItem);
     }
 
-    m_pButton = CButtonUI::Create(m_pGraphicDev, _vec3(m_fX + 15.f, m_fY + 50.f, 0.f));
+    m_pButton = CButtonUI::Create(m_pGraphicDev, _vec3(m_fX + 15.f, m_fY + 50.f, 0.f), m_strItemKey);
 
     m_fSizeX = 80.f;
     m_fSizeY = 80.f;

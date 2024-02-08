@@ -135,6 +135,13 @@ namespace Engine
 		BOX_DIR_END
 	};
 
+	enum ARMOR_SLOT_TYPE {
+		ARMOR = 15,
+		HAND,
+		HEAD,
+		ARMOR_SLOT_END
+	};
+
 
 
 	enum class eTRAP_STATE

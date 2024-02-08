@@ -116,10 +116,10 @@ void Engine::CInputDev::Update_MouseState(void)
 	{
 		if (m_tMouseState.rgbButtons[i] & 0x80)
 		{
-			if (m_vecMouseState[i] == eKEY_STATE::TAP)
-				m_vecMouseState[i] = eKEY_STATE::HOLD;
-			else
+			if (m_vecMouseState[i] == eKEY_STATE::NONE)
 				m_vecMouseState[i] = eKEY_STATE::TAP;
+			else
+				m_vecMouseState[i] = eKEY_STATE::HOLD;
 		}
 		else
 		{
