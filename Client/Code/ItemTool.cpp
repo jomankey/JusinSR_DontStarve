@@ -49,7 +49,7 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 	ScreenToClient(g_hWnd, &tPt);
 	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
 
-	if ((Engine::Get_DIMouseState(DIM_LB) & 0x80) && m_eItemType == INVEN)
+	if ((Engine::Get_DIMouseState(DIM_LB) & 0x8000) && m_eItemType == UI_ITEM_INVEN) // 마우스 피킹 후 움직이면 
 	{
 		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
 		{
@@ -57,22 +57,38 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 			m_fY += Engine::Get_DIMouseMove(DIMS_Y);
 
 			m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
-			vector<CInvenBox*> vecBox = CInvenBoxMgr::GetInstance()->Get_BoxList(INVEN);
-			
-			for (auto& iter : vecBox)
-			{
-				if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
-				{
-					
-				}
-			}
-			
 		}
 	}
-	else if ((Engine::Get_DIMouseState(DIM_LB) & 0x0001) && m_eItemType == INVEN)
+	else if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::AWAY && m_eItemType == UI_ITEM_INVEN) // 마우스 UP
+	{
+		vector<CInvenBox*> vecBox = CInvenBoxMgr::GetInstance()->Get_BoxList(INVEN);
+		for (int i = 0; i < vecBox.size(); ++i)
+		{
+			//아이템 사이즈
+			_vec2 vItemPos = _vec2(m_fX, m_fY);
+
+			if (Engine::Collision_Mouse(vItemPos, vecBox[i]->Get_fX(), vecBox[i]->Get_fY(), vecBox[i]->Get_SizeX(), vecBox[i]->Get_fY()))
+			{
+				//아이템과 박스 충돌
+				if (CInvenBoxMgr::GetInstance()->Get_InvenItem(i) != nullptr) // 충돌한 박스가 null이 아니라면
+					break;
+
+				m_fX = vecBox[i]->Get_fX();
+				m_fY = vecBox[i]->Get_fY();
+				m_fPreX = m_fX;
+				m_fPreY = m_fY;
+
+				m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+				CInvenBoxMgr::GetInstance()->Move_InvenItem(this, m_iNum, i);
+				m_iNum = i;
+
+			}
+		}
+	}
+	else if (m_eItemType == UI_ITEM_INVEN)
 	{
 		m_fX = m_fPreX;
-		m_fX = m_fPreY;
+		m_fY = m_fPreY;
 
 		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
 	}

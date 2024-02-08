@@ -84,6 +84,16 @@ eKEY_STATE GetKeyState(_ubyte byKeyID)
 	return CInputDev::GetInstance()->GetKeyState(byKeyID);
 }
 
+eKEY_STATE GetMouseState(MOUSEKEYSTATE eMouseState)
+{
+	return CInputDev::GetInstance()-> GetMouseState(eMouseState);
+}
+
+void Update_MouseState(void)
+{
+	return CInputDev::GetInstance()->Update_MouseState();
+}
+
 // PathMgr
 
 inline HRESULT Ready_PathMgr()

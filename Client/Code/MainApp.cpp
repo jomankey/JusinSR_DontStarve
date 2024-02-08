@@ -28,6 +28,7 @@ int CMainApp::Update_MainApp(const float& fTimeDelta)
 {
 
 	Engine::Update_InputDev();
+	Engine::Update_MouseState();
 	m_pManagementClass->Update_Scene(fTimeDelta);
 
 	return 0;

@@ -17,6 +17,11 @@ eKEY_STATE Engine::CInputDev::GetKeyState(_ubyte byKeyID)
 	return m_vecKey[byKeyID].eState;
 }
 
+eKEY_STATE Engine::CInputDev::GetMouseState(MOUSEKEYSTATE eMouseState)
+{
+	return m_vecMouseState[eMouseState];
+}
+
 HRESULT Engine::CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 {
 
@@ -60,6 +65,9 @@ HRESULT Engine::CInputDev::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 		m_vecKey.push_back(tKeyInfo{ eKEY_STATE::NONE,false });
 	}
 
+	for (int i = 0; i < DIM_END; ++i)
+		m_vecMouseState.push_back(eKEY_STATE::NONE);
+
 	return S_OK;
 }
 
@@ -99,6 +107,27 @@ void Engine::CInputDev::Update_InputDev(void)
 			m_vecKey[i].bPrevPush = false;
 		}
 
+	}
+}
+
+void Engine::CInputDev::Update_MouseState(void)
+{
+	for (int i = 0; i < DIM_END; ++i)
+	{
+		if (m_tMouseState.rgbButtons[i] & 0x80)
+		{
+			if (m_vecMouseState[i] == eKEY_STATE::TAP)
+				m_vecMouseState[i] = eKEY_STATE::HOLD;
+			else
+				m_vecMouseState[i] = eKEY_STATE::TAP;
+		}
+		else
+		{
+			if (m_vecMouseState[i] == eKEY_STATE::HOLD || m_vecMouseState[i] == eKEY_STATE::TAP)
+				m_vecMouseState[i] = eKEY_STATE::AWAY;
+			else
+				m_vecMouseState[i] = eKEY_STATE::NONE;
+		}
 	}
 }
 

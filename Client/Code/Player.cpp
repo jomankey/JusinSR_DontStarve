@@ -12,7 +12,7 @@
 #include "CItem.h"
 
 //Manager
-#include "UIMgr.h"
+#include "InvenBoxMgr.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -595,7 +595,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (nullptr != findObj)
 		{
-			if (CUIMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
+			if (CInvenBoxMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
 				DeleteObject(findObj);
 		}
 	}

@@ -11,6 +11,7 @@ namespace Engine {
 		TAP, //누를떄
 		HOLD,//누르고 있을때
 		AWAY, // 똇을때
+		KEY_END,
 	};
 	struct tKeyInfo
 	{
@@ -39,10 +40,12 @@ namespace Engine {
 		}
 
 		eKEY_STATE GetKeyState(_ubyte byKeyID);
+		eKEY_STATE GetMouseState(MOUSEKEYSTATE eMouseState);
 
-	public:
+		public:
 		HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 		void	Update_InputDev(void);
+		void Update_MouseState(void);
 
 	private:
 		LPDIRECTINPUT8			m_pInputSDK = nullptr;
@@ -54,6 +57,8 @@ namespace Engine {
 	private:
 		_byte					m_byKeyState[256];		// 키보드에 있는 모든 키값을 저장하기 위한 변수
 		DIMOUSESTATE			m_tMouseState;
+
+		vector<eKEY_STATE> m_vecMouseState;
 		vector< tKeyInfo>		m_vecKey;
 	public:
 		virtual void	Free(void);

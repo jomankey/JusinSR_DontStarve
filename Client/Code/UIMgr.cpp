@@ -8,10 +8,6 @@ IMPLEMENT_SINGLETON(CUIMgr)
 
 CUIMgr::CUIMgr()
 {
-	for (int i = 0; i < 15; i++)
-	{
-		m_pItemArr[i] = nullptr;
-	}
 }
 
 CUIMgr::~CUIMgr()
@@ -30,74 +26,7 @@ CREATEINFO CUIMgr::Get_CreateInfo(wstring pKey)
 	return CREATEINFO();
 }
 
-//아이템 습득실패시 false반환
-_bool CUIMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey)
-{
-	//int i = 0;
 
-	//for (auto& itemBox : m_pItemArr)
-	//{
-	//	if (nullptr == itemBox && _pItem->IsEquipment())// 아이템칸이 비었고 장비아이템을 습득했을경우
-	//	{
-	//		itemBox = _pItem;
-	//		return true;
-	//	}
-
-	//	if (nullptr != itemBox && (!_pItem->IsEquipment()))//아이템이있고 소모품을습득했을경우
-	//	{
-	//		if (itemBox->GetObjName()== _pItem->GetObjName())//해당칸의 이름이 같은 아이템이있을경우
-	//		{
-	//			itemBox->AddItemCount(_pItem->GetItemInfo().ItemCount);
-	//			return true;
-	//		}
-	//	}
-	//}
-
-	//for (auto& itemBox : m_pItemArr)
-	//{
-	//	if (itemBox == nullptr)
-	//	{
-	//		itemBox = _pItem;
-	//		return true;
-	//	}
-	//}
-	vector<CInvenBox*> vecBox = CInvenBoxMgr::GetInstance()->Get_BoxList(INVEN);
-
-	for (auto& box : vecBox) // 인벤토리 빈칸 있는지 없는지 체크
-	{
-		if (box->Get_Item() == nullptr) // 아이템이 없다면 인벤에 아이템 생성
-		{
-			_vec3 vPos;
-			vPos.x = box->Get_fX();
-			vPos.y = box->Get_fY();
-
-			CItem* pItem = CItemTool::Create(pGraphicDev, strItemKey, vPos, UI_ITEM_INVEN);
-			box->Set_Item(pItem);
-			return true;
-		}
-
-		if (box->Get_Item()->GetObjName() == strItemKey) // 같은 아이템이 있다면 아이템 카운트 증가
-		{
-			box->Get_Item()->AddItemCount(1);
-			return true;
-		}
-	}
-
-	return false;
-}
-
-CItem* CUIMgr::GetItemBox(_uint _uint)
-
-{
-	if (nullptr != m_pItemArr[_uint])
-	{
-		return m_pItemArr[_uint];
-	}
-	else
-	{
-		return nullptr;
-	}
-}
 
 void CUIMgr::Ready_CreateInfo()
 {
@@ -165,10 +94,6 @@ void CUIMgr::Ready_CreateInfo()
 
 void CUIMgr::Free()
 {
-	for (auto iter : m_pItemArr)
-	{
-		
-	}
 	//m_pItemArr[0].
 	//__super::Free();
 }

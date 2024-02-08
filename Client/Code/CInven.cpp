@@ -39,8 +39,6 @@ _int CInven::Update_GameObject(const _float& fTimeDelta)
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 
 	CInvenBoxMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, INVEN);
-	//m_pTransForm->Get_WorldMatrix()->_41 = vPos.x - (WINCX >> 1);
-	//m_pTransForm->Get_WorldMatrix()->_42 = -vPos.y + (WINCY >> 1);
 
 	renderer::Add_RenderGroup(RENDER_UI, this);
 	return 0;

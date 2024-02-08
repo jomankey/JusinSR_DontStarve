@@ -12,7 +12,8 @@ private:
 
 public:
     void Set_FoodItem(_bool _bFood) { m_bFood = _bFood; }
-    
+    void Set_BoxIndex(_uint iNum) { m_iNum = iNum; }
+
     _bool Get_FoodItem() { return m_bFood; }
 
 public:
@@ -35,5 +36,6 @@ private:
     _bool m_bFood;
 
     UI_ITEM_TYPE m_eItemType;
+    _uint m_iNum; // 박스 순서 넘버
 };
 

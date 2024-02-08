@@ -53,6 +53,8 @@ namespace Engine
 	inline HRESULT	Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 	inline void		Update_InputDev(void);
 	inline eKEY_STATE GetKeyState(_ubyte byKeyID);
+	inline eKEY_STATE GetMouseState(MOUSEKEYSTATE eMouseState);
+	inline void Update_MouseState(void);
 
 	//Collision
 	inline _bool Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale);

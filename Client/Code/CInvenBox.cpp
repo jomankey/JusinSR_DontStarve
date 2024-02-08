@@ -9,8 +9,10 @@
 #include "Texture.h"
 #include "Scene.h"
 #include <ItemTool.h>
-CInvenBox::CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, BOX_TYPE eType)
-	:CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y), m_pItem(nullptr), m_eType(eType)
+#include "InvenBoxMgr.h"
+
+CInvenBox::CInvenBox(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _uint iIndex, BOX_TYPE eType)
+	:CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y), m_pItem(nullptr), m_eType(eType), m_iInvenIndex(iIndex)
 {
 }
 
@@ -71,22 +73,30 @@ void CInvenBox::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
+	_tchar strItemCount[32];
 	if (m_pItem != nullptr)
 	{
 		m_pItem->Render_GameObject();
-		_tchar strItemCount[32];
-		_itow_s(m_pItem->Get_ItemCount(), strItemCount, 10);
-		if (m_eType == INVEN)
-			Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY +5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+
+		if (m_eType == ITEM_VIEW)
+		{
+			_itow_s(m_pItem->Get_ItemCount(), strItemCount, 10);
+			Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY + 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		}
 	}
 		
+	if (m_eType == INVEN && CInvenBoxMgr::GetInstance()->Get_InvenItem(m_iInvenIndex) != nullptr)
+	{
+		_itow_s(CInvenBoxMgr::GetInstance()->Get_InvenItem(m_iInvenIndex)->Get_ItemCount(), strItemCount, 10);
+		Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY + 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-CInvenBox* CInvenBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, BOX_TYPE eType)
+CInvenBox* CInvenBox::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _uint iIndex, BOX_TYPE eType)
 {
-	CInvenBox* pInstance = new CInvenBox(pGraphicDev, vPos, eType);
+	CInvenBox* pInstance = new CInvenBox(pGraphicDev, vPos, iIndex, eType);
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
