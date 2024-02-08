@@ -69,6 +69,10 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_bIsRoadScene = true;
 	}
+	else
+	{
+		m_bIsRoadScene = false;
+	}
 
 	if (!m_bFrameLock)		//프레임 락이 걸리면 프레임이 오르지 않음
 	{
@@ -602,8 +606,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 				else
 					m_eCurState = MOVE;
 			}
-
-			
 		}
 	}
 	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)

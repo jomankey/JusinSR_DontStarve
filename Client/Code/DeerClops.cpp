@@ -45,6 +45,7 @@ HRESULT CDeerClops::Ready_GameObject()
 
 _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 {
+	m_pTransForm->Set_Scale(_vec3(5.f, 5.f, 5.f));
 	m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -362,12 +363,9 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 
 void CDeerClops::Chase_Player(const _float& fTimeDelta)
 {
-	_vec3 PlayerPos, vDir, vPos;
+	_vec3 PlayerPos;
 	PlayerComponent()->Get_Info(INFO_POS, &PlayerPos);
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	vDir = PlayerPos - vPos;
-	vDir.y = 0;
-	m_eCurLook = m_pTransForm->For_Player_Direction(&vDir, m_Stat.fSpeed, fTimeDelta);
+	m_eCurLook = m_pTransForm->Chase_Target_Monster(&PlayerPos, m_Stat.fSpeed, fTimeDelta);
 }
 
 CTransform* CDeerClops::PlayerComponent()
