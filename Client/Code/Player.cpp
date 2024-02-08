@@ -54,7 +54,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_Dirchange = false;
 	m_KeyLock = false;
 	m_bFrameLock = false;
-	
+
 	m_vPlayerActing = false;
 	m_bIsRoadScene - false;
 	m_TargetObject = RSOBJ_END;
@@ -62,7 +62,6 @@ HRESULT CPlayer::Ready_GameObject()
 	Set_Stat();
 	return S_OK;
 }
-
 Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
 	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"ROAD" && !m_bIsRoadScene)
@@ -75,14 +74,14 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	}
 
 
-	if (!m_bFrameLock)		//프레임 락이 걸리면 프레임이 오르지 않음
+	if (!m_bFrameLock)      //프레임 락이 걸리면 프레임이 오르지 않음
 	{
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 	}
 
-	if (m_fFrameEnd <= m_fFrame)		//프레임이 끝에 다다르면 진입
+	if (m_fFrameEnd <= m_fFrame)      //프레임이 끝에 다다르면 진입
 	{
-		if (m_KeyLock == true)			//KeyLock을 풀고 IDLE 상태로 만듦
+		if (m_KeyLock == true)         //KeyLock을 풀고 IDLE 상태로 만듦
 		{
 			m_KeyLock = false;
 			m_eCurState = IDLE;
@@ -93,7 +92,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		}
 		m_fFrame = 0.f;
 	}
-	if (!m_KeyLock)			//특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
+	if (!m_KeyLock)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
 		if (!m_bIsRoadScene)
 		{
@@ -458,88 +457,88 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 
 	if (GetAsyncKeyState('W'))
-		{
-			D3DXVec3Normalize(&vDir, &vDir);
-			vDir.y = 0.f;
-			m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-				m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
-	
-			if (m_ePreWeapon == TORCH)
-			{
-				m_eCurState = TORCH_RUN;
-			}
-			else
-			{
-				m_eCurState = MOVE;
-			}
-			m_eCurLook = LOOK_UP;
-		}
-	if (GetAsyncKeyState('S'))
-		{ //f
-			D3DXVec3Normalize(&vDir, &vDir);
-			vDir.y = 0.f;
+	{
+		D3DXVec3Normalize(&vDir, &vDir);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
-			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-				m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
-		
-			if (m_ePreWeapon == TORCH)
-			{
-				m_eCurState = TORCH_RUN;
-			}
-			else
-			{
-				m_eCurState = MOVE;
-			}
-			m_eCurLook = LOOK_DOWN;
 
+		if (m_ePreWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
 		}
+		else
+		{
+			m_eCurState = MOVE;
+		}
+		m_eCurLook = LOOK_UP;
+	}
+	if (GetAsyncKeyState('S'))
+	{ //f
+		D3DXVec3Normalize(&vDir, &vDir);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vDir, -m_Stat.fSpeed, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+			m_pTransForm->Move_Pos(&vDir, m_Stat.fSpeed, fTimeDelta);
+
+		if (m_ePreWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
+		}
+		else
+		{
+			m_eCurState = MOVE;
+		}
+		m_eCurLook = LOOK_DOWN;
+
+	}
 	if (GetAsyncKeyState('A'))
-		{
-			D3DXVec3Normalize(&vRight, &vRight);
-			vDir.y = 0.f;
-			m_pTransForm->Move_Pos(&vRight, -m_Stat.fSpeed, fTimeDelta);
-			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-			vCurPos.x += 0.5f;
-			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-				m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
-		
-
-			if (m_ePreWeapon == TORCH)
-			{
-				m_eCurState = TORCH_RUN;
-			}
-			else
-			{
-				m_eCurState = MOVE;
-			}
-			m_eCurLook = LOOK_LEFT;
-			/*m_pTransForm->Rotation(ROT_Y, D3DXToRadian(90.f * fTimeDelta));*/
-		}
-	if (GetAsyncKeyState('D'))
-		{
-			D3DXVec3Normalize(&vRight, &vRight);
-			vDir.y = 0.f;
+	{
+		D3DXVec3Normalize(&vRight, &vRight);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vRight, -m_Stat.fSpeed, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+		vCurPos.x += 0.5f;
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
 			m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
-			m_pTransForm->Get_Info(INFO_POS, &vCurPos);
-			vCurPos.x -= 0.5f;
-			if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
-				m_pTransForm->Set_Pos(vCurPos);
-		
 
-			if (m_ePreWeapon == TORCH)
-			{
-				m_eCurState = TORCH_RUN;
-			}
-			else
-			{
-				m_eCurState = MOVE;
-			}
-			m_eCurLook = LOOK_RIGHT;
 
+		if (m_ePreWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
 		}
+		else
+		{
+			m_eCurState = MOVE;
+		}
+		m_eCurLook = LOOK_LEFT;
+		/*m_pTransForm->Rotation(ROT_Y, D3DXToRadian(90.f * fTimeDelta));*/
+	}
+	if (GetAsyncKeyState('D'))
+	{
+		D3DXVec3Normalize(&vRight, &vRight);
+		vDir.y = 0.f;
+		m_pTransForm->Move_Pos(&vRight, m_Stat.fSpeed, fTimeDelta);
+		m_pTransForm->Get_Info(INFO_POS, &vCurPos);
+		vCurPos.x -= 0.5f;
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+			m_pTransForm->Set_Pos(vCurPos);
+
+
+		if (m_ePreWeapon == TORCH)
+		{
+			m_eCurState = TORCH_RUN;
+		}
+		else
+		{
+			m_eCurState = MOVE;
+		}
+		m_eCurLook = LOOK_RIGHT;
+
+	}
 
 
 	if (!GetAsyncKeyState('W') &&              //이동중이지 않을 때 IDLE로 변경
@@ -572,7 +571,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_vTargetDir.y = 0.f;
 			if (D3DXVec3Length(&m_vTargetDir) < 1.f)
 			{
-				ResObj_Mining(m_TargetObject , findObj);
+				ResObj_Mining(m_TargetObject, findObj);
 			}
 			else
 			{
@@ -585,7 +584,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 					m_eCurState = MOVE;
 			}
 
-			
+
 		}
 	}
 	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
@@ -595,8 +594,13 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (nullptr != findObj)
 		{
+<<<<<<< HEAD
 			if (CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
 				DeleteObject(findObj);
+=======
+			if (CUIMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
+			DeleteObject(findObj);
+>>>>>>> b048cd98b19b96e3c6c33d02e165b0b80c160615
 		}
 	}
 
@@ -608,7 +612,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			&& dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
-			
+
 		}
 	}
 
@@ -895,7 +899,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 	{
 	case ROCK:
 		m_eCurState = PICKING_OBJECT;
-		if ((m_fFrameEnd-1) < m_fFrame && !m_vPlayerActing)
+		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 		{
 			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 			m_vPlayerActing = true;

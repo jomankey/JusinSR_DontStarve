@@ -11,8 +11,6 @@ namespace Engine
 
 class CToolUI;
 
-
-
 class CUI
 	: public Engine::CGameObject
 {
