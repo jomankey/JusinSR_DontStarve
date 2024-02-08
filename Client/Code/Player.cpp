@@ -594,13 +594,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (nullptr != findObj)
 		{
-<<<<<<< HEAD
 			if (CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
 				DeleteObject(findObj);
-=======
-			if (CUIMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName()));
-			DeleteObject(findObj);
->>>>>>> b048cd98b19b96e3c6c33d02e165b0b80c160615
 		}
 	}
 
