@@ -53,6 +53,7 @@
 #include"CHungryUI.h"
 #include"ExplainPanel.h"
 #include <ItemBasic.h>
+#include "Stage.h"
 
 CBossScene::CBossScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -76,16 +77,21 @@ HRESULT CBossScene::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	//FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
-	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
+	//FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
 	return S_OK;
 }
 
 Engine::_int CBossScene::Update_Scene(const _float& fTimeDelta)
 {
-	Change_LightInfo(fTimeDelta);
+	//Change_LightInfo(fTimeDelta);
 
-
+	if (KEY_TAP(DIK_Z))
+	{
+		CScene* pScene = CStage::Create(m_pGraphicDev, L"Stage");
+		NULL_CHECK_RETURN(pScene, -1);
+		scenemgr::Change_CurScene(pScene);
+	}
 
 	return __super::Update_Scene(fTimeDelta);
 }

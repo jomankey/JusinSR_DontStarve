@@ -60,6 +60,7 @@
 #include"CHungryUI.h"
 #include"ExplainPanel.h"
 #include <ItemBasic.h>
+#include <CBossScene.h>
 
 CRoadScene::CRoadScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -90,11 +91,18 @@ HRESULT CRoadScene::Ready_Scene()
 
 Engine::_int CRoadScene::Update_Scene(const _float& fTimeDelta)
 {
+	__super::Update_Scene(fTimeDelta);
+
 	Change_LightInfo(fTimeDelta);
 
+	if (KEY_TAP(DIK_Z))
+	{
+		CScene* pScene = CBossScene::Create(m_pGraphicDev, L"BosScene");
+		NULL_CHECK_RETURN(pScene, -1);
+		scenemgr::Change_CurScene(pScene);
+	}
 
-
-	return __super::Update_Scene(fTimeDelta);
+	return 0;
 }
 
 void CRoadScene::LateUpdate_Scene()
