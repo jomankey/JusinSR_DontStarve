@@ -172,6 +172,12 @@
     <Filter Include="02. GameObject\10. Trap\03. TumbleWeed">
       <UniqueIdentifier>{de22da1f-f23a-49ea-a5c0-3d9886c5fe16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\11. Ghost">
+      <UniqueIdentifier>{27cc9905-0271-4565-bac0-efdc38eff15b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\00. Ghost">
+      <UniqueIdentifier>{ea685cc4-e200-4189-9c95-3f60ead51ec9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -348,6 +354,9 @@
     <ClInclude Include="..\Header\CTumbleWeed.h">
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Ghost.h">
+      <Filter>02. GameObject\06. Effect\00. Ghost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -514,6 +523,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTumbleWeed.cpp">
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ghost.cpp">
+      <Filter>02. GameObject\06. Effect\00. Ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

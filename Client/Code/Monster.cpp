@@ -67,6 +67,48 @@ CGameObject* CMonster::Get_Player_Pointer()
 	return pPlayer;
 }
 
+void CMonster::Collision_EachOther(const _float& fTimeDelta)
+{
+	auto iter = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+	for (auto find : iter)
+	{
+		Collision_Transform(m_pTransForm, find->GetTransForm(), fTimeDelta, m_Stat.fSpeed);
+	}
+}
+
+_bool CMonster::Collision_Transform(CTransform* _Src, CTransform* _Dst, const _float& fTimeDelta, const _float& fSpeed)
+{
+	_vec3 vSrc, vSrcScale, vDst, vDstScale,  vRDir;
+
+	_Src->Get_Info(INFO_POS, &vSrc);
+	vSrcScale = _Src->Get_Scale();
+
+	_Dst->Get_Info(INFO_POS, &vDst);
+	vDstScale = _Dst->Get_Scale();
+
+	_float iDistanceX = fabs(vSrc.x - vDst.x);		
+	_float fRadCX = vSrcScale.x * 0.5f + vDstScale.x * 0.5f;		
+
+	_float fDistanceZ = fabs(vSrc.z - vDst.z);	//거리
+	_float fRadCY = vSrcScale.y * 0.5f + vDstScale.y * 0.5f; // 스케일의 반
+
+	vDst.y = 0;
+	vSrc.y = 0;
+	
+	vRDir = vSrc - vDst;
+	D3DXVec3Normalize(&vRDir, &vRDir);
+	if (fDistanceZ > fRadCY || iDistanceX > fRadCX)
+	{
+		return false;
+	}
+	else
+	{
+		_Src->Move_Pos(&vRDir, fSpeed, fTimeDelta);
+		return true;
+	}
+		
+}
+
 void CMonster::Player_Chase(const _float& fTimeDelta)
 {
 	_vec3 PlayerPos;

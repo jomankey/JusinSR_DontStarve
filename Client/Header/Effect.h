@@ -3,44 +3,32 @@
 #include "Base.h"
 #include "GameObject.h"
 
-namespace Engine {
-
-class CRcTex;
-class CTexture;
-class CTransform;
-class CCalculator;
-
-}
-
 class CEffect :	public Engine::CGameObject
 {
-private:
-	explicit CEffect(LPDIRECT3DDEVICE9 pGraphicDev);
+protected:
+	explicit CEffect(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 vPos);
 	explicit CEffect(const CEffect& rhs);
 	virtual ~CEffect();
 
-public:
-	virtual HRESULT Ready_GameObject()						 override;
-	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-	virtual void LateUpdate_GameObject()					 override;
-	virtual void Render_GameObject()						 override;
+protected:
+	virtual void	State_Change()	PURE;
+	virtual void	Look_Change();
+protected:
+	_vec3 m_vPos;
 
-private:
-	HRESULT			Add_Component();
-	void			Height_OnTerrain();
-
-private:
-	Engine::CRcTex*		m_pBufferCom;
-	Engine::CTransform*	m_pTransForm;
-	Engine::CTexture*	m_pTextureCom;
-	Engine::CCalculator*	m_pCalculatorCom;
-
+	LOOKDIR		m_eCurLook;			//현재 바라보는 방향
+	LOOKDIR		m_ePreLook;
+	//프레임
 	_float				m_fFrame = 0.f;
+	_float				m_fFrameEnd;
+	_float				m_fAcctime;				//시간 누적용 변수
+	_int				m_fFrameChange = 0;		//프레임이 바뀌어야 하는 경우에 사용함.
+	_bool				m_bFrameStop;			//프레임을 멈춰야 할 때 true로 바꿔줘
 
-public:
-	static CEffect*		Create(LPDIRECT3DDEVICE9	pGraphicDev);
-
-private:
+	_bool				m_Dirchange;
+protected:
 	virtual void Free() override;
+
+
 };
 

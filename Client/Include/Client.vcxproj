@@ -188,6 +188,7 @@
     <ClInclude Include="..\Header\CHungryUI.h" />
     <ClInclude Include="..\Header\CInven.h" />
     <ClInclude Include="..\Header\CInvenBox.h" />
+    <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\CItem.h" />
     <ClInclude Include="..\Header\CItemFood.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="..\Code\BerryBush.cpp" />
     <ClCompile Include="..\Code\CInven.cpp" />
     <ClCompile Include="..\Code\CInvenBox.cpp" />
+    <ClCompile Include="..\Code\Ghost.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="..\Code\CItem.cpp" />
     <ClCompile Include="..\Code\CItemFood.cpp" />

@@ -37,7 +37,7 @@ HRESULT CTallbird::Ready_GameObject()
 
 _int CTallbird::Update_GameObject(const _float& fTimeDelta)
 {
-    
+  
     if (!m_bFrameStop)
     {
         m_fFrame += m_fFrameEnd * fTimeDelta;
@@ -277,12 +277,12 @@ void CTallbird::Set_ObjStat()
 {
     m_Stat.fHP = 150.f;
     m_Stat.fMxHP = 150.f;
-    m_Stat.fSpeed = 1.5f;
+    m_Stat.fSpeed = 2.5f;
 
     m_Stat.fATK = 25.f;
     m_Stat.bDead = false;
     m_Stat.fATKRange = 2.f;
-    m_Stat.fAggroRange = 5.f;
+    m_Stat.fAggroRange = 3.f;
 }
 
 void CTallbird::Set_Scale()
@@ -328,6 +328,7 @@ void CTallbird::First_Phase(const _float& fTimeDelta)
 
 void CTallbird::Second_Phase(const _float& fTimeDelta)
 {
+
     if (!m_bHit)
     {
         if (IsTarget_Approach(m_Stat.fATKRange + 0.5f))
@@ -356,6 +357,7 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
         else if (m_ePrestate == WALK)
         {
             Player_Chase(fTimeDelta);
+            Collision_EachOther(fTimeDelta);
         }
 
     }
@@ -369,7 +371,7 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
         if (m_bHit)
             m_bHit = false;
     }
-
+    
 }
 
 

@@ -347,6 +347,7 @@ void CPig::Attacking(const _float& fTimeDelta)
 		else if (m_ePreState == RUN && !IsTarget_Approach(m_Stat.fATKRange))
 		{
 			Player_Chase(fTimeDelta);
+			Collision_EachOther(fTimeDelta);
 		}
 		else if (!IsTarget_Approach(m_Stat.fATKRange))
 		{

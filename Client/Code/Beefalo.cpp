@@ -18,12 +18,10 @@ CBeefalo::CBeefalo(const CBeefalo& rhs)
 
 CBeefalo::~CBeefalo()
 {
-
 }
 
 HRESULT CBeefalo::Ready_GameObject()
 {
-
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
     Set_ObjStat();

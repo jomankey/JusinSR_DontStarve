@@ -29,6 +29,7 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 	void			Set_Attack(int _Atk);			//공격당했을 때 호출되는 함수
+	_bool			IsPlayer_Dead() { return m_Stat.bDead; }	//외부에서 죽었는지 확인하는 함수
 private:
 	HRESULT			Add_Component();
 	void			Key_Input(const _float& fTimeDelta);
@@ -40,7 +41,7 @@ private:
 	void			Weapon_Change();			//무기 변경에 따른 변화에 대한 함수
 	void			Look_Change();				//바라보는 방향을 바꾸기 위한 함수
 	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);	//Res오브젝트들을 채굴할 때 사용하는 함수
-
+	_int			Die_Check();
 
 	HRESULT Ready_Light();	//조명
 	void Fire_Light();

@@ -294,6 +294,7 @@ void CSpider::Attacking(const _float& fTimeDelta)
         else if (m_ePrestate == WALK)
         {
             Player_Chase(fTimeDelta);
+            Collision_EachOther(fTimeDelta);
         }
     }
     else
