@@ -29,14 +29,13 @@ public:
 	virtual void Render_GameObject()						 override;
 
 public:
-	void			Set_WakeUp();				//1페이즈 시작
-	void			Set_Phase(_bool _first, _bool _second, _bool _third, _bool _fourth, _bool _fifth) {
+	void			Set_WakeUp();				//1페이즈 시작 트리거
+	void			Set_Phase(_bool _first, _bool _second, _bool _third, _bool _fourth) {
 		m_bPhase[FIRST] = _first;
 		m_bPhase[SECOND] = _second;
 		m_bPhase[THIRD] = _third;
 		m_bPhase[DIE] = _fourth;
-		m_bPhase[PHASE_END] = _fifth;
-	}
+	}			//페이즈를 임의적으로 클래스 밖에서 조정해줄 수 있는 함수
 
 private:
 	virtual HRESULT			Add_Component();
@@ -44,10 +43,11 @@ private:
 	virtual void	Set_ObjStat();
 	virtual void	State_Change()				override;
 	
-	void			Sleep(const _float& fTimeDelta);
-	void			First_Phase(const _float& fTimeDelta);
+	void			Sleep(const _float& fTimeDelta);		//첫 조우하기 전 자고있음
+	void			First_Phase(const _float& fTimeDelta);		//페이즈 별 패턴
 	void			Second_Phase(const _float& fTimeDelta);
 	void			Third_Phase(const _float& fTimeDelta);
+	void			Boss_Die(const _float& fTimeDelta);
 
 
 
