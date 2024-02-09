@@ -27,6 +27,7 @@ HRESULT CBeefalo::Ready_GameObject()
     Set_ObjStat();
     Look_Change();
     m_fFrameEnd = 10;
+    m_fDiffY = 1.f;
     m_fFrameChange = rand() % 5;
     return S_OK;
 }

@@ -28,6 +28,7 @@ HRESULT CObjectFireFlies::Ready_GameObject()
 	m_eObject_id = FIRE_FLIES;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 17.f;
+	m_fDiffY = 0.4f;
 	//Ready_Stat();
 
 	return S_OK;

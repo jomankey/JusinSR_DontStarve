@@ -24,6 +24,7 @@ HRESULT CTent::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = TENT;
 
+	m_fDiffY = 1.f;
 	m_fFrame = 0.0f;
 	return S_OK;
 }

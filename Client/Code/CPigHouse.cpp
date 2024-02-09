@@ -27,6 +27,7 @@ HRESULT CPigHouse::Ready_GameObject()
 	m_eCurState = RES_IDLE;
 	m_eObject_id = PIG_HOUSE;
 	m_fFrame = 0.f;
+	m_fDiffY = 1.f;
 	Ready_Stat();
 
 	return S_OK;
