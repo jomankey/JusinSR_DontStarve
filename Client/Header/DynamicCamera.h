@@ -24,7 +24,6 @@ public:
 	_float		Get_Angle() { return m_fAngle; }
 
 	void ShakeCamera();
-
 	void SetShakedCamera(_float _fIntensity, _float _fShakeTime)
 	{
 		m_fShakeAccTime = 0.f;
