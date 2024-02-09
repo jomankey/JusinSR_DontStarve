@@ -27,7 +27,6 @@ public:
 
 	//1~4 만 적용가능
 	void AddFIre(int _Value);
-	void FireOn();
 private:
 	virtual HRESULT			Add_Component() override;
 	virtual void			Check_FrameState() override;

@@ -43,7 +43,7 @@ _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 {
 	if (GetAsyncKeyState('T')) // È¶ºÒ
 	{
-		m_bIsDrop = true;
+		Set_DropBonfire();
 
 	}
 	if (GetAsyncKeyState('1')) // È¶ºÒ
@@ -188,14 +188,6 @@ void CBonfire::AddFIre(int _Value)
 
 }
 
-void CBonfire::FireOn()
-{
-	if (m_pFire)
-	{
-		m_pFire->Set_IsOff(false);
-		AddFIre(2);
-	}
-}
 
 HRESULT CBonfire::Add_Component()
 {

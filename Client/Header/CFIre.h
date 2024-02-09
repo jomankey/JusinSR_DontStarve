@@ -53,6 +53,8 @@ private:
 
 
 	_float m_fTimeChek = 0.f;
+	_float m_MaxfTimeChek = 10.f;
+
 	BOOL m_bIsOff = false;
 };
 

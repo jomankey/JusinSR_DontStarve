@@ -41,7 +41,7 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 	Check_FrameState();
 
 	m_fTimeChek += fTimeDelta;
-	if (m_fTimeChek >= 10.f)
+	if (m_fTimeChek >= m_MaxfTimeChek)
 	{
 		Level_Down();
 		m_fTimeChek = 0.f;
@@ -102,9 +102,17 @@ void CFire::Set_FireLevel(_int iLevel)
 {
 	if(iLevel<0|| iLevel>4)
 		return;
+	
 
 	m_efireCurState = (FIRE_STATE)iLevel;
-
+	if (m_efireCurState == FIRE_LEVEL_4)
+	{
+		m_MaxfTimeChek = 15.0f;
+	}
+	else
+	{
+		m_MaxfTimeChek = 10.0f;
+	}
 }
 
 HRESULT CFire::Add_Component()
