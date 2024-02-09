@@ -28,6 +28,7 @@ namespace Engine
 		HAMMERING,
 		AXE_CHOP_PRE,
 		AXE_CHOP_LOOP,
+		DEAD,
 		STATE_END
 	};
 	enum LOOKDIR { LOOK_DOWN, LOOK_RIGHT, LOOK_LEFT, LOOK_UP, LOOK_END };
@@ -59,6 +60,7 @@ namespace Engine
 		TRAP,
 		UI,
 		BOSS,
+		EFFECT,
 		END = 32,
 	};
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };

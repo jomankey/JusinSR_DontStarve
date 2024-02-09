@@ -4,6 +4,8 @@
 
 namespace Engine 
 {
+
+
 	class ENGINE_DLL CCollisionMgr :
 		public CBase
 	{
@@ -23,6 +25,11 @@ namespace Engine
 		_bool Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale);
 
 		_bool Collision_Mouse(_vec2 vMousePos, _float fX, _float fY, _float fSizeX, _float fSizeY);
+<<<<<<< HEAD
+=======
+
+		
+>>>>>>> 4cb08cb4e14f9a932186c0610c068691f30bbb70
 	private:
 		virtual void Free();
 	};

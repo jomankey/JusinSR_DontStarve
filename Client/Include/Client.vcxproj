@@ -188,8 +188,13 @@
     <ClInclude Include="..\Header\CHpUI.h" />
     <ClInclude Include="..\Header\CHungryUI.h" />
     <ClInclude Include="..\Header\CInven.h" />
+<<<<<<< HEAD
     <ClInclude Include="..\Header\InvenSlot.h" />
     <ClInclude Include="..\Header\Slot.h" />
+=======
+    <ClInclude Include="..\Header\CInvenBox.h" />
+    <ClInclude Include="..\Header\Ghost.h" />
+>>>>>>> 4cb08cb4e14f9a932186c0610c068691f30bbb70
     <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\CItem.h" />
     <ClInclude Include="..\Header\CItemFood.h" />
@@ -249,8 +254,13 @@
     <ClCompile Include="..\Code\CHungryUI.cpp" />
     <ClCompile Include="..\Code\BerryBush.cpp" />
     <ClCompile Include="..\Code\CInven.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="..\Code\InvenSlot.cpp" />
     <ClCompile Include="..\Code\Slot.cpp" />
+=======
+    <ClCompile Include="..\Code\CInvenBox.cpp" />
+    <ClCompile Include="..\Code\Ghost.cpp" />
+>>>>>>> 4cb08cb4e14f9a932186c0610c068691f30bbb70
     <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="..\Code\CItem.cpp" />
     <ClCompile Include="..\Code\CItemFood.cpp" />

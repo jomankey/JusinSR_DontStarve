@@ -169,6 +169,7 @@
     <Filter Include="02. GameObject\10. Trap\03. TumbleWeed">
       <UniqueIdentifier>{de22da1f-f23a-49ea-a5c0-3d9886c5fe16}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="02. GameObject\07. CUI\01. Inven\Slot">
       <UniqueIdentifier>{355ae054-adb7-49a0-9aca-afb03e614781}</UniqueIdentifier>
     </Filter>
@@ -177,6 +178,13 @@
     </Filter>
     <Filter Include="02. GameObject\07. CUI\01. Inven\Slot\Inven">
       <UniqueIdentifier>{106a57af-ce13-4208-bcf6-a300141c73ae}</UniqueIdentifier>
+=======
+    <Filter Include="02. GameObject\11. Ghost">
+      <UniqueIdentifier>{27cc9905-0271-4565-bac0-efdc38eff15b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\00. Ghost">
+      <UniqueIdentifier>{ea685cc4-e200-4189-9c95-3f60ead51ec9}</UniqueIdentifier>
+>>>>>>> 4cb08cb4e14f9a932186c0610c068691f30bbb70
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -354,11 +362,16 @@
     <ClInclude Include="..\Header\CTumbleWeed.h">
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\Header\ArmorSlot.h">
       <Filter>02. GameObject\07. CUI\01. Inven\Slot\Armor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\InvenSlot.h">
       <Filter>02. GameObject\07. CUI\01. Inven\Slot\Inven</Filter>
+=======
+    <ClInclude Include="..\Header\Ghost.h">
+      <Filter>02. GameObject\06. Effect\00. Ghost</Filter>
+>>>>>>> 4cb08cb4e14f9a932186c0610c068691f30bbb70
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -527,11 +540,16 @@
     <ClCompile Include="..\Code\CTumbleWeed.cpp">
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\Code\ArmorSlot.cpp">
       <Filter>02. GameObject\07. CUI\01. Inven\Slot\Armor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\InvenSlot.cpp">
       <Filter>02. GameObject\07. CUI\01. Inven\Slot\Inven</Filter>
+=======
+    <ClCompile Include="..\Code\Ghost.cpp">
+      <Filter>02. GameObject\06. Effect\00. Ghost</Filter>
+>>>>>>> 4cb08cb4e14f9a932186c0610c068691f30bbb70
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -133,6 +133,8 @@ _bool Collision_Mouse(_vec2 vMousePos, _float fX, _float fY, _float fSizeX, _flo
 	return CCollisionMgr::GetInstance()->Collision_Mouse(vMousePos, fX, fY, fSizeX, fSizeY);
 }
 
+
+
 //Resource
 inline void Save_TexturePath(wstring _fileName, wstring _key, TEXTUREID _textureTag, wstring _subPath, int num)
 {

@@ -10,6 +10,7 @@
 #include "Layer.h"
 #include "Scene.h"
 #include "CItem.h"
+#include "Ghost.h"
 
 //Manager
 #include "SlotMgr.h"
@@ -78,10 +79,10 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 	}
-
+	_int iResult = Die_Check();
 	if (m_fFrameEnd <= m_fFrame)      //프레임이 끝에 다다르면 진입
 	{
-		if (m_KeyLock == true)         //KeyLock을 풀고 IDLE 상태로 만듦
+		if (m_KeyLock == true && !m_Stat.bDead)         //KeyLock을 풀고 IDLE 상태로 만듦
 		{
 			m_KeyLock = false;
 			m_eCurState = IDLE;
@@ -92,7 +93,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		}
 		m_fFrame = 0.f;
 	}
-	if (!m_KeyLock)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
+	if (!m_KeyLock && !m_Stat.bDead)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
 		if (!m_bIsRoadScene)
 		{
@@ -102,6 +103,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		{
 			Ket_Input_Road(fTimeDelta);
 		}
+		
 	}
 	Weapon_Change();
 	Check_State();
@@ -401,6 +403,10 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTextureCom[LOOK_DOWN][EAT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_eat"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
+
+	pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_die"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_die", pComponent });
 #pragma endregion TEXCOM
 
 
@@ -755,6 +761,11 @@ void CPlayer::Check_State()
 		case AXE_CHOP_PRE:
 			m_fFrameEnd = 15;
 			break;
+		case DEAD:
+			m_fFrameEnd = 19;
+			m_KeyLock = true;
+			m_eCurLook = LOOK_DOWN;
+			break;
 		}
 		m_ePreState = m_eCurState;
 		m_fFrame = 0.f;
@@ -811,6 +822,8 @@ void CPlayer::Set_Scale()
 	//else if (m_eCurState == AXE_CHOP_PRE)
 	//	m_pTransForm->m_vScale = { 1.f, 0.5f, 0.7f };
 
+	else if (m_eCurState == DEAD)
+		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
 	else
 		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
 
@@ -929,6 +942,37 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		m_eCurState = BUILD;
 		break;
 	}
+}
+
+_int CPlayer::Die_Check()
+{
+	if (m_Stat.fHP <= 0 && m_ePreState != DEAD)
+	{
+		m_Stat.fHP = 0;
+		m_eCurState = DEAD;
+		m_Stat.bDead = true;
+		m_fFrame = 0.f;
+	}
+	else if (m_ePreState == DEAD)
+	{
+		if (m_fFrameEnd-1 < m_fFrame)
+		{
+			m_fFrame = m_fFrameEnd - 1;
+			m_bFrameLock = true;
+			//여기에 고스트 소환하는 거
+			_vec3 pPlayerPos;
+			m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
+			
+			CGameObject* pGameObject = CGhost::Create(m_pGraphicDev, pPlayerPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), E_FAIL);
+				
+		}
+	}
+
+
+	return 0;
+
 }
 
 HRESULT CPlayer::Ready_Light()
