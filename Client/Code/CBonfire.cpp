@@ -66,10 +66,7 @@ _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 
 		AddFIre(4);
 	}
-	if (GetAsyncKeyState('5')) // È¶ºÒ
-	{
 
-	}
 
 	
 	//

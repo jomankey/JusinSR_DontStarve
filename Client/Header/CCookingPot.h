@@ -1,7 +1,7 @@
 #pragma once
 #include "ResObject.h"
 class CCookingPot :
-    public CResObject
+	public CResObject
 {
 
 
@@ -14,6 +14,7 @@ class CCookingPot :
 		COOKINGPOT_PLACE,
 		COOKINGPOT_HIT_EMPTY,
 		COOKINGPOT_HIT_COOKING,
+		COOKINGPOT_DEFAULT,
 		COOKINGPOT_END
 	};
 
@@ -30,12 +31,37 @@ public:
 	virtual void Render_GameObject()						override;
 
 
+	//마우스 땐 순간 드랍 호출
+	void Set_Drop() { m_bIsDrop = true; };
+
+	//요리를 시작하거나 멈추는 함수
+	void Set_Cooking(BOOL _IsCooking) { m_bIsCooking = _IsCooking; };
+
+	//솥을 불태워버리는 함수 //솥 복구 불가
+	void Set_Burnt() { m_bIsBurnt = true; };
+
+	//요리중일 때 솥을 가득 채우는 함수
+	void Set_Full()
+	{
+		m_bIsFull = true;
+		m_bIsEmpty = false;
+	};
+
+	//요리중일 때 솥을 비우는 함수
+	void Set_Empty()
+	{ 
+		m_bIsEmpty = true; 
+		m_bIsFull = false;
+	};
+
+	//요리중일 때 솥이 맞는 함수 (솥이 요리 중이어야 함)
+	void Set_Hit() { m_bIsHit = true; };
 
 private:
 	virtual HRESULT			Add_Component() override;
 	virtual void			Check_FrameState() override;
 	virtual void			Ready_Stat() override {};
-	virtual void			Change_Frame_Event() override {};
+	virtual void			Change_Frame_Event() override;
 
 
 
@@ -55,6 +81,12 @@ private:
 	COOKINGPOT_STATE m_eCookingpotPrevState;
 
 	BOOL m_bIsDrop = false;
+	BOOL m_bIsFrameStop = false;
+	BOOL m_bIsCooking = false;
+	BOOL m_bIsBurnt = false;
+	BOOL m_bIsFull = false;
+	BOOL m_bIsEmpty = false;
+	BOOL m_bIsHit = false;
 
 
 

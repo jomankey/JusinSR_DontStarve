@@ -23,13 +23,52 @@ HRESULT CCookingPot::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = COOKING_POT;
-	
+	m_eCookingpotCurState = COOKINGPOT_DEFAULT;
 	m_fFrame = 0.0f;
 	return S_OK;
 }
 
 _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 {
+	if (GetAsyncKeyState('T')) // 횃불
+	{
+		
+		Set_Drop();
+	}
+	if (GetAsyncKeyState('6')) // 횃불
+	{
+		Set_Cooking(false);
+	}
+
+	if (GetAsyncKeyState('7')) // 횃불
+	{
+		Set_Cooking(true);
+	}
+
+
+
+	if (GetAsyncKeyState('8')) // 횃불
+	{
+		Set_Hit();
+		Set_Empty();
+	}
+	if (GetAsyncKeyState('9')) // 횃불
+	{
+		Set_Hit();
+		Set_Full();
+	}
+
+	if (GetAsyncKeyState('0')) // 횃불
+	{
+		Set_Burnt();
+	}
+
+	if (!m_bIsFrameStop)
+	{
+		m_fFrame += m_fFrameEnd * fTimeDelta;
+	}
+
+	
 
 
 
@@ -37,6 +76,7 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 	
 
+	Change_Frame_Event();
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -50,7 +90,7 @@ void CCookingPot::LateUpdate_GameObject()
 {
 
 
-
+	
 	Check_FrameState();
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
@@ -120,13 +160,15 @@ HRESULT CCookingPot::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_CookingPot_Hit_Empty", pComponent });
 
+	pComponent = m_pCookingpotTexCom[COOKINGPOT_DEFAULT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_CookingPot_Default"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_CookingPot_Default", pComponent });
+
 	pComponent = m_pCookingpotTexCom[COOKINGPOT_HIT_COOKING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_CookingPot_Hit"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_CookingPot_Hit", pComponent });
 
-	pComponent = m_pCookingpotTexCom[COOKINGPOT_END] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_CookingPot_Default"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_CookingPot_Default", pComponent });
+
 
 
 
@@ -162,7 +204,6 @@ void CCookingPot::Check_FrameState()
 	{
 
 
-
 		switch (m_eCookingpotCurState)
 		{
 		case CCookingPot::COOKINGPOT_IDLE_EMPTY:
@@ -186,7 +227,7 @@ void CCookingPot::Check_FrameState()
 		case CCookingPot::COOKINGPOT_HIT_COOKING:
 			m_fFrameEnd = 9.0f;
 			break;
-		case CCookingPot::COOKINGPOT_END:
+		case CCookingPot::COOKINGPOT_DEFAULT:
 			m_fFrameEnd = 0.0f;
 			break;
 		default:
@@ -195,6 +236,94 @@ void CCookingPot::Check_FrameState()
 		m_eCookingpotPrevState = m_eCookingpotCurState;
 		m_fFrame = 0.0f;
 	}
+}
+
+void CCookingPot::Change_Frame_Event()
+{
+	if (m_bIsDrop)
+	{
+		if (m_eCookingpotCurState == COOKINGPOT_DEFAULT)
+		{
+			m_eCookingpotCurState = COOKINGPOT_PLACE;
+		}
+
+		//솥이 타버리면 복구 불가
+		if (m_bIsBurnt)
+		{
+			m_eCookingpotCurState = COOKINGPOT_BURNT;
+			return;
+
+		}
+
+		//솥이 떨어지는 모션이 끝나면 프레임 고정
+		if (m_eCookingpotCurState== COOKINGPOT_PLACE&&m_fFrame>m_fFrameEnd)
+		{
+			m_bIsFrameStop = true;
+			m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
+		}
+		
+		//솥이 떨어지는 모션이 끝나고 그리고 요리가 시작 되었을 때 프레임 반복
+		else if (m_eCookingpotCurState == COOKINGPOT_COOKING_LOOP&& m_bIsCooking)
+		{
+			m_bIsFrameStop= false;
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_fFrame=0.0f;
+			}
+		}
+
+		//솥이 떨어지는 모션이 끝나고 요리가 시작되지 않았을 때 Empty로 돌아감
+		else if(m_eCookingpotCurState == COOKINGPOT_COOKING_LOOP && !m_bIsCooking)
+		{
+			m_bIsFrameStop = true;
+			m_eCookingpotCurState = COOKINGPOT_IDLE_EMPTY;
+		}
+
+
+		//요리를 다시 시작하려 할 때
+		if (m_eCookingpotCurState == COOKINGPOT_IDLE_EMPTY && m_bIsCooking)
+		{
+			m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
+		}
+
+
+		//솥에 요리가 비어있고, 요리 중일 때
+		if (m_bIsHit&& m_bIsEmpty&& m_bIsCooking)
+		{
+		
+			m_eCookingpotCurState = COOKINGPOT_HIT_EMPTY;
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_fFrame = 0.0f;
+				m_bIsHit = false;
+				m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
+			}
+
+		}
+
+		//솥에 요리가 차있고, 요리 중일 때
+		if (m_bIsHit && m_bIsFull&& m_bIsCooking)
+		{
+			
+			m_eCookingpotCurState= COOKINGPOT_HIT_COOKING;
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_fFrame = 0.0f;
+				m_bIsHit = false;
+				m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
+
+			}
+
+		}
+
+
+
+
+
+
+	}
+
+
 }
 
 
