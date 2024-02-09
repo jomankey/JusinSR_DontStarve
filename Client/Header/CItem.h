@@ -6,6 +6,7 @@ namespace Engine
 class CRcTex;
 class CTexture;
 class CTransform;
+class CCalculator;
 }
 
 struct ItemInfo
@@ -65,9 +66,15 @@ protected:
 protected:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
+	Engine::CCalculator* m_pCalculatorCom;
 
 protected:
 	ItemInfo	m_tItemInfo;
+
+	_matrix				m_ViewMatrix, m_ProjMatrix;
+	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
+	_float m_fPreX, m_fPreY;
+
 
 };
 

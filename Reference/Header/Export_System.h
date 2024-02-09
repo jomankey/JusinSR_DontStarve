@@ -66,6 +66,8 @@ namespace Engine
 		_vec3 vPlayerScale,
 		_vec3 vMonsterScale);
 	inline _bool Collision_Mouse(_vec2 vMousePos, _float fX, _float fY, _float fSizeX, _float fSizeY);
+	inline _bool Collision_Mouse_Object(_vec3 vRayPos, _vec3 vRayDir, _vec3 vObjPos, _vec3 vObjScale);
+
 	
 
 

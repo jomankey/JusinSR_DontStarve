@@ -5,7 +5,7 @@
 #include <Slot.h>
 #include "SlotMgr.h"
 CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
-	: CItem(pGraphicDev, _strObjName), m_fX(vPos.x), m_fY(vPos.y), m_fSizeX(0.f), m_fSizeY(0.f), m_bFood(bFood), m_eItemType(eType), m_fPreX(0.f), m_fPreY(0.f), m_eArmorSlotType(ARMOR_SLOT_END)
+	: CItem(pGraphicDev, _strObjName), m_bFood(bFood), m_eItemType(eType), m_eArmorSlotType(ARMOR_SLOT_END), m_vPos(vPos)
 {
 	m_tItemInfo.ItemCount = 1;
 }
@@ -23,6 +23,9 @@ HRESULT CItemTool::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_fX = m_vPos.x;
+	m_fY = m_vPos.y;
+	
 	m_fSizeX = 15.f;
 	m_fSizeY = 15.f;
 

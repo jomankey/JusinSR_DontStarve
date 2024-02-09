@@ -165,6 +165,79 @@ _bool CCollisionMgr::Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPla
 	return true;
 }
 
+_bool Engine::CCollisionMgr::Collision_Mouse_Object(_vec3 vRayPos, _vec3 vRayDir, _vec3 vObjPos, _vec3 vObjScale)
+{
+	//컬라이더가 붙을 월드 위치
+	float minValue = 0.0f, maxValue = FLT_MAX;
+
+	_vec3 minPosition = _vec3{ vObjPos.x - (vObjScale.x * 0.5f), vObjPos.y - (vObjScale.y * 0.5f), vObjPos.z - (vObjScale.z * 0.5f) };
+	_vec3 maxPosition = _vec3{ vObjPos.x + (vObjScale.x * 0.5f), vObjPos.y + (vObjScale.y * 0.5f), vObjPos.z + (vObjScale.z * 0.5f) };
+	//X축 검사
+	if (fabsf(vRayDir.x) >= 0.f)
+	{
+		float value = 1.0f / vRayDir.x;
+		float minX = (minPosition.x - vRayPos.x) * value;
+		float maxX = (maxPosition.x - vRayPos.x) * value;
+
+		if (minX > maxX)
+		{
+			float temp = minX;
+			minX = maxX;
+			maxX = temp;
+		}
+
+		minValue = max(minX, minValue);
+		maxValue = min(maxX, maxValue);
+
+		if (minValue > maxValue)
+			return false;
+	}
+
+	//Y축 검사
+	if (fabsf(vRayDir.y) >= 0.f)
+	{
+		float value = 1.0f / vRayDir.y;
+		float minY = (minPosition.y - vRayPos.y) * value;
+		float maxY = (maxPosition.y - vRayPos.y) * value;
+
+		if (minY > maxY)
+		{
+			float temp = minY;
+			minY = maxY;
+			maxY = temp;
+		}
+
+		minValue = max(minY, minValue);
+		maxValue = min(maxY, maxValue);
+
+		if (minValue > maxValue)
+			return false;
+	}
+
+	//Z축 검사
+	if (fabsf(vRayDir.z) >= 0.f)
+	{
+		float value = 1.0f / vRayDir.z;
+		float minZ = (minPosition.z - vRayPos.z) * value;
+		float maxZ = (maxPosition.z - vRayPos.z) * value;
+
+		if (minZ > maxZ)
+		{
+			float temp = minZ;
+			minZ = maxZ;
+			maxZ = temp;
+		}
+
+		minValue = max(minZ, minValue);
+		maxValue = min(maxZ, maxValue);
+
+		if (minValue > maxValue)
+			return false;
+	}
+
+	return true;
+}
+
 _bool Engine::CCollisionMgr::Collision_Mouse(_vec2 vMousePos, _float fX, _float fY, _float fSizeX, _float fSizeY)
 {
 	if (fX - (fSizeX) < vMousePos.x && vMousePos.x < fX + (fSizeX))

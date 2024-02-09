@@ -29,6 +29,9 @@ namespace Engine
 			const _ulong& dwCntX = VTXCNTX,
 			const _ulong& dwCntZ = VTXCNTZ);
 
+		void Change_MouseMatrix(HWND hWnd, _vec3 vMousePos, _vec3* _vRayPos, _vec3* _vRayDir); // 월드 좌표 마우스 pos, dir 값 구함
+		void Change_OnObjectMatrix(HWND hWnd, _vec3* vObjPos);
+
 		//Tool용 마우스 피킹
 		_ulong Picking_OnTerrain_Tool(HWND hWnd,
 			CTerrainTex* pTerrainBufferCom,

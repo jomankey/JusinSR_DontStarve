@@ -8,7 +8,7 @@
 
 
 CItem::CItem(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CGameObject(pGraphicDev, L"NONE")
+	:CGameObject(pGraphicDev, L"NONE"), m_fX(0.f), m_fY(0.f), m_fSizeX(0.f), m_fSizeY(0.f), m_fPreX(0.f), m_fPreY(0.f)
 	, m_pBufferCom(nullptr)
 	, m_pTextureCom(nullptr)
 	, m_tItemInfo{}
@@ -72,6 +72,11 @@ HRESULT CItem::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(0.5f, 0.3f, 0.5f));
+
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
+
 	return S_OK;
 }
 

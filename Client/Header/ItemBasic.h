@@ -10,6 +10,9 @@ private:
     virtual ~CItemBasic();
 
 public:
+    void Pickup_Item(_vec3 vSlotPos);
+
+public:
     HRESULT Ready_GameObject() override;
     _int Update_GameObject(const _float& fTimeDelta) override;
     void LateUpdate_GameObject() override;
@@ -20,5 +23,11 @@ public:
 
 private:
     virtual void Free();
+
+private:
+    _bool m_bChangeRander;
+
+    _vec3 m_vPos = {};
+    _vec3 m_vSlotPos = {};
 };
 

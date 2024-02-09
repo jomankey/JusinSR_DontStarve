@@ -252,7 +252,64 @@ _vec3 Engine::CCalculator::Picking_OnCubeTerrain(HWND hWnd, vector<CGameObject*>
 	return  _vec3();
 }
 
-								
+void Engine::CCalculator::Change_MouseMatrix(HWND hWnd, _vec3 vMousePos, _vec3* _vRayPos, _vec3* _vRayDir)
+{
+	// 뷰포트 -> 투영
+
+	D3DVIEWPORT9		ViewPort;
+	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
+	m_pGraphicDev->GetViewport(&ViewPort);
+
+	vMousePos.x = vMousePos.x / (ViewPort.Width * 0.5f) - 1.f;
+	vMousePos.y = vMousePos.y / -(ViewPort.Height * 0.5f) + 1.f;
+
+	//vMousePos.z = 0.f;
+
+	// 투영 -> 뷰스페이스
+	_matrix	matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixInverse(&matProj, NULL, &matProj);
+	D3DXVec3TransformCoord(&vMousePos, &vMousePos, &matProj);
+
+	// 뷰 스페이스 -> 월드
+	_matrix	matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, NULL, &matView);
+
+	_vec3	vRayDir, vRayPos;
+
+	vRayPos = { 0.f, 0.f, 0.f };
+	vRayDir = vMousePos - vRayPos;
+
+	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
+	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
+
+	*(_vRayPos) = vRayPos;
+	*(_vRayDir) = vRayDir;
+}
+
+//오브젝트 윈도우 좌표로 변환
+void Engine::CCalculator::Change_OnObjectMatrix(HWND hWnd, _vec3* vObjPos)
+{
+	// 월드 -> 뷰 스페이스
+	_matrix matView;
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXVec3TransformCoord(vObjPos, vObjPos, &matView);
+
+	// 뷰 스페이스 -> 투영
+	_matrix matProj;
+	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXVec3TransformCoord(vObjPos, vObjPos, &matProj);
+
+	// 투영 -> 뷰포트
+	D3DVIEWPORT9 matViewPort;
+	m_pGraphicDev->GetViewport(&matViewPort);
+
+	vObjPos->x = vObjPos->x * (WINCX * 0.5) + (WINCX * 0.5);
+	vObjPos->y = vObjPos->y * (-WINCY * 0.5) + (WINCY * 0.5);
+
+	vObjPos->z = 0.f;
+}				
 
 _ulong CCalculator::Picking_OnTerrain_Tool(HWND hWnd,
 	CTerrainTex* pTerrainBufferCom,

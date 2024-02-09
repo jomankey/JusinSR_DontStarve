@@ -133,6 +133,11 @@ _bool Collision_Mouse(_vec2 vMousePos, _float fX, _float fY, _float fSizeX, _flo
 	return CCollisionMgr::GetInstance()->Collision_Mouse(vMousePos, fX, fY, fSizeX, fSizeY);
 }
 
+_bool Collision_Mouse_Object(_vec3 vRayPos, _vec3 vRayDir, _vec3 vObjPos, _vec3 vObjScale)
+{
+	return CCollisionMgr::GetInstance()->Collision_Mouse_Object(vRayPos, vRayDir, vObjPos, vObjScale);
+}
+
 
 
 //Resource

@@ -96,9 +96,13 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
 
 	//UI
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà",  L"Panel_Title", 15, 15, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Panel_Info",  6, 10, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Button_Make", 10, 15, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà",  L"Panel_Title", 20, 20, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Panel_Info",  12, 12, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Button_Make", 18, 18, FW_THIN), E_FAIL);
+
+	//Mouse
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Title", 21, 21, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Sub", 19, 19, FW_HEAVY), E_FAIL);
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);

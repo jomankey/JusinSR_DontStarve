@@ -42,8 +42,9 @@ HRESULT CHpUI::Ready_GameObject()
 
 _int CHpUI::Update_GameObject(const _float& fTimeDelta)
 {
+	m_pTransForm->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
+	m_pTransForm->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
 	__super::Update_GameObject(fTimeDelta);
-
 	return 0;
 }
 

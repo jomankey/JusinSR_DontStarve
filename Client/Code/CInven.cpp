@@ -22,7 +22,7 @@ HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_fSizeY = 340.f;
 
 	//직교투영
-	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(90.f));
 

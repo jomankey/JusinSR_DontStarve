@@ -49,7 +49,9 @@
 #include"SlideUI.h"
 #include"CHpUI.h"
 #include"CMentalUI.h"
-#include"CWorldUI.h"
+#include"WorldUI.h"
+#include "WorldTimeBody.h"
+#include "WorldHand.h"
 #include"CHungryUI.h"
 #include"ExplainPanel.h"
 #include <ItemBasic.h>
@@ -198,38 +200,6 @@ HRESULT CBossScene::Ready_Layer_UI()
 	NULL_CHECK_RETURN(uiLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
-	//Before UI struct 
-	//-------------------------------------------
-
-	////인벤토리
-	//pGameObject = CInven::Create(m_pGraphicDev, UI_STATE::UI_STATIC);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
-
-	//인벤토리 슬롯 이미지
-	//for (int i = 0; i < 15; i++)
-	//{
-	//	int PixelJump = 0;
-	//	if (i == 5 || i == 10 || i == 15)
-	//		PixelJump = 7;
-
-	//	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(130.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot");
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-	//}
-
-	//인벤토리에 들어갈 아이템 이미지
-	//for (int i = 0; i < 15; i++)
-	//{
-	//	int PixelJump = 0;
-	//	if (i == 5 || i == 10 || i == 15)
-	//		PixelJump = 7;
-
-	//	pGameObject = CInvenBox::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(150.f + PixelJump + (i * 35), 580, 0.f), _vec3(15.f, 15.f, 0.f), L"Proto_UI_Item_Inven_Slot", i);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-	//}
 
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev);
@@ -247,17 +217,17 @@ HRESULT CBossScene::Ready_Layer_UI()
 
 
 	//WorldUI
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(40.f, 40.f, 0.f), L"Proto_UI_World_1");
+	pGameObject = CWorldUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//WorldUI
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(40.f, 40.f, 0.f), L"Proto_UI_World_2");
+	pGameObject = CWorldTimeBody::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//WorldUIClock
-	pGameObject = CWorldUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(10.f, 30.f, 0.f), L"Proto_UI_World_10");
+	pGameObject = CWorldHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 

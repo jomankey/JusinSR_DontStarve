@@ -96,8 +96,9 @@ void CButtonUI::Input_Mouse()
         //아이템 제작 
         if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
         {
+            _vec3 vSlotPos;
             // 생산 로직 구현 
-            CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strCreateItemKey);
+            CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strCreateItemKey, &vSlotPos);
         }
     }
 }

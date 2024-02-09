@@ -190,6 +190,7 @@
     <ClInclude Include="..\Header\CInven.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\InvenSlot.h" />
+    <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\Slot.h" />
     <ClInclude Include="..\Header\StateUI.h" />
     <ClInclude Include="..\Header\UIMgr.h" />
@@ -209,7 +210,8 @@
     <ClInclude Include="..\Header\CTeleporterWorm.h" />
     <ClInclude Include="..\Header\CToolUI.h" />
     <ClInclude Include="..\Header\CUI.h" />
-    <ClInclude Include="..\Header\CWorldUI.h" />
+    <ClInclude Include="..\Header\WorldHand.h" />
+    <ClInclude Include="..\Header\WorldUI.h" />
     <ClInclude Include="..\Header\DeerClops.h" />
     <ClInclude Include="..\Header\DynamicCamera.h" />
     <ClInclude Include="..\Header\Effect.h" />
@@ -229,6 +231,7 @@
     <ClInclude Include="..\Header\Stage.h" />
     <ClInclude Include="..\Header\Tallbird.h" />
     <ClInclude Include="..\Header\Terrain.h" />
+    <ClInclude Include="..\Header\WorldTimeBody.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="FuncEvent.h" />
     <ClInclude Include="Resource.h" />
@@ -252,6 +255,7 @@
     <ClCompile Include="..\Code\BerryBush.cpp" />
     <ClCompile Include="..\Code\CInven.cpp" />
     <ClCompile Include="..\Code\InvenSlot.cpp" />
+    <ClCompile Include="..\Code\Mouse.cpp" />
     <ClCompile Include="..\Code\Slot.cpp" />
     <ClCompile Include="..\Code\StateUI.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />
@@ -271,7 +275,8 @@
     <ClCompile Include="..\Code\CTeleporterWorm.cpp" />
     <ClCompile Include="..\Code\CToolUI.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
-    <ClCompile Include="..\Code\CWorldUI.cpp" />
+    <ClCompile Include="..\Code\WorldHand.cpp" />
+    <ClCompile Include="..\Code\WorldUI.cpp" />
     <ClCompile Include="..\Code\DeerClops.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
@@ -291,6 +296,7 @@
     <ClCompile Include="..\Code\Stage.cpp" />
     <ClCompile Include="..\Code\Tallbird.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
+    <ClCompile Include="..\Code\WorldTimeBody.cpp" />
     <ClCompile Include="..\Header\Ghost.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="FuncEvent.cpp" />

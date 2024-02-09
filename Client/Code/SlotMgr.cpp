@@ -21,17 +21,18 @@ CSlotMgr::~CSlotMgr()
 }
 
 //아이템 습득실패시 false반환
-_bool CSlotMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey)
+_bool CSlotMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos)
 {
 	vector<CSlot*> vecBox = Get_BoxList(INVEN);
 
 	for (int i = 0; i < INVENCNT; ++i) // 인벤토리 빈칸 있는지 없는지 체크
 	{
+		_vec3 vPos;
+		vPos.x = vecBox[i]->Get_fX();
+		vPos.y = vecBox[i]->Get_fY();
+
 		if (m_pItemArr[i] == nullptr) // 아이템이 없다면 인벤에 아이템 생성
 		{
-			_vec3 vPos;
-			vPos.x = vecBox[i]->Get_fX();
-			vPos.y = vecBox[i]->Get_fY();
 			/*
 			L"Log"
 			L"Berries"
@@ -65,13 +66,14 @@ _bool CSlotMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey)
 			if (eArmor != ARMOR_SLOT_END) dynamic_cast<CItemTool*>(pItem)->Set_ArmorSlotType(eArmor);
 			dynamic_cast<CItemTool*>(pItem)->Set_BoxIndex(i);
 			m_pItemArr[i] = pItem;
-
+			(*vSlotPos) = vPos;
 			return true;
 		}
 
 		if (m_pItemArr[i]->GetObjName() == strItemKey) // 같은 아이템이 있다면 아이템 카운트 증가
 		{
 			m_pItemArr[i]->AddItemCount(1);
+			(*vSlotPos) = vPos;
 			return true;
 		}
 	}

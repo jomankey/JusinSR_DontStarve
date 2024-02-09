@@ -43,7 +43,7 @@ public:
     void LateUpdate_InvenBoxMgr(BOX_TYPE eType);
     void Render_InvenBoxMgr(BOX_TYPE eType);
     
-    _bool	AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey);	//반환값이False면 아이템습득실패(아이템꽉참)
+    _bool	AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos);	//반환값이False면 아이템습득실패(아이템꽉참)
 
 private:
     virtual void Free();

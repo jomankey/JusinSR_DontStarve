@@ -196,6 +196,15 @@
     <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime">
       <UniqueIdentifier>{73167806-e74e-41b5-9ccb-8cea2609506c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody">
+      <UniqueIdentifier>{33f80c82-e3e7-4aa7-b765-1b6ff03e65e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand">
+      <UniqueIdentifier>{e961d514-a094-47b3-9eb3-360bf558ea58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\12. Mouse">
+      <UniqueIdentifier>{6082ec61-eb0d-4af5-9eab-6e79fed2384f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -378,11 +387,20 @@
     <ClInclude Include="..\Header\CMentalUI.h">
       <Filter>02. GameObject\07. CUI\03. StateUI\Mental</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CWorldUI.h">
+    <ClInclude Include="..\Header\WorldUI.h">
       <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\StateUI.h">
       <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WorldTimeBody.h">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WorldHand.h">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mouse.h">
+      <Filter>02. GameObject\12. Mouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -557,11 +575,20 @@
     <ClCompile Include="..\Code\CMentalUI.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI\Mental</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CWorldUI.cpp">
+    <ClCompile Include="..\Code\WorldUI.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\StateUI.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WorldTimeBody.cpp">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WorldHand.cpp">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mouse.cpp">
+      <Filter>02. GameObject\12. Mouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
