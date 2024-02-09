@@ -429,6 +429,26 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Off", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_off__000.png")), E_FAIL);
 
+	//Obj_BonFIre
+	//Drop_state
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BonFIre_Drop", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/place/place__%03d.png",7)), E_FAIL);
+	//Idle_state
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Bonfire_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/new_idle__000.png")), E_FAIL);
+
+
+	//FIre
+	//Level_1
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev1/lev1__%03d.png",6)), E_FAIL);
+	//Level_2
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev2/lev2__%03d.png",6)), E_FAIL);
+	//Level_3
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_3", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev3/lev3__%03d.png",6)), E_FAIL);
+	//Level_4
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_4", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev4/lev4__%03d.png",6)), E_FAIL);
+
+
+
+
 
 	//Item Object
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Log", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Log.png")), E_FAIL);

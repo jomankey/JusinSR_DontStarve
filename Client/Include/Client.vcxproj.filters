@@ -178,6 +178,9 @@
     <Filter Include="02. GameObject\06. Effect\00. Ghost">
       <UniqueIdentifier>{ea685cc4-e200-4189-9c95-3f60ead51ec9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\10. BonFire">
+      <UniqueIdentifier>{7d73ea03-86cf-4ba3-945a-6e970bdcddd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -357,6 +360,12 @@
     <ClInclude Include="..\Header\Ghost.h">
       <Filter>02. GameObject\06. Effect\00. Ghost</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\CBonfire.h">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CFIre.h">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -526,6 +535,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Ghost.cpp">
       <Filter>02. GameObject\06. Effect\00. Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CBonfire.cpp">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CFIre.cpp">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
