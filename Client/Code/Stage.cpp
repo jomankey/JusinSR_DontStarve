@@ -18,9 +18,7 @@
 #include "Pig.h"
 #include "Tallbird.h"
 #include "BerryBush.h"
-#include"CObjectFireFlies.h"
-#include"CTeleporterWorm.h"
-#include"CBossDoor.h"
+
 
 #include "Transform.h"
 //Scene
@@ -31,6 +29,11 @@
 #include "CObjectRock.h"
 #include "CObjectGrass.h"
 #include "CObjectTree.h"
+#include"CObjectFireFlies.h"
+#include"CTeleporterWorm.h"
+#include"CBossDoor.h"
+#include"CBonfire.h"
+#include"CFIre.h"
 
 // Item/Object
 #include "CItem.h"
@@ -44,6 +47,7 @@
 #include "CSpike.h"
 #include "CToothTrap.h"
 #include "CTumbleWeed.h"
+
 
 
 //UI
@@ -218,6 +222,24 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	//}
+
+
+	for (_int i = 0; i < 10; ++i)
+	{
+		pGameObject = CBonfire::Create(m_pGraphicDev);
+		pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	}
+	//	for (_int i = 0; i < 10; ++i)
+	//{
+	//	pGameObject = CFire::Create(m_pGraphicDev);
+	//	pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	//}
+
+
 
 	/*for (_int i = 0; i < 10; ++i)
 	{
