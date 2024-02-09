@@ -6,6 +6,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\Beefalo.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\code\CBonfire.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\CBossScene.cpp"
 
 
@@ -18,7 +21,16 @@
 #include "C:\GitHub\JusinSR\Client\Code\CCatapult.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\code\CCookingPot.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\code\CFIre.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\CSpike.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\code\CTent.cpp"
 
 
 #include "C:\GitHub\JusinSR\Client\Code\CToothTrap.cpp"

@@ -83,6 +83,7 @@ CTexture * CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, cons
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("Texture Create Failed");
+
 		return nullptr;
 	}
 

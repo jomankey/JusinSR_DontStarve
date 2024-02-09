@@ -63,9 +63,9 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 		//createObject
 		_vec3 vPos;
 		m_pTransForm->Get_Info(INFO_POS, &vPos);
-
-		auto pGameObject =  CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", vPos);
+		auto pGameObject = CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", vPos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::TRAP, pGameObject);
+		m_pAnimCom->SetCurAnimationFrame(L"ATK_DOWN", 16);
 	}
 
 	if (m_eCurState == eTRAP_STATE::ATK && m_pAnimCom->IsFinish(L"ATK_DOWN"))//공격끝나면
