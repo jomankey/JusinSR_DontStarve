@@ -27,7 +27,7 @@ HRESULT CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev,
 	pFont = CMyFont::Create(pGraphicDev, pFontType, iWidth, iHeight, iWeight);
 	NULL_CHECK_RETURN(pFont, E_FAIL);
 
-	m_mapFont.insert({ pFontType, pFont });
+	m_mapFont.insert({ pFontTag, pFont });
 
 	return S_OK;
 }

@@ -24,12 +24,22 @@ private:
 	virtual ~CPlayer();
 
 public:
+	_uint Get_PlayerHp() { return m_Stat.fHP; }
+	_uint Get_PlayerMaxHp() { return m_Stat.fMxHP; }
+	_uint Get_PlayerHungry() { return m_Stat.fHungry; }
+	_uint Get_PlayerMaxHangry() { return m_Stat.fMaxHungry; }
+	_uint Get_PlayerMental() { return m_Stat.fMental; }
+	_uint Get_PlayerMaxMental() { return m_Stat.fMaxMental; }
+	
+
+public:
 	virtual HRESULT Ready_GameObject()						 override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 	void			Set_Attack(int _Atk);			//공격당했을 때 호출되는 함수
 	_bool			IsPlayer_Dead() { return m_Stat.bDead; }	//외부에서 죽었는지 확인하는 함수
+
 private:
 	HRESULT			Add_Component();
 	void			Key_Input(const _float& fTimeDelta);
@@ -46,6 +56,7 @@ private:
 	HRESULT Ready_Light();	//조명
 	void Fire_Light();
 	
+	void Update_State(const _float& fTimeDelta);
 
 	CGameObject* Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget);
 

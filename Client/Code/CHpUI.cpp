@@ -7,89 +7,94 @@
 #include "Export_System.h"
 
 #include "Scene.h"
+#include <Player.h>
 
-CHpUI::CHpUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-	: CUI(pGraphicDev, eUIState, _UI_Name)
-	, m_fMaxHp(0.f)
-	, m_fCurentHp(0.f)
-	, m_frame(0.f)
-	, m_frameEnd(0.f)
-
+CHpUI::CHpUI(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CStateUI(pGraphicDev)
 {
-
 }
 
 CHpUI::CHpUI(const CHpUI& rhs)
-	: CUI(rhs)
+	: CStateUI(rhs)
 {
-
 }
 
 CHpUI::~CHpUI()
 {
 }
 
+HRESULT CHpUI::Ready_GameObject()
+{
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	m_fX = 680.f;
+	m_fY = 110.f;
+
+	m_fSizeX = 30.f;
+	m_fSizeY = 30.f;
+
+	__super::Ready_GameObject();
+
+	m_frameEnd = 20.f;
+
+	return S_OK;
+}
+
 _int CHpUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-
-	//if (!m_bFrameStop) {
-	//	if (m_bHpPiusMInus) //+메소드
-	//	{
-	//		m_frame -= fTimeDelta;
-	//		if (m_frame <= (m_PreFrame))
-	//		{
-	//			m_bFrameStop = true;
-	//			m_frameEnd = 0.f;
-	//		}
-	//
-	//	}
-	//	else    //-메소드
-	//	{
-	//		m_frame += fTimeDelta;
-	//		if (m_frame >= m_PreFrame)
-	//		{
-	//			m_bFrameStop = true;
-	//			m_frameEnd = 0.f;
-	//		}
-	//	}
-	//}
-
-
-	if (GetAsyncKeyState('L')) // 공격
-	{
-		MinusCurntHp(10);
-	}
-
-if (GetAsyncKeyState('K')) // 공격
-	{
-		AddCurntHp(10);
-	}
 	return 0;
+}
+
+void CHpUI::LateUpdate_GameObject()
+{
+	__super::LateUpdate_GameObject();
+	Check_State();
 }
 
 void CHpUI::Render_GameObject()
 {
-
-	scenemgr::Get_CurScene()->BeginOrtho();
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pTextureCom->Set_Texture((_uint)m_fImageCount);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	m_pBufferCom->Render_Buffer();
-
-
-
-	scenemgr::Get_CurScene()->EndOrtho();
-
+	__super::Render_GameObject();
 }
 
-CHpUI* CHpUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+HRESULT CHpUI::Add_Component()
 {
-	CHpUI* pInstance = new CHpUI(pGraphicDev, _State, _UI_Name);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
+	CComponent* pComponent = nullptr;
+
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_UI_HP"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_UI_HP", pComponent });
+
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+	return S_OK;
+}
+
+void CHpUI::Check_State()
+{
+	CGameObject* pP = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PLAYER)[0];
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(pP);
+
+	_float fHp = pPlayer->Get_PlayerHp();
+	_float fMaxHp = pPlayer->Get_PlayerMaxHp();
+
+	_float fFrame = (fMaxHp - fHp) / 10.f;
+	
+	if (fFrame < m_frameEnd)
+		m_frame = fFrame;
+}
+
+CHpUI* CHpUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CHpUI* pInstance = new CHpUI(pGraphicDev);
+	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");
@@ -101,106 +106,5 @@ CHpUI* CHpUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos,
 
 void CHpUI::Free()
 {
-	CUI::Free();
-}
-
-void CHpUI::AddCurntHp(const _float _value)  //0이 풀피임
-{
-	if (_value < 0)
-		return;
-
-	if (m_fImageCount <= 0)
-	{
-		m_fImageCount = 0;
-		return;
-	}
-
-
-	if (_value / 10 > m_fImageCount)
-	{
-		m_fImageCount = 0;
-		return;
-	}
-
-	if (m_fImageCount <= 19.f)
-	{
-		m_fImageCount -= _value / 10.f;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//m_fCurentHp += _value/10;
-	//if (m_fMaxHp <= m_fCurentHp)
-	//{
-	//	m_fCurentHp = m_fMaxHp;
-	//	return;
-	//}
-	//else
-	//{
-	//	m_fCurentHp += _value;
-	//	m_frameEnd = _value/10;
-	//	m_bHpPiusMInus = true;
-	//}
-
-}
-
-void CHpUI::MinusCurntHp(const _float _value)
-{
-	if (_value < 0)
-		return;
-
-	if (m_fImageCount > m_fImageMaxCount)
-	{
-		m_fImageCount = m_fImageMaxCount;
-		return;
-	}
-	if (_value / 10 > (m_fImageMaxCount - m_fImageCount))
-	{
-		m_fImageCount = m_fImageMaxCount;
-		return;
-	}
-
-
-
-	
-	if(m_fImageCount==19)
-		return;
-
-	if (_value >=m_fImageMaxCount*10.f)
-	{
-		m_fImageCount = 19.f;
-		return;
-	}
-
-	if (m_fImageCount<19.f)
-	{
-		m_fImageCount += _value / 10.f;
-	}
-	
-
-	//_float Scr = m_fCurentHp -_value;
-	//m_fCurentHp -= _value;
-	//
-	//if (0 >= m_fCurentHp)
-	//{
-	//	m_fCurentHp = 0;
-	//	return;
-	//}
-	//else
-	//{
-	//	m_bFrameStop = false;
-	//	m_frameEnd = _value/10;
-	//	m_bHpPiusMInus = true;
-	//	m_PreFrame = m_frame + m_frameEnd;
-	//}
+	__super::Free();
 }

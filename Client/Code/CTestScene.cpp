@@ -190,16 +190,16 @@ HRESULT CTestScene::Ready_Layer_UI()
 	//}
 
 	//HpUI
-	pGameObject = CHpUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(680.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_HP");
+	pGameObject = CHpUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//Mental
-	pGameObject = CMentalUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(770.f, 110.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Mental");
+	pGameObject = CMentalUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 	//Hunger
-	pGameObject = CHungryUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 130.f, 0.f), _vec3(30.f, 30.f, 0.f), L"Proto_UI_Hungry");
+	pGameObject = CHungryUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 

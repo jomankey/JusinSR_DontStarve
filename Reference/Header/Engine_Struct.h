@@ -57,6 +57,10 @@ namespace Engine
 		_float fATK;
 		_float fAggroRange;
 		_float fATKRange;
+		_float fHungry;
+		_float fMaxHungry;
+		_float fMental;
+		_float fMaxMental;
 		_bool bDead;
 	}OBJSTAT;
 

@@ -1,62 +1,92 @@
 #include"CMentalUI.h"
-
-
-
 #include "Export_Utility.h"
 #include "Export_System.h"
 
 #include "Scene.h"
+#include <Player.h>
 
 
-CMentalUI::CMentalUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-	: CUI(pGraphicDev, eUIState, _UI_Name)
+CMentalUI::CMentalUI(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CStateUI(pGraphicDev)
 {
-
-
-}
-
-CMentalUI::CMentalUI(const CMentalUI& rhs)
-	: CUI(rhs)
-{
-
 }
 
 CMentalUI::~CMentalUI()
 {
 }
 
+HRESULT CMentalUI::Ready_GameObject()
+{
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	m_fX = 770.f;
+	m_fY = 110.f;
+
+	m_fSizeX = 30.f;
+	m_fSizeY = 30.f;
+
+	__super::Ready_GameObject();
+
+	m_frameEnd = 20.f;
+
+	return S_OK;
+}
+
 _int CMentalUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-
-
-
 	return 0;
+}
+
+void CMentalUI::LateUpdate_GameObject()
+{
+	__super::LateUpdate_GameObject();
+	Check_State();
 }
 
 void CMentalUI::Render_GameObject()
 {
-	scenemgr::Get_CurScene()->BeginOrtho();
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pTextureCom->Set_Texture(m_fImageCount);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	m_pBufferCom->Render_Buffer();
-
-
-
-	scenemgr::Get_CurScene()->EndOrtho();
-
-
-
+	__super::Render_GameObject();
 }
 
-CMentalUI* CMentalUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+HRESULT CMentalUI::Add_Component()
 {
-	CMentalUI* pInstance = new CMentalUI(pGraphicDev, _State, _UI_Name);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
+	CComponent* pComponent = nullptr;
+
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_UI_Mental"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_UI_Mental", pComponent });
+
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+	return S_OK;
+}
+
+void CMentalUI::Check_State()
+{
+	CGameObject* pP = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PLAYER)[0];
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(pP);
+
+	_float fMental = pPlayer->Get_PlayerMental();
+	_float fMaxMental = pPlayer->Get_PlayerMaxMental();
+
+	_float fFrame = (fMaxMental - fMental) / 10.f;
+
+	if (fFrame < m_frameEnd)
+		m_frame = fFrame;
+}
+
+CMentalUI* CMentalUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CMentalUI* pInstance = new CMentalUI(pGraphicDev);
+	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");
@@ -66,7 +96,8 @@ CMentalUI* CMentalUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _ve
 	return pInstance;
 }
 
+
 void CMentalUI::Free()
 {
-	CUI::Free();
+	__super::Free();
 }

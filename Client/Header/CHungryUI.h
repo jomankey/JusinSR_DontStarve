@@ -1,37 +1,27 @@
 #pragma once
-#include "CUI.h"
 
-class CHungryUI : public CUI
+#include "StateUI.h"
+
+class CHungryUI : public CStateUI
 {
-protected:
-	explicit CHungryUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name);
-	explicit CHungryUI(const CHungryUI& rhs);
+private:
+	explicit CHungryUI(LPDIRECT3DDEVICE9 pGraphicDev);
 	virtual ~CHungryUI();
 
 public:
+	virtual HRESULT Ready_GameObject() override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
-	virtual void Render_GameObject()						 override;
+	virtual void LateUpdate_GameObject()					 override;
+	virtual void Render_GameObject() override;
 
-
-public:
-	static CHungryUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle = 0.f);
-	virtual void Free() override;
-
-
-
-
-public:
-	void AddCurntHp(const _float _value);
-	void MinusCurntHp(const _float _value);
 private:
-	_float m_fCurentHungry;
+	HRESULT			Add_Component() override;
+	void Check_State() override;
 
-	_float m_fMaxHungry;
+public:
+	static CHungryUI* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
+private:
+	virtual void Free();
 
-
-
-
-	_float m_fImageMaxCount = 19.f;
-	_float m_fImageCount = 0.f;
 };

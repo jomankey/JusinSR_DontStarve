@@ -6,67 +6,91 @@
 #include "Export_System.h"
 
 #include "Scene.h"
+#include <Player.h>
 
 
-CHungryUI::CHungryUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE eUIState, const _tchar* _UI_Name)
-	: CUI(pGraphicDev, eUIState, _UI_Name)
-	, m_fCurentHungry(0.f)
-	, m_fMaxHungry(0.f)
+CHungryUI::CHungryUI(LPDIRECT3DDEVICE9 pGraphicDev)
+	: CStateUI(pGraphicDev)
 
 {
-
-}
-
-CHungryUI::CHungryUI(const CHungryUI& rhs)
-	: CUI(rhs)
-{
-
 }
 
 CHungryUI::~CHungryUI()
 {
 }
 
+HRESULT CHungryUI::Ready_GameObject()
+{
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	m_fX = 725.f;
+	m_fY = 130.f;
+	
+	m_fSizeX = 30.f;
+	m_fSizeY = 30.f;
+
+	__super::Ready_GameObject();
+
+	m_frameEnd = 20.f;
+
+	return S_OK;
+}
+
 _int CHungryUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	if (GetAsyncKeyState('L')) // 공격
-	{
-		MinusCurntHp(10);
-	}
-
-	if (GetAsyncKeyState('K')) // 공격
-	{
-		AddCurntHp(10);
-	}
-
-
 	return 0;
+}
+
+void CHungryUI::LateUpdate_GameObject()
+{
+	__super::LateUpdate_GameObject();
+	Check_State();
 }
 
 void CHungryUI::Render_GameObject()
 {
-	scenemgr::Get_CurScene()->BeginOrtho();
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-
-	m_pTextureCom->Set_Texture(m_fImageCount);
-
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	m_pBufferCom->Render_Buffer();
-
-
-
-	scenemgr::Get_CurScene()->EndOrtho();
-
-
-
+	__super::Render_GameObject();
 }
 
-CHungryUI* CHungryUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle)
+HRESULT CHungryUI::Add_Component()
 {
-	CHungryUI* pInstance = new CHungryUI(pGraphicDev, _State, _UI_Name);
-	if (FAILED(pInstance->Ready_GameObject(_pos, _size, _Angle)))
+	CComponent* pComponent = nullptr;
+
+	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
+
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_UI_Hungry"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_UI_Hungry", pComponent });
+
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+	return S_OK;
+}
+
+void CHungryUI::Check_State()
+{
+	CGameObject* pP = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PLAYER)[0];
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(pP);
+
+	_float fHungry = pPlayer->Get_PlayerHungry();
+	_float fMaxHungry = pPlayer->Get_PlayerMaxHangry();
+
+	_float fFrame = (fMaxHungry - fHungry) / 10.f;
+
+	if (fFrame < m_frameEnd)
+		m_frame = fFrame;
+}
+
+CHungryUI* CHungryUI::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CHungryUI* pInstance = new CHungryUI(pGraphicDev);
+	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("UI Create Failed");
@@ -78,67 +102,5 @@ CHungryUI* CHungryUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, _ve
 
 void CHungryUI::Free()
 {
-	CUI::Free();
-}
-
-void CHungryUI::AddCurntHp(const _float _value)
-{
-
-
-	if (_value < 0)
-		return;
-
-	if (m_fImageCount <= 0)
-	{
-		m_fImageCount = 0;
-		return;
-	}
-
-
-	if (_value / 10 > m_fImageCount)
-	{
-		m_fImageCount = 0;
-		return;
-	}
-
-	if (m_fImageCount <= 19.f)
-	{
-		m_fImageCount -= _value / 10.f;
-	}
-
-}
-
-void CHungryUI::MinusCurntHp(const _float _value)
-{
-	if (_value < 0)
-		return;
-
-	if (m_fImageCount > m_fImageMaxCount)
-	{
-		m_fImageCount = m_fImageMaxCount;
-		return;
-	}
-	if (_value / 10 > (m_fImageMaxCount - m_fImageCount))
-	{
-		m_fImageCount = m_fImageMaxCount;
-		return;
-	}
-
-
-
-
-	if (m_fImageCount == 19)
-		return;
-
-	if (_value >= m_fImageMaxCount * 10.f)
-	{
-		m_fImageCount = 19.f;
-		return;
-	}
-
-	if (m_fImageCount < 19.f)
-	{
-		m_fImageCount += _value / 10.f;
-	}
-
+	__super::Free();
 }

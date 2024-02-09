@@ -65,6 +65,8 @@ HRESULT CPlayer::Ready_GameObject()
 }
 Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 {
+	Update_State(fTimeDelta); // 플레이어 State 매 프레임마다 업데이트
+
 	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"ROAD" && !m_bIsRoadScene)
 	{
 		m_bIsRoadScene = true;
@@ -832,13 +834,17 @@ void CPlayer::Set_Scale()
 void CPlayer::Set_Stat()
 {
 	m_Stat.fHP = 200.f;
-	m_Stat.fMxHP = 150.f;
+	m_Stat.fMxHP = 200.f;
 	m_Stat.fSpeed = 5.f;
 	m_Stat.fATK = 10.f;
 	m_Stat.fATKRange = 1.f;
 	m_Stat.fAggroRange = 5.f;
+	m_Stat.fHungry = 200.f;
+	m_Stat.fMaxHungry = 200.f;
+	m_Stat.fMental = 200.f;
+	m_Stat.fMaxMental = 200.f;
 	m_Stat.bDead = false;
-
+	
 }
 
 void CPlayer::Set_Attack(int _Atk)
@@ -1017,6 +1023,12 @@ void CPlayer::Fire_Light()
 
 	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
 	light::Get_Light(1)->Update_Light();
+}
+
+void CPlayer::Update_State(const _float& fTimeDelta)
+{
+	m_Stat.fHungry -= fTimeDelta;
+	m_Stat.fMental -= fTimeDelta;
 }
 
 
