@@ -149,6 +149,8 @@ namespace Engine
 	enum class eTRAP_STATE
 	{
 		HIDE,	//숨어있는상태
+		PLACE,	//생성중인상태
+		ATK,	//공격중인상태
 		GROW,	//나오고있는상태
 		MOVE,	//움직이고있는상태
 		IDLE,	//나온상태

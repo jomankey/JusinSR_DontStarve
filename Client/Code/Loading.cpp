@@ -303,14 +303,6 @@ HRESULT CLoading::Loading_Anim_Texture()
 {
 	Engine::CAnimation* pAnim = nullptr;
 
-	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_UP", L"../Bin/Resource/Texture/Build/Catapult/IDLE_UP/IDLE_UP__%03d.png", 23, 0.1f);
-	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_UP", pAnim);
-
-	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_DOWN", L"../Bin/Resource/Texture/Build/Catapult/IDLE_DOWN/IDLE_DOWN__%03d.png", 23, 0.1f);
-	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_DOWN", pAnim);
-
-	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_SIDE", L"../Bin/Resource/Texture/Build/Catapult/IDLE_SIDE/IDLE_SIDE__%03d.png", 23, 0.1f);
-	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_SIDE", pAnim);
 
 	////////
 	//Trap//
@@ -318,13 +310,13 @@ HRESULT CLoading::Loading_Anim_Texture()
 	
 
 	//SPIKE
-	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_IDLE", L"../Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__%03d.png", 17, 0.1f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_IDLE", L"../Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__%03d.png", 30, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_IDLE", pAnim);
 
-	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_GROW", L"../Bin/Resource/Texture/Build/Trap/Spike/GROW/GROW__%03d.png", 23, 0.03f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_GROW", L"../Bin/Resource/Texture/Build/Trap/Spike/GROW/GROW__%03d.png", 31, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_GROW", pAnim);
 
-	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_HIDE", L"../Bin/Resource/Texture/Build/Trap/Spike/PICKED/PICKED__%03d.png", 3, 10.f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_HIDE", L"../Bin/Resource/Texture/Build/Trap/Spike/PICKING/PICKING__%03d.png", 31, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_HIDE", pAnim);
 
 
@@ -350,6 +342,21 @@ HRESULT CLoading::Loading_Anim_Texture()
 
 	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TUMBLE_MOVE_SIDE", L"../Bin/Resource/Texture/Build/Trap/TumbleWeed/MOVE_SIDE/MOVE_SIDE__%03d.png", 5, 10.f);
 	proto::Ready_ProtoAnim(L"TRAP_TUMBLE_MOVE_SIDE", pAnim);
+
+
+	//Catapult
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_ATK_DOWN", L"../Bin/Resource/Texture/Build/Catapult/ATK_DOWN/ATK_DOWN__%03d.png", 31, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_ATK_DOWN", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_DEATH", L"../Bin/Resource/Texture/Build/Catapult/DEATH/DEATH__%03d.png", 31, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_DEATH", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_DOWN", L"../Bin/Resource/Texture/Build/Catapult/IDLE_DOWN/IDLE_DOWN__%03d.png", 51, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_DOWN", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_PLACE", L"../Bin/Resource/Texture/Build/Catapult/PLACE/PLACE__%03d.png", 31, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_PLACE", pAnim);
+
 
 
 	return S_OK;

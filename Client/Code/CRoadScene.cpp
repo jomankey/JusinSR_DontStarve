@@ -38,6 +38,7 @@
 #include "CSpike.h"
 #include "CToothTrap.h"
 #include "CTumbleWeed.h"
+#include "CCatapult.h"
 
 //Environment
 
@@ -180,17 +181,19 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
 	}
 
-	//TRAP_OBJECT_TUMBLE_WEED
-	pGameObject = CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", _vec3(10.f, 1.5f, 3.5f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
-
 	for (size_t i = 0; i < 10; i++)
 	{
 		pGameObject = CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", _vec3(10.f + 5.f * i, 1.5f, (rand() % 3 + 2.5f) ));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
 	}
+
+	pGameObject = CCatapult::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	pGameObject->GetTransForm()->Set_Pos(_vec3(10.f, 1.5f, 3.5f));
+
+
 
 	return S_OK;
 }

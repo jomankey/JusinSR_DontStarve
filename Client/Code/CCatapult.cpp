@@ -3,19 +3,22 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "CTumbleWeed.h"
+
 
 CCatapult::CCatapult(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 	, m_pBufferCom(nullptr)
-	, m_pReverseCom(nullptr)
 	, m_pAnimCom(nullptr)
+	, m_eCurState(eTRAP_STATE::NONE)
+	, m_fAccTime(0.f)
+	, m_fAtkTime(1.f)
 {
 }
 
 CCatapult::CCatapult(const CCatapult& rhs)
 	: CGameObject(rhs.m_pGraphicDev)
 	, m_pBufferCom(nullptr)
-	, m_pReverseCom(nullptr)
 	, m_pAnimCom(nullptr)
 {
 }
@@ -33,22 +36,52 @@ HRESULT CCatapult::Ready_GameObject()
 
 _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 {
-	CGameObject::Update_GameObject(fTimeDelta);
+
+
+	if (m_eCurState == eTRAP_STATE::PLACE && m_pAnimCom->IsFinish(L"PLACE"))
+	{
+		m_eCurState = eTRAP_STATE::IDLE;
+		m_pAnimCom->ChangeAnimation(L"IDLE_DOWN");
+		m_pTransForm->Set_Scale(_vec3(1.5f, 1.5f, 1.5f));
+		m_pAnimCom->SetLoopAnimator(true);
+	}
+
+	if (m_eCurState == eTRAP_STATE::IDLE)
+	{
+		m_fAccTime += fTimeDelta;
+		if (m_fAtkTime <= m_fAccTime)
+		{
+			m_pAnimCom->ChangeAnimation(L"ATK_DOWN");
+			m_pAnimCom->SetLoopAnimator(false);
+			m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
+			m_eCurState = eTRAP_STATE::ATK;
+		}
+	}
+
+	if (m_pAnimCom->GetAnimFrame(L"ATK_DOWN") == 15)
+	{
+		//createObject
+		_vec3 vPos;
+		m_pTransForm->Get_Info(INFO_POS, &vPos);
+
+		auto pGameObject =  CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", vPos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::TRAP, pGameObject);
+	}
+
+	if (m_eCurState == eTRAP_STATE::ATK && m_pAnimCom->IsFinish(L"ATK_DOWN"))//공격끝나면
+	{
+		m_pAnimCom->ChangeAnimation(L"IDLE_DOWN");
+		m_pAnimCom->SetLoopAnimator(true);
+		m_fAccTime = 0.f;
+		m_pTransForm->Set_Scale(_vec3(1.5f, 1.5f, 1.5f));
+		m_eCurState = eTRAP_STATE::IDLE;
+	}
+
+
+
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
-	if (KEY_TAP(DIK_RIGHT))
-	{
-		m_pAnimCom->SetCurAnimation(L"IDLE_SIDE");
-	}
-	if (KEY_TAP(DIK_UP))
-	{
-		m_pAnimCom->SetCurAnimation(L"IDLE_UP");
-	}
-	if (KEY_TAP(DIK_DOWN))
-	{
-		m_pAnimCom->SetCurAnimation(L"IDLE_DOWN");
-	}
-	return 0;
+	return 	CGameObject::Update_GameObject(fTimeDelta);
 }
 
 void CCatapult::LateUpdate_GameObject()
@@ -88,11 +121,6 @@ HRESULT CCatapult::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
 
-	pComponent = m_pReverseCom = dynamic_cast<CRvRcTex*>(proto::Clone_Proto(L"Proto_RvRcTex"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_RvRcTex", pComponent });
-
-
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
@@ -101,13 +129,21 @@ HRESULT CCatapult::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Anim", pComponent });
 
-	m_pAnimCom->AddAnimation(L"IDLE_UP", proto::Clone_ProtoAnim(L"CATAPULT_IDLE_UP"));
+
+
+
+
 	m_pAnimCom->AddAnimation(L"IDLE_DOWN", proto::Clone_ProtoAnim(L"CATAPULT_IDLE_DOWN"));
-	m_pAnimCom->AddAnimation(L"IDLE_SIDE", proto::Clone_ProtoAnim(L"CATAPULT_IDLE_SIDE"));
-	m_pAnimCom->SetCurAnimation(L"IDLE_UP");
+	m_pAnimCom->AddAnimation(L"ATK_DOWN", proto::Clone_ProtoAnim(L"CATAPULT_ATK_DOWN"));
+	m_pAnimCom->AddAnimation(L"PLACE", proto::Clone_ProtoAnim(L"CATAPULT_PLACE"));
+	m_pAnimCom->AddAnimation(L"DEATH", proto::Clone_ProtoAnim(L"CATAPULT_DEATH"));
 
 
-	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
+	m_pAnimCom->SetCurAnimation(L"PLACE");
+	m_eCurState = eTRAP_STATE::PLACE;
+
+
+	m_pTransForm->Set_Scale(_vec3(1.5f, 1.5f, 1.5f));
 
 	return S_OK;
 }

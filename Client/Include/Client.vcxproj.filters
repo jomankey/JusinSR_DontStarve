@@ -124,9 +124,6 @@
     <Filter Include="02. GameObject\08. ResObjects\08. BossDoor">
       <UniqueIdentifier>{aaf1ad01-3552-4107-9f17-97cfbb017412}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\08. ResObjects\09. CCatapult">
-      <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Monster\05. Tallbird">
       <UniqueIdentifier>{912e9267-1b95-48e6-ad0a-24922a520a47}</UniqueIdentifier>
     </Filter>
@@ -195,6 +192,9 @@
     </Filter>
     <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime">
       <UniqueIdentifier>{73167806-e74e-41b5-9ccb-8cea2609506c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\10. Trap\09. CCatapult">
+      <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,7 +313,7 @@
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCatapult.h">
-      <Filter>02. GameObject\08. ResObjects\09. CCatapult</Filter>
+      <Filter>02. GameObject\10. Trap\09. CCatapult</Filter>
     </ClInclude>
     <ClInclude Include="..\header\CBossDoor.h">
       <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
@@ -492,7 +492,7 @@
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCatapult.cpp">
-      <Filter>02. GameObject\08. ResObjects\09. CCatapult</Filter>
+      <Filter>02. GameObject\10. Trap\09. CCatapult</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBossDoor.cpp">
       <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>

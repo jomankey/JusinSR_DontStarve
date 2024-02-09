@@ -39,7 +39,8 @@ HRESULT CProtoMgr::Ready_ProtoAnim(const _tchar* pProtoAnimTag, CAnimation* pAni
 
 	if (nullptr != pInstance)
 	{
-		assert(false, const _tchar * = L"Animation Already exists");
+
+		assert(false && L"Animation Already exists");
 		return E_FAIL;
 	}
 

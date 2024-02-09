@@ -40,7 +40,6 @@ protected:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
 	Engine::CAnimator* m_pAnimCom;
-	map<const _tchar*, CTexture*>	m_mapTexture;
 	_bool m_bHit; // 플레이어맞았을경우
 	eTRAP_STATE m_eCurState;
 
