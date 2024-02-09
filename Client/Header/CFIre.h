@@ -25,7 +25,6 @@ public:
 	void Set_Pos(_vec3 _Pos);
 	void Set_FireLevel(_int iLevel);
 
-	FIRE_STATE Get_FireLevel() { return m_efireCurState; }
 	BOOL Get_IsOff() { return m_bIsOff; }
 	void Set_IsOff(BOOL _bIsOff) { m_bIsOff = _bIsOff; }
 private:

@@ -181,6 +181,12 @@
     <Filter Include="02. GameObject\08. ResObjects\10. BonFire">
       <UniqueIdentifier>{7d73ea03-86cf-4ba3-945a-6e970bdcddd6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\11. CookingPot">
+      <UniqueIdentifier>{e02210ae-8172-4f18-83d4-06afd0fb9491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\12. Tent">
+      <UniqueIdentifier>{d36e3eb9-c16c-4f7f-9bdb-8728a87d4ca3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -366,6 +372,12 @@
     <ClInclude Include="..\header\CFIre.h">
       <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\CCookingPot.h">
+      <Filter>02. GameObject\08. ResObjects\11. CookingPot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CTent.h">
+      <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -541,6 +553,12 @@
     </ClCompile>
     <ClCompile Include="..\code\CFIre.cpp">
       <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CCookingPot.cpp">
+      <Filter>02. GameObject\08. ResObjects\11. CookingPot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CTent.cpp">
+      <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

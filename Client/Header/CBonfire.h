@@ -23,9 +23,10 @@ public:
 
 
 public:
+	//처음에는 항상 IDLE임 마우스를 드래그해서 놓으면 해당 함수를 호출	
 	void Set_DropBonfire() { m_bIsDrop = true; }
 
-	//1~4 만 적용가능
+	//1~4 만 적용가능// 장작을 추가하는 함수
 	void AddFIre(int _Value);
 private:
 	virtual HRESULT			Add_Component() override;
