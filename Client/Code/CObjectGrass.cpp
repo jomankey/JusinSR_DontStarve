@@ -21,6 +21,15 @@ HRESULT CObjectGrass::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+
+
+		_vec3 vPos;
+	m_pTransForm->Set_Scale(_vec3(1.5f, 3.0f, 1.5f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.5f, vPos.z);
+
+
+
 	Ready_Stat();
 
 	m_eCurState = RES_IDLE;
@@ -82,7 +91,7 @@ void CObjectGrass::Render_GameObject()
 HRESULT CObjectGrass::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
+
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -102,9 +111,7 @@ HRESULT CObjectGrass::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.5f, 1.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
+
 
 	return S_OK;
 }

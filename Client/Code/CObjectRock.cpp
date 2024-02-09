@@ -20,6 +20,18 @@ CObjectRock::~CObjectRock()
 HRESULT CObjectRock::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+
+	_vec3 vPos;
+	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
+
+
+
+
+
+
 	Ready_Stat();
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
@@ -67,7 +79,6 @@ void CObjectRock::Render_GameObject()
 HRESULT CObjectRock::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -81,9 +92,6 @@ HRESULT CObjectRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
 
 	return S_OK;
 }

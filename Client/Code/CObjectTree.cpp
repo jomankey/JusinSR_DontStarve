@@ -23,6 +23,9 @@ HRESULT CObjectTree::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
 
+
+
+
 	m_eCurState = RES_IDLE;
 	m_eObject_id = TREE;
 	m_fFrame = 0.f;
