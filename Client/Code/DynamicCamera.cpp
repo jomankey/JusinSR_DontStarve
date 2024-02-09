@@ -16,6 +16,7 @@ CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_fShakeTime(0.3f)
 	, m_fShakeAccTime(1.f)
 	, m_bRoad(false)
+	, m_bLockWidth(false)
 {
 
 }
@@ -77,6 +78,12 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 		if (KEY_TAP(DIK_P))
 		{
+			SetShakedCamera(3.f, 1.f, false);
+			m_fShakeAccTime = 0.f;
+		}
+		if (KEY_TAP(DIK_O))
+		{
+			SetShakedCamera(3.f, 1.f, true);
 			m_fShakeAccTime = 0.f;
 		}
 
@@ -155,13 +162,19 @@ void CDynamicCamera::ShakeCamera()
 	D3DXVec3Cross(&vRight, &vLook, &m_vUp);
 	D3DXVec3Cross(&vUp, &vLook, &vRight);
 	// -1.5f ~ 1.5f 사이의값 구함
-	float offsetX = ((rand() % 100 / 100.0f) * m_fIntensity) - (m_fIntensity * 0.5f);
 	float offsetY = ((rand() % 100 / 100.0f) * m_fIntensity) - (m_fIntensity * 0.5f);
 
-	m_vEye += vRight * offsetX;
 	m_vEye += vUp * offsetY;
-	m_vAt += vRight * offsetX;
 	m_vAt += vUp * offsetY;
+
+	if (!m_bLockWidth)
+	{
+		float offsetX = ((rand() % 100 / 100.0f) * m_fIntensity) - (m_fIntensity * 0.5f);
+		m_vEye += vRight * offsetX;
+		m_vAt += vRight * offsetX;
+	}
+
+
 }
 
 void CDynamicCamera::Key_Input(const _float& fTimeDelta)

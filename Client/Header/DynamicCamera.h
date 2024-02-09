@@ -24,11 +24,12 @@ public:
 	_float		Get_Angle() { return m_fAngle; }
 
 	void ShakeCamera();
-	void SetShakedCamera(_float _fIntensity, _float _fShakeTime)
+	void SetShakedCamera(_float _fIntensity, _float _fShakeTime,_bool _bLockWidth)
 	{
 		m_fShakeAccTime = 0.f;
 		m_fIntensity = _fIntensity;
 		m_fShakeAccTime = _fShakeTime;
+		m_bLockWidth = _bLockWidth;
 	}
 
 	void SetRoadScene(_bool _bRoad) { m_bRoad = _bRoad; }
@@ -63,7 +64,7 @@ private:
 	_float	m_fIntensity;	//카메라 흔들림 강도
 	_float	m_fShakeTime;	//진동 시간
 	_float	m_fShakeAccTime;		//누적 시간
-
+	_bool	m_bLockWidth;		//좌우 흔들림 적용
 
 	_float	m_fDiff;		//차이값
 	_vec3	m_vTargetEye;	//카메라 목적지
@@ -75,6 +76,7 @@ private:
 	//로드씬전용 카메라위치
 	_float	m_fRoadDistance;	//거리
 	_float	m_fRoadHeight;		//높이
+
 
 };
 
