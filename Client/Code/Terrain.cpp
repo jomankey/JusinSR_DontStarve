@@ -24,6 +24,10 @@ CTerrain::~CTerrain()
 HRESULT CTerrain::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	_vec3 vPos;
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	vPos.y = -2.f;
+	m_pTransForm->Set_Pos(vPos);
 
 	return S_OK;
 }
@@ -34,9 +38,8 @@ Engine::_int CTerrain::Update_GameObject(const _float& fTimeDelta)
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	
 	_vec3 vPos;
-
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-
+	m_fDiffY = 50.f;
 	Compute_ViewZ(&vPos);
 	//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 

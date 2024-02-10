@@ -27,16 +27,11 @@ HRESULT CObjectRock::Ready_GameObject()
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
 
-
-
-
-
-
 	Ready_Stat();
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
 	m_fFrame = 0;
-	m_fDiffY = 0.7f;
+	m_fDiffY = 1.2f;
 
 	return S_OK;
 }
@@ -101,9 +96,6 @@ HRESULT CObjectRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
 
 	return S_OK;
 }
