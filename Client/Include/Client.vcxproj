@@ -176,6 +176,7 @@
     <ClInclude Include="..\Header\ArmorSlot.h" />
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
+    <ClInclude Include="..\Header\BossEftDown.h" />
     <ClInclude Include="..\header\CBonfire.h" />
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\ButtonUI.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\Header\CCatapult.h" />
     <ClInclude Include="..\header\CCookingPot.h" />
     <ClInclude Include="..\header\CFIre.h" />
+    <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CSpike.h" />
     <ClInclude Include="..\header\CTent.h" />
     <ClInclude Include="..\Header\CToothTrap.h" />
@@ -192,9 +194,14 @@
     <ClInclude Include="..\Header\CHpUI.h" />
     <ClInclude Include="..\Header\CHungryUI.h" />
     <ClInclude Include="..\Header\CInven.h" />
+    <ClInclude Include="..\Header\FallMark.h" />
     <ClInclude Include="..\Header\Ghost.h" />
+    <ClInclude Include="..\Header\IceMissileL.h" />
+    <ClInclude Include="..\Header\IceSpikeL.h" />
+    <ClInclude Include="..\Header\IceSpikeR.h" />
     <ClInclude Include="..\Header\InvenSlot.h" />
     <ClInclude Include="..\Header\Slot.h" />
+    <ClInclude Include="..\Header\SnowSplash.h" />
     <ClInclude Include="..\Header\StateUI.h" />
     <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\CItem.h" />
@@ -242,6 +249,7 @@
   <ItemGroup>
     <ClCompile Include="..\Code\ArmorSlot.cpp" />
     <ClCompile Include="..\Code\Beefalo.cpp" />
+    <ClCompile Include="..\Code\BossEftDown.cpp" />
     <ClCompile Include="..\code\CBonfire.cpp" />
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
@@ -249,6 +257,7 @@
     <ClCompile Include="..\Code\CCatapult.cpp" />
     <ClCompile Include="..\code\CCookingPot.cpp" />
     <ClCompile Include="..\code\CFIre.cpp" />
+    <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CSpike.cpp" />
     <ClCompile Include="..\code\CTent.cpp" />
     <ClCompile Include="..\Code\CToothTrap.cpp" />
@@ -259,8 +268,13 @@
     <ClCompile Include="..\Code\CHungryUI.cpp" />
     <ClCompile Include="..\Code\BerryBush.cpp" />
     <ClCompile Include="..\Code\CInven.cpp" />
+    <ClCompile Include="..\Code\FallMark.cpp" />
+    <ClCompile Include="..\Code\IceMissileL.cpp" />
+    <ClCompile Include="..\Code\IceSpikeL.cpp" />
+    <ClCompile Include="..\Code\IceSpikeR.cpp" />
     <ClCompile Include="..\Code\InvenSlot.cpp" />
     <ClCompile Include="..\Code\Slot.cpp" />
+    <ClCompile Include="..\Code\SnowSplash.cpp" />
     <ClCompile Include="..\Code\StateUI.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="..\Code\CItem.cpp" />

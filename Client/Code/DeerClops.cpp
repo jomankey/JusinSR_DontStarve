@@ -4,7 +4,10 @@
 #include "Export_Utility.h"
 #include "Scene.h"
 #include "Player.h"
-
+#include "BossEftDown.h"
+#include "Layer.h"
+#include "Circle.h"
+#include "FallMark.h"
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	: CMonster(pGraphicDev, _vPos),
 	m_eCurState(SLEEP), m_ePreState(STATE_END)
@@ -65,6 +68,12 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 	if (KEY_TAP(DIK_9))
 	{
 		Set_WakeUp();
+	}
+
+	if (KEY_TAP(DIK_6))
+	{
+		Set_Hit();
+		m_Stat.fHP -= 50;
 	}
 
 	State_Change();
@@ -211,6 +220,9 @@ HRESULT CDeerClops::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Deer_taunt", pComponent });
 
+	pComponent = m_pTextureCom[LOOK_DOWN][LONG_TAUNT] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_long_taunt"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Deer_long_taunt", pComponent });
 
 	//DEAD
 	pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_dead"));
@@ -233,13 +245,38 @@ HRESULT CDeerClops::Add_Component()
 
 void CDeerClops::Set_Hit()
 {
-	m_eCurState = HIT;
-	m_bHit = true;
+	if (m_Stat.fHP > 0)
+	{
+		if (m_ePreState != ATTACK)
+		{
+			m_eCurState = HIT;
+			m_bHit = true;
+		}
+		
+		
+
+
+
+		if (m_Stat.fHP < 250.f && !m_bPhase[THIRD])
+		{
+			m_bPhase[THIRD] = true;
+			m_eCurState = LONG_TAUNT;
+			_vec3 vThisPos;
+			m_pTransForm->Get_Info(INFO_POS, &vThisPos);
+			CGameObject* pGameObject = CCircle::Create(m_pGraphicDev, vThisPos);
+			NULL_CHECK_RETURN(pGameObject, );
+			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), );
+			dynamic_cast<CCircle*>(pGameObject)->Set_Count(2);
+			m_fAcctime = 0.f;
+		}
+		else
+			return;
+	}
 }
 
 void CDeerClops::Set_ObjStat()
 {
-	m_Stat.fHP = 100.f;
+	m_Stat.fHP = 500.f;
 	m_Stat.fMxHP = 100.f;
 	m_Stat.fSpeed = 2.f;
 	m_Stat.fATK = 50.f;
@@ -275,6 +312,10 @@ void CDeerClops::State_Change()
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
 			break;
+		case LONG_TAUNT:
+			m_fFrameEnd = 33;
+			m_eCurLook = LOOK_DOWN;
+			break;
 		case HIT:
 			m_fFrameEnd = 20;
 			break;
@@ -307,6 +348,12 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 	else if (m_ePreState == IDLE && m_fFrameEnd < m_fFrame)	//포효 지르기
 	{
 		m_eCurState = TAUNT;
+		_vec3 vThisPos;
+		m_pTransForm->Get_Info(INFO_POS, &vThisPos);
+		CGameObject* pGameObject = CCircle::Create(m_pGraphicDev, vThisPos);
+		NULL_CHECK_RETURN(pGameObject, );
+		FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), );
+
 	}
 	else if (m_ePreState == TAUNT && m_fFrameEnd < m_fFrame)
 	{
@@ -323,24 +370,61 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 }
 void CDeerClops::Second_Phase(const _float& fTimeDelta)
 {
+	m_fAcctime += fTimeDelta;
 	
-	if (IsTarget_Approach(m_Stat.fATKRange))
+
+
+	if (5.f < m_fAcctime)
+	{
+		m_fAcctime = 0.f;
+		if (m_bAttackCooltime)
+			m_bAttackCooltime = false;
+
+		_vec3 pPos = Get_Player_Pos();
+		
+		CGameObject* pGameObject = FallMark::Create(m_pGraphicDev, pPos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+	}
+
+	if (IsTarget_Approach(m_Stat.fATKRange) && !m_bAttackCooltime)
 	{
 		m_eCurState = ATTACK;
+		m_bAttackCooltime = true;
 	}
-	else if (m_ePreState == ATTACK && IsTarget_Approach(m_Stat.fATKRange + 1.f)&& !m_bAttacking)
-	{
-		if (12 < m_fFrame)
-		{
-			dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);	//추후에 이펙트 만들면 버릴예정
-			m_bAttacking = true;
-		}
-	}
-	else if (m_ePreState == ATTACK && !IsTarget_Approach(m_Stat.fATKRange))
+	else if (IsTarget_Approach(m_Stat.fATKRange) && m_bAttackCooltime)
 	{
 		if (m_fFrameEnd < m_fFrame)
 		{
+			m_eCurState = IDLE;
+		}
+	}
+	else if (m_ePreState == IDLE)
+	{
+		if (!IsTarget_Approach(m_Stat.fATKRange))
+		{
 			m_eCurState = WALK;
+		}
+	}
+	else if (m_ePreState == ATTACK)
+	{
+		if (9 < m_fFrame && !m_bAttacking)
+		{
+			_vec3 vThisPos; // 이펙트 생성 기점.
+			m_pTransForm->Get_Info(INFO_POS, &vThisPos);
+
+			CGameObject* pGameObject = CBossEftDown::Create(m_pGraphicDev, vThisPos);
+			NULL_CHECK_RETURN(pGameObject, );
+			CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+			dynamic_cast<CBossEftDown*>(pGameObject)->Set_Look_Dir(m_ePreLook);
+			m_bAttacking = true;
+		}
+
+		if (!IsTarget_Approach(m_Stat.fATKRange))
+		{
+			if (m_fFrameEnd < m_fFrame)
+			{
+				m_eCurState = WALK;
+			}
 		}
 	}
 	else if(m_ePreState == WALK)
@@ -351,7 +435,7 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	if (m_fFrameEnd < m_fFrame)
 	{
 		m_fFrame = 0.f;
-		if(m_bAttacking)
+		if (m_bAttacking)
 			m_bAttacking = false;
 	}
 
@@ -360,6 +444,24 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 void CDeerClops::Third_Phase(const _float& fTimeDelta) //아직 제작중
 {
 	m_Stat.fSpeed = 3.5f;
+
+	m_fAcctime += fTimeDelta;
+
+	if (m_ePreState == LONG_TAUNT)
+	{
+
+	}
+
+
+
+	if (m_fFrameEnd < m_fFrame)
+	{
+		m_fFrame = 0.f;
+		if (m_bAttacking)
+			m_bAttacking = false;
+	}
+
+
 }
 
 void CDeerClops::Boss_Die(const _float& fTimeDelta)

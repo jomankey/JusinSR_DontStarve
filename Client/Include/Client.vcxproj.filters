@@ -205,6 +205,36 @@
     <Filter Include="02. GameObject\08. ResObjects\12. Tent">
       <UniqueIdentifier>{d36e3eb9-c16c-4f7f-9bdb-8728a87d4ca3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\06. Effect\01. BossAttack">
+      <UniqueIdentifier>{f62931ae-91fb-4358-8d91-60c976114d82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\02. Circle">
+      <UniqueIdentifier>{08fb77ba-2de1-4aaa-b7d4-6c0648c87162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\03. IceSpike">
+      <UniqueIdentifier>{c5af6147-59a0-4be5-b5a1-5e3f0fb55447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\03. IceSpike\Left">
+      <UniqueIdentifier>{962836b2-6d4a-499f-8a80-8723f17f03c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\03. IceSpike\Right">
+      <UniqueIdentifier>{4f6a70fd-aac2-4fa5-aa0a-d7a3b3e8033c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\04. IceMissile">
+      <UniqueIdentifier>{d9e02fa3-4fcc-4e8a-a1d4-5b1c55948b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\04. IceMissile\Left">
+      <UniqueIdentifier>{0cd8ff3d-f2f8-4b89-9b8b-95a247badd3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\04. IceMissile\Right">
+      <UniqueIdentifier>{bb1d84d6-07d0-42c0-ac7c-1ad8077dc99d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\05. FallMark">
+      <UniqueIdentifier>{af785a05-4999-4445-a958-c5c620200df6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\06. SnowSplash">
+      <UniqueIdentifier>{6d8c891a-f43f-4722-8953-4d325f9c2ba2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -405,6 +435,27 @@
     <ClInclude Include="..\header\CTent.h">
       <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BossEftDown.h">
+      <Filter>02. GameObject\06. Effect\01. BossAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Circle.h">
+      <Filter>02. GameObject\06. Effect\02. Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IceSpikeL.h">
+      <Filter>02. GameObject\06. Effect\03. IceSpike\Left</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IceSpikeR.h">
+      <Filter>02. GameObject\06. Effect\03. IceSpike\Right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\IceMissileL.h">
+      <Filter>02. GameObject\06. Effect\04. IceMissile\Left</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FallMark.h">
+      <Filter>02. GameObject\06. Effect\05. FallMark</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SnowSplash.h">
+      <Filter>02. GameObject\06. Effect\06. SnowSplash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -595,6 +646,27 @@
     </ClCompile>
     <ClCompile Include="..\code\CTent.cpp">
       <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossEftDown.cpp">
+      <Filter>02. GameObject\06. Effect\01. BossAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Circle.cpp">
+      <Filter>02. GameObject\06. Effect\02. Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IceSpikeL.cpp">
+      <Filter>02. GameObject\06. Effect\03. IceSpike\Left</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IceSpikeR.cpp">
+      <Filter>02. GameObject\06. Effect\03. IceSpike\Right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IceMissileL.cpp">
+      <Filter>02. GameObject\06. Effect\04. IceMissile\Left</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FallMark.cpp">
+      <Filter>02. GameObject\06. Effect\05. FallMark</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SnowSplash.cpp">
+      <Filter>02. GameObject\06. Effect\06. SnowSplash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_bFrameStop(false)
 	, m_bHit(false)
 	, m_bAttacking(false)
-	
+	, m_bAttackCooltime(false)
 {
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
@@ -34,6 +34,7 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_bFrameStop(rhs.m_bFrameStop)
 	, m_bHit(rhs.m_bHit)
 	, m_bAttacking(rhs.m_bAttacking)
+	, m_bAttackCooltime(rhs.m_bAttackCooltime)
 {
 }
 

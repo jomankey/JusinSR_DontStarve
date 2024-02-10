@@ -15,7 +15,7 @@ namespace Engine
 class CDeerClops :
 	public CMonster
 {
-	enum DEERSTATE { IDLE, WALK, ATTACK, SLEEP,SLEEP_PST, TAUNT, HIT, DEAD, STATE_END };
+	enum DEERSTATE { IDLE, WALK, ATTACK, SLEEP,SLEEP_PST, TAUNT,LONG_TAUNT, HIT, DEAD, STATE_END };
 	enum DEER_PHASE { FIRST, SECOND, THIRD, DIE, PHASE_END};
 private:
 	explicit CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);
