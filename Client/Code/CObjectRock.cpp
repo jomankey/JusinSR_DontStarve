@@ -2,7 +2,7 @@
 #include "CObjectRock.h"
 #include "Export_Utility.h"
 #include "Component.h"
-
+#include "ItemBasic.h"
 CObjectRock::CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
 {
@@ -20,6 +20,18 @@ CObjectRock::~CObjectRock()
 HRESULT CObjectRock::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+
+	_vec3 vPos;
+	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
+
+
+
+
+
+
 	Ready_Stat();
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
@@ -30,6 +42,9 @@ HRESULT CObjectRock::Ready_GameObject()
 
 _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 {
+
+	Change_Frame_Event();
+	m_pTransForm->Get_Info(INFO_POS, &m_vOriginPos);
 	CGameObject::Update_GameObject(fTimeDelta);
 
 
@@ -40,7 +55,7 @@ _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 void CObjectRock::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	Change_Frame_Event();
+	
 
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
@@ -55,19 +70,23 @@ void CObjectRock::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
+
 	m_pTextureCom[m_eCurState]->Set_Texture(m_fFrame);
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
+
+
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	
 }
 
 HRESULT CObjectRock::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -81,9 +100,6 @@ HRESULT CObjectRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
 
 	return S_OK;
 }
@@ -92,10 +108,59 @@ void CObjectRock::Change_Frame_Event()
 {
 	if (m_Stat.fHP <= 3.f && m_Stat.fHP != 0)
 	{
+		m_pTransForm->Set_Scale(_vec3(1.5f, 1.5f, 1.5f));
 		m_fFrame = 1;
 	}
-	if (m_Stat.fHP <= 0)
+	if (m_Stat.fHP <= 1)
+	{
+		m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
 		m_fFrame = 2;
+	}
+
+	if (m_Stat.fHP <= 0)
+	{
+
+		if (m_Stat.bDead == false)
+		{
+			srand(static_cast<unsigned int>(time(nullptr)));
+			int iItemCount = rand() % 1 + 3;	//아이템 갯수용
+			for (int i = 0; i < iItemCount; ++i)
+			{
+				int signX = (rand() % 2 == 0) ? -1 : 1;
+				int signZ = (rand() % 2 == 0) ? -1 : 1;
+				int iItemPosX = rand() % 3 * signX;
+				int iItemPosZ = rand() % 3 * signZ;
+				_vec3 vPos;
+				m_pTransForm->Get_Info(INFO_POS, &vPos);
+				vPos.x += iItemPosX;
+				vPos.y = 0.8f;
+				vPos.z += iItemPosZ;
+				CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"Rocks_0");
+				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
+				pGameObj->GetTransForm()->Set_Pos(vPos);
+				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
+
+
+
+				/*srand(static_cast<unsigned int>(time(nullptr)));
+				int signtmp = (rand() % 2 == 0) ? -1 : 1;
+				int iItemPostmp = rand() % 3 * signtmp;
+				vPos.x += iItemPostmp;
+				vPos.y = 0.5f;
+				vPos.z += iItemPostmp;
+				pGameObj = CItemBasic::Create(m_pGraphicDev, L"Rocks_1");
+				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
+				pGameObj->GetTransForm()->Set_Pos(vPos);
+				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);*/
+
+			}
+
+		}
+
+
+		m_Stat.bDead = true;
+		m_fFrame = 3;
+	}
 }
 
 void CObjectRock::Check_FrameState()

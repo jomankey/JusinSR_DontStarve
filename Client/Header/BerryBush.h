@@ -31,5 +31,7 @@ public:
 
 private:
     virtual void Free();
+
+    BOOL _bDropItem = false;
 };
 

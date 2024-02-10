@@ -13,6 +13,7 @@ class CTent :
 		CTENT_DESTROY,
 		CTENT_BURNT,
 		CTENT_PLACE,
+		CTENT_DEFAULT,
 		CTENT_END
 	};
 
@@ -29,11 +30,21 @@ public:
 
 
 
+
+
+	void Set_Drop() { m_bIsDrop = true; };
+	void Set_Enter() { m_bIsEnter = true; };
+	void Set_Destroy() { m_bIsDestroy = true; };
+	void Set_Hit() { m_bIsHit = true; };
+	void Set_Burnt() { m_bIsBurnt = true; };
+
+
+
 private:
 	virtual HRESULT			Add_Component() override;
 	virtual void			Check_FrameState() override;
 	virtual void			Ready_Stat() override {};
-	virtual void			Change_Frame_Event() override {};
+	virtual void			Change_Frame_Event() override ;
 
 
 
@@ -53,7 +64,15 @@ private:
 	CTENT_STATE m_eTentPrevState;
 
 	BOOL m_bIsDrop = false;
+	BOOL m_bIsFrameStop = false;
+	BOOL m_bIsEnter = false;
+	BOOL m_bIsDestroy = false;
 
+
+
+
+	BOOL m_bIsHit = false;
+	BOOL m_bIsBurnt = false;
 
 };
 

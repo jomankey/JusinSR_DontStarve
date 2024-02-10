@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include"ItemBasic.h"
 
 CObjectTree::CObjectTree(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -22,6 +23,10 @@ HRESULT CObjectTree::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
+	
+
+	
+
 
 	m_eCurState = RES_IDLE;
 	m_eObject_id = TREE;
@@ -45,14 +50,51 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 		}
 
 		else if (m_eCurState == RES_DEAD || m_eCurState == RES_DEAD2)
+		{
+			srand(static_cast<unsigned int>(time(nullptr)));
+			int iItemCount = rand() % 1 + 3;	//아이템 갯수용 //
+			for (int i = 0; i < iItemCount; ++i)
+			{
+				int signX = (rand() % 2 == 0) ? -1 : 1;
+				int signZ = (rand() % 2 == 0) ? -1 : 1;
+				int iItemPosX = rand() % 3 * signX;
+				int iItemPosZ = rand() % 3 * signZ;
+				_vec3 vPos;
+				m_pTransForm->Get_Info(INFO_POS, &vPos);
+				vPos.x += iItemPosX;
+				vPos.y = 0.8f;
+				vPos.z += iItemPosZ;
+				CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"Twigs");
+				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
+				pGameObj->GetTransForm()->Set_Pos(vPos);
+				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
+				
+				//다른 위치에서 떨어지기
+				srand(static_cast<unsigned int>(time(nullptr)));
+				int signtmp = (rand() % 2 == 0) ? -1 : 1;
+				int iItemPostmp = rand() % 3 * signtmp;
+				vPos.x+= iItemPostmp;
+				vPos.y = 0.5f;
+				vPos.z += iItemPostmp;
+				 pGameObj = CItemBasic::Create(m_pGraphicDev, L"Log");
+				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
+				pGameObj->GetTransForm()->Set_Pos(vPos);
+				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
+
+
+			}
 			m_Stat.bDead = true;
 
+		}
+			
 		m_fFrame = 0.f;
 	}
+	m_pTransForm->Get_Info(INFO_POS, &m_vOriginPos);
 
+	Change_Frame_Event();
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
+	
 	return 0;
 }
 
@@ -60,7 +102,7 @@ void CObjectTree::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
-	Change_Frame_Event();
+	
 	Check_FrameState();
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
@@ -146,7 +188,12 @@ void CObjectTree::Change_Frame_Event()
 	}
 
 	if (m_Stat.bDead)
+	{
+		m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
+		m_pTransForm->Set_Pos(m_vOriginPos.x, 1.0f, m_vOriginPos.z); //
 		m_eCurState = RES_FINAL;
+
+	}
 }
 
 void CObjectTree::Check_FrameState()
@@ -164,6 +211,8 @@ void CObjectTree::Check_FrameState()
 	{
 		m_fFrameEnd = 13;
 		m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
+		
+		//m_vOriginPos
 	}
 	if (m_eCurState == RES_DEAD2)
 	{
@@ -173,7 +222,7 @@ void CObjectTree::Check_FrameState()
 	if (m_eCurState == RES_FINAL)
 	{
 		m_fFrameEnd = 0;
-		m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
+		
 	}
 
 	m_ePreState = m_eCurState;
@@ -182,8 +231,8 @@ void CObjectTree::Check_FrameState()
 
 void CObjectTree::Ready_Stat()
 {
-	m_Stat.fHP = 6.f;
-	m_Stat.fMxHP = 6.f;
+	m_Stat.fHP = 1.f;
+	m_Stat.fMxHP = 1.f;
 	m_Stat.fSpeed = 1.f;
 	m_Stat.bDead = false;
 }

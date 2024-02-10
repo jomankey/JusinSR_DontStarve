@@ -15,10 +15,19 @@ public:
     void LateUpdate_GameObject() override;
     void Render_GameObject() override;
     
+
+    //오브젝트에 의해 생성된 객체들만 사용할 것
+    void SetCreateByObject( ) { m_bIsCreateByObject = true; }
+    void DropMotion(const _float& fTimeDelta);
+
 public:
     static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _szName);
 
 private:
     virtual void Free();
+
+
+    BOOL m_bIsCreateByObject = false;
+
 };
 

@@ -2,7 +2,7 @@
 #include "CObjectGrass.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-
+#include "ItemBasic.h"
 CObjectGrass::CObjectGrass(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CResObject(pGraphicDev)
 {
@@ -21,6 +21,15 @@ HRESULT CObjectGrass::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+
+
+		_vec3 vPos;
+	m_pTransForm->Set_Scale(_vec3(1.5f, 3.0f, 1.5f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.5f, vPos.z);
+
+
+
 	Ready_Stat();
 
 	m_eCurState = RES_IDLE;
@@ -37,7 +46,28 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 	if (m_fFrameEnd < m_fFrame)
 	{
 		if (m_eCurState == RES_DEAD)
+		{
+			srand(static_cast<unsigned int>(time(nullptr)));
+			//int iItemCount = rand() %  3;	//아이템 갯수용
+			for (int i = 0; i < 3; ++i)
+			{
+				int signX = (rand() % 2 == 0) ? -1 : 1;
+				int signZ = (rand() % 2 == 0) ? -1 : 1;
+				int iItemPosX = rand() % 3* signX;
+				int iItemPosZ = rand() % 3 * signZ;
+				_vec3 vPos;
+				m_pTransForm->Get_Info(INFO_POS, &vPos);
+				vPos.x += iItemPosX;
+				vPos.z += iItemPosZ;
+				CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"CutGlass");
+				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
+				pGameObj->GetTransForm()->Set_Pos(vPos);
+				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
+				
+			}
 			return 0x80000000;
+		}
+			
 
 		m_fFrame = 0.f;
 	}
@@ -82,7 +112,7 @@ void CObjectGrass::Render_GameObject()
 HRESULT CObjectGrass::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
+
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -102,9 +132,7 @@ HRESULT CObjectGrass::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.5f, 1.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
+
 
 	return S_OK;
 }

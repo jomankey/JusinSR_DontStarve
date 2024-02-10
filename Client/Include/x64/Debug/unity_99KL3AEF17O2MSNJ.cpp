@@ -1,5 +1,8 @@
 #include "stdafx.h"
 
+#include "C:\Git\PortPolio\Client\Code\ArmorSlot.cpp"
+
+
 #include "C:\Git\PortPolio\Client\Code\Beefalo.cpp"
 
 
@@ -54,10 +57,13 @@
 #include "C:\Git\PortPolio\Client\Code\CInven.cpp"
 
 
-#include "C:\Git\PortPolio\Client\Code\CInvenBox.cpp"
+#include "C:\Git\PortPolio\Client\Code\InvenSlot.cpp"
 
 
-#include "C:\Git\PortPolio\Client\Code\Ghost.cpp"
+#include "C:\Git\PortPolio\Client\Code\Slot.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\StateUI.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\UIMgr.cpp"
@@ -123,7 +129,7 @@
 #include "C:\Git\PortPolio\Client\Code\Effect.cpp"
 
 
-#include "C:\Git\PortPolio\Client\Code\InvenBoxMgr.cpp"
+#include "C:\Git\PortPolio\Client\Code\SlotMgr.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\ItemBasic.cpp"
@@ -169,6 +175,9 @@
 
 
 #include "C:\Git\PortPolio\Client\Code\Terrain.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Header\Ghost.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Include\Client.cpp"

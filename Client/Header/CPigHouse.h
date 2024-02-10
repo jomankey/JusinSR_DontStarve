@@ -32,4 +32,7 @@ public:
 
 private:
 	virtual void Free();
+
+
+	BOOL m_bIsDropItem = false;
 };
