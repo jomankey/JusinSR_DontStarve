@@ -24,6 +24,11 @@
 #include <cassert>
 #include <process.h>
 
+#include <io.h>
+#include <iostream>
+
+#include "fmod.hpp"
+
 #if defined(_DEBUG) && !defined(_TOOL)
 
 #define _CRTDBG_MAP_ALLOC

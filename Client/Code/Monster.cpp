@@ -18,13 +18,11 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_bAttacking(false)
 	, m_bAttackCooltime(false)
 {
-	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 
 CMonster::CMonster(const CMonster& rhs)
 	: Engine::CGameObject(rhs)
 	, m_vPos(rhs.m_vPos)
-	, m_Stat(rhs.m_Stat)
 	, m_Dirchange(rhs.m_Dirchange)
 	, m_eCurLook(rhs.m_eCurLook)
 	, m_ePreLook(rhs.m_ePreLook)

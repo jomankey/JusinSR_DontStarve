@@ -6,8 +6,8 @@
 #include "ResObject.h"
 #include <ItemBasic.h>
 
-CPigHouse::CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev)
-	:CResObject(pGraphicDev), m_eHouseState(STANDARD)
+CPigHouse::CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev, _int iCount)
+	:CResObject(pGraphicDev), m_eHouseState(STANDARD), m_iPointNum(iCount)
 {
 }
 
@@ -29,13 +29,14 @@ HRESULT CPigHouse::Ready_GameObject()
 	m_eObject_id = PIG_HOUSE;
 	m_fFrame = 0.f;
 	Ready_Stat();
+	Ready_Light();
 
 	return S_OK;
 }
 
 _int CPigHouse::Update_GameObject(const _float& fTimeDelta)
 {
-
+	Change_Light();
 	if (m_eCurState != RES_IDLE && m_eCurState != RES_DEAD)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 
@@ -130,12 +131,6 @@ HRESULT CPigHouse::Add_Component()
 
 void CPigHouse::Change_Frame_Event()
 {
-	//if () // 충돌 혹은 피격 혹은 아침저녁 바뀔때 메소드
-	//{
-	//	m_eHouseState = ??		//스테이트 바꾸기
-	//	
-	//}
-
 	//시간에 따른 텍스쳐 프레임값 변경 
 	TIME_STATE  eTimeState = light::Get_TimeIndex();
 	//IDLE일때의 상태값
@@ -213,16 +208,63 @@ void CPigHouse::Check_FrameState()
 
 void CPigHouse::Ready_Stat()
 {
+	m_Stat.strObjName = L"돼지 집";
 	m_Stat.fHP = 10.f;
 	m_Stat.fMxHP = 10.f;
 	m_Stat.fSpeed = 1.f;
 	m_Stat.bDead = false;
 }
 
-
-CResObject* CPigHouse::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+HRESULT CPigHouse::Ready_Light()
 {
-	CResObject* pInstance = new CPigHouse(pGraphicDev);
+	//점광원
+// 최초 생성 후 플레이어 횟불 사용 시에만 켜지도록 
+	D3DLIGHT9 tPointLightInfo;
+	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo.Type = D3DLIGHT_POINT;
+
+	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Attenuation0 = 3.f;
+
+	tPointLightInfo.Range = 5.f;
+	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
+
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, m_iPointNum), E_FAIL);
+	light::Get_Light(m_iPointNum)->Close_Light();
+}
+
+void CPigHouse::Change_Light()
+{
+	//오전을 제외한 모든 시간에 
+	TIME_STATE eTimeState = light::Get_TimeIndex();
+	if (eTimeState == MORNING)
+		return;
+
+	D3DLIGHT9* tPointLightInfo = light::Get_Light(m_iPointNum)->Get_Light();
+	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo->Type = D3DLIGHT_POINT;
+
+	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tPointLightInfo->Attenuation0 = 3.f;
+
+	tPointLightInfo->Range = 3.f;
+
+	_vec3 pPigHousePos;
+	m_pTransForm->Get_Info(INFO_POS, &pPigHousePos); // player pos 값 설정
+	tPointLightInfo->Position = pPigHousePos;
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
+	light::Get_Light(m_iPointNum)->Update_Light();
+}
+
+
+CResObject* CPigHouse::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iCount)
+{
+	CResObject* pInstance = new CPigHouse(pGraphicDev, iCount);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

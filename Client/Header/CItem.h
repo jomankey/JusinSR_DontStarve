@@ -6,6 +6,7 @@ namespace Engine
 class CRcTex;
 class CTexture;
 class CTransform;
+class CCalculator;
 }
 
 struct ItemInfo
@@ -31,11 +32,11 @@ public:
 	void AddItemCount(_uint _num) { m_tItemInfo.ItemCount += _num; }
 	void MinusItemCount(_uint _num)
 	{
-		if (m_tItemInfo.ItemCount > _num)
+		if (m_tItemInfo.ItemCount >= _num)
 			m_tItemInfo.ItemCount -= _num;
 	}
 	void Set_ItemCount(_uint _iNum) { m_tItemInfo.ItemCount = _iNum; }
-
+	
 	_bool			IsEquipment() { return m_tItemInfo.Equipment; }
 
 
@@ -58,6 +59,7 @@ public:
 protected:
 	HRESULT			Add_Component();
 	virtual void MousePicking();
+	void Set_ObjState();
 
 protected:
 	virtual void Free();
@@ -65,9 +67,15 @@ protected:
 protected:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
+	Engine::CCalculator* m_pCalculatorCom;
 
 protected:
 	ItemInfo	m_tItemInfo;
+
+	_matrix				m_ViewMatrix, m_ProjMatrix;
+	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
+	_float m_fPreX, m_fPreY;
+
 
 };
 

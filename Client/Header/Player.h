@@ -31,6 +31,9 @@ public:
 	_uint Get_PlayerMental() { return m_Stat.fMental; }
 	_uint Get_PlayerMaxMental() { return m_Stat.fMaxMental; }
 	
+	void Set_PlayerHp(_int _iHp) { m_Stat.fHP += _iHp; }
+	void Set_PlayerMental(_int _iMental) { m_Stat.fMental += _iMental; }
+	void Set_PlayerHangry(_int _iHangry) { m_Stat.fHungry += _iHangry; }
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;
@@ -53,7 +56,6 @@ private:
 	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);	//Res오브젝트들을 채굴할 때 사용하는 함수
 	_int			Die_Check();
 
-	HRESULT Ready_Light();	//조명
 	void Fire_Light();
 	
 	void Update_State(const _float& fTimeDelta);
@@ -81,7 +83,7 @@ private:
 	LOOKDIR				m_ePreLook;
 	_bool				m_Dirchange;			//Look
 	_bool				m_bAttack;
-	OBJSTAT				m_Stat;
+
 	_bool				m_KeyLock;				//Key Input 함수를 막는 용도	true 면 막힘
 	_bool				m_bFrameLock;			//프레임 축적을 막는 용도 true 면 막힘
 

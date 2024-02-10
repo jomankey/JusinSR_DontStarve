@@ -48,7 +48,9 @@
 #include"SlideUI.h"
 #include"CHpUI.h"
 #include"CMentalUI.h"
-#include"CWorldUI.h"
+#include"WorldUI.h"
+#include "WorldTimeBody.h"
+#include "WorldHand.h"
 #include"CHungryUI.h"
 #include"ExplainPanel.h"
 #include <ItemBasic.h>
@@ -205,17 +207,17 @@ HRESULT CTestScene::Ready_Layer_UI()
 
 
 	//WorldUI
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(40.f, 40.f, 0.f), L"Proto_UI_World_1");
+	pGameObject = CWorldUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
-	//WorldUIa
-	pGameObject = CUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(40.f, 40.f, 0.f), L"Proto_UI_World_2");
+	//WorldUI
+	pGameObject = CWorldTimeBody::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//WorldUIClock
-	pGameObject = CWorldUI::Create(m_pGraphicDev, UI_STATE::UI_STATIC, _vec3(730.f, 60.f, 0.f), _vec3(10.f, 30.f, 0.f), L"Proto_UI_World_10");
+	pGameObject = CWorldHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
@@ -334,7 +336,9 @@ HRESULT CTestScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	}
 	else if (!_tcscmp(L"PigHouse", pName))
 	{
-		pGameObject = CPigHouse::Create(m_pGraphicDev);
+		static _int iCount = 1;
+		iCount++;
+		pGameObject = CPigHouse::Create(m_pGraphicDev, iCount);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	}

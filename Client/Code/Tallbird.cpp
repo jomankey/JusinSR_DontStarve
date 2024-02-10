@@ -276,6 +276,7 @@ void CTallbird::State_Change()
 
 void CTallbird::Set_ObjStat()
 {
+    m_Stat.strObjName = L"키다리새";
     m_Stat.fHP = 150.f;
     m_Stat.fMxHP = 150.f;
     m_Stat.fSpeed = 2.5f;

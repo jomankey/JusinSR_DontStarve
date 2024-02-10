@@ -41,7 +41,7 @@ HRESULT CSlot::Ready_GameObject()
 	m_fSizeX = 15.f;
 	m_fSizeY = 15.f;
 
-	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 
 	D3DXMatrixIdentity(&m_ViewMatrix);

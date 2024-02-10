@@ -62,6 +62,15 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.tItemInfo[1].iCount = 2;
 	m_vecCreateInfo.push_back(tInfo);
 
+	tInfo.strKeyName = L"Cook";
+	tInfo.strName = L"요리 도구";
+	tInfo.strInfo = L"맛있는 요리를 할 수 있다.";
+	tInfo.tItemInfo[0].strItemName = L"Rocks_0";
+	tInfo.tItemInfo[0].iCount = 3;
+	tInfo.tItemInfo[1].strItemName = L"Log";
+	tInfo.tItemInfo[1].iCount = 2;
+	m_vecCreateInfo.push_back(tInfo);
+
 	//생존 용품
 	tInfo.strKeyName = L"Torch";
 	tInfo.strName = L"횃불";
@@ -81,6 +90,15 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.tItemInfo[1].iCount = 3;
 	m_vecCreateInfo.push_back(tInfo);
 
+	tInfo.strKeyName = L"Tent";
+	tInfo.strName = L"텐트";
+	tInfo.strInfo = L"안전하게 잠을 잘 수 있다.";
+	tInfo.tItemInfo[0].strItemName = L"CutGlass";
+	tInfo.tItemInfo[0].iCount = 2;
+	tInfo.tItemInfo[1].strItemName = L"Twigs";
+	tInfo.tItemInfo[1].iCount = 2;
+	m_vecCreateInfo.push_back(tInfo);
+
 	//전투용품
 	tInfo.strKeyName = L"Lance";
 	tInfo.strName = L"전투창";
@@ -90,6 +108,17 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.tItemInfo[1].strItemName = L"FireSton";
 	tInfo.tItemInfo[1].iCount = 1;
 	m_vecCreateInfo.push_back(tInfo);
+
+	tInfo.strKeyName = L"Armor";
+	tInfo.strName = L"풀 갑옷";
+	tInfo.strInfo = L"몸을 아~~주 조금 보호할 수 있다.";
+	tInfo.tItemInfo[0].strItemName = L"CutGlass";
+	tInfo.tItemInfo[0].iCount = 3;
+	tInfo.tItemInfo[1].strItemName = L"Twigs";
+	tInfo.tItemInfo[1].iCount = 2;
+	m_vecCreateInfo.push_back(tInfo);
+
+
 }
 
 void CUIMgr::Free()

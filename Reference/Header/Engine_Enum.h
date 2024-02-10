@@ -64,6 +64,7 @@ namespace Engine
 		TILE,
 		CAMERA,
 		BACK_GROUND,
+		MOUSE,
 		ITEM,
 		MONSTER,
 		PLAYER,

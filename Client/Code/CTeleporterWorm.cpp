@@ -29,6 +29,7 @@ HRESULT CTeleporterWorm::Ready_GameObject()
 	m_fFrame = 0.f;
 	m_fFrameEnd = 7.f;
 	//Ready_Stat();
+	m_Stat.strObjName = L"¿úÈ¦";
 
 	return S_OK;
 }

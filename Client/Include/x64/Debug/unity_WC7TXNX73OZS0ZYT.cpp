@@ -6,6 +6,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Beefalo.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CBonfire.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CBossScene.cpp"
 
 
@@ -18,7 +21,16 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CCatapult.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CCookingPot.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CFIre.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSpike.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CTent.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CToothTrap.cpp"
@@ -46,6 +58,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\InvenSlot.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Mouse.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Slot.cpp"
@@ -105,7 +120,10 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CUI.cpp"
 
 
-#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CWorldUI.cpp"
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\WorldHand.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\WorldUI.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\DeerClops.cpp"
@@ -163,6 +181,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Terrain.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\WorldTimeBody.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Header\Ghost.cpp"

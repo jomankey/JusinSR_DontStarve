@@ -224,6 +224,7 @@ HRESULT CPig::Add_Component()
 
 void CPig::Set_ObjStat()
 {
+	m_Stat.strObjName = L"µÅÁö";
 	m_Stat.fHP = 100.f;
 	m_Stat.fMxHP = 100.f;
 	m_Stat.fSpeed = 1.f;

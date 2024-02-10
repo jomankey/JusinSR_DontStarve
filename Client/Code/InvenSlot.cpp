@@ -48,23 +48,24 @@ void CInvenSlot::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
-	_tchar strItemCount[32];
-	if (m_pItem != nullptr)
-	{
+
+	//if (m_pItem != nullptr)
+	//{
+	//	m_pItem->Render_GameObject();
+
+	//	if (m_eType == INVEN)
+	//	{
+	//		_itow_s(m_pItem->Get_ItemCount(), strItemCount, 10);
+	//		Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+	//	}
+	//}
+
+	//if (m_eType == INVEN && CSlotMgr::GetInstance()->Get_InvenItem(m_iInvenIndex) != nullptr)
+	//{
+
+	//}
+	if (m_pItem)
 		m_pItem->Render_GameObject();
-
-		if (m_eType == INVEN)
-		{
-			_itow_s(m_pItem->Get_ItemCount(), strItemCount, 10);
-			Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY + 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
-		}
-	}
-
-	if (m_eType == INVEN && CSlotMgr::GetInstance()->Get_InvenItem(m_iInvenIndex) != nullptr)
-	{
-		_itow_s(CSlotMgr::GetInstance()->Get_InvenItem(m_iInvenIndex)->Get_ItemCount(), strItemCount, 10);
-		Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 8.f, m_fY + 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
-	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }

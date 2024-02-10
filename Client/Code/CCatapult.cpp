@@ -30,6 +30,7 @@ CCatapult::~CCatapult()
 HRESULT CCatapult::Ready_GameObject()
 {
 	Add_Component();
+	m_Stat.strObjName = L"≈ıºÆ±‚";
 
 	return S_OK;
 }

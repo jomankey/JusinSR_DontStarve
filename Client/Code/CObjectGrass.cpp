@@ -159,6 +159,7 @@ void CObjectGrass::Change_Frame_Event()
 
 void CObjectGrass::Ready_Stat()
 {
+	m_Stat.strObjName = L"Ç®»Ñ¸®";
 	m_Stat.fHP = 1;
 	m_Stat.fMxHP = 1;
 	m_Stat.fSpeed = 1.f;

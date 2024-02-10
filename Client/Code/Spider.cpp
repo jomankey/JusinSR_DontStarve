@@ -248,6 +248,7 @@ void CSpider::State_Change()
 
 void CSpider::Set_ObjStat()
 {
+    m_Stat.strObjName = L"°Å¹Ì";
     m_Stat.fHP = 100.f;
     m_Stat.fMxHP = 100.f;
     m_Stat.fSpeed = 1.5f;

@@ -26,6 +26,8 @@ public:
 
 private:
     void Input_Mouse();
+    void Eat_Food();
+    void Move_Pos();
 
 public:
     static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType = UI_ITEM_CREATE, _bool bFood = false);
@@ -34,14 +36,13 @@ private:
     virtual void Free();
 
 private:
-    _matrix				m_ViewMatrix, m_ProjMatrix;
-    _float m_fX, m_fY, m_fSizeX, m_fSizeY;
-    _float m_fPreX, m_fPreY;
-
+    _vec3 m_vPos;
     _bool m_bFood;
+    _bool m_bClick;
 
     UI_ITEM_TYPE m_eItemType;
     ARMOR_SLOT_TYPE m_eArmorSlotType;
     _uint m_iNum; // 박스 순서 넘버
+
 };
 

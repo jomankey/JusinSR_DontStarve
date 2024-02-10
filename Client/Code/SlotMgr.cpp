@@ -21,57 +21,76 @@ CSlotMgr::~CSlotMgr()
 }
 
 //아이템 습득실패시 false반환
-_bool CSlotMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey)
+_bool CSlotMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos)
 {
 	vector<CSlot*> vecBox = Get_BoxList(INVEN);
 
+	_vec3 vPos;
+
 	for (int i = 0; i < INVENCNT; ++i) // 인벤토리 빈칸 있는지 없는지 체크
+	{
+		if (m_pItemArr[i] != nullptr && m_pItemArr[i]->GetObjName() == strItemKey) // 같은 아이템이 있다면 아이템 카운트 증가
+		{
+			vPos.x = vecBox[i]->Get_fX();
+			vPos.y = vecBox[i]->Get_fY();
+
+			m_pItemArr[i]->AddItemCount(1);
+			(*vSlotPos) = vPos;
+			return true;
+		}
+	}
+
+	for (int i = 0; i < INVENCNT; ++i) 
 	{
 		if (m_pItemArr[i] == nullptr) // 아이템이 없다면 인벤에 아이템 생성
 		{
-			_vec3 vPos;
 			vPos.x = vecBox[i]->Get_fX();
 			vPos.y = vecBox[i]->Get_fY();
-			/*
-			L"Log"
-			L"Berries"
-			L"Cooked_berries"
-			L"Cooked_Meat_Monster"
-			L"CookedMeat"
-			L"CutGlass"
-			L"CutStone"
-			L"Meat_Monster"
-			L"RawMeat"
-			L"Rocks_0"
-			L"Rocks_1"
-			L"Silk"
-			L"Twigs"
-			L"Ax"
-			L"Lance"
-			L"Hammer"
-			L"FireSton"
-			L"Pickaxe"
-			L"Shovel"
-			L"Torch"
-			L"BonFire"
-			*/
+
 			_bool bFood = strItemKey == L"Cooked_berries" || strItemKey == L"Cooked_Meat_Monster" || strItemKey == L"CookedMeat" || strItemKey == L"Meat_Monster" || strItemKey == L"RawMeat";
 
 			ARMOR_SLOT_TYPE eArmor(ARMOR_SLOT_END);
 			if (strItemKey == L"Ax" || strItemKey == L"Lance" || strItemKey == L"Hammer" || strItemKey == L"Pickaxe" || strItemKey == L"Torch")
 				eArmor = HAND;
+			if (strItemKey == L"Armor")
+				eArmor = HEAD;
 
 			CItem* pItem = CItemTool::Create(pGraphicDev, strItemKey, vPos, UI_ITEM_INVEN, bFood);
 			if (eArmor != ARMOR_SLOT_END) dynamic_cast<CItemTool*>(pItem)->Set_ArmorSlotType(eArmor);
 			dynamic_cast<CItemTool*>(pItem)->Set_BoxIndex(i);
 			m_pItemArr[i] = pItem;
-
+			(*vSlotPos) = vPos;
 			return true;
 		}
+	}
 
-		if (m_pItemArr[i]->GetObjName() == strItemKey) // 같은 아이템이 있다면 아이템 카운트 증가
+	return false;
+}
+
+_bool CSlotMgr::Check_AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos)
+{
+	vector<CSlot*> vecBox = Get_BoxList(INVEN);
+
+	_vec3 vPos;
+
+	for (int i = 0; i < INVENCNT; ++i) // 인벤토리 빈칸 있는지 없는지 체크
+	{
+		if (m_pItemArr[i] != nullptr && m_pItemArr[i]->GetObjName() == strItemKey) // 같은 아이템이 있다면 아이템 카운트 증가
 		{
-			m_pItemArr[i]->AddItemCount(1);
+			vPos.x = vecBox[i]->Get_fX();
+			vPos.y = vecBox[i]->Get_fY();
+			(*vSlotPos) = vPos;
+			return true;
+		}
+	}
+
+	for (int i = 0; i < INVENCNT; ++i)
+	{
+		if (m_pItemArr[i] == nullptr) // 아이템이 없다면 인벤에 아이템 생성
+		{
+			vPos.x = vecBox[i]->Get_fX();
+			vPos.y = vecBox[i]->Get_fY();
+			(*vSlotPos) = vPos;
 			return true;
 		}
 	}
@@ -89,11 +108,39 @@ void CSlotMgr::Set_Create_Menu(int _iNum, CItem* pItem)
 	pCreateBox[_iNum]->Set_Item(pItem);
 }
 
+void CSlotMgr::Remove_InvenItem(_uint _iItemNum)
+{
+	CItem* pItme = m_pItemArr[_iItemNum];
+
+	pItme->MinusItemCount(1);
+
+	if (pItme->Get_ItemCount() <= 0)
+	{
+		Safe_Release(pItme);
+		m_pItemArr[_iItemNum] = nullptr;
+	}	
+}
+
 void CSlotMgr::Set_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType, CItem* pItem, _uint _iItemNum)
 {
 	// 아이템 장착 시 인벤 삭제
 	m_pArmorArr[eArmorSlotType - 15] = pItem;
 	m_pItemArr[_iItemNum] = nullptr;
+}
+
+_bool CSlotMgr::Check_InvenItemCount(wstring strName, _int iNeedNum)
+{
+	for (auto& iter : m_pItemArr)
+	{
+		
+		if (iter == nullptr || strName != iter->GetObjName())
+			continue;
+
+		if (iter->Get_ItemCount() >= iNeedNum)
+			return true;
+	}
+
+	return false;
 }
 
 void CSlotMgr::Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _uint _iItemNum)

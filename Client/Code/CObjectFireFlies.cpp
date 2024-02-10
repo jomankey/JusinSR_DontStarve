@@ -30,6 +30,8 @@ HRESULT CObjectFireFlies::Ready_GameObject()
 	m_fFrameEnd = 17.f;
 	//Ready_Stat();
 
+	m_Stat.strObjName = L"¹Ýµ÷ºÒÀÌ";
+
 	return S_OK;
 }
 

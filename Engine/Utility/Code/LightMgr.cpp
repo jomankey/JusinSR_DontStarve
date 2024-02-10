@@ -34,14 +34,14 @@ _int CLightMgr::Change_Light(const _float& fTimeDelta, _int _iIndex)
 
 		m_eChangeIndex = AFTERNOON;
 	}
-	if (m_eChangeIndex == AFTERNOON)
+	else if (m_eChangeIndex == AFTERNOON)
 	{
 		if (10000 >= m_fPreTime) // 90000
 			return m_eChangeIndex;
 
-		m_eChangeIndex = AFTERNOON;
+		m_eChangeIndex = NIGHT;
 	}
-	if (m_eChangeIndex == NIGHT)
+	else if (m_eChangeIndex == NIGHT)
 	{
 		if (10000 >= m_fPreTime) // 60000
 			return m_eChangeIndex;

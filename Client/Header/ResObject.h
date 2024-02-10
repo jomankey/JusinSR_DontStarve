@@ -45,8 +45,6 @@ protected:
     _float				m_fFrameEnd;
     _bool m_bHit;
 
-    OBJSTAT m_Stat;
-
 protected:
     virtual void Free() override;
 };

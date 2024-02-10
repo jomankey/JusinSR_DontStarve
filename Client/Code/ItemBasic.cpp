@@ -1,8 +1,10 @@
 #include "ItemBasic.h"
 #include "Export_Utility.h"
+#include "stdafx.h"
+#include "SlotMgr.h"
 
 CItemBasic::CItemBasic(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CItem(pGraphicDev)
+	: CItem(pGraphicDev), m_bChangeRander(false)
 {
 }
 
@@ -20,9 +22,33 @@ CItemBasic::~CItemBasic()
 {
 }
 
+void CItemBasic::Pickup_Item(_vec3 vSlotPos)
+{
+	m_pTransForm->Get_Info(INFO_POS, &m_vPos);
+	m_pCalculatorCom->Change_OnObjectMatrix(g_hWnd, &m_vPos);
+	m_bChangeRander = true;
+
+	m_vSlotPos = vSlotPos;
+
+	m_fX = m_vPos.x;
+	m_fY = m_vPos.y;
+
+	m_fSizeX = 25.f;
+	m_fSizeY = 25.f;
+
+	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.0f));
+	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
+	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(180.f));
+
+	D3DXMatrixIdentity(&m_ViewMatrix);
+	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
+}
+
 HRESULT CItemBasic::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	Set_ObjState();
 
     return S_OK;
 }
@@ -32,6 +58,22 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 
 	CGameObject::Update_GameObject(fTimeDelta);
 
+	if (m_bChangeRander)
+	{
+		if (m_vSlotPos.y - m_fY <= 0.1f)
+		{
+			_vec3 vSlotPos = {};
+			CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strObjName, &vSlotPos);
+			return 0x80000000;
+		}
+			
+		// 아이템 먹엇을때 슬롯쪽으로 이동
+		m_fX += (m_vSlotPos.x - m_fX) * 5.f * fTimeDelta;
+		m_fY += (m_vSlotPos.y - m_fY) * 5.f * fTimeDelta;
+
+		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
+	}
+
 	MousePicking();
 	m_pTransForm->BillBoard();
 
@@ -40,7 +82,7 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 		DropMotion(fTimeDelta);
 	}
 
-	renderer::Add_RenderGroup(RENDER_ALPHA, this);
+	renderer::Add_RenderGroup(m_bChangeRander ? RENDER_UI : RENDER_ALPHA, this);
 
 	return 0;
 }
@@ -58,16 +100,25 @@ void CItemBasic::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+
+	if (m_bChangeRander)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
+	}
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	if (!m_bChangeRander) m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	if (!m_bChangeRander) m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+	scenemgr::Get_CurScene()->EndOrtho();
 }
 
 void CItemBasic::DropMotion(const _float& fTimeDelta)

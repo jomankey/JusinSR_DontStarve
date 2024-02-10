@@ -5,6 +5,7 @@
 #include "Stage.h"
 #include "UIMgr.h"
 #include "SlotMgr.h"
+#include "Export_System.h"
 
 CMainApp::CMainApp() : m_pDeviceClass(nullptr)
 {
@@ -19,6 +20,8 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(SetUp_Setting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
+	//Engine::Ready_Sound();
+	//Engine::PlayBGM(L"Start.mp3", 10.f);
 	//01:23
 	//test
 	return S_OK;
@@ -26,7 +29,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 int CMainApp::Update_MainApp(const float& fTimeDelta)
 {
-
+	
 	Engine::Update_InputDev();
 	Engine::Update_MouseState();
 	m_pManagementClass->Update_Scene(fTimeDelta);
@@ -96,9 +99,13 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
 
 	//UI
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà",  L"Panel_Title", 15, 15, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Panel_Info",  6, 10, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Button_Make", 10, 15, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà",  L"Panel_Title", 20, 20, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Panel_Info",  12, 12, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà", L"Button_Make", 18, 18, FW_THIN), E_FAIL);
+
+	//Mouse
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Title", 25, 25, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Sub", 20, 20, FW_HEAVY), E_FAIL);
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);

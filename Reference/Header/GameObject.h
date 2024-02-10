@@ -23,6 +23,10 @@ namespace Engine
 		void SetDeleteObj() { m_bDelete = true; }
 		_bool IsDelete() { return m_bDelete; }
 
+		OBJSTAT Get_State() { return m_Stat; }
+
+		void Set_SlotNum(_int iNum) { m_iSlotNum = iNum; }
+
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
@@ -47,5 +51,9 @@ namespace Engine
 		_bool										m_bDelete;	//삭제예정일경우 True
 
 		wstring										m_strObjName;
+
+		OBJSTAT				m_Stat;
+
+		_int m_iSlotNum;  // 생성 시 슬롯의 몇번째에 있는지 체크하기 위해서 필요
 	};
 }

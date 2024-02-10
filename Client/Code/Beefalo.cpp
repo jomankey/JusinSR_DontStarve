@@ -215,6 +215,7 @@ HRESULT CBeefalo::Add_Component()
 
 void CBeefalo::Set_ObjStat()
 {
+    m_Stat.strObjName = L"¹öÆÈ·Î";
     m_Stat.fHP = 100.f;
     m_Stat.fMxHP = 100.f;
     m_Stat.fSpeed = 1.f;
