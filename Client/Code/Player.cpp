@@ -600,7 +600,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		if (nullptr != findObj)
 		{
 			_vec3 vSlotPos;
-			if (CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, findObj->GetObjName(), &vSlotPos));
+			if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, findObj->GetObjName(), &vSlotPos));
 			{
 				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);
 			}

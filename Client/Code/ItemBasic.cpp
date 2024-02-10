@@ -1,6 +1,8 @@
 #include "ItemBasic.h"
 #include "Export_Utility.h"
 #include "stdafx.h"
+#include "SlotMgr.h"
+
 CItemBasic::CItemBasic(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CItem(pGraphicDev), m_bChangeRander(false)
 {
@@ -58,7 +60,12 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 	if (m_bChangeRander)
 	{
 		if (m_vSlotPos.y - m_fY <= 0.1f)
+		{
+			_vec3 vSlotPos = {};
+			CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strObjName, &vSlotPos);
 			return 0x80000000;
+		}
+			
 		// 아이템 먹엇을때 슬롯쪽으로 이동
 		m_fX += (m_vSlotPos.x - m_fX) * 5.f * fTimeDelta;
 		m_fY += (m_vSlotPos.y - m_fY) * 5.f * fTimeDelta;

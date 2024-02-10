@@ -3,14 +3,14 @@
 #include "stdafx.h"
 #include "SlotMgr.h"
 
-CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strKeyName)
-	: CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y), m_strCreateItemKey(strKeyName)
+CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CREATEINFO tCreateInfo)
+	: CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y), m_tCreateInfo(tCreateInfo), m_bColl(false)
 {
 
 }
 
 CButtonUI::CButtonUI(const CButtonUI& rhs)
-	: CGameObject(rhs), m_fX(rhs.m_fX), m_fY(rhs.m_fY), m_strCreateItemKey(rhs.m_strCreateItemKey)
+	: CGameObject(rhs), m_fX(rhs.m_fX), m_fY(rhs.m_fY), m_tCreateInfo(rhs.m_tCreateInfo)
 {
 }
 
@@ -56,7 +56,7 @@ void CButtonUI::Render_GameObject()
 
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-    m_pTextureCom->Set_Texture(0);
+    m_pTextureCom->Set_Texture(m_bColl);
 
     m_pBufferCom->Render_Buffer();
 
@@ -91,21 +91,27 @@ void CButtonUI::Input_Mouse()
     ScreenToClient(g_hWnd, &tPt);
     _vec2 vMousePos = _vec2(tPt.x, tPt.y);
 
-    if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
+    m_bColl = Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY);
+
+    //아이템 제작 
+    if (m_bColl)
     {
-        //아이템 제작 
-        if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+        if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
         {
             _vec3 vSlotPos;
             // 생산 로직 구현 
-            CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strCreateItemKey, &vSlotPos);
+            _bool bFirstCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
+            _bool bSecondCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
+
+            if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
+                CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
         }
     }
 }
 
-CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strKeyName)
+CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CREATEINFO tCreateInfo)
 {
-    CButtonUI* pInstance = new CButtonUI(pGraphicDev, vPos, strKeyName);
+    CButtonUI* pInstance = new CButtonUI(pGraphicDev, vPos, tCreateInfo);
 
     if (FAILED(pInstance->Ready_GameObject()))
     {

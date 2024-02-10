@@ -56,7 +56,7 @@ HRESULT CExplainPanel::Ready_GameObject()
         m_pItem[i]->Set_Item(pItem);
     }
 
-    m_pButton = CButtonUI::Create(m_pGraphicDev, _vec3(m_fX + 15.f, m_fY + 50.f, 0.f), m_strItemKey);
+    m_pButton = CButtonUI::Create(m_pGraphicDev, _vec3(m_fX + 15.f, m_fY + 50.f, 0.f), m_tCreateInfo);
 
     m_fSizeX = 80.f;
     m_fSizeY = 80.f;
