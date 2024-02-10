@@ -55,6 +55,10 @@ HRESULT CSlideUI::Ready_GameObject()
 		vPos = _vec3{ m_vecSlideBox[2]->Get_fX(), m_vecSlideBox[2]->Get_fY() - pHeight, 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Hammer", vPos);
 		m_vecSlideBox[2]->Set_Item(pItem);
+
+		vPos = _vec3{ m_vecSlideBox[3]->Get_fX(), m_vecSlideBox[3]->Get_fY() - pHeight, 0.f };
+		pItem = CItemTool::Create(m_pGraphicDev, L"Cook", vPos);
+		m_vecSlideBox[3]->Set_Item(pItem);
 	}
 		break;
 	case Engine::ITEM_ALIVE: // È¶ºÒ, ¸ð´ÚºÒ
@@ -66,6 +70,10 @@ HRESULT CSlideUI::Ready_GameObject()
 		vPos = _vec3{ m_vecSlideBox[1]->Get_fX(), m_vecSlideBox[1]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"BonFire", vPos);
 		m_vecSlideBox[1]->Set_Item(pItem);
+
+		vPos = _vec3{ m_vecSlideBox[2]->Get_fX(), m_vecSlideBox[2]->Get_fY() - pHeight , 0.f };
+		pItem = CItemTool::Create(m_pGraphicDev, L"Tent", vPos);
+		m_vecSlideBox[2]->Set_Item(pItem);
 	}
 		break;
 	case Engine::ITEM_WEAPON: // ÀüÅõÃ¢
@@ -73,6 +81,10 @@ HRESULT CSlideUI::Ready_GameObject()
 		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Lance", vPos);
 		m_vecSlideBox[0]->Set_Item(pItem);
+
+		vPos = _vec3{ m_vecSlideBox[1]->Get_fX(), m_vecSlideBox[1]->Get_fY() - pHeight , 0.f };
+		pItem = CItemTool::Create(m_pGraphicDev, L"Armor", vPos);
+		m_vecSlideBox[1]->Set_Item(pItem);
 	}
 		break;
 	default:

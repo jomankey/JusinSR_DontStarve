@@ -4,6 +4,11 @@
 #include "stdafx.h"
 #include <Slot.h>
 #include "SlotMgr.h"
+#include <Player.h>
+#include <Mouse.h>
+#include "CBonfire.h"
+#include "CTent.h"
+
 CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
 	: CItem(pGraphicDev, _strObjName), m_bFood(bFood), m_eItemType(eType), m_eArmorSlotType(ARMOR_SLOT_END), m_vPos(vPos)
 {
@@ -80,7 +85,7 @@ void CItemTool::Input_Mouse()
 	ScreenToClient(g_hWnd, &tPt);
 	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
 
-	if ((Engine::Get_DIMouseState(DIM_LB) & 0x8000) && m_eItemType == UI_ITEM_INVEN) // 마우스 피킹 후 움직이면 
+	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::HOLD && m_eItemType == UI_ITEM_INVEN) // 마우스 피킹 후 움직이면 
 	{
 		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
 		{
@@ -88,6 +93,36 @@ void CItemTool::Input_Mouse()
 			m_fY += Engine::Get_DIMouseMove(DIMS_Y);
 
 			m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+		}
+	}
+	else if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP && m_eItemType == UI_ITEM_INVEN) // 마우스 오른쪽 클릭
+	{
+		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+		{
+			if (m_bFood) // 음식이먼 먹기 가능
+			{
+				Eat_Food();
+			}
+			else if (m_strObjName == L"BonFire") // 설치
+			{
+				auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+				CMouse* pMouse = dynamic_cast<CMouse*> (vecMouse);
+				pMouse->Set_Install(true);
+
+				CGameObject* pBonfire = CBonfire::Create(m_pGraphicDev, true);
+				pBonfire->Set_SlotNum(m_iNum);
+				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT, pBonfire);
+			}
+			else if (m_strObjName == L"Tent") // 설치
+			{
+				auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+				CMouse* pMouse = dynamic_cast<CMouse*> (vecMouse);
+				pMouse->Set_Install(true);
+
+				CGameObject* pTent = CTent::Create(m_pGraphicDev, true);
+				pTent->Set_SlotNum(m_iNum);
+				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT, pTent);
+			}
 		}
 	}
 	else if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::AWAY && m_eItemType == UI_ITEM_INVEN) // 마우스 UP
@@ -151,6 +186,46 @@ void CItemTool::Input_Mouse()
 		m_fY = m_fPreY;
 
 		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+	}
+}
+
+void CItemTool::Eat_Food()
+{
+	//플레이어 먹기 기능
+	auto& vecPlayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PLAYER)[0];
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(vecPlayer);
+
+	if (m_strObjName == L"Berries")
+	{
+		pPlayer->Set_PlayerHangry(3.f);
+		pPlayer->Set_PlayerHp(3.f);
+	}
+	else if (m_strObjName == L"Cooked_berries")
+	{
+		pPlayer->Set_PlayerHangry(5.f);
+		pPlayer->Set_PlayerHp(5.f);
+	}
+	else if (m_strObjName == L"Cooked_Meat_Monste")
+	{
+		pPlayer->Set_PlayerHangry(7.f);
+		pPlayer->Set_PlayerHp(5.f);
+		pPlayer->Set_PlayerMental(-3.f);
+	}
+	else if (m_strObjName == L"CookedMeat")
+	{
+		pPlayer->Set_PlayerHangry(10.f);
+		pPlayer->Set_PlayerHp(10.f);
+	}
+	else if (m_strObjName == L"Meat_Monster")
+	{
+		pPlayer->Set_PlayerHangry(5.f);
+		pPlayer->Set_PlayerHp(2.f);
+		pPlayer->Set_PlayerMental(-5.f);
+	}
+	else if (m_strObjName == L"RawMeat")
+	{
+		pPlayer->Set_PlayerHangry(5.f);
+		pPlayer->Set_PlayerHp(3.f);
 	}
 }
 

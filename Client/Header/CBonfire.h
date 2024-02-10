@@ -11,7 +11,7 @@ class CBonfire :
 	enum BONFIRE_STATE { BONFIRE_IDLE,BONFIRE_DROP,BONFIRE_END };
 
 private:
-	explicit CBonfire(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CBonfire(LPDIRECT3DDEVICE9 pGraphicDev , _bool bInstall);
 	explicit CBonfire(const CBonfire& rhs);
 	virtual ~CBonfire();
 
@@ -23,6 +23,7 @@ public:
 
 
 public:
+	void Install_Obj();
 	//처음에는 항상 IDLE임 마우스를 드래그해서 놓으면 해당 함수를 호출	
 	void Set_DropBonfire() { m_bIsDrop = true; }
 
@@ -39,13 +40,14 @@ private:
 
 
 public:
-	static CResObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CResObject* Create(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall = false);
 
 private:
 	virtual void Free();
 
 
 private:
+	Engine::CCalculator* m_pCalculatorCom;
 	CTexture* m_pBonfireTexCom[BONFIRE_END];
 
 	BONFIRE_STATE m_eBonfireCurState;
@@ -58,5 +60,6 @@ private:
 	BOOL m_bIsDrop = false;
 	BOOL m_bIsDropEnd = false;
 
+	_bool m_bInstall = false;
 };
 

@@ -25,6 +25,8 @@ namespace Engine
 
 		OBJSTAT Get_State() { return m_Stat; }
 
+		void Set_SlotNum(_int iNum) { m_iSlotNum = iNum; }
+
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
@@ -51,5 +53,7 @@ namespace Engine
 		wstring										m_strObjName;
 
 		OBJSTAT				m_Stat;
+
+		_int m_iSlotNum;  // 생성 시 슬롯의 몇번째에 있는지 체크하기 위해서 필요
 	};
 }

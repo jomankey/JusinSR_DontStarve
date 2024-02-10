@@ -32,11 +32,11 @@ public:
 	void AddItemCount(_uint _num) { m_tItemInfo.ItemCount += _num; }
 	void MinusItemCount(_uint _num)
 	{
-		if (m_tItemInfo.ItemCount > _num)
+		if (m_tItemInfo.ItemCount >= _num)
 			m_tItemInfo.ItemCount -= _num;
 	}
 	void Set_ItemCount(_uint _iNum) { m_tItemInfo.ItemCount = _iNum; }
-
+	
 	_bool			IsEquipment() { return m_tItemInfo.Equipment; }
 
 

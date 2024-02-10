@@ -3,9 +3,11 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include <Mouse.h>
+#include "SlotMgr.h"
 
-CTent::CTent(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CResObject(pGraphicDev)
+CTent::CTent(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
+	: CResObject(pGraphicDev), m_bInstall(bInstall)
 {
 }
 
@@ -30,17 +32,10 @@ HRESULT CTent::Ready_GameObject()
 
 _int CTent::Update_GameObject(const _float& fTimeDelta)
 {
-
-
-	
-
-
-
+	Install_Obj();
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
-
 
 	return 0;
 }
@@ -126,15 +121,17 @@ HRESULT CTent::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-
-
-
-
-
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
+	
+	if (!m_bInstall)
+	{
+		m_pTransForm->Get_Info(INFO_POS, &vPos);
+		m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
+	}
 
 	return S_OK;
 }
@@ -172,19 +169,34 @@ void CTent::Check_FrameState()
 		m_eTentPrevState = m_eTentCurState;
 		m_fFrame = 0.0f;
 	}
-
-	
-
 }
 
-
-
-
-
-
-CTent* CTent::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+void CTent::Install_Obj()
 {
-	CTent* pInstance = new CTent(pGraphicDev);
+	if (!m_bInstall) return;
+
+	auto& vecTerrain = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::TILE)[0];
+	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(scenemgr::Get_CurScene()->GetTerrainObject()->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
+	_vec3 vPos = m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, vecTerrain->GetTransForm());
+
+	vPos.y = 1.f;
+	m_pTransForm->Set_Pos(vPos);
+
+	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // 설치 완료
+	{
+		m_bInstall = false;
+
+		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
+		pMouse->Set_Install(false);
+
+		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
+	}
+}
+
+CTent* CTent::Create(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
+{
+	CTent* pInstance = new CTent(pGraphicDev, bInstall);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

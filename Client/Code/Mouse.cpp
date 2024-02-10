@@ -4,7 +4,7 @@
 #include "SlotMgr.h"
 
 CMouse::CMouse(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_bColl(false), m_eGroupType(eOBJECT_GROUPTYPE::END)
+	: CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_bColl(false), m_eGroupType(eOBJECT_GROUPTYPE::END), m_bInstall(false)
 {
 	ZeroMemory(&m_eObjState, sizeof(m_eObjState));
 }
@@ -53,7 +53,7 @@ void CMouse::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 
-	if (m_bColl)
+	if (m_bColl && !m_bInstall)
 	{
 		// 이름
 		Engine::Render_Font(L"Mouse_Title", m_eObjState.strObjName, &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y - 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
@@ -104,9 +104,9 @@ void CMouse::Check_Coll()
 {
 	//몬스터
 	auto& vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
-	_vec3 vRayPos, vRayDir, vMouseScale, vMonsterPos, vMonsterScale;
+	_vec3 vRayDir, vMouseScale, vMonsterPos, vMonsterScale;
 	//마우스 좌표 변환
-	m_pCalculatorCom->Change_MouseMatrix(g_hWnd, m_vMousePos, &vRayPos, &vRayDir);
+	m_pCalculatorCom->Change_MouseMatrix(g_hWnd, m_vMousePos, &m_vRayPos, &vRayDir);
 	vMouseScale = m_pTransForm->Get_Scale();
 
 	for (auto& iter : vecMonster)
@@ -114,7 +114,7 @@ void CMouse::Check_Coll()
 		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
 		vMonsterScale = iter->GetTransForm()->Get_Scale();
 
-		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		if (Engine::Collision_Mouse_Object(m_vRayPos, vRayDir, vMonsterPos, vMonsterScale))
 		{
 			m_bColl = true;
 			m_eGroupType = eOBJECT_GROUPTYPE::MONSTER;
@@ -135,7 +135,7 @@ void CMouse::Check_Coll()
 		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
 		vMonsterScale = iter->GetTransForm()->Get_Scale();
 
-		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		if (Engine::Collision_Mouse_Object(m_vRayPos, vRayDir, vMonsterPos, vMonsterScale))
 		{
 			m_bColl = true;
 			m_eGroupType = eOBJECT_GROUPTYPE::RESOURCE_OBJECT;
@@ -156,7 +156,7 @@ void CMouse::Check_Coll()
 		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
 		vMonsterScale = iter->GetTransForm()->Get_Scale();
 
-		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		if (Engine::Collision_Mouse_Object(m_vRayPos, vRayDir, vMonsterPos, vMonsterScale))
 		{
 			m_bColl = true;
 			m_eGroupType = eOBJECT_GROUPTYPE::RESOURCE_OBJECT;
@@ -180,7 +180,7 @@ void CMouse::Check_Coll()
 		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
 		vMonsterScale = iter->GetTransForm()->Get_Scale();
 
-		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		if (Engine::Collision_Mouse_Object(m_vRayPos, vRayDir, vMonsterPos, vMonsterScale))
 		{
 			m_bColl = true;
 			m_eGroupType = eOBJECT_GROUPTYPE::ITEM;

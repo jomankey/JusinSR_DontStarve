@@ -17,7 +17,7 @@ class CTent :
 	};
 
 private:
-	explicit CTent(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CTent(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall);
 	explicit CTent(const CTent& rhs);
 	virtual ~CTent();
 
@@ -35,25 +35,26 @@ private:
 	virtual void			Ready_Stat() override {};
 	virtual void			Change_Frame_Event() override {};
 
-
+	void Install_Obj();
 
 
 
 public:
-	static CTent* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CTent* Create(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall = false);
 
 private:
 	virtual void Free();
 
 
 private:
+	Engine::CCalculator* m_pCalculatorCom;
 	CTexture* m_pTentTexCom[CTENT_END];
 
 	CTENT_STATE m_eTentCurState;
 	CTENT_STATE m_eTentPrevState;
 
 	BOOL m_bIsDrop = false;
-
+	_bool m_bInstall = false;
 
 };
 

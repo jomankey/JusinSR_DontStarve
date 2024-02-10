@@ -4,13 +4,14 @@
 #include "Transform.h"
 
 
-CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev )
+CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
 	, m_mapComponent{}
 	, m_fViewZ(1.f)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_strObjName(L"NONE")
+	, m_iSlotNum(0)
 {
 	m_pGraphicDev->AddRef();
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
@@ -23,6 +24,7 @@ Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_strObjName(_strName)
+	, m_iSlotNum(0)
 {
 	m_pGraphicDev->AddRef();
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
@@ -34,6 +36,7 @@ CGameObject::CGameObject(const CGameObject& rhs)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_Stat(rhs.m_Stat)
+	, m_iSlotNum(rhs.m_iSlotNum)
 {
 	m_mapComponent[ID_DYNAMIC] = rhs.m_mapComponent[ID_DYNAMIC];
 

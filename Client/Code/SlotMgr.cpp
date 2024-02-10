@@ -91,6 +91,19 @@ void CSlotMgr::Set_Create_Menu(int _iNum, CItem* pItem)
 	pCreateBox[_iNum]->Set_Item(pItem);
 }
 
+void CSlotMgr::Remove_InvenItem(_uint _iItemNum)
+{
+	CItem* pItme = m_pItemArr[_iItemNum];
+
+	pItme->MinusItemCount(1);
+
+	if (pItme->Get_ItemCount() <= 0)
+	{
+		Safe_Release(pItme);
+		m_pItemArr[_iItemNum] = nullptr;
+	}	
+}
+
 void CSlotMgr::Set_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType, CItem* pItem, _uint _iItemNum)
 {
 	// 아이템 장착 시 인벤 삭제

@@ -8,6 +8,12 @@ private:
     virtual ~CMouse();
 
 public:
+	_vec3 Get_MousePos() { return m_vMousePos; }
+	_vec3 Get_MouseRayPos() { return m_vRayPos; }
+
+	void Set_Install(_bool bInstall) { m_bInstall = bInstall; }
+
+public:
 	virtual HRESULT Ready_GameObject() override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject() override;
@@ -29,8 +35,9 @@ private:
 	Engine::CCalculator* m_pCalculatorCom;
 
 	_bool m_bColl;
-
+	_bool m_bInstall;
 	_vec3 m_vMousePos;
+	_vec3 m_vRayPos;
 
 	_matrix				m_ViewMatrix, m_ProjMatrix;
 	_float m_fX, m_fY, m_fSizeX, m_fSizeY;

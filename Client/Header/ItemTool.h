@@ -26,6 +26,7 @@ public:
 
 private:
     void Input_Mouse();
+    void Eat_Food();
 
 public:
     static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType = UI_ITEM_CREATE, _bool bFood = false);

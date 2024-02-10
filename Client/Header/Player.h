@@ -31,6 +31,9 @@ public:
 	_uint Get_PlayerMental() { return m_Stat.fMental; }
 	_uint Get_PlayerMaxMental() { return m_Stat.fMaxMental; }
 	
+	void Set_PlayerHp(_int _iHp) { m_Stat.fHP += _iHp; }
+	void Set_PlayerMental(_int _iMental) { m_Stat.fMental += _iMental; }
+	void Set_PlayerHangry(_int _iHangry) { m_Stat.fHungry += _iHangry; }
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;

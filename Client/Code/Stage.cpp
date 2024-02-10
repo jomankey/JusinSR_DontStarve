@@ -232,13 +232,13 @@ NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 	//}
 
 
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CBonfire::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
+	//for (_int i = 0; i < 10; ++i)
+	//{
+	//	pGameObject = CBonfire::Create(m_pGraphicDev);
+	//	pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	//}
 	//	for (_int i = 0; i < 10; ++i)
 	//{
 	//	pGameObject = CFire::Create(m_pGraphicDev);

@@ -20,6 +20,8 @@ public:
         m_pItemArr[_iMoveNum] = pItem;
         m_pItemArr[_iItemNum] = nullptr;
     }
+    void Remove_InvenItem(_uint _iItemNum);
+
     void Set_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType, CItem* pItem, _uint _iItemNum);
 
     void Get_BoxPos(BOX_TYPE eType, int _iNum, _vec3* vPos) {
@@ -27,7 +29,7 @@ public:
         vPos->x = pBox[_iNum]->Get_fX();
         vPos->y = pBox[_iNum]->Get_fY();
     }
-
+    
     vector<CSlot*> Get_BoxList(BOX_TYPE eType) { return m_mapBox.find(eType)->second; }
     CItem* Get_InvenItem(_uint iNum) { return m_pItemArr[iNum]; }
     void Get_Inven(CItem** pInvenItem) { memcpy(pInvenItem, m_pItemArr, sizeof(m_pItemArr)); }

@@ -4,14 +4,15 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-
+#include "SlotMgr.h"
 
 
 
 #include "CFire.h"
+#include <Mouse.h>
 
-CBonfire::CBonfire(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CResObject(pGraphicDev)
+CBonfire::CBonfire(LPDIRECT3DDEVICE9 pGraphicDev , _bool bInstall)
+	: CResObject(pGraphicDev), m_bInstall(bInstall)
 
 {
 }
@@ -41,6 +42,7 @@ HRESULT CBonfire::Ready_GameObject()
 
 _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 {
+	Install_Obj();
 	if (GetAsyncKeyState('T')) // 횃불
 	{
 		Set_DropBonfire();
@@ -177,6 +179,35 @@ void CBonfire::Render_GameObject()
 	}
 }
 
+void CBonfire::Install_Obj() // 설치시 마우스 포인터를 따라옴 (쉐이더 써야함)
+{
+	if (!m_bInstall) return;
+
+	//auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+	//CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
+
+	//_vec3 vMouseRayPos = pMouse->Get_MouseRayPos(); // 마우스 월드 좌표값
+	//vMouseRayPos.y = 1.f;
+	//m_pTransForm->Set_Pos(vMouseRayPos);
+	auto& vecTerrain = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::TILE)[0];
+	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(scenemgr::Get_CurScene()->GetTerrainObject()->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
+	_vec3 vPos = m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, vecTerrain->GetTransForm());
+
+	vPos.y = 1.f;
+	m_pTransForm->Set_Pos(vPos);
+
+	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // 설치 완료
+	{
+		m_bInstall = false;
+
+		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
+		pMouse->Set_Install(false);
+
+		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
+	}
+}
+
 void CBonfire::AddFIre(int _Value)
 {
 	if (m_pFire)
@@ -211,10 +242,13 @@ HRESULT CBonfire::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
+	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
+	if (!m_bInstall) m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
 
 	return S_OK;
 }
@@ -256,9 +290,9 @@ void CBonfire::Check_FrameState()
 
 
 
-CResObject* CBonfire::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CResObject* CBonfire::Create(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
 {
-	CResObject* pInstance = new CBonfire(pGraphicDev);
+	CResObject* pInstance = new CBonfire(pGraphicDev, bInstall);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

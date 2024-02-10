@@ -148,6 +148,9 @@
     <Filter Include="03. Manager\UIMgr">
       <UniqueIdentifier>{93eadb37-63e1-42d9-93aa-8f2d6cf38ef3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\InvenBoxMgr">
+      <UniqueIdentifier>{fee9fa8e-3ef7-4825-afa4-120a3f1f6fd2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\07. CUI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI">
       <UniqueIdentifier>{7d2f92fa-f6fb-4324-ad15-d81f6752a5de}</UniqueIdentifier>
     </Filter>
@@ -187,22 +190,6 @@
     <Filter Include="02. GameObject\07. CUI\03. StateUI\Mental">
       <UniqueIdentifier>{58034a28-4714-4ee4-9372-93267a8ef005}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime">
-      <UniqueIdentifier>{73167806-e74e-41b5-9ccb-8cea2609506c}</UniqueIdentifier>
-    </Filter>
-<<<<<<< HEAD
-    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody">
-      <UniqueIdentifier>{33f80c82-e3e7-4aa7-b765-1b6ff03e65e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand">
-      <UniqueIdentifier>{e961d514-a094-47b3-9eb3-360bf558ea58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\12. Mouse">
-      <UniqueIdentifier>{6082ec61-eb0d-4af5-9eab-6e79fed2384f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03. Manager\SlotMgr">
-      <UniqueIdentifier>{fee9fa8e-3ef7-4825-afa4-120a3f1f6fd2}</UniqueIdentifier>
-=======
     <Filter Include="02. GameObject\10. Trap\09. CCatapult">
       <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
     </Filter>
@@ -214,7 +201,21 @@
     </Filter>
     <Filter Include="02. GameObject\08. ResObjects\12. Tent">
       <UniqueIdentifier>{d36e3eb9-c16c-4f7f-9bdb-8728a87d4ca3}</UniqueIdentifier>
->>>>>>> f7a972240bb85b88bbb96af58a3272beb2ac5cb7
+    </Filter>
+    <Filter Include="02. GameObject\12. Mouse">
+      <UniqueIdentifier>{872444c4-a49c-4dc0-8c3f-392ffb34436d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime">
+      <UniqueIdentifier>{6560a966-863b-468c-b375-9ca54989f77e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand">
+      <UniqueIdentifier>{1488ca8d-1090-48cd-8ea0-b28c84b45dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WorldTimeBody">
+      <UniqueIdentifier>{03ad610f-0fca-4344-8b17-d44e751609a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WorldUI">
+      <UniqueIdentifier>{5e96da7c-ddca-48ce-84e7-f17a1954a423}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -375,7 +376,7 @@
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\SlotMgr.h">
-      <Filter>03. Manager\SlotMgr</Filter>
+      <Filter>03. Manager\InvenBoxMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ArmorSlot.h">
       <Filter>02. GameObject\07. CUI\01. Inven\Slot\ArmorSlot</Filter>
@@ -398,22 +399,9 @@
     <ClInclude Include="..\Header\CMentalUI.h">
       <Filter>02. GameObject\07. CUI\03. StateUI\Mental</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\WorldUI.h">
-      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\StateUI.h">
       <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="..\Header\WorldTimeBody.h">
-      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\WorldHand.h">
-      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Mouse.h">
-      <Filter>02. GameObject\12. Mouse</Filter>
-=======
     <ClInclude Include="..\header\CBonfire.h">
       <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
     </ClInclude>
@@ -425,7 +413,18 @@
     </ClInclude>
     <ClInclude Include="..\header\CTent.h">
       <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
->>>>>>> f7a972240bb85b88bbb96af58a3272beb2ac5cb7
+    </ClInclude>
+    <ClInclude Include="..\Header\Mouse.h">
+      <Filter>02. GameObject\12. Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WorldHand.h">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WorldTimeBody.h">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldTimeBody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\WorldUI.h">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -577,7 +576,7 @@
       <Filter>02. GameObject\10. Trap\03. TumbleWeed</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SlotMgr.cpp">
-      <Filter>03. Manager\SlotMgr</Filter>
+      <Filter>03. Manager\InvenBoxMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ArmorSlot.cpp">
       <Filter>02. GameObject\07. CUI\01. Inven\Slot\ArmorSlot</Filter>
@@ -600,22 +599,9 @@
     <ClCompile Include="..\Code\CMentalUI.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI\Mental</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\WorldUI.cpp">
-      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\StateUI.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="..\Code\WorldTimeBody.cpp">
-      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\WorldHand.cpp">
-      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Mouse.cpp">
-      <Filter>02. GameObject\12. Mouse</Filter>
-=======
     <ClCompile Include="..\code\CBonfire.cpp">
       <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
     </ClCompile>
@@ -627,7 +613,18 @@
     </ClCompile>
     <ClCompile Include="..\code\CTent.cpp">
       <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
->>>>>>> f7a972240bb85b88bbb96af58a3272beb2ac5cb7
+    </ClCompile>
+    <ClCompile Include="..\Code\Mouse.cpp">
+      <Filter>02. GameObject\12. Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WorldHand.cpp">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldHand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WorldTimeBody.cpp">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldTimeBody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\WorldUI.cpp">
+      <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

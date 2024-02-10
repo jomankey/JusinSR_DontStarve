@@ -57,11 +57,11 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bChangeRander)
 	{
-		if (m_vSlotPos.x - m_fX == 0.f || m_vSlotPos.y - m_fY == 0.f)
+		if (m_vSlotPos.y - m_fY <= 0.1f)
 			return 0x80000000;
 		// 아이템 먹엇을때 슬롯쪽으로 이동
-		m_fX += (m_vSlotPos.x - m_fX) * fTimeDelta;
-		m_fY += (m_vSlotPos.y - m_fY) * fTimeDelta;
+		m_fX += (m_vSlotPos.x - m_fX) * 5.f * fTimeDelta;
+		m_fY += (m_vSlotPos.y - m_fY) * 5.f * fTimeDelta;
 
 		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
 	}

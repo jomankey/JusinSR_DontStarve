@@ -496,6 +496,10 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Shovel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Shovel.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Torch", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Torch.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"BonFire", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/BonFire.png")), E_FAIL);
+
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Armor", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Armor.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Cook", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Cook.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Tent", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Tant.png")), E_FAIL);
 	return S_OK;
 }
 
