@@ -20,19 +20,16 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bAttack(false)
 {
-	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	: Engine::CGameObject(pGraphicDev, _strName)
 	, m_bAttack(false)
 {
-	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
 }
 
 CPlayer::CPlayer(const CPlayer& rhs)
 	: Engine::CGameObject(rhs)
 	, m_bAttack(rhs.m_bAttack)
-	, m_Stat(rhs.m_Stat)
 {
 }
 

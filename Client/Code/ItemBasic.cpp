@@ -46,6 +46,8 @@ HRESULT CItemBasic::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	Set_ObjState();
+
     return S_OK;
 }
 

@@ -81,7 +81,7 @@ private:
 	LOOKDIR				m_ePreLook;
 	_bool				m_Dirchange;			//Look
 	_bool				m_bAttack;
-	OBJSTAT				m_Stat;
+
 	_bool				m_KeyLock;				//Key Input 함수를 막는 용도	true 면 막힘
 	_bool				m_bFrameLock;			//프레임 축적을 막는 용도 true 면 막힘
 

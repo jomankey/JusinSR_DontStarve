@@ -184,6 +184,7 @@ void CPigHouse::Check_FrameState()
 
 void CPigHouse::Ready_Stat()
 {
+	m_Stat.strObjName = L"µÅÁö Áý";
 	m_Stat.fHP = 10.f;
 	m_Stat.fMxHP = 10.f;
 	m_Stat.fSpeed = 1.f;

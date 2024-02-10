@@ -39,6 +39,8 @@ HRESULT CItemTool::Ready_GameObject()
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
 
+	Set_ObjState();
+
 	return S_OK;
 }
 

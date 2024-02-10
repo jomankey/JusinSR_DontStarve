@@ -23,6 +23,8 @@ namespace Engine
 		void SetDeleteObj() { m_bDelete = true; }
 		_bool IsDelete() { return m_bDelete; }
 
+		OBJSTAT Get_State() { return m_Stat; }
+
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
@@ -47,5 +49,7 @@ namespace Engine
 		_bool										m_bDelete;	//삭제예정일경우 True
 
 		wstring										m_strObjName;
+
+		OBJSTAT				m_Stat;
 	};
 }

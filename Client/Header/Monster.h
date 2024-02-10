@@ -36,7 +36,6 @@ protected:
 	_vec3		m_vDir; //현재 이동중인 방향
 	LOOKDIR		m_eCurLook;			//현재 바라보는 방향
 	LOOKDIR		m_ePreLook;
-	OBJSTAT		m_Stat;		//스탯
 	_bool		m_Dirchange; //false 일때 오른쪽 보기
 	_bool		m_Attacked;	//공격당했는지 아닌지 검사하는 변수
 	_bool		m_bAttacking; //공격 했는지 안햇는지 검사하는 변수

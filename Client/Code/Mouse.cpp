@@ -1,10 +1,12 @@
 #include "Mouse.h"
 #include "stdafx.h"
 #include "Export_System.h"
+#include "SlotMgr.h"
 
 CMouse::CMouse(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_bColl(false)
+	: CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_bColl(false), m_eGroupType(eOBJECT_GROUPTYPE::END)
 {
+	ZeroMemory(&m_eObjState, sizeof(m_eObjState));
 }
 
 CMouse::~CMouse()
@@ -33,25 +35,7 @@ _int CMouse::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
-	auto& vecObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
-	_vec3 vRayPos, vRayDir, vMouseScale, vMonsterPos, vMonsterScale;
-	//마우스 좌표 변환
-	m_pCalculatorCom->Change_MouseMatrix(g_hWnd, m_vMousePos, &vRayPos, &vRayDir);
-	vMouseScale = m_pTransForm->Get_Scale();
-
-	for (auto& iter : vecObj)
-	{
-		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
-		vMonsterScale = iter->GetTransForm()->Get_Scale();
-
-		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
-		{
-			m_bColl = true;
-			break;
-		}
-		else m_bColl = false;
-	}
-	
+	Check_Coll();
 
 	renderer::Add_RenderGroup(RENDER_PRIORITY, this);
 
@@ -71,8 +55,19 @@ void CMouse::Render_GameObject()
 
 	if (m_bColl)
 	{
-		Engine::Render_Font(L"Mouse_Title", L"이름", &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y - 20.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
-		Engine::Render_Font(L"Mouse_Sub", L"정보", &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y - 5.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		// 이름
+		Engine::Render_Font(L"Mouse_Title", m_eObjState.strObjName, &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y - 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+		if (m_eGroupType == eOBJECT_GROUPTYPE::MONSTER)
+		{
+			_tchar strInfo[32];
+			Engine::Render_Font(L"Mouse_Sub", L"생명력 : ", &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			_itow_s(m_eObjState.fHP, strInfo, 10);
+			Engine::Render_Font(L"Mouse_Sub", strInfo, &_vec2(m_vMousePos.x + 100.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			Engine::Render_Font(L"Mouse_Sub", L"/", &_vec2(m_vMousePos.x + 135.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			_itow_s(m_eObjState.fMxHP, strInfo, 10);
+			Engine::Render_Font(L"Mouse_Sub", strInfo, &_vec2(m_vMousePos.x + 150.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		}
 	}
 
 	scenemgr::Get_CurScene()->EndOrtho();
@@ -103,6 +98,101 @@ HRESULT CMouse::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 	return S_OK;
+}
+
+void CMouse::Check_Coll()
+{
+	//몬스터
+	auto& vecMonster = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+	_vec3 vRayPos, vRayDir, vMouseScale, vMonsterPos, vMonsterScale;
+	//마우스 좌표 변환
+	m_pCalculatorCom->Change_MouseMatrix(g_hWnd, m_vMousePos, &vRayPos, &vRayDir);
+	vMouseScale = m_pTransForm->Get_Scale();
+
+	for (auto& iter : vecMonster)
+	{
+		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
+		vMonsterScale = iter->GetTransForm()->Get_Scale();
+
+		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		{
+			m_bColl = true;
+			m_eGroupType = eOBJECT_GROUPTYPE::MONSTER;
+			m_eObjState = iter->Get_State();
+			return;
+		}
+		else
+		{
+			m_bColl = false;
+			m_eGroupType = eOBJECT_GROUPTYPE::END;
+		}
+	}
+
+	auto& vecObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
+
+	for (auto& iter : vecObj)
+	{
+		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
+		vMonsterScale = iter->GetTransForm()->Get_Scale();
+
+		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		{
+			m_bColl = true;
+			m_eGroupType = eOBJECT_GROUPTYPE::RESOURCE_OBJECT;
+			m_eObjState = iter->Get_State();
+			return;
+		}
+		else
+		{
+			m_bColl = false;
+			m_eGroupType = eOBJECT_GROUPTYPE::END;
+		}
+	}
+
+	auto& vecItem = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM);
+
+	for (auto& iter : vecItem)
+	{
+		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
+		vMonsterScale = iter->GetTransForm()->Get_Scale();
+
+		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		{
+			m_bColl = true;
+			m_eGroupType = eOBJECT_GROUPTYPE::RESOURCE_OBJECT;
+			m_eObjState = iter->Get_State();
+			return;
+		}
+		else
+		{
+			m_bColl = false;
+			m_eGroupType = eOBJECT_GROUPTYPE::END;
+		}
+	}
+
+	CItem* pInven[INVENCNT];
+	CSlotMgr::GetInstance()->Get_Inven(pInven);
+
+	for (auto& iter : pInven)
+	{
+		if (iter == nullptr) continue;
+
+		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
+		vMonsterScale = iter->GetTransForm()->Get_Scale();
+
+		if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vMonsterPos, vMonsterScale))
+		{
+			m_bColl = true;
+			m_eGroupType = eOBJECT_GROUPTYPE::ITEM;
+			m_eObjState = iter->Get_State();
+			return;
+		}
+		else
+		{
+			m_bColl = false;
+			m_eGroupType = eOBJECT_GROUPTYPE::END;
+		}
+	}
 }
 
 CMouse* CMouse::Create(LPDIRECT3DDEVICE9 pGraphicDev)

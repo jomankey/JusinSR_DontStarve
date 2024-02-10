@@ -97,6 +97,7 @@ void CBerryBush::Check_FrameState()
 
 void CBerryBush::Ready_Stat()
 {
+	m_Stat.strObjName = L"º£¸® ´ýºÒ";
 	m_Stat.fHP = 1.f;
 	m_Stat.fMxHP = 1.f;
 	m_Stat.fSpeed = 1.f;

@@ -41,6 +41,52 @@ void CItem::MousePicking()
 {
 }
 
+void CItem::Set_ObjState()
+{
+	if (m_strObjName == L"Log")
+		m_Stat.strObjName = L"통나무";
+	else if (m_strObjName == L"Berries")
+		m_Stat.strObjName = L"나무열매";
+	else if (m_strObjName == L"Cooked_berries")
+		m_Stat.strObjName = L"구운열매";
+	else if (m_strObjName == L"Cooked_Meat_Monster")
+		m_Stat.strObjName = L"괴물고기구이";
+	else if (m_strObjName == L"CookedMeat")
+		m_Stat.strObjName = L"고기구이";
+	else if (m_strObjName == L"CutGlass")
+		m_Stat.strObjName = L"풀 줄기";
+	else if (m_strObjName == L"CutStone")
+		m_Stat.strObjName = L"통나무";
+	else if (m_strObjName == L"Meat_Monster")
+		m_Stat.strObjName = L"괴물고기";
+	else if (m_strObjName == L"RawMeat")
+		m_Stat.strObjName = L"날고기";
+	else if (m_strObjName == L"Rocks_0")
+		m_Stat.strObjName = L"돌맹이";
+	else if (m_strObjName == L"Rocks_1")
+		m_Stat.strObjName = L"돌맹이";
+	else if (m_strObjName == L"Silk")
+		m_Stat.strObjName = L"거미줄";
+	else if (m_strObjName == L"Twigs")
+		m_Stat.strObjName = L"잔가지";
+	else if (m_strObjName == L"Ax")
+		m_Stat.strObjName = L"도끼";
+	else if (m_strObjName == L"Lance")
+		m_Stat.strObjName = L"전투창";
+	else if (m_strObjName == L"Hammer")
+		m_Stat.strObjName = L"망치";
+	else if (m_strObjName == L"FireSton")
+		m_Stat.strObjName = L"부싯돌";
+	else if (m_strObjName == L"Pickaxe")
+		m_Stat.strObjName = L"곡괭이";
+	else if (m_strObjName == L"Shovel")
+		m_Stat.strObjName = L"삽";
+	else if (m_strObjName == L"Torch")
+		m_Stat.strObjName = L"횃불";
+	else if (m_strObjName == L"BonFire")
+		m_Stat.strObjName = L"모닥불";
+}
+
 _int CItem::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);

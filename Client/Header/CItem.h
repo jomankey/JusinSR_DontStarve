@@ -59,6 +59,7 @@ public:
 protected:
 	HRESULT			Add_Component();
 	virtual void MousePicking();
+	void Set_ObjState();
 
 protected:
 	virtual void Free();

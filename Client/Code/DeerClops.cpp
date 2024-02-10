@@ -239,6 +239,7 @@ void CDeerClops::Set_Hit()
 
 void CDeerClops::Set_ObjStat()
 {
+	m_Stat.strObjName = L"¿Ü´«»ç½¿";
 	m_Stat.fHP = 100.f;
 	m_Stat.fMxHP = 100.f;
 	m_Stat.fSpeed = 2.f;

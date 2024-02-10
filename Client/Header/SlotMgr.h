@@ -30,6 +30,7 @@ public:
 
     vector<CSlot*> Get_BoxList(BOX_TYPE eType) { return m_mapBox.find(eType)->second; }
     CItem* Get_InvenItem(_uint iNum) { return m_pItemArr[iNum]; }
+    void Get_Inven(CItem** pInvenItem) { memcpy(pInvenItem, m_pItemArr, sizeof(m_pItemArr)); }
 
     // 아이템 장착 확인
     // 아이템 장착을 안하고 있을 시 L"" 값이 넘어간다.

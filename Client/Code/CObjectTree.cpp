@@ -182,6 +182,7 @@ void CObjectTree::Check_FrameState()
 
 void CObjectTree::Ready_Stat()
 {
+	m_Stat.strObjName = L"³ª¹«";
 	m_Stat.fHP = 6.f;
 	m_Stat.fMxHP = 6.f;
 	m_Stat.fSpeed = 1.f;

@@ -105,6 +105,7 @@ void CObjectRock::Check_FrameState()
 
 void CObjectRock::Ready_Stat()
 {
+	m_Stat.strObjName = L"πŸ¿ß";
 	m_Stat.fHP = 6;
 	m_Stat.fMxHP = 6;
 	m_Stat.fSpeed = 1;
