@@ -54,7 +54,7 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 	if (GetAsyncKeyState('3')) // 횃불
 	{
 		Set_Destroy();
-		
+
 	}
 	if (GetAsyncKeyState('4')) // 횃불
 	{
@@ -70,7 +70,7 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 	if (!m_bIsFrameStop)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 
-	
+
 
 
 
@@ -116,7 +116,7 @@ void CTent::Render_GameObject()
 	m_pTentTexCom[m_eTentCurState]->Set_Texture((_uint)m_fFrame);
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
-	
+
 
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -183,7 +183,7 @@ HRESULT CTent::Add_Component()
 
 
 	m_pTransForm->Set_Scale(_vec3(4.5f, 4.5f, 4.5f));
-	
+
 	if (!m_bInstall)
 	{
 		m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -200,19 +200,19 @@ void CTent::Check_FrameState()
 		switch (m_eTentCurState)
 		{
 		case CTent::CTENT_IDLE:
-			m_fFrameEnd=18.0f;
+			m_fFrameEnd = 18.0f;
 			break;
 		case CTent::CTENT_HIT:
-			m_fFrameEnd=3.0f;
+			m_fFrameEnd = 3.0f;
 			break;
 		case CTent::CTENT_ENTER:
-			m_fFrameEnd=7.0f;
+			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DESTROY:
-			m_fFrameEnd=16.0f;
+			m_fFrameEnd = 16.0f;
 			break;
 		case CTent::CTENT_BURNT:
-			m_fFrameEnd=0.0f;
+			m_fFrameEnd = 0.0f;
 			break;
 		case CTent::CTENT_PLACE:
 			m_fFrameEnd = 7.0f;
@@ -227,9 +227,8 @@ void CTent::Check_FrameState()
 		m_fFrame = 0.0f;
 	}
 
-	
 
-}
+
 }
 
 void CTent::Change_Frame_Event()
@@ -241,7 +240,7 @@ void CTent::Change_Frame_Event()
 			m_eTentCurState = CTENT_PLACE;
 		}
 
-		if (m_bIsBurnt&& !m_bIsDestroy)	//파괴되지 않은 상태에서만 탈 수 있음
+		if (m_bIsBurnt && !m_bIsDestroy)	//파괴되지 않은 상태에서만 탈 수 있음
 		{
 			m_eTentCurState = CTENT_BURNT;
 			return;
@@ -253,19 +252,19 @@ void CTent::Change_Frame_Event()
 			if (m_fFrame > m_fFrameEnd)
 			{
 
-				m_bIsFrameStop=true;
+				m_bIsFrameStop = true;
 				//회수시 다시는 못 지음
 				return;
 			}
 		}
 
-		if (m_eTentCurState== CTENT_PLACE&& m_fFrame>m_fFrameEnd)
+		if (m_eTentCurState == CTENT_PLACE && m_fFrame > m_fFrameEnd)
 		{
 			m_bIsFrameStop = true;
 			m_eTentCurState = CTENT_IDLE;
 		}
 
-		else if (m_eTentCurState== CTENT_IDLE)
+		else if (m_eTentCurState == CTENT_IDLE)
 		{
 			m_bIsFrameStop = false;
 			if (m_fFrame > m_fFrameEnd)
@@ -304,7 +303,7 @@ void CTent::Change_Frame_Event()
 
 
 
-	
+
 }
 void CTent::Install_Obj()
 {
