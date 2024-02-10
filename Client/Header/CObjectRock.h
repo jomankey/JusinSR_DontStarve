@@ -28,5 +28,9 @@ public:
 
 private:
 	virtual void Free();
+
+
+	_vec3 m_vOriginPos;
+
 };
 

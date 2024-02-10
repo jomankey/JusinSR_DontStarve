@@ -35,8 +35,8 @@ public:
 	void Set_Drop() { m_bIsDrop = true; };
 
 	//요리를 시작하거나 멈추는 함수
-	void Set_Cooking(BOOL _IsCooking) { m_bIsCooking = _IsCooking; };
-
+	void Set_Cooking(_In_ BOOL _IsCooking) { m_bIsCooking = _IsCooking; };
+	
 	//솥을 불태워버리는 함수 //솥 복구 불가
 	void Set_Burnt() { m_bIsBurnt = true; };
 
