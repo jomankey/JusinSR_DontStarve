@@ -24,6 +24,8 @@ HRESULT CCookingPot::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = COOKING_POT;
 	m_eCookingpotCurState = COOKINGPOT_DEFAULT;
+	
+	m_fDiffY = 1.f;
 	m_fFrame = 0.0f;
 	return S_OK;
 }

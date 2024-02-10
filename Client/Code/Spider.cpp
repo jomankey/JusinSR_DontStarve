@@ -30,6 +30,7 @@ HRESULT CSpider::Ready_GameObject()
     m_fFrameChange = rand() % 3;
     D3DXVec3Normalize(&m_vDir, &m_vDir);
     Look_Change();
+    m_fDiffY = 0.5f;
     return S_OK;
 }
 

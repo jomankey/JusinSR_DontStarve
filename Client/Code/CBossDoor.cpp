@@ -30,6 +30,7 @@ HRESULT CBossDoor::Ready_GameObject()
 	m_eObject_id = BOSS_DOOR;
 	m_eBossDoorPrevState = BOSSDOOR_END;
 	m_eBossDoorCurState = SLEEP;
+	m_fDiffY = 1.f;
 	//Ready_Stat();
 	m_Stat.strObjName = L"º¸½º·ë";
 
