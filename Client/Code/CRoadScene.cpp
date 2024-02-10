@@ -389,7 +389,9 @@ HRESULT CRoadScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	}
 	else if (!_tcscmp(L"PigHouse", pName))
 	{
-		pGameObject = CPigHouse::Create(m_pGraphicDev);
+		static _int iCount = 1;
+		iCount++;
+		pGameObject = CPigHouse::Create(m_pGraphicDev, iCount);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	}

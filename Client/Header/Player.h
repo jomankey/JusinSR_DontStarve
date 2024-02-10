@@ -56,7 +56,6 @@ private:
 	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);	//Res오브젝트들을 채굴할 때 사용하는 함수
 	_int			Die_Check();
 
-	HRESULT Ready_Light();	//조명
 	void Fire_Light();
 	
 	void Update_State(const _float& fTimeDelta);

@@ -40,7 +40,6 @@ CPlayer::~CPlayer()
 HRESULT CPlayer::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 
 	/*m_pTransForm->m_vScale = { 1.2f, 1.f, 1.f };*/
 	m_eCurState = IDLE;
@@ -982,47 +981,24 @@ _int CPlayer::Die_Check()
 
 }
 
-HRESULT CPlayer::Ready_Light()
-{
-	//점광원
-// 최초 생성 후 플레이어 횟불 사용 시에만 켜지도록 
-	D3DLIGHT9 tPointLightInfo;
-	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
-
-	tPointLightInfo.Type = D3DLIGHT_POINT;
-
-	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Attenuation0 = 0.00000001f;
-	tPointLightInfo.Range = 5.f;
-	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
-
-	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, 1), E_FAIL);
-	light::Get_Light(1)->Close_Light();
-
-}
-
 void CPlayer::Fire_Light()
 {
 	if (m_ePreWeapon != TORCH)
 		return;
 
 	D3DLIGHT9* tPointLightInfo = light::Get_Light(1)->Get_Light();
-	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
 
 	tPointLightInfo->Type = D3DLIGHT_POINT;
 
-	tPointLightInfo->Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
-	//tPointLightInfo->Ambient = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
-	//tPointLightInfo->Specular = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
-	
-	tPointLightInfo->Attenuation0 = 0.000000001f;
+	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tPointLightInfo->Attenuation0 = 3.f;
 	tPointLightInfo->Range = 5.f;
 
 	_vec3 pPlayerPos;
 	m_pTransForm->Get_Info(INFO_POS, &pPlayerPos); // player pos 값 설정
 	tPointLightInfo->Position = pPlayerPos;
 
-	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
 	light::Get_Light(1)->Update_Light();
 }
 
