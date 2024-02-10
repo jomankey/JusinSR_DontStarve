@@ -26,7 +26,7 @@ HRESULT CTerrain::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	_vec3 vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	vPos.y = -2.f;
+	vPos.y = -0.5f;
 	m_pTransForm->Set_Pos(vPos);
 
 	return S_OK;
