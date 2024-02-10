@@ -17,14 +17,19 @@ public:
 	virtual void Render_GameObject()						override;
 
 	virtual HRESULT			Add_Component();
-private:
 
-	CRcTex* m_pBufferCom;
-	CRvRcTex* m_pReverseCom;
-	CAnimator* m_pAnimCom;
 public:
 	static CGameObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();
+
+private:
+	CRcTex* m_pBufferCom;
+	CAnimator* m_pAnimCom;
+	eTRAP_STATE m_eCurState;
+	_float	m_fAtkTime;// 공격쿨타임
+	_float	m_fAccTime;// 누적시간
+
+
 };

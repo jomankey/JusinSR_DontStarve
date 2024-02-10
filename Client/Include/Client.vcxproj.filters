@@ -124,9 +124,6 @@
     <Filter Include="02. GameObject\08. ResObjects\08. BossDoor">
       <UniqueIdentifier>{aaf1ad01-3552-4107-9f17-97cfbb017412}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\08. ResObjects\09. CCatapult">
-      <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Monster\05. Tallbird">
       <UniqueIdentifier>{912e9267-1b95-48e6-ad0a-24922a520a47}</UniqueIdentifier>
     </Filter>
@@ -193,6 +190,7 @@
     <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime">
       <UniqueIdentifier>{73167806-e74e-41b5-9ccb-8cea2609506c}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody">
       <UniqueIdentifier>{33f80c82-e3e7-4aa7-b765-1b6ff03e65e0}</UniqueIdentifier>
     </Filter>
@@ -204,6 +202,19 @@
     </Filter>
     <Filter Include="03. Manager\SlotMgr">
       <UniqueIdentifier>{fee9fa8e-3ef7-4825-afa4-120a3f1f6fd2}</UniqueIdentifier>
+=======
+    <Filter Include="02. GameObject\10. Trap\09. CCatapult">
+      <UniqueIdentifier>{87334019-a066-4647-9f9b-f3a72b5975d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\10. BonFire">
+      <UniqueIdentifier>{7d73ea03-86cf-4ba3-945a-6e970bdcddd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\11. CookingPot">
+      <UniqueIdentifier>{e02210ae-8172-4f18-83d4-06afd0fb9491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\08. ResObjects\12. Tent">
+      <UniqueIdentifier>{d36e3eb9-c16c-4f7f-9bdb-8728a87d4ca3}</UniqueIdentifier>
+>>>>>>> f7a972240bb85b88bbb96af58a3272beb2ac5cb7
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -322,7 +333,7 @@
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CCatapult.h">
-      <Filter>02. GameObject\08. ResObjects\09. CCatapult</Filter>
+      <Filter>02. GameObject\10. Trap\09. CCatapult</Filter>
     </ClInclude>
     <ClInclude Include="..\header\CBossDoor.h">
       <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
@@ -393,6 +404,7 @@
     <ClInclude Include="..\Header\StateUI.h">
       <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\Header\WorldTimeBody.h">
       <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody</Filter>
     </ClInclude>
@@ -401,6 +413,19 @@
     </ClInclude>
     <ClInclude Include="..\Header\Mouse.h">
       <Filter>02. GameObject\12. Mouse</Filter>
+=======
+    <ClInclude Include="..\header\CBonfire.h">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CFIre.h">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CCookingPot.h">
+      <Filter>02. GameObject\08. ResObjects\11. CookingPot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CTent.h">
+      <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
+>>>>>>> f7a972240bb85b88bbb96af58a3272beb2ac5cb7
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -510,7 +535,7 @@
       <Filter>02. GameObject\08. ResObjects\07. TeleporterWorm</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CCatapult.cpp">
-      <Filter>02. GameObject\08. ResObjects\09. CCatapult</Filter>
+      <Filter>02. GameObject\10. Trap\09. CCatapult</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CBossDoor.cpp">
       <Filter>02. GameObject\08. ResObjects\08. BossDoor</Filter>
@@ -581,6 +606,7 @@
     <ClCompile Include="..\Code\StateUI.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\Code\WorldTimeBody.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WoldTimeBody</Filter>
     </ClCompile>
@@ -589,6 +615,19 @@
     </ClCompile>
     <ClCompile Include="..\Code\Mouse.cpp">
       <Filter>02. GameObject\12. Mouse</Filter>
+=======
+    <ClCompile Include="..\code\CBonfire.cpp">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CFIre.cpp">
+      <Filter>02. GameObject\08. ResObjects\10. BonFire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CCookingPot.cpp">
+      <Filter>02. GameObject\08. ResObjects\11. CookingPot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CTent.cpp">
+      <Filter>02. GameObject\08. ResObjects\12. Tent</Filter>
+>>>>>>> f7a972240bb85b88bbb96af58a3272beb2ac5cb7
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -59,7 +59,6 @@ _bool CTrap::PlayerHit(float _fDistance)
 
 void CTrap::Free()
 {
-	m_mapTexture.clear();
 	__super::Free();
 }
 

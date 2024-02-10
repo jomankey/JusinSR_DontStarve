@@ -303,14 +303,6 @@ HRESULT CLoading::Loading_Anim_Texture()
 {
 	Engine::CAnimation* pAnim = nullptr;
 
-	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_UP", L"../Bin/Resource/Texture/Build/Catapult/IDLE_UP/IDLE_UP__%03d.png", 23, 0.1f);
-	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_UP", pAnim);
-
-	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_DOWN", L"../Bin/Resource/Texture/Build/Catapult/IDLE_DOWN/IDLE_DOWN__%03d.png", 23, 0.1f);
-	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_DOWN", pAnim);
-
-	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_SIDE", L"../Bin/Resource/Texture/Build/Catapult/IDLE_SIDE/IDLE_SIDE__%03d.png", 23, 0.1f);
-	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_SIDE", pAnim);
 
 	////////
 	//Trap//
@@ -318,13 +310,13 @@ HRESULT CLoading::Loading_Anim_Texture()
 	
 
 	//SPIKE
-	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_IDLE", L"../Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__%03d.png", 17, 0.1f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_IDLE", L"../Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__%03d.png", 30, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_IDLE", pAnim);
 
-	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_GROW", L"../Bin/Resource/Texture/Build/Trap/Spike/GROW/GROW__%03d.png", 23, 0.03f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_GROW", L"../Bin/Resource/Texture/Build/Trap/Spike/GROW/GROW__%03d.png", 31, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_GROW", pAnim);
 
-	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_HIDE", L"../Bin/Resource/Texture/Build/Trap/Spike/PICKED/PICKED__%03d.png", 3, 10.f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_HIDE", L"../Bin/Resource/Texture/Build/Trap/Spike/PICKING/PICKING__%03d.png", 31, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_HIDE", pAnim);
 
 
@@ -350,6 +342,21 @@ HRESULT CLoading::Loading_Anim_Texture()
 
 	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_TUMBLE_MOVE_SIDE", L"../Bin/Resource/Texture/Build/Trap/TumbleWeed/MOVE_SIDE/MOVE_SIDE__%03d.png", 5, 10.f);
 	proto::Ready_ProtoAnim(L"TRAP_TUMBLE_MOVE_SIDE", pAnim);
+
+
+	//Catapult
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_ATK_DOWN", L"../Bin/Resource/Texture/Build/Catapult/ATK_DOWN/ATK_DOWN__%03d.png", 31, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_ATK_DOWN", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_DEATH", L"../Bin/Resource/Texture/Build/Catapult/DEATH/DEATH__%03d.png", 31, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_DEATH", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_IDLE_DOWN", L"../Bin/Resource/Texture/Build/Catapult/IDLE_DOWN/IDLE_DOWN__%03d.png", 51, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_IDLE_DOWN", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_PLACE", L"../Bin/Resource/Texture/Build/Catapult/PLACE/PLACE__%03d.png", 31, 0.05f);
+	proto::Ready_ProtoAnim(L"CATAPULT_PLACE", pAnim);
+
 
 
 	return S_OK;
@@ -426,6 +433,45 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Close", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__%03d.png", 10)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__%03d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Off", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_off__000.png")), E_FAIL);
+
+	//Obj_BonFIre
+	//Drop_state
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BonFIre_Drop", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/place/place__%03d.png",7)), E_FAIL);
+	//Idle_state
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Bonfire_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/new_idle__000.png")), E_FAIL);
+
+
+	//FIre
+	//Level_1
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev1/lev1__%03d.png",6)), E_FAIL);
+	//Level_2
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev2/lev2__%03d.png",6)), E_FAIL);
+	//Level_3
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_3", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev3/lev3__%03d.png",6)), E_FAIL);
+	//Level_4
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_4", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev4/lev4__%03d.png",6)), E_FAIL);
+
+	//Obj_CookingPot
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_Burnt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Burnt/Burnt__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_loop", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Cooking_loop/Cooking_loop__%03d.png",7)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_Hit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Hit_Cooking/Hit_Cooking__%03d.png",10)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_Hit_Empty", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Hit_Empty/Hit_Empty__%03d.png",10)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_Idle_empty", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Idle_empty/Idle_empty__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_Idle_full", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Idle_full/Idle_full__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_Default", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Idle_Defalut__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_CookingPot_Place", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Cooking_pot/Place/Place__%03d.png",9)), E_FAIL);
+
+
+	//Tent
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Tent_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Tent/Idle/Tent_Idle__%03d.png", 19)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Tent_Burnt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Tent/Burnt/Tent_Burnt__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Tent_Defalut_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Tent/Tent_Defalut_Idle__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Tent_Destroy", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Tent/Destroy/Tent_Destroy__%03d.png", 17)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Tent_Enter", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Tent/Enter/Tent_Enter__%03d.png", 8)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Tent_Hit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Tent/Hit/Tent_Hit__%03d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Tent_Place", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Tent/Place/Tent_Place__%03d.png", 8)), E_FAIL);
+
+
 
 
 	//Item Object

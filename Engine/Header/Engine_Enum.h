@@ -18,7 +18,19 @@ namespace Engine
 
 	enum MOUSEKEYSTATE { DIM_LB, DIM_RB, DIM_MB, DIM_END };
 	enum MOUSEMOVESTATE {	DIMS_X, DIMS_Y, DIMS_Z, DIMS_END };
-	enum RESOBJID {ROCK, TREE, PIG_HOUSE, GRASS, BERRY_BUSH,FIRE_FLIES,TELEPORTER,BOSS_DOOR ,RSOBJ_END};
+	enum RESOBJID {
+		ROCK, 
+		TREE,
+		PIG_HOUSE,
+		GRASS, 
+		BERRY_BUSH,
+		FIRE_FLIES,
+		TELEPORTER,
+		BOSS_DOOR ,
+		BON_FIRE,
+		TENT,
+		COOKING_POT,
+		RSOBJ_END};
 
 	enum PLAYERSTATE {
 		IDLE, MOVE, BUILD, PICKUP, HIT, ATTACK, FALLDOWN, WAKEUP, EAT, 
@@ -150,6 +162,8 @@ namespace Engine
 	enum class eTRAP_STATE
 	{
 		HIDE,	//숨어있는상태
+		PLACE,	//생성중인상태
+		ATK,	//공격중인상태
 		GROW,	//나오고있는상태
 		MOVE,	//움직이고있는상태
 		IDLE,	//나온상태

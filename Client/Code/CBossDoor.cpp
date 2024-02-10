@@ -143,7 +143,7 @@ HRESULT CBossDoor::Add_Component()
 
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 2.3f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
 
 	return S_OK;
 }

@@ -176,11 +176,15 @@
     <ClInclude Include="..\Header\ArmorSlot.h" />
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
+    <ClInclude Include="..\header\CBonfire.h" />
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\ButtonUI.h" />
     <ClInclude Include="..\header\CBossDoor.h" />
     <ClInclude Include="..\Header\CCatapult.h" />
+    <ClInclude Include="..\header\CCookingPot.h" />
+    <ClInclude Include="..\header\CFIre.h" />
     <ClInclude Include="..\Header\CSpike.h" />
+    <ClInclude Include="..\header\CTent.h" />
     <ClInclude Include="..\Header\CToothTrap.h" />
     <ClInclude Include="..\Header\CTrap.h" />
     <ClInclude Include="..\Header\CTumbleWeed.h" />
@@ -241,11 +245,15 @@
   <ItemGroup>
     <ClCompile Include="..\Code\ArmorSlot.cpp" />
     <ClCompile Include="..\Code\Beefalo.cpp" />
+    <ClCompile Include="..\code\CBonfire.cpp" />
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
     <ClCompile Include="..\Code\CBossDoor.cpp" />
     <ClCompile Include="..\Code\CCatapult.cpp" />
+    <ClCompile Include="..\code\CCookingPot.cpp" />
+    <ClCompile Include="..\code\CFIre.cpp" />
     <ClCompile Include="..\Code\CSpike.cpp" />
+    <ClCompile Include="..\code\CTent.cpp" />
     <ClCompile Include="..\Code\CToothTrap.cpp" />
     <ClCompile Include="..\Code\CTrap.cpp" />
     <ClCompile Include="..\Code\CTumbleWeed.cpp" />
