@@ -24,6 +24,7 @@ public:
 
 	void Set_Pos(_vec3 _Pos);
 	void Set_NextLevel();
+	void Set_MoreTime();
 	FIRE_STATE Get_CurState() { return m_efireCurState; }
 	BOOL Get_IsOff() { return m_bIsOff; }
 	void Set_IsOff(BOOL _bIsOff) { m_bIsOff = _bIsOff; }
@@ -37,7 +38,6 @@ private:
 	HRESULT Ready_Light();	//Α¶Έν
 	void Change_Light();
 
-	void Level_Up();
 	void Level_Down();
 public:
 	static CFire* Create(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -53,8 +53,9 @@ private:
 	FIRE_STATE m_efirerPrevState;
 
 
-	_float m_fTimeChek = 0.f;
-	_float m_MaxfTimeChek = 10.f;
+
+	_float m_fDownTime = 0.f;
+	_float m_MaxfTimeChek = 240.f;
 
 	BOOL m_bIsOff = false;
 

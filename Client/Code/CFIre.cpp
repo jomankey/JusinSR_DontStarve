@@ -45,12 +45,24 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 
 	Check_FrameState();
 
-	m_fTimeChek += fTimeDelta;
-	if (m_fTimeChek >= m_MaxfTimeChek)
-	{
 
+	m_fDownTime += fTimeDelta;
+	m_MaxfTimeChek -= fTimeDelta;
+
+
+	//1분이 되고, 불이 켜져있으면 불 단계를 낮추고 시간을 초기화
+	if (m_fDownTime>=60.f&& m_bIsOff==false)
+	{
 		Level_Down();
-		m_fTimeChek = 0.f;
+		m_fDownTime = 0.f;
+	}
+
+
+	//최대 지속시간이 240초가 넘어가고 불이 1단계일 때 불을 꺼버림 그리고 최대 지속시간은 초기화
+	if (m_MaxfTimeChek<=0&& m_efireCurState== FIRE_LEVEL_1)
+	{
+		m_bIsOff= true;
+		m_MaxfTimeChek = 240.f;
 	}
 
 
@@ -121,17 +133,22 @@ void CFire::Set_NextLevel()
 		m_efireCurState = FIRE_LEVEL_4;
 	}
 
-	
 
-	//m_efireCurState = (FIRE_STATE)iLevel;
-	if (m_efireCurState == FIRE_LEVEL_4)
+}
+
+void CFire::Set_MoreTime()
+{
+	//떨어지는 단계를 막기위해 시간을 줄여줌
+	m_fDownTime = 0.0f;
+
+
+	//최대 지속시간 240초 보다 작을때만 증가 
+	if (m_MaxfTimeChek <= 220)
 	{
-		m_MaxfTimeChek = 15.0f;
+		m_MaxfTimeChek += 20.0f;
+
 	}
-	else
-	{
-		m_MaxfTimeChek = 10.0f;
-	}
+
 }
 
 HRESULT CFire::Add_Component()
@@ -187,6 +204,7 @@ void CFire::Check_FrameState()
 		{
 		case CFire::FIRE_LEVEL_1:
 			m_pTransForm->Set_Scale(_vec3(0.4f, 0.4f, 0.4f));
+
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
@@ -266,17 +284,15 @@ void CFire::Change_Light()
 	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
 	light::Get_Light(m_iLightNum)->Update_Light();
 }
-void CFire::Level_Up()
-{
 
-
-
-}
 void CFire::Level_Down()
 {
+
+
 	if (m_efireCurState== FIRE_LEVEL_4)
 	{
 		m_efireCurState = FIRE_LEVEL_3;
+
 	}
 	else if (m_efireCurState== FIRE_LEVEL_3)
 	{
