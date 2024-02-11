@@ -135,6 +135,7 @@ namespace Engine
 	enum UI_ITEM_TYPE { // 인벤/ 생산용인지
 		UI_ITEM_INVEN,
 		UI_ITEM_CREATE,
+		UI_ITEM_CREATE_NEED,
 		UI_ITEM_COOK,
 		UI_ITEM_END
 	};

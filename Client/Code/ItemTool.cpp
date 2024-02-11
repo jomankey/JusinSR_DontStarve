@@ -78,7 +78,7 @@ void CItemTool::Render_GameObject()
 
 	m_pBufferCom->Render_Buffer();
 
-	if (m_eItemType == UI_ITEM_INVEN && m_eArmorSlotType == ARMOR_SLOT_END)
+	if ((m_eItemType == UI_ITEM_INVEN || m_eItemType == UI_ITEM_CREATE_NEED) && m_eArmorSlotType == ARMOR_SLOT_END)
 	{
 		_tchar strItemCount[32];
 

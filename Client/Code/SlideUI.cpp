@@ -76,7 +76,7 @@ HRESULT CSlideUI::Ready_GameObject()
 		m_vecSlideBox[2]->Set_Item(pItem);
 	}
 		break;
-	case Engine::ITEM_WEAPON: // ÀüÅõÃ¢, °©¿Ê
+	case Engine::ITEM_WEAPON: // ÀüÅõÃ¢
 	{
 		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Lance", vPos);

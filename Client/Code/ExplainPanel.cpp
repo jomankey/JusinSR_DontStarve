@@ -51,7 +51,7 @@ HRESULT CExplainPanel::Ready_GameObject()
     {
         _vec3 vPos = _vec3(m_fX + 4.f * ((i+1) * (i *4) ), m_fY + 8.f, 0.f);
         m_pItem[i] = CInvenSlot::Create(m_pGraphicDev, vPos, i, INVEN);
-        CItem* pItem = CItemTool::Create(m_pGraphicDev, m_tCreateInfo.tItemInfo[i].strItemName, vPos);
+        CItem* pItem = CItemTool::Create(m_pGraphicDev, m_tCreateInfo.tItemInfo[i].strItemName, vPos, UI_ITEM_CREATE_NEED);
         pItem->Set_ItemCount(m_tCreateInfo.tItemInfo[i].iCount);
         m_pItem[i]->Set_Item(pItem);
     }
