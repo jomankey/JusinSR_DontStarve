@@ -6,6 +6,9 @@
 #include "C:\Git\PortPolio\Client\Code\Beefalo.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\BossEftDown.cpp"
+
+
 #include "C:\Git\PortPolio\Client\code\CBonfire.cpp"
 
 
@@ -25,6 +28,9 @@
 
 
 #include "C:\Git\PortPolio\Client\code\CFIre.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\Circle.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\CSpike.cpp"
@@ -57,10 +63,28 @@
 #include "C:\Git\PortPolio\Client\Code\CInven.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\FallMark.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\IceMissileL.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\IceSpikeL.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\IceSpikeR.cpp"
+
+
 #include "C:\Git\PortPolio\Client\Code\InvenSlot.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\Mouse.cpp"
+
+
 #include "C:\Git\PortPolio\Client\Code\Slot.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\SnowSplash.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\StateUI.cpp"
@@ -117,7 +141,10 @@
 #include "C:\Git\PortPolio\Client\Code\CUI.cpp"
 
 
-#include "C:\Git\PortPolio\Client\Code\CWorldUI.cpp"
+#include "C:\Git\PortPolio\Client\Code\WorldHand.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\WorldUI.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\DeerClops.cpp"
@@ -175,6 +202,9 @@
 
 
 #include "C:\Git\PortPolio\Client\Code\Terrain.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\WorldTimeBody.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Header\Ghost.cpp"

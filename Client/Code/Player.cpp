@@ -16,6 +16,9 @@
 #include "SlotMgr.h"
 #include <ItemBasic.h>
 
+//TestPSW
+#include <CBonfire.h>
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bAttack(false)
@@ -625,7 +628,46 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_eCurWeapon = TORCH;
 		Fire_Light();
+
+
+		//TestPSW			//가까이 있는 걸로 찾아야함   
+		decltype(auto)	Test =scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
+		for (auto& object : Test)
+		{
+			if (dynamic_cast<CResObject*>(object)->Get_Resourse_ID() == BON_FIRE)
+			{
+				dynamic_cast<CBonfire*>(object)->Set_DropBonfire();
+				dynamic_cast<CBonfire*>(object)->AddFIre(3);
+			}
+			
+		}
+
+
+
 	}
+
+	if (GetAsyncKeyState('1')) // 횃불
+	{
+
+
+		//TestPSW		//가까이 있는 걸로 찾아야함 
+		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
+		for (auto& object : Test)
+		{
+			if (dynamic_cast<CResObject*>(object)->Get_Resourse_ID() == BON_FIRE)
+			{
+			
+				dynamic_cast<CBonfire*>(object)->AddFIre(1);
+			}
+
+		}
+
+
+	}
+
+
+
+
 
 	if (GetAsyncKeyState('V')) // 줍기
 	{
