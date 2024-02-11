@@ -443,6 +443,8 @@ HRESULT CLoading::Loading_Item_Texture()
 
 
 	//FIre
+	//Level_0
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_0", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/None_Fire.png")), E_FAIL);
 	//Level_1
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FIre_lev_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Campfire/lev1/lev1__%03d.png",6)), E_FAIL);
 	//Level_2

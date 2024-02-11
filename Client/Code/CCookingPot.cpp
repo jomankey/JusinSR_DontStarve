@@ -76,6 +76,14 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 	}
 
+	m_fTimeChek += fTimeDelta;
+	if (m_fTimeChek >= m_MaxfTimeChek)
+	{
+		m_fTimeChek = 0.f;
+	}
+
+
+
 	Change_Frame_Event();
 
 	if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) // 요리도구 UI 열기
@@ -341,7 +349,7 @@ void CCookingPot::Install_Obj()
 	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // 설치 완료
 	{
 		m_bInstall = false;
-
+		m_bIsDrop= true;
 		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);

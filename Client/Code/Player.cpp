@@ -643,7 +643,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			if (dynamic_cast<CResObject*>(object)->Get_Resourse_ID() == BON_FIRE)
 			{
 				dynamic_cast<CBonfire*>(object)->Set_DropBonfire();
-				dynamic_cast<CBonfire*>(object)->AddFIre(3);
 			}
 			
 		}
@@ -652,6 +651,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	}
 
+	
 	if (GetAsyncKeyState('1')) // È¶ºÒ
 	{
 
@@ -662,7 +662,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		{
 			if (dynamic_cast<CResObject*>(object)->Get_Resourse_ID() == BON_FIRE)
 			{
-			
+				
 				dynamic_cast<CBonfire*>(object)->AddFIre(1);
 			}
 

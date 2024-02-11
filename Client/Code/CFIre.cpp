@@ -27,6 +27,7 @@ HRESULT CFire::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = BON_FIRE;
 	m_efireCurState= FIRE_LEVEL_2;
+	m_fDiffY = 1.0f;
 	m_fFrame = 0.0f;
 	return S_OK;
 }
@@ -47,6 +48,7 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 	m_fTimeChek += fTimeDelta;
 	if (m_fTimeChek >= m_MaxfTimeChek)
 	{
+
 		Level_Down();
 		m_fTimeChek = 0.f;
 	}
@@ -102,13 +104,26 @@ void CFire::Set_Pos(_vec3 _Pos)
 	m_pTransForm->Set_Pos(_Pos);
 }
 
-void CFire::Set_FireLevel(_int iLevel)
+void CFire::Set_NextLevel()
 {
-	if(iLevel<0|| iLevel>4)
-		return;
+
+
+	if (m_efireCurState== FIRE_LEVEL_1)
+	{
+		m_efireCurState = FIRE_LEVEL_2;
+	}
+	else if (m_efireCurState== FIRE_LEVEL_2)
+	{
+		m_efireCurState = FIRE_LEVEL_3;
+	}
+	else if (m_efireCurState == FIRE_LEVEL_3)
+	{
+		m_efireCurState = FIRE_LEVEL_4;
+	}
+
 	
 
-	m_efireCurState = (FIRE_STATE)iLevel;
+	//m_efireCurState = (FIRE_STATE)iLevel;
 	if (m_efireCurState == FIRE_LEVEL_4)
 	{
 		m_MaxfTimeChek = 15.0f;
@@ -171,12 +186,12 @@ void CFire::Check_FrameState()
 		switch (m_efireCurState)
 		{
 		case CFire::FIRE_LEVEL_1:
-			m_pTransForm->Set_Scale(_vec3(0.3f, 0.3f, 0.3f));
+			m_pTransForm->Set_Scale(_vec3(0.4f, 0.4f, 0.4f));
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
 		case CFire::FIRE_LEVEL_2:
-			m_pTransForm->Set_Scale(_vec3(0.4f, 0.4f, 0.4f));
+			m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
@@ -251,7 +266,12 @@ void CFire::Change_Light()
 	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
 	light::Get_Light(m_iLightNum)->Update_Light();
 }
+void CFire::Level_Up()
+{
 
+
+
+}
 void CFire::Level_Down()
 {
 	if (m_efireCurState== FIRE_LEVEL_4)

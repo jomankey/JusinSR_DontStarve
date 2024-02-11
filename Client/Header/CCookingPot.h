@@ -81,6 +81,9 @@ private:
 	COOKINGPOT_STATE m_eCookingpotCurState;
 	COOKINGPOT_STATE m_eCookingpotPrevState;
 
+	_float m_fTimeChek = 0.f;
+	_float m_MaxfTimeChek = 3.f;
+
 	BOOL m_bIsDrop = false;
 	BOOL m_bIsFrameStop = false;
 	BOOL m_bIsCooking = false;
