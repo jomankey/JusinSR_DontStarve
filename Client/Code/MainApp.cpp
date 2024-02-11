@@ -92,20 +92,20 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);		  // Z버퍼에 깊이 값을 기록은 하지만 자동 정렬을 수행할지 말지 결정
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정
 	
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo배낭여행", L"Loading_Key1", 10, 22, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo배낭여행", L"Loading_Key2", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_Key1", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_Key2", 10, 22, FW_HEAVY), E_FAIL);
 
 	//owner Ui 
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo배낭여행", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔고딕코딩", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
 
 	//UI
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo배낭여행",  L"Panel_Title", 20, 20, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo배낭여행", L"Panel_Info",  12, 12, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo배낭여행", L"Button_Make", 18, 18, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔고딕코딩",  L"Panel_Title", 15, 15, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔고딕코딩", L"Panel_Info",  8, 10, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔고딕코딩", L"Button_Make", 13, 13, FW_THIN), E_FAIL);
 
 	//Mouse
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo배낭여행", L"Mouse_Title", 25, 25, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo배낭여행", L"Mouse_Sub", 20, 20, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Mouse_Title", 18, 18, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Mouse_Sub", 10, 10, FW_HEAVY), E_FAIL);
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);

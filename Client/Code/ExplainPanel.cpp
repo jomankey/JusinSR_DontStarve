@@ -58,8 +58,8 @@ HRESULT CExplainPanel::Ready_GameObject()
 
     m_pButton = CButtonUI::Create(m_pGraphicDev, _vec3(m_fX + 15.f, m_fY + 50.f, 0.f), m_tCreateInfo);
 
-    m_fSizeX = 80.f;
-    m_fSizeY = 80.f;
+    m_fSizeX = 90.f;
+    m_fSizeY = 90.f;
 
     m_pTransForm->Set_Pos(_vec3((m_fX - WINCX * 0.5f), -m_fY + WINCY * 0.5f, 0.1f));
     m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
@@ -120,8 +120,35 @@ void CExplainPanel::Render_GameObject()
 
     m_pBufferCom->Render_Buffer();
 
-    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- 12.f, m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- 32.f, m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+    //PSW 길이에 맞춰서 띄우기용 -------------------
+    wstring wStringName(m_tCreateInfo.strName);
+    size_t sNameLen = wStringName.length();
+    //띄어쓰기용
+    int spacingName =0;
+    if (sNameLen == 4&& sNameLen <5)
+    {
+        spacingName = 10;
+    }
+    else if (sNameLen >=5)
+    {
+        spacingName = 25;
+    }
+    else 
+        spacingName = 0;
+    //PSW 길이에 맞춰서 띄우기용 -------------------
+
+
+    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (14.f+ sNameLen + spacingName), m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+
+
+    //PSW 길이에 맞춰서 띄우기용 -------------------
+    wstring wStringInfo(m_tCreateInfo.strInfo);
+    size_t sInfoLen = wStringInfo.length();
+    //PSW 길이에 맞춰서 띄우기용 -------------------
+  
+    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (32.f+ sInfoLen), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
     //아이템 2개 넣기
     for (int i = 0; i < 2; ++i)
