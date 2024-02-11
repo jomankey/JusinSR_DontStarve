@@ -42,7 +42,7 @@ HRESULT CSlideUI::Ready_GameObject()
 	//ToolTypeº°·Î ¾ÆÀÌÅÛ ³Ö¾îÁÜ (°íÁ¤°ª)
 	switch (m_eToolType)
 	{
-	case Engine::ITEM_EQUIP: // °î±ªÀÌ, µµ³¢, ¸ÁÄ¡
+	case Engine::ITEM_EQUIP: // °î±ªÀÌ, µµ³¢, ¸ÁÄ¡, ¿ä¸®µµ±¸
 	{
 		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Ax", vPos);
@@ -61,7 +61,7 @@ HRESULT CSlideUI::Ready_GameObject()
 		m_vecSlideBox[3]->Set_Item(pItem);
 	}
 		break;
-	case Engine::ITEM_ALIVE: // È¶ºÒ, ¸ð´ÚºÒ
+	case Engine::ITEM_ALIVE: // È¶ºÒ, ¸ð´ÚºÒ, ÅÙÆ®
 	{
 		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight, 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Torch", vPos);
@@ -76,7 +76,7 @@ HRESULT CSlideUI::Ready_GameObject()
 		m_vecSlideBox[2]->Set_Item(pItem);
 	}
 		break;
-	case Engine::ITEM_WEAPON: // ÀüÅõÃ¢
+	case Engine::ITEM_WEAPON: // ÀüÅõÃ¢, °©¿Ê
 	{
 		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Lance", vPos);

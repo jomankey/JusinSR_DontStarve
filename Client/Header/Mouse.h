@@ -10,6 +10,7 @@ private:
 public:
 	_vec3 Get_MousePos() { return m_vMousePos; }
 	_vec3 Get_MouseRayPos() { return m_vRayPos; }
+	_vec3 Get_MouseRayDir() { return m_vRayDir; }
 
 	void Set_Install(_bool bInstall) { m_bInstall = bInstall; }
 
@@ -36,8 +37,10 @@ private:
 
 	_bool m_bColl;
 	_bool m_bInstall;
+
 	_vec3 m_vMousePos;
 	_vec3 m_vRayPos;
+	_vec3 m_vRayDir;
 
 	_matrix				m_ViewMatrix, m_ProjMatrix;
 	_float m_fX, m_fY, m_fSizeX, m_fSizeY;

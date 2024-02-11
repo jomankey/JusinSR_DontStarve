@@ -5,6 +5,7 @@
 #include "Export_Utility.h"
 #include <Mouse.h>
 #include "SlotMgr.h"
+#include <Cook.h>
 
 CCookingPot::CCookingPot(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
 	: CResObject(pGraphicDev), m_bInstall(bInstall)
@@ -29,6 +30,8 @@ HRESULT CCookingPot::Ready_GameObject()
 	
 	m_fDiffY = 1.f;
 	m_fFrame = 0.0f;
+
+	m_Stat.strObjName = L"요리 솥";
 	return S_OK;
 }
 
@@ -75,17 +78,35 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 	Change_Frame_Event();
 
+	if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) // 요리도구 UI 열기
+	{
+		auto& vecUI = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
+		for (auto& iter : vecUI)
+		{
+			auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+			CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
+			_vec3 vPos;
+			m_pTransForm->Get_Info(INFO_POS, &vPos);
+			if (Engine::Collision_Mouse_Object(pMouse->Get_MouseRayPos(), pMouse->Get_MouseRayDir(), vPos, m_pTransForm->Get_Scale()))
+			{
+				if (iter->Get_State().strObjName == L"요리 도구")
+				{
+					CCook* pCook = dynamic_cast<CCook*>(iter);
+					pCook->IsShow(true);
+				}
+			}
+		}
+	}
+
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
+
 
 	return 0;
 }
 
 void CCookingPot::LateUpdate_GameObject()
-{
-
-
-	
+{	
 	Check_FrameState();
 	_vec3	vPos;
 	m_pTransForm->BillBoard();

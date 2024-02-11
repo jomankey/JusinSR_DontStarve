@@ -38,7 +38,7 @@ HRESULT CItemTool::Ready_GameObject()
 	m_fPreX = m_fX;
 	m_fPreY = m_fY;
 
-	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	//m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(90.f));
 
@@ -55,13 +55,14 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	Input_Mouse();
-	Move_Pos();
 
 	return 0;
 }
 
 void CItemTool::LateUpdate_GameObject()
 {
+	Move_Pos();
+
 	__super::LateUpdate_GameObject();
 }
 
@@ -106,14 +107,28 @@ void CItemTool::Input_Mouse()
 			return;
 		}
 
+		_vec2 vItemPos = _vec2(m_fX, m_fY);
+
+		//요리칸에 닿았다면
+		vector<CSlot*> vecCookBox = CSlotMgr::GetInstance()->Get_BoxList(COOK);
+		for (int i = 0; i < 4; ++i)
+		{
+			if (Engine::Collision_Mouse(vItemPos, vecCookBox[i]->Get_fX(), vecCookBox[i]->Get_fY(), vecCookBox[i]->Get_SizeX(), vecCookBox[i]->Get_SizeY()))
+			{
+				//아이템과 요리 아이템 충돌
+				_vec3 vSlotPos = _vec3{ vecCookBox[i]->Get_fX(), vecCookBox[i]->Get_fY(), 0.f };
+				CSlotMgr::GetInstance()->Set_CookItem(m_pGraphicDev, m_strObjName, vSlotPos, i);
+				CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
+
+				return;
+			}
+		}
+
 		m_bClick = false;
 
 		vector<CSlot*> vecBox = CSlotMgr::GetInstance()->Get_BoxList(INVEN);
 		for (int i = 0; i < INVENCNT; ++i)
 		{
-			//아이템 사이즈
-			_vec2 vItemPos = _vec2(m_fX, m_fY);
-
 			if (Engine::Collision_Mouse(vItemPos, vecBox[i]->Get_fX(), vecBox[i]->Get_fY(), vecBox[i]->Get_SizeX(), vecBox[i]->Get_fY()))
 			{
 				CItem* pItem = CSlotMgr::GetInstance()->Get_InvenItem(i);
@@ -130,13 +145,12 @@ void CItemTool::Input_Mouse()
 				CSlotMgr::GetInstance()->Move_InvenItem(this, m_iNum, i);
 				m_iNum = i;
 				
+				return;
 			}
 		}
 
 		for (int i = 15; i < INVENCNT + 3; ++i) // 장착칸에 닿았다면
 		{
-			_vec2 vItemPos = _vec2(m_fX, m_fY);
-
 			if (Engine::Collision_Mouse(vItemPos, vecBox[i]->Get_fX(), vecBox[i]->Get_fY(), vecBox[i]->Get_SizeX(), vecBox[i]->Get_fY()))
 			{
 				//아이템과 박스 충돌
@@ -160,10 +174,10 @@ void CItemTool::Input_Mouse()
 				CSlotMgr::GetInstance()->Set_ArmorItem(m_eArmorSlotType, this, m_iNum);
 
 				m_iNum = i;
+
+				return;
 			}
 		}
-		
-
 	}
 	else if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP && m_eItemType == UI_ITEM_INVEN) // 마우스 오른쪽 클릭
 	{

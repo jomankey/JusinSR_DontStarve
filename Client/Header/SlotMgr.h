@@ -21,9 +21,6 @@ public:
         m_pItemArr[_iItemNum] = nullptr;
     }
     void Remove_InvenItem(_uint _iItemNum);
-
-    void Set_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType, CItem* pItem, _uint _iItemNum);
-
     void Get_BoxPos(BOX_TYPE eType, int _iNum, _vec3* vPos) {
         vector< CSlot*> pBox = m_mapBox.find(eType)->second;
         vPos->x = pBox[_iNum]->Get_fX();
@@ -37,8 +34,12 @@ public:
 
     // 아이템 장착 확인
     // 아이템 장착을 안하고 있을 시 L"" 값이 넘어간다.
+    void Set_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType, CItem* pItem, _uint _iItemNum);
     wstring Get_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType) { return m_pArmorArr[eArmorSlotType - 15] != nullptr ? m_pArmorArr[eArmorSlotType - 15]->GetObjName() : L""; }
     void Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _uint _iItemNum);
+
+    //요리 칸
+    void Set_CookItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strKeyName, _vec3 vSlotPos, _uint iSlotNum);
 
 public:
     HRESULT Add_InvenBoxList(LPDIRECT3DDEVICE9 pGraphicDev, BOX_TYPE eType, BOX_DIR eDir ,int _iNum);
@@ -54,9 +55,9 @@ private:
 
 private:
     map <BOX_TYPE, vector<CSlot*>> m_mapBox;
+
     CItem* m_pItemArr[INVENCNT]; // 인벤토리
-
     CItem* m_pArmorArr[3]; // 장착 아이템 
-
+    CItem* m_pCookArr[4]; // 요리칸에 들어가는 아이템 
 };
 

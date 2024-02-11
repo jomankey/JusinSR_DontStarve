@@ -186,6 +186,7 @@
     <ClInclude Include="..\header\CCookingPot.h" />
     <ClInclude Include="..\header\CFIre.h" />
     <ClInclude Include="..\Header\Circle.h" />
+    <ClInclude Include="..\Header\Cook.h" />
     <ClInclude Include="..\Header\CSpike.h" />
     <ClInclude Include="..\header\CTent.h" />
     <ClInclude Include="..\Header\CToothTrap.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="..\code\CCookingPot.cpp" />
     <ClCompile Include="..\code\CFIre.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
+    <ClCompile Include="..\Code\Cook.cpp" />
     <ClCompile Include="..\Code\CSpike.cpp" />
     <ClCompile Include="..\code\CTent.cpp" />
     <ClCompile Include="..\Code\CToothTrap.cpp" />

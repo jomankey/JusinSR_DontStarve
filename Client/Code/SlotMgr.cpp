@@ -13,6 +13,9 @@ CSlotMgr::CSlotMgr()
 
 	for (int i = 0; i < 3; ++i)
 		m_pArmorArr[i] = nullptr;
+
+	for (int i = 0; i < 4; ++i)
+		m_pCookArr[i] = nullptr;
 }
 
 CSlotMgr::~CSlotMgr()
@@ -153,6 +156,15 @@ void CSlotMgr::Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _u
 	dynamic_cast<CItemTool*>(pMoveItem)->Set_BoxIndex(_iItemNum);
 }
 
+void CSlotMgr::Set_CookItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strKeyName, _vec3 vSlotPos, _uint iSlotNum)
+{
+	CItem* pItem = CItemTool::Create(pGraphicDev, strKeyName, vSlotPos, UI_ITEM_COOK);
+
+	if (m_pCookArr[iSlotNum] == nullptr)
+		m_pCookArr[iSlotNum] = pItem;
+
+}
+
 HRESULT CSlotMgr::Add_InvenBoxList(LPDIRECT3DDEVICE9 pGraphicDev, BOX_TYPE eType, BOX_DIR eDir, int _iNum)
 {
 	if (eType > BOX_END || eDir > BOX_DIR_END || 0 > _iNum)
@@ -160,17 +172,22 @@ HRESULT CSlotMgr::Add_InvenBoxList(LPDIRECT3DDEVICE9 pGraphicDev, BOX_TYPE eType
 
 	vector<CSlot*> pInvenBox;
 
-	if (eDir == WIDTH) // 세로 방향 (인벤)
+	if (eType == INVEN) // 세로 방향 (인벤)
 	{
 		for (int i = 0; i < _iNum; ++i)
 			pInvenBox.push_back(CInvenSlot::Create(pGraphicDev, _vec3(120.f + (15.f + 20.f) * i, 582.f, 0.f), i, eType));
 		for (int i = INVENCNT; i < _iNum +3; ++i)
 			pInvenBox.push_back(CArmorSlot::Create(pGraphicDev, _vec3(120.f + (15.f + 20.f) * i, 582.f, 0.f), i, (ARMOR_SLOT_TYPE)i));
 	}
-	if (eDir == HEIGHT) // 가로 방향
+	if (eType == CREATE) // 가로 방향
 	{
 		for (int i = 0; i < _iNum; ++i)
 			pInvenBox.push_back(CInvenSlot::Create(pGraphicDev, _vec3(25.f, 140.f + 40.f*i, 0.f), i, eType));
+	}
+	if (eType == COOK) // 가로 방향
+	{
+		for (int i = 0; i < _iNum; ++i)
+			pInvenBox.push_back(CInvenSlot::Create(pGraphicDev, _vec3(450.f, 230.f + 35.f * i, 0.f), i, eType));
 	}
 	m_mapBox.emplace(eType, pInvenBox);
 	return S_OK;
@@ -190,6 +207,11 @@ void CSlotMgr::Update_InvenBoxMgr(const _float& fTimeDelta, BOX_TYPE eType)
 		for (auto& iter : m_pArmorArr)
 			if (iter) iter->Update_GameObject(fTimeDelta);
 	}
+	else if (eType == COOK)
+	{
+		for (auto& item : m_pCookArr)
+			if (item) item->Update_GameObject(fTimeDelta);
+	}
 }
 
 void CSlotMgr::LateUpdate_InvenBoxMgr(BOX_TYPE eType)
@@ -205,6 +227,11 @@ void CSlotMgr::LateUpdate_InvenBoxMgr(BOX_TYPE eType)
 			if (inven) inven->LateUpdate_GameObject();
 		for (auto& iter : m_pArmorArr)
 			if (iter) iter->LateUpdate_GameObject();
+	}
+	else if (eType == COOK)
+	{
+		for (auto& item : m_pCookArr)
+			if (item) item->LateUpdate_GameObject();
 	}
 }
 
@@ -222,6 +249,11 @@ void CSlotMgr::Render_InvenBoxMgr(BOX_TYPE eType)
 		for (auto& iter : m_pArmorArr)
 			if (iter) iter->Render_GameObject();
 	}
+	else if (eType == COOK)
+	{
+		for (auto& item : m_pCookArr)
+			if (item) item->Render_GameObject();
+	}
 }
 
 void CSlotMgr::Free()
@@ -234,5 +266,8 @@ void CSlotMgr::Free()
 		Safe_Release(iter);
 
 	for (auto& iter : m_pArmorArr)
+		Safe_Release(iter);
+
+	for (auto& iter : m_pCookArr)
 		Safe_Release(iter);
 }

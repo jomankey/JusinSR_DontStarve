@@ -45,6 +45,11 @@ public:
 
 	_uint Get_ItemCount() { return m_tItemInfo.ItemCount; }
 
+	_float Get_fX() { return m_fX; }
+	_float Get_fY() { return m_fY; }
+	_float Get_fSizeX() { return m_fSizeX; }
+	_float Get_fSizeY() { return m_fSizeY; }
+
 public:
 	//순수가상함수
 	virtual _bool UseItem() { return false; }

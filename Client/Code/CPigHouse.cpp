@@ -241,7 +241,10 @@ void CPigHouse::Change_Light()
 	//오전을 제외한 모든 시간에 
 	TIME_STATE eTimeState = light::Get_TimeIndex();
 	if (eTimeState == MORNING)
+	{
+		light::Get_Light(m_iPointNum)->Close_Light();
 		return;
+	}
 
 	D3DLIGHT9* tPointLightInfo = light::Get_Light(m_iPointNum)->Get_Light();
 	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));

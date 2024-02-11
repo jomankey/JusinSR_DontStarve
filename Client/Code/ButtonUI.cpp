@@ -2,9 +2,17 @@
 #include "Export_System.h"
 #include "stdafx.h"
 #include "SlotMgr.h"
+#include <Mouse.h>
+#include <Cook.h>
+#include <CCookingPot.h>
 
-CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CREATEINFO tCreateInfo)
-	: CGameObject(pGraphicDev), m_fX(vPos.x), m_fY(vPos.y), m_tCreateInfo(tCreateInfo), m_bColl(false)
+CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec2 vSize, _bool bFood)
+    : CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_fX(vPos.x), m_fY(vPos.y), m_bColl(false), m_fSizeX(vSize.x), m_fSizeY(vSize.y), m_bFood(bFood)
+{
+}
+
+CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CREATEINFO tCreateInfo, _vec2 vSize)
+	: CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_fX(vPos.x), m_fY(vPos.y), m_bColl(false), m_fSizeX(vSize.x), m_fSizeY(vSize.y), m_tCreateInfo(tCreateInfo), m_bFood(false)
 {
 
 }
@@ -21,9 +29,6 @@ CButtonUI::~CButtonUI()
 HRESULT CButtonUI::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-    m_fSizeX = 40.f;
-    m_fSizeY = 15.f;
 
     m_pTransForm->Set_Pos(_vec3((m_fX - WINCX * 0.5f), -m_fY + WINCY * 0.5f, 0.f));
     m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
@@ -94,7 +99,7 @@ void CButtonUI::Input_Mouse()
     m_bColl = Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY);
 
     //아이템 제작 
-    if (m_bColl)
+    if (m_bColl && !m_bFood) // 제작 탭에서 아이템 제작
     {
         if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
         {
@@ -109,11 +114,52 @@ void CButtonUI::Input_Mouse()
             CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
         }
     }
+    else if (m_bColl && m_bFood) // 요리 탭에서 요리 제작
+    {
+
+        if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
+        {
+            //if (CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, ))
+
+            auto& vecUI = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
+            for (auto& iter : vecUI)
+            {
+                if (iter->Get_State().strObjName == L"요리 도구")
+                {
+                    dynamic_cast<CCook*>(iter)->IsShow(false);
+                }
+            }
+
+            auto& vecObject = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+            for (auto& iter : vecObject)
+            {
+                if (iter->Get_State().strObjName == L"요리 솥")
+                {
+                    dynamic_cast<CCookingPot*>(iter)->Set_Cooking(true);
+                }
+            }
+        }
+    }
+
 }
 
-CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CREATEINFO tCreateInfo)
+CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec2 vSize, _bool bFood)
 {
-    CButtonUI* pInstance = new CButtonUI(pGraphicDev, vPos, tCreateInfo);
+    CButtonUI* pInstance = new CButtonUI(pGraphicDev, vPos, vSize, bFood);
+
+    if (FAILED(pInstance->Ready_GameObject()))
+    {
+        Safe_Release(pInstance);
+
+        return nullptr;
+    }
+
+    return pInstance;
+}
+
+CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, CREATEINFO tCreateInfo, _vec2 vSize)
+{
+    CButtonUI* pInstance = new CButtonUI(pGraphicDev, vPos, tCreateInfo, vSize);
 
     if (FAILED(pInstance->Ready_GameObject()))
     {

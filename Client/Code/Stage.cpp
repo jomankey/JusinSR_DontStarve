@@ -67,6 +67,7 @@
 #include <ItemBasic.h>
 #include "Stage.h"
 #include <CreateUI.h>
+#include "Cook.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -188,12 +189,12 @@ NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
 
-	for (_int i = 0; i < 5; ++i)
-	{
-		pGameObject = CTallbird::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 2.5f, _float(rand() % 120)));
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	}
+	//for (_int i = 0; i < 5; ++i)
+	//{
+	//	pGameObject = CTallbird::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 2.5f, _float(rand() % 120)));
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+	//}
 	//
 	//for (_int i = 0; i < 10; ++i)
 	//{
@@ -234,114 +235,28 @@ NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 	//}
 
 
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CBonfire::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CCookingPot::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(50.f, 1, 64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CTent::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(64.f, 1.7, 64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	//	for (_int i = 0; i < 10; ++i)
+	//for (_int i = 0; i < 10; ++i)
 	//{
-	//	pGameObject = CFire::Create(m_pGraphicDev);
+	//	pGameObject = CBonfire::Create(m_pGraphicDev);
 	//	pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	//}
-
-
-
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(64.f,1,64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CObjectFireFlies::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(64.f,1,70.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	pGameObject = CBossDoor::Create(m_pGraphicDev);
-	pGameObject->GetTransForm()->Set_Pos(64.f, 1, 70.f);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-
-
-	//pGameObject = CObjectTree::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CPigHouse::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}*/
-	//for (_int i = 0; i < 2; ++i)
-	//{
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	//for (_int i = 0; i < 10; ++i)
 	//{
-	//	pGameObject = CObjectTree::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_TREE", pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CPigHouse::Create(m_pGraphicDev);
+	//	pGameObject = CCookingPot::Create(m_pGraphicDev);
+	//	pGameObject->GetTransForm()->Set_Pos(50.f, 1, 64.f);
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	//}
-
-	
-	//for (_int i = 0; i < 2; ++i)
+	//for (_int i = 0; i < 10; ++i)
 	//{
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Cooked_berries", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
+	//	pGameObject = CTent::Create(m_pGraphicDev);
+	//	pGameObject->GetTransForm()->Set_Pos(64.f, 1.7, 64.f);
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"Rocks_0", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	//	pGameObject = CItem::Create(m_pGraphicDev, L"CutGlass", _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
-
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CPigHouse::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}*/
-
-
+	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	//}
+	
 	return S_OK;
 }
 
@@ -360,7 +275,10 @@ HRESULT CStage::Ready_Layer_UI()
 	pGameObject = CCreateUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
-
+	//Cook
+	pGameObject = CCook::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev);
