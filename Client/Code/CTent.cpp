@@ -180,10 +180,6 @@ HRESULT CTent::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 
-
-
-
-
 	m_pTransForm->Set_Scale(_vec3(4.5f, 4.5f, 4.5f));
 
 	if (!m_bInstall)
