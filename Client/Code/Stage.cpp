@@ -233,54 +233,6 @@ NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	//}
-
-
-<<<<<<< HEAD
-	//for (_int i = 0; i < 10; ++i)
-=======
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CBonfire::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CCookingPot::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(50.f, 1, 64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CTent::Create(m_pGraphicDev);
-		pGameObject->GetTransForm()->Set_Pos(70.f, 1.7, 64.f);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	}
-	//	for (_int i = 0; i < 10; ++i)
->>>>>>> 4fc4402915b3d2683128ca73defcb0cfc017427f
-	//{
-	//	pGameObject = CBonfire::Create(m_pGraphicDev);
-	//	pGameObject->GetTransForm()->Set_Pos(64.f, 1, 64.f);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CCookingPot::Create(m_pGraphicDev);
-	//	pGameObject->GetTransForm()->Set_Pos(50.f, 1, 64.f);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CTent::Create(m_pGraphicDev);
-	//	pGameObject->GetTransForm()->Set_Pos(64.f, 1.7, 64.f);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	//}
 	
 	return S_OK;
 }
