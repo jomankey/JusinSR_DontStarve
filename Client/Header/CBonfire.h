@@ -53,6 +53,8 @@ private:
 	BONFIRE_STATE m_eBonfireCurState;
 	BONFIRE_STATE m_eBonfirerPrevState;
 
+
+	_float m_fFireWoodCount = 0.f;
 	CFire* m_pFire = nullptr;
 
 

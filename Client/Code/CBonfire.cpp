@@ -35,6 +35,7 @@ HRESULT CBonfire::Ready_GameObject()
 	m_eObject_id = BON_FIRE;
 	m_eBonfireCurState = BONFIRE_IDLE;
 	m_fFrame = 0.0f;
+	m_fDiffY= 1.2f;
 	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
 
 	return S_OK;
@@ -180,10 +181,23 @@ void CBonfire::Install_Obj() // 설치시 마우스 포인터를 따라옴 (쉐이더 써야함)
 
 void CBonfire::AddFIre(int _Value)
 {
+	m_fFireWoodCount += _Value;
+
+
 	if (m_pFire)
 	{
+		if (m_pFire->Get_CurState() == 1&& m_pFire->Get_IsOff())
+		{
+		m_pFire->Set_IsOff(false);
+		}
 
-		m_pFire->Set_FireLevel(_Value);
+
+		if (m_fFireWoodCount >= 5)
+		{
+			m_pFire->Set_NextLevel();
+			m_fFireWoodCount = 0;
+
+		}
 
 	}
 

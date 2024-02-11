@@ -23,8 +23,8 @@ public:
 
 
 	void Set_Pos(_vec3 _Pos);
-	void Set_FireLevel(_int iLevel);
-
+	void Set_NextLevel();
+	FIRE_STATE Get_CurState() { return m_efireCurState; }
 	BOOL Get_IsOff() { return m_bIsOff; }
 	void Set_IsOff(BOOL _bIsOff) { m_bIsOff = _bIsOff; }
 private:
@@ -35,7 +35,7 @@ private:
 
 
 
-
+	void Level_Up();
 	void Level_Down();
 public:
 	static CFire* Create(LPDIRECT3DDEVICE9 pGraphicDev);
