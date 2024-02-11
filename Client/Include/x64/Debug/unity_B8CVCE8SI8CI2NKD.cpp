@@ -6,6 +6,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Beefalo.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\BossEftDown.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CBonfire.cpp"
 
 
@@ -25,6 +28,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CFIre.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Circle.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSpike.cpp"
@@ -57,6 +63,18 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CInven.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\FallMark.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\IceMissileL.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\IceSpikeL.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\IceSpikeR.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\InvenSlot.cpp"
 
 
@@ -64,6 +82,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Slot.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\SnowSplash.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\StateUI.cpp"

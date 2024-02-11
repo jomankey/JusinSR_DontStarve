@@ -20,7 +20,7 @@ class CCookingPot :
 
 
 private:
-	explicit CCookingPot(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CCookingPot(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall);
 	explicit CCookingPot(const CCookingPot& rhs);
 	virtual ~CCookingPot();
 
@@ -63,18 +63,19 @@ private:
 	virtual void			Ready_Stat() override {};
 	virtual void			Change_Frame_Event() override;
 
-
+	void Install_Obj();
 
 
 
 public:
-	static CCookingPot* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CCookingPot* Create(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall = false);
 
 private:
 	virtual void Free();
 
 
 private:
+	Engine::CCalculator* m_pCalculatorCom;
 	CTexture* m_pCookingpotTexCom[COOKINGPOT_END];
 
 	COOKINGPOT_STATE m_eCookingpotCurState;
@@ -88,7 +89,7 @@ private:
 	BOOL m_bIsEmpty = false;
 	BOOL m_bIsHit = false;
 
-
+	_bool m_bInstall = false;
 
 };
 

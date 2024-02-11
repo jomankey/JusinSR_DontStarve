@@ -99,12 +99,14 @@ void CButtonUI::Input_Mouse()
         if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
         {
             _vec3 vSlotPos;
-            // 생산 로직 구현 
-            _bool bFirstCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
-            _bool bSecondCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
+            //// 생산 로직 구현 
+            //_bool bFirstCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
+            //_bool bSecondCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
 
-            if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
-                CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
+            //if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
+            //    CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
+
+            CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
         }
     }
 }

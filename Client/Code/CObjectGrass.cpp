@@ -126,8 +126,6 @@ HRESULT CObjectGrass::Add_Component()
 	pComponent = m_pTextureCom[RES_DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Obejct_Grass_dead"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass_dead", pComponent });
-	//m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Grass", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
