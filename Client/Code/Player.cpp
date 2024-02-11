@@ -631,7 +631,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		Fire_Light();
 
 
-		//TestPSW			//가까이 있는 걸로 찾아야함   
+		//TestPSW			//가까이 있는 걸로 찾아야함   아니면 모든 모닥불 다 켜질거임 아마도?
 		decltype(auto)	Test =scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
 		for (auto& object : Test)
 		{
@@ -651,7 +651,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 
 
-		//TestPSW		//가까이 있는 걸로 찾아야함 
+		//TestPSW		//가까이 있는 걸로 찾아야함  아니면 모든 모닥불 다 켜질거임 아마도?
 		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
 		for (auto& object : Test)
 		{
