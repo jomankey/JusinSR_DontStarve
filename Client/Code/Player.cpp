@@ -18,6 +18,7 @@
 
 //TestPSW
 #include <CBonfire.h>
+//TestPSW---------------------------------------------
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -641,7 +642,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 			
 		}
-
+		//TestPSW---------------------------------------------
 
 
 	}
@@ -661,7 +662,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			}
 
 		}
-
+		//TestPSW---------------------------------------------
 
 	}
 
