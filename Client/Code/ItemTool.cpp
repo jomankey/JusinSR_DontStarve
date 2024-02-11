@@ -8,6 +8,7 @@
 #include <Mouse.h>
 #include "CBonfire.h"
 #include "CTent.h"
+#include "CCookingPot.h"
 
 CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
 	: CItem(pGraphicDev, _strObjName), m_bFood(bFood), m_eItemType(eType), m_eArmorSlotType(ARMOR_SLOT_END), m_vPos(vPos), m_bClick(false)
@@ -189,6 +190,16 @@ void CItemTool::Input_Mouse()
 				pMouse->Set_Install(true);
 
 				CGameObject* pTent = CTent::Create(m_pGraphicDev, true);
+				pTent->Set_SlotNum(m_iNum);
+				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT, pTent);
+			}
+			else if (m_strObjName == L"Cook") // ¼³Ä¡
+			{
+				auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+				CMouse* pMouse = dynamic_cast<CMouse*> (vecMouse);
+				pMouse->Set_Install(true);
+
+				CGameObject* pTent = CCookingPot::Create(m_pGraphicDev, true);
 				pTent->Set_SlotNum(m_iNum);
 				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT, pTent);
 			}
