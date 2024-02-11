@@ -43,33 +43,6 @@ HRESULT CBonfire::Ready_GameObject()
 _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
-	if (GetAsyncKeyState('T')) // È¶ºÒ
-	{
-		Set_DropBonfire();
-
-	}
-	if (GetAsyncKeyState('1')) // È¶ºÒ
-	{
-
-		AddFIre(1);
-	}
-	if (GetAsyncKeyState('2')) // È¶ºÒ
-	{
-
-		AddFIre(2);
-	}
-	if (GetAsyncKeyState('3')) // È¶ºÒ
-	{
-
-		AddFIre(3);
-	}
-	if (GetAsyncKeyState('4')) // È¶ºÒ
-	{
-
-		AddFIre(4);
-	}
-
-
 	
 	//
 	if (m_eBonfireCurState == BONFIRE_DROP)
@@ -196,7 +169,7 @@ void CBonfire::Install_Obj() // ¼³Ä¡½Ã ¸¶¿ì½º Æ÷ÀÎÅÍ¸¦ µû¶ó¿È (½¦ÀÌ´õ ½á¾ßÇÔ)
 	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // ¼³Ä¡ ¿Ï·á
 	{
 		m_bInstall = false;
-
+		m_bIsDrop = true;
 		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);

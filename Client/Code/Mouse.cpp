@@ -62,7 +62,7 @@ void CMouse::Render_GameObject()
 		if (m_eGroupType == eOBJECT_GROUPTYPE::MONSTER)
 		{
 			_tchar strInfo[32];
-			Engine::Render_Font(L"Mouse_Sub", L"생명력 : ", &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			Engine::Render_Font(L"Mouse_Sub", L"생명력: ", &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 			_itow_s(m_eObjState.fHP, strInfo, 10);
 			Engine::Render_Font(L"Mouse_Sub", strInfo, &_vec2(m_vMousePos.x + 100.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 			Engine::Render_Font(L"Mouse_Sub", L"/", &_vec2(m_vMousePos.x + 135.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
