@@ -37,6 +37,7 @@ HRESULT CBonfire::Ready_GameObject()
 	m_fFrame = 0.0f;
 	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
 
+	m_Stat.strObjName = L"모닥불";
 	return S_OK;
 }
 
@@ -175,6 +176,7 @@ void CBonfire::Install_Obj() // 설치시 마우스 포인터를 따라옴 (쉐이더 써야함)
 		pMouse->Set_Install(false);
 
 		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
+		Set_DropBonfire();
 	}
 }
 

@@ -347,6 +347,7 @@ void CCookingPot::Install_Obj()
 		pMouse->Set_Install(false);
 
 		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
+		Set_Drop();
 	}
 }
 

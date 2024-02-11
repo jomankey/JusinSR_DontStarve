@@ -178,6 +178,24 @@ void CItemTool::Input_Mouse()
 				return;
 			}
 		}
+
+		auto& vecObjBox = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+		for (auto& iter : vecObjBox)
+		{
+			if (iter->Get_State().strObjName == L"모닥불")
+			{
+				_vec3 vRayPos, vRayDir;
+				m_pCalculatorCom->Change_MouseMatrix(g_hWnd, _vec3{ m_fX, m_fY, 0.f }, &vRayPos, &vRayDir);
+				_vec3 vObjPos;
+				iter->GetTransForm()->Get_Info(INFO_POS, &vObjPos);
+
+				if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vObjPos, iter->GetTransForm()->Get_Scale()))
+				{
+					dynamic_cast<CBonfire*>(iter)->AddFIre(3);
+					CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
+				}
+			}
+		}
 	}
 	else if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP && m_eItemType == UI_ITEM_INVEN) // 마우스 오른쪽 클릭
 	{
