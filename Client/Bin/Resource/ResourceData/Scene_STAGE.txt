@@ -154,3 +154,6 @@
 [Proto_HeightTerrainTexture][0][../Bin/Resource/Texture/Terrain/Terrain0.png][1]
 =======
 >>>>>>> e895fa4f58e90b812a6c751aa35dc9d516f48ca4
+[Proto_TerrainTexture][0][../Bin/Resource/Texture/Terrain/Terrain.png][1]
+[Proto_BossTexture][0][../Bin/Resource/Texture/Terrain/BossTerrain.png][1]
+[Proto_HeightTerrainTexture][0][../Bin/Resource/Texture/Terrain/Terrain0.png][1]

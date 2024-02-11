@@ -27,7 +27,7 @@ HRESULT CTent::Ready_GameObject()
 	m_eObject_id = TENT;
 	m_eTentCurState = CTENT_DEFAULT;
 
-	m_fDiffY = 1.f;
+	m_fDiffY = 1.5f;
 	m_fFrame = 0.0f;
 	return S_OK;
 }
