@@ -140,9 +140,6 @@ void CExplainPanel::Render_GameObject()
 
 
     Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (14.f+ sNameLen + spacingName), m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-
-
-
     //PSW 길이에 맞춰서 띄우기용 -------------------
     wstring wStringInfo(m_tCreateInfo.strInfo);
     size_t sInfoLen = wStringInfo.length();
