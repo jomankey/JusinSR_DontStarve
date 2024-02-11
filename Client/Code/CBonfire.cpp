@@ -5,8 +5,7 @@
 #include "Export_Utility.h"
 
 #include "SlotMgr.h"
-
-
+#include "MainApp.h"
 
 #include "CFire.h"
 #include <Mouse.h>
@@ -44,7 +43,7 @@ HRESULT CBonfire::Ready_GameObject()
 _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
-	
+
 	//
 	if (m_eBonfireCurState == BONFIRE_DROP)
 		{
@@ -259,8 +258,6 @@ void CBonfire::Check_FrameState()
 
 
 }
-
-
 
 CResObject* CBonfire::Create(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
 {

@@ -18,22 +18,26 @@
 
 //TestPSW
 #include <CBonfire.h>
+#include <MainApp.h>
 //TestPSW---------------------------------------------
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bAttack(false)
+	, m_iLightNum(++CMainApp::g_iLightNum)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	: Engine::CGameObject(pGraphicDev, _strName)
 	, m_bAttack(false)
+	, m_iLightNum(++CMainApp::g_iLightNum)
 {
 }
 
 CPlayer::CPlayer(const CPlayer& rhs)
 	: Engine::CGameObject(rhs)
 	, m_bAttack(rhs.m_bAttack)
+	, m_iLightNum(rhs.m_iLightNum)
 {
 }
 
@@ -43,6 +47,7 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Ready_GameObject()
 {
+	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	/*m_pTransForm->m_vScale = { 1.2f, 1.f, 1.f };*/
@@ -1026,12 +1031,31 @@ _int CPlayer::Die_Check()
 
 }
 
+HRESULT CPlayer::Ready_Light()
+{
+	//플레이어 조명
+	D3DLIGHT9 tPointLightInfo;
+	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo.Type = D3DLIGHT_POINT;
+
+	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Attenuation0 = 0.00000001f;
+	tPointLightInfo.Range = 5.f;
+	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
+
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, m_iLightNum), E_FAIL);
+	light::Get_Light(m_iLightNum)->Close_Light();
+
+	return S_OK;
+}
+
 void CPlayer::Fire_Light()
 {
 	if (m_ePreWeapon != TORCH)
 		return;
 
-	D3DLIGHT9* tPointLightInfo = light::Get_Light(1)->Get_Light();
+	D3DLIGHT9* tPointLightInfo = light::Get_Light(m_iLightNum)->Get_Light();
 
 	tPointLightInfo->Type = D3DLIGHT_POINT;
 
@@ -1044,7 +1068,7 @@ void CPlayer::Fire_Light()
 	m_pTransForm->Get_Info(INFO_POS, &pPlayerPos); // player pos 값 설정
 	tPointLightInfo->Position = pPlayerPos;
 
-	light::Get_Light(1)->Update_Light();
+	light::Get_Light(m_iLightNum)->Update_Light();
 }
 
 void CPlayer::Update_State(const _float& fTimeDelta)

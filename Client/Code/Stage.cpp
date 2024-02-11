@@ -68,6 +68,9 @@
 #include "Stage.h"
 #include <CreateUI.h>
 #include "Cook.h"
+#include "MainApp.h"
+
+
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -92,8 +95,6 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
-
-
 
 	return S_OK;
 }
@@ -304,22 +305,7 @@ HRESULT CStage::Ready_LightInfo()
 
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
-	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
-
-
-	//플레이어 조명
-	D3DLIGHT9 tPointLightInfo;
-	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
-
-	tPointLightInfo.Type = D3DLIGHT_POINT;
-
-	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Attenuation0 = 0.00000001f;
-	tPointLightInfo.Range = 5.f;
-	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
-
-	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, 1), E_FAIL);
-	light::Get_Light(1)->Close_Light();
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, ++CMainApp::g_iLightNum), E_FAIL);
 
 	return S_OK;
 }
@@ -417,9 +403,7 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos)
 	}
 	else if (!_tcscmp(L"PigHouse", pName))
 	{
-		static _int iCount = 1;
-		iCount++;
-		pGameObject = CPigHouse::Create(m_pGraphicDev, iCount);
+		pGameObject = CPigHouse::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	}

@@ -110,7 +110,7 @@ void CUIMgr::Ready_CreateInfo()
 	m_vecCreateInfo.push_back(tInfo);
 
 	tInfo.strKeyName = L"Armor";
-	tInfo.strName = L"Ç® °©¿Ê";
+	tInfo.strName = L"Ç®°©¿Ê";
 	tInfo.strInfo = L"¸öÀ» ¾Æ~~ÁÖ Á¶±Ý\nº¸È£ÇÒ ¼ö ÀÖ´Ù.";
 	tInfo.tItemInfo[0].strItemName = L"CutGlass";
 	tInfo.tItemInfo[0].iCount = 3;

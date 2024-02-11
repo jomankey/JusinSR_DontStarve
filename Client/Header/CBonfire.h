@@ -21,7 +21,6 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						override;
 
-
 public:
 	void Install_Obj();
 	//처음에는 항상 IDLE임 마우스를 드래그해서 놓으면 해당 함수를 호출	
@@ -29,13 +28,12 @@ public:
 
 	//1~4 만 적용가능// 장작을 추가하는 함수
 	void AddFIre(int _Value);
+
 private:
 	virtual HRESULT			Add_Component() override;
 	virtual void			Check_FrameState() override;
 	virtual void			Ready_Stat() override {};
 	virtual void			Change_Frame_Event() override {};
-
-
 
 
 
@@ -45,7 +43,6 @@ public:
 private:
 	virtual void Free();
 
-
 private:
 	Engine::CCalculator* m_pCalculatorCom;
 	CTexture* m_pBonfireTexCom[BONFIRE_END];
@@ -54,8 +51,6 @@ private:
 	BONFIRE_STATE m_eBonfirerPrevState;
 
 	CFire* m_pFire = nullptr;
-
-
 
 	BOOL m_bIsDrop = false;
 	BOOL m_bIsDropEnd = false;

@@ -7,6 +7,8 @@
 #include "SlotMgr.h"
 #include "Export_System.h"
 
+_uint CMainApp::g_iLightNum = -1;
+
 CMainApp::CMainApp() : m_pDeviceClass(nullptr)
 {
 }
@@ -99,13 +101,13 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
 
 	//UI
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù",  L"Panel_Title", 15, 15, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Panel_Info",  8, 10, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Button_Make", 13, 13, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù",  L"Panel_Title", 10, 22, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Panel_Info",  5, 12, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Button_Make", 8, 12, FW_THIN), E_FAIL);
 
 	//Mouse
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Mouse_Title", 18, 18, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Mouse_Sub", 10, 10, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Title", 15, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Sub", 6, 20, FW_HEAVY), E_FAIL);
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);

@@ -37,6 +37,8 @@ private:
 
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 
+public:
+	static _uint g_iLightNum; // Α¶Έν °ª
 
 public:
 	static CMainApp*		Create();

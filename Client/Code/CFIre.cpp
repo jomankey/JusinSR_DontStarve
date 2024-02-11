@@ -3,9 +3,10 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include <MainApp.h>
 
 CFire::CFire(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CResObject(pGraphicDev)
+	: CResObject(pGraphicDev), m_iLightNum(++CMainApp::g_iLightNum)
 {
 }
 
@@ -21,6 +22,8 @@ CFire::~CFire()
 
 HRESULT CFire::Ready_GameObject()
 {
+	Ready_Light();
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = BON_FIRE;
 	m_efireCurState= FIRE_LEVEL_2;
@@ -30,6 +33,7 @@ HRESULT CFire::Ready_GameObject()
 
 _int CFire::Update_GameObject(const _float& fTimeDelta)
 {
+	Change_Light();
 
 	m_fFrame += m_fFrameEnd * fTimeDelta;
 	
@@ -198,6 +202,55 @@ void CFire::Check_FrameState()
 }
 
 
+
+HRESULT CFire::Ready_Light()
+{
+	//점광원
+// 최초 생성 후 플레이어 횟불 사용 시에만 켜지도록 
+	D3DLIGHT9 tPointLightInfo;
+	ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo.Type = D3DLIGHT_POINT;
+
+	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Attenuation0 = 3.f;
+
+	tPointLightInfo.Range = 5.f;
+	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
+
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, m_iLightNum), E_FAIL);
+	light::Get_Light(m_iLightNum)->Close_Light();
+
+	return S_OK;
+}
+
+void CFire::Change_Light()
+{
+	if (m_bIsOff)
+	{
+		light::Get_Light(m_iLightNum)->Close_Light();
+		return;
+	}
+
+	D3DLIGHT9* tPointLightInfo = light::Get_Light(m_iLightNum)->Get_Light();
+	//ZeroMemory(&tPointLightInfo, sizeof(D3DLIGHT9));
+
+	tPointLightInfo->Type = D3DLIGHT_POINT;
+
+	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+
+	tPointLightInfo->Attenuation0 = 3.f;
+
+	tPointLightInfo->Range = 10.f;
+
+	_vec3 pPigHousePos;
+	m_pTransForm->Get_Info(INFO_POS, &pPigHousePos); // player pos 값 설정
+	tPointLightInfo->Position = pPigHousePos;
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 1), E_FAIL);
+	light::Get_Light(m_iLightNum)->Update_Light();
+}
 
 void CFire::Level_Down()
 {

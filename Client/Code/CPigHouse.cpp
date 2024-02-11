@@ -5,9 +5,10 @@
 #include "Export_Utility.h"
 #include "ResObject.h"
 #include <ItemBasic.h>
+#include "MainApp.h"
 
-CPigHouse::CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev, _int iCount)
-	:CResObject(pGraphicDev), m_eHouseState(STANDARD), m_iPointNum(iCount)
+CPigHouse::CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CResObject(pGraphicDev), m_eHouseState(STANDARD), m_iPointNum(++CMainApp::g_iLightNum)
 {
 }
 
@@ -234,6 +235,8 @@ HRESULT CPigHouse::Ready_Light()
 
 	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, m_iPointNum), E_FAIL);
 	light::Get_Light(m_iPointNum)->Close_Light();
+
+	return S_OK;
 }
 
 void CPigHouse::Change_Light()
@@ -266,9 +269,9 @@ void CPigHouse::Change_Light()
 }
 
 
-CResObject* CPigHouse::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iCount)
+CResObject* CPigHouse::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CResObject* pInstance = new CPigHouse(pGraphicDev, iCount);
+	CResObject* pInstance = new CPigHouse(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

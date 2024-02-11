@@ -11,7 +11,7 @@
 #include "CPigHouse.h"
 #include "Pig.h"
 #include "BerryBush.h"
-
+#include "MainApp.h"
 //Scene
 #include "Layer.h"
 
@@ -275,7 +275,7 @@ HRESULT CBossScene::Ready_LightInfo()
 
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
-	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, ++CMainApp::g_iLightNum), E_FAIL);
 
 	return S_OK;
 }
@@ -373,9 +373,7 @@ HRESULT CBossScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	}
 	else if (!_tcscmp(L"PigHouse", pName))
 	{
-		static _int iCount = 1;
-		iCount++;
-		pGameObject = CPigHouse::Create(m_pGraphicDev, iCount);
+		pGameObject = CPigHouse::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
 	}

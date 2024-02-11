@@ -13,7 +13,7 @@ HRESULT CWorldHand::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = 720.f;
+	m_fX = 730.f;
 	m_fY = 60.f;
 
 	m_fSizeX = 10.f;

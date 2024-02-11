@@ -33,7 +33,9 @@ private:
 	virtual void			Ready_Stat() override {};
 	virtual void			Change_Frame_Event() override {};
 
-
+private:
+	HRESULT Ready_Light();	//Α¶Έν
+	void Change_Light();
 
 
 	void Level_Down();
@@ -55,5 +57,7 @@ private:
 	_float m_MaxfTimeChek = 10.f;
 
 	BOOL m_bIsOff = false;
+
+	_uint m_iLightNum;
 };
 

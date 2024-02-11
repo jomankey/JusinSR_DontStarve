@@ -8,7 +8,7 @@ class CPigHouse :
 
 	enum PIGHOUSE { STANDARD, ONLIGHT, RUNDOWN, PH_END };
 private:
-	explicit CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev, _int iCount);
+	explicit CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CPigHouse(const CPigHouse& rhs);
 	virtual ~CPigHouse();
 
@@ -32,7 +32,7 @@ private:
 	_int m_iPointNum;
 
 public:
-	static CResObject* Create(LPDIRECT3DDEVICE9 pGraphicDev , _int iCount);
+	static CResObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();

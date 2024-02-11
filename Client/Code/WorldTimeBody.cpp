@@ -13,7 +13,7 @@ HRESULT CWorldTimeBody::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = 720.f;
+	m_fX = 730.f;
 	m_fY = 60.f;
 
 	m_fSizeX = 40.f;
@@ -72,6 +72,7 @@ CWorldTimeBody* CWorldTimeBody::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
+
 		return nullptr;
 	}
 

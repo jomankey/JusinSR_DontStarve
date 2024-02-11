@@ -56,6 +56,7 @@ private:
 	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);	//Res오브젝트들을 채굴할 때 사용하는 함수
 	_int			Die_Check();
 
+	HRESULT Ready_Light();
 	void Fire_Light();
 	
 	void Update_State(const _float& fTimeDelta);
@@ -94,6 +95,8 @@ private:
 
 	RESOBJID			m_TargetObject;			//Res오브젝트의 종류를 판별
 	_bool				m_bIsRoadScene;			//Road 씬이면 true (임시)
+
+	_uint m_iLightNum;
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);

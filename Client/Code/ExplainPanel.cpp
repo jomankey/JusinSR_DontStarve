@@ -126,7 +126,7 @@ void CExplainPanel::Render_GameObject()
     size_t sNameLen = wStringName.length();
     //띄어쓰기용
     int spacingName =0;
-    if (sNameLen == 4&& sNameLen <5)
+    if (sNameLen == 3&& sNameLen < 5)
     {
         spacingName = 10;
     }
@@ -139,13 +139,13 @@ void CExplainPanel::Render_GameObject()
     //PSW 길이에 맞춰서 띄우기용 -------------------
 
 
-    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (14.f+ sNameLen + spacingName), m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (sNameLen + spacingName), m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
     //PSW 길이에 맞춰서 띄우기용 -------------------
     wstring wStringInfo(m_tCreateInfo.strInfo);
     size_t sInfoLen = wStringInfo.length();
     //PSW 길이에 맞춰서 띄우기용 -------------------
   
-    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (32.f+ sInfoLen), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
     //아이템 2개 넣기
     for (int i = 0; i < 2; ++i)
