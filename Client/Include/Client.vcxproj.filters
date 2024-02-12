@@ -262,6 +262,9 @@
     <Filter Include="02. GameObject\07. UI\06. AnimationUI\03. BackGround">
       <UniqueIdentifier>{0c7c0c48-9e98-4986-b004-60aa1508c57c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\06. Effect\07. RebirthAmulet">
+      <UniqueIdentifier>{6b245f73-6004-49b5-bed3-967794227638}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -510,6 +513,9 @@
     <ClInclude Include="..\Header\CLoadBackGround.h">
       <Filter>02. GameObject\07. UI\06. AnimationUI\03. BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Rebirth.h">
+      <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -748,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CLoadBackGround.cpp">
       <Filter>02. GameObject\07. UI\06. AnimationUI\03. BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rebirth.cpp">
+      <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
