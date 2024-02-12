@@ -41,11 +41,32 @@ HRESULT CBonfire::Ready_GameObject()
 	return S_OK;
 }
 
+static bool teskey = false;
+
 _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
 
 	//
+	//Test 외부에서 똑같이 동작확인을 위한 코드 ()
+	if (GetAsyncKeyState('1')& 0x8000) // 횃불
+	{
+		if (!teskey)
+		{
+			teskey = true;
+		}
+	}
+	else
+	{
+		if (teskey)
+		{
+			AddFIre(1);
+
+			teskey = false;
+		}
+			
+	}
+	
 	if (m_eBonfireCurState == BONFIRE_DROP)
 		{
 			if (!m_bIsDropEnd)
@@ -189,7 +210,7 @@ void CBonfire::AddFIre(int _Value)
 	{
 		if (m_pFire->Get_CurState() == 1&& m_pFire->Get_IsOff())
 		{
-		m_pFire->Set_IsOff(false);
+			m_pFire->Set_IsOff(false);
 		}
 
 
@@ -199,6 +220,9 @@ void CBonfire::AddFIre(int _Value)
 			m_fFireWoodCount = 0;
 
 		}
+
+		//연료를 추가 할 때마다 항상 시간이 증가해야함 
+		m_pFire->Set_MoreTime();
 
 	}
 

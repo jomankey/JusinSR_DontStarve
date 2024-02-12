@@ -38,11 +38,7 @@ HRESULT CCookingPot::Ready_GameObject()
 _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
-	if (GetAsyncKeyState('T')) // 횃불
-	{
-		
-		Set_Drop();
-	}
+
 	if (GetAsyncKeyState('6')) // 횃불
 	{
 		Set_Cooking(false);
@@ -74,11 +70,19 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 	if (!m_bIsFrameStop)
 	{
 		m_fFrame += m_fFrameEnd * fTimeDelta;
+		
+
 	}
 
-	m_fTimeChek += fTimeDelta;
+	if (m_bIsCooking)
+	{
+
+		m_fTimeChek += fTimeDelta;
+	}
 	if (m_fTimeChek >= m_MaxfTimeChek)
 	{
+
+		m_bIsCooking=false;
 		m_fTimeChek = 0.f;
 	}
 
@@ -293,36 +297,43 @@ void CCookingPot::Change_Frame_Event()
 		if (m_eCookingpotCurState == COOKINGPOT_IDLE_EMPTY && m_bIsCooking)
 		{
 			m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
+			
 		}
 
-
-		//솥에 요리가 비어있고, 요리 중일 때
-		if (m_bIsHit&& m_bIsEmpty&& m_bIsCooking)
+		if (m_eCookingpotCurState == COOKINGPOT_IDLE_EMPTY && !m_bIsCooking || m_eCookingpotCurState == COOKINGPOT_HIT_EMPTY)
 		{
-		
-			m_eCookingpotCurState = COOKINGPOT_HIT_EMPTY;
-			if (m_fFrame > m_fFrameEnd)
+			//솥에 요리가 비어있고, 요리 중이 아닐 때에만 피해 모션		또는 //프레임이 한번 씹혔을 때의 방지 다시 초기화를 위한
+			if (m_bIsHit && m_bIsEmpty  || m_eCookingpotCurState == COOKINGPOT_HIT_EMPTY)
 			{
-				m_fFrame = 0.0f;
-				m_bIsHit = false;
-				m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
+
+				m_eCookingpotCurState = COOKINGPOT_HIT_EMPTY;
+				m_bIsFrameStop = false;
+				if (m_fFrame > m_fFrameEnd)
+				{
+					m_fFrame = 0.0f;
+					m_bIsHit = false;
+					m_eCookingpotCurState = COOKINGPOT_IDLE_EMPTY;
+				}
 			}
 
 		}
 
-		//솥에 요리가 차있고, 요리 중일 때
-		if (m_bIsHit && m_bIsFull&& m_bIsCooking)
+		
+		//솥에 요리가 차있고, 요리 중일 때에만 피해 모션				또는 //프레임이 한번 씹혔을 때의 다시 초기화를 위한 방지
+		else if (m_bIsHit && m_bIsFull&& m_bIsCooking|| m_eCookingpotCurState== COOKINGPOT_HIT_COOKING)
 		{
 			
 			m_eCookingpotCurState= COOKINGPOT_HIT_COOKING;
+			m_bIsFrameStop = false;
 			if (m_fFrame > m_fFrameEnd)
 			{
 				m_fFrame = 0.0f;
 				m_bIsHit = false;
 				m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
-
+		
 			}
 
+			
 		}
 
 
@@ -355,7 +366,7 @@ void CCookingPot::Install_Obj()
 		pMouse->Set_Install(false);
 
 		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
-		Set_Drop();
+		
 	}
 }
 
