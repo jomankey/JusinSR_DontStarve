@@ -168,7 +168,7 @@ void CTeleporterWorm::Change_Frame_Event()
 	//	m_eTelporterCurState = TELEPORTER_CLOSE;
 	//
 	//}
-
+	//TEST
 
 
 
