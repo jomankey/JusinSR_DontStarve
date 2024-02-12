@@ -191,7 +191,7 @@ void CItemTool::Input_Mouse()
 
 				if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vObjPos, iter->GetTransForm()->Get_Scale()))
 				{
-					dynamic_cast<CBonfire*>(iter)->AddFIre(3);
+					dynamic_cast<CBonfire*>(iter)->AddFIre(1);
 					CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
 				}
 			}
