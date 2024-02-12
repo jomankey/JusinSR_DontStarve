@@ -49,7 +49,10 @@ namespace Engine
 	{
 		LOGO,
 		STAGE,
-		END
+		ROAD,
+		BOSS,
+		TEST,
+		NONE,
 	};
 
 	enum class eLAYER_TYPE

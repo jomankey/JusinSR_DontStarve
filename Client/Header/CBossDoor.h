@@ -26,7 +26,8 @@ private:
 	void Open(const _float& fTimeDelta);
 	void IDLE(const _float& fTimeDelta);
 	void Close(const _float& fTimeDelta);
-
+	//충돌반경
+	void ChangeScenePlayer(_float _fDistance);
 
 
 public:

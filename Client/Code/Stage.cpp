@@ -22,9 +22,11 @@
 
 
 #include "Transform.h"
+
 //Scene
 #include "Layer.h"
 #include "CTestScene.h"
+#include "CRoadScene.h"
 
 // Monster/Resource/Object
 #include "CObjectRock.h"
@@ -105,12 +107,13 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 
 	Change_LightInfo(fTimeDelta);
 
-	//if (KEY_TAP(DIK_Z))
-	//{
-	//	CScene* pScene = CRoadScene::Create(m_pGraphicDev, L"RoadScene");
-	//	NULL_CHECK_RETURN(pScene, -1);
-	//	scenemgr::Change_CurScene(pScene);
-	//}
+	if (KEY_TAP(DIK_Z))
+	{
+		CScene* pScene = CRoadScene::Create(m_pGraphicDev, L"ROAD");
+		NULL_CHECK_RETURN(pScene, -1);
+
+		ChangeScene(pScene);
+	}
 
 	return 0;
 }
@@ -157,7 +160,7 @@ HRESULT CStage::Ready_Layer_Environment()
 
 HRESULT CStage::Ready_Layer_GameLogic()
 {
-NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
+	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
@@ -181,70 +184,10 @@ NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
 
-
-	//pGameObject = CBeefalo::Create(m_pGraphicDev, _vec3(_float(rand() % 30), 1.5f, _float(rand() % 30)));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-
-	/*pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(10.f, 1.5f, 10.f));
+	pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DeerClops", pGameObject), E_FAIL);*/
-
-	//for (_int i = 0; i < 5; ++i)
-	//{
-	//	pGameObject = CTallbird::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 2.5f, _float(rand() % 120)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	//}
-	//
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CSpider::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CPig::Create(m_pGraphicDev, _vec3(_float(rand() % 120), 1.5f, _float(rand() % 120)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CObjectGrass::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_GRASS", pGameObject), E_FAIL);
-	//}
-
-	/*for (_int i = 0; i < 10; ++i)
-	{
-		pGameObject = CObjectGrass::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	}*/
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CObjectRock::Create(m_pGraphicDev, _vec3(_float(rand() % 20), 1.5f, _float(rand() % 20)));
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_vecLayer[(int)eLAYER_TYPE::OBJECTS]->AddGameObject(L"OBJ_ROCK", pGameObject), E_FAIL);
-	//}
-	//for (_int i = 0; i < 10; ++i)
-	//{
-	//	pGameObject = CObjectTree::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	//}
-	
-		//pGameObject = CCookingPot::Create(m_pGraphicDev);
-		//pGameObject->GetTransForm()->Set_Pos(_vec3(60.f, 1.5f, 60.f));
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-
-		//pGameObject = CBonfire::Create(m_pGraphicDev);
-		//pGameObject->GetTransForm()->Set_Pos(_vec3(64.f, 1.5f, 60.f));
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	pGameObject->GetTransForm()->Set_Pos(_vec3(60.f, 1.f, 60.f));
 
 
 	return S_OK;

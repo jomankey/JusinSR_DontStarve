@@ -4,6 +4,9 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include "CRoadScene.h"
+
+
 CTeleporterWorm::CTeleporterWorm(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
 {
@@ -43,6 +46,7 @@ _int CTeleporterWorm::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_fFrame = 0.f;
 	}
+	ChangeScenePlayer(1.f);//플레이어가 1.f거리안에 있을때 C키 입력시 씬이동
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -99,8 +103,6 @@ HRESULT CTeleporterWorm::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Teleporter_Open", pComponent });
 
-
-
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
@@ -114,6 +116,32 @@ HRESULT CTeleporterWorm::Add_Component()
 
 void CTeleporterWorm::Change_Frame_Event()
 {
+
+}
+
+//충돌반경
+void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
+{
+
+	_vec3 vPlayerPos;
+	_vec3 vPos;
+	_vec3 vDistance;
+
+	float fDistance = 0.f;
+	scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPlayerPos);
+	GetTransForm()->Get_Info(INFO_POS, &vPos);
+
+	vDistance = vPlayerPos - vPos;
+	vDistance.y = 0.f;
+	fDistance = D3DXVec3Length(&vDistance);
+	if (fDistance <= _fDistance)
+	{
+		if (KEY_TAP(DIK_C))
+		{
+			ChangeScene(CRoadScene::Create(m_pGraphicDev, L"ROAD"));
+		}
+	}
+
 
 }
 

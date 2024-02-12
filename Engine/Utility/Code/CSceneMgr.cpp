@@ -1,5 +1,6 @@
 #include "Export_Utility.h"
 
+
 IMPLEMENT_SINGLETON(CSceneMgr)
 
 CSceneMgr::CSceneMgr()
@@ -28,7 +29,7 @@ _int CSceneMgr::Update_Scene(const _float& fTimeDelta)
 {
 	NULL_CHECK_RETURN(m_pCurScene, -1)
 
-		return m_pCurScene->Update_Scene(fTimeDelta);
+	return m_pCurScene->Update_Scene(fTimeDelta);
 }
 
 void CSceneMgr::LateUpdate_Scene()
