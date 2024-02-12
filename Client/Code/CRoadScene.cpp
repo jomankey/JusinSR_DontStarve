@@ -333,9 +333,11 @@ HRESULT CRoadScene::Load_Data()
 		ReadFile(hFile, &vScale, sizeof(_vec3), &dwByte, nullptr);
 
 		dwStrByte = 0;
-
 		Create_Object(pName, vPos, vScale);
+
+		delete[] pName;
 	}
+
 	CloseHandle(hFile);
 
 	hFile = CreateFile(

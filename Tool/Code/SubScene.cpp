@@ -410,7 +410,10 @@ HRESULT CSubScene::Load_ObjFile()
 		dwStrByte = 0;
 
 		Create_Object(pName, vPos, vScale);
+<<<<<<< HEAD
 
+=======
+>>>>>>> bdd65c48f7d390de1318798ccb8f882cf2d3064c
 		delete[] pName;
 	}
 	CloseHandle(hFile);

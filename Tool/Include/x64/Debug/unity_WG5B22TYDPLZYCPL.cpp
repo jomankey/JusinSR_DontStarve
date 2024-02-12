@@ -20,6 +20,9 @@
 #include "C:\GitHub\JusinSR\imgui\imgui\imgui_widgets.cpp"
 
 
+#include "C:\GitHub\JusinSR\Tool\Code\FuncEvent.cpp"
+
+
 #include "C:\GitHub\JusinSR\Tool\Code\MainTool.cpp"
 
 
@@ -27,9 +30,6 @@
 
 
 #include "C:\GitHub\JusinSR\Tool\Code\TerrainScene.cpp"
-
-
-#include "C:\GitHub\JusinSR\Tool\Code\ToolBerry.cpp"
 
 
 #include "C:\GitHub\JusinSR\Tool\Code\ToolBossScene.cpp"
@@ -44,31 +44,16 @@
 #include "C:\GitHub\JusinSR\Tool\Code\ToolCubeTerrain.cpp"
 
 
-#include "C:\GitHub\JusinSR\Tool\Code\ToolGrass.cpp"
-
-
-#include "C:\GitHub\JusinSR\Tool\Code\ToolItem.cpp"
-
-
 #include "C:\GitHub\JusinSR\Tool\Code\ToolMgr.cpp"
 
 
-#include "C:\GitHub\JusinSR\Tool\Code\ToolMonster.cpp"
-
-
-#include "C:\GitHub\JusinSR\Tool\Code\ToolPigHouse.cpp"
-
-
-#include "C:\GitHub\JusinSR\Tool\Code\ToolRock.cpp"
+#include "C:\GitHub\JusinSR\Tool\Code\ToolObj.cpp"
 
 
 #include "C:\GitHub\JusinSR\Tool\Code\ToolSkyBox.cpp"
 
 
 #include "C:\GitHub\JusinSR\Tool\Code\ToolTerrain.cpp"
-
-
-#include "C:\GitHub\JusinSR\Tool\Code\ToolTree.cpp"
 
 
 #include "C:\GitHub\JusinSR\Tool\Include\Tool.cpp"

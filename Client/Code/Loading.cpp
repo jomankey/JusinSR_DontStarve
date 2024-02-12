@@ -134,6 +134,9 @@ HRESULT CLoading::Loading_Player_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_wakeup", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/wake_up/wake_up__%03d.png", 32)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_eat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/eat/eat__%03d.png", 36)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_die", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/death/death__%03d.png", 19)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_dialog", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/dial/dial__%03d.png", 17)), E_FAIL);
+
+
 
 	//유령상태
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Ghost_Appear", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ghost/appear/appear__%03d.png", 12)), E_FAIL);
@@ -417,6 +420,7 @@ HRESULT CLoading::Loading_Item_Texture()
 	//Obj_Teleporter
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Teleporter_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Teleporter_worm/Idle/WormIdle__%03d.png", 7)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Teleporter_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Teleporter_worm/Open/WormOpen__%03d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Teleporter_Close", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Teleporter_worm/Close/WormClose__%03d.png", 6)), E_FAIL);
 
 	//Obj_BossDoor
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__%03d.png", 19)), E_FAIL);

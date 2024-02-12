@@ -42,6 +42,9 @@
 #include "C:\20240209\Client\Code\Circle.cpp"
 
 
+#include "C:\20240209\Client\Code\CLoadBackGround.cpp"
+
+
 #include "C:\20240209\Client\Code\Cook.cpp"
 
 

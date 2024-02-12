@@ -56,8 +56,13 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 		if (KEY_TAP(DIK_U))
 		{
-			SetTarget(scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0]);
-			m_bMove = true;
+			auto pObj =  scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0];
+			if (nullptr!= pObj)
+			{
+				SetTarget(pObj);
+				m_bMove = true;
+
+			}
 		}
 		if (KEY_TAP(DIK_I))
 		{
