@@ -4,7 +4,7 @@ class CTeleporterWorm :
     public CResObject
 {
 
-	enum TELEPORTER_STATE { TELEPORTER_IDLE, TELEPORTER_OPEN, TELEPORTER_END};
+	enum TELEPORTER_STATE { TELEPORTER_IDLE, TELEPORTER_OPEN, TELEPORTER_CLOSE,TELEPORTER_END};
 
 private:
 	explicit CTeleporterWorm(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -32,7 +32,7 @@ public:	//외부용
 
 private:
 	//내부용
-	tuple<_bool, _vec3> IsPlayerInRadius();
+	tuple<_bool, _vec3,_bool> IsPlayerInRadius();
 public:
 	static CResObject* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
@@ -47,7 +47,9 @@ private:
 	TELEPORTER_STATE m_eTelporterCurState;
 	TELEPORTER_STATE m_eTelporterPreState;
 
+	BOOL m_bFrameStop = false;
 
 
+	BOOL m_bReverseFrame = false;
 };
 
