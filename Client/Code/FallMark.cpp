@@ -7,9 +7,10 @@
 #include "Monster.h"
 #include "ResObject.h"
 #include "IceMissileL.h"
+#include "IceMissileR.h"
 #include "Scene.h"
 #include "Layer.h"
-
+#include <random>
 FallMark::FallMark(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	:CEffect(pGraphicDev, _vPos), m_eCurState(APPEAR),
     m_ePreState(STATE_END), m_bMissileLaunch(false)
@@ -106,7 +107,7 @@ HRESULT FallMark::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-    m_pTransForm->Set_Scale({ 1.f, 0.5f, 1.f });
+    m_pTransForm->Set_Scale({ 1.5f, 1.f, 1.5f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -137,6 +138,11 @@ void FallMark::State_Change()
 
 _int FallMark::Appear()
 {
+    random_device rd;               //난수발생기
+    default_random_engine eng(rd());
+    uniform_int_distribution<int> distribution(0, 1);
+    int randomNumber = distribution(eng);
+
     _vec3 vrDir, vlDir, vUp, vRight;
     m_pTransForm->Get_Info(INFO_UP, &vUp);
     m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
@@ -146,17 +152,30 @@ _int FallMark::Appear()
     D3DXVec3Normalize(&vrDir, &vrDir);
     D3DXVec3Normalize(&vlDir, &vlDir);
 
-    _vec3 vMissilePos;
-    vMissilePos = m_vPos + vrDir * 20.f;
+   
     if (m_ePreState == APPEAR && !m_bMissileLaunch)
     {
         if (6 < m_fFrame)
         {
             m_bMissileLaunch = true;
-            CGameObject* pGameObject = IceMissileL::Create(m_pGraphicDev, vMissilePos);
-            NULL_CHECK_RETURN(pGameObject,E_FAIL );
-            CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
-            dynamic_cast<IceMissileL*>(pGameObject)->Set_Target(this, m_vPos);
+            if (randomNumber == 0)
+            {
+                _vec3 vMissilePos;
+                vMissilePos = m_vPos + vrDir * 30.f;
+                CGameObject* pGameObject = IceMissileL::Create(m_pGraphicDev, vMissilePos);
+                NULL_CHECK_RETURN(pGameObject, E_FAIL);
+                CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+                dynamic_cast<IceMissileL*>(pGameObject)->Set_Target(this, m_vPos);
+            }
+            else
+            {
+                _vec3 vMissilePos;
+                vMissilePos = m_vPos + vlDir * 30.f;
+                CGameObject* pGameObject = IceMissileR::Create(m_pGraphicDev, vMissilePos);
+                NULL_CHECK_RETURN(pGameObject, E_FAIL);
+                CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+                dynamic_cast<IceMissileR*>(pGameObject)->Set_Target(this, m_vPos);
+            }
         }
     }
 
@@ -170,6 +189,8 @@ _int FallMark::Appear()
 
     if (m_ePreState == DISAPPEAR && m_fFrameEnd-1 < m_fFrame)
     {
+        m_bFrameStop = true;
+        m_fFrame = m_fFrameEnd - 1;
         DeleteObject(this);
         return 0x80000000;
     }

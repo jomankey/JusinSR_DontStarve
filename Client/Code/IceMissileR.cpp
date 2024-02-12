@@ -1,4 +1,4 @@
-#include "IceMissileL.h"
+#include "IceMissileR.h"
 #include "stdafx.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -8,29 +8,29 @@
 #include "ResObject.h"
 #include "FallMark.h"
 #include "SnowSplash.h"
-#include "IceSpikeL.h"
-IceMissileL::IceMissileL(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
+#include "IceSpikeR.h"
+IceMissileR::IceMissileR(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	:CEffect(pGraphicDev, _vPos), m_bShoot(false), m_pTarget(nullptr)
 {
 }
 
-IceMissileL::IceMissileL(const IceMissileL& rhs)
+IceMissileR::IceMissileR(const IceMissileR& rhs)
 	:CEffect(rhs)
 {
 }
 
-IceMissileL::~IceMissileL()
+IceMissileR::~IceMissileR()
 {
 }
 
-HRESULT IceMissileL::Ready_GameObject()
+HRESULT IceMissileR::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
     return S_OK;
 }
 
-_int IceMissileL::Update_GameObject(const _float& fTimeDelta)
+_int IceMissileR::Update_GameObject(const _float& fTimeDelta)
 {
 
     _int iResult = Appear(fTimeDelta);
@@ -41,7 +41,7 @@ _int IceMissileL::Update_GameObject(const _float& fTimeDelta)
     return iResult;
 }
 
-void IceMissileL::LateUpdate_GameObject()
+void IceMissileR::LateUpdate_GameObject()
 {
     CGameObject::LateUpdate_GameObject();
     m_pTransForm->BillBoard();
@@ -50,7 +50,7 @@ void IceMissileL::LateUpdate_GameObject()
     CGameObject::Compute_ViewZ(&vPos);
 }
 
-void IceMissileL::Render_GameObject()
+void IceMissileR::Render_GameObject()
 {
     m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
@@ -72,7 +72,7 @@ void IceMissileL::Render_GameObject()
 
 
 
-void IceMissileL::Set_Target(CGameObject* _target, _vec3 _vtarget)
+void IceMissileR::Set_Target(CGameObject* _target, _vec3 _vtarget)
 {
     m_pTarget = _target;
     m_vTargetpos = _vtarget;
@@ -80,7 +80,7 @@ void IceMissileL::Set_Target(CGameObject* _target, _vec3 _vtarget)
         m_bShoot = true;
 }
 
-HRESULT IceMissileL::Add_Component()
+HRESULT IceMissileR::Add_Component()
 {
     CComponent* pComponent = nullptr;
 
@@ -91,9 +91,9 @@ HRESULT IceMissileL::Add_Component()
 
 #pragma region TEXCOM
 
-    pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Ice_missile_right"));
+    pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Deer_Ice_missile_left"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
-    m_mapComponent[ID_STATIC].insert({ L"Deer_Ice_missile_right", pComponent });
+    m_mapComponent[ID_STATIC].insert({ L"Deer_Ice_missile_left", pComponent });
 
 
 #pragma endregion TEXCOM
@@ -111,12 +111,12 @@ HRESULT IceMissileL::Add_Component()
     return S_OK;
 }
 
-void IceMissileL::State_Change()
+void IceMissileR::State_Change()
 {
  
 }
 
-_int IceMissileL::Appear(const _float& fTimeDelta)
+_int IceMissileR::Appear(const _float& fTimeDelta)
 {
     if (m_bShoot)
     {
@@ -135,7 +135,7 @@ _int IceMissileL::Appear(const _float& fTimeDelta)
             NULL_CHECK_RETURN(pGameObject, E_FAIL);
             CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
 
-            lpGameObject = IceSpikeL::Create(m_pGraphicDev, m_vTargetpos);
+            lpGameObject = IceSpikeR::Create(m_pGraphicDev, m_vTargetpos);
             NULL_CHECK_RETURN(lpGameObject, E_FAIL);
             CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, lpGameObject);
 
@@ -148,9 +148,9 @@ _int IceMissileL::Appear(const _float& fTimeDelta)
 }
 
 
-IceMissileL* IceMissileL::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
+IceMissileR* IceMissileR::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {
-    IceMissileL* pInstance = new IceMissileL(pGraphicDev, _vPos);
+    IceMissileR* pInstance = new IceMissileR(pGraphicDev, _vPos);
 
     if (FAILED(pInstance->Ready_GameObject()))
     {
@@ -161,7 +161,7 @@ IceMissileL* IceMissileL::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     return pInstance;
 }
 
-void IceMissileL::Free()
+void IceMissileR::Free()
 {
     __super::Free();
 }

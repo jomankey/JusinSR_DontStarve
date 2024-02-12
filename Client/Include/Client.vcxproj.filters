@@ -483,6 +483,9 @@
     <ClInclude Include="..\Header\Cook.h">
       <Filter>02. GameObject\07. UI\05. Cook</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\IceMissileR.h">
+      <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -706,6 +709,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Cook.cpp">
       <Filter>02. GameObject\07. UI\05. Cook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IceMissileR.cpp">
+      <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

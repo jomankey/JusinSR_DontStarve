@@ -69,6 +69,9 @@
 #include "C:\20240209\Client\Code\IceMissileL.cpp"
 
 
+#include "C:\20240209\Client\Code\IceMissileR.cpp"
+
+
 #include "C:\20240209\Client\Code\IceSpikeL.cpp"
 
 
@@ -76,6 +79,9 @@
 
 
 #include "C:\20240209\Client\Code\InvenSlot.cpp"
+
+
+#include "C:\20240209\Client\Code\Mouse.cpp"
 
 
 #include "C:\20240209\Client\Code\Slot.cpp"
@@ -138,7 +144,10 @@
 #include "C:\20240209\Client\Code\CUI.cpp"
 
 
-#include "C:\20240209\Client\Code\CWorldUI.cpp"
+#include "C:\20240209\Client\Code\WorldHand.cpp"
+
+
+#include "C:\20240209\Client\Code\WorldUI.cpp"
 
 
 #include "C:\20240209\Client\Code\DeerClops.cpp"
@@ -196,6 +205,9 @@
 
 
 #include "C:\20240209\Client\Code\Terrain.cpp"
+
+
+#include "C:\20240209\Client\Code\WorldTimeBody.cpp"
 
 
 #include "C:\20240209\Client\Header\Ghost.cpp"
