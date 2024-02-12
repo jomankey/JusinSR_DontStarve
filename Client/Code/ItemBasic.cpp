@@ -64,7 +64,8 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 		{
 			_vec3 vSlotPos = {};
 			CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strObjName, &vSlotPos);
-			return 0x80000000;
+			DeleteObject(this);
+			//return 0x80000000;
 		}
 			
 		// 아이템 먹엇을때 슬롯쪽으로 이동

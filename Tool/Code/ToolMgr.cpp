@@ -14,8 +14,12 @@ int CToolMgr::iItemCurrentItemIdx = 0;
 _bool CToolMgr::bObjectAdd = false;
 _bool CToolMgr::bItemAdd = false;
 _bool CToolMgr::bMonsterAdd = false;
-_bool CToolMgr::bSaveData = false;
-_bool CToolMgr::bLoadData = false;
+_bool CToolMgr::bObjSaveData = false;
+_bool CToolMgr::bObjLoadData = false;
+_bool CToolMgr::bPointSaveData = false;
+_bool CToolMgr::bPointLoadData = false;
+_bool CToolMgr::bLightSaveData = false;
+_bool CToolMgr::bLightLoadData = false;
 _bool CToolMgr::bTerrainWireFrame = false;
 
 _int CToolMgr::iPickingIndex = -1;
@@ -85,45 +89,6 @@ void CToolMgr::Window_Tile()
 {
     ImGui::Begin("Tile Tool");
 
-    //ImGui::Text("Choose the tile and pick it");
-
-    //const char* Items[] = { "grass", "grass2" };
-
-    //if (ImGui::BeginListBox("Tile List"))
-    //{
-    //    for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
-    //    {
-    //        const bool bSelected = (item_current_idx == i);
-    //        if (ImGui::Selectable(Items[i], bSelected))
-    //            item_current_idx = i;
-
-    //        if (bSelected)
-    //            ImGui::SetItemDefaultFocus();
-    //    }
-    //    ImGui::EndListBox();
-    //}
-
-    //for (int i = 0; i < 80; i++)
-    //{
-    //    ImTextureID my_tex_id = (LPDIRECT3DTEXTURE9*)m_pTileTexture[item_current_idx]->Get_Texture(i);
-    //    float my_tex_w = 128.f;
-    //    float my_tex_h = 128.f;
-
-    //    ImGui::PushID(i);
-    //    ImVec2 size = ImVec2(32.f, 32.f);
-    //    ImVec2 uv0 = ImVec2(0.f, 0.f);
-    //    ImVec2 uv1 = ImVec2(32.f / my_tex_w, 32.f / my_tex_h);
-    //    ImVec4 bg_col = ImVec4(255.f, 255.f, 255.f, 1.f); // »ö»ó°ª 
-    //    ImVec4 tint_col = ImVec4(1.f, 1.f, 1.f, 1.f);
-    //    ImGui::ImageButton("", (void*)my_tex_id, size, uv0, uv1, bg_col, tint_col);
-
-    //    ImGui::PopID();
-    //    if (i % 5 == 0 && i != 0)
-    //        ImGui::NewLine();
-    //    else
-    //        ImGui::SameLine();
-    //}
-
     ImGui::Checkbox("TerrainWireFrame", &bTerrainWireFrame);
 
     ImGui::NewLine();
@@ -147,6 +112,15 @@ void CToolMgr::Window_Tile()
         ImGui::EndListBox();
 
         }
+
+    if (ImGui::SmallButton("Save"))
+        bPointSaveData = true;
+
+    ImGui::SameLine();
+
+    if (ImGui::SmallButton("Load"))
+        bPointLoadData = true;
+
     ImGui::End();
 }
 
@@ -170,6 +144,15 @@ void CToolMgr::Window_Light()
     ImGui::ColorEdit3("DirectionDiffuse", m_fDirectionDiffuseColor[iTimeLight]);
     ImGui::ColorEdit3("DirectionAmbient", m_fDirectionAmbientColor[iTimeLight]);
     ImGui::ColorEdit3("DirectionSpecular", m_fDirectionSpecularColor[iTimeLight]);
+
+    if (ImGui::SmallButton("Save"))
+        bLightSaveData = true;
+
+    ImGui::SameLine();
+
+    if (ImGui::SmallButton("Load"))
+        bLightLoadData = true;
+
 
     ImGui::End();
 }
@@ -264,12 +247,12 @@ void CToolMgr::Window_Object()
     }
 
     if (ImGui::SmallButton("Save"))
-        bSaveData = true;
+        bObjSaveData = true;
     
     ImGui::SameLine();
 
     if (ImGui::SmallButton("Load"))
-        bLoadData = true;
+        bObjLoadData = true;
 
     ImGui::End();
 }

@@ -1,21 +1,21 @@
-#include "ToolMonster.h"
+#include "ToolObj.h"
 
-CToolMonster::CToolMonster(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName)
+CToolObj::CToolObj(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName)
 	: CGameObject(pGraphicDev), m_pName(pName)
 {
 }
 
-CToolMonster::~CToolMonster()
+CToolObj::~CToolObj()
 {
 }
 
-HRESULT CToolMonster::Ready_GameObject()
+HRESULT CToolObj::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	return S_OK;
 }
 
-_int CToolMonster::Update_GameObject(const _float& fTimeDelta)
+_int CToolObj::Update_GameObject(const _float& fTimeDelta)
 {
 	CGameObject::Update_GameObject(fTimeDelta);
 
@@ -25,12 +25,12 @@ _int CToolMonster::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-void CToolMonster::LateUpdate_GameObject()
+void CToolObj::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CToolMonster::Render_GameObject()
+void CToolObj::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -45,7 +45,7 @@ void CToolMonster::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-HRESULT CToolMonster::Add_Component()
+HRESULT CToolObj::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 	_vec3 vPos;
@@ -69,9 +69,9 @@ HRESULT CToolMonster::Add_Component()
 	return S_OK;
 }
 
-CToolMonster* CToolMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName)
+CToolObj* CToolObj::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName)
 {
-	CToolMonster* pInstance = new CToolMonster(pGraphicDev, pName);
+	CToolObj* pInstance = new CToolObj(pGraphicDev, pName);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -82,7 +82,7 @@ CToolMonster* CToolMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName)
 	return pInstance;
 }
 
-void CToolMonster::Free()
+void CToolObj::Free()
 {
 	__super::Free();
 }

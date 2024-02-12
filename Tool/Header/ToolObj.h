@@ -1,11 +1,11 @@
 #pragma once
 #include "Export_Utility.h"
-class CToolMonster :
+class CToolObj :
     public CGameObject
 {
 private:
-	explicit CToolMonster(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName);
-	virtual ~CToolMonster();
+	explicit CToolObj(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName);
+	virtual ~CToolObj();
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;
@@ -22,7 +22,7 @@ private:
 	wstring m_pName;
 
 public:
-	static CToolMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName);
+	static CToolObj* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName);
 
 private:
 	virtual void Free();

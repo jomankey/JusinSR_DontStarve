@@ -12,7 +12,7 @@
 #include "ToolGrass.h"
 #include <ToolSkyBox.h>
 #include <ToolItem.h>
-#include "ToolMonster.h"
+#include "ToolObj.h"
 
 #include "Scene.h"
 #include "Layer.h"
@@ -64,6 +64,21 @@ HRESULT CTerrainScene::Ready_Scene()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Pig", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/pig/idle_happy/happy__000.png")), E_FAIL);
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/berrybush/most/most_idle__000.png")), E_FAIL);
 
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FireFlies_Pre", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/FireFlies/swarm_pre/swarm_pre__000.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FireFlies_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/FireFlies/swarm_loop/swarm_loop__000.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_FireFlies_Pst", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/FireFlies/swarm_pst/swarm_pst__000.png")), E_FAIL);
+
+	//Obj_Teleporter
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Teleporter_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Teleporter_worm/Idle/WormIdle__000.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_Teleporter_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Monster/Resource/Teleporter_worm/Open/WormOpen__000.png")), E_FAIL);
+
+	//Obj_BossDoor
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Open", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/activate/activate__000.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Close", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/deactive/deactive__000.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__000.png")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Off", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_off__000.png")), E_FAIL);
+
+
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
@@ -83,15 +98,37 @@ _int CTerrainScene::Update_Scene(const _float& fTimeDelta)
 	Change_LightInfo(fTimeDelta);
 	Input_Mouse();
 
-	if (CToolMgr::bSaveData)
+	if (CToolMgr::bObjSaveData)
 	{
-		Save_File();
-		CToolMgr::bSaveData = false;
+		Save_ObjFile();
+		CToolMgr::bObjSaveData = false;
 	}
-	if (CToolMgr::bLoadData)
+	if (CToolMgr::bObjLoadData)
 	{
-		FAILED_CHECK_RETURN(Load_File(), E_FAIL);
-		CToolMgr::bLoadData = false;
+		FAILED_CHECK_RETURN(Load_ObjFile(), E_FAIL);
+		CToolMgr::bObjLoadData = false;
+	}
+
+	if (CToolMgr::bPointSaveData)
+	{
+		Save_PointFile();
+		CToolMgr::bPointSaveData = false;
+	}
+	if (CToolMgr::bPointLoadData)
+	{
+		FAILED_CHECK_RETURN(Load_PointFile(), E_FAIL);
+		CToolMgr::bPointLoadData = false;
+	}
+
+	if (CToolMgr::bLightSaveData)
+	{
+		Save_PointFile();
+		CToolMgr::bLightSaveData = false;
+	}
+	if (CToolMgr::bLightLoadData)
+	{
+		FAILED_CHECK_RETURN(Load_PointFile(), E_FAIL);
+		CToolMgr::bLightLoadData = false;
 	}
 
 	return __super::Update_Scene(fTimeDelta);
@@ -180,10 +217,10 @@ HRESULT CTerrainScene::Ready_LightInfo()
 	return S_OK;
 }
 
-void CTerrainScene::Save_File()
+void CTerrainScene::Save_ObjFile()
 {
 	HANDLE	hFile = CreateFile(
-		L"../../Data/mainMap.dat",
+		L"../../Data/MainMap_Obj.dat",
 		GENERIC_WRITE,
 		NULL,
 		NULL,
@@ -230,21 +267,14 @@ void CTerrainScene::Save_File()
 		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
 	}
 
-
-	iCount = CToolMgr::vecPickingIdex.size();
-	WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
-
-	for (int i = 0; i < CToolMgr::vecPickingIdex.size(); ++i)
-		WriteFile(hFile, &CToolMgr::vecPickingIdex[i], sizeof(_int), &dwByte, nullptr);
-
 	MessageBox(g_hWnd, L"Terrain Save", L"己傍", MB_OK);
 	CloseHandle(hFile);
 }
 
-HRESULT CTerrainScene::Load_File()
+HRESULT CTerrainScene::Load_ObjFile()
 {
 	HANDLE	hFile = CreateFile(
-		L"../../Data/mainMap.dat",
+		L"../../Data/MainMap_Obj.dat",
 		GENERIC_READ,
 		NULL,
 		NULL,
@@ -291,6 +321,58 @@ HRESULT CTerrainScene::Load_File()
 		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
 	}
 
+	CloseHandle(hFile);
+
+	MessageBox(g_hWnd, L"Terrain Load", L"己傍", MB_OK);
+
+	return S_OK;
+}
+
+void CTerrainScene::Save_PointFile()
+{
+	HANDLE	hFile = CreateFile(
+		L"../../Data/MainMap_Point.dat",
+		GENERIC_WRITE,
+		NULL,
+		NULL,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
+
+	_vec3 vPos{};
+	_int iCount(0);
+	DWORD	dwByte(0), dwStrByte(0);
+
+	iCount = CToolMgr::vecPickingIdex.size();
+	WriteFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+
+	for (int i = 0; i < CToolMgr::vecPickingIdex.size(); ++i)
+		WriteFile(hFile, &CToolMgr::vecPickingIdex[i], sizeof(_int), &dwByte, nullptr);
+
+	MessageBox(g_hWnd, L"Point Save", L"己傍", MB_OK);
+	CloseHandle(hFile);
+}
+
+HRESULT CTerrainScene::Load_PointFile()
+{
+	HANDLE	hFile = CreateFile(
+		L"../../Data/MainMap_Point.dat",
+		GENERIC_READ,
+		NULL,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	_int iCount(0);
+	DWORD	dwByte(0);
+
 	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
 	for (int i = 0; i < iCount; ++i)
@@ -302,7 +384,81 @@ HRESULT CTerrainScene::Load_File()
 
 	CloseHandle(hFile);
 
-	MessageBox(g_hWnd, L"Terrain Load", L"己傍", MB_OK);
+	MessageBox(g_hWnd, L"Point Load", L"己傍", MB_OK);
+
+	return S_OK;
+}
+
+void CTerrainScene::Save_LightFile()
+{
+	HANDLE	hFile = CreateFile(
+		L"../../Data/MainMap_Light.dat",
+		GENERIC_WRITE,
+		NULL,
+		NULL,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
+
+	_vec3 vPos{};
+	DWORD	dwByte(0);
+
+	for (int i = 0; i < 3; ++i)
+	{
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		WriteFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+	}
+
+	MessageBox(g_hWnd, L"Light Save", L"己傍", MB_OK);
+	CloseHandle(hFile);
+}
+
+HRESULT CTerrainScene::Load_LightFile()
+{
+	HANDLE	hFile = CreateFile(
+		L"../../Data/MainMap_Light.dat",
+		GENERIC_READ,
+		NULL,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD	dwByte(0);
+
+	for (int i = 0; i < 3; ++i)
+	{
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hFile, &CToolMgr::m_fDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+	}
+
+	CloseHandle(hFile);
+
+	MessageBox(g_hWnd, L"Light Load", L"己傍", MB_OK);
 
 	return S_OK;
 }
@@ -314,96 +470,101 @@ HRESULT CTerrainScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
-	if (!_tcscmp(L"Tree", pName))
-	{
-		pGameObject = CToolTree::Create(m_pGraphicDev);
-		pGameObject->SetObjName(L"Tree");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 2.5f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"Rock", pName))
-	{
-		pGameObject = CToolRock::Create(m_pGraphicDev);
-		pGameObject->SetObjName(L"Rock");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"Grass", pName))
-	{
-		pGameObject = CToolGrass::Create(m_pGraphicDev);
-		pGameObject->SetObjName(L"Grass");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"PigHouse", pName))
-	{
-		pGameObject = CToolPigHouse::Create(m_pGraphicDev);
-		pGameObject->SetObjName(L"PigHouse");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"BerryBush", pName))
-	{
-		pGameObject = CToolBerry::Create(m_pGraphicDev);
-		pGameObject->SetObjName(L"BerryBush");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"Twigs", pName))
-	{
-		pGameObject = CToolItem::Create(m_pGraphicDev, L"Twigs", vPos);
-		pGameObject->SetObjName(L"Twigs");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"Rocks_0", pName))
-	{
-		pGameObject = CToolItem::Create(m_pGraphicDev, L"Rocks_0", vPos);
-		pGameObject->SetObjName(L"Rocks_0");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"Firestone", pName))
-	{
-		pGameObject = CToolItem::Create(m_pGraphicDev, L"Firestone", vPos);
-		pGameObject->SetObjName(L"Firestone");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"CutGlass", pName))
-	{
-		pGameObject = CToolItem::Create(m_pGraphicDev, L"CutGlass",vPos);
-		pGameObject->SetObjName(L"CutGlass");
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
-	else if (!_tcscmp(L"Beefalo", pName) || !_tcscmp(L"Spider", pName) || !_tcscmp(L"Pig", pName) || !_tcscmp(L"Boss", pName))
-	{
-		pGameObject = CToolMonster::Create(m_pGraphicDev, pName);
-		pGameObject->SetObjName(pName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-		vPos.y = 1.f;
-		pGameObject->GetTransForm()->Set_Pos(vPos);
-	}
+	//if (!_tcscmp(L"Tree", pName))
+	//{
+	//	pGameObject = CToolTree::Create(m_pGraphicDev);
+	//	pGameObject->SetObjName(L"Tree");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 2.5f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"Rock", pName))
+	//{
+	//	pGameObject = CToolRock::Create(m_pGraphicDev);
+	//	pGameObject->SetObjName(L"Rock");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"Grass", pName))
+	//{
+	//	pGameObject = CToolGrass::Create(m_pGraphicDev);
+	//	pGameObject->SetObjName(L"Grass");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"PigHouse", pName))
+	//{
+	//	pGameObject = CToolPigHouse::Create(m_pGraphicDev);
+	//	pGameObject->SetObjName(L"PigHouse");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"BerryBush", pName))
+	//{
+	//	pGameObject = CToolBerry::Create(m_pGraphicDev);
+	//	pGameObject->SetObjName(L"BerryBush");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"Twigs", pName))
+	//{
+	//	pGameObject = CToolItem::Create(m_pGraphicDev, L"Twigs", vPos);
+	//	pGameObject->SetObjName(L"Twigs");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"Rocks_0", pName))
+	//{
+	//	pGameObject = CToolItem::Create(m_pGraphicDev, L"Rocks_0", vPos);
+	//	pGameObject->SetObjName(L"Rocks_0");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"Firestone", pName))
+	//{
+	//	pGameObject = CToolItem::Create(m_pGraphicDev, L"Firestone", vPos);
+	//	pGameObject->SetObjName(L"Firestone");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"CutGlass", pName))
+	//{
+	//	pGameObject = CToolItem::Create(m_pGraphicDev, L"CutGlass",vPos);
+	//	pGameObject->SetObjName(L"CutGlass");
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	//	vPos.y = 1.f;
+	//	pGameObject->GetTransForm()->Set_Pos(vPos);
+	//}
+	//else if (!_tcscmp(L"Beefalo", pName) || !_tcscmp(L"Spider", pName) || !_tcscmp(L"Pig", pName) || !_tcscmp(L"Boss", pName) || 
+	//	!_tcscmp(L"Proto_Object_FireFlies_Pre", pName) || 
+	//	!_tcscmp(L"Proto_Object_Teleporter_Idle", pName)
+	//	|| !_tcscmp(L"Proto_Object_BossDoor_Open", pName))
+	//{
+
+	//}
+
+	pGameObject = CToolObj::Create(m_pGraphicDev, pName);
+	pGameObject->SetObjName(pName);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	vPos.y = 1.f;
+	pGameObject->GetTransForm()->Set_Pos(vPos);
 
 	return S_OK;
 }

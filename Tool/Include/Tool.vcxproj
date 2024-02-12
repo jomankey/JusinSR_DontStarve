@@ -180,7 +180,7 @@
     <ClInclude Include="..\Header\ToolGrass.h" />
     <ClInclude Include="..\Header\ToolItem.h" />
     <ClInclude Include="..\Header\ToolMgr.h" />
-    <ClInclude Include="..\Header\ToolMonster.h" />
+    <ClInclude Include="..\Header\ToolObj.h" />
     <ClInclude Include="..\Header\ToolPigHouse.h" />
     <ClInclude Include="..\Header\ToolRock.h" />
     <ClInclude Include="..\Header\ToolSkyBox.h" />
@@ -210,7 +210,7 @@
     <ClCompile Include="..\Code\ToolGrass.cpp" />
     <ClCompile Include="..\Code\ToolItem.cpp" />
     <ClCompile Include="..\Code\ToolMgr.cpp" />
-    <ClCompile Include="..\Code\ToolMonster.cpp" />
+    <ClCompile Include="..\Code\ToolObj.cpp" />
     <ClCompile Include="..\Code\ToolPigHouse.cpp" />
     <ClCompile Include="..\Code\ToolRock.cpp" />
     <ClCompile Include="..\Code\ToolSkyBox.cpp" />

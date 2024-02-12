@@ -18,7 +18,7 @@
 #include <ToolPigHouse.h>
 #include <ToolBerry.h>
 #include <ToolItem.h>
-#include <ToolMonster.h>
+#include "ToolObj.h"
 
 CSubScene::CSubScene(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CScene(pGraphicDev, L"SceneTool")
@@ -336,7 +336,7 @@ HRESULT CSubScene::Create_Object(const _tchar* pName, _vec3 vPos)
 	}
 	else if (!_tcscmp(L"Beefalo", pName) || !_tcscmp(L"Spider", pName) || !_tcscmp(L"Pig", pName) || !_tcscmp(L"Boss", pName))
 	{
-		pGameObject = CToolMonster::Create(m_pGraphicDev, pName);
+		pGameObject = CToolObj::Create(m_pGraphicDev, pName);
 		pGameObject->SetObjName(pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);

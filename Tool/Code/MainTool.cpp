@@ -58,7 +58,7 @@ HRESULT CMainTool::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr*
 {
 	Engine::CScene* pScene = nullptr;
 
-	pScene = CSubScene::Create(pGraphicDev);
+	pScene = CTerrainScene::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pScene, E_FAIL);
 
 	FAILED_CHECK_RETURN(scenemgr::Create_SceneMgr(pGraphicDev, ppManagement), E_FAIL);

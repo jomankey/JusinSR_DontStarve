@@ -40,8 +40,12 @@ public:
 	static int iItemCurrentMonsterIdx, iItemCurrentEtcIdx, iItemCurrentItemIdx;
 	static _bool bObjectAdd, bItemAdd, bMonsterAdd;
 
-	static _bool bSaveData;
-	static _bool bLoadData;
+	static _bool bObjSaveData;
+	static _bool bObjLoadData;
+	static _bool bPointSaveData;
+	static _bool bPointLoadData;
+	static _bool bLightSaveData;
+	static _bool bLightLoadData;
 
 	static _bool bTerrainWireFrame;
 

@@ -156,7 +156,7 @@
     <ClInclude Include="..\Header\ToolBerry.h">
       <Filter>02. Object\01. Etc\Berry</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ToolMonster.h">
+    <ClInclude Include="..\Header\ToolObj.h">
       <Filter>02. Object\00. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TerrainScene.h">
@@ -233,7 +233,7 @@
     <ClCompile Include="..\Code\ToolBerry.cpp">
       <Filter>02. Object\01. Etc\Berry</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ToolMonster.cpp">
+    <ClCompile Include="..\Code\ToolObj.cpp">
       <Filter>02. Object\00. Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TerrainScene.cpp">
