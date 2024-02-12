@@ -25,10 +25,14 @@ private:
 	HRESULT			Ready_LightInfo();
 
 private:
-	void Save_File();
-	HRESULT Load_File();
+	void Save_ObjFile();
+	HRESULT Load_ObjFile();
+	void Save_PointFile();
+	HRESULT Load_PointFile();
+	void Save_LightFile();
+	HRESULT Load_LightFile();
 
-	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
+	HRESULT Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale);
 
 private:
 	CToolCubeTerrain* m_pCubeTerrain;

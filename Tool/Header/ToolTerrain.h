@@ -31,7 +31,6 @@ private:
 private:
     Engine::CTerrainTex* m_pBufferCom;
     Engine::CTexture* m_pTextureCom;
-    Engine::CCalculator* m_pCalculatorCom;
 
 public:
     static CToolTerrain* Create(LPDIRECT3DDEVICE9	pGraphicDev);

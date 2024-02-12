@@ -24,7 +24,7 @@ HRESULT CObjectGrass::Ready_GameObject()
 
 
 		_vec3 vPos;
-	m_pTransForm->Set_Scale(_vec3(1.5f, 3.0f, 1.5f));
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.5f, vPos.z);
 
@@ -66,7 +66,7 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
 				
 			}
-			return 0x80000000;
+			DeleteObject(this);
 		}
 			
 

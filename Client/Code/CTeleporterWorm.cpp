@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "CRoadScene.h"
 
 CTeleporterWorm::CTeleporterWorm(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -42,6 +43,7 @@ _int CTeleporterWorm::Update_GameObject(const _float& fTimeDelta)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	}
+	ChangeScenePlayer(1.f);
 
 	Change_Frame_Event();
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -55,7 +57,7 @@ void CTeleporterWorm::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 
 
-	
+
 	Check_FrameState();
 
 	//IsPlayerInRadius();
@@ -99,7 +101,7 @@ HRESULT CTeleporterWorm::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Teleporter_Open", pComponent });
 
-		pComponent = m_pTeleporterTextureCom[TELEPORTER_CLOSE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_Teleporter_Close"));
+	pComponent = m_pTeleporterTextureCom[TELEPORTER_CLOSE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_Teleporter_Close"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Teleporter_Close", pComponent });
 
@@ -144,16 +146,16 @@ void CTeleporterWorm::Change_Frame_Event()
 			}
 
 		}
-	
+
 
 	}
-	else if(m_eTelporterCurState== TELEPORTER_OPEN|| m_eTelporterCurState== TELEPORTER_CLOSE)
+	else if (m_eTelporterCurState == TELEPORTER_OPEN || m_eTelporterCurState == TELEPORTER_CLOSE)
 	{
 		m_bFrameStop = false;
 		m_eTelporterCurState = TELEPORTER_CLOSE;
 		if (m_eTelporterCurState == TELEPORTER_CLOSE)
 		{
-			
+
 			if (m_fFrame > m_fFrameEnd)
 			{
 				m_eTelporterCurState = TELEPORTER_IDLE;
@@ -176,7 +178,7 @@ void CTeleporterWorm::Change_Frame_Event()
 
 void CTeleporterWorm::Check_FrameState()
 {
-	
+
 	if (m_eTelporterPreState != m_eTelporterCurState)
 	{
 
@@ -281,6 +283,31 @@ tuple<_bool, _vec3, _bool> CTeleporterWorm::IsPlayerInRadius()
 	return make_tuple(IsClose, vPlayerPos, IsMoreClose);
 }
 
+//충돌반경
+void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
+{
+
+	_vec3 vPlayerPos;
+	_vec3 vPos;
+	_vec3 vDistance;
+
+	float fDistance = 0.f;
+	scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPlayerPos);
+	GetTransForm()->Get_Info(INFO_POS, &vPos);
+
+	vDistance = vPlayerPos - vPos;
+	vDistance.y = 0.f;
+	fDistance = D3DXVec3Length(&vDistance);
+	if (fDistance <= _fDistance)
+	{
+		if (KEY_TAP(DIK_C))
+		{
+			ChangeScene(CRoadScene::Create(m_pGraphicDev, L"ROAD"));
+		}
+	}
+
+
+}
 
 
 CResObject* CTeleporterWorm::Create(LPDIRECT3DDEVICE9 pGraphicDev)

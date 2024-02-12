@@ -31,38 +31,8 @@
     <Filter Include="02. Object">
       <UniqueIdentifier>{34b5dd24-5558-429b-bc3b-1a7947e7ff90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\ToolCamera">
-      <UniqueIdentifier>{c18c0c8f-ed0c-420c-bccd-bb8eaa84164d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. ToolMgr">
       <UniqueIdentifier>{ddf7bbd0-01e5-4704-b84b-f8f0a8d0e8d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\ToolSkyBox">
-      <UniqueIdentifier>{80bec7bf-6b5d-43ae-9f6d-b409e86113e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\00. Monster">
-      <UniqueIdentifier>{a88fda3e-44b3-4962-8c7c-d68175b86828}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Etc">
-      <UniqueIdentifier>{a544806b-9e6a-4e1a-a94f-89d6bdd3a409}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Etc\Tree">
-      <UniqueIdentifier>{f1f7e049-5dd2-46bb-8f69-b4a591b0a80e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Etc\Rock">
-      <UniqueIdentifier>{e227bb02-7ec9-4017-b6dc-e7e7df1a64b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Etc\Grass">
-      <UniqueIdentifier>{b05d2684-fa59-42d6-ad64-10806fff4fcb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Etc\PigHouse">
-      <UniqueIdentifier>{7ca0e969-4e73-48ca-952e-2971f704ac19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\01. Etc\Berry">
-      <UniqueIdentifier>{6e6fc987-14b0-4376-8d8a-1881af79eb6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\02. Item">
-      <UniqueIdentifier>{dc895043-ec1d-4daf-b243-267d41b7956b}</UniqueIdentifier>
     </Filter>
     <Filter Include="01. Scene\Stage1">
       <UniqueIdentifier>{97ac9209-92a9-4dd3-9e8b-07ba10195908}</UniqueIdentifier>
@@ -70,20 +40,32 @@
     <Filter Include="01. Scene\Stage2">
       <UniqueIdentifier>{0a24213e-5534-4993-a5bb-e1bc85562461}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Terrain">
-      <UniqueIdentifier>{fbc69f4a-8083-4514-ab3e-11031f7cb0ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Terrain\ToolTerrain">
-      <UniqueIdentifier>{136b493d-7b8d-4c7a-9247-7491f75cecbb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Object\Terrain\ToolCubeTerrain">
-      <UniqueIdentifier>{818527b5-36d5-44f2-84ba-bddc83d8fca4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Scene\Stage3">
       <UniqueIdentifier>{f6a83992-b0b9-46da-b7bb-38decd1365b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Object\Terrain\ToolBossTerrain">
+    <Filter Include="02. Object\01. Terrain">
+      <UniqueIdentifier>{fbc69f4a-8083-4514-ab3e-11031f7cb0ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Terrain\ToolTerrain">
+      <UniqueIdentifier>{136b493d-7b8d-4c7a-9247-7491f75cecbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Terrain\ToolCubeTerrain">
+      <UniqueIdentifier>{818527b5-36d5-44f2-84ba-bddc83d8fca4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\01. Terrain\ToolBossTerrain">
       <UniqueIdentifier>{8b69d06e-245c-482a-ab4c-7cf648d7c6d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\02. ToolCamera">
+      <UniqueIdentifier>{c18c0c8f-ed0c-420c-bccd-bb8eaa84164d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\03. ToolSkyBox">
+      <UniqueIdentifier>{80bec7bf-6b5d-43ae-9f6d-b409e86113e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Mgr">
+      <UniqueIdentifier>{420c08ed-5e3f-4f74-b94b-a48dd242359c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Object\00. Obj">
+      <UniqueIdentifier>{a88fda3e-44b3-4962-8c7c-d68175b86828}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,37 +109,16 @@
       <Filter>00. MainTool</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolTerrain.h">
-      <Filter>02. Object\Terrain\ToolTerrain</Filter>
+      <Filter>02. Object\01. Terrain\ToolTerrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolCamera.h">
-      <Filter>02. Object\ToolCamera</Filter>
+      <Filter>02. Object\02. ToolCamera</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolMgr.h">
       <Filter>03. ToolMgr</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ToolTree.h">
-      <Filter>02. Object\01. Etc\Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolRock.h">
-      <Filter>02. Object\01. Etc\Rock</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolGrass.h">
-      <Filter>02. Object\01. Etc\Grass</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ToolSkyBox.h">
-      <Filter>02. Object\ToolSkyBox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolItem.h">
-      <Filter>02. Object\02. Item</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolPigHouse.h">
-      <Filter>02. Object\01. Etc\PigHouse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolBerry.h">
-      <Filter>02. Object\01. Etc\Berry</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ToolObj.h">
-      <Filter>02. Object\00. Monster</Filter>
+      <Filter>02. Object\03. ToolSkyBox</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TerrainScene.h">
       <Filter>01. Scene\Stage1</Filter>
@@ -166,13 +127,19 @@
       <Filter>01. Scene\Stage2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolCubeTerrain.h">
-      <Filter>02. Object\Terrain\ToolCubeTerrain</Filter>
+      <Filter>02. Object\01. Terrain\ToolCubeTerrain</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolBossScene.h">
       <Filter>01. Scene\Stage3</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ToolBossTerrain.h">
-      <Filter>02. Object\Terrain\ToolBossTerrain</Filter>
+      <Filter>02. Object\01. Terrain\ToolBossTerrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ToolObj.h">
+      <Filter>02. Object\00. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FuncEvent.h">
+      <Filter>04. Mgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -204,37 +171,16 @@
       <Filter>00. MainTool</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolTerrain.cpp">
-      <Filter>02. Object\Terrain\ToolTerrain</Filter>
+      <Filter>02. Object\01. Terrain\ToolTerrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolCamera.cpp">
-      <Filter>02. Object\ToolCamera</Filter>
+      <Filter>02. Object\02. ToolCamera</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolMgr.cpp">
       <Filter>03. ToolMgr</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ToolTree.cpp">
-      <Filter>02. Object\01. Etc\Tree</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolRock.cpp">
-      <Filter>02. Object\01. Etc\Rock</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolGrass.cpp">
-      <Filter>02. Object\01. Etc\Grass</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\ToolSkyBox.cpp">
-      <Filter>02. Object\ToolSkyBox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolItem.cpp">
-      <Filter>02. Object\02. Item</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolPigHouse.cpp">
-      <Filter>02. Object\01. Etc\PigHouse</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolBerry.cpp">
-      <Filter>02. Object\01. Etc\Berry</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ToolObj.cpp">
-      <Filter>02. Object\00. Monster</Filter>
+      <Filter>02. Object\03. ToolSkyBox</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TerrainScene.cpp">
       <Filter>01. Scene\Stage1</Filter>
@@ -243,13 +189,19 @@
       <Filter>01. Scene\Stage2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolCubeTerrain.cpp">
-      <Filter>02. Object\Terrain\ToolCubeTerrain</Filter>
+      <Filter>02. Object\01. Terrain\ToolCubeTerrain</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolBossScene.cpp">
       <Filter>01. Scene\Stage3</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ToolBossTerrain.cpp">
-      <Filter>02. Object\Terrain\ToolBossTerrain</Filter>
+      <Filter>02. Object\01. Terrain\ToolBossTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ToolObj.cpp">
+      <Filter>02. Object\00. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FuncEvent.cpp">
+      <Filter>04. Mgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -119,13 +119,13 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 void CCookingPot::LateUpdate_GameObject()
 {	
+	__super::LateUpdate_GameObject();
+
 	Check_FrameState();
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
-
-	__super::LateUpdate_GameObject();
 }
 
 void CCookingPot::Render_GameObject()

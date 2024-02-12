@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Monster.h"
 #include "ResObject.h"
+#include "SnowSplash.h"
 
 CCircle::CCircle(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	:CEffect(pGraphicDev, _vPos), m_eCurState(APPEAR),
@@ -124,18 +125,45 @@ _int CCircle::Appear()
 {
     if (m_fFrameEnd-1 < m_fFrame && m_iCount == m_iCountMax)
     {
+
+
+
         m_fFrame = m_fFrameEnd - 1;
         m_bFrameStop = true;
-        /*DeleteObject(this);*/
+        DeleteObject(this);
         return 0x80000000;
     }
     
     if (m_fFrameEnd < m_fFrame)
     {
         m_iCount++;
+        Generate_SnowSplash();
         m_fFrame = 0.f;
     }
     return 0;
+}
+
+void CCircle::Generate_SnowSplash()
+{
+    srand(unsigned(time(NULL)));
+    for (int i = 0; i < 10; ++i)
+    {
+        _vec3 pPos = m_vPos;
+        int randomValue = rand() % 10;
+        int randomValue2 = rand() % 5;
+        // 부호를 무작위로 선택 (-1 또는 1)
+        int sign = (rand() % 2 == 0) ? 1 : -1;
+        int sign2 = (rand() % 2 == 0) ? 1 : -1;
+
+        // 랜덤값에 부호를 적용
+        int result = randomValue * sign;
+        int result2 = randomValue2 * sign2;
+
+        pPos.x += (float)result;
+        pPos.z += (float)result2;
+        CGameObject* pGameObject = SnowSplash::Create(m_pGraphicDev, pPos);
+        CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+    }
 }
 
 

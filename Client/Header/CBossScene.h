@@ -26,7 +26,7 @@ private:
 private:
 	HRESULT Load_Data();
 	HRESULT Change_LightInfo(const _float& fTimeDelta);
-	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
+	HRESULT Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale);
 private:
 	_vec3 m_vDirectionDiffuseColor[3] = {};
 	_vec3 m_vDirectionAmbientColor[3] = {};

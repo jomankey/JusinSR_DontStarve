@@ -1,16 +1,5 @@
 #include "stdafx.h"
 
-void CreateObject(CGameObject* _pObj, eOBJECT_GROUPTYPE _eGroup)
-{
-	tEvent evn = {};
-	evn.eEven = eEVENT_TYPE::CREATE_OBJECT;
-
-	evn.lParam = (DWORD_PTR)_pObj;
-	evn.wParam = (DWORD_PTR)_eGroup;
-
-	eventmgr::AddEvent(evn);
-}
-
 void CreateObject( eLAYER_TYPE _eLayer, eOBJECT_GROUPTYPE _eObjGroup, CGameObject* _pObj )
 {
 	tEvent evn = {};
@@ -31,3 +20,10 @@ void DeleteObject(CGameObject* _pObj)
 	eventmgr::AddEvent(evn);
 }
 
+void ChangeScene(CScene* _pScene)
+{
+	tEvent evn = {};
+	evn.eEven = eEVENT_TYPE::SCENE_CHANGE;
+	evn.lParam = (DWORD_PTR)_pScene;
+	eventmgr::AddEvent(evn);
+}

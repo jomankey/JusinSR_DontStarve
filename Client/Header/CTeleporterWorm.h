@@ -23,6 +23,7 @@ private:
 	virtual void Ready_Stat() override {};
 	virtual void Change_Frame_Event() override;
 
+	void ChangeScenePlayer(_float _fDistance);
 
 	
 	

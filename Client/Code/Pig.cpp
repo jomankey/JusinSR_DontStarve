@@ -63,6 +63,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 void CPig::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
+
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
