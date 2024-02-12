@@ -42,7 +42,6 @@ CGameObject::CGameObject(const CGameObject& rhs)
 	, m_fDiffY(0.f)
 {
 	m_mapComponent[ID_DYNAMIC] = rhs.m_mapComponent[ID_DYNAMIC];
-
 	m_pGraphicDev->AddRef();
 }
 

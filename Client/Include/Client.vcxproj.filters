@@ -250,6 +250,15 @@
     <Filter Include="02. GameObject\07. UI\05. Cook">
       <UniqueIdentifier>{283d441e-bad3-4b31-adde-580ea0e06621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. UI\06. AnimationUI">
+      <UniqueIdentifier>{63131860-c17f-4d28-b638-762e090e497c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. UI\06. AnimationUI\02. GenerateHand">
+      <UniqueIdentifier>{0749a4e5-707a-4b7e-b5c3-c1c2b02206c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. UI\06. AnimationUI\01. GenerateMap">
+      <UniqueIdentifier>{04fe03e9-d12a-48e2-97d9-ca8d504013e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -483,6 +492,15 @@
     <ClInclude Include="..\Header\Cook.h">
       <Filter>02. GameObject\07. UI\05. Cook</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CAnimationUI.h">
+      <Filter>02. GameObject\07. UI\06. AnimationUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGenerateMap.h">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\01. GenerateMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CGenerateHand.h">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\02. GenerateHand</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\IceMissileR.h">
       <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
     </ClInclude>
@@ -709,6 +727,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Cook.cpp">
       <Filter>02. GameObject\07. UI\05. Cook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CAnimationUI.cpp">
+      <Filter>02. GameObject\07. UI\06. AnimationUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGenerateMap.cpp">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\01. GenerateMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGenerateHand.cpp">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\02. GenerateHand</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\IceMissileR.cpp">
       <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
