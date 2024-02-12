@@ -106,12 +106,9 @@ void CUI::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pTextureCom->Set_Texture(0);
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	//m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
-	//m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
-
 	m_pBufferCom->Render_Buffer();
+
 
 	scenemgr::Get_CurScene()->EndOrtho();
 }

@@ -20,7 +20,6 @@ public:
 public:
 	HRESULT		Ready_Loading(LOADINGID eID);
 	_uint		Loading_ForStage();
-	HRESULT		Loading_Componment();
 	HRESULT		Loading_Player_Texture();
 	HRESULT		Loading_Beefalo_Texture();
 	HRESULT		Loading_UI_Texture();

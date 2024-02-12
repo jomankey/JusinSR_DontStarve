@@ -9,6 +9,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\BossEftDown.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\CAnimationUI.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\code\CBonfire.cpp"
 
 
@@ -28,6 +31,12 @@
 
 
 #include "C:\GitHub\JusinSR\Client\code\CFIre.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\Code\CGenerateHand.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\Code\CGenerateMap.cpp"
 
 
 #include "C:\GitHub\JusinSR\Client\Code\Circle.cpp"
