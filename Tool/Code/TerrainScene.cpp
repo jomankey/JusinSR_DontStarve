@@ -604,6 +604,9 @@ HRESULT CTerrainScene::Input_Mouse()
 			case 10:
 				Create_Object(L"Capapult", vPickPos, vScale);
 				break;
+			case 11:
+				Create_Object(L"ToothTrap", vPickPos, vScale);
+				break;
 			default:
 				break;
 			}

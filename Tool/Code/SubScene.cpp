@@ -302,7 +302,7 @@ HRESULT CSubScene::Ready_Layer_GameLogic()
 
 	pGameObject = m_pTerrain = CToolTerrain::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 	m_pTerrain->GetTransForm()->Set_Pos(0.f, 1.f, 0.f);
 
 	return S_OK;
