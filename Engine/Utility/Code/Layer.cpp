@@ -31,20 +31,14 @@ _int CLayer::UpdateLayer(const _float& fTimeDelta)
 
 	for (size_t i = 0; i < (int)eOBJECT_GROUPTYPE::END; i++)
 	{
-		for (auto iter = m_vecObject[i].begin(); iter != m_vecObject[i].end(); )
+		for (auto& iter : m_vecObject[i])
 		{
-			iResult = (*iter)->Update_GameObject(fTimeDelta);
-
-			if (iResult & 0x80000000) // IsDelete 처리 해야함.
-			{
-				//(*iter) = nullptr;
-				Safe_Release(*iter);
-				iter = m_vecObject[i].erase(iter);
-			}
-			else ++iter;
+			//삭제예정인 오브젝트는 건너뜀
+			if (iter->IsDelete())
+				continue;
+			iResult = iter->Update_GameObject(fTimeDelta);
 		}
 	}
-
 	return iResult;
 }
 
@@ -55,6 +49,7 @@ void CLayer::LateUpdateLayer()
 	{
 		for (auto& iter : m_vecObject[i])
 		{
+			//삭제예정인 오브젝트는 건너뜀
 			if (iter->IsDelete())
 				continue;
 			iter->LateUpdate_GameObject();
