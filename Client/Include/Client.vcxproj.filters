@@ -477,6 +477,9 @@
     <ClInclude Include="..\Header\WorldUI.h">
       <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\IceMissileR.h">
+      <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -697,6 +700,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\WorldUI.cpp">
       <Filter>02. GameObject\07. CUI\03. StateUI\WorldTime\WorldUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\IceMissileR.cpp">
+      <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

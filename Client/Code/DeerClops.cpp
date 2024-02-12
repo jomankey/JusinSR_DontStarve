@@ -375,7 +375,7 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	
 
 
-	if (5.f < m_fAcctime)
+	if (0.5f < m_fAcctime)
 	{
 		m_fAcctime = 0.f;
 		if (m_bAttackCooltime)

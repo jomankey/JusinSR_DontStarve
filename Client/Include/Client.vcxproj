@@ -198,6 +198,7 @@
     <ClInclude Include="..\Header\FallMark.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\IceMissileL.h" />
+    <ClInclude Include="..\Header\IceMissileR.h" />
     <ClInclude Include="..\Header\IceSpikeL.h" />
     <ClInclude Include="..\Header\IceSpikeR.h" />
     <ClInclude Include="..\Header\InvenSlot.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="..\Code\CInven.cpp" />
     <ClCompile Include="..\Code\FallMark.cpp" />
     <ClCompile Include="..\Code\IceMissileL.cpp" />
+    <ClCompile Include="..\Code\IceMissileR.cpp" />
     <ClCompile Include="..\Code\IceSpikeL.cpp" />
     <ClCompile Include="..\Code\IceSpikeR.cpp" />
     <ClCompile Include="..\Code\InvenSlot.cpp" />
