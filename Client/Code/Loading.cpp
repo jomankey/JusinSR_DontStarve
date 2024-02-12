@@ -344,9 +344,13 @@ HRESULT CLoading::Loading_Anim_Texture()
 	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_PLACE", L"../Bin/Resource/Texture/Build/Catapult/PLACE/PLACE__%03d.png", 31, 0.05f);
 	proto::Ready_ProtoAnim(L"CATAPULT_PLACE", pAnim);
 
+	//CatapultProjectile
 
+	pAnim = CAnimation::Create(m_pGraphicDev, L"PROJ_CATAPULT_AIR", L"../Bin/Resource/Texture/Projectile/CataProj/AIR/AIR__%03d.png", 63, 0.01f);
+	proto::Ready_ProtoAnim(L"PROJ_CATAPULT_AIR", pAnim);
 
-
+	pAnim = CAnimation::Create(m_pGraphicDev, L"PROJ_CATAPULT_HIT", L"../Bin/Resource/Texture/Projectile/CataProj/HIT/HIT__%03d.png", 48, 0.01f);
+	proto::Ready_ProtoAnim(L"PROJ_CATAPULT_HIT", pAnim);
 
 
 	return S_OK;

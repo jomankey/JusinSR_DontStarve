@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\ButtonUI.h" />
     <ClInclude Include="..\header\CBossDoor.h" />
+    <ClInclude Include="..\header\CCataProj.h" />
     <ClInclude Include="..\Header\CCatapult.h" />
     <ClInclude Include="..\header\CCookingPot.h" />
     <ClInclude Include="..\header\CFIre.h" />
@@ -265,6 +266,7 @@
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
     <ClCompile Include="..\Code\CBossDoor.cpp" />
+    <ClCompile Include="..\Code\CCataProj.cpp" />
     <ClCompile Include="..\Code\CCatapult.cpp" />
     <ClCompile Include="..\code\CCookingPot.cpp" />
     <ClCompile Include="..\code\CFIre.cpp" />

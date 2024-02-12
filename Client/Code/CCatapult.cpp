@@ -3,7 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-#include "CTumbleWeed.h"
+#include "CCataProj.h"
 
 
 CCatapult::CCatapult(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -64,7 +64,7 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 		//createObject
 		_vec3 vPos;
 		m_pTransForm->Get_Info(INFO_POS, &vPos);
-		auto pGameObject = CTumbleWeed::Create(m_pGraphicDev, L"TRAP_TUMBLE", vPos);
+		auto pGameObject = CCataProj::Create(m_pGraphicDev, L"TRAP_TUMBLE", vPos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::TRAP, pGameObject);
 		m_pAnimCom->SetCurAnimationFrame(L"ATK_DOWN", 16);
 	}
