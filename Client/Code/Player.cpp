@@ -638,12 +638,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	}
 
-	
-	
-
-
-
-
 
 	if (GetAsyncKeyState('V')) // ащ╠Б
 	{

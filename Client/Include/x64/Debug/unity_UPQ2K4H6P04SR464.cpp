@@ -9,6 +9,9 @@
 #include "C:\20240209\Client\Code\BossEftDown.cpp"
 
 
+#include "C:\20240209\Client\Code\CAnimationUI.cpp"
+
+
 #include "C:\20240209\Client\code\CBonfire.cpp"
 
 
@@ -30,7 +33,16 @@
 #include "C:\20240209\Client\code\CFIre.cpp"
 
 
+#include "C:\20240209\Client\Code\CGenerateHand.cpp"
+
+
+#include "C:\20240209\Client\Code\CGenerateMap.cpp"
+
+
 #include "C:\20240209\Client\Code\Circle.cpp"
+
+
+#include "C:\20240209\Client\Code\Cook.cpp"
 
 
 #include "C:\20240209\Client\Code\CSpike.cpp"
