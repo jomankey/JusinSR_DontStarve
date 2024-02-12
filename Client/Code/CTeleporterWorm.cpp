@@ -3,9 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-
 #include "CRoadScene.h"
-
 
 CTeleporterWorm::CTeleporterWorm(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -45,7 +43,7 @@ _int CTeleporterWorm::Update_GameObject(const _float& fTimeDelta)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	}
-	ChangeScenePlayer(1.f);//플레이어가 1.f거리안에 있을때 C키 입력시 씬이동
+	ChangeScenePlayer(1.f);
 
 	Change_Frame_Event();
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -59,7 +57,7 @@ void CTeleporterWorm::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 
 
-	
+
 	Check_FrameState();
 
 	//IsPlayerInRadius();
@@ -103,7 +101,7 @@ HRESULT CTeleporterWorm::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Teleporter_Open", pComponent });
 
-		pComponent = m_pTeleporterTextureCom[TELEPORTER_CLOSE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_Teleporter_Close"));
+	pComponent = m_pTeleporterTextureCom[TELEPORTER_CLOSE] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Object_Teleporter_Close"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Object_Teleporter_Close", pComponent });
 
@@ -112,9 +110,9 @@ HRESULT CTeleporterWorm::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 0.7f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 2.3f, vPos.z);
 
 	return S_OK;
 }
@@ -122,38 +120,65 @@ HRESULT CTeleporterWorm::Add_Component()
 
 void CTeleporterWorm::Change_Frame_Event()
 {
+	bool IsClose = get<0>(IsPlayerInRadius());
+	bool IsMoreClose = get<2>(IsPlayerInRadius());
+	//플레이어 pos 저장용 , 나중에 멤버변수로 가지고 있어도 됨
+	_vec3 vPlayerPos = get<1>(IsPlayerInRadius());
 
-}
-
-//충돌반경
-void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
-{
-
-	_vec3 vPlayerPos;
-	_vec3 vPos;
-	_vec3 vDistance;
-
-	float fDistance = 0.f;
-	scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPlayerPos);
-	GetTransForm()->Get_Info(INFO_POS, &vPos);
-
-	vDistance = vPlayerPos - vPos;
-	vDistance.y = 0.f;
-	fDistance = D3DXVec3Length(&vDistance);
-	if (fDistance <= _fDistance)
+	if (m_eTelporterCurState == TELEPORTER_IDLE)
 	{
-		if (KEY_TAP(DIK_C))
+		if (m_fFrame > m_fFrameEnd)
 		{
-			ChangeScene(CRoadScene::Create(m_pGraphicDev, L"ROAD"));
+			m_fFrame = 0.0f;
 		}
 	}
+
+
+	if (IsClose)
+	{
+		m_eTelporterCurState = TELEPORTER_OPEN;
+		if (m_eTelporterCurState == TELEPORTER_OPEN)
+		{
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_bFrameStop = true;
+				m_fFrame = 5.0f;
+			}
+
+		}
+
+
+	}
+	else if (m_eTelporterCurState == TELEPORTER_OPEN || m_eTelporterCurState == TELEPORTER_CLOSE)
+	{
+		m_bFrameStop = false;
+		m_eTelporterCurState = TELEPORTER_CLOSE;
+		if (m_eTelporterCurState == TELEPORTER_CLOSE)
+		{
+
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_eTelporterCurState = TELEPORTER_IDLE;
+				m_fFrame = 0.0f;
+			}
+		}
+
+	}
+
+	//if (IsMoreClose)
+	//{
+	//	m_eTelporterCurState = TELEPORTER_CLOSE;
+	//
+	//}
+	//TEST
+
 
 
 }
 
 void CTeleporterWorm::Check_FrameState()
 {
-	
+
 	if (m_eTelporterPreState != m_eTelporterCurState)
 	{
 
@@ -258,6 +283,31 @@ tuple<_bool, _vec3, _bool> CTeleporterWorm::IsPlayerInRadius()
 	return make_tuple(IsClose, vPlayerPos, IsMoreClose);
 }
 
+//충돌반경
+void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
+{
+
+	_vec3 vPlayerPos;
+	_vec3 vPos;
+	_vec3 vDistance;
+
+	float fDistance = 0.f;
+	scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPlayerPos);
+	GetTransForm()->Get_Info(INFO_POS, &vPos);
+
+	vDistance = vPlayerPos - vPos;
+	vDistance.y = 0.f;
+	fDistance = D3DXVec3Length(&vDistance);
+	if (fDistance <= _fDistance)
+	{
+		if (KEY_TAP(DIK_C))
+		{
+			ChangeScene(CRoadScene::Create(m_pGraphicDev, L"ROAD"));
+		}
+	}
+
+
+}
 
 
 CResObject* CTeleporterWorm::Create(LPDIRECT3DDEVICE9 pGraphicDev)
