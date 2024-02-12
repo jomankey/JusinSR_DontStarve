@@ -511,7 +511,7 @@ HRESULT CRoadScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 	}
 	else if (!_tcscmp(L"TrapSpike", pName))
 	{
-		vPos.y = 0.5f;
+		vPos.y = 1.6f;
 		pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
