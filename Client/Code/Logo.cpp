@@ -17,6 +17,9 @@
 
 #include "CGenerateMap.h"
 #include "CGenerateHand.h"
+#include "CLoadBackGround.h"
+
+
 
 //Camera
 #include "DynamicCamera.h"
@@ -34,12 +37,15 @@ CLogo::~CLogo()
 
 HRESULT CLogo::Ready_Scene()
 {
-	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
 
 	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
 	{
 		m_arrLayer[i] = CLayer::Create();
 	}
+
+	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
+
+
 
 	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
 
@@ -148,8 +154,15 @@ HRESULT CLogo::Ready_LoadingObject()
 	pAnim = CAnimation::Create(m_pGraphicDev, L"GENERATE_HAND", L"../Bin/Resource/Texture/UI/GenerateHand/GenerateHand__%03d.png", 69, 0.05f);
 	proto::Ready_ProtoAnim(L"GENERATE_HAND", pAnim);
 
+	pAnim = CAnimation::Create(m_pGraphicDev, L"LOAD_BACK_GROUND", L"../Bin/Resource/Texture/UI/UI/GenerateBackGround.png", 1, 10.f);
+	proto::Ready_ProtoAnim(L"LOAD_BACK_GROUND", pAnim);
+
 
 	CGameObject* pInstance = nullptr;
+
+
+	pInstance = CLoadBackGround::Create(m_pGraphicDev, L"LOAD_BACK_GROUND", _vec3(WINCX/2.f,WINCY/2.f,0.f),_vec3(WINCX*0.5f, WINCY*0.5f,0.f));
+	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
 	pInstance = CGenerateMap::Create(m_pGraphicDev, L"GENERATE_MAP", _vec3(WINCX / 2 + 50.f, WINCY, 0.f), _vec3(325.f * 0.8f, 374.f * 0.8f, 0.f));
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);

@@ -20,8 +20,6 @@ private:
 	HRESULT			Ready_Prototype();
 	HRESULT			Ready_Layer_GameLogic(const _tchar* pLayerTag) { return S_OK; }
 	HRESULT			Ready_Layer_UI(const _tchar* pLayerTag) { return S_OK; }
-
-
 	HRESULT			Ready_LoadingObject();
 
 private:

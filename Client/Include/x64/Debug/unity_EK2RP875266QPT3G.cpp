@@ -42,6 +42,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\Circle.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\CLoadBackGround.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\Cook.cpp"
 
 

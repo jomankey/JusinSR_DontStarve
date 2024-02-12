@@ -259,6 +259,9 @@
     <Filter Include="02. GameObject\07. UI\06. AnimationUI\01. GenerateMap">
       <UniqueIdentifier>{04fe03e9-d12a-48e2-97d9-ca8d504013e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. UI\06. AnimationUI\03. BackGround">
+      <UniqueIdentifier>{0c7c0c48-9e98-4986-b004-60aa1508c57c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -504,6 +507,9 @@
     <ClInclude Include="..\Header\IceMissileR.h">
       <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CLoadBackGround.h">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\03. BackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -739,6 +745,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\IceMissileR.cpp">
       <Filter>02. GameObject\06. Effect\04. IceMissile\Right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CLoadBackGround.cpp">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\03. BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

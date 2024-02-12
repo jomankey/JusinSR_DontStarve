@@ -29,8 +29,6 @@ CUI::CUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _UiName)
 	, m_fY(0)
 	, m_fSizeX(0)
 	, m_fSizeY(0)
-
-
 {
 
 }
