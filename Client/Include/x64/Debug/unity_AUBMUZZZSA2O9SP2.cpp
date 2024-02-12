@@ -9,6 +9,9 @@
 #include "C:\Git\PortPolio\Client\Code\BossEftDown.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\CAnimationUI.cpp"
+
+
 #include "C:\Git\PortPolio\Client\code\CBonfire.cpp"
 
 
@@ -30,7 +33,16 @@
 #include "C:\Git\PortPolio\Client\code\CFIre.cpp"
 
 
+#include "C:\Git\PortPolio\Client\Code\CGenerateHand.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\CGenerateMap.cpp"
+
+
 #include "C:\Git\PortPolio\Client\Code\Circle.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\CLoadBackGround.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\Cook.cpp"
@@ -70,6 +82,9 @@
 
 
 #include "C:\Git\PortPolio\Client\Code\IceMissileL.cpp"
+
+
+#include "C:\Git\PortPolio\Client\Code\IceMissileR.cpp"
 
 
 #include "C:\Git\PortPolio\Client\Code\IceSpikeL.cpp"
