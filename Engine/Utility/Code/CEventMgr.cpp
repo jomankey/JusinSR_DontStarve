@@ -68,7 +68,9 @@ void CEventMgr::excute(const tEvent& _eve)
 	}
 	break;
 	case eEVENT_TYPE::SCENE_CHANGE:
-		//추후업데이트예정
+		// lParam: pScene;
+		(CScene*)_eve.lParam;
+		scenemgr::Change_CurScene((CScene*)_eve.lParam);
 		break;
 	}
 

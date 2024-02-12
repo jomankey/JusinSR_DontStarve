@@ -178,6 +178,7 @@
     <ClInclude Include="..\Header\Beefalo.h" />
     <ClInclude Include="..\Header\BerryBush.h" />
     <ClInclude Include="..\Header\BossEftDown.h" />
+    <ClInclude Include="..\Header\CAnimationUI.h" />
     <ClInclude Include="..\header\CBonfire.h" />
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\ButtonUI.h" />
@@ -185,7 +186,10 @@
     <ClInclude Include="..\Header\CCatapult.h" />
     <ClInclude Include="..\header\CCookingPot.h" />
     <ClInclude Include="..\header\CFIre.h" />
+    <ClInclude Include="..\Header\CGenerateHand.h" />
+    <ClInclude Include="..\Header\CGenerateMap.h" />
     <ClInclude Include="..\Header\Circle.h" />
+    <ClInclude Include="..\Header\CLoadBackGround.h" />
     <ClInclude Include="..\Header\Cook.h" />
     <ClInclude Include="..\Header\CSpike.h" />
     <ClInclude Include="..\header\CTent.h" />
@@ -199,6 +203,7 @@
     <ClInclude Include="..\Header\FallMark.h" />
     <ClInclude Include="..\Header\Ghost.h" />
     <ClInclude Include="..\Header\IceMissileL.h" />
+    <ClInclude Include="..\Header\IceMissileR.h" />
     <ClInclude Include="..\Header\IceSpikeL.h" />
     <ClInclude Include="..\Header\IceSpikeR.h" />
     <ClInclude Include="..\Header\InvenSlot.h" />
@@ -255,6 +260,7 @@
     <ClCompile Include="..\Code\ArmorSlot.cpp" />
     <ClCompile Include="..\Code\Beefalo.cpp" />
     <ClCompile Include="..\Code\BossEftDown.cpp" />
+    <ClCompile Include="..\Code\CAnimationUI.cpp" />
     <ClCompile Include="..\code\CBonfire.cpp" />
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
@@ -262,7 +268,10 @@
     <ClCompile Include="..\Code\CCatapult.cpp" />
     <ClCompile Include="..\code\CCookingPot.cpp" />
     <ClCompile Include="..\code\CFIre.cpp" />
+    <ClCompile Include="..\Code\CGenerateHand.cpp" />
+    <ClCompile Include="..\Code\CGenerateMap.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
+    <ClCompile Include="..\Code\CLoadBackGround.cpp" />
     <ClCompile Include="..\Code\Cook.cpp" />
     <ClCompile Include="..\Code\CSpike.cpp" />
     <ClCompile Include="..\code\CTent.cpp" />
@@ -276,6 +285,7 @@
     <ClCompile Include="..\Code\CInven.cpp" />
     <ClCompile Include="..\Code\FallMark.cpp" />
     <ClCompile Include="..\Code\IceMissileL.cpp" />
+    <ClCompile Include="..\Code\IceMissileR.cpp" />
     <ClCompile Include="..\Code\IceSpikeL.cpp" />
     <ClCompile Include="..\Code\IceSpikeR.cpp" />
     <ClCompile Include="..\Code\InvenSlot.cpp" />

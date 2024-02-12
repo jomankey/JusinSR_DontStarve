@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "CBossScene.h"
 
 CBossDoor::CBossDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -69,6 +70,8 @@ _int CBossDoor::Update_GameObject(const _float& fTimeDelta)
 		Sleep(fTimeDelta);
 
 	Check_FrameState();
+
+	ChangeScenePlayer(1.f);//¿úÈ¦ÀÌ¶û°°À½
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -241,6 +244,31 @@ void CBossDoor::Close(const _float& fTimeDelta)
 		m_bStateChange[1] = false;
 		m_bStateChange[2] = false;
 	}
+
+}
+
+void CBossDoor::ChangeScenePlayer(_float _fDistance)
+{
+
+	_vec3 vPlayerPos;
+	_vec3 vPos;
+	_vec3 vDistance;
+
+	float fDistance = 0.f;
+	scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPlayerPos);
+	GetTransForm()->Get_Info(INFO_POS, &vPos);
+
+	vDistance = vPlayerPos - vPos;
+	vDistance.y = 0.f;
+	fDistance = D3DXVec3Length(&vDistance);
+	if (fDistance <= _fDistance)
+	{
+		if (KEY_TAP(DIK_C))
+		{
+			ChangeScene(CBossScene::Create(m_pGraphicDev, L"BOSS"));
+		}
+	}
+
 
 }
 

@@ -22,9 +22,11 @@
 
 
 #include "Transform.h"
+
 //Scene
 #include "Layer.h"
 #include "CTestScene.h"
+#include "CRoadScene.h"
 
 // Monster/Resource/Object
 #include "CObjectRock.h"
@@ -105,12 +107,13 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 
 	Change_LightInfo(fTimeDelta);
 
-	//if (KEY_TAP(DIK_Z))
-	//{
-	//	CScene* pScene = CRoadScene::Create(m_pGraphicDev, L"RoadScene");
-	//	NULL_CHECK_RETURN(pScene, -1);
-	//	scenemgr::Change_CurScene(pScene);
-	//}
+	if (KEY_TAP(DIK_Z))
+	{
+		CScene* pScene = CRoadScene::Create(m_pGraphicDev, L"ROAD");
+		NULL_CHECK_RETURN(pScene, -1);
+
+		ChangeScene(pScene);
+	}
 
 	return 0;
 }
@@ -157,7 +160,7 @@ HRESULT CStage::Ready_Layer_Environment()
 
 HRESULT CStage::Ready_Layer_GameLogic()
 {
-NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
+	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
@@ -172,6 +175,19 @@ NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
+<<<<<<< HEAD
+=======
+	pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(61.f, 0.7f, 64.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+
+	pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+	pGameObject->GetTransForm()->Set_Pos(_vec3(60.f, 1.f, 60.f));
+
+
+>>>>>>> 92ab6383751f9647c6b83bec66b0975e94c30f65
 	return S_OK;
 }
 

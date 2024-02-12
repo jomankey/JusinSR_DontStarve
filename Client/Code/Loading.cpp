@@ -37,7 +37,6 @@ _uint CLoading::Loading_ForStage()
 {
 	FAILED_CHECK_RETURN(Loading_UI_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Item_Texture(), E_FAIL);
-	FAILED_CHECK_RETURN(Loading_Componment(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Player_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Beefalo_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_TallBird_Texture(), E_FAIL);
@@ -55,7 +54,6 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_PlayerTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player%d.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_EffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Explosion/Explosion%d.png", 90)), E_FAIL);
 
-
 	Loading_Spider_Texture();
 	Loading_Pig_Texture();
 	/*Loading_Boss_Texture();*/
@@ -69,19 +67,6 @@ _uint CLoading::Loading_ForStage()
 	return S_OK;
 }
 
-HRESULT CLoading::Loading_Componment()
-{
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_3_3_1_Tex", CustomizeTex::Create(m_pGraphicDev, 3, 3, 1)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Anim", CAnimator::Create(m_pGraphicDev)), E_FAIL);
-
-	return S_OK;
-}
 
 HRESULT CLoading::Loading_Player_Texture()
 {
@@ -308,7 +293,6 @@ HRESULT CLoading::Loading_Anim_Texture()
 	//Trap//
 	////////
 	
-
 	//SPIKE
 	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_IDLE", L"../Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__%03d.png", 30, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_IDLE", pAnim);
@@ -359,6 +343,9 @@ HRESULT CLoading::Loading_Anim_Texture()
 
 
 
+
+
+
 	return S_OK;
 }
 
@@ -366,7 +353,6 @@ HRESULT CLoading::Loading_UI_Texture()
 {
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Inven_Slot", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/InvenSlot/Item_Inven_Slot_%03d.png",2)), E_FAIL);
-
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Weapon", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Weapon.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Light", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Light.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Alive", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Alive.png")), E_FAIL);
@@ -391,11 +377,14 @@ HRESULT CLoading::Loading_UI_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Panel_%03d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Explain_PopUp_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Explain_PopUp_Panel.png")), E_FAIL);
 
-
 	//Pop_Up UI Botton
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_Button__%03d.png", 3)), E_FAIL);
 	//Make_Button
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Make_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/UI/Make_Button_%03d.png", 2)), E_FAIL);
+
+
+
+
 
 	return S_OK;
 }

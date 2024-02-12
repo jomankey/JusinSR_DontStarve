@@ -42,13 +42,19 @@ private:
 	virtual void	Set_Hit()						override;
 	virtual void	Set_ObjStat();
 	virtual void	State_Change()				override;
-	
+
+	void Set_Scale();
+
 	void			Sleep(const _float& fTimeDelta);		//첫 조우하기 전 자고있음
 	void			First_Phase(const _float& fTimeDelta);		//페이즈 별 패턴
 	void			Second_Phase(const _float& fTimeDelta);
 	void			Third_Phase(const _float& fTimeDelta);
 	void			Boss_Die(const _float& fTimeDelta);
 
+	void			Generate_Fall_Mark();   //플레이어위치에 마법진 생성하는 함수
+	void			Generate_Fall_Mark_Ex();	//마법진 많이 생성하는 함수
+	void			Generate_Attack_Effect();		//기본 공격 이펙트 생성 함수
+	void			Generate_Roaring(_int _iCount);				// 포효 지르기 이펙트 생성 함수
 
 
 public:
@@ -66,6 +72,8 @@ private:
 	DEERSTATE		m_ePreState;
 	_bool		m_bPhase[DEER_PHASE::PHASE_END];		//페이즈 변경용 bool 배열
 
+	_float		m_fSkill;
+	_float		m_fSkill2;
 	
 };
 

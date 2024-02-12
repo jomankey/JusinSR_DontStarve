@@ -10,7 +10,8 @@
 #include "FallMark.h"
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	: CMonster(pGraphicDev, _vPos),
-	m_eCurState(SLEEP), m_ePreState(STATE_END)
+	m_eCurState(SLEEP), m_ePreState(STATE_END),
+	m_fSkill(0.f), m_fSkill2(0.f)
 {
 }
 
@@ -65,12 +66,12 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 	else
 		Sleep(fTimeDelta);
 	
-	if (KEY_TAP(DIK_9))
+	if (KEY_TAP(DIK_9)) // 9번 누르면 깨움
 	{
 		Set_WakeUp();
 	}
 
-	if (KEY_TAP(DIK_6))
+	if (KEY_TAP(DIK_6))		//6번 누르면 피깍음
 	{
 		Set_Hit();
 		m_Stat.fHP -= 50;
@@ -78,6 +79,7 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 
 	State_Change();
 	Look_Change();
+	Set_Scale();
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return 0;
@@ -246,29 +248,34 @@ HRESULT CDeerClops::Add_Component()
 
 void CDeerClops::Set_Hit()
 {
+	m_fFrame = 0.f;
 	if (m_Stat.fHP > 0)
 	{
 		if (m_ePreState != ATTACK)
 		{
 			m_eCurState = HIT;
+			m_fFrame = 0.f;
 			m_bHit = true;
 		}
 		
-		
-
-
-
-		if (m_Stat.fHP < 250.f && !m_bPhase[THIRD])
+		if (m_Stat.fHP < 51.f && !m_bPhase[THIRD])
 		{
 			m_bPhase[THIRD] = true;
 			m_eCurState = LONG_TAUNT;
-			_vec3 vThisPos;
-			m_pTransForm->Get_Info(INFO_POS, &vThisPos);
-			CGameObject* pGameObject = CCircle::Create(m_pGraphicDev, vThisPos);
-			NULL_CHECK_RETURN(pGameObject, );
-			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), );
-			dynamic_cast<CCircle*>(pGameObject)->Set_Count(2);
+			
 			m_fAcctime = 0.f;
+			m_bAttacking = false;
+		}
+		else
+			return;
+	}
+	else
+	{
+		if (!m_bPhase[DIE])
+		{
+			m_bPhase[DIE] = true;
+			m_eCurState = DEAD;
+			m_Stat.bDead = true;
 		}
 		else
 			return;
@@ -282,7 +289,7 @@ void CDeerClops::Set_ObjStat()
 	m_Stat.fMxHP = 100.f;
 	m_Stat.fSpeed = 2.f;
 	m_Stat.fATK = 50.f;
-	m_Stat.fATKRange = 4.f;
+	m_Stat.fATKRange = 3.f;
 	m_Stat.fAggroRange = 10.f;
 	m_Stat.bDead = false;
 }
@@ -311,15 +318,17 @@ void CDeerClops::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case TAUNT:
+			Generate_Roaring(0.9);
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case LONG_TAUNT:
+			Generate_Roaring(3);
 			m_fFrameEnd = 33;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case HIT:
-			m_fFrameEnd = 20;
+			m_fFrameEnd = 7;
 			break;
 		case DEAD:
 			m_fFrameEnd = 24;
@@ -329,6 +338,42 @@ void CDeerClops::State_Change()
 		m_fFrame = 0.f;
 		m_ePreState = m_eCurState;
 	}
+}
+
+void CDeerClops::Set_Scale()
+{
+	if (m_ePreState == TAUNT || m_ePreState == LONG_TAUNT)
+	{
+		m_pTransForm->Set_Scale({ 6.f, 6.f, 6.f });
+	}
+	else if (m_ePreState == IDLE)
+	{
+		m_pTransForm->Set_Scale({ 4.f, 4.f, 4.f });
+	}
+	else if (m_ePreState == ATTACK)
+	{
+		m_pTransForm->Set_Scale({ 7.f, 7.f, 7.f });
+	}
+	else if (m_ePreState == WALK)
+	{
+		if (m_ePreLook == LOOK_LEFT || m_ePreLook == LOOK_RIGHT)
+		{
+			m_pTransForm->Set_Scale({ 4.5f, 6.f, 4.5f });
+		}
+		else
+		{
+			m_pTransForm->Set_Scale({ 6.f, 6.f, 6.f });
+		}
+	}
+	else if (m_ePreState == SLEEP)
+	{
+		m_pTransForm->Set_Scale({ 4.5f, 4.5f, 4.5f });
+	}
+	else
+	{
+		m_pTransForm->Set_Scale({ 5.f, 5.f, 5.f });
+	}
+
 }
 
 
@@ -350,12 +395,6 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 	else if (m_ePreState == IDLE && m_fFrameEnd < m_fFrame)	//포효 지르기
 	{
 		m_eCurState = TAUNT;
-		_vec3 vThisPos;
-		m_pTransForm->Get_Info(INFO_POS, &vThisPos);
-		CGameObject* pGameObject = CCircle::Create(m_pGraphicDev, vThisPos);
-		NULL_CHECK_RETURN(pGameObject, );
-		FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), );
-
 	}
 	else if (m_ePreState == TAUNT && m_fFrameEnd < m_fFrame)
 	{
@@ -375,17 +414,11 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	m_fAcctime += fTimeDelta;
 	
 
-
-	if (5.f < m_fAcctime)
+	if (3.f < m_fAcctime)
 	{
 		m_fAcctime = 0.f;
 		if (m_bAttackCooltime)
 			m_bAttackCooltime = false;
-
-		_vec3 pPos = Get_Player_Pos();
-		
-		CGameObject* pGameObject = FallMark::Create(m_pGraphicDev, pPos);
-		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
 	}
 
 	if (IsTarget_Approach(m_Stat.fATKRange) && !m_bAttackCooltime)
@@ -407,17 +440,17 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 			m_eCurState = WALK;
 		}
 	}
+	else if (m_ePreState == HIT)
+	{
+		if (m_fFrameEnd < m_fFrame)
+		{
+			m_eCurState = WALK;
+		}
+	}
 	else if (m_ePreState == ATTACK)
 	{
 		if (9 < m_fFrame && !m_bAttacking)
 		{
-			_vec3 vThisPos; // 이펙트 생성 기점.
-			m_pTransForm->Get_Info(INFO_POS, &vThisPos);
-
-			CGameObject* pGameObject = CBossEftDown::Create(m_pGraphicDev, vThisPos);
-			NULL_CHECK_RETURN(pGameObject, );
-			CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
-			dynamic_cast<CBossEftDown*>(pGameObject)->Set_Look_Dir(m_ePreLook);
 			m_bAttacking = true;
 		}
 
@@ -447,11 +480,59 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //아직 제작중
 {
 	m_Stat.fSpeed = 3.5f;
 
-	m_fAcctime += fTimeDelta;
+	
+	m_fSkill2 += fTimeDelta;
+	if (15.f < m_fSkill2)
+	{
+		m_eCurState = LONG_TAUNT;
+		m_fSkill2 = 0.f;
+	}
+
+
 
 	if (m_ePreState == LONG_TAUNT)
 	{
+		m_fAcctime += fTimeDelta;
+		m_fSkill += fTimeDelta;
+		if (0.3 < m_fSkill)
+		{
+			Generate_Fall_Mark();
+			m_fSkill = 0.f;
+		}
 
+
+
+		if (5 < m_fAcctime)
+		{
+			Generate_Fall_Mark_Ex();
+			m_eCurState = WALK;
+			m_fAcctime = 0.f;
+		}
+	}
+	else if (m_ePreState == WALK)
+	{
+		Player_Chase(fTimeDelta);
+
+		if (IsTarget_Approach(m_Stat.fATKRange))
+		{
+			m_eCurState = ATTACK;
+		}
+	}
+	else if (m_ePreState == ATTACK)
+	{
+		if (9 < m_fFrame && !m_bAttacking)
+		{
+			Generate_Attack_Effect();
+			m_bAttacking = true;
+		}
+
+		if (m_fFrameEnd-1 < m_fFrame)
+		{
+			if (!IsTarget_Approach(m_Stat.fATKRange))
+			{
+				m_eCurState == WALK;
+			}
+		}
 	}
 
 
@@ -468,6 +549,94 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //아직 제작중
 
 void CDeerClops::Boss_Die(const _float& fTimeDelta)
 {
+	if (m_ePreState == DEAD && m_fFrameEnd - 1 < m_fFrame)
+	{
+		m_fFrame = m_fFrameEnd - 1;
+		m_bFrameStop = true;
+
+
+
+		// 엔딩 메소드 추가
+	}
+
+}
+
+void CDeerClops::Generate_Fall_Mark()
+{
+	_vec3 pPos = Get_Player_Pos();
+	CGameObject* pGameObject = FallMark::Create(m_pGraphicDev, pPos);
+	CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+}
+
+void CDeerClops::Generate_Fall_Mark_Ex()
+{
+	srand(unsigned(time(NULL)));
+	_vec3 vDir;
+
+	for (int i = 0; i < 20; ++i)
+	{
+		_vec3 pPos = Get_Player_Pos();
+		pPos.y = 1.f;
+		int randomValue = rand() % 10;
+		int randomValue2 = rand() % 10;
+		// 부호를 무작위로 선택 (-1 또는 1)
+		int sign = (rand() % 2 == 0) ? 1 : -1;
+		int sign2 = (rand() % 2 == 0) ? 1 : -1;
+
+		// 랜덤값에 부호를 적용
+		int result = randomValue * sign;
+		int result2 = randomValue2 * sign2;
+
+		pPos.x += (float)result;
+		pPos.z += (float)result2;
+		CGameObject* pGameObject = FallMark::Create(m_pGraphicDev, pPos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+	}
+}
+
+void CDeerClops::Generate_Attack_Effect()
+{
+	_vec3 vThisPos, vRight, vLook; // 이펙트 생성 기점.
+	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
+	m_pTransForm->Get_Info(INFO_LOOK, &vLook);
+	m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
+	D3DXVec3Normalize(&vLook, &vLook);
+	D3DXVec3Normalize(&vRight, &vRight);
+	vThisPos.y = 0.5f;
+	switch (m_ePreLook)
+	{
+	case LOOK_DOWN:
+		vThisPos -= vLook * 4;
+		vThisPos -= vRight * 4;
+		break;
+	case LOOK_UP:
+		vThisPos += vLook * 4;
+		break;
+	case LOOK_LEFT:
+		vThisPos -= vRight * 4;
+		vThisPos -= vLook * 4;
+		break;
+	case LOOK_RIGHT:
+		vThisPos += vRight * 4;
+		vThisPos -= vLook * 4;
+		break;
+	}
+
+	CGameObject* pGameObject = CBossEftDown::Create(m_pGraphicDev, vThisPos);
+	NULL_CHECK_RETURN(pGameObject, );
+	CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+	dynamic_cast<CBossEftDown*>(pGameObject)->Set_Look_Dir(m_ePreLook);
+}
+
+void CDeerClops::Generate_Roaring(_int _iCount)
+{
+	_vec3 vThisPos;
+	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
+	vThisPos.y = 1.f;
+	CGameObject* pGameObject = CCircle::Create(m_pGraphicDev, vThisPos);
+	NULL_CHECK_RETURN(pGameObject, );
+	CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
+	dynamic_cast<CCircle*>(pGameObject)->Set_Count(_iCount);
 }
 
 void CDeerClops::Free()

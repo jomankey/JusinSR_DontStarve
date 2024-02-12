@@ -203,35 +203,36 @@ void CBossEftDown::Look_For_Change()
 {
     if (m_ePreLook != m_eCurLook)
     {
-        _vec3 vCurPos ,vLook, vRight;
+       /* _vec3 vCurPos ,vLook, vRight;
         vCurPos = m_vPos;
         m_pTransForm->Get_Info(INFO_LOOK, &vLook);
         m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
 
         D3DXVec3Normalize(&vLook, &vLook);
-        D3DXVec3Normalize(&vRight, &vRight);
+        D3DXVec3Normalize(&vRight, &vRight);*/
 
         switch (m_eCurLook)
         {
         case LOOK_DOWN:
             m_Dirchange = false;
-            vCurPos += vLook * 2;
-            m_pTransForm->Set_Pos(vCurPos);
+        /*    vCurPos += vLook * 2;
+            m_pTransForm->Set_Pos(vCurPos);*/
             break;
         case LOOK_UP:
             m_Dirchange = true;
-            vCurPos -= vLook * 2;
-            m_pTransForm->Set_Pos(vCurPos);
+           /* vCurPos -= vLook * 2;
+            m_pTransForm->Set_Pos(vCurPos);*/
             break;
        case LOOK_LEFT:
             m_Dirchange = false;
-            vCurPos += vRight * 2;
-            m_pTransForm->Set_Pos(vCurPos);
+        /*    vCurPos += vRight * 2;
+            vCurPos += vLook * 4;
+            m_pTransForm->Set_Pos(vCurPos);*/
             break;
         case LOOK_RIGHT:
             m_Dirchange = true;
-            vCurPos -= vRight * 2;
-            m_pTransForm->Set_Pos(vCurPos);
+    /*        vCurPos -= vRight * 2;
+            m_pTransForm->Set_Pos(vCurPos);*/
             break;
         }
         m_ePreLook = m_eCurLook;

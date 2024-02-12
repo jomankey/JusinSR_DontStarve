@@ -22,6 +22,7 @@ namespace Engine
 		vector<CGameObject*> mVecDeadObj;
 	private:
 		void excute(const tEvent& _eve);
+
 	private:
 		virtual void		Free();
 

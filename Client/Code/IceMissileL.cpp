@@ -101,7 +101,7 @@ HRESULT IceMissileL::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-    m_pTransForm->Set_Scale({ 1.f, 1.f, 1.f });
+    m_pTransForm->Set_Scale({ 1.f, 4.f, 1.f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -122,7 +122,7 @@ _int IceMissileL::Appear(const _float& fTimeDelta)
     {
         _vec3 vDir = m_vTargetpos - m_vPos;
         D3DXVec3Normalize(&vDir, &vDir);
-        m_pTransForm->Move_Pos(&vDir, 25.f, fTimeDelta);
+        m_pTransForm->Move_Pos(&vDir, 40.f, fTimeDelta);
 
         if (Collision_Transform(m_pTransForm, m_pTarget->GetTransForm()))
         {
