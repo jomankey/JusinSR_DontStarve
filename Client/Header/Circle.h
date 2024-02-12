@@ -25,9 +25,8 @@ public:
 private:
 	HRESULT					Add_Component();
 	virtual void State_Change()			override;
-
 	_int Appear();
-
+	void Generate_SnowSplash();				//눈 터지는 효과 생성하기
 
 private:
 	Engine::CRcTex* m_pBufferCom;
