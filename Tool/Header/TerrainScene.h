@@ -32,7 +32,7 @@ private:
 	void Save_LightFile();
 	HRESULT Load_LightFile();
 
-	HRESULT Create_Object(const _tchar* pName, _vec3 vPos);
+	HRESULT Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale);
 	HRESULT Change_LightInfo(const _float& fTimeDelta);
 
 private:

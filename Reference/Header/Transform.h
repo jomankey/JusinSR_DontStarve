@@ -34,6 +34,7 @@ namespace Engine {
 		}
 
 		_vec3 Get_Scale() { return m_vScale; }
+		_vec3 Get_Pos() { return m_vInfo[INFO_POS]; }
 
 		void		Rotation(ROTATION eType, const _float& fAngle)
 		{

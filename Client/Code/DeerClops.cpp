@@ -88,6 +88,7 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 void CDeerClops::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
+
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);

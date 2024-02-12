@@ -7,6 +7,7 @@ namespace Engine
 {
 	class CComponent;
 	class CTransform;
+	class CCalculator;
 
 	class ENGINE_DLL CGameObject : public CBase
 	{
@@ -27,6 +28,8 @@ namespace Engine
 
 		void Set_SlotNum(_int iNum) { m_iSlotNum = iNum; }
 
+		void Height_OnTerrain();
+
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
@@ -46,6 +49,7 @@ namespace Engine
 
 		multimap<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 		CTransform* m_pTransForm;
+		CCalculator* m_pCalculator;
 
 		_float										m_fViewZ;	//z버퍼 소팅
 		_float										m_fDiffY;	//z버퍼계산시 y 보정값

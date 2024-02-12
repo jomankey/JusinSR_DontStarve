@@ -102,7 +102,7 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 void CObjectTree::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-
+	//Height_OnTerrain();
 	
 	Check_FrameState();
 	_vec3	vPos;
@@ -166,7 +166,7 @@ HRESULT CObjectTree::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	//m_pTransForm->Set_Pos(vPos.x, 2.3f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 1.5f, vPos.z);
 
 	return S_OK;
 }
@@ -208,7 +208,7 @@ void CObjectTree::Check_FrameState()
 	if (m_eCurState == RES_HIT_1)
 		m_fFrameEnd = 6;
 
-	if (m_eCurState == RES_DEAD) //위치 조정 필요
+	if (m_eCurState == RES_DEAD) 
 	{
 		m_fFrameEnd = 13;
 		m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));

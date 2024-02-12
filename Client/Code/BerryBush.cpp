@@ -164,9 +164,9 @@ HRESULT CBerryBush::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(1.5f, 1.5, 1.5f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	//m_pTransForm->Get_Info(INFO_POS, &vPos);
+	//m_pTransForm->Set_Pos(vPos.x, 0.5f, vPos.z);
 
 	return S_OK;
 }

@@ -15,11 +15,18 @@ public:
 
 private:
 	HRESULT			Add_Component();
+	void BillBoard();
+	
+	void Mouse_Input();
+	void Height_Obj();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
+
 	wstring m_pName;
+
+
 
 public:
 	static CToolObj* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring pName);
