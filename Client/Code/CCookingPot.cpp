@@ -81,7 +81,10 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 	}
 	if (m_fTimeChek >= m_MaxfTimeChek)
 	{
-
+		_vec3 vSlot;
+		//¿ä¸®³¡
+		CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop", &vSlot);
+		
 		m_bIsCooking=false;
 		m_fTimeChek = 0.f;
 	}

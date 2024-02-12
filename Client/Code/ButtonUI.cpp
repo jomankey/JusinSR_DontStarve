@@ -109,12 +109,17 @@ void CButtonUI::Input_Mouse()
             _bool bSecondCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
 
             if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
+            {
+                CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
+                CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
                 CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
+            }
+                
 
-           // CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
+           //CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
         }
     }
-    else if (m_bColl && m_bFood) // 요리 탭에서 요리 제작
+    else if (m_bColl && m_bFood) // 요리 탭에서 요리 제작, 요리 끝나면 아이템 다 사라지도록 
     {
 
         if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
@@ -135,9 +140,14 @@ void CButtonUI::Input_Mouse()
             {
                 if (iter->Get_State().strObjName == L"요리 솥")
                 {
-                    dynamic_cast<CCookingPot*>(iter)->Set_Cooking(true);
+
+                    CCookingPot* pCookingPot = dynamic_cast<CCookingPot*>(iter);
+                    pCookingPot->Set_Cooking(true);
+                    pCookingPot->Set_Success(CSlotMgr::GetInstance()->Start_Cook());
                 }
             }
+
+            CSlotMgr::GetInstance()->Remove_CookItem();
         }
     }
 

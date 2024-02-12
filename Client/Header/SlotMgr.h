@@ -20,7 +20,7 @@ public:
         m_pItemArr[_iMoveNum] = pItem;
         m_pItemArr[_iItemNum] = nullptr;
     }
-    void Remove_InvenItem(_uint _iItemNum);
+    void Remove_InvenItem(_uint _iItemNum, _uint _iItemCount = 1);
     void Get_BoxPos(BOX_TYPE eType, int _iNum, _vec3* vPos) {
         vector< CSlot*> pBox = m_mapBox.find(eType)->second;
         vPos->x = pBox[_iNum]->Get_fX();
@@ -31,6 +31,7 @@ public:
     CItem* Get_InvenItem(_uint iNum) { return m_pItemArr[iNum]; }
     void Get_Inven(CItem** pInvenItem) { memcpy(pInvenItem, m_pItemArr, sizeof(m_pItemArr)); }
     _bool Check_InvenItemCount(wstring strName, _int iNeedNum);
+    void Remove_CreateItem(wstring strName, _uint iItemCount);
 
     // 아이템 장착 확인
     // 아이템 장착을 안하고 있을 시 L"" 값이 넘어간다.
@@ -40,6 +41,8 @@ public:
 
     //요리 칸
     void Set_CookItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strKeyName, _vec3 vSlotPos, _uint iSlotNum);
+    void Remove_CookItem();
+    _bool Start_Cook();
 
 public:
     HRESULT Add_InvenBoxList(LPDIRECT3DDEVICE9 pGraphicDev, BOX_TYPE eType, BOX_DIR eDir ,int _iNum);

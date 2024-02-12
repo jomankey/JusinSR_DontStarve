@@ -1154,7 +1154,11 @@ HRESULT CPlayer::Ready_Light()
 void CPlayer::Fire_Light()
 {
 	if (m_ePreWeapon != TORCH)
+	{
+		light::Get_Light(m_iLightNum)->Close_Light();
 		return;
+	}
+		
 
 	D3DLIGHT9* tPointLightInfo = light::Get_Light(m_iLightNum)->Get_Light();
 

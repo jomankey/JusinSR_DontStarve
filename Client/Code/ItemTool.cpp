@@ -124,6 +124,24 @@ void CItemTool::Input_Mouse()
 			}
 		}
 
+		auto& vecObjBox = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+		for (auto& iter : vecObjBox)
+		{
+			if (iter->Get_State().strObjName == L"¸ð´ÚºÒ")
+			{
+				_vec3 vRayPos, vRayDir;
+				m_pCalculatorCom->Change_MouseMatrix(g_hWnd, _vec3{ m_fX, m_fY, 0.f }, &vRayPos, &vRayDir);
+				_vec3 vObjPos;
+				iter->GetTransForm()->Get_Info(INFO_POS, &vObjPos);
+
+				if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vObjPos, iter->GetTransForm()->Get_Scale()))
+				{
+					dynamic_cast<CBonfire*>(iter)->AddFIre(1);
+					CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
+				}
+			}
+		}
+
 		m_bClick = false;
 
 		vector<CSlot*> vecBox = CSlotMgr::GetInstance()->Get_BoxList(INVEN);
@@ -169,6 +187,20 @@ void CItemTool::Input_Mouse()
 				m_fPreX = m_fX;
 				m_fPreY = m_fY;
 
+				WEAPON eWeapon = WEAPON_END;
+				if (m_Stat.strObjName == L"µµ³¢")
+					eWeapon = AXE;
+				else if (m_Stat.strObjName == L"¸ÁÄ¡")
+					eWeapon = HAMMER;
+				else if (m_Stat.strObjName == L"°î±ªÀÌ")
+					eWeapon = PICK;
+				else if (m_Stat.strObjName == L"ÀüÅõÃ¢")
+					eWeapon = SPEAR;
+				else if (m_Stat.strObjName == L"È¶ºÒ")
+					eWeapon = TORCH;
+
+				dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Weapon_Equip(eWeapon);
+
 				m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
 
 				CSlotMgr::GetInstance()->Set_ArmorItem(m_eArmorSlotType, this, m_iNum);
@@ -179,23 +211,7 @@ void CItemTool::Input_Mouse()
 			}
 		}
 
-		auto& vecObjBox = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& iter : vecObjBox)
-		{
-			if (iter->Get_State().strObjName == L"¸ð´ÚºÒ")
-			{
-				_vec3 vRayPos, vRayDir;
-				m_pCalculatorCom->Change_MouseMatrix(g_hWnd, _vec3{ m_fX, m_fY, 0.f }, &vRayPos, &vRayDir);
-				_vec3 vObjPos;
-				iter->GetTransForm()->Get_Info(INFO_POS, &vObjPos);
 
-				if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vObjPos, iter->GetTransForm()->Get_Scale()))
-				{
-					dynamic_cast<CBonfire*>(iter)->AddFIre(1);
-					CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
-				}
-			}
-		}
 	}
 	else if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP && m_eItemType == UI_ITEM_INVEN) // ¸¶¿ì½º ¿À¸¥ÂÊ Å¬¸¯
 	{
@@ -284,6 +300,18 @@ void CItemTool::Eat_Food()
 		pPlayer->Set_PlayerHangry(5.f);
 		pPlayer->Set_PlayerHp(3.f);
 	}
+	else if (m_strObjName == L"Meatballs")
+	{
+		pPlayer->Set_PlayerHangry(62.f);
+		pPlayer->Set_PlayerHp(3.f);
+		pPlayer->Set_PlayerMental(5.f);
+	}
+	else if (m_strObjName == L"Wetgoop")
+	{
+		pPlayer->Set_PlayerHangry(0.f);
+		pPlayer->Set_PlayerHp(0.f);
+	}
+	CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
 }
 
 void CItemTool::Move_Pos()
