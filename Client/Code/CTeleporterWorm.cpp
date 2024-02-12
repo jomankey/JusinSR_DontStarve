@@ -61,12 +61,7 @@ void CTeleporterWorm::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
-
-	
 	Check_FrameState();
-
-	//IsPlayerInRadius();
-
 
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
@@ -175,14 +170,6 @@ void CTeleporterWorm::Change_Frame_Event()
 
 	}
 
-	//if (IsMoreClose)
-	//{
-	//	m_eTelporterCurState = TELEPORTER_CLOSE;
-	//
-	//}
-	//TEST
-
-
 
 }
 
@@ -282,7 +269,6 @@ tuple<_bool, _vec3, _bool> CTeleporterWorm::IsPlayerInRadius()
 	}
 	else
 	{
-		//m_eTelporterCurState = TELEPORTER_IDLE;
 		IsClose = false;
 	}
 
