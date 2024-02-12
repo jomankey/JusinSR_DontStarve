@@ -92,7 +92,6 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 void CItemBasic::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	if (!m_bChangeRander) Height_OnTerrain();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	__super::Compute_ViewZ(&vPos);

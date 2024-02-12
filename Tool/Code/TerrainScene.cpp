@@ -300,7 +300,9 @@ HRESULT CTerrainScene::Load_ObjFile()
 		dwStrByte = 0;
 
 		Create_Object(pName, vPos, vScale);
+		delete[] pName;
 	}
+	
 	CloseHandle(hFile);
 
 	MessageBox(g_hWnd, L"Object Load", L"¼º°ø", MB_OK);

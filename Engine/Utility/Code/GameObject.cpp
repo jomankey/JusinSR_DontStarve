@@ -49,19 +49,6 @@ CGameObject::~CGameObject()
 {
 }
 
-
-void Engine::CGameObject::Height_OnTerrain()
-{
-	_vec3 vObjPos = m_pTransForm->Get_Pos();
-
-	const auto& pTerrainBuffer = scenemgr::Get_CurScene()->GetTerrainObject()->Find_Component(ID_STATIC, L"Proto_TerrainTex");
-	const _vec3* pVtxPos = dynamic_cast<CTerrainTex*> (pTerrainBuffer)->Get_VtxPos();
-	_float fY = m_pCalculator->Compute_HeightOnTerrain(&vObjPos, pVtxPos);
-
-	vObjPos.y = fY + (m_pTransForm->Get_Scale().y - 0.3f);
-	m_pTransForm->Set_Pos(vObjPos);
-}
-
 HRESULT CGameObject::Ready_GameObject()
 {
 	return S_OK;

@@ -77,7 +77,7 @@ HRESULT CToolBossScene::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 
-	m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
+	m_pCalculator = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 
 	return S_OK;
 }
@@ -247,7 +247,7 @@ _vec3 CToolBossScene::Picking_Terrain()
 	CTransform* pTerrainTransCom = dynamic_cast<CTransform*>(pTerrain->GetTransForm());
 	NULL_CHECK_RETURN(pTerrainTransCom, _vec3());
 
-	return m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
+	return m_pCalculator->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, pTerrainTransCom);
 }
 
 HRESULT CToolBossScene::Ready_Layer_Environment()
@@ -400,6 +400,8 @@ HRESULT CToolBossScene::Load_ObjFile()
 		dwStrByte = 0;
 
 		Create_Object(pName, vPos, vScale);
+
+		delete[] pName;
 	}
 	CloseHandle(hFile);
 
