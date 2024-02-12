@@ -293,7 +293,6 @@ HRESULT CLoading::Loading_Anim_Texture()
 	//Trap//
 	////////
 	
-
 	//SPIKE
 	pAnim = CAnimation::Create(m_pGraphicDev, L"TRAP_SPIKE_IDLE", L"../Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__%03d.png", 30, 0.03f);
 	proto::Ready_ProtoAnim(L"TRAP_SPIKE_IDLE", pAnim);
@@ -377,7 +376,6 @@ HRESULT CLoading::Loading_UI_Texture()
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Linked_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Linked_Panel.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Item_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Item_Panel_%03d.png", 2)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Explain_PopUp_Panel", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Explain_PopUp_Panel.png")), E_FAIL);
-
 
 	//Pop_Up UI Botton
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Left_Panel_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Hud/Left_Panel_Button__%03d.png", 3)), E_FAIL);

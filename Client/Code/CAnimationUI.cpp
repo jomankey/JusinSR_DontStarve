@@ -43,37 +43,6 @@ void CAnimationUI::Render_GameObject()
 	scenemgr::Get_CurScene()->EndOrtho();
 }
 
-//HRESULT CAnimationUI::Add_Component()
-//{
-//	CComponent* pComponent = nullptr;
-//	_vec3 vPos;
-//
-//	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
-//	NULL_CHECK_RETURN(pComponent, E_FAIL);
-//	m_mapComponent[ID_STATIC].insert({ L"Proto_RcTex", pComponent });
-//
-//	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
-//	NULL_CHECK_RETURN(pComponent, E_FAIL);
-//	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-//
-//	pComponent = m_pAnimCom = dynamic_cast<CAnimator*>(proto::Clone_Proto(L"Proto_Anim"));
-//	NULL_CHECK_RETURN(pComponent, E_FAIL);
-//	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Anim", pComponent });
-//
-//	m_pAnimCom->AddAnimation(L"HIDE", proto::Clone_ProtoAnim(L"TRAP_SPIKE_HIDE"));//숨기
-//	m_pAnimCom->AddAnimation(L"GROW", proto::Clone_ProtoAnim(L"TRAP_SPIKE_GROW"));//나타나기
-//	m_pAnimCom->AddAnimation(L"IDLE", proto::Clone_ProtoAnim(L"TRAP_SPIKE_IDLE"));//나타난상태지속
-//
-//
-//	m_pAnimCom->SetCurAnimation(L"HIDE");
-//	m_pAnimCom->SetCurAnimationFrame(L"HIDE", m_pAnimCom->GetAnimMaxFrame(L"HIDE"));
-//
-//
-//	m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
-//
-//	return S_OK;
-//}
-
 void CAnimationUI::Free()
 {
 	__super::Free();
