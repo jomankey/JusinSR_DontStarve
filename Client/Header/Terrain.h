@@ -19,6 +19,8 @@ private:
 	virtual ~CTerrain();
 
 public:
+	Engine::CTerrainTex* Get_Buffer() { return m_pBufferCom; };
+public:
 	virtual HRESULT Ready_GameObject()						 override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;

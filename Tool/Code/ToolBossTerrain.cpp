@@ -65,15 +65,15 @@ HRESULT CToolBossTerrain::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_TerrainTex", pComponent });
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Boss_Tile"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_BossTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Proto_Boss_Tile", pComponent });
+	m_mapComponent[ID_STATIC].insert({ L"Proto_BossTexture", pComponent });
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
+	pComponent = m_pCalculator = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
@@ -92,7 +92,7 @@ void CToolBossTerrain::Input_Mouse()
 
 HRESULT CToolBossTerrain::Picking_OnTerrain()
 {
-	_ulong i = m_pCalculatorCom->Picking_OnTerrain_Tool(g_hWnd,
+	_ulong i = m_pCalculator->Picking_OnTerrain_Tool(g_hWnd,
 		m_pBufferCom,
 		m_pTransForm);
 

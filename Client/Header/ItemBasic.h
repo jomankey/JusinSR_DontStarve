@@ -17,7 +17,6 @@ public:
     _int Update_GameObject(const _float& fTimeDelta) override;
     void LateUpdate_GameObject() override;
     void Render_GameObject() override;
-    
 
     //오브젝트에 의해 생성된 객체들만 사용할 것
     void SetCreateByObject( ) { m_bIsCreateByObject = true; }

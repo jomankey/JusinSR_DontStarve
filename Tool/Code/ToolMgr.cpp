@@ -2,6 +2,7 @@
 #include "framework.h"
 
 #include "Export_Utility.h"
+#include "ToolObj.h"
 
 _vec3 CToolMgr::m_fDirectionDiffuseColor[3] = { {1.f, 1.f, 1.f} };
 _vec3 CToolMgr::m_fDirectionAmbientColor[3] = { {1.f, 1.f, 1.f} };
@@ -10,6 +11,7 @@ _vec3 CToolMgr::m_fDirectionSpecularColor[3] = { {1.f, 1.f, 1.f} };
 int CToolMgr::iItemCurrentMonsterIdx = 0;
 int CToolMgr::iItemCurrentEtcIdx = 0;
 int CToolMgr::iItemCurrentItemIdx = 0;
+int CToolMgr::iAddObjIdx = 0;
 
 _bool CToolMgr::bObjectAdd = false;
 _bool CToolMgr::bItemAdd = false;
@@ -27,6 +29,11 @@ vector<_int> CToolMgr::vecPickingIdex;
 
 _int CToolMgr::iTimeLight = 0; // ¹ã, ³· Á¶¸í °ª ÀúÀåÇÏ±â 
 _int CToolMgr::iAUtoTime = 1;
+
+_float CToolMgr::fMonsterY = 0.f;
+_float CToolMgr::fMonsterScale[4] = { 1.f, 1.f, 1.f, 1.f };
+
+vector<CGameObject*> CToolMgr::m_vecObj;
 
 CToolMgr::CToolMgr(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev), 
@@ -75,6 +82,7 @@ void CToolMgr::Update_ToolMgr()
     Window_Tile();
     Window_Light();
     Window_Object();
+    //Window_Patch();
 }
 
 void CToolMgr::Render_ToolMgr()
@@ -173,7 +181,7 @@ void CToolMgr::Window_Object()
 
         if (ImGui::BeginListBox("Monster List"))
         {
-            const char* Items[] = { "Spider", "Pig", "Beefalo", "Boss"};
+            const char* Items[] = { "Spider", "Pig", "Beefalo", "Boss", "Tallbird"};
 
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
             {
@@ -196,7 +204,9 @@ void CToolMgr::Window_Object()
     {
         if (ImGui::BeginListBox("Etc List"))
         {
-            const char* Items[] = { "Tree", "Rock", "Grass", "Pig_House", "Berry"};
+            const char* Items[] = { "Tree", "Rock", "Grass", "Pig_House", 
+                "Pig_House_Dead", "Berry", "FireFlies", "Teleporter", "BossDoor", "TrapSpike", "Capapult"
+            };
             
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)
             {
@@ -246,6 +256,11 @@ void CToolMgr::Window_Object()
             bItemAdd = true;
     }
 
+    ImGui::InputFloat("Pos Y", &fMonsterY, 0.10f, 10.0f, "%.3f");
+
+    ImGui::InputFloat3("Scale", fMonsterScale);
+    
+
     if (ImGui::SmallButton("Save"))
         bObjSaveData = true;
     
@@ -255,6 +270,57 @@ void CToolMgr::Window_Object()
         bObjLoadData = true;
 
     ImGui::End();
+}
+
+void CToolMgr::Window_Patch()
+{
+    ImGui::Begin("Obj Patch");
+        if (ImGui::BeginListBox("Add List"))
+        {
+            //const char* Items[] = { "Spider", "Pig", "Beefalo", "Boss" };
+
+            for (int i = 0; i < m_vecObj.size(); ++i)
+            {
+                size_t len = std::wcstombs(nullptr, m_vecObj[i]->GetObjName().c_str(), 0);
+                char* buf = new char[len + 1];
+                std::wcstombs(buf, m_vecObj[i]->GetObjName().c_str(), len + 1);
+
+                const bool bSelected = (CToolMgr::iAddObjIdx == i);
+                if (ImGui::Selectable(buf, bSelected))
+                {
+                    CToolMgr::iAddObjIdx = i;
+                    //CToolMgr::bItemAdd = false;
+                    //CToolMgr::bObjectAdd = false;
+                }
+
+                if (bSelected)
+                    ImGui::SetItemDefaultFocus();
+
+                delete[] buf;
+            }
+            ImGui::EndListBox();
+        }
+
+        static float fY = 0.10f;
+        ImGui::InputFloat("Pos Y", &fY, 0.10f, 10.0f, "%.3f");
+
+        if (!m_vecObj.empty())
+        {
+            _vec3 vPos;
+            m_vecObj[iAddObjIdx]->GetTransForm()->Get_Info(INFO_POS, &vPos);
+            vPos.y = fY;
+            m_vecObj[iAddObjIdx]->GetTransForm()->Set_Pos(vPos);
+        }
+
+        static float vec4a[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        ImGui::InputFloat3("Scale", vec4a);
+        if (!m_vecObj.empty())
+        {
+            _vec3 vScale = _vec3(vec4a[0], vec4a[1], vec4a[2]);
+            m_vecObj[iAddObjIdx]->GetTransForm()->Set_Scale(vScale);
+        }
+
+        ImGui::End();
 }
 
 CToolMgr* CToolMgr::Create(LPDIRECT3DDEVICE9 pGraphicDev)

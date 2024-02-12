@@ -131,6 +131,8 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+	//Height_OnTerrain();
+
 	_vec3 vPos;
 	BillBoard();
 	m_pTransForm->Get_Info(INFO::INFO_POS, &vPos);

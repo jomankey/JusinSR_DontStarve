@@ -4,10 +4,11 @@
 #include "Engine_Define.h"
 #include "Export_System.h"
 
+
+class CToolObj;
 namespace Engine
 {
 	class CTexture;
-
 }
 class CToolMgr :
 	public CBase
@@ -27,6 +28,7 @@ private:
 	void Window_Tile();
 	void Window_Light();
 	void Window_Object();
+	void Window_Patch();
 
 public:
 	static _vec3 m_fDirectionDiffuseColor[3];
@@ -38,6 +40,11 @@ public:
 	vector<Engine::CTexture*> m_pTileTexture;
 	int item_current_idx;
 	static int iItemCurrentMonsterIdx, iItemCurrentEtcIdx, iItemCurrentItemIdx;
+	static int iAddObjIdx;
+
+	static _float fMonsterY;
+	static _float fMonsterScale[4];
+
 	static _bool bObjectAdd, bItemAdd, bMonsterAdd;
 
 	static _bool bObjSaveData;
@@ -54,6 +61,8 @@ public:
 
 	static _int iTimeLight;
 	static _int iAUtoTime;
+
+	static vector<CGameObject*> m_vecObj;
 
 
 public:

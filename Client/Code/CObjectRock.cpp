@@ -23,7 +23,7 @@ HRESULT CObjectRock::Ready_GameObject()
 
 
 	_vec3 vPos;
-	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
+	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
 
@@ -51,8 +51,6 @@ _int CObjectRock::Update_GameObject(const _float& fTimeDelta)
 void CObjectRock::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	
-
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -77,7 +75,7 @@ void CObjectRock::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-	
+
 }
 
 HRESULT CObjectRock::Add_Component()
@@ -104,12 +102,12 @@ void CObjectRock::Change_Frame_Event()
 {
 	if (m_Stat.fHP <= 3.f && m_Stat.fHP != 0)
 	{
-		m_pTransForm->Set_Scale(_vec3(1.5f, 1.5f, 1.5f));
+		//m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 		m_fFrame = 1;
 	}
 	if (m_Stat.fHP <= 1)
 	{
-		m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
+		//m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 		m_fFrame = 2;
 	}
 
