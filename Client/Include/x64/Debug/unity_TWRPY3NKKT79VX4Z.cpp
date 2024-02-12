@@ -81,6 +81,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\IceMissileL.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\IceMissileR.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\IceSpikeL.cpp"
 
 

@@ -186,7 +186,6 @@ _int FallMark::Appear()
         m_bFrameStop = true;
     }
 
-
     if (m_ePreState == DISAPPEAR && m_fFrameEnd-1 < m_fFrame)
     {
         m_bFrameStop = true;

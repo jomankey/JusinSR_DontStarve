@@ -253,10 +253,6 @@ void CDeerClops::Set_Hit()
 			m_bHit = true;
 		}
 		
-		
-
-
-
 		if (m_Stat.fHP < 250.f && !m_bPhase[THIRD])
 		{
 			m_bPhase[THIRD] = true;
