@@ -400,6 +400,7 @@ HRESULT CToolBossScene::Load_ObjFile()
 		dwStrByte = 0;
 
 		Create_Object(pName, vPos, vScale);
+		delete[] pName;
 	}
 	CloseHandle(hFile);
 
