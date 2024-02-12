@@ -634,42 +634,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_eCurWeapon = TORCH;
 		Fire_Light();
-
-
-		//TestPSW			//가까이 있는 걸로 찾아야함   아니면 모든 모닥불 다 켜질거임 아마도?
-		decltype(auto)	Test =scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
-		for (auto& object : Test)
-		{
-			if (dynamic_cast<CResObject*>(object)->Get_Resourse_ID() == BON_FIRE)
-			{
-				dynamic_cast<CBonfire*>(object)->Set_DropBonfire();
-			}
-			
-		}
-		//TestPSW---------------------------------------------
-
+	
 
 	}
 
 	
-	if (GetAsyncKeyState('1')) // 횃불
-	{
-
-
-		//TestPSW		//가까이 있는 걸로 찾아야함  아니면 모든 모닥불 다 켜질거임 아마도?
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
-		for (auto& object : Test)
-		{
-			if (dynamic_cast<CResObject*>(object)->Get_Resourse_ID() == BON_FIRE)
-			{
-				
-				dynamic_cast<CBonfire*>(object)->AddFIre(1);
-			}
-
-		}
-		//TestPSW---------------------------------------------
-
-	}
+	
 
 
 

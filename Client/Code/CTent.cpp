@@ -38,11 +38,7 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 	Install_Obj();
 
 	//예시 코드
-	if (GetAsyncKeyState('T')) // 횃불
-	{
 
-		Set_Drop();
-	}
 	if (GetAsyncKeyState('1')) // 횃불
 	{
 
@@ -59,11 +55,6 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 
 	}
 	if (GetAsyncKeyState('4')) // 횃불
-	{
-		Set_Destroy();
-
-	}
-	if (GetAsyncKeyState('5')) // 횃불
 	{
 		Set_Burnt();
 	}
@@ -251,7 +242,7 @@ void CTent::Change_Frame_Event()
 			{
 
 				m_bIsFrameStop = true;
-				//회수시 다시는 못 지음
+				//회수(파괴)시 다시는 못 지음 새로 텐트를 생성해야함
 				return;
 			}
 		}
@@ -317,7 +308,7 @@ void CTent::Install_Obj()
 	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // 설치 완료
 	{
 		m_bInstall = false;
-
+		m_bIsDrop = true;
 		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);

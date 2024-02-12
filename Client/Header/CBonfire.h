@@ -58,5 +58,6 @@ private:
 	BOOL m_bIsDropEnd = false;
 
 	_bool m_bInstall = false;
+
 };
 
