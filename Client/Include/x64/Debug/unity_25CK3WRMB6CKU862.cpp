@@ -9,6 +9,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\BossEftDown.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CAnimationUI.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CBonfire.cpp"
 
 
@@ -30,7 +33,16 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CFIre.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CGenerateHand.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CGenerateMap.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Circle.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CLoadBackGround.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Cook.cpp"
@@ -70,6 +82,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\IceMissileL.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\IceMissileR.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\IceSpikeL.cpp"

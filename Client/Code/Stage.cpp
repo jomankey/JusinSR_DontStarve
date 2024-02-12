@@ -175,19 +175,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
-<<<<<<< HEAD
-=======
-	pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(61.f, 0.7f, 64.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
-
-	pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
-	pGameObject->GetTransForm()->Set_Pos(_vec3(60.f, 1.f, 60.f));
-
-
->>>>>>> 92ab6383751f9647c6b83bec66b0975e94c30f65
 	return S_OK;
 }
 
