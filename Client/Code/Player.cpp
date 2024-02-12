@@ -415,6 +415,13 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
 
+	
+
+	pComponent = m_pTextureCom[LOOK_DOWN][DIALOG] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_dialog"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_dialog", pComponent });
+
+
 	pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_die"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_die", pComponent });
@@ -586,7 +593,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_TargetObject = dynamic_cast<CResObject*>(findObj)->Get_Resourse_ID();
 			m_vTargetDir = m_vTargetPos - vPos;
 			m_vTargetDir.y = 0.f;
-			if (D3DXVec3Length(&m_vTargetDir) < 1.f)
+			if (D3DXVec3Length(&m_vTargetDir) < 1.5f)
 			{
 				ResObj_Mining(m_TargetObject, findObj);
 			}
@@ -621,7 +628,14 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (GetAsyncKeyState('F')) // 공격
 	{
-		m_eCurState = ATTACK;
+		if (m_ePreWeapon == SPEAR)
+		{
+			m_eCurState = SPEAR_ATTACK;
+		}
+		else
+		{
+			m_eCurState = ATTACK;
+		}
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
 		if (nullptr != findObj && !findObj->IsDelete()
 			&& dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
@@ -636,7 +650,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		m_eCurWeapon = TORCH;
 		Fire_Light();
 	
-
 	}
 
 
@@ -852,6 +865,10 @@ void CPlayer::Check_State()
 		case MOVE:
 			m_fFrameEnd = 6;
 			break;
+		case DIALOG:
+			m_eCurLook = LOOK_DOWN;
+			m_fFrameEnd = 17;
+			break;
 		case TORCH_IDLE:
 			m_fFrameEnd = 22;
 			break;
@@ -917,13 +934,13 @@ void CPlayer::Set_Scale()
 		m_pTransForm->m_vScale = { 0.7f, 1.f, 0.7f };
 
 	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT))
-		m_pTransForm->m_vScale = { 1.7f,0.05f,1.f };
+		m_pTransForm->m_vScale = { 1.f,0.5f,1.f };
 
 	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_UP || m_eCurLook == LOOK_DOWN))
-		m_pTransForm->m_vScale = { 1.2f,0.5f,1.f };
+		m_pTransForm->m_vScale = { 1.f,0.5f,1.f };
 
-	//else if (m_eCurState == AXE_CHOP_PRE)
-	//	m_pTransForm->m_vScale = { 1.f, 0.5f, 0.7f };
+	else if (m_eCurState == AXE_CHOP_PRE)
+		m_pTransForm->m_vScale = { 1.f, 0.5f, 1.f };
 
 	else if (m_eCurState == DEAD)
 		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
@@ -1013,24 +1030,55 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 	switch (_ObjID)
 	{
 	case ROCK:
-		m_eCurState = PICKING_OBJECT;
-		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
+
+		if (m_eCurWeapon == PICK)
 		{
-			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+
+			m_eCurState = PICKING_OBJECT;
+			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
+			{
+				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+				m_vPlayerActing = true;
+			}
+		}
+		else
+		{
+			m_eCurState = DIALOG;		//곡괭이가 없으면 안된다는 대사 추가
 			m_vPlayerActing = true;
 		}
 		break;
 	case TREE:
-		if (7.f < m_fFrame && !m_vPlayerActing)
+		if (m_eCurWeapon == AXE)
 		{
-			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
-			dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
+			if (7.f < m_fFrame && !m_vPlayerActing)
+			{
+				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
+				m_vPlayerActing = true;
+			}
+			m_eCurState = AXE_CHOP_PRE;
+		}
+		else
+		{
+			m_eCurState = DIALOG;  //도끼가 없으면 안된다는 대사 추가
 			m_vPlayerActing = true;
 		}
-		m_eCurState = AXE_CHOP_PRE;
 		break;
 	case PIG_HOUSE:
-		m_eCurState = HAMMERING;
+		if (m_eCurWeapon == HAMMER)
+		{
+			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
+			{
+				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+				m_vPlayerActing = true;
+			}
+			m_eCurState = HAMMERING;
+		}
+		else
+		{
+			m_eCurState = DIALOG;		//망치가 없으면 안된다는 대사 추가
+			m_vPlayerActing = true;
+		}
 		break;
 	case GRASS:
 		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
