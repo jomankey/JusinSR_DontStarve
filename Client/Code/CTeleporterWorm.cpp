@@ -153,64 +153,6 @@ void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
 
 void CTeleporterWorm::Check_FrameState()
 {
-	bool IsClose = get<0>(IsPlayerInRadius());
-	bool IsMoreClose = get<2>(IsPlayerInRadius());
-	//플레이어 pos 저장용 , 나중에 멤버변수로 가지고 있어도 됨
-	_vec3 vPlayerPos = get<1>(IsPlayerInRadius());
-
-	if (m_eTelporterCurState == TELEPORTER_IDLE)
-	{
-		if (m_fFrame > m_fFrameEnd)
-		{
-			m_fFrame = 0.0f;
-		}
-	}
-
-
-	if (IsClose)
-	{
-		m_eTelporterCurState = TELEPORTER_OPEN;
-		if (m_eTelporterCurState == TELEPORTER_OPEN)
-		{
-			if (m_fFrame > m_fFrameEnd)
-			{
-				m_bFrameStop = true;
-				m_fFrame = 5.0f;
-			}
-
-		}
-	
-
-	}
-	else if(m_eTelporterCurState== TELEPORTER_OPEN|| m_eTelporterCurState== TELEPORTER_CLOSE)
-	{
-		m_bFrameStop = false;
-		m_eTelporterCurState = TELEPORTER_CLOSE;
-		if (m_eTelporterCurState == TELEPORTER_CLOSE)
-		{
-			
-			if (m_fFrame > m_fFrameEnd)
-			{
-				m_eTelporterCurState = TELEPORTER_IDLE;
-				m_fFrame = 0.0f;
-			}
-		}
-
-	}
-
-	//if (IsMoreClose)
-	//{
-	//	m_eTelporterCurState = TELEPORTER_CLOSE;
-	//
-	//}
-
-
-
-
-}
-
-void CTeleporterWorm::Check_FrameState()
-{
 	
 	if (m_eTelporterPreState != m_eTelporterCurState)
 	{
