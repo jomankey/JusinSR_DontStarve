@@ -32,7 +32,6 @@ public:
 
 
 
-	void Set_Drop() { m_bIsDrop = true; };
 	void Set_Enter() { m_bIsEnter = true; };
 	void Set_Destroy() { m_bIsDestroy = true; };
 	void Set_Hit() { m_bIsHit = true; };

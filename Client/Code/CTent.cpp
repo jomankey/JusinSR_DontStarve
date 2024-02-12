@@ -24,9 +24,12 @@ CTent::~CTent()
 HRESULT CTent::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_eObject_id = TENT;
+	m_eObject_id = RESOBJID::TENT;
 	m_eTentCurState = CTENT_DEFAULT;
 
+
+
+	m_Stat.strObjName = L"ÅÙÆ®";
 	m_fDiffY = 1.5f;
 	m_fFrame = 0.0f;
 	return S_OK;
@@ -39,25 +42,25 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 
 	//¿¹½Ã ÄÚµå
 
-	if (GetAsyncKeyState('1')) // È¶ºÒ
-	{
-
-		Set_Enter();
-	}
-	if (GetAsyncKeyState('2')) // È¶ºÒ
-	{
-
-		Set_Hit();
-	}
-	if (GetAsyncKeyState('3')) // È¶ºÒ
-	{
-		Set_Destroy();
-
-	}
-	if (GetAsyncKeyState('4')) // È¶ºÒ
-	{
-		Set_Burnt();
-	}
+	//if (GetAsyncKeyState('1')) // È¶ºÒ
+	//{
+	//
+	//	Set_Enter();
+	//}
+	//if (GetAsyncKeyState('2')) // È¶ºÒ
+	//{
+	//
+	//	Set_Hit();
+	//}
+	//if (GetAsyncKeyState('3')) // È¶ºÒ
+	//{
+	//	Set_Destroy();
+	//
+	//}
+	//if (GetAsyncKeyState('4')) // È¶ºÒ
+	//{
+	//	Set_Burnt();
+	//}
 
 
 	if (!m_bIsFrameStop)
@@ -262,7 +265,7 @@ void CTent::Change_Frame_Event()
 			}
 		}
 
-		if (m_bIsEnter)
+		if (m_bIsEnter&&!m_bIsDestroy)
 		{
 			m_eTentCurState = CTENT_ENTER;
 			if (m_fFrame > m_fFrameEnd)
@@ -272,7 +275,7 @@ void CTent::Change_Frame_Event()
 				m_fFrame = 0.0f;
 			}
 		}
-		if (m_bIsHit)
+		if (m_bIsHit&&!m_bIsDestroy&&!m_bIsEnter)
 		{
 
 			m_eTentCurState = CTENT_HIT;
