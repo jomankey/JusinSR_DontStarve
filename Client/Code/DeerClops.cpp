@@ -394,7 +394,8 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 	}
 	else if (m_ePreState == IDLE && m_fFrameEnd < m_fFrame)	//포효 지르기
 	{
-		m_eCurState = TAUNT;
+		m_eCurState = TAUNT;		//여기서 카메라 쉐이킹
+		
 	}
 	else if (m_ePreState == TAUNT && m_fFrameEnd < m_fFrame)
 	{
