@@ -48,7 +48,7 @@ private:
 	TELEPORTER_STATE m_eTelporterCurState;
 	TELEPORTER_STATE m_eTelporterPreState;
 
-	BOOL m_bFrameStop = false;
+	BOOL m_bFrameStop = true;
 
 
 	BOOL m_bReverseFrame = false;

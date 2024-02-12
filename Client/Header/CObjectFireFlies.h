@@ -38,8 +38,8 @@ private:
 	FIREFLIESSTATE m_eFireFliesPreState;
 
 
-	BOOL m_bIsCheckAfterDay;
 
-	BOOL m_bNextAnim = true;
+
+	BOOL m_bIsFrameStop = false;
 };
 

@@ -45,7 +45,12 @@ _int CTeleporterWorm::Update_GameObject(const _float& fTimeDelta)
 	}
 	ChangeScenePlayer(1.f);
 
+
+
+
+
 	Change_Frame_Event();
+	
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -57,7 +62,7 @@ void CTeleporterWorm::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 
 
-
+	
 	Check_FrameState();
 
 	//IsPlayerInRadius();
@@ -127,6 +132,7 @@ void CTeleporterWorm::Change_Frame_Event()
 
 	if (m_eTelporterCurState == TELEPORTER_IDLE)
 	{
+		
 		if (m_fFrame > m_fFrameEnd)
 		{
 			m_fFrame = 0.0f;
@@ -137,8 +143,11 @@ void CTeleporterWorm::Change_Frame_Event()
 	if (IsClose)
 	{
 		m_eTelporterCurState = TELEPORTER_OPEN;
+
+		//¿­¸± ¶§
 		if (m_eTelporterCurState == TELEPORTER_OPEN)
 		{
+			
 			if (m_fFrame > m_fFrameEnd)
 			{
 				m_bFrameStop = true;
@@ -153,9 +162,10 @@ void CTeleporterWorm::Change_Frame_Event()
 	{
 		m_bFrameStop = false;
 		m_eTelporterCurState = TELEPORTER_CLOSE;
+		//´ÝÈú ¶§
 		if (m_eTelporterCurState == TELEPORTER_CLOSE)
 		{
-
+			m_pTransForm->Set_Scale(_vec3(4.5f, 4.5f, 4.5f));
 			if (m_fFrame > m_fFrameEnd)
 			{
 				m_eTelporterCurState = TELEPORTER_IDLE;
@@ -187,21 +197,20 @@ void CTeleporterWorm::Check_FrameState()
 		{
 		case TELEPORTER_STATE::TELEPORTER_IDLE:
 		{
-
+			m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 			m_fFrameEnd = 6.0f;
 			break;
 
 		}
 		case TELEPORTER_STATE::TELEPORTER_OPEN:
 		{
-
+			m_pTransForm->Set_Scale(_vec3(5.5f, 5.5f, 5.5f));
 			m_fFrameEnd = 5.0f;
 			break;
 
 		}
 		case TELEPORTER_STATE::TELEPORTER_CLOSE:
 		{
-
 
 			m_fFrameEnd = 5.0f;
 			break;
