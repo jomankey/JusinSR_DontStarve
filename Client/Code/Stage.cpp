@@ -180,10 +180,10 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
 
 
-	pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	pGameObject->GetTransForm()->Set_Pos(_vec3(50.f, 1.5f, 50.f));
+	//pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+	//pGameObject->GetTransForm()->Set_Pos(_vec3(50.f, 1.5f, 50.f));
 
 
 
