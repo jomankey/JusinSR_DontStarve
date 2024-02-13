@@ -23,7 +23,7 @@ HRESULT CObjectRock::Ready_GameObject()
 
 
 	_vec3 vPos;
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f,2.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
 
@@ -31,7 +31,7 @@ HRESULT CObjectRock::Ready_GameObject()
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
 	m_fFrame = 0;
-	m_fDiffY = 1.2f;
+	m_fDiffY = 4.2f;
 
 	return S_OK;
 }

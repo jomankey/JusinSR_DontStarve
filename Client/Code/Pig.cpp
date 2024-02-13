@@ -29,7 +29,7 @@ HRESULT CPig::Ready_GameObject()
 	/*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
 	m_fFrameEnd = 7;
 	m_fFrameChange = rand() % 5;
-	m_fDiffY = 1.f;
+	m_fDiffY = 3.5f;
 	Look_Change();
 	return S_OK;
 }
@@ -55,7 +55,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
 	Look_Change(); 
-	m_pTransForm->m_vScale = { 1.5f, 1.5f, 1.f };
+	m_pTransForm->m_vScale = { 1.5f, 1.5f, 1.5f };
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return iResult;
 }
