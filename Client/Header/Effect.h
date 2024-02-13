@@ -13,7 +13,6 @@ protected:
 protected:
 	virtual void	State_Change()	PURE;
 	virtual void	Look_Change();
-	_bool		Collision_Transform(CTransform* _Src, CTransform* _Dst);
 protected:
 	_vec3 m_vPos;
 
