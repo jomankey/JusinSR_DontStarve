@@ -49,19 +49,6 @@ CGameObject::~CGameObject()
 {
 }
 
-
-void Engine::CGameObject::Height_OnTerrain()
-{
-	_vec3 vObjPos = m_pTransForm->Get_Pos();
-
-	const auto& pTerrainBuffer = scenemgr::Get_CurScene()->GetTerrainObject()->Find_Component(ID_STATIC, L"Proto_TerrainTex");
-	const _vec3* pVtxPos = dynamic_cast<CTerrainTex*> (pTerrainBuffer)->Get_VtxPos();
-	_float fY = m_pCalculator->Compute_HeightOnTerrain(&vObjPos, pVtxPos);
-
-	vObjPos.y = fY + (m_pTransForm->Get_Scale().y - 0.3f);
-	m_pTransForm->Set_Pos(vObjPos);
-}
-
 HRESULT CGameObject::Ready_GameObject()
 {
 	return S_OK;
@@ -81,6 +68,32 @@ void CGameObject::LateUpdate_GameObject()
 		iter.second->LateUpdate_Component();
 
 
+}
+
+_bool Engine::CGameObject::Collision_Transform(CTransform* _Src, CTransform* _Dst)
+{
+	_vec3 vSrc, vSrcScale, vDst, vDstScale;
+
+	_Src->Get_Info(INFO_POS, &vSrc);
+	vSrcScale = _Src->Get_Scale();
+
+	_Dst->Get_Info(INFO_POS, &vDst);
+	vDstScale = _Dst->Get_Scale();
+
+	_float iDistanceX = fabs(vSrc.x - vDst.x);
+	_float fRadCX = vSrcScale.x * 0.5f + vDstScale.x * 0.5f;
+
+	_float fDistanceZ = fabs(vSrc.z - vDst.z);
+	_float fRadCY = vSrcScale.y * 0.5f + vDstScale.y * 0.5f;
+
+	if (fDistanceZ > fRadCY || iDistanceX > fRadCX)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 

@@ -28,13 +28,12 @@ namespace Engine
 
 		void Set_SlotNum(_int iNum) { m_iSlotNum = iNum; }
 
-		void Height_OnTerrain();
-
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
 		virtual void		LateUpdate_GameObject();
 		virtual void		Render_GameObject()PURE;
+		_bool		Collision_Transform(CTransform* _Src, CTransform* _Dst);
 
 	protected:
 		explicit CGameObject() = delete;
@@ -42,6 +41,7 @@ namespace Engine
 		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
 		explicit CGameObject(const CGameObject& rhs);
 		virtual ~CGameObject();
+		
 
 		virtual void		Free() override;
 	protected:
@@ -49,7 +49,6 @@ namespace Engine
 
 		multimap<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 		CTransform* m_pTransForm;
-		CCalculator* m_pCalculator;
 
 		_float										m_fViewZ;	//z버퍼 소팅
 		_float										m_fDiffY;	//z버퍼계산시 y 보정값

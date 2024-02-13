@@ -64,10 +64,10 @@ void CMouse::Render_GameObject()
 			_tchar strInfo[32];
 			Engine::Render_Font(L"Mouse_Sub", L"ปýธํทย: ", &_vec2(m_vMousePos.x + 20.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 			_itow_s(m_eObjState.fHP, strInfo, 10);
-			Engine::Render_Font(L"Mouse_Sub", strInfo, &_vec2(m_vMousePos.x + 100.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
-			Engine::Render_Font(L"Mouse_Sub", L"/", &_vec2(m_vMousePos.x + 135.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			Engine::Render_Font(L"Mouse_Sub", strInfo, &_vec2(m_vMousePos.x + 50.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			Engine::Render_Font(L"Mouse_Sub", L"/", &_vec2(m_vMousePos.x + 70.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 			_itow_s(m_eObjState.fMxHP, strInfo, 10);
-			Engine::Render_Font(L"Mouse_Sub", strInfo, &_vec2(m_vMousePos.x + 150.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+			Engine::Render_Font(L"Mouse_Sub", strInfo, &_vec2(m_vMousePos.x + 80.f, m_vMousePos.y + 5.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 		}
 	}
 

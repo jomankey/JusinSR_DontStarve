@@ -74,6 +74,8 @@ private:
 
 	_float		m_fSkill;
 	_float		m_fSkill2;
+
+
 	
 };
 

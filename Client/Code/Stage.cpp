@@ -190,15 +190,18 @@ HRESULT CStage::Ready_Layer_UI()
 	NULL_CHECK_RETURN(uiLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
-	pGameObject = CInven::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
 
 	pGameObject = CCreateUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
 	//Cook
 	pGameObject = CCook::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	pGameObject = CInven::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
@@ -290,9 +293,10 @@ HRESULT CStage::Load_Data()
 		Create_Object(pName, vPos, vScale);
 		delete[] pName;
 	}
+	
 	CloseHandle(hFile);
 
-	hFile = CreateFile(
+	HANDLE hPointFile = CreateFile(
 		L"../../Data/MainMap_Point.dat",
 		GENERIC_READ,
 		NULL,
@@ -301,23 +305,23 @@ HRESULT CStage::Load_Data()
 		FILE_ATTRIBUTE_NORMAL,
 		NULL);
 
-	if (INVALID_HANDLE_VALUE == hFile)
+	if (INVALID_HANDLE_VALUE == hPointFile)
 		return E_FAIL;
 
 	iCount = 0;
 	dwByte = 0;
 
-	ReadFile(hFile, &iCount, sizeof(_int), &dwByte, nullptr);
+	ReadFile(hPointFile, &iCount, sizeof(_int), &dwByte, nullptr);
 
 	for (int i = 0; i < iCount; ++i)
 	{
 		int iTemp = 0;
-		ReadFile(hFile, &iTemp, sizeof(_int), &dwByte, nullptr);
+		ReadFile(hPointFile, &iTemp, sizeof(_int), &dwByte, nullptr);
 	}
 
-	CloseHandle(hFile);
+	CloseHandle(hPointFile);
 
-	hFile = CreateFile(
+	HANDLE hLightFile = CreateFile(
 		L"../../Data/MainMap_Light.dat",
 		GENERIC_READ,
 		NULL,
@@ -326,27 +330,27 @@ HRESULT CStage::Load_Data()
 		FILE_ATTRIBUTE_NORMAL,
 		NULL);
 
-	if (INVALID_HANDLE_VALUE == hFile)
+	if (INVALID_HANDLE_VALUE == hLightFile)
 		return E_FAIL;
 
 	dwByte = 0;
 
 	for (int i = 0; i < 3; ++i)
 	{
-		ReadFile(hFile, &m_vDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &m_vDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &m_vDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionDiffuseColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionDiffuseColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionDiffuseColor[i].z, sizeof(_float), &dwByte, nullptr);
 
-		ReadFile(hFile, &m_vDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &m_vDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &m_vDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionAmbientColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionAmbientColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionAmbientColor[i].z, sizeof(_float), &dwByte, nullptr);
 
-		ReadFile(hFile, &m_vDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &m_vDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
-		ReadFile(hFile, &m_vDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionSpecularColor[i].x, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionSpecularColor[i].y, sizeof(_float), &dwByte, nullptr);
+		ReadFile(hLightFile, &m_vDirectionSpecularColor[i].z, sizeof(_float), &dwByte, nullptr);
 	}
 
-	CloseHandle(hFile);
+	CloseHandle(hLightFile);
 
 	return S_OK;
 }
@@ -417,14 +421,14 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 	{
 		pGameObject = CBeefalo::Create(m_pGraphicDev, vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 		vPos.y = 1.5f;
 	}
 	else if (!_tcscmp(L"FireSton", pName))
 	{
 		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Spider", pName))
 	{
@@ -443,19 +447,19 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 	{
 		pGameObject = CObjectFireFlies::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Teleporter", pName))
 	{
 		pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"BossDoor", pName))
 	{
 		pGameObject = CBossDoor::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 
 	if (nullptr != pGameObject)

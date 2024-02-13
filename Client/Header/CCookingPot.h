@@ -60,6 +60,8 @@ public:
 		m_bIsHit = true;
 	};
 
+	void Set_Success(_bool bSuccess) { m_bSuccess = bSuccess; }
+
 private:
 	virtual HRESULT			Add_Component() override;
 	virtual void			Check_FrameState() override;
@@ -96,6 +98,8 @@ private:
 	BOOL m_bIsHit = false;
 
 	_bool m_bInstall = false;
+
+	_bool m_bSuccess = false;
 
 };
 

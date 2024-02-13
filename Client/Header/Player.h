@@ -35,6 +35,8 @@ public:
 	void Set_PlayerMental(_int _iMental) { m_Stat.fMental += _iMental; }
 	void Set_PlayerHangry(_int _iHangry) { m_Stat.fHungry += _iHangry; }
 
+	void Set_Tent() { m_bTent = !m_bTent; }
+
 public:
 	virtual HRESULT Ready_GameObject()						 override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
@@ -102,6 +104,8 @@ private:
 	_bool				m_bIsRoadScene;			//Road æ¿¿Ã∏È true (¿”Ω√)
 
 	_uint m_iLightNum;
+
+	_bool m_bTent;
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);

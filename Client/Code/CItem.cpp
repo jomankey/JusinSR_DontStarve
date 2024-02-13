@@ -85,6 +85,10 @@ void CItem::Set_ObjState()
 		m_Stat.strObjName = L"È¶ºÒ";
 	else if (m_strObjName == L"BonFire")
 		m_Stat.strObjName = L"¸ð´ÚºÒ";
+	else if (m_strObjName == L"Wetgoop")
+		m_Stat.strObjName = L"°ïÁ×";
+	else if (m_strObjName == L"Meatballs")
+		m_Stat.strObjName = L"¹ÌÆ®º¼";
 }
 
 _int CItem::Update_GameObject(const _float& fTimeDelta)

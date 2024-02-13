@@ -5,6 +5,7 @@
 #include "Export_Utility.h"
 #include <Mouse.h>
 #include "SlotMgr.h"
+#include <Player.h>
 
 CTent::CTent(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
 	: CResObject(pGraphicDev), m_bInstall(bInstall)
@@ -75,6 +76,22 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 
 
 	Change_Frame_Event();
+
+	if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) // 플레이어와 상호작용
+	{
+		//auto& vecUI = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
+		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
+		_vec3 vPos;
+		m_pTransForm->Get_Info(INFO_POS, &vPos);
+		if (Engine::Collision_Mouse_Object(pMouse->Get_MouseRayPos(), pMouse->Get_MouseRayDir(), vPos, m_pTransForm->Get_Scale()))
+		{
+			//충돌처리
+			CPlayer* pPlayer = dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject());
+			pPlayer->Set_Tent();
+			Set_Enter();
+		}
+	}
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -174,7 +191,7 @@ HRESULT CTent::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 
-	m_pTransForm->Set_Scale(_vec3(4.5f, 4.5f, 4.5f));
+	m_pTransForm->Set_Scale(_vec3(3.f, 3.f, 3.f));
 
 	if (!m_bInstall)
 	{

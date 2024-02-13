@@ -34,7 +34,7 @@ private:
 	HRESULT Change_LightInfo(const _float& fTimeDelta);
 
 private:
-	Engine::CCalculator* m_pCalculatorCom;
+	Engine::CCalculator* m_pCalculator;
 
 	_vec3 vLight[3] = { { 1.f, 1.f, 1.f} };
 

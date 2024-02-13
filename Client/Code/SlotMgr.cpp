@@ -50,7 +50,7 @@ _bool CSlotMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3
 			vPos.x = vecBox[i]->Get_fX();
 			vPos.y = vecBox[i]->Get_fY();
 
-			_bool bFood = strItemKey == L"Cooked_berries" || strItemKey == L"Cooked_Meat_Monster" || strItemKey == L"CookedMeat" || strItemKey == L"Meat_Monster" || strItemKey == L"RawMeat";
+			_bool bFood = strItemKey == L"Cooked_berries" || strItemKey == L"Cooked_Meat_Monster" || strItemKey == L"CookedMeat" || strItemKey == L"Meat_Monster" || strItemKey == L"RawMeat" || strItemKey == L"Berries" || strItemKey == L"Meatballs" || strItemKey == L"Wetgoop";
 
 			ARMOR_SLOT_TYPE eArmor(ARMOR_SLOT_END);
 			if (strItemKey == L"Ax" || strItemKey == L"Lance" || strItemKey == L"Hammer" || strItemKey == L"Pickaxe" || strItemKey == L"Torch")
@@ -111,11 +111,11 @@ void CSlotMgr::Set_Create_Menu(int _iNum, CItem* pItem)
 	pCreateBox[_iNum]->Set_Item(pItem);
 }
 
-void CSlotMgr::Remove_InvenItem(_uint _iItemNum)
+void CSlotMgr::Remove_InvenItem(_uint _iItemNum, _uint _iItemCount)
 {
 	CItem* pItme = m_pItemArr[_iItemNum];
 
-	pItme->MinusItemCount(1);
+	pItme->MinusItemCount(_iItemCount);
 
 	if (pItme->Get_ItemCount() <= 0)
 	{
@@ -146,6 +146,18 @@ _bool CSlotMgr::Check_InvenItemCount(wstring strName, _int iNeedNum)
 	return false;
 }
 
+void CSlotMgr::Remove_CreateItem(wstring strName, _uint iItemCount)
+{
+	for (auto& iter : m_pItemArr)
+	{
+
+		if (iter == nullptr || strName != iter->GetObjName())
+			continue;
+
+		iter->MinusItemCount(iItemCount);
+	}
+}
+
 void CSlotMgr::Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _uint _iItemNum)
 {
 
@@ -163,6 +175,24 @@ void CSlotMgr::Set_CookItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strKeyName, _
 	if (m_pCookArr[iSlotNum] == nullptr)
 		m_pCookArr[iSlotNum] = pItem;
 
+}
+
+void CSlotMgr::Remove_CookItem()
+{
+	for (auto& iter : m_pCookArr)
+	{
+		Safe_Release(iter);
+	}
+}
+
+_bool CSlotMgr::Start_Cook()
+{
+	for (auto & iter : m_pCookArr)
+	{
+		if (iter != nullptr && (iter->GetObjName() == L"Cooked_Meat_Monster" || iter->GetObjName() == L"CookedMeat" || iter->GetObjName() == L"Meat_Monster" || iter->GetObjName() == L"RawMeat"))
+			return true;
+	}
+	return false;
 }
 
 HRESULT CSlotMgr::Add_InvenBoxList(LPDIRECT3DDEVICE9 pGraphicDev, BOX_TYPE eType, BOX_DIR eDir, int _iNum)
