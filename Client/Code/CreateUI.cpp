@@ -17,7 +17,7 @@ CCreateUI::~CCreateUI()
 HRESULT CCreateUI::Ready_GameObject()
 {
 	CUIMgr::GetInstance()->Ready_CreateInfo();
-	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, CREATE, HEIGHT, 3);
+	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, CREATE, HEIGHT, 4);
 
 	// 고정 아이템 이미지 넣어주기 
 	_vec3 vPos;
@@ -33,12 +33,15 @@ HRESULT CCreateUI::Ready_GameObject()
 	pItem = CItemTool::Create(m_pGraphicDev, L"Proto_UI_Equipment", vPos);
 	CSlotMgr::GetInstance()->Set_Create_Menu(2, pItem);
 
-	for (size_t i = 0; i < 3; ++i)
+	CSlotMgr::GetInstance()->Get_BoxPos(CREATE, 3, &vPos);
+	pItem = CItemTool::Create(m_pGraphicDev, L"Proto_UI_Processing", vPos);
+	CSlotMgr::GetInstance()->Set_Create_Menu(3, pItem);
+
+	for (size_t i = 0; i < 4; ++i)
 	{
 		CSlideUI* pUI = CSlideUI::Create(m_pGraphicDev, (eITEMTOOL_TYPE)i);
 		m_vecSlide.push_back(pUI);
 	}
-
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 

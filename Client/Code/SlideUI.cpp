@@ -89,6 +89,25 @@ HRESULT CSlideUI::Ready_GameObject()
 		vPos = _vec3{ m_vecSlideBox[1]->Get_fX(), m_vecSlideBox[1]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Armor", vPos);
 		m_vecSlideBox[1]->Set_Item(pItem);
+
+		vPos = _vec3{ m_vecSlideBox[2]->Get_fX(), m_vecSlideBox[2]->Get_fY() - pHeight , 0.f };
+		pItem = CItemTool::Create(m_pGraphicDev, L"LogSuit", vPos);
+		m_vecSlideBox[2]->Set_Item(pItem);
+	}
+		break;
+	case Engine::ITEM_PROCESSING: // Àç·áµé
+	{
+		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight , 0.f };
+		pItem = CItemTool::Create(m_pGraphicDev, L"Rope", vPos);
+		m_vecSlideBox[0]->Set_Item(pItem);
+
+		vPos = _vec3{ m_vecSlideBox[1]->Get_fX(), m_vecSlideBox[1]->Get_fY() - pHeight , 0.f };
+		pItem = CItemTool::Create(m_pGraphicDev, L"Charcoal", vPos);
+		m_vecSlideBox[1]->Set_Item(pItem);
+
+		vPos = _vec3{ m_vecSlideBox[2]->Get_fX(), m_vecSlideBox[2]->Get_fY() - pHeight , 0.f };
+		pItem = CItemTool::Create(m_pGraphicDev, L"CutStone", vPos);
+		m_vecSlideBox[2]->Set_Item(pItem);
 	}
 		break;
 	default:

@@ -102,7 +102,7 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	//UI
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®¹Ù¸¥°íµñ",  L"Panel_Title", 15, 25, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®¹Ù¸¥°íµñ", L"Panel_Info",  8, 13, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®¹Ù¸¥°íµñ", L"Button_Make", 12, 15, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®¹Ù¸¥°íµñ", L"Button_Make", 15, 18, FW_THIN), E_FAIL);
 
 	//Mouse
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Title", 15, 22, FW_HEAVY), E_FAIL);

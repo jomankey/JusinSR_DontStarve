@@ -403,7 +403,7 @@ void CItemTool::Coll_ItemBasic(const float& fTimeDelta)
 	for (auto& iter : vecItem)
 	{
 		CItemBasic* pItem = dynamic_cast<CItemBasic*>(iter);
-		if (!pItem->Get_ChangeRender())
+		if (!pItem->Get_ChangeRender() && pItem->GetObjName() != m_strObjName)
 			continue;
 
 		if (Engine::Collision_Mouse(_vec2{m_fX, m_fY}, pItem->Get_fX(), pItem->Get_fY(), pItem->Get_fSizeX(), pItem->Get_fSizeY()))

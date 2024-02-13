@@ -5,6 +5,7 @@
 #include <Mouse.h>
 #include <Cook.h>
 #include <CCookingPot.h>
+#include <ItemBasic.h>
 
 CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec2 vSize, _bool bFood)
     : CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_fX(vPos.x), m_fY(vPos.y), m_bColl(false), m_fSizeX(vSize.x), m_fSizeY(vSize.y), m_bFood(bFood)
@@ -112,11 +113,17 @@ void CButtonUI::Input_Mouse()
             {
                 CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
                 CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
-                CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
-            }
-                
 
-           CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
+                if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
+                {
+                    _vec3 vPos;
+                    scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPos);
+                    CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_tCreateInfo.strKeyName);
+                    CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pItem);
+                    pItem->GetTransForm()->Set_Pos(vPos);
+                    dynamic_cast<CItemBasic*>(pItem)->Pickup_Item(vSlotPos);
+                }
+            }
         }
     }
     else if (m_bColl && m_bFood) // 요리 탭에서 요리 제작, 요리 끝나면 아이템 다 사라지도록 
@@ -150,7 +157,6 @@ void CButtonUI::Input_Mouse()
             CSlotMgr::GetInstance()->Remove_CookItem();
         }
     }
-
 }
 
 CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec2 vSize, _bool bFood)

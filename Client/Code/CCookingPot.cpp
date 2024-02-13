@@ -6,6 +6,7 @@
 #include <Mouse.h>
 #include "SlotMgr.h"
 #include <Cook.h>
+#include <ItemBasic.h>
 
 CCookingPot::CCookingPot(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
 	: CResObject(pGraphicDev), m_bInstall(bInstall)
@@ -70,13 +71,10 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 	if (!m_bIsFrameStop)
 	{
 		m_fFrame += m_fFrameEnd * fTimeDelta;
-		
-
 	}
 
 	if (m_bIsCooking)
 	{
-
 		m_fTimeChek += fTimeDelta;
 	}
 
@@ -85,7 +83,16 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 	{
 		_vec3 vSlot;
 		//¿ä¸®³¡
-		CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop", &vSlot);
+		if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop", &vSlot))
+		{
+			_vec3 vPos;
+			m_pTransForm->Get_Info(INFO_POS, &vPos);
+
+			CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop");
+			CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pItem);
+			pItem->GetTransForm()->Set_Pos(vPos);
+			dynamic_cast<CItemBasic*>(pItem)->Pickup_Item(vSlot);
+		}
 		
 		m_bIsCooking=false;
 		m_fTimeChek = 0.f;

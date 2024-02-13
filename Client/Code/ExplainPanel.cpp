@@ -16,6 +16,9 @@ CExplainPanel::CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring 
     m_vPos(vPos)
 {
     ZeroMemory(&m_tCreateInfo, sizeof(m_tCreateInfo));
+
+    for (int i = 0; i < 3; ++i)
+        m_pItem[i] = nullptr;
 }
 
 CExplainPanel::CExplainPanel(const CExplainPanel& rhs)
@@ -39,7 +42,7 @@ HRESULT CExplainPanel::Ready_GameObject()
     m_fX = m_vPos.x;
     m_fY = m_vPos.y;
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
     {
         _vec3 vPos = _vec3(m_fX + 4.f * ((i+1) * (i *4) ), m_fY + 8.f, 0.f);
         m_pItem[i] = CInvenSlot::Create(m_pGraphicDev, vPos, i, INVEN);
@@ -135,8 +138,8 @@ void CExplainPanel::Render_GameObject()
   
     Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-    //아이템 2개 넣기
-    for (int i = 0; i < 2; ++i)
+    //아이템 넣기
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         m_pItem[i]->Render_GameObject();
 
     m_pButton->Render_GameObject();

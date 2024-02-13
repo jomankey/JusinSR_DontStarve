@@ -33,7 +33,7 @@ _int CWorldHand::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	m_fWorldTime = 0.0003f;
+	m_fWorldTime = 0.0027f;
 	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(-(m_fWorldTime / fTimeDelta)));
 
 	return 0;

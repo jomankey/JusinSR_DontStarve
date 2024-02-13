@@ -135,6 +135,7 @@ namespace Engine
 		ITEM_EQUIP,
 		ITEM_ALIVE,
 		ITEM_WEAPON,
+		ITEM_PROCESSING,
 		ITEM_END
 	};
 

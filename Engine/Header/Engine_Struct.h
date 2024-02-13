@@ -84,7 +84,8 @@ namespace Engine
 		_tchar* strKeyName;
 		_tchar* strName;
 		_tchar* strInfo;
-		ITEMINFO tItemInfo[2]; // 아이템 key값 넣기
+		_int iInfoCount; // 필요한 아이템 수
+		ITEMINFO tItemInfo[3]; // 아이템 key값 넣기
 	} CREATEINFO;
 
 	struct tFrameInfo

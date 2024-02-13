@@ -37,7 +37,7 @@ private:
 	CREATEINFO m_tCreateInfo;
 	wstring m_strItemKey;
 
-	CSlot* m_pItem[2];
+	CSlot* m_pItem[3];
 	CButtonUI* m_pButton;
 };
 

@@ -25,7 +25,7 @@ CItemBasic::~CItemBasic()
 
 void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 {
-	m_pTransForm->Get_Info(INFO_POS, &m_vPos);
+	m_vPos = m_pTransForm->Get_Pos();
 	m_pCalculatorCom->Change_OnObjectMatrix(g_hWnd, &m_vPos);
 	m_bChangeRander = true;
 
