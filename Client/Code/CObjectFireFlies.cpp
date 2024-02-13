@@ -6,7 +6,6 @@
 
 CObjectFireFlies::CObjectFireFlies(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
-	, m_bIsCheckAfterDay(false)
 {
 }
 
@@ -27,7 +26,6 @@ HRESULT CObjectFireFlies::Ready_GameObject()
 	m_eFireFliesCurState = FIREFLIES_PRE;
 	m_eObject_id = FIRE_FLIES;
 	m_fFrame = 0.f;
-	m_fFrameEnd = 17.f;
 	m_fDiffY = 0.4f;
 	//Ready_Stat();
 
@@ -38,52 +36,17 @@ HRESULT CObjectFireFlies::Ready_GameObject()
 
 _int CObjectFireFlies::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bIsCheckAfterDay)
-	{
-		m_fFrame += m_fFrameEnd * fTimeDelta*0.5;
-		if (m_fFrameEnd < m_fFrame)
-		{
-			m_fFrame = 0.f;
-		}
-	}
-	else
-	{
-		//if (m_eFireFliesCurState == FIREFLIES_PST)
-		//{
-		//	m_fFrame += m_fFrameEnd * fTimeDelta;
-		//	if (m_fFrame > m_fFrameEnd)
-		//	{
-		//		m_bNextAnim = true;
-		//	}
-		//
-		//}
-
-		//밤에서 낮으로 바뀌었을 때 소멸하는 애니메이션 한 번 출력후 바로 다음 상태로 넘어가기
-		//기본 loop상태에서 바꿔야 하기 때문에 
-		//m_fFrame += m_fFrameEnd * fTimeDelta;
-		//if (m_eFireFliesCurState == FIREFLIES_PST && m_fFrameEnd < m_fFrame)
-		//	m_bNextAnim = true;
-		//
-		//
-		////무조건 낮일 때 해당 상태를 계속 유지 시켜야 함
-		//if (m_bNextAnim)
-		//{
-			m_eFireFliesCurState = FIREFLIES_PRE;
-			m_fFrame = 0.f;
-		//}
-	}
 	
-	if (GetAsyncKeyState('F')) //밤
-	{
-		m_bIsCheckAfterDay = true;
-	}
+	if(!m_bIsFrameStop)
+	m_fFrame += m_fFrameEnd * fTimeDelta;
 	
-	if (GetAsyncKeyState('G')) //낮
-	{
 
-		m_bIsCheckAfterDay = false;
-	}
 
+
+
+
+
+	Change_Frame_Event();
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -95,43 +58,13 @@ void CObjectFireFlies::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 
 
-	Change_Frame_Event();
+	
 	Check_FrameState();
 
 
 
 
 
-	//if (m_bIsCheckAfterDay)	//밤이면 Check_Night()
-	//{
-	//	Change_Frame_Event();
-	//	Check_FrameState();
-	//}
-	//else	//낮이면
-	//{
-	//	//밤에서 낮으로 바꼈을 때 바뀌는 동작을 수행하기 위한 조건문
-	//	if (m_eFireFliesCurState == FIREFLIES_LOOP)
-	//	{
-	//
-	//		m_eFireFliesCurState = FIREFLIES_PST;
-	//		m_bIsCheckAfterDay= true;
-	//		Check_FrameState();
-	//	}
-	//
-	//	//밤에서 낮으로 바꼇을 때 바귀는 동작을 다 수행	했으면 다시 처음으로 돌아가기 위한 조건문
-	//	if (m_eFireFliesCurState == FIREFLIES_PST&& m_fFrameEnd < m_fFrame)
-	//	{
-	//		m_eFireFliesCurState = FIREFLIES_PRE;
-	//		m_fFrame = 0.f;
-	//	}
-	//	// 완전히 낮일 때 계속 안보이게 하기 위한 조건문
-	//	else
-	//	{
-	//		m_eFireFliesCurState = FIREFLIES_PRE;
-	//		m_fFrame = 0.f;
-	//	}
-	//	
-	//}
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -189,54 +122,101 @@ HRESULT CObjectFireFlies::Add_Component()
 
 void CObjectFireFlies::Change_Frame_Event()
 {
-	if (m_bIsCheckAfterDay)
+
+	//밤 일때
+	if (Check_Night())
 	{
-		if (m_eFireFliesCurState == FIREFLIES_PRE)
+		if (m_eFireFliesCurState== FIREFLIES_PRE)
 		{
-			m_eFireFliesCurState = FIREFLIES_LOOP;
+			m_bIsFrameStop= false;
+			m_fFrameEnd = 16.0f;
+			//m_eFireFliesCurState = FIREFLIES_LOOP;
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_eFireFliesCurState = FIREFLIES_LOOP;
+				m_fFrame = 0.0f;
+			}
+		}
+		if (m_eFireFliesCurState == FIREFLIES_LOOP)
+		{
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_fFrame = 0.0f;
+			}
 		}
 	}
+	//낮 일때
+	else
+	{
 
-	//if (!m_bIsCheckAfterDay)
-	//{
-	//	m_eFireFliesCurState = FIREFLIES_PST;
-	//}
 
-}
-BOOL CObjectFireFlies::Check_Night()
-{
-	if (light::Get_TimeIndex() == TIME_STATE::NIGHT)
-		return true;
-	else 
-		return false;
+		if (m_eFireFliesCurState == FIREFLIES_LOOP)
+		{
+			m_fFrame = 0.0f;
+			m_eFireFliesCurState = FIREFLIES_PST;
+
+		}
+		if (m_eFireFliesCurState == FIREFLIES_PST)
+		{
+			if (m_fFrame > m_fFrameEnd)
+			{
+				m_eFireFliesCurState = FIREFLIES_PRE;
+				m_fFrame = 0.0f;
+				m_bIsFrameStop= true;
+			}
+		}
+
+
+	}
+
+
 
 }
 
 void CObjectFireFlies::Check_FrameState()
 {
-
-	//현재 돌고 있는 프레임 체크용
-	if (m_eFireFliesPreState == m_eFireFliesCurState)
-		return;
-
-	if (m_eFireFliesCurState == FIREFLIES_PRE)
-		m_fFrameEnd = 17;
-
-	if (m_eFireFliesCurState == FIREFLIES_LOOP)
-		m_fFrameEnd = 34;
-
-	if (m_eFireFliesCurState == FIREFLIES_PST)
+	if (m_eFireFliesPreState != m_eFireFliesCurState)
 	{
-		//if(m_fFrameEnd < m_fFrame)
-		//{
-		//	m_bNextAnim = true;
-		//}
-		m_fFrameEnd = 18;
+		switch (m_eFireFliesCurState)
+		{
+		case CObjectFireFlies::FIREFLIES_PRE:
+			m_fFrameEnd = 16.0f;
+			break;
+		case CObjectFireFlies::FIREFLIES_LOOP:
+			m_fFrameEnd = 32.0f;
+			break;
+		case CObjectFireFlies::FIREFLIES_PST:
+			m_fFrameEnd = 17.0f;
+			break;
+		case CObjectFireFlies::FIREFLIES_END:
+			break;
+		default:
+			break;
+		}
+		m_eFireFliesPreState = m_eFireFliesCurState;
+		m_fFrame = 0.0f;
+
 	}
 
-	m_eFireFliesPreState = m_eFireFliesCurState;
-	m_fFrame = 0.f;
+
 }
+
+
+
+
+
+BOOL CObjectFireFlies::Check_Night()
+{
+	if (light::Get_TimeIndex() == TIME_STATE::NIGHT)
+		return true;
+	else
+		return false;
+
+}
+
+
+
+
 
 
 

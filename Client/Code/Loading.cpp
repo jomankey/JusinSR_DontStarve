@@ -142,6 +142,12 @@ HRESULT CLoading::Loading_Player_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Ghost_Appear", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ghost/appear/appear__%03d.png", 12)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Ghost_IDLE", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ghost/idle/idle__%03d.png", 26)), E_FAIL);
 
+
+	//부활모션
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Rebirth", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/rebirth/amulet__%03d.png", 30)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_research", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/research/research__%03d.png", 17)), E_FAIL);
+
+
 	return S_OK;
 }
 

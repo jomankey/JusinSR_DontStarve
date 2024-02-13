@@ -262,11 +262,11 @@
     <Filter Include="02. GameObject\07. UI\06. AnimationUI\03. BackGround">
       <UniqueIdentifier>{0c7c0c48-9e98-4986-b004-60aa1508c57c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\13. Projectile">
-      <UniqueIdentifier>{8df5958b-2c9b-4d29-8ac5-de86c8818e71}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\10. Trap\09. CCatapult\Projectile">
       <UniqueIdentifier>{4eda038a-cae0-4755-84d7-40e0edf70b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\07. RebirthAmulet">
+      <UniqueIdentifier>{6b245f73-6004-49b5-bed3-967794227638}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -519,6 +519,9 @@
     <ClInclude Include="..\header\CCataProj.h">
       <Filter>02. GameObject\10. Trap\09. CCatapult\Projectile</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Rebirth.h">
+      <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -760,6 +763,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCataProj.cpp">
       <Filter>02. GameObject\10. Trap\09. CCatapult\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rebirth.cpp">
+      <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

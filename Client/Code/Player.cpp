@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "CItem.h"
 #include "Ghost.h"
+#include "Rebirth.h"
 
 //Manager
 #include "SlotMgr.h"
@@ -67,6 +68,7 @@ HRESULT CPlayer::Ready_GameObject()
 
 	m_vPlayerActing = false;
 	m_bIsRoadScene - false;
+	m_Ghost = nullptr;
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 
@@ -117,6 +119,10 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 			Ket_Input_Road(fTimeDelta);
 		}
 		
+	}
+	else if (m_Stat.bDead)
+	{
+		Rebirth();
 	}
 	Weapon_Change();
 	Check_State();
@@ -432,6 +438,12 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_die"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_die", pComponent });
+
+
+	pComponent = m_pTextureCom[LOOK_DOWN][REBIRTH] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_research"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_research", pComponent });
+	
 #pragma endregion TEXCOM
 
 
@@ -893,6 +905,11 @@ void CPlayer::Check_State()
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
+		case REBIRTH:
+			m_fFrameEnd = 17;
+			m_KeyLock = true;
+			m_eCurLook = LOOK_DOWN;
+			break;
 		}
 		m_ePreState = m_eCurState;
 		m_fFrame = 0.f;
@@ -951,6 +968,10 @@ void CPlayer::Set_Scale()
 
 	else if (m_eCurState == DEAD)
 		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
+
+	else if (m_eCurState == REBIRTH)
+		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
+	
 	else
 		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
 
@@ -1125,9 +1146,9 @@ _int CPlayer::Die_Check()
 			_vec3 pPlayerPos;
 			m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
 			
-			CGameObject* pGameObject = CGhost::Create(m_pGraphicDev, pPlayerPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), E_FAIL);
+			m_Ghost = CGhost::Create(m_pGraphicDev, pPlayerPos);
+			NULL_CHECK_RETURN(m_Ghost, E_FAIL);
+			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, m_Ghost), E_FAIL);
 				
 		}
 	}
@@ -1135,6 +1156,26 @@ _int CPlayer::Die_Check()
 
 	return 0;
 
+}
+
+void CPlayer::Rebirth()
+{
+	if (KEY_HOLD(DIK_M))
+	{
+		_vec3 pPlayerPos;
+		m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
+		CGameObject* amulet = CRebirth::Create(m_pGraphicDev, pPlayerPos);
+		NULL_CHECK_RETURN(amulet, );
+		FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, amulet), );
+
+		m_eCurState = REBIRTH;
+		m_bFrameLock = false;
+		m_Stat.bDead = false;
+		m_Stat.fHP = m_Stat.fMxHP;
+
+		DeleteObject(m_Ghost);
+		m_Ghost = nullptr;
+	}
 }
 
 HRESULT CPlayer::Ready_Light()
