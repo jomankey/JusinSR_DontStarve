@@ -262,9 +262,6 @@
     <Filter Include="02. GameObject\07. UI\06. AnimationUI\03. BackGround">
       <UniqueIdentifier>{0c7c0c48-9e98-4986-b004-60aa1508c57c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\13. Projectile">
-      <UniqueIdentifier>{8df5958b-2c9b-4d29-8ac5-de86c8818e71}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\10. Trap\09. CCatapult\Projectile">
       <UniqueIdentifier>{4eda038a-cae0-4755-84d7-40e0edf70b4b}</UniqueIdentifier>
     </Filter>
