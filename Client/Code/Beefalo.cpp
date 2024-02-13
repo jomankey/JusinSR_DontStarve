@@ -61,7 +61,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     CGameObject::Update_GameObject(fTimeDelta);
     State_Change();
     Look_Change();
-
+    Set_Scale();
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     
     return iResult;
@@ -324,7 +324,7 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
             { 
                 m_eCurState = MADRUN;
             }
-            else if ((3 < m_fFrame) && IsTarget_Approach(m_Stat.fATKRange) && !m_bAttacking)
+            else if ((3 < m_fFrame) && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()) && !m_bAttacking)
             {
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
@@ -403,6 +403,28 @@ void CBeefalo::Set_Hit()
 {
     m_eCurState = HIT;
     m_bHit = true;
+}
+
+void CBeefalo::Set_Scale()
+{
+
+    if (m_ePreState == MADRUN)
+    {
+        m_pTransForm->Set_Scale({ 2.2f, 2.2f, 2.2f });
+    }
+    else if (m_ePreState == ATTACK)
+    {
+        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
+    }
+    else if (m_ePreState == DEAD)
+    {
+        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
+    }
+    else
+    {
+        m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
+    }
+
 }
 
 

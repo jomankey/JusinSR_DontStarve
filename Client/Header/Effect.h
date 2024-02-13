@@ -13,6 +13,7 @@ protected:
 protected:
 	virtual void	State_Change()	PURE;
 	virtual void	Look_Change();
+	void Check_Collision();
 protected:
 	_vec3 m_vPos;
 
@@ -26,6 +27,8 @@ protected:
 	_bool				m_bFrameStop;			//«¡∑π¿”¿ª ∏ÿ√Áæﬂ «“ ∂ß true∑Œ πŸ≤„¡‡
 
 	_bool				m_Dirchange;
+
+	_float				m_fDamage;
 protected:
 	virtual void Free() override;
 

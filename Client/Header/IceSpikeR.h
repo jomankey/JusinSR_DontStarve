@@ -38,6 +38,8 @@ private:
 	ICESPIKE m_eCurState;
 	ICESPIKE m_ePreState;
 
+	_bool	m_bAttack;
+
 public:
 	static IceSpikeR* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 
