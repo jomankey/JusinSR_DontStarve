@@ -107,17 +107,6 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 
 	Change_LightInfo(fTimeDelta);
 
-<<<<<<< HEAD
-	/*if (KEY_TAP(DIK_Z))
-	{
-		CScene* pScene = CRoadScene::Create(m_pGraphicDev, L"ROAD");
-		NULL_CHECK_RETURN(pScene, -1);
-
-		ChangeScene(pScene);
-	}*/
-
-=======
->>>>>>> f6ffc56d9c88e210c9be11af51e7486a7d48d468
 	return 0;
 }
 
