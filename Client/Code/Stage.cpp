@@ -158,7 +158,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	Engine::CGameObject* pGameObject = nullptr;
 	///TEST
 
-	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 44, _vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f));
+	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 44, _vec3(-10.f, -10.f, -10.f), _vec3(10.f, 10.f, 10.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), E_FAIL);
 

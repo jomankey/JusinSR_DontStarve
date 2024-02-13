@@ -43,7 +43,7 @@ namespace Engine
 
 	}VTXPARTICLE;
 
-	const _ulong	FVF_PARTICLE = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_PSIZE;
+	const _ulong	FVF_PARTICLE = D3DFVF_XYZ | D3DFVF_DIFFUSE;
 
 	typedef struct tagIndex16
 	{
