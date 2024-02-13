@@ -102,6 +102,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Mouse.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Rebirth.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Slot.cpp"
 
 
