@@ -1,5 +1,5 @@
 #include "BerryBush.h"
-#include <ItemBasic.h>
+
 
 CBerryBush::CBerryBush(LPDIRECT3DDEVICE9 pGrahpicDev)
 	: CResObject(pGrahpicDev),

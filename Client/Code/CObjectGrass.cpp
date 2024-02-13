@@ -2,7 +2,7 @@
 #include "CObjectGrass.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-#include "ItemBasic.h"
+
 CObjectGrass::CObjectGrass(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CResObject(pGraphicDev)
 {

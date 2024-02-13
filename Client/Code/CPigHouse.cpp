@@ -4,7 +4,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "ResObject.h"
-#include <ItemBasic.h>
+
 #include "MainApp.h"
 
 CPigHouse::CPigHouse(LPDIRECT3DDEVICE9 pGraphicDev)

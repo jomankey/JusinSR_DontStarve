@@ -2,7 +2,6 @@
 #include "CObjectRock.h"
 #include "Export_Utility.h"
 #include "Component.h"
-#include "ItemBasic.h"
 CObjectRock::CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
 {
