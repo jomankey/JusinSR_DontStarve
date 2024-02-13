@@ -268,6 +268,9 @@
     <Filter Include="02. GameObject\10. Trap\09. CCatapult\Projectile">
       <UniqueIdentifier>{4eda038a-cae0-4755-84d7-40e0edf70b4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\06. Effect\07. RebirthAmulet">
+      <UniqueIdentifier>{6b245f73-6004-49b5-bed3-967794227638}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -519,6 +522,9 @@
     <ClInclude Include="..\header\CCataProj.h">
       <Filter>02. GameObject\10. Trap\09. CCatapult\Projectile</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Rebirth.h">
+      <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -760,6 +766,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CCataProj.cpp">
       <Filter>02. GameObject\10. Trap\09. CCatapult\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rebirth.cpp">
+      <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
