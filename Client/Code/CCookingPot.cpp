@@ -79,6 +79,8 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 		m_fTimeChek += fTimeDelta;
 	}
+
+
 	if (m_fTimeChek >= m_MaxfTimeChek)
 	{
 
