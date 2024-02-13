@@ -91,49 +91,37 @@ void CSoundMgr::SetChannelVolume(CHANNELID eID, float fVolume)
 
 void CSoundMgr::LoadSoundFile()
 {
-	// _finddata_t : <io.h>에서 제공하며 파일 정보를 저장하는 구조체
-	_finddata_t fd;
-	
-	// _findfirst : <io.h>에서 제공하며 사용자가 설정한 경로 내에서 가장 첫 번째 파일을 찾는 함수
-	long handle = _findfirst("../../Client/Bin/Resource/Sound/*.mp3", &fd);
-
-	if (handle == -1)
+	_wfinddata64_t fd;
+	__int64 handle = _wfindfirst64(L"../../Client/Bin/Resource/Sound/*.*", &fd);
+	if (handle == -1 || handle == 0)
 		return;
 
 	int iResult = 0;
 
 	char szCurPath[128] = "../../Client/Bin/Resource/Sound/";
 	char szFullPath[128] = "";
-
+	char szFilename[MAX_PATH];
 	while (iResult != -1)
 	{
+		WideCharToMultiByte(CP_UTF8, 0, fd.name, -1, szFilename, sizeof(szFilename), NULL, NULL);
 		strcpy_s(szFullPath, szCurPath);
-
-		// "../Sound/Success.wav"
-		strcat_s(szFullPath, fd.name);
-
+		strcat_s(szFullPath, szFilename);
 		FMOD_SOUND* pSound = nullptr;
 
-		FMOD_RESULT eRes = FMOD_System_CreateSound(m_pSystem, szFullPath, FMOD_DEFAULT, nullptr, &pSound);
-
+		FMOD_RESULT eRes = FMOD_System_CreateSound(m_pSystem, szFullPath, FMOD_DEFAULT, 0, &pSound);
 		if (eRes == FMOD_OK)
 		{
-			int iLength = strlen(fd.name) + 1;
+			int iLength = strlen(szFilename) + 1;
 
 			TCHAR* pSoundKey = new TCHAR[iLength];
 			ZeroMemory(pSoundKey, sizeof(TCHAR) * iLength);
-
-			// 아스키 코드 문자열을 유니코드 문자열로 변환시켜주는 함수
-			MultiByteToWideChar(CP_ACP, 0, fd.name, iLength, pSoundKey, iLength);
+			MultiByteToWideChar(CP_ACP, 0, szFilename, iLength, pSoundKey, iLength);
 
 			m_mapSound.emplace(pSoundKey, pSound);
 		}
-		//_findnext : <io.h>에서 제공하며 다음 위치의 파일을 찾는 함수, 더이상 없다면 -1을 리턴
-		iResult = _findnext(handle, &fd);
+		iResult = _wfindnext64(handle, &fd);
 	}
-
 	FMOD_System_Update(m_pSystem);
-
 	_findclose(handle);
 }
 

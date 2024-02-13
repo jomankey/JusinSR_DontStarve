@@ -22,8 +22,8 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(SetUp_Setting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
-	//Engine::Ready_Sound();
-	//Engine::PlayBGM(L"Start.mp3", 10.f);
+	Engine::Ready_Sound();
+	Engine::PlayBGM(L"Start.mp3", 10.f);
 	//01:23
 	//test
 	return S_OK;
