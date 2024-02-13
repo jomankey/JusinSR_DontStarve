@@ -50,31 +50,6 @@ void CEffect::Look_Change()
 	}
 }
 
-_bool CEffect::Collision_Transform(CTransform* _Src, CTransform* _Dst)
-{
-	_vec3 vSrc, vSrcScale, vDst, vDstScale;
-
-	_Src->Get_Info(INFO_POS, &vSrc);
-	vSrcScale = _Src->Get_Scale();
-
-	_Dst->Get_Info(INFO_POS, &vDst);
-	vDstScale = _Dst->Get_Scale();
-
-	_float iDistanceX = fabs(vSrc.x - vDst.x);
-	_float fRadCX = vSrcScale.x * 0.5f + vDstScale.x * 0.5f;
-
-	_float fDistanceZ = fabs(vSrc.z - vDst.z);
-	_float fRadCY = vSrcScale.y * 0.5f + vDstScale.y * 0.5f;
-
-	if (fDistanceZ > fRadCY || iDistanceX > fRadCX)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
-}
 
 
 
