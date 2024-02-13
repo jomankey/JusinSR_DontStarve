@@ -136,7 +136,7 @@ void CObjectRock::Change_Frame_Event()
 
 
 
-				/*srand(static_cast<unsigned int>(time(nullptr)));
+				srand(static_cast<unsigned int>(time(nullptr)));
 				int signtmp = (rand() % 2 == 0) ? -1 : 1;
 				int iItemPostmp = rand() % 3 * signtmp;
 				vPos.x += iItemPostmp;
@@ -145,7 +145,7 @@ void CObjectRock::Change_Frame_Event()
 				pGameObj = CItemBasic::Create(m_pGraphicDev, L"Rocks_1");
 				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
 				pGameObj->GetTransForm()->Set_Pos(vPos);
-				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);*/
+				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
 
 			}
 

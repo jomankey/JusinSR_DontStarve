@@ -40,7 +40,7 @@ _int CTeleporterWorm::Update_GameObject(const _float& fTimeDelta)
 {
 	if (!m_bFrameStop)
 	{
-		m_fFrame += m_fFrameEnd * fTimeDelta;
+		m_fFrame += m_fFrameEnd * fTimeDelta*2.0f;
 
 	}
 	ChangeScenePlayer(1.f);
@@ -160,7 +160,7 @@ void CTeleporterWorm::Change_Frame_Event()
 		//´ÝÈú ¶§
 		if (m_eTelporterCurState == TELEPORTER_CLOSE)
 		{
-			m_pTransForm->Set_Scale(_vec3(4.5f, 4.5f, 4.5f));
+			//m_pTransForm->Set_Scale(_vec3(4.5f, 4.5f, 4.5f));
 			if (m_fFrame > m_fFrameEnd)
 			{
 				m_eTelporterCurState = TELEPORTER_IDLE;
@@ -184,14 +184,14 @@ void CTeleporterWorm::Check_FrameState()
 		{
 		case TELEPORTER_STATE::TELEPORTER_IDLE:
 		{
-			m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
+			//m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 			m_fFrameEnd = 6.0f;
 			break;
 
 		}
 		case TELEPORTER_STATE::TELEPORTER_OPEN:
 		{
-			m_pTransForm->Set_Scale(_vec3(5.5f, 5.5f, 5.5f));
+			//m_pTransForm->Set_Scale(_vec3(5.5f, 5.5f, 5.5f));
 			m_fFrameEnd = 5.0f;
 			break;
 
@@ -256,7 +256,7 @@ tuple<_bool, _vec3, _bool> CTeleporterWorm::IsPlayerInRadius()
 	_vec3 vDir = vPlayerPos - vMyPos;
 	float _test = D3DXVec3Length(&vDir);
 
-	if (D3DXVec3Length(&(vPlayerPos - vMyPos)) < 3.0f)
+	if (D3DXVec3Length(&(vPlayerPos - vMyPos)) < 4.0f)
 	{
 		if (D3DXVec3Length(&(vPlayerPos - vMyPos)) < 1.0f)
 		{
