@@ -78,6 +78,8 @@ namespace Engine
 		UI,
 		BOSS,
 		EFFECT,
+		SLIDEBOX,
+		PANEL,
 		END = 32,
 	};
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };

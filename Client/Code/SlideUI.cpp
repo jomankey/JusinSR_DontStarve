@@ -6,16 +6,17 @@
 #include"SlideBox.h"
 
 #include "SlotMgr.h"
+#include <Mouse.h>
 
 
 CSlideUI::CSlideUI(LPDIRECT3DDEVICE9 pGraphicDev, eITEMTOOL_TYPE eType)
-	: CGameObject(pGraphicDev), m_pGraphicDev(pGraphicDev), m_bShow(false), m_eToolType(eType)
+	: CUI(pGraphicDev), m_bShow(false), m_eToolType(eType)
 
 {
 }
 
 CSlideUI::CSlideUI(const CSlideUI& rhs)
-	: CGameObject(rhs)
+	: CUI(rhs)
 {
 }
 
@@ -32,6 +33,7 @@ HRESULT CSlideUI::Ready_GameObject()
 	{
 		_vec3 vPos = _vec3(90.f, 150.f + 55.f * j, 0.f);
 		CSlideBox* pSlideBox = CSlideBox::Create(m_pGraphicDev, vPos);
+		//CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::SLIDEBOX, pSlideBox);
 		m_vecSlideBox.push_back(pSlideBox);
 	}
 
@@ -40,12 +42,14 @@ HRESULT CSlideUI::Ready_GameObject()
 	CSlideBox* pSlideBox = nullptr;
 	_float pHeight = 7.f;
 	//ToolTypeº°·Î ¾ÆÀÌÅÛ ³Ö¾îÁÜ (°íÁ¤°ª)
+	
 	switch (m_eToolType)
 	{
 	case Engine::ITEM_EQUIP: // °î±ªÀÌ, µµ³¢, ¸ÁÄ¡, ¿ä¸®µµ±¸
 	{
 		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Ax", vPos);
+		CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::SLIDEBOX, pItem);
 		m_vecSlideBox[0]->Set_Item(pItem);
 
 		vPos = _vec3{ m_vecSlideBox[1]->Get_fX(), m_vecSlideBox[1]->Get_fY() - pHeight, 0.f };
@@ -108,9 +112,19 @@ _int CSlideUI::Update_GameObject(const _float& fTimeDelta)
 void CSlideUI::LateUpdate_GameObject()
 {
 	if (!m_bShow) return;
-
 	for (auto& iter : m_vecSlideBox)
+	{
 		iter->LateUpdate_GameObject();
+
+		CUI* pUI = dynamic_cast<CUI*>(iter);
+		CMouse* pMouse = dynamic_cast<CMouse*>(scenemgr::Get_CurScene()->GetMouseObject());
+		_vec3 vMousePos = pMouse->Get_MousePos();
+		if (Engine::Collision_Mouse(_vec2(vMousePos.x, vMousePos.y), pUI->Get_fX(), pUI->Get_fY(), pUI->Get_fSizeX(), pUI->Get_fSizeY()))
+		{
+			pMouse->IsColl(false);
+			return;
+		}
+	}
 
 	__super::LateUpdate_GameObject();
 }

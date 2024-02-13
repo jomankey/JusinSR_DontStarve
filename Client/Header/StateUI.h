@@ -1,7 +1,9 @@
 #pragma once
 #include "Export_Utility.h"
+#include "UI.h"
+
 class CStateUI :
-    public CGameObject
+    public CUI
 {
 protected:
     explicit CStateUI(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -18,10 +20,6 @@ private:
 	virtual void Check_State() PURE;
 
 protected:
-	Engine::CTexture* m_pTextureCom;
-	Engine::CRcTex* m_pBufferCom;
-
-protected:
 	virtual void Free();
 
 protected:
@@ -29,8 +27,5 @@ protected:
 	_float m_frameEnd; //프레임이 시작되고나서 움직이는 값
 	_float m_PreFrame;
 	BOOL m_bFrameStop = true;
-
-	_matrix				m_ViewMatrix, m_ProjMatrix;
-	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
 };
 

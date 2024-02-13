@@ -24,6 +24,7 @@ namespace Engine
 		//나중에 싱글톤으로 교체
 		CGameObject* GetTerrainObject() { return m_pTerrain; }
 		CGameObject* GetPlayerObject() { return m_pPlayer; }
+		CGameObject* GetMouseObject() { return m_pMouse; }
 		CLayer* GetLayer(eLAYER_TYPE _eLayerType) { return m_arrLayer[(int)_eLayerType]; }
 		HRESULT		AddGameObject(eLAYER_TYPE _eLayerType, eOBJECT_GROUPTYPE _eObjType, CGameObject* pGameObject);
 		wstring Get_Scene_Name() { return m_strSceneName; }
@@ -51,5 +52,6 @@ namespace Engine
 		//나중에 싱글톤으로 교체
 		CGameObject* m_pTerrain;
 		CGameObject* m_pPlayer;
+		CGameObject* m_pMouse;
 	};
 }

@@ -228,8 +228,7 @@
     <ClInclude Include="..\Header\SlideUI.h" />
     <ClInclude Include="..\Header\CTestScene.h" />
     <ClInclude Include="..\Header\CTeleporterWorm.h" />
-    <ClInclude Include="..\Header\CToolUI.h" />
-    <ClInclude Include="..\Header\CUI.h" />
+    <ClInclude Include="..\Header\UI.h" />
     <ClInclude Include="..\Header\WorldHand.h" />
     <ClInclude Include="..\Header\WorldUI.h" />
     <ClInclude Include="..\Header\DeerClops.h" />
@@ -312,8 +311,7 @@
     <ClCompile Include="..\Code\SlideUI.cpp" />
     <ClCompile Include="..\Code\CTestScene.cpp" />
     <ClCompile Include="..\Code\CTeleporterWorm.cpp" />
-    <ClCompile Include="..\Code\CToolUI.cpp" />
-    <ClCompile Include="..\Code\CUI.cpp" />
+    <ClCompile Include="..\Code\UI.cpp" />
     <ClCompile Include="..\Code\WorldHand.cpp" />
     <ClCompile Include="..\Code\WorldUI.cpp" />
     <ClCompile Include="..\Code\DeerClops.cpp" />

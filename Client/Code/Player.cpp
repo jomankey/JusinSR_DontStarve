@@ -1224,8 +1224,8 @@ void CPlayer::Fire_Light()
 
 void CPlayer::Update_State(const _float& fTimeDelta)
 {
-	m_Stat.fHungry -= fTimeDelta;
-	m_Stat.fMental -= fTimeDelta;
+	m_Stat.fHungry -= fTimeDelta * 0.3;
+	m_Stat.fMental -= fTimeDelta * 0.3;
 }
 
 

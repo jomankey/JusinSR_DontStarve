@@ -1,12 +1,17 @@
 #pragma once
 #include "Export_Utility.h"
 #include <SlideUI.h>
+#include "UI.h"
+
 class CCreateUI :
-    public CGameObject
+    public CUI
 {
 private:
     explicit CCreateUI(LPDIRECT3DDEVICE9 pGraphicDev);
     virtual ~CCreateUI();
+
+public:
+    vector<CSlideUI*> Get_Slide() { return m_vecSlide; }
 
 public:
     virtual HRESULT Ready_GameObject() override;
@@ -15,25 +20,17 @@ public:
     virtual void Render_GameObject() override;
 
 private:
-    HRESULT			Add_Component();
+    virtual HRESULT			Add_Component() override;
 
     void Picking_Mouse();
 
-private:
-    Engine::CTexture* m_pTextureCom;
-    Engine::CRcTex* m_pBufferCom;
-
 public:
-    static CCreateUI* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+    static CUI* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
     virtual void Free();
 
 private:
     vector<CSlideUI*> m_vecSlide;
-    _matrix				m_ViewMatrix, m_ProjMatrix;
-    _float m_fX, m_fY, m_fSizeX, m_fSizeY;
-
-    LPDIRECT3DDEVICE9 m_pGraphicDev;
 };
 

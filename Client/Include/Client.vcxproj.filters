@@ -229,9 +229,6 @@
     <Filter Include="02. GameObject\07. UI\03. StateUI\WorldTime\WorldUI">
       <UniqueIdentifier>{5e96da7c-ddca-48ce-84e7-f17a1954a423}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. UI\04. ToolUI">
-      <UniqueIdentifier>{3116b9ca-4620-4d9d-8e8f-f0102d81e6e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. UI\02. CreateUI">
       <UniqueIdentifier>{ccce8bb0-9d51-48e5-bfd9-1f5d3f02736d}</UniqueIdentifier>
     </Filter>
@@ -246,9 +243,6 @@
     </Filter>
     <Filter Include="02. GameObject\07. UI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI">
       <UniqueIdentifier>{7d2f92fa-f6fb-4324-ad15-d81f6752a5de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07. UI\05. Cook">
-      <UniqueIdentifier>{283d441e-bad3-4b31-adde-580ea0e06621}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\07. UI\06. AnimationUI">
       <UniqueIdentifier>{63131860-c17f-4d28-b638-762e090e497c}</UniqueIdentifier>
@@ -267,6 +261,9 @@
     </Filter>
     <Filter Include="02. GameObject\06. Effect\07. RebirthAmulet">
       <UniqueIdentifier>{6b245f73-6004-49b5-bed3-967794227638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. UI\04. Cook">
+      <UniqueIdentifier>{283d441e-bad3-4b31-adde-580ea0e06621}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -312,7 +309,7 @@
     <ClInclude Include="..\Header\Logo.h">
       <Filter>01. Scene\00. Logo</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUI.h">
+    <ClInclude Include="..\Header\UI.h">
       <Filter>02. GameObject\07. UI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CObjectRock.h">
@@ -359,9 +356,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\BerryBush.h">
       <Filter>02. GameObject\08. ResObjects\05. BerryBush</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CToolUI.h">
-      <Filter>02. GameObject\07. UI\04. ToolUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ButtonUI.h">
       <Filter>02. GameObject\07. UI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI</Filter>
@@ -499,7 +493,7 @@
       <Filter>02. GameObject\07. UI\03. StateUI\WorldTime\WorldUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Cook.h">
-      <Filter>02. GameObject\07. UI\05. Cook</Filter>
+      <Filter>02. GameObject\07. UI\04. Cook</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CAnimationUI.h">
       <Filter>02. GameObject\07. UI\06. AnimationUI</Filter>
@@ -557,7 +551,7 @@
     <ClCompile Include="..\Code\Logo.cpp">
       <Filter>01. Scene\00. Logo</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CUI.cpp">
+    <ClCompile Include="..\Code\UI.cpp">
       <Filter>02. GameObject\07. UI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CObjectRock.cpp">
@@ -601,9 +595,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\ResObject.cpp">
       <Filter>02. GameObject\08. ResObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CToolUI.cpp">
-      <Filter>02. GameObject\07. UI\04. ToolUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ButtonUI.cpp">
       <Filter>02. GameObject\07. UI\02. CreateUI\00. Slide\01. ExplainPanel\00. ButtonUI</Filter>
@@ -744,7 +735,7 @@
       <Filter>02. GameObject\07. UI\03. StateUI\WorldTime\WorldUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Cook.cpp">
-      <Filter>02. GameObject\07. UI\05. Cook</Filter>
+      <Filter>02. GameObject\07. UI\04. Cook</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CAnimationUI.cpp">
       <Filter>02. GameObject\07. UI\06. AnimationUI</Filter>

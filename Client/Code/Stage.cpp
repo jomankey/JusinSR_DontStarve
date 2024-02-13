@@ -56,7 +56,7 @@
 
 
 //UI
-#include "CUI.h"
+#include "UI.h"
 #include"Slot.h"
 #include"SlideUI.h"
 #include"CHpUI.h"
@@ -142,11 +142,6 @@ HRESULT CStage::Ready_Layer_Environment()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::BACK_GROUND, pGameObject), E_FAIL);
 
-	//////////마우스
-	pGameObject = CMouse::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::MOUSE, pGameObject), E_FAIL);
-
 	return S_OK;
 }
 
@@ -191,7 +186,6 @@ HRESULT CStage::Ready_Layer_UI()
 	Engine::CGameObject* pGameObject = nullptr;
 
 
-
 	pGameObject = CCreateUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
@@ -234,6 +228,11 @@ HRESULT CStage::Ready_Layer_UI()
 	pGameObject = CWorldHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//////////마우스
+	pGameObject = m_pMouse = CMouse::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::MOUSE, pGameObject), E_FAIL);
 
 	return S_OK;
 }

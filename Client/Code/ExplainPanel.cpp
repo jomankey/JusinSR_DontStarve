@@ -10,29 +10,18 @@
 #include "InvenSlot.h"
 
 CExplainPanel::CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strItemKey)
-    : CGameObject(pGraphicDev), 
-    m_fX(vPos.x), 
-    m_fY(vPos.y), 
+    : CUI(pGraphicDev), 
     m_strItemKey(strItemKey),
-    m_pBufferCom(nullptr),
-    m_pTextureCom(nullptr),
     m_pButton(nullptr),
-    m_fSizeX(0.f),
-    m_fSizeY(0.f)
+    m_vPos(vPos)
 {
     ZeroMemory(&m_tCreateInfo, sizeof(m_tCreateInfo));
 }
 
 CExplainPanel::CExplainPanel(const CExplainPanel& rhs)
-    : CGameObject(rhs), 
-    m_fX(rhs.m_fX), 
-    m_fY(rhs.m_fY), 
+    : CUI(rhs),
     m_strItemKey(rhs.m_strItemKey),
-    m_pBufferCom(rhs.m_pBufferCom),
-    m_pTextureCom(rhs.m_pTextureCom),
-    m_pButton(rhs.m_pButton),
-    m_fSizeX(rhs.m_fSizeX),
-    m_fSizeY(rhs.m_fSizeY)
+    m_pButton(rhs.m_pButton)
 {
 }
 
@@ -46,6 +35,9 @@ HRESULT CExplainPanel::Ready_GameObject()
     ZeroMemory(&m_pItem, sizeof(m_pItem));
 
     m_tCreateInfo = CUIMgr::GetInstance()->Get_CreateInfo(m_strItemKey);
+
+    m_fX = m_vPos.x;
+    m_fY = m_vPos.y;
 
     for (int i = 0; i < 2; ++i)
     {
@@ -61,11 +53,7 @@ HRESULT CExplainPanel::Ready_GameObject()
     m_fSizeX = 90.f;
     m_fSizeY = 90.f;
 
-    m_pTransForm->Set_Pos(_vec3((m_fX - WINCX * 0.5f), -m_fY + WINCY * 0.5f, 0.1f));
-    m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
-
-    D3DXMatrixIdentity(&m_ViewMatrix);
-    D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
+    __super::Ready_GameObject();
 
     return S_OK;
 }

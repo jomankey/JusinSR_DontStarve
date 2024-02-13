@@ -1,4 +1,7 @@
 #include "WorldHand.h"
+#include "Export_Utility.h"
+#include "Export_System.h"
+#include "Engine_Define.h"
 
 CWorldHand::CWorldHand(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CStateUI(pGraphicDev)
@@ -44,6 +47,21 @@ void CWorldHand::LateUpdate_GameObject()
 void CWorldHand::Render_GameObject()
 {
 	__super::Render_GameObject();
+
+	_tchar strDay[60];
+
+	_swprintf_c(strDay, sizeof(strDay), L"%d 일", light::Get_Day());
+	Engine::Render_Font(L"Mouse_Title", strDay, &_vec2(m_fX - 12.f, m_fY - 20.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	wstring strTime;
+	if (light::Get_TimeIndex() == MORNING)
+		strTime = L"아침";
+	else if (light::Get_TimeIndex() == AFTERNOON)
+		strTime = L"저녁";
+	else if (light::Get_TimeIndex() == NIGHT)
+		strTime = L"새벽";
+
+	Engine::Render_Font(L"Mouse_Title", strTime.c_str(), &_vec2(m_fX - 13.f, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
 	scenemgr::Get_CurScene()->EndOrtho();
 }

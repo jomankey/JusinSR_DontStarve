@@ -13,6 +13,7 @@ public:
 	_vec3 Get_MouseRayDir() { return m_vRayDir; }
 
 	void Set_Install(_bool bInstall) { m_bInstall = bInstall; }
+	void IsColl(_bool bColl) { m_bColl = bColl; }
 
 public:
 	virtual HRESULT Ready_GameObject() override;

@@ -1,9 +1,9 @@
 #pragma once
-#include "CUI.h"
+#include "UI.h"
 #include "Export_Utility.h"
 #include <ExplainPanel.h>
 
-class CSlideBox :public CGameObject
+class CSlideBox :public CUI
 {
 
 protected:
@@ -36,15 +36,9 @@ private:
 	virtual void Free();
 
 private:
-	Engine::CTexture* m_pTextureCom;
-	Engine::CRcTex* m_pBufferCom;
-
+	_vec3 m_vPos;
 	const _tchar* ItemName;
 	BOOL m_bIsShow = true;
-
-	_matrix				m_ViewMatrix, m_ProjMatrix;
-	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
-
 	CItem* m_pItem;
 	CExplainPanel* m_pPanel;
 };

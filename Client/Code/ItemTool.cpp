@@ -113,7 +113,7 @@ void CItemTool::Input_Mouse()
 		vector<CSlot*> vecCookBox = CSlotMgr::GetInstance()->Get_BoxList(COOK);
 		for (int i = 0; i < 4; ++i)
 		{
-			if (Engine::Collision_Mouse(vItemPos, vecCookBox[i]->Get_fX(), vecCookBox[i]->Get_fY(), vecCookBox[i]->Get_SizeX(), vecCookBox[i]->Get_SizeY()))
+			if (Engine::Collision_Mouse(vItemPos, vecCookBox[i]->Get_fX(), vecCookBox[i]->Get_fY(), vecCookBox[i]->Get_fSizeX(), vecCookBox[i]->Get_fSizeY()))
 			{
 				//아이템과 요리 아이템 충돌
 				_vec3 vSlotPos = _vec3{ vecCookBox[i]->Get_fX(), vecCookBox[i]->Get_fY(), 0.f };
@@ -138,6 +138,8 @@ void CItemTool::Input_Mouse()
 				{
 					dynamic_cast<CBonfire*>(iter)->AddFIre(1);
 					CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
+
+					return;
 				}
 			}
 		}
@@ -147,7 +149,7 @@ void CItemTool::Input_Mouse()
 		vector<CSlot*> vecBox = CSlotMgr::GetInstance()->Get_BoxList(INVEN);
 		for (int i = 0; i < INVENCNT; ++i)
 		{
-			if (Engine::Collision_Mouse(vItemPos, vecBox[i]->Get_fX(), vecBox[i]->Get_fY(), vecBox[i]->Get_SizeX(), vecBox[i]->Get_fY()))
+			if (Engine::Collision_Mouse(vItemPos, vecBox[i]->Get_fX(), vecBox[i]->Get_fY(), vecBox[i]->Get_fSizeX(), vecBox[i]->Get_fY()))
 			{
 				CItem* pItem = CSlotMgr::GetInstance()->Get_InvenItem(i);
 				//아이템과 박스 충돌
@@ -169,7 +171,7 @@ void CItemTool::Input_Mouse()
 
 		for (int i = 15; i < INVENCNT + 3; ++i) // 장착칸에 닿았다면
 		{
-			if (Engine::Collision_Mouse(vItemPos, vecBox[i]->Get_fX(), vecBox[i]->Get_fY(), vecBox[i]->Get_SizeX(), vecBox[i]->Get_fY()))
+			if (Engine::Collision_Mouse(vItemPos, vecBox[i]->Get_fX(), vecBox[i]->Get_fY(), vecBox[i]->Get_fSizeX(), vecBox[i]->Get_fY()))
 			{
 				//아이템과 박스 충돌
 				// 아이템이 장착 아이템이 아니라면 

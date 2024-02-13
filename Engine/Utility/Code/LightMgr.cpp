@@ -2,7 +2,7 @@
 
 IMPLEMENT_SINGLETON(CLightMgr)
 
-CLightMgr::CLightMgr() : m_fPreTime(0), m_eChangeIndex(MORNING)
+CLightMgr::CLightMgr() : m_fPreTime(0), m_eChangeIndex(MORNING), m_iDay(0)
 {
 }
 

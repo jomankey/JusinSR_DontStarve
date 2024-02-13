@@ -57,6 +57,12 @@ void CHpUI::LateUpdate_GameObject()
 void CHpUI::Render_GameObject()
 {
 	__super::Render_GameObject();
+	
+	_tchar strHp[32];
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject());
+	_itow_s(pPlayer->Get_PlayerHp(), strHp, 10);
+
+	Engine::Render_Font(L"Mouse_Sub", strHp, &_vec2(m_fX - 11.f, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CHpUI::Add_Component()

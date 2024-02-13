@@ -44,7 +44,7 @@
 #include "CCatapult.h"
 
 //UI
-#include "CUI.h"
+#include "UI.h"
 #include"Slot.h"
 #include"SlideUI.h"
 #include"CHpUI.h"
