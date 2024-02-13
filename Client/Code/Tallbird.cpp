@@ -348,7 +348,7 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
 
         if (m_ePrestate == ATTACK)
         {
-            if (m_fFrame > 5.f && !m_bAttacking && IsTarget_Approach(m_Stat.fATKRange))
+            if (m_fFrame > 5.f && !m_bAttacking && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()))
             {
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;

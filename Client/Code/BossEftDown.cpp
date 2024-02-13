@@ -10,8 +10,8 @@
 CBossEftDown::CBossEftDown(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	:CEffect(pGraphicDev, _vPos), m_eCurState(APPEAR),
     m_ePreState(STATE_END), 
-    m_bCollision(false),
-    m_fDamage(30.f)
+    m_bCollision(false)
+
 {
 }
 
@@ -29,6 +29,7 @@ HRESULT CBossEftDown::Ready_GameObject()
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
     m_fFrameEnd = 11.f;
+    m_fDamage = 30.f;
     return S_OK;
 }
 
@@ -105,7 +106,7 @@ HRESULT CBossEftDown::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-    m_pTransForm->Set_Scale({ 1.f, 1.f, 1.f });
+    m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -129,43 +130,6 @@ void CBossEftDown::State_Change()
         m_ePreState = m_eCurState;
     }
 }
-
-void CBossEftDown::Check_Collision()
-{
-    auto iter = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
-    for (auto find : iter)
-    {
-        if (find != nullptr)
-        {
-            if (Collision_Transform(this->m_pTransForm, find->GetTransForm()))
-            {
-                dynamic_cast<CMonster*>(find)->Set_Attack(m_fDamage);
-            }
-        }
-    }
-
-    auto obj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
-    for (auto find : obj)
-    {
-        if (find != nullptr)
-        {
-            if (Collision_Transform(this->m_pTransForm, find->GetTransForm()))
-            {
-                dynamic_cast<CResObject*>(find)->Set_Attack();
-            }
-        }
-    }
-
-    auto player = scenemgr::Get_CurScene()->GetPlayerObject();
-    if (player != nullptr)
-    {
-        if (Collision_Transform(this->m_pTransForm, player->GetTransForm()))
-        {
-            dynamic_cast<CPlayer*>(player)->Set_Attack((int)m_fDamage);
-        }
-    }
-}
-
 
 _int CBossEftDown::Appear()
 {
