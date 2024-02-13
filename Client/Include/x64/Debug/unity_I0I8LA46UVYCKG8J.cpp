@@ -51,6 +51,12 @@
 #include "C:\20240214\Client\Code\Cook.cpp"
 
 
+#include "C:\20240214\Client\Code\CParticle.cpp"
+
+
+#include "C:\20240214\Client\Code\CSnow.cpp"
+
+
 #include "C:\20240214\Client\Code\CSpike.cpp"
 
 

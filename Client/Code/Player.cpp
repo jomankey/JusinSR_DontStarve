@@ -652,9 +652,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		CGameObject* boss = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::BOSS);
 		if (nullptr != boss && !boss->IsDelete()
-			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(findObj)->GetTransForm()))
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(boss)->GetTransForm()))
 		{
-			dynamic_cast<CMonster*>(boss)->Set_Attack(m_Stat.fATK);
+			dynamic_cast<CDeerClops*>(boss)->Set_Attack(m_Stat.fATK);
 		}
 	}
 

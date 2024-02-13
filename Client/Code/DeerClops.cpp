@@ -337,14 +337,14 @@ void CDeerClops::State_Change()
 {
 	if (m_ePreState != m_eCurState)
 	{
-		if (m_ePreState == TAUNT)
+		/*if (m_ePreState == TAUNT)
 		{
 			Adjust_Pos_Taunt_Back();
 		}
 		else if (m_ePreState == ATTACK)
 		{
 			Adjust_Pos_Attack_Back();
-		}
+		}*/
 		//taunt 면 위치조정
 		switch (m_eCurState)
 		{
@@ -355,7 +355,7 @@ void CDeerClops::State_Change()
 			m_fFrameEnd = 16;
 			break;
 		case ATTACK:
-			Adjust_Pos_Attack();
+		/*	Adjust_Pos_Attack();*/
 			m_fFrameEnd = 20;
 			break;
 		case SLEEP:
@@ -367,7 +367,7 @@ void CDeerClops::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case TAUNT:
-			Adjust_Pos_Taunt();
+		/*	Adjust_Pos_Taunt();*/
 			Generate_Roaring(0.9);
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
@@ -586,7 +586,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 		{
 	
 			m_pTransForm->Move_Pos(&m_vFallingDir, 60.f, fTimeDelta);
-			if (Get_Pos().y < 4.f)
+			if (Get_Pos().y < 0.1f)
 			{
 				
 				m_pTransForm->Set_Pos(m_vPos);
@@ -595,7 +595,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				Getnerate_SnowSplash();
 				// 여기에 카메라 쉐이킹
 			}
-			else if (Get_Pos().y < 6.f)
+			else if (Get_Pos().y < 4.f)
 			{
 				m_bFrameStop = false;
 			}
