@@ -12,7 +12,7 @@
 #include "RvRcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
-
+#include "CPtcTex.h"
 #include "CustomTex.h"
 
 #include "Texture.h"

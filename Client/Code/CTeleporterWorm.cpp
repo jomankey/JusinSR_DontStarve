@@ -43,7 +43,7 @@ _int CTeleporterWorm::Update_GameObject(const _float& fTimeDelta)
 		m_fFrame += m_fFrameEnd * fTimeDelta;
 
 	}
-	ChangeScenePlayer(1.f);
+	ChangeScenePlayer(4.f);
 
 
 
