@@ -52,38 +52,10 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 
 		else if (m_eCurState == RES_DEAD || m_eCurState == RES_DEAD2)
 		{
-			srand(static_cast<unsigned int>(time(nullptr)));
-			int iItemCount = rand() % 1 + 3;	//아이템 갯수용 //
-			for (int i = 0; i < iItemCount; ++i)
-			{
-				int signX = (rand() % 2 == 0) ? -1 : 1;
-				int signZ = (rand() % 2 == 0) ? -1 : 1;
-				int iItemPosX = rand() % 3 * signX;
-				int iItemPosZ = rand() % 3 * signZ;
-				_vec3 vPos;
-				m_pTransForm->Get_Info(INFO_POS, &vPos);
-				vPos.x += iItemPosX;
-				vPos.y = 0.8f;
-				vPos.z += iItemPosZ;
-				CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"Twigs");
-				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
-				pGameObj->GetTransForm()->Set_Pos(vPos);
-				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
-				
-				//다른 위치에서 떨어지기
-				srand(static_cast<unsigned int>(time(nullptr)));
-				int signtmp = (rand() % 2 == 0) ? -1 : 1;
-				int iItemPostmp = rand() % 3 * signtmp;
-				vPos.x+= iItemPostmp;
-				vPos.y = 0.5f;
-				vPos.z += iItemPostmp;
-				 pGameObj = CItemBasic::Create(m_pGraphicDev, L"Log");
-				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
-				pGameObj->GetTransForm()->Set_Pos(vPos);
-				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
 
-
-			}
+			CreateItem(L"Twigs", this, this->m_pGraphicDev);
+			CreateItem(L"Log", this, this->m_pGraphicDev);
+		
 			m_Stat.bDead = true;
 
 		}

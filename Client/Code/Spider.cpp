@@ -4,7 +4,7 @@
 #include "Export_Utility.h"
 #include "Player.h"
 #include "Scene.h"
-#include <ItemBasic.h>
+#include"ResObject.h"
 
 CSpider::CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos), m_bModeChange(false), m_eCurstate(WALK), m_ePrestate(STATE_END)
@@ -367,28 +367,7 @@ _int CSpider::Die_Check()
         if (m_fFrameEnd < m_fFrame)
         {
 
-            srand(static_cast<unsigned int>(time(nullptr)));
-            int iItemCount = rand() % 1 + 3;	//아이템 갯수용
-            for (int i = 0; i < iItemCount; ++i)
-            {
-             
-                int signX = (rand() % 2 == 0) ? -1 : 1;
-                int signZ = (rand() % 2 == 0) ? -1 : 1;
-                int iItemPosX = rand() % 3 * signX;
-                int iItemPosZ = rand() % 3 * signZ;
-                _vec3 vPos;
-                m_pTransForm->Get_Info(INFO_POS, &vPos);
-                vPos.x += iItemPosX;
-                vPos.y = 0.8f;
-                vPos.z += iItemPosZ;
-                CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"Silk");
-                dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
-                pGameObj->GetTransForm()->Set_Pos(vPos);
-                scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
-
-            }
-
-
+           CResObject::CreateItem(L"Silk", this, m_pGraphicDev);
 
             m_eCurstate = ERASE;
         }

@@ -20,6 +20,11 @@ public:
     _bool Get_AttackState() { return m_bHit; }
 
 
+
+public:
+    //오브젝트가 아이템을 만들어야할 때 사용하는 함수
+   static void CreateItem(const _tchar* _itemName,CGameObject* _Type, LPDIRECT3DDEVICE9 pGraphicDev);
+
 public:
     virtual HRESULT Ready_GameObject()						 override;
     virtual _int Update_GameObject(const _float& fTimeDelta) override;
