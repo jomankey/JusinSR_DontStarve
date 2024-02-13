@@ -80,7 +80,7 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 	if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) // 플레이어와 상호작용
 	{
 		//auto& vecUI = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
-		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		_vec3 vPos;
 		m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -329,7 +329,7 @@ void CTent::Install_Obj()
 	{
 		m_bInstall = false;
 		m_bIsDrop = true;
-		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
 

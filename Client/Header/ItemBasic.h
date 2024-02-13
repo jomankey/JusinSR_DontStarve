@@ -11,6 +11,7 @@ private:
 
 public:
     void Pickup_Item(_vec3 vSlotPos);
+    _bool Get_ChangeRender() { return m_bChangeRander; }
 
 public:
     HRESULT Ready_GameObject() override;

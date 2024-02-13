@@ -100,7 +100,7 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 		auto& vecUI = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
 		for (auto& iter : vecUI)
 		{
-			auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+			auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 			CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 			_vec3 vPos;
 			m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -117,7 +117,6 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
 
 	return 0;
 }
@@ -366,7 +365,7 @@ void CCookingPot::Install_Obj()
 	{
 		m_bInstall = false;
 		m_bIsDrop= true;
-		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();;
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
 

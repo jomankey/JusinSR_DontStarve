@@ -695,74 +695,74 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 #pragma region PSWTEST
 	//PSW Test---------------------------------------------------------
 
-	if (GetAsyncKeyState('1')) //텐트 입장
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if(object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName==L"텐트")
-			{
+	//if (GetAsyncKeyState('1')) //텐트 입장
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if(object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName==L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Enter();
-				
+	//			dynamic_cast<CTent*>(object)->Set_Enter();
+	//			
 
-			}
+	//		}
 
-		}
-	}
-	if (GetAsyncKeyState('2')) //텐트 파괴
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if (object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName == L"텐트")
-			{
+	//	}
+	//}
+	//if (GetAsyncKeyState('2')) //텐트 파괴
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if (object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName == L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Destroy();
-				//해당 함수 호출하면 다시는 못지음 (Enter모션, Hit모션, Burnt모션 다 불가능)
+	//			dynamic_cast<CTent*>(object)->Set_Destroy();
+	//			//해당 함수 호출하면 다시는 못지음 (Enter모션, Hit모션, Burnt모션 다 불가능)
 
-			}
+	//		}
 
-		}
-	}
-	if (GetAsyncKeyState('3')) //텐트가 맞았을 때, 이거는 다른 곳에서 해도 됨 떄린 객체에게 시켜야 할 듯
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if (object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName == L"텐트")
-			{
+	//	}
+	//}
+	//if (GetAsyncKeyState('3')) //텐트가 맞았을 때, 이거는 다른 곳에서 해도 됨 떄린 객체에게 시켜야 할 듯
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if (object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName == L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Hit();
-				
+	//			dynamic_cast<CTent*>(object)->Set_Hit();
+	//			
 
-			}
+	//		}
 
-		}
-	}
-	if (GetAsyncKeyState('4')) //텐트가 타버렸 을  때,  이거는 텐트가 불 탔다는 스텟을 가졌으면  텐트안에서 처리 가능
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if (object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName == L"텐트")
-			{
+	//	}
+	//}
+	//if (GetAsyncKeyState('4')) //텐트가 타버렸 을  때,  이거는 텐트가 불 탔다는 스텟을 가졌으면  텐트안에서 처리 가능
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if (object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName == L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Burnt();
-				//해당 함수 호출하면 다시는 못지음 (계속 탄 상태로 남아 있음)
+	//			dynamic_cast<CTent*>(object)->Set_Burnt();
+	//			//해당 함수 호출하면 다시는 못지음 (계속 탄 상태로 남아 있음)
 
-			}
+	//		}
 
-		}
-	}
+	//	}
+	//}
 
 
 
@@ -1224,8 +1224,32 @@ void CPlayer::Fire_Light()
 
 void CPlayer::Update_State(const _float& fTimeDelta)
 {
-	m_Stat.fHungry -= fTimeDelta * 0.3;
-	m_Stat.fMental -= fTimeDelta * 0.3;
+	if (m_bTent)
+	{
+		//텐트 안에 있을때 플레이어 상태값 변화
+
+		if (m_Stat.fHP + fTimeDelta * 0.4f <= m_Stat.fMxHP)
+			m_Stat.fHP = m_Stat.fMxHP;
+		else
+			m_Stat.fHP += fTimeDelta * 0.4f;
+
+		if (m_Stat.fHungry - fTimeDelta >= 0.f)
+			m_Stat.fHungry = 0.f;
+		else
+			m_Stat.fHungry -= fTimeDelta;
+
+		if (m_Stat.fMental + fTimeDelta * 0.2f <= m_Stat.fMaxMental)
+			m_Stat.fMental = m_Stat.fMaxMental;
+		else
+			m_Stat.fMental += fTimeDelta * 0.2f;
+	}
+	else
+	{
+		//일반 상태값 
+		if (m_Stat.fHungry - (fTimeDelta * 0.3) < 0.f) m_Stat.fHungry = 0.f; else m_Stat.fHungry -= fTimeDelta * 0.3;
+		if (m_Stat.fMental - (fTimeDelta * 0.3) < 0.f) m_Stat.fMental = 0.f; else m_Stat.fMental -= fTimeDelta * 0.3;
+	}
+
 }
 
 

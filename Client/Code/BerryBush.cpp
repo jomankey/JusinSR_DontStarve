@@ -99,10 +99,6 @@ void CBerryBush::Change_Frame_Event()
 				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
 				pGameObj->GetTransForm()->Set_Pos(vPos);
 				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
-
-
-
-
 			}
 		}
 		_bDropItem= true;

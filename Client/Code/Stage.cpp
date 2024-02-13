@@ -309,14 +309,16 @@ HRESULT CStage::Load_Data()
 
 	iCount = 0;
 	dwByte = 0;
-
+	vector<_int> vecInt;
 	ReadFile(hPointFile, &iCount, sizeof(_int), &dwByte, nullptr);
-
+	
 	for (int i = 0; i < iCount; ++i)
 	{
 		int iTemp = 0;
 		ReadFile(hPointFile, &iTemp, sizeof(_int), &dwByte, nullptr);
+		vecInt.push_back(iTemp);
 	}
+	dynamic_cast<CTerrain*>(m_pTerrain)->Get_Buffer()->Set_VecPos(vecInt);
 
 	CloseHandle(hPointFile);
 

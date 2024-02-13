@@ -9,9 +9,17 @@
 #include "CBonfire.h"
 #include "CTent.h"
 #include "CCookingPot.h"
+#include <ItemBasic.h>
 
 CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
-	: CItem(pGraphicDev, _strObjName), m_bFood(bFood), m_eItemType(eType), m_eArmorSlotType(ARMOR_SLOT_END), m_vPos(vPos), m_bClick(false)
+	: CItem(pGraphicDev, _strObjName), 
+	m_bFood(bFood), 
+	m_eItemType(eType), 
+	m_eArmorSlotType(ARMOR_SLOT_END), 
+	m_vPos(vPos), 
+	m_bClick(false), 
+	m_bColl(false),
+	m_fSpeed(7.f)
 {
 	m_tItemInfo.ItemCount = 1;
 }
@@ -52,9 +60,11 @@ HRESULT CItemTool::Ready_GameObject()
 
 _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 {
+	Coll_ItemBasic(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 
 	Input_Mouse();
+	
 
 	return 0;
 }
@@ -127,7 +137,7 @@ void CItemTool::Input_Mouse()
 		auto& vecObjBox = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
 		for (auto& iter : vecObjBox)
 		{
-			if (iter->Get_State().strObjName == L"모닥불")
+			if (iter->Get_State().strObjName == L"모닥불") // 모닥불 오브젝트와 충돌하면
 			{
 				_vec3 vRayPos, vRayDir;
 				m_pCalculatorCom->Change_MouseMatrix(g_hWnd, _vec3{ m_fX, m_fY, 0.f }, &vRayPos, &vRayDir);
@@ -136,9 +146,30 @@ void CItemTool::Input_Mouse()
 
 				if (Engine::Collision_Mouse_Object(vRayPos, vRayDir, vObjPos, iter->GetTransForm()->Get_Scale()))
 				{
-					dynamic_cast<CBonfire*>(iter)->AddFIre(1);
-					CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
+					if (m_bFood)
+					{
+						wstring strCookFood = L"";
+						// 요리일 때, 구워진다.
+						if (m_strObjName == L"Berries")
+							strCookFood = L"Cooked_berries";
+						else if (m_strObjName == L"RawMeat")
+							strCookFood = L"CookedMeat";
+						else if (m_strObjName == L"Meat_Monster")
+							strCookFood = L"Cooked_Meat_Monster";
+						else return;
 
+						_vec3 vSlotPos;
+						if (CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, strCookFood, &vSlotPos))
+						{
+							//월드 아이템 생성해서 이동하도록 구현 
+							CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
+						}
+					}
+					else
+					{
+						dynamic_cast<CBonfire*>(iter)->AddFIre(1);
+						CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
+					}
 					return;
 				}
 			}
@@ -225,8 +256,8 @@ void CItemTool::Input_Mouse()
 			}
 			else if (m_strObjName == L"BonFire") // 설치
 			{
-				auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
-				CMouse* pMouse = dynamic_cast<CMouse*> (vecMouse);
+				auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
+				CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 				pMouse->Set_Install(true);
 
 				CGameObject* pBonfire = CBonfire::Create(m_pGraphicDev, true);
@@ -235,7 +266,7 @@ void CItemTool::Input_Mouse()
 			}
 			else if (m_strObjName == L"Tent") // 설치
 			{
-				auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+				auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 				CMouse* pMouse = dynamic_cast<CMouse*> (vecMouse);
 				pMouse->Set_Install(true);
 
@@ -245,7 +276,7 @@ void CItemTool::Input_Mouse()
 			}
 			else if (m_strObjName == L"Cook") // 설치
 			{
-				auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+				auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 				CMouse* pMouse = dynamic_cast<CMouse*> (vecMouse);
 				pMouse->Set_Install(true);
 
@@ -331,6 +362,58 @@ void CItemTool::Move_Pos()
 
 }
 
+void CItemTool::Coll_ItemBasic(const float& fTimeDelta)
+{
+	if (m_bColl) // 충돌인 상태이면
+	{
+		static _bool bSizeUp(true);
+		
+		if (bSizeUp)
+		{
+			if (m_fSizeX < 19.f)
+				m_fSizeX +=  fTimeDelta * m_fSpeed;
+			if (m_fSizeY < 19.f)
+				m_fSizeY +=  fTimeDelta * m_fSpeed;
+
+			if (m_fSizeX >= 19.f || m_fSizeY >= 19.f)
+				bSizeUp = false;
+		}
+		else
+		{
+			if (m_fSizeX > 15.f)
+				m_fSizeX -=  fTimeDelta * m_fSpeed;
+			if (m_fSizeY > 15.f)
+				m_fSizeY -=  fTimeDelta * m_fSpeed;
+
+			if (m_fSizeX <= 15.f || m_fSizeY <= 15.f)
+			{
+				m_fSizeX = 15.f;
+				m_fSizeY = 15.f;
+				m_bColl = false;
+				bSizeUp = true;
+			}
+		}
+
+		m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 0.f });
+
+		return;
+	}
+	auto& vecItem = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM);
+
+	for (auto& iter : vecItem)
+	{
+		CItemBasic* pItem = dynamic_cast<CItemBasic*>(iter);
+		if (!pItem->Get_ChangeRender())
+			continue;
+
+		if (Engine::Collision_Mouse(_vec2{m_fX, m_fY}, pItem->Get_fX(), pItem->Get_fY(), pItem->Get_fSizeX(), pItem->Get_fSizeY()))
+		{
+			m_bColl = true;
+			return;
+		}
+	}
+}
+
 CItem* CItemTool::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType, _bool bFood)
 {
 	CItem* pInstance = new CItemTool(pGraphicDev, _strObjName, vPos, eType, bFood);
@@ -346,5 +429,6 @@ CItem* CItemTool::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _ve
 
 void CItemTool::Free()
 {
+	m_bColl = false;
 	__super::Free();
 }

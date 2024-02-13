@@ -28,6 +28,7 @@ private:
     void Input_Mouse();
     void Eat_Food();
     void Move_Pos();
+    void Coll_ItemBasic(const float& fTimeDelta); // 주운 아이템과 인벤 아이템이 충돌하는지 체크
 
 public:
     static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 vPos, UI_ITEM_TYPE eType = UI_ITEM_CREATE, _bool bFood = false);
@@ -39,10 +40,12 @@ private:
     _vec3 m_vPos;
     _bool m_bFood;
     _bool m_bClick;
+    _bool m_bColl;
 
     UI_ITEM_TYPE m_eItemType;
     ARMOR_SLOT_TYPE m_eArmorSlotType;
     _uint m_iNum; // 박스 순서 넘버
+    _uint m_fSpeed;
 
 };
 

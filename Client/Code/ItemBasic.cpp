@@ -34,8 +34,8 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 	m_fX = m_vPos.x;
 	m_fY = m_vPos.y;
 
-	m_fSizeX = 25.f;
-	m_fSizeY = 25.f;
+	m_fSizeX = 15.f;
+	m_fSizeY = 15.f;
 
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.0f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
@@ -74,10 +74,11 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 		m_fY += (m_vSlotPos.y - m_fY) * 5.f * fTimeDelta;
 
 		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
+		m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	}
+	else m_pTransForm->BillBoard();
 
 	MousePicking();
-	m_pTransForm->BillBoard();
 
 	if (m_bIsCreateByObject)
 	{
@@ -112,7 +113,7 @@ void CItemBasic::Render_GameObject()
 	if (!m_bChangeRander) m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);
-	FAILED_CHECK_RETURN(SetUp_Material(), );
+	if (!m_bChangeRander) FAILED_CHECK_RETURN(SetUp_Material(), );
 	m_pBufferCom->Render_Buffer();
 
 	if (!m_bChangeRander) m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

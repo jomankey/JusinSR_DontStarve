@@ -192,7 +192,7 @@ void CBonfire::Install_Obj() // 설치시 마우스 포인터를 따라옴 (쉐이더 써야함)
 	{
 		m_bInstall = false;
 		m_bIsDrop = true;
-		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
 
