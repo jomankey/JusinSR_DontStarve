@@ -11,6 +11,8 @@
 #include "Scene.h"
 #include "CItem.h"
 #include "Ghost.h"
+#include "Rebirth.h"
+#include "DeerClops.h"
 
 //Manager
 #include "SlotMgr.h"
@@ -25,13 +27,15 @@
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bAttack(false)
-	, m_iLightNum(++CMainApp::g_iLightNum)
+	, m_iLightNum(++CMainApp::g_iLightNum),
+	m_bTent(false)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	: Engine::CGameObject(pGraphicDev, _strName)
 	, m_bAttack(false)
-	, m_iLightNum(++CMainApp::g_iLightNum)
+	, m_iLightNum(++CMainApp::g_iLightNum),
+	m_bTent(false)
 {
 }
 
@@ -65,10 +69,12 @@ HRESULT CPlayer::Ready_GameObject()
 
 	m_vPlayerActing = false;
 	m_bIsRoadScene - false;
+	m_Ghost = nullptr;
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 
-	m_fDiffY = 0.3f;// z버퍼 보정용값 추가
+	m_fDiffY = 0.5f;// z버퍼 보정용값 추가
+
 	Set_Stat();
 	return S_OK;
 }
@@ -116,6 +122,10 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		}
 		
 	}
+	else if (m_Stat.bDead)
+	{
+		Rebirth();
+	}
 	Weapon_Change();
 	Check_State();
 	Look_Change();
@@ -142,6 +152,9 @@ void CPlayer::LateUpdate_GameObject()
 
 void CPlayer::Render_GameObject()
 {
+	if (m_bTent)
+		return;
+
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -334,22 +347,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_side", pComponent });
 
-	//Axe loop
-	/*pComponent = m_pTextureCom[LOOK_DOWN][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_down"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_down", pComponent });
-
-	pComponent = m_pTextureCom[LOOK_UP][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_up"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_up", pComponent });
-
-	pComponent = m_pTextureCom[LOOK_RIGHT][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_side"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });
-
-	pComponent = m_pTextureCom[LOOK_LEFT][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_side"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });*/
+	
 
 	//Hammer
 	pComponent = m_pTextureCom[LOOK_DOWN][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_down"));
@@ -427,6 +425,12 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_die"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_die", pComponent });
+
+
+	pComponent = m_pTextureCom[LOOK_DOWN][REBIRTH] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_research"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_research", pComponent });
+	
 #pragma endregion TEXCOM
 
 
@@ -640,10 +644,17 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		}
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
 		if (nullptr != findObj && !findObj->IsDelete()
-			&& dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CMonster*>(findObj)->GetTransForm()))
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
 
+		}
+
+		CGameObject* boss = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::BOSS);
+		if (nullptr != boss && !boss->IsDelete()
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(findObj)->GetTransForm()))
+		{
+			dynamic_cast<CMonster*>(boss)->Set_Attack(m_Stat.fATK);
 		}
 	}
 
@@ -888,6 +899,11 @@ void CPlayer::Check_State()
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
+		case REBIRTH:
+			m_fFrameEnd = 17;
+			m_KeyLock = true;
+			m_eCurLook = LOOK_DOWN;
+			break;
 		}
 		m_ePreState = m_eCurState;
 		m_fFrame = 0.f;
@@ -946,6 +962,10 @@ void CPlayer::Set_Scale()
 
 	else if (m_eCurState == DEAD)
 		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
+
+	else if (m_eCurState == REBIRTH)
+		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
+	
 	else
 		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
 
@@ -988,16 +1008,24 @@ void CPlayer::Weapon_Change()
 			m_Stat.fATKRange = 1.f;
 			break;
 		case AXE:
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case TORCH:
 			if (m_eCurState = IDLE)
 			{
 				m_eCurState = TORCH_IDLE;
 			}
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case HAMMER:
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case PICK:
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case SPEAR:
 			m_Stat.fATK = 50;
@@ -1120,9 +1148,9 @@ _int CPlayer::Die_Check()
 			_vec3 pPlayerPos;
 			m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
 			
-			CGameObject* pGameObject = CGhost::Create(m_pGraphicDev, pPlayerPos);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), E_FAIL);
+			m_Ghost = CGhost::Create(m_pGraphicDev, pPlayerPos);
+			NULL_CHECK_RETURN(m_Ghost, E_FAIL);
+			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, m_Ghost), E_FAIL);
 				
 		}
 	}
@@ -1130,6 +1158,26 @@ _int CPlayer::Die_Check()
 
 	return 0;
 
+}
+
+void CPlayer::Rebirth()
+{
+	if (KEY_HOLD(DIK_M))
+	{
+		_vec3 pPlayerPos;
+		m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
+		CGameObject* amulet = CRebirth::Create(m_pGraphicDev, pPlayerPos);
+		NULL_CHECK_RETURN(amulet, );
+		FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, amulet), );
+
+		m_eCurState = REBIRTH;
+		m_bFrameLock = false;
+		m_Stat.bDead = false;
+		m_Stat.fHP = m_Stat.fMxHP;
+
+		DeleteObject(m_Ghost);
+		m_Ghost = nullptr;
+	}
 }
 
 HRESULT CPlayer::Ready_Light()
@@ -1153,8 +1201,12 @@ HRESULT CPlayer::Ready_Light()
 
 void CPlayer::Fire_Light()
 {
-	if (m_ePreWeapon != TORCH)
+	if (m_ePreWeapon != TORCH || m_bTent)
+	{
+		light::Get_Light(m_iLightNum)->Close_Light();
 		return;
+	}
+		
 
 	D3DLIGHT9* tPointLightInfo = light::Get_Light(m_iLightNum)->Get_Light();
 

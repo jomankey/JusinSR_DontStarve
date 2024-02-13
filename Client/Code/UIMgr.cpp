@@ -41,7 +41,7 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.tItemInfo[0].strItemName = L"Twigs";
 	tInfo.tItemInfo[0].iCount = 1;
 	tInfo.tItemInfo[1].strItemName = L"FireSton";
-	tInfo.tItemInfo[1].iCount = 5;
+	tInfo.tItemInfo[1].iCount = 3;
 	m_vecCreateInfo.push_back(tInfo);
 
 	tInfo.strKeyName = L"Pickaxe";
@@ -50,7 +50,7 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.tItemInfo[0].strItemName = L"Twigs";
 	tInfo.tItemInfo[0].iCount = 1;
 	tInfo.tItemInfo[1].strItemName = L"FireSton";
-	tInfo.tItemInfo[1].iCount = 5;
+	tInfo.tItemInfo[1].iCount = 3;
 	m_vecCreateInfo.push_back(tInfo);
 
 	tInfo.strKeyName = L"Hammer";
@@ -93,8 +93,8 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.strKeyName = L"Tent";
 	tInfo.strName = L"텐트";
 	tInfo.strInfo = L"안전하게 잠을\n잘 수 있다.";
-	tInfo.tItemInfo[0].strItemName = L"CutGlass";
-	tInfo.tItemInfo[0].iCount = 2;
+	tInfo.tItemInfo[0].strItemName = L"PigTail";
+	tInfo.tItemInfo[0].iCount = 3;
 	tInfo.tItemInfo[1].strItemName = L"Twigs";
 	tInfo.tItemInfo[1].iCount = 2;
 	m_vecCreateInfo.push_back(tInfo);

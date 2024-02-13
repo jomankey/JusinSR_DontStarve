@@ -1,5 +1,5 @@
 #include "BerryBush.h"
-#include <ItemBasic.h>
+
 
 CBerryBush::CBerryBush(LPDIRECT3DDEVICE9 pGrahpicDev)
 	: CResObject(pGrahpicDev),
@@ -19,7 +19,7 @@ HRESULT CBerryBush::Ready_GameObject()
 	m_eObject_id = BERRY_BUSH;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 0.f;
-	m_fDiffY = 0.78f;
+	m_fDiffY = 3.0f;
 	Ready_Stat();
 	return S_OK;
 }
@@ -82,28 +82,8 @@ void CBerryBush::Change_Frame_Event()
 
 		if (_bDropItem == false)
 		{
-			srand(static_cast<unsigned int>(time(nullptr)));
-			int iItemCount = rand() % 1 + 3;	//아이템 갯수용
-			for (int i = 0; i < iItemCount; ++i)
-			{
-				int signX = (rand() % 2 == 0) ? -1 : 1;
-				int signZ = (rand() % 2 == 0) ? -1 : 1;
-				int iItemPosX = rand() % 3 * signX;
-				int iItemPosZ = rand() % 3 * signZ;
-				_vec3 vPos;
-				m_pTransForm->Get_Info(INFO_POS, &vPos);
-				vPos.x += iItemPosX;
-				vPos.y = 0.8f;
-				vPos.z += iItemPosZ;
-				CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"Berries");
-				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
-				pGameObj->GetTransForm()->Set_Pos(vPos);
-				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
-
-
-
-
-			}
+			CreateItem(L"Berries", this, this->m_pGraphicDev);
+	
 		}
 		_bDropItem= true;
 		m_eBerryCurState = BERRY_EMPTY;

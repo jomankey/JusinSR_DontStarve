@@ -31,6 +31,15 @@ HRESULT CAnimator::Ready_Animation()
 
 _int CAnimator::Update_Component(const _float& fTimeDelta)
 {
+	if (nullptr != m_pCurAnimation)
+	{
+		if (m_pCurAnimation->IsFinish() && this->IsLoop())
+		{
+			m_pCurAnimation->ResetFrame();
+		}
+	}
+
+
 	return 0;
 }
 void CAnimator::LateUpdate_Component()
@@ -39,10 +48,7 @@ void CAnimator::LateUpdate_Component()
 	{
 		//현재선택된 애니메이션이 끝났지만 
 		//애니메이터가 루프로 설정되어있다면 프레임리셋 (ex:IDLE모션 )
-		if (m_pCurAnimation->IsFinish() && this->IsLoop())
-		{
-			m_pCurAnimation->ResetFrame();
-		}
+
 		m_pCurAnimation->AnimUpdate(Engine::Get_TimeDelta(L"Timer_FPS60"));
 	}
 

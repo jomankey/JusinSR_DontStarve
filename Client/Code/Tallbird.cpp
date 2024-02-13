@@ -4,7 +4,7 @@
 #include "Export_Utility.h"
 #include "Player.h"
 #include "Scene.h"
-#include <ItemBasic.h>
+#include"ResObject.h"
 
 CTallbird::CTallbird(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos), m_eCurstate(SLEEP), m_ePrestate(STATE_END)
@@ -31,7 +31,7 @@ HRESULT CTallbird::Ready_GameObject()
     m_fFrameEnd = 0;
     m_bFrameStop = true;
     m_fFrameChange = rand() % 3;
-    m_fDiffY = 0.7f;
+    m_fDiffY = 3.5f;
     D3DXVec3Normalize(&m_vDir, &m_vDir);
     Look_Change();
     return S_OK;
@@ -348,7 +348,7 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
 
         if (m_ePrestate == ATTACK)
         {
-            if (m_fFrame > 5.f && !m_bAttacking && IsTarget_Approach(m_Stat.fATKRange))
+            if (m_fFrame > 5.f && !m_bAttacking && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()))
             {
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
@@ -390,30 +390,11 @@ _int CTallbird::Die_Check()
     }
     else if (m_ePrestate == DEAD)
     {
+ 
         if (m_fFrameEnd < m_fFrame)
         {
 
-            srand(static_cast<unsigned int>(time(nullptr)));
-            int iItemCount = rand() % 1 + 3;	//아이템 갯수용
-            for (int i = 0; i < iItemCount; ++i)
-            {
-                int signX = (rand() % 2 == 0) ? -1 : 1;
-                int signZ = (rand() % 2 == 0) ? -1 : 1;
-                int iItemPosX = rand() % 3 * signX;
-                int iItemPosZ = rand() % 3 * signZ;
-                _vec3 vPos;
-                m_pTransForm->Get_Info(INFO_POS, &vPos);
-                vPos.x += iItemPosX;
-                vPos.y = 0.8f;
-                vPos.z += iItemPosZ;
-                CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"Meat_Monster");
-                dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
-                pGameObj->GetTransForm()->Set_Pos(vPos);
-                scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
-
-            }
-
-
+            CResObject::CreateItem(L"Meat_Monster", this, m_pGraphicDev);
 
             m_eCurstate = ERASE;
         }

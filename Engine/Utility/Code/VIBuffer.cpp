@@ -4,7 +4,13 @@
 
 CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CComponent(pGraphicDev),
-	m_pVB(nullptr), m_pIB(nullptr), m_dwVtxCnt(0), m_dwTriCnt(0), m_dwVtxSize(0), m_dwFVF(0), m_dwIdxSize(0)
+	m_pVB(nullptr),
+	m_pIB(nullptr),
+	m_dwVtxCnt(0),
+	m_dwTriCnt(0),
+	m_dwVtxSize(0),
+	m_dwFVF(0),
+	m_dwIdxSize(0)
 {
 }
 

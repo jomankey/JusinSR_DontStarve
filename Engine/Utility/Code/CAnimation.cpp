@@ -70,6 +70,7 @@ void CAnimation::AnimUpdate(const _float& fTimeDelta)
 	{
 		m_fAccTime = 0.f;
 		++m_iCurFrm;
+
 		//최대프레임보다 값이 높아지면 
 		if (m_iMaxFrameCount <= m_iCurFrm)
 		{

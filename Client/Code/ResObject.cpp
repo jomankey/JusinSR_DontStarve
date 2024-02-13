@@ -1,4 +1,5 @@
 #include "ResObject.h"
+#include "ItemBasic.h"
 
 CResObject::CResObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev),
@@ -26,6 +27,8 @@ CResObject::~CResObject()
 {
 }
 
+
+
 HRESULT CResObject::Ready_GameObject()
 {
 	return S_OK;
@@ -48,4 +51,35 @@ void CResObject::Render_GameObject()
 void CResObject::Free()
 {
 	__super::Free();
+}
+
+
+
+
+void CResObject::CreateItem(const _tchar* _itemName, CGameObject* _Type, LPDIRECT3DDEVICE9 pGraphicDev)
+{
+
+	srand(static_cast<unsigned int>(time(nullptr)));
+	int iItemCount = rand() % 1 + 3;	//아이템 갯수용
+	for (int i = 0; i < iItemCount; ++i)
+	{
+		//방향을 설정하기 위한 값
+		int sign = (rand() % 2 == 0) ? -1 : 1;
+		int Pos = (rand() % 3);
+
+		//어느 축으로 나아갈지 설정하기 위한 값
+		int signDir = (rand() % 1 == 0) ? 0 : 1;
+		_vec3 vPos;
+		_Type->GetTransForm()->Get_Info(INFO_POS, &vPos);//m_pTransForm->Get_Info(INFO_POS, &vPos);
+		CGameObject* pGameObj = CItemBasic::Create(pGraphicDev, _itemName);
+		dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject(Pos * sign);
+		//생성된 객체는 각 방향과 나아갈 축을 가지고 태어난다.
+		dynamic_cast<CItemBasic*>(pGameObj)->CheckSign(sign, signDir);
+		pGameObj->GetTransForm()->Set_Pos(vPos.x, vPos.y, vPos.z);
+		scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
+
+
+	}
+
+
 }

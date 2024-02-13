@@ -23,6 +23,7 @@ private:
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CTexture* m_pTextureCom;
+	Engine::CCalculator* m_pCalculator;
 
 	wstring m_pName;
 

@@ -21,6 +21,8 @@
 #include "CObjectGrass.h"
 #include "CObjectTree.h"
 
+
+
 //Component
 #include "Transform.h"
 
@@ -41,7 +43,19 @@
 #include "CTumbleWeed.h"
 #include "CCatapult.h"
 
+
+//Particle
+
+#include "CParticle.h"
+#include "CSnow.h"
+
+
+
+
+
 //Environment
+
+
 
 #include "RunTerrain.h"
 //
@@ -141,10 +155,20 @@ HRESULT CRoadScene::Ready_Layer_Environment()
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
 	static_cast<CDynamicCamera*>(m_pCamera)->SetRoadScene(true);
+
+
+
 	//////////스카이박스
 	pGameObject = CSkyBox::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::BACK_GROUND, pGameObject), E_FAIL);
+
+
+	///TEST
+
+	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 44, _vec3(-10.f, -10.f, -10.f), _vec3(10.f, 10.f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), E_FAIL);
 
 	return S_OK;
 }
@@ -465,14 +489,14 @@ HRESULT CRoadScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 	{
 		pGameObject = CBeefalo::Create(m_pGraphicDev, vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 		vPos.y = 1.5f;
 	}
 	else if (!_tcscmp(L"FireSton", pName))
 	{
 		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Spider", pName))
 	{
@@ -490,19 +514,19 @@ HRESULT CRoadScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 	{
 		pGameObject = CObjectFireFlies::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Teleporter", pName))
 	{
 		pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"BossDoor", pName))
 	{
 		pGameObject = CBossDoor::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
 	else if (!_tcscmp(L"Tallbird", pName))
 	{
@@ -517,19 +541,19 @@ HRESULT CRoadScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
-		}
+	}
 	else if (!_tcscmp(L"ToothTrap", pName))
 	{
 		pGameObject = pGameObject = CToothTrap::Create(m_pGraphicDev, L"TRAP_TOOTH", vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-		}
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+	}
 	else if (!_tcscmp(L"Capapult", pName))
 	{
 		pGameObject = CCatapult::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-		vPos.y = 1.4f;
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
+		vPos.y = 2.4f;
 	}
 
 	if (nullptr != pGameObject)

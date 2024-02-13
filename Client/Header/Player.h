@@ -35,6 +35,8 @@ public:
 	void Set_PlayerMental(_int _iMental) { m_Stat.fMental += _iMental; }
 	void Set_PlayerHangry(_int _iHangry) { m_Stat.fHungry += _iHangry; }
 
+	void Set_Tent() { m_bTent = !m_bTent; }
+
 public:
 	virtual HRESULT Ready_GameObject()						 override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
@@ -57,6 +59,7 @@ private:
 	void			Look_Change();				//바라보는 방향을 바꾸기 위한 함수
 	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);	//Res오브젝트들을 채굴할 때 사용하는 함수
 	_int			Die_Check();
+	void			Rebirth();
 
 	HRESULT Ready_Light();
 	void Fire_Light();
@@ -72,6 +75,8 @@ private:
 	Engine::CRvRcTex* m_pReverseCom;
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][PLAYERSTATE::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
+
+	CGameObject* m_Ghost;
 
 	_float				m_fFrame = 0.f;
 	_float				m_fFrameEnd;
@@ -99,6 +104,8 @@ private:
 	_bool				m_bIsRoadScene;			//Road 씬이면 true (임시)
 
 	_uint m_iLightNum;
+
+	_bool m_bTent;
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);

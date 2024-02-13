@@ -140,9 +140,9 @@ void CGhost::Set_Scale()
 {
 
     if (m_ePreState == APPEAR)
-        m_pTransForm->m_vScale = { 1.5f, 3.5f, 1.5f };
+        m_pTransForm->m_vScale = { 1.5f, 2.5f, 1.5f };
     else if (m_ePreState == IDLE)
-        m_pTransForm->m_vScale = { 1.5f, 3.5f, 1.5f };
+        m_pTransForm->m_vScale = { 1.5f, 2.5f, 1.5f };
 }
 
 CGhost* CGhost::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)

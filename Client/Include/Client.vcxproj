@@ -183,6 +183,7 @@
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\ButtonUI.h" />
     <ClInclude Include="..\header\CBossDoor.h" />
+    <ClInclude Include="..\header\CCataProj.h" />
     <ClInclude Include="..\Header\CCatapult.h" />
     <ClInclude Include="..\header\CCookingPot.h" />
     <ClInclude Include="..\header\CFIre.h" />
@@ -191,6 +192,8 @@
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CLoadBackGround.h" />
     <ClInclude Include="..\Header\Cook.h" />
+    <ClInclude Include="..\Header\CParticle.h" />
+    <ClInclude Include="..\Header\CSnow.h" />
     <ClInclude Include="..\Header\CSpike.h" />
     <ClInclude Include="..\header\CTent.h" />
     <ClInclude Include="..\Header\CToothTrap.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="..\Header\IceSpikeR.h" />
     <ClInclude Include="..\Header\InvenSlot.h" />
     <ClInclude Include="..\Header\Mouse.h" />
+    <ClInclude Include="..\Header\Rebirth.h" />
     <ClInclude Include="..\Header\Slot.h" />
     <ClInclude Include="..\Header\SnowSplash.h" />
     <ClInclude Include="..\Header\StateUI.h" />
@@ -265,6 +269,7 @@
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
     <ClCompile Include="..\Code\CBossDoor.cpp" />
+    <ClCompile Include="..\Code\CCataProj.cpp" />
     <ClCompile Include="..\Code\CCatapult.cpp" />
     <ClCompile Include="..\code\CCookingPot.cpp" />
     <ClCompile Include="..\code\CFIre.cpp" />
@@ -273,6 +278,8 @@
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CLoadBackGround.cpp" />
     <ClCompile Include="..\Code\Cook.cpp" />
+    <ClCompile Include="..\Code\CParticle.cpp" />
+    <ClCompile Include="..\Code\CSnow.cpp" />
     <ClCompile Include="..\Code\CSpike.cpp" />
     <ClCompile Include="..\code\CTent.cpp" />
     <ClCompile Include="..\Code\CToothTrap.cpp" />
@@ -290,6 +297,7 @@
     <ClCompile Include="..\Code\IceSpikeR.cpp" />
     <ClCompile Include="..\Code\InvenSlot.cpp" />
     <ClCompile Include="..\Code\Mouse.cpp" />
+    <ClCompile Include="..\Code\Rebirth.cpp" />
     <ClCompile Include="..\Code\Slot.cpp" />
     <ClCompile Include="..\Code\SnowSplash.cpp" />
     <ClCompile Include="..\Code\StateUI.cpp" />

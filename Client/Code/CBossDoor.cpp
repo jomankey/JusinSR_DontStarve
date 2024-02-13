@@ -31,7 +31,7 @@ HRESULT CBossDoor::Ready_GameObject()
 	m_eObject_id = BOSS_DOOR;
 	m_eBossDoorPrevState = BOSSDOOR_END;
 	m_eBossDoorCurState = SLEEP;
-	m_fDiffY = 1.f;
+	m_fDiffY = 4.f;
 	//Ready_Stat();
 	m_Stat.strObjName = L"º¸½º·ë";
 
@@ -71,7 +71,7 @@ _int CBossDoor::Update_GameObject(const _float& fTimeDelta)
 
 	Check_FrameState();
 
-	ChangeScenePlayer(1.f);//¿úÈ¦ÀÌ¶û°°À½
+	ChangeScenePlayer(4.f);//¿úÈ¦ÀÌ¶û°°À½
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);

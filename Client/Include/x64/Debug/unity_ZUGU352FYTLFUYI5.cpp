@@ -24,6 +24,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\CBossDoor.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\CCataProj.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\CCatapult.cpp"
 
 

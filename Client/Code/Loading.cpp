@@ -142,6 +142,12 @@ HRESULT CLoading::Loading_Player_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Ghost_Appear", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ghost/appear/appear__%03d.png", 12)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Ghost_IDLE", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Ghost/idle/idle__%03d.png", 26)), E_FAIL);
 
+
+	//부활모션
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Rebirth", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/rebirth/amulet__%03d.png", 30)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_research", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/research/research__%03d.png", 17)), E_FAIL);
+
+
 	return S_OK;
 }
 
@@ -344,9 +350,13 @@ HRESULT CLoading::Loading_Anim_Texture()
 	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_PLACE", L"../Bin/Resource/Texture/Build/Catapult/PLACE/PLACE__%03d.png", 31, 0.05f);
 	proto::Ready_ProtoAnim(L"CATAPULT_PLACE", pAnim);
 
+	//CatapultProjectile
 
+	pAnim = CAnimation::Create(m_pGraphicDev, L"PROJ_CATAPULT_AIR", L"../Bin/Resource/Texture/Projectile/CataProj/AIR/AIR__%03d.png", 63, 0.01f);
+	proto::Ready_ProtoAnim(L"PROJ_CATAPULT_AIR", pAnim);
 
-
+	pAnim = CAnimation::Create(m_pGraphicDev, L"PROJ_CATAPULT_HIT", L"../Bin/Resource/Texture/Projectile/CataProj/HIT/HIT__%03d.png", 48, 0.01f);
+	proto::Ready_ProtoAnim(L"PROJ_CATAPULT_HIT", pAnim);
 
 
 	return S_OK;

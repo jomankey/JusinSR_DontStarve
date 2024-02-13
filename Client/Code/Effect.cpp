@@ -3,6 +3,9 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "Monster.h"
+#include "Player.h"
+#include "ResObject.h"
 
 CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 vPos)
 	: Engine::CGameObject(pGraphicDev)
@@ -13,6 +16,7 @@ CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 vPos)
 	, m_Dirchange(false)
 	, m_eCurLook(LOOK_DOWN)
 	, m_ePreLook(LOOK_END)
+	, m_fDamage(0.f)
 {
 }
 
@@ -25,6 +29,7 @@ CEffect::CEffect(const CEffect& rhs)
 	, m_Dirchange(rhs.m_Dirchange)
 	, m_eCurLook(rhs.m_eCurLook)
 	, m_ePreLook(rhs.m_ePreLook)
+	, m_fDamage(rhs.m_fDamage)
 {
 
 }
@@ -50,31 +55,42 @@ void CEffect::Look_Change()
 	}
 }
 
-_bool CEffect::Collision_Transform(CTransform* _Src, CTransform* _Dst)
+void CEffect::Check_Collision()
 {
-	_vec3 vSrc, vSrcScale, vDst, vDstScale;
-
-	_Src->Get_Info(INFO_POS, &vSrc);
-	vSrcScale = _Src->Get_Scale();
-
-	_Dst->Get_Info(INFO_POS, &vDst);
-	vDstScale = _Dst->Get_Scale();
-
-	_float iDistanceX = fabs(vSrc.x - vDst.x);
-	_float fRadCX = vSrcScale.x * 0.5f + vDstScale.x * 0.5f;
-
-	_float fDistanceZ = fabs(vSrc.z - vDst.z);
-	_float fRadCY = vSrcScale.y * 0.5f + vDstScale.y * 0.5f;
-
-	if (fDistanceZ > fRadCY || iDistanceX > fRadCX)
+	auto iter = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+	for (auto find : iter)
 	{
-		return false;
+		if (find != nullptr)
+		{
+			if (Collision_Transform(this->m_pTransForm, find->GetTransForm()))
+			{
+				dynamic_cast<CMonster*>(find)->Set_Attack(m_fDamage);
+			}
+		}
 	}
-	else
+
+	auto obj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
+	for (auto find : obj)
 	{
-		return true;
+		if (find != nullptr)
+		{
+			if (Collision_Transform(this->m_pTransForm, find->GetTransForm()))
+			{
+				dynamic_cast<CResObject*>(find)->Set_Attack();
+			}
+		}
+	}
+
+	auto player = scenemgr::Get_CurScene()->GetPlayerObject();
+	if (player != nullptr)
+	{
+		if (Collision_Transform(this->m_pTransForm, player->GetTransForm()))
+		{
+			dynamic_cast<CPlayer*>(player)->Set_Attack((int)m_fDamage);
+		}
 	}
 }
+
 
 
 
