@@ -102,9 +102,6 @@
     <ClInclude Include="..\..\Header\Export_Utility.h">
       <Filter>99. Export</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\VIBuffer.h">
-      <Filter>04. Component\00. VIBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Header\TriCol.h">
       <Filter>04. Component\00. VIBuffer\00. TriCol</Filter>
     </ClInclude>
@@ -168,6 +165,9 @@
     <ClInclude Include="..\..\Header\CAnimation.h">
       <Filter>04. Component\05. Animator\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\VIBuffer.h">
+      <Filter>04. Component\00. VIBuffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CSceneMgr.cpp">
@@ -184,9 +184,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Scene.cpp">
       <Filter>01. Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\VIBuffer.cpp">
-      <Filter>04. Component\00. VIBuffer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TriCol.cpp">
       <Filter>04. Component\00. VIBuffer\00. TriCol</Filter>
@@ -250,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CAnimation.cpp">
       <Filter>04. Component\05. Animator\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\VIBuffer.cpp">
+      <Filter>04. Component\00. VIBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,8 +33,8 @@ HRESULT CDeerClops::Ready_GameObject()
 	m_pTransForm->Set_Pos(m_vPos);
 	Set_ObjStat();
 	m_fAcctime = float(rand() % 30);
-	m_fDiffY = 1.5f;
 	m_bFalldown = false;
+	m_fDiffY = 4.5f;
 	for (auto i = 0; i < DEER_PHASE::PHASE_END; ++i)
 	{
 		m_bPhase[i] = false;

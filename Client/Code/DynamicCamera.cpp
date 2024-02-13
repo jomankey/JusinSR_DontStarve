@@ -8,7 +8,7 @@ CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
 	, m_fAngle(-180.f)
 	, m_fDistance(2.f)
-	, m_fHeight(3.f)
+	, m_fHeight(7.f)
 	, m_fRoadDistance(6.8f)
 	, m_fRoadHeight(4.2f)
 	, m_bkeyInput(true)
@@ -56,8 +56,8 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 		if (KEY_TAP(DIK_U))
 		{
-			auto pObj =  scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0];
-			if (nullptr!= pObj)
+			auto pObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0];
+			if (nullptr != pObj)
 			{
 				SetTarget(pObj);
 				m_bMove = true;
@@ -76,9 +76,9 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 			m_vAt = vTarget;//바라볼곳
 
-			m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance * m_fHeight;
-			m_vTargetEye.y = vTarget.y + m_fHeight * m_fHeight;
-			m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance * m_fHeight;//사실상 목적지
+			m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fHeight;
+			m_vTargetEye.y = vTarget.y + m_fHeight;
+			m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fHeight;//사실상 목적지
 		}
 
 		if (KEY_TAP(DIK_P))
@@ -212,12 +212,12 @@ void CDynamicCamera::Mouse_Move()
 	{
 		if (dwMouseMove > 0.f)
 		{
-			m_fHeight -= 0.05f;
+			m_fHeight -= 0.1f;
 
 		}
 		else if (dwMouseMove < 0.f)
 		{
-			m_fHeight += 0.05f;
+			m_fHeight += 0.1f;
 
 		}
 	}

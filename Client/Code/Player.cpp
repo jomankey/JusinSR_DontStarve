@@ -73,7 +73,8 @@ HRESULT CPlayer::Ready_GameObject()
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 
-	m_fDiffY = 0.3f;// z버퍼 보정용값 추가
+	m_fDiffY = 0.5f;// z버퍼 보정용값 추가
+
 	Set_Stat();
 	return S_OK;
 }

@@ -192,6 +192,8 @@
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CLoadBackGround.h" />
     <ClInclude Include="..\Header\Cook.h" />
+    <ClInclude Include="..\Header\CParticle.h" />
+    <ClInclude Include="..\Header\CSnow.h" />
     <ClInclude Include="..\Header\CSpike.h" />
     <ClInclude Include="..\header\CTent.h" />
     <ClInclude Include="..\Header\CToothTrap.h" />
@@ -276,6 +278,8 @@
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CLoadBackGround.cpp" />
     <ClCompile Include="..\Code\Cook.cpp" />
+    <ClCompile Include="..\Code\CParticle.cpp" />
+    <ClCompile Include="..\Code\CSnow.cpp" />
     <ClCompile Include="..\Code\CSpike.cpp" />
     <ClCompile Include="..\code\CTent.cpp" />
     <ClCompile Include="..\Code\CToothTrap.cpp" />

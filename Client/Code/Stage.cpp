@@ -53,6 +53,7 @@
 #include "CToothTrap.h"
 #include "CTumbleWeed.h"
 
+#include "CSnow.h"
 
 
 //UI
@@ -155,6 +156,11 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
+	///TEST
+
+	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 44, _vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), E_FAIL);
 
 	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev, L"Proto_TerrainTexture");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
