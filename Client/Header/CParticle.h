@@ -30,6 +30,7 @@ public:
 	virtual _int			Update_GameObject(const _float& fTimeDelta)override;
 	virtual void			LateUpdate_GameObject();
 	void Render_GameObject() override;
+	DWORD	FtoDw(float f) { return *((DWORD*)&f); }
 
 
 protected:
@@ -51,7 +52,7 @@ protected:
 		GetRendomVector(&attribute->m_vPos, &m_vMinBox, &m_vMaxBox);
 
 		attribute->m_vPos.y = m_vMaxBox.y;
-
+		
 		attribute->m_vVelocity.x = GetRandomFloat(0.0f, 1.0f) * -5.0f;
 		attribute->m_vVelocity.y = GetRandomFloat(0.0f, 1.0f) *-20.0f;
 		attribute->m_vVelocity.z = 0.0f;

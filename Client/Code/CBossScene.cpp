@@ -43,6 +43,10 @@
 #include <BerryBush.h>
 
 
+//Particle
+#include "CSnow.h"
+
+
 //UI
 #include "CUI.h"
 #include"Slot.h"
@@ -231,6 +235,13 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 
 	
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
+
+
+	///TEST
+
+	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 660, _vec3(-10.f, -10.f, -10.f), _vec3(10.f, 10.f, 10.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
 
 
 	return S_OK;
