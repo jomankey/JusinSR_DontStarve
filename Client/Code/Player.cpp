@@ -25,13 +25,15 @@
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bAttack(false)
-	, m_iLightNum(++CMainApp::g_iLightNum)
+	, m_iLightNum(++CMainApp::g_iLightNum),
+	m_bTent(false)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	: Engine::CGameObject(pGraphicDev, _strName)
 	, m_bAttack(false)
-	, m_iLightNum(++CMainApp::g_iLightNum)
+	, m_iLightNum(++CMainApp::g_iLightNum),
+	m_bTent(false)
 {
 }
 
@@ -142,6 +144,9 @@ void CPlayer::LateUpdate_GameObject()
 
 void CPlayer::Render_GameObject()
 {
+	if (m_bTent)
+		return;
+
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -1153,7 +1158,7 @@ HRESULT CPlayer::Ready_Light()
 
 void CPlayer::Fire_Light()
 {
-	if (m_ePreWeapon != TORCH)
+	if (m_ePreWeapon != TORCH || m_bTent)
 	{
 		light::Get_Light(m_iLightNum)->Close_Light();
 		return;

@@ -39,33 +39,33 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
 
-	if (GetAsyncKeyState('6')) // È¶ºÒ
-	{
-		Set_Cooking(false);
-	}
+	//if (GetAsyncKeyState('6')) // È¶ºÒ
+	//{
+	//	Set_Cooking(false);
+	//}
 
-	if (GetAsyncKeyState('7')) // È¶ºÒ
-	{
-		Set_Cooking(true);
-	}
+	//if (GetAsyncKeyState('7')) // È¶ºÒ
+	//{
+	//	Set_Cooking(true);
+	//}
 
 
 
-	if (GetAsyncKeyState('8')) // È¶ºÒ
-	{
-		Set_Hit();
-		Set_Empty();
-	}
-	if (GetAsyncKeyState('9')) // È¶ºÒ
-	{
-		Set_Hit();
-		Set_Full();
-	}
+	//if (GetAsyncKeyState('8')) // È¶ºÒ
+	//{
+	//	Set_Hit();
+	//	Set_Empty();
+	//}
+	//if (GetAsyncKeyState('9')) // È¶ºÒ
+	//{
+	//	Set_Hit();
+	//	Set_Full();
+	//}
 
-	if (GetAsyncKeyState('0')) // È¶ºÒ
-	{
-		Set_Burnt();
-	}
+	//if (GetAsyncKeyState('0')) // È¶ºÒ
+	//{
+	//	Set_Burnt();
+	//}
 
 	if (!m_bIsFrameStop)
 	{
