@@ -161,6 +161,20 @@ HRESULT CBossScene::Loading_Boss_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_mark_pst", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/Fall_Mark/Pst/Pst__%03d.png", 5)), E_FAIL);
 
 
+	//Fall Down
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Fall_Down", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/falldown/falldown__%03d.png", 37)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Wake_Up", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/wakeup/wakeup__%03d.png", 11)), E_FAIL);
+
+	//Pattern
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Pattern_Pre", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/PatternPre/pre__%03d.png", 12)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Pattern_Loop", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/PatternLoop/loop__%03d.png", 13)), E_FAIL);
+
+
+
+
+
+
+
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/dead/dead__%03d.png", 24)), E_FAIL);
 	return S_OK;
@@ -210,10 +224,10 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 
 	
 
-	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 3.f, 64.f));
+	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 4.f, 64.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
-
+	dynamic_cast<CDeerClops*>(pGameObject)->Set_Phase(true, true, false, false, false, false);
 
 	
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);

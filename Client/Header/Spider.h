@@ -31,7 +31,7 @@ private:
 	HRESULT			Add_Component();
 	virtual void			State_Change();
 	virtual void			Set_ObjStat()					override;
-	void					Set_Scale();
+	virtual void	Set_Scale()						override;
 
 	
 	void			Attacking(const _float& fTimeDelta);

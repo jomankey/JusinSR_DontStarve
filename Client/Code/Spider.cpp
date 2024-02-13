@@ -30,7 +30,7 @@ HRESULT CSpider::Ready_GameObject()
     m_fFrameChange = rand() % 3;
     D3DXVec3Normalize(&m_vDir, &m_vDir);
     Look_Change();
-    m_fDiffY = 0.5f;
+    m_fDiffY = 1.f;
     return S_OK;
 }
 
@@ -285,11 +285,16 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == ATTACK)
         {
-            if (6 < m_fFrame && IsTarget_Approach(m_Stat.fATKRange) && !m_bAttacking)
+            if (6 < m_fFrame && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()))
             {
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
             }
+          /*  if (6 < m_fFrame && IsTarget_Approach(m_Stat.fATKRange) && !m_bAttacking)
+            {
+               
+                m_bAttacking = true;
+            }*/
             else if (m_fFrameEnd < m_fFrame)
             {
                 if (!IsTarget_Approach(m_Stat.fATKRange))

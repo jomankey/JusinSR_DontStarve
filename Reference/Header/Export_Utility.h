@@ -12,7 +12,6 @@
 #include "RvRcTex.h"
 #include "TerrainTex.h"
 #include "CubeTex.h"
-
 #include "CustomTex.h"
 
 #include "Texture.h"

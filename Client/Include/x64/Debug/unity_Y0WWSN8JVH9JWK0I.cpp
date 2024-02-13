@@ -51,6 +51,12 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\Cook.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CParticle.cpp"
+
+
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CSnow.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Code\CSpike.cpp"
 
 

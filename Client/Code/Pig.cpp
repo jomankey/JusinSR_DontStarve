@@ -28,7 +28,7 @@ HRESULT CPig::Ready_GameObject()
 	/*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
 	m_fFrameEnd = 7;
 	m_fFrameChange = rand() % 5;
-	m_fDiffY = 1.f;
+	m_fDiffY = 3.5f;
 	Look_Change();
 	return S_OK;
 }
@@ -54,7 +54,8 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
 	Look_Change(); 
-	m_pTransForm->m_vScale = { 1.5f, 1.5f, 1.f };
+	Set_Scale();
+	
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return iResult;
 }
@@ -215,6 +216,7 @@ HRESULT CPig::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+	m_pTransForm->Set_Scale({ 1.5f,2.f,1.5f });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -339,7 +341,7 @@ void CPig::Attacking(const _float& fTimeDelta)
 		}
 		else if (m_ePreState == ATTACK)
 		{
-			if (5 < m_fFrame && IsTarget_Approach(m_Stat.fATKRange), !m_bAttacking)
+			if (5 < m_fFrame && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()), !m_bAttacking)
 			{
 				dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
 				m_bAttacking = true;
@@ -410,6 +412,10 @@ void CPig::Set_Hit()
 {
 	m_eCurState = HIT;
 	m_bHit = true;
+}
+
+void CPig::Set_Scale()
+{
 }
 
 

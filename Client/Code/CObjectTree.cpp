@@ -32,7 +32,7 @@ HRESULT CObjectTree::Ready_GameObject()
 	m_eObject_id = TREE;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 27.f;
-	m_fDiffY = 1.f;
+	m_fDiffY = 3.4f;
 	Ready_Stat();
 
 	return S_OK;
