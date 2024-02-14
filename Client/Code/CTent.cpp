@@ -219,12 +219,14 @@ void CTent::Check_FrameState()
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DESTROY:
+			Engine::PlaySound_W(L"Obj_Tent_Destroy.mp3", SOUND_EFFECT, 10.0f);
 			m_fFrameEnd = 16.0f;
 			break;
 		case CTent::CTENT_BURNT:
 			m_fFrameEnd = 0.0f;
 			break;
 		case CTent::CTENT_PLACE:
+			Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DEFAULT:
@@ -259,10 +261,12 @@ void CTent::Change_Frame_Event()
 
 		if (m_bIsDestroy)
 		{
+			
+			//Obj_Tent_Destroy.mp3
 			m_eTentCurState = CTENT_DESTROY;
 			if (m_fFrame > m_fFrameEnd)
 			{
-
+				
 				m_bIsFrameStop = true;
 				//회수(파괴)시 다시는 못 지음 새로 텐트를 생성해야함
 				return;

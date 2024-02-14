@@ -34,6 +34,9 @@ public:
 private:
 	virtual void Free();
 
+	void RandomSoundPlay();
+
+
 	_vec3 m_vOriginPos;
 };
 

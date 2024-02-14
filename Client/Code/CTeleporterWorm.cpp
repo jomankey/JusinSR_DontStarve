@@ -191,6 +191,7 @@ void CTeleporterWorm::Check_FrameState()
 		}
 		case TELEPORTER_STATE::TELEPORTER_OPEN:
 		{
+			Engine::PlaySound_W(L"Obj_Worm_Open.mp3", SOUND_EFFECT, 1.0f);
 			//m_pTransForm->Set_Scale(_vec3(5.5f, 5.5f, 5.5f));
 			m_fFrameEnd = 5.0f;
 			break;
@@ -198,7 +199,7 @@ void CTeleporterWorm::Check_FrameState()
 		}
 		case TELEPORTER_STATE::TELEPORTER_CLOSE:
 		{
-
+			Engine::PlaySound_W(L"Obj_Worm_Close.mp3", SOUND_EFFECT, 1.0f);
 			m_fFrameEnd = 5.0f;
 			break;
 
@@ -297,6 +298,7 @@ void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
 	{
 		if (KEY_TAP(DIK_C))
 		{
+			Engine::PlaySound_W(L"Obj_Worm_Travel.mp3", SOUND_EFFECT, 1.0f);
 			ChangeScene(CLoadingScene::Create(m_pGraphicDev,CLoading::LOADING_ROAD));
 		}
 	}
