@@ -35,6 +35,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_ForStage()
 {
+
 	FAILED_CHECK_RETURN(Loading_UI_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Item_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Player_Texture(), E_FAIL);
