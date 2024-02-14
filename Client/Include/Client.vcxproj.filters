@@ -274,6 +274,12 @@
     <Filter Include="02. GameObject\13. Particle\Snow">
       <UniqueIdentifier>{9f306b82-f0be-4ecb-a942-75e8a0df48d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\98. LoadingScene">
+      <UniqueIdentifier>{d7795cfb-1114-4859-98fe-08166a91cdd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\05. MainScene">
+      <UniqueIdentifier>{c3640b9e-bc62-43c5-8618-79434d7c4612}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -531,6 +537,15 @@
     <ClInclude Include="..\Header\UI.h">
       <Filter>02. GameObject\07. UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LoadingScene.h">
+      <Filter>01. Scene\98. LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBGLoading.h">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\03. BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMainScene.h">
+      <Filter>01. Scene\05. MainScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -778,6 +793,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI.cpp">
       <Filter>02. GameObject\07. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingScene.cpp">
+      <Filter>01. Scene\98. LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBGLoading.cpp">
+      <Filter>02. GameObject\07. UI\06. AnimationUI\03. BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainScene.cpp">
+      <Filter>01. Scene\05. MainScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

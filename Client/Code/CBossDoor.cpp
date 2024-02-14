@@ -3,7 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-#include "CBossScene.h"
+#include "LoadingScene.h"
 
 CBossDoor::CBossDoor(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -139,11 +139,6 @@ HRESULT CBossDoor::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	
-
-	
-
-
 
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -265,7 +260,7 @@ void CBossDoor::ChangeScenePlayer(_float _fDistance)
 	{
 		if (KEY_TAP(DIK_C))
 		{
-			ChangeScene(CBossScene::Create(m_pGraphicDev, L"BOSS"));
+			ChangeScene(CLoadingScene::Create(m_pGraphicDev, CLoading::LOADING_BOSS));
 		}
 	}
 
