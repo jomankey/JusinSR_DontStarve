@@ -12,6 +12,9 @@
 #include "C:\PortPolio\Client\Code\CAnimationUI.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CBGLoading.cpp"
+
+
 #include "C:\PortPolio\Client\code\CBonfire.cpp"
 
 
@@ -46,6 +49,9 @@
 
 
 #include "C:\PortPolio\Client\Code\CLoadBackGround.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CMainScene.cpp"
 
 
 #include "C:\PortPolio\Client\Code\Cook.cpp"
@@ -103,6 +109,9 @@
 
 
 #include "C:\PortPolio\Client\Code\InvenSlot.cpp"
+
+
+#include "C:\PortPolio\Client\Code\LoadingScene.cpp"
 
 
 #include "C:\PortPolio\Client\Code\Mouse.cpp"
@@ -165,10 +174,7 @@
 #include "C:\PortPolio\Client\Code\CTeleporterWorm.cpp"
 
 
-#include "C:\PortPolio\Client\Code\CToolUI.cpp"
-
-
-#include "C:\PortPolio\Client\Code\CUI.cpp"
+#include "C:\PortPolio\Client\Code\UI.cpp"
 
 
 #include "C:\PortPolio\Client\Code\WorldHand.cpp"

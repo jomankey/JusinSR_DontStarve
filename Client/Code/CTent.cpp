@@ -40,6 +40,7 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 {
 
 	Install_Obj();
+	
 
 	//예시 코드
 
@@ -246,6 +247,7 @@ void CTent::Change_Frame_Event()
 	{
 		if (m_eTentCurState == CTENT_DEFAULT)
 		{
+			
 			m_eTentCurState = CTENT_PLACE;
 		}
 
@@ -332,7 +334,7 @@ void CTent::Install_Obj()
 		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
-
+		Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
 		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
 	}
 }
