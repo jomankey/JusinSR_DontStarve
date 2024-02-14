@@ -23,12 +23,9 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
 	Engine::Ready_Sound();
-<<<<<<< HEAD
 	//Engine::PlaySound_W(L"Start.mp3", SOUND_BGM, 1.f);
 
-=======
-	Engine::PlayBGM(L"Start.mp3", 10.f);
->>>>>>> d51dad7016a6a512f22882391b6a04cb4a92f719
+	//Engine::PlayBGM(L"Start.mp3", 10.f);
 
 	return S_OK;
 }
@@ -98,15 +95,10 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);		  // Z버퍼에 깊이 값을 기록은 하지만 자동 정렬을 수행할지 말지 결정
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정
 	
-<<<<<<< HEAD
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔바른코딩", L"Loading_Key1", 10, 22, FW_NORMAL), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔바른코딩", L"Loading_Key2", 10, 22, FW_NORMAL), E_FAIL);
-=======
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_Key1", 10, 22, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_Key2", 10, 22, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_BOSS", 10, 22, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_ROAD", 10, 22, FW_HEAVY), E_FAIL);
->>>>>>> d51dad7016a6a512f22882391b6a04cb4a92f719
 
 	//owner Ui 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔바른코딩", L"Font_Count", 7, 7, FW_THIN), E_FAIL);

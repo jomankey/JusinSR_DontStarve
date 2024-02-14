@@ -12,6 +12,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CAnimationUI.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CBGLoading.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CBonfire.cpp"
 
 
@@ -46,6 +49,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CLoadBackGround.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CMainScene.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Cook.cpp"
@@ -103,6 +109,9 @@
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\InvenSlot.cpp"
+
+
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\LoadingScene.cpp"
 
 
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Mouse.cpp"
