@@ -136,11 +136,7 @@ HRESULT CObjectTree::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-<<<<<<< HEAD
-	//m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
-=======
 	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
->>>>>>> 22c4c5ae1e5ac2987f2f3dd79477c7d6d5ac94e9
 
 	return S_OK;
 }

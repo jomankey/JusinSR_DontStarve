@@ -135,7 +135,6 @@ _bool CSlotMgr::Check_InvenItemCount(wstring strName, _int iNeedNum)
 {
 	for (auto& iter : m_pItemArr)
 	{
-		
 		if (iter == nullptr || strName != iter->GetObjName())
 			continue;
 
@@ -148,13 +147,18 @@ _bool CSlotMgr::Check_InvenItemCount(wstring strName, _int iNeedNum)
 
 void CSlotMgr::Remove_CreateItem(wstring strName, _uint iItemCount)
 {
-	for (auto& iter : m_pItemArr)
+	for (int i =0; i < INVENCNT; ++i)
 	{
-
-		if (iter == nullptr || strName != iter->GetObjName())
+		if (m_pItemArr[i] == nullptr || strName != m_pItemArr[i]->GetObjName())
 			continue;
 
-		iter->MinusItemCount(iItemCount);
+		m_pItemArr[i]->MinusItemCount(iItemCount);
+
+		if (m_pItemArr[i]->Get_ItemCount() <= 0)
+		{
+			Safe_Release(m_pItemArr[i]);
+			m_pItemArr[i] = nullptr;
+		}
 	}
 }
 

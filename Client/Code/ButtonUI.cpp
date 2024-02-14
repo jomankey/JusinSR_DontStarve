@@ -106,13 +106,22 @@ void CButtonUI::Input_Mouse()
         {
             _vec3 vSlotPos;
             // 생산 로직 구현 
-            _bool bFirstCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
-            _bool bSecondCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
+            _int iNum = m_tCreateInfo.iInfoCount;
+            _bool bCheck(false);
 
-            if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
+            for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
             {
-                CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
-                CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
+                bCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[i].strItemName, m_tCreateInfo.tItemInfo[i].iCount);
+
+                if (!bCheck) break;
+            }
+           
+            if (bCheck) // 모두 true인 경우에 생성 가능 
+            {
+                for (int i= 0; i< m_tCreateInfo.iInfoCount; ++i)
+                {
+                    CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[i].strItemName, m_tCreateInfo.tItemInfo[i].iCount);
+                }
 
                 if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
                 {

@@ -15,13 +15,18 @@ protected:
 
 public:
 	void Set_ToolType(eITEMTOOL_TYPE eType) { m_eToolType = eType; }
-	void Set_Show(_bool bShow) { m_bShow = bShow; }
+	void Set_Show(_bool bShow) { 
+		if (bShow)
+		{
+			for (auto& iter : m_vecSlideBox)
+			{
+				dynamic_cast<CSlideBox*>(iter)->Set_StartfX(100.f);
+			}
+		}
+
+		m_bShow = bShow; }
 
 	_bool Get_Show() { 
-		for (auto& iter : m_vecSlideBox)
-		{
-			dynamic_cast<CSlideBox*>(iter)->Set_StartfX(100.f);
-		}
 		return m_bShow; }
 
 public:

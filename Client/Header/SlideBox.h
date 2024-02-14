@@ -18,8 +18,6 @@ public:
 	_float Get_fX() { return m_fX; }
 	_float Get_fY() { return m_fY; }
 
-	void SetShow(bool _bIsShow) { m_bIsShow = _bIsShow; }
-
 public:
 	virtual HRESULT Ready_GameObject() override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
@@ -38,8 +36,8 @@ private:
 
 private:
 	_vec3 m_vPos;
-	const _tchar* ItemName;
-	BOOL m_bIsShow = true;
+	_bool m_bPanelShow;
+
 	CItem* m_pItem;
 	CExplainPanel* m_pPanel;
 };

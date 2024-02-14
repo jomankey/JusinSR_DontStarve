@@ -156,7 +156,7 @@ void CUIMgr::Ready_CreateInfo()
 
 	tInfo.strKeyName = L"Charcoal";
 	tInfo.strName = L"숯";
-	tInfo.strInfo = L"나무를 태우면 \n나온다고 하는데...?";
+	tInfo.strInfo = L"나무를 태워 만든다.";
 	tInfo.iInfoCount = 1;
 	tInfo.tItemInfo[0].strItemName = L"Log";
 	tInfo.tItemInfo[0].iCount = 3;

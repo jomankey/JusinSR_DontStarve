@@ -23,7 +23,8 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
 	Engine::Ready_Sound();
-	//Engine::PlayBGM(L"Start.mp3", 10.f);
+	//Engine::PlaySound_W(L"Start.mp3", SOUND_BGM, 1.f);
+
 
 	return S_OK;
 }
@@ -93,16 +94,16 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZENABLE, TRUE);		  // Z버퍼에 깊이 값을 기록은 하지만 자동 정렬을 수행할지 말지 결정
 	//(*ppGraphicDev)->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);  // Z버퍼에 픽셀의 깊이 값을 저장할지 말지 결정
 	
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_Key1", 10, 22, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔고딕코딩", L"Loading_Key2", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔바른코딩", L"Loading_Key1", 10, 22, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"나눔바른코딩", L"Loading_Key2", 10, 22, FW_NORMAL), E_FAIL);
 
 	//owner Ui 
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔고딕코딩", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔바른코딩", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
 
 	//UI
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔바른고딕",  L"Panel_Title", 15, 25, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔바른고딕", L"Panel_Info",  8, 13, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔바른고딕", L"Button_Make", 15, 18, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo배낭여행",  L"Panel_Title", 22, 32, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔고딕코딩", L"Panel_Info", 6, 12, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"나눔고딕코딩", L"Button_Make", 8, 18, FW_NORMAL), E_FAIL);
 
 	//Mouse
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo배낭여행", L"Mouse_Title", 15, 22, FW_HEAVY), E_FAIL);

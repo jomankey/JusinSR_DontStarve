@@ -139,9 +139,6 @@ void CItemBasic::DropMotion(const _float& fTimeDelta)
 	m_pTransForm->Get_Info(INFO_RIGHT, &vDirRight);
 	m_pTransForm->Get_Info(INFO_LOOK, &vDirLook);
 
-
-
-
 	if (!bHowFar)
 	{
 		m_pTransForm->Move_Pos(&vDirUp, fSpeed, fTimeDelta);
