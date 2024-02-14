@@ -280,7 +280,6 @@ HRESULT CDeerClops::Add_Component()
 #pragma endregion TEXCOM
 	
 
-
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
@@ -299,6 +298,7 @@ void CDeerClops::Set_Hit()
 	{
 		if (m_ePreState != ATTACK)
 		{
+			Engine::PlaySound_W(L"Obj_Deerclops_Hurt_5.mp3", SOUND_EFFECT, 5.f);
 			m_eCurState = HIT;
 			m_fFrame = 0.f;
 			m_bHit = true;
@@ -320,6 +320,7 @@ void CDeerClops::Set_Hit()
 		if (!m_bPhase[DIE])
 		{
 			m_bPhase[DIE] = true;
+			Engine::PlaySound_W(L"Obj_Deerclops_Death_1.mp3", SOUND_EFFECT, 5.f);
 			m_eCurState = DEAD;
 			m_Stat.bDead = true;
 		}
@@ -571,6 +572,7 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	{
 		if (9 < m_fFrame && !m_bAttacking)
 		{
+			Engine::PlaySound_W(L"Obj_Deerclops_Attack_3.mp3", SOUND_EFFECT, 5.f);
 			m_bAttacking = true;
 		}
 
@@ -612,7 +614,8 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				Generate_Roaring(0.9);
 				Getnerate_SnowSplash();
 				Camera_Shaking(3.f, 1.f, false);
-
+				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_EFFECT, 7.f);
+				
 				// 여기에 카메라 쉐이킹
 			}
 			else if (Get_Pos().y < 4.f)
@@ -695,6 +698,7 @@ void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 	{
 		if (9 < m_fFrame && !m_bAttacking)
 		{
+			Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 5.f);
 			m_bAttacking = true;
 		}
 
@@ -911,6 +915,7 @@ void CDeerClops::Generate_Fall_Mark_Ex()
 
 void CDeerClops::Generate_Attack_Effect()
 {
+	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 5.f);
 	_vec3 vThisPos, vRight, vLook; // 이펙트 생성 기점.
 	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
 	m_pTransForm->Get_Info(INFO_LOOK, &vLook);
