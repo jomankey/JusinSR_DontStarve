@@ -51,6 +51,12 @@
 #include "C:\PortPolio\Client\Code\Cook.cpp"
 
 
+#include "C:\PortPolio\Client\Code\CParticle.cpp"
+
+
+#include "C:\PortPolio\Client\Code\CSnow.cpp"
+
+
 #include "C:\PortPolio\Client\Code\CSpike.cpp"
 
 

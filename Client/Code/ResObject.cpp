@@ -63,19 +63,13 @@ void CResObject::CreateItem(const _tchar* _itemName, CGameObject* _Type, LPDIREC
 	int iItemCount = rand() % 1 + 3;	//아이템 갯수용
 	for (int i = 0; i < iItemCount; ++i)
 	{
-		//방향을 설정하기 위한 값
-		int sign = (rand() % 2 == 0) ? -1 : 1;
-		int Pos = (rand() % 3);
 
-		//어느 축으로 나아갈지 설정하기 위한 값
-		int signDir = (rand() % 1 == 0) ? 0 : 1;
 		_vec3 vPos;
 		_Type->GetTransForm()->Get_Info(INFO_POS, &vPos);//m_pTransForm->Get_Info(INFO_POS, &vPos);
 		CGameObject* pGameObj = CItemBasic::Create(pGraphicDev, _itemName);
-		dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject(Pos * sign);
+		dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
 		//생성된 객체는 각 방향과 나아갈 축을 가지고 태어난다.
-		dynamic_cast<CItemBasic*>(pGameObj)->CheckSign(sign, signDir);
-		pGameObj->GetTransForm()->Set_Pos(vPos.x, vPos.y, vPos.z);
+		pGameObj->GetTransForm()->Set_Pos(vPos.x, 0.f, vPos.z);
 		scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
 
 
