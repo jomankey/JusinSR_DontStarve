@@ -26,7 +26,6 @@ CCircle::~CCircle()
 HRESULT CCircle::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-    m_vPos.z += 2.f;
     m_pTransForm->Set_Pos(m_vPos);
     m_fFrameEnd = 11.f;
     return S_OK;
