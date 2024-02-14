@@ -50,6 +50,11 @@ public:
 	_float Get_fSizeX() { return m_fSizeX; }
 	_float Get_fSizeY() { return m_fSizeY; }
 
+	void Set_fX(_float _fX) { 
+		m_fX = _fX;
+		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
+	}
+
 public:
 	//순수가상함수
 	virtual _bool UseItem() { return false; }

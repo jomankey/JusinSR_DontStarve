@@ -77,7 +77,7 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bChangeRander)
 	{
-		if (m_vSlotPos.y - m_fY <= 0.1f)
+		if (m_vSlotPos.y - m_fY <= 0.5f)
 		{
 			_vec3 vSlotPos = {};
 			CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strObjName, &vSlotPos);
@@ -141,6 +141,97 @@ void CItemBasic::Render_GameObject()
 
 void CItemBasic::DropMotion(const _float& fTimeDelta)
 {
+
+	//const float gravity = 9.8f;
+	//_vec3 vDirUp;
+	//_vec3 vDirRight;
+	//_vec3 vDirLook;
+	//_vec3 vOrigin;
+
+	//// 아이템의 초기 위치 및 방향 정보 가져오기
+	//_float fSpeed = 20.f;
+
+	//m_pTransForm->Get_Info(INFO_POS, &vOrigin);
+	//
+	//m_pTransForm->Get_Info(INFO_UP, &vDirUp);
+	//m_pTransForm->Get_Info(INFO_RIGHT, &vDirRight);
+	//m_pTransForm->Get_Info(INFO_LOOK, &vDirLook);
+
+	//if (!bHowFar)
+	//{
+	//	m_pTransForm->Move_Pos(&vDirUp, fSpeed, fTimeDelta);
+	//	if (vOrigin.y > 0.8f)   // 어디까지 올라갈 것인가
+	//	{
+	//		bHowFar = true;
+	//	}
+	//}
+	//else // 아이템이 아래로 떨어지는 동안 중력의 영향을 받아 포물선 운동
+	//{
+	//	if (vOrigin.y < 0.3f)   // 어디까지 내려갈 것인가
+	//	{
+	//		m_pTransForm->Set_Pos(vOrigin.x+iPos, vOrigin.y, vOrigin.z+iPos);
+	//		m_bIsCreateByObject = false;
+	//		return;
+	//	}
+
+	//	// 아이템의 속도에 중력 가속도를 더하여 포물선 운동 구현
+	//	fItemSpeed += gravity * fTimeDelta;
+	//	m_pTransForm->Move_Pos(&(-vDirUp * fItemSpeed), fSpeed, fTimeDelta);
+	//}
+
+	//// x축으로 이동
+	////if(!m_bHowToDir)
+	////	m_pTransForm->Move_Pos(&(vDirLook * m_iSign), fSpeed * 0.5f, fTimeDelta);
+	////else{
+	////	// z축으로 이동
+	//m_pTransForm->Move_Pos(&(vDirRight * m_iSign), fSpeed * 0.5f, fTimeDelta);//여기서는 속도가 거리임
+	////}
+
+
+
+
+
+	//_vec3	vDirUp;
+	//_vec3	vDirRight;
+	//_vec3	vDirLook;
+	//_vec3   vOrigin;
+	//
+
+	//_float fSpeed = 10.f;
+
+
+	//m_pTransForm->Get_Info(INFO_POS, &vOrigin);
+	//m_pTransForm->Get_Info(INFO_UP, &vDirUp);
+	//m_pTransForm->Get_Info(INFO_RIGHT, &vDirRight);
+	//m_pTransForm->Get_Info(INFO_LOOK, &vDirLook);
+
+	//
+
+	//if (bHowFar)
+	//{
+	//	m_pTransForm->Move_Pos(&-vDirUp, fSpeed, fTimeDelta);
+	//	if (vOrigin.y < 0.7f)	//어디까지 내려갈 것인가
+	//	{
+	//		m_bIsCreateByObject = false;
+	//	}
+	//}
+	//else if(!bHowFar)
+	//{
+	//	m_pTransForm->Move_Pos(&vDirUp, fSpeed, fTimeDelta);
+	//	if (vOrigin.y > 1.0f)	//어디까지 올라갈 것인가
+	//	{
+	//		bHowFar = true;
+	//	}
+	//}
+
+	//m_pTransForm->Move_Pos(&(vDirRight* m_iSign), fSpeed*0.5,  fTimeDelta);
+
+
+
+	////m_pTransForm->Move_Pos(&(vDirLook* m_iSign), fSpeed,  fTimeDelta);
+	//
+
+
 	const float Gravity = 9.8f;
 	_vec3 vUp;
 	//m_pTransForm->Get_Info(INFO_UP, &vUp);

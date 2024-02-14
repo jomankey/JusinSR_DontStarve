@@ -59,7 +59,7 @@ HRESULT CCreateUI::Ready_GameObject()
 
 _int CCreateUI::Update_GameObject(const _float& fTimeDelta)
 {
-
+	Picking_Mouse();
 
 	CSlotMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, CREATE);
 	for (auto& iter : m_vecSlide) iter->Update_GameObject(fTimeDelta);
@@ -74,18 +74,19 @@ void CCreateUI::LateUpdate_GameObject()
 	CSlotMgr::GetInstance()->LateUpdate_InvenBoxMgr(CREATE);
 	for (auto& iter : m_vecSlide) iter->LateUpdate_GameObject();
 
-	Picking_Mouse();
-
 	__super::LateUpdate_GameObject();
 }
 
 void CCreateUI::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	for (auto& iter : m_vecSlide) iter->Render_GameObject();
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
-	
+
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pTextureCom->Set_Texture(0);
@@ -93,7 +94,6 @@ void CCreateUI::Render_GameObject()
 	m_pBufferCom->Render_Buffer();
 
 	CSlotMgr::GetInstance()->Render_InvenBoxMgr(CREATE);
-	for (auto& iter : m_vecSlide) iter->Render_GameObject();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);

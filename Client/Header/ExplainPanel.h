@@ -21,6 +21,8 @@ public:
 	void Set_Show(bool _bShow) { m_bShow = _bShow; }
 	_bool Get_Show() { return m_bShow; }
 
+	void Set_m_bSlideBoxColl(bool _bColl) { m_bSlideBoxColl = _bColl; }
+
 private:
 	HRESULT			Add_Component();
 
@@ -33,6 +35,7 @@ private:
 private:
 	_vec3 m_vPos;
 	_bool m_bShow = false;
+	_bool m_bSlideBoxColl;
 
 	CREATEINFO m_tCreateInfo;
 	wstring m_strItemKey;

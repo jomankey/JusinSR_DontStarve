@@ -13,11 +13,10 @@ protected:
 
 public:
 	void Set_Item(CItem* pItem);
+	void Set_StartfX(_float _fX) { m_fX = m_vPos.x - _fX; }
 	
 	_float Get_fX() { return m_fX; }
 	_float Get_fY() { return m_fY; }
-
-	void SetShow(bool _bIsShow) { m_bIsShow = _bIsShow; }
 
 public:
 	virtual HRESULT Ready_GameObject() override;
@@ -37,8 +36,8 @@ private:
 
 private:
 	_vec3 m_vPos;
-	const _tchar* ItemName;
-	BOOL m_bIsShow = true;
+	_bool m_bPanelShow;
+
 	CItem* m_pItem;
 	CExplainPanel* m_pPanel;
 };

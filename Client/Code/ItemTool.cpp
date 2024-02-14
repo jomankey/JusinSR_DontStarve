@@ -19,7 +19,7 @@ CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 v
 	m_vPos(vPos), 
 	m_bClick(false), 
 	m_bColl(false),
-	m_fSpeed(7.f)
+	m_fSpeed(10.f)
 {
 	m_tItemInfo.ItemCount = 1;
 }
@@ -86,6 +86,8 @@ void CItemTool::Render_GameObject()
 
 	m_pTextureCom->Set_Texture(0);
 
+	FAILED_CHECK_RETURN(SetUp_Material(D3DXCOLOR(1.f, 1.f, 1.f, 1.f)), );
+
 	m_pBufferCom->Render_Buffer();
 
 	if ((m_eItemType == UI_ITEM_INVEN || m_eItemType == UI_ITEM_CREATE_NEED) && m_eArmorSlotType == ARMOR_SLOT_END)
@@ -93,7 +95,7 @@ void CItemTool::Render_GameObject()
 		_tchar strItemCount[32];
 
 		_itow_s(m_tItemInfo.ItemCount, strItemCount, 10);
-		Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX, m_fY - 15.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 5.f, m_fY - 15.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -370,12 +372,12 @@ void CItemTool::Coll_ItemBasic(const float& fTimeDelta)
 		
 		if (bSizeUp)
 		{
-			if (m_fSizeX < 19.f)
+			if (m_fSizeX < 20.f)
 				m_fSizeX +=  fTimeDelta * m_fSpeed;
-			if (m_fSizeY < 19.f)
+			if (m_fSizeY < 20.f)
 				m_fSizeY +=  fTimeDelta * m_fSpeed;
 
-			if (m_fSizeX >= 19.f || m_fSizeY >= 19.f)
+			if (m_fSizeX >= 20.f || m_fSizeY >= 20.f)
 				bSizeUp = false;
 		}
 		else
@@ -403,12 +405,13 @@ void CItemTool::Coll_ItemBasic(const float& fTimeDelta)
 	for (auto& iter : vecItem)
 	{
 		CItemBasic* pItem = dynamic_cast<CItemBasic*>(iter);
-		if (!pItem->Get_ChangeRender() && pItem->GetObjName() != m_strObjName)
+		if (!pItem->Get_ChangeRender() || pItem->GetObjName() != m_strObjName)
 			continue;
 
 		if (Engine::Collision_Mouse(_vec2{m_fX, m_fY}, pItem->Get_fX(), pItem->Get_fY(), pItem->Get_fSizeX(), pItem->Get_fSizeY()))
 		{
 			m_bColl = true;
+			//DeleteObject(pItem);
 			return;
 		}
 	}

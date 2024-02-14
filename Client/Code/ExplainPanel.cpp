@@ -13,7 +13,8 @@ CExplainPanel::CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring 
     : CUI(pGraphicDev), 
     m_strItemKey(strItemKey),
     m_pButton(nullptr),
-    m_vPos(vPos)
+    m_vPos(vPos),
+    m_bSlideBoxColl(false)
 {
     ZeroMemory(&m_tCreateInfo, sizeof(m_tCreateInfo));
 
@@ -70,7 +71,7 @@ HRESULT CExplainPanel::Ready_GameObject()
 
 _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 {
-    if (!m_bShow)
+    if (!m_bShow && !m_bSlideBoxColl)
         return 0;
 
     __super::Update_GameObject(fTimeDelta);
@@ -79,9 +80,13 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
     GetCursorPos(&tPt);
     ScreenToClient(g_hWnd, &tPt);
     _vec2 vMousePos = _vec2(tPt.x, tPt.y);
-
     if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+    {
+        m_bSlideBoxColl = false;
         m_bShow = true;
+    }
+    else
+        m_bShow = false;
 
     for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         m_pItem[i]->Update_GameObject(fTimeDelta);
@@ -93,7 +98,7 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 
 void CExplainPanel::LateUpdate_GameObject()
 {
-    if (!m_bShow)
+    if (!m_bShow && !m_bSlideBoxColl)
         return;
 
     for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
@@ -105,7 +110,7 @@ void CExplainPanel::LateUpdate_GameObject()
 
 void CExplainPanel::Render_GameObject()
 {
-    if (!m_bShow)
+    if (!m_bShow && !m_bSlideBoxColl)
 		return;
 
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
@@ -124,26 +129,26 @@ void CExplainPanel::Render_GameObject()
     size_t sNameLen = wStringName.length();
     //띄어쓰기용
     int spacingName =0;
-    if (sNameLen == 3&& sNameLen < 5)
-    {
+    if (sNameLen == 3 || sNameLen == 4)
         spacingName = 10;
-    }
-    else if (sNameLen >=5)
-    {
-        spacingName = 25;
-    }
+    else if (sNameLen == 5)
+        spacingName = 15;
+    else if (sNameLen >5 )
+        spacingName = 22;
     else 
         spacingName = 0;
     //PSW 길이에 맞춰서 띄우기용 -------------------
 
-
-    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (sNameLen + spacingName), m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    if (sNameLen == 1)
+        Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX + 6.f, m_fY - 70.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    else
+        Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (sNameLen + spacingName), m_fY - 70.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
     //PSW 길이에 맞춰서 띄우기용 -------------------
     wstring wStringInfo(m_tCreateInfo.strInfo);
     size_t sInfoLen = wStringInfo.length();
     //PSW 길이에 맞춰서 띄우기용 -------------------
   
-    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen + 10.f), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
     //아이템 넣기
     for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
@@ -189,7 +194,7 @@ HRESULT CExplainPanel::Add_Component()
 
 void CExplainPanel::Free()
 {
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         Safe_Release(m_pItem[i]);
     Safe_Release(m_pButton);
 

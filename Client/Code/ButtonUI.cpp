@@ -106,8 +106,8 @@ void CButtonUI::Input_Mouse()
         {
             _vec3 vSlotPos;
             // 생산 로직 구현 
-            _bool bFirstCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
-            _bool bSecondCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
+            //_int iNum = m_tCreateInfo.iInfoCount;
+            //_bool bCheck(false);
 
            // if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
            // {
