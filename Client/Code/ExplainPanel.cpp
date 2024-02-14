@@ -76,7 +76,7 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
     if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
         m_bShow = true;
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         m_pItem[i]->Update_GameObject(fTimeDelta);
 
     m_pButton->Update_GameObject(fTimeDelta);
@@ -89,7 +89,7 @@ void CExplainPanel::LateUpdate_GameObject()
     if (!m_bShow)
         return;
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         m_pItem[i]->LateUpdate_GameObject();
 
     m_pButton->LateUpdate_GameObject();
@@ -182,7 +182,7 @@ HRESULT CExplainPanel::Add_Component()
 
 void CExplainPanel::Free()
 {
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 3; ++i)
         Safe_Release(m_pItem[i]);
     Safe_Release(m_pButton);
 

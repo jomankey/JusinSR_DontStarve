@@ -71,7 +71,7 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.strName = L"요리 도구";
 	tInfo.strInfo = L"맛있는 요리를\n할 수 있다.";
 	tInfo.iInfoCount = 3;
-	tInfo.tItemInfo[0].strItemName = L"CubStone";
+	tInfo.tItemInfo[0].strItemName = L"CutStone";
 	tInfo.tItemInfo[0].iCount = 2;
 	tInfo.tItemInfo[1].strItemName = L"Charcoal";
 	tInfo.tItemInfo[1].iCount = 6;

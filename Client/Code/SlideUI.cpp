@@ -39,7 +39,6 @@ HRESULT CSlideUI::Ready_GameObject()
 
 	_vec3 vPos;
 	CItem* pItem = nullptr;
-	CSlideBox* pSlideBox = nullptr;
 	_float pHeight = 7.f;
 	//ToolType별로 아이템 넣어줌 (고정값)
 	
