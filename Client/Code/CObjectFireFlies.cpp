@@ -26,7 +26,7 @@ HRESULT CObjectFireFlies::Ready_GameObject()
 	m_eFireFliesCurState = FIREFLIES_PRE;
 	m_eObject_id = FIRE_FLIES;
 	m_fFrame = 0.f;
-	m_fDiffY = 0.4f;
+	m_fDiffY = 0.f;
 	//Ready_Stat();
 
 	m_Stat.strObjName = L"¹Ýµ÷ºÒÀÌ";

@@ -31,7 +31,7 @@ HRESULT CObjectRock::Ready_GameObject()
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
 	m_fFrame = 0;
-	m_fDiffY = 4.2f;
+	m_fDiffY = 1.f;
 
 	return S_OK;
 }

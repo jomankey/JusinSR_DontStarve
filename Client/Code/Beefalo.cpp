@@ -29,7 +29,7 @@ HRESULT CBeefalo::Ready_GameObject()
     Set_ObjStat();
     Look_Change();
     m_fFrameEnd = 10;
-    m_fDiffY = 2.5f;
+    m_fDiffY =1.f;
     m_fFrameChange = rand() % 5;
 
     //m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
@@ -417,6 +417,10 @@ void CBeefalo::Set_Scale()
         m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
     }
     else if (m_ePreState == DEAD)
+    {
+        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
+    }
+    else if (m_ePreState == HIT)
     {
         m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
     }

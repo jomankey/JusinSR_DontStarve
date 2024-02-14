@@ -33,10 +33,8 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 
 	m_fX = m_vPos.x;
 	m_fY = m_vPos.y;
-
 	m_fSizeX = 15.f;
 	m_fSizeY = 15.f;
-
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.0f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	//m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(180.f));
@@ -50,6 +48,7 @@ HRESULT CItemBasic::Ready_GameObject()
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	Set_ObjState();
+	m_fDiffY = -4.f;
 
     return S_OK;
 }

@@ -19,7 +19,7 @@ HRESULT CBerryBush::Ready_GameObject()
 	m_eObject_id = BERRY_BUSH;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 0.f;
-	m_fDiffY = 3.0f;
+	m_fDiffY = 0.78f;
 	Ready_Stat();
 	return S_OK;
 }

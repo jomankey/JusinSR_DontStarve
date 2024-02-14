@@ -74,7 +74,10 @@ private:
 
 	virtual void Free()override;
 protected:
-	CTexture* m_pTextureCom;
+	CTexture* m_pTextureCom; 
+	CTransform* m_pTransForm;
+	;
+
 	//CPtcTex* m_pPtcTexCom;
 	_vec3	m_vOrigin;	// 원본위치
 	_float	m_fSize;	//파티클 크기
