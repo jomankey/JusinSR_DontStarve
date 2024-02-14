@@ -246,13 +246,12 @@ void Engine::CTransform::BillBoard()
 
 	matBill._23 = matView._23;
 	matBill._32 = matView._32;
-
 	matBill._12 = matView._12;
 	matBill._21 = matView._21;
 
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
-	Set_WorldMatrix(&(matBill * matWorld));
+	Set_WorldMatrix(&(matBill * m_matWorld));
 }
 
 float Engine::CTransform::CalculateAngleBetweenVectors(const D3DXVECTOR3& vec1, const D3DXVECTOR3& vec2)

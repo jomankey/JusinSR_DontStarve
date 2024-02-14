@@ -45,12 +45,12 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 
 HRESULT CItemBasic::Ready_GameObject()
 {
-    FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	Set_ObjState();
-	m_fDiffY = -4.f;
+	m_fDiffY = -0.3f;
 
-    return S_OK;
+	return S_OK;
 }
 
 _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
@@ -67,7 +67,7 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 			DeleteObject(this);
 			//return 0x80000000;
 		}
-			
+
 		// 아이템 먹엇을때 슬롯쪽으로 이동
 		m_fX += (m_vSlotPos.x - m_fX) * 5.f * fTimeDelta;
 		m_fY += (m_vSlotPos.y - m_fY) * 5.f * fTimeDelta;
@@ -75,7 +75,6 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
 		m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	}
-	else m_pTransForm->BillBoard();
 
 	MousePicking();
 
@@ -92,6 +91,7 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 void CItemBasic::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	__super::Compute_ViewZ(&vPos);
@@ -134,7 +134,7 @@ void CItemBasic::DropMotion(const _float& fTimeDelta)
 	_float fSpeed = 20.f;
 
 	m_pTransForm->Get_Info(INFO_POS, &vOrigin);
-	
+
 	m_pTransForm->Get_Info(INFO_UP, &vDirUp);
 	m_pTransForm->Get_Info(INFO_RIGHT, &vDirRight);
 	m_pTransForm->Get_Info(INFO_LOOK, &vDirLook);
@@ -154,7 +154,7 @@ void CItemBasic::DropMotion(const _float& fTimeDelta)
 	{
 		if (vOrigin.y < 0.3f)   // 어디까지 내려갈 것인가
 		{
-			m_pTransForm->Set_Pos(vOrigin.x+iPos, vOrigin.y, vOrigin.z+iPos);
+			m_pTransForm->Set_Pos(vOrigin.x + iPos, vOrigin.y, vOrigin.z + iPos);
 			m_bIsCreateByObject = false;
 			return;
 		}
@@ -218,9 +218,9 @@ void CItemBasic::DropMotion(const _float& fTimeDelta)
 
 
 
-	
 
-	
+
+
 
 }
 
@@ -259,7 +259,7 @@ CItem* CItemBasic::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _szName)
 		return nullptr;
 	}
 
-    return pInstance;
+	return pInstance;
 }
 
 void CItemBasic::Free()

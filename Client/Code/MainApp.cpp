@@ -95,6 +95,8 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_Key1", 10, 22, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_Key2", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_BOSS", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_ROAD", 10, 22, FW_HEAVY), E_FAIL);
 
 	//owner Ui 
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Font_Count", 7, 7, FW_THIN), E_FAIL);

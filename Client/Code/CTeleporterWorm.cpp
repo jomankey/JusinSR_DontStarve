@@ -3,7 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-#include "CRoadScene.h"
+#include "LoadingScene.h"
 
 CTeleporterWorm::CTeleporterWorm(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -297,7 +297,7 @@ void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
 	{
 		if (KEY_TAP(DIK_C))
 		{
-			ChangeScene(CRoadScene::Create(m_pGraphicDev, L"ROAD"));
+			ChangeScene(CLoadingScene::Create(m_pGraphicDev,CLoading::LOADING_ROAD));
 		}
 	}
 
