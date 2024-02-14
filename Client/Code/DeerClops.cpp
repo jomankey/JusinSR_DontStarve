@@ -385,6 +385,7 @@ void CDeerClops::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case LONG_TAUNT:
+			Camera_Shaking(1.f, 2.f, false);
 			Generate_Roaring(3);
 			Adjust_Taunt_Pos();
 			m_fFrameEnd = 33;
