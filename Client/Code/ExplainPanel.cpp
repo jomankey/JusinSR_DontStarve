@@ -133,22 +133,22 @@ void CExplainPanel::Render_GameObject()
         spacingName = 10;
     else if (sNameLen == 5)
         spacingName = 15;
-    else if (sNameLen == 1)
-        spacingName = 3;
     else if (sNameLen >5 )
         spacingName = 22;
     else 
         spacingName = 0;
     //PSW 길이에 맞춰서 띄우기용 -------------------
 
-
-    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (sNameLen + spacingName), m_fY - 70.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    if (sNameLen == 1)
+        Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX + 6.f, m_fY - 70.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    else
+        Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (sNameLen + spacingName), m_fY - 70.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
     //PSW 길이에 맞춰서 띄우기용 -------------------
     wstring wStringInfo(m_tCreateInfo.strInfo);
     size_t sInfoLen = wStringInfo.length();
     //PSW 길이에 맞춰서 띄우기용 -------------------
   
-    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen + 10.f), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
     //아이템 넣기
     for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
