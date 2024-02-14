@@ -86,6 +86,8 @@ namespace Engine
 	inline void Ready_Sound();
 	inline void PlaySound_W(_tchar* pSoundKey, CHANNELID eID, float fVolume);
 	inline void PlayBGM(TCHAR* pSoundKey, float fVolume);
+	inline void PlayEffectContinue(TCHAR* pSoundKey, float fVolume,  CHANNELID eID);
+
 	inline void StopSound(CHANNELID eID);
 	inline void StopAll();
 	inline void SetChannelVolume(CHANNELID eID, float fVolume);

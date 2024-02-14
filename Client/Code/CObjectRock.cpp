@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CObjectRock.h"
+#include "Export_System.h"
 #include "Export_Utility.h"
 #include "Component.h"
 CObjectRock::CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -116,7 +117,7 @@ void CObjectRock::Change_Frame_Event()
 		{
 			CreateItem(L"Rocks_0",this, this->m_pGraphicDev);
 			CreateItem(L"Rocks_1",this, this->m_pGraphicDev);
-
+			Engine::PlaySound_W(L"Obj_Rock_Destroy.mp3", SOUND_EFFECT, 1.0f);
 
 		}
 

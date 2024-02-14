@@ -48,13 +48,14 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_eCurState == RES_HIT_1) // 피격 모션이 끝난 후 IDLE로 돌아감
 		{
+			
 			m_eCurState = RES_IDLE;
 			m_bHit = false;
 		}
 
 		else if (m_eCurState == RES_DEAD || m_eCurState == RES_DEAD2)
 		{
-
+			Engine::PlaySound_W(L"Obj_Tree_Destroy.mp3", SOUND_EFFECT, 1.0f);
 			CreateItem(L"Twigs", this, this->m_pGraphicDev);
 			CreateItem(L"Log", this, this->m_pGraphicDev);
 		
@@ -151,8 +152,9 @@ void CObjectTree::Change_Frame_Event()
 		return;
 
 	//HIT 시 상태값
-	if (m_bHit)
+	if (m_bHit) {
 		m_eCurState = RES_HIT_1;
+	}
 
 	if (m_Stat.fHP <= 0) // 체력이 0일때
 	{
@@ -184,6 +186,7 @@ void CObjectTree::Check_FrameState()
 
 	if (m_eCurState == RES_DEAD) 
 	{
+		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
 		m_fFrameEnd = 13;
 		m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
 		
@@ -191,6 +194,7 @@ void CObjectTree::Check_FrameState()
 	}
 	if (m_eCurState == RES_DEAD2)
 	{
+		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
 		m_fFrameEnd = 13;
 		m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	}
@@ -230,6 +234,33 @@ CResObject* CObjectTree::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CObjectTree::Free()
 {
 	CGameObject::Free();
+}
+
+void CObjectTree::RandomSoundPlay()
+{
+	srand(static_cast<unsigned int>(time(nullptr)));
+	int iRandNum = rand() %4+1 ;
+	switch (iRandNum)
+	{
+	case 1:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 5:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	default:
+		break;
+	}
+
 }
 
 

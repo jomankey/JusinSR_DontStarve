@@ -30,6 +30,8 @@ HRESULT IceSpikeL::Ready_GameObject()
     m_fDamage = 10.f;
     int RandomPattern = rand() % 3;         // 0 1 2 인덱스 중 랜덤 패턴 적용
     m_eCurState = (ICESPIKE)RandomPattern;
+    Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, 5.f);
+    
     
    
     return S_OK;

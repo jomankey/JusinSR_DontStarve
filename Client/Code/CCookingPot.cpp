@@ -40,15 +40,15 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
 
-	//if (GetAsyncKeyState('6')) // 횃불
-	//{
-	//	Set_Cooking(false);
-	//}
+	if (GetAsyncKeyState('6')) // 횃불
+	{
+		Set_Cooking(false);
+	}
 
-	//if (GetAsyncKeyState('7')) // 횃불
-	//{
-	//	Set_Cooking(true);
-	//}
+	if (GetAsyncKeyState('7')) // 횃불
+	{
+		Set_Cooking(true);
+	}
 
 
 
@@ -75,19 +75,22 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bIsCooking)
 	{
+
 		m_fTimeChek += fTimeDelta;
 	}
 
 
 	if (m_fTimeChek >= m_MaxfTimeChek)
 	{
+		
 		_vec3 vSlot;
 		//요리끝
 		if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop", &vSlot))
 		{
+			Engine::PlaySound_W(L"Obj_Cookingpot_Finish.mp3", SOUND_EFFECT, 1.0f);
+			
 			_vec3 vPos;
 			m_pTransForm->Get_Info(INFO_POS, &vPos);
-
 			CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop");
 			CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pItem);
 			pItem->GetTransForm()->Set_Pos(vPos);
@@ -231,12 +234,15 @@ void CCookingPot::Check_FrameState()
 		switch (m_eCookingpotCurState)
 		{
 		case CCookingPot::COOKINGPOT_IDLE_EMPTY:
+
 			m_fFrameEnd = 0.0f;
 			break;
 		case CCookingPot::COOKINGPOT_IDLE_FULL:
 			m_fFrameEnd = 0.0f;
 			break;
 		case CCookingPot::COOKINGPOT_COOKING_LOOP:
+			
+	
 			m_fFrameEnd = 6.0f;
 			break;
 		case CCookingPot::COOKINGPOT_BURNT:
@@ -268,6 +274,7 @@ void CCookingPot::Change_Frame_Event()
 	{
 		if (m_eCookingpotCurState == COOKINGPOT_DEFAULT)
 		{
+			Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 0.5f);
 			m_eCookingpotCurState = COOKINGPOT_PLACE;
 		}
 
@@ -289,6 +296,7 @@ void CCookingPot::Change_Frame_Event()
 		//솥이 떨어지는 모션이 끝나고 그리고 요리가 시작 되었을 때 프레임 반복
 		else if (m_eCookingpotCurState == COOKINGPOT_COOKING_LOOP&& m_bIsCooking)
 		{
+			
 			m_bIsFrameStop= false;
 			if (m_fFrame > m_fFrameEnd)
 			{
@@ -299,6 +307,9 @@ void CCookingPot::Change_Frame_Event()
 		//솥이 떨어지는 모션이 끝나고 요리가 시작되지 않았을 때 Empty로 돌아감
 		else if(m_eCookingpotCurState == COOKINGPOT_COOKING_LOOP && !m_bIsCooking)
 		{
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH2);
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
 			m_bIsFrameStop = true;
 			m_eCookingpotCurState = COOKINGPOT_IDLE_EMPTY;
 		}
@@ -307,6 +318,9 @@ void CCookingPot::Change_Frame_Event()
 		//요리를 다시 시작하려 할 때
 		if (m_eCookingpotCurState == COOKINGPOT_IDLE_EMPTY && m_bIsCooking)
 		{
+			Engine::PlayEffectContinue(L"Obj_Cookingpot_Boil.mp3", 0.7f, SOUND_EFFECT_CONTINUE_CH1);
+			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_1.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH2);
+			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_2.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH3);
 			m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
 			
 		}

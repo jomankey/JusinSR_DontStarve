@@ -630,7 +630,9 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			_vec3 vSlotPos;
 			if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, findObj->GetObjName(), &vSlotPos));
 			{
+				
 				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);
+				m_eCurState = PICKUP;
 			}
 		}
 	}
@@ -853,6 +855,7 @@ void CPlayer::Check_State()
 			m_fFrameEnd = 22;
 			break;
 		case HIT:
+			Hit_Sound();
 			m_fFrameEnd = 7;
 			m_KeyLock = true;
 			break;
@@ -873,7 +876,11 @@ void CPlayer::Check_State()
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
+		case PICKUP:
+			m_fFrameEnd = 6;
+			break;
 		case EAT:
+			Eat_Sound();
 			m_fFrameEnd = 36;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
@@ -882,6 +889,7 @@ void CPlayer::Check_State()
 			m_fFrameEnd = 6;
 			break;
 		case DIALOG:
+			Dialog_Sound();
 			m_eCurLook = LOOK_DOWN;
 			m_fFrameEnd = 17;
 			break;
@@ -897,7 +905,14 @@ void CPlayer::Check_State()
 		case AXE_CHOP_PRE:
 			m_fFrameEnd = 15;
 			break;
+		case HAMMERING:
+			m_fFrameEnd = 9;
+			break;
+		case SPEAR_ATTACK:
+			m_fFrameEnd = 8;
+			break;
 		case DEAD:
+			Engine::PlaySound_W(L"wilson_Vocie_Death.mp3", SOUND_EFFECT, 5.f);
 			m_fFrameEnd = 19;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
@@ -1065,15 +1080,16 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 	{
 	case ROCK:
 
-		if (m_eCurWeapon == PICK)
+		if (m_ePreWeapon == PICK)
 		{
-
-			m_eCurState = PICKING_OBJECT;
 			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 			{
+				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_EFFECT, 5.f);
+				Rock_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				m_vPlayerActing = true;
 			}
+			m_eCurState = PICKING_OBJECT;
 		}
 		else
 		{
@@ -1082,10 +1098,13 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		}
 		break;
 	case TREE:
-		if (m_eCurWeapon == AXE)
+		if (m_ePreWeapon == AXE)
 		{
 			if (7.f < m_fFrame && !m_vPlayerActing)
 			{
+				Engine::PlaySound_W(L"wilson_Gather_Wood_1.mp3", SOUND_EFFECT, 5.f);
+				Engine::PlaySound_W(L"wilson_Gather_Wood_2.mp3", SOUND_EFFECT, 5.f);
+				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
 				m_vPlayerActing = true;
@@ -1099,11 +1118,13 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		}
 		break;
 	case PIG_HOUSE:
-		if (m_eCurWeapon == HAMMER)
+		if (m_ePreWeapon == HAMMER)
 		{
 			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 			{
+				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
 				m_vPlayerActing = true;
 			}
 			m_eCurState = HAMMERING;
@@ -1118,6 +1139,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 		{
 			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			Grass_Sound();
 			m_vPlayerActing = true;
 		}
 		m_eCurState = BUILD;
@@ -1126,6 +1148,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 		{
 			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			Grass_Sound();
 			m_vPlayerActing = true;
 		}
 		m_eCurState = BUILD;
@@ -1151,7 +1174,7 @@ _int CPlayer::Die_Check()
 			//여기에 고스트 소환하는 거
 			_vec3 pPlayerPos;
 			m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
-			
+			Engine::PlaySound_W(L"wilson_Ghost_Spawn.mp3", SOUND_EFFECT, 5.f);
 			m_Ghost = CGhost::Create(m_pGraphicDev, pPlayerPos);
 			NULL_CHECK_RETURN(m_Ghost, E_FAIL);
 			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, m_Ghost), E_FAIL);
@@ -1258,7 +1281,6 @@ void CPlayer::Update_State(const _float& fTimeDelta)
 
 }
 
-
 //못찾았을경우 nullptr반환
 CGameObject* CPlayer::Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget)
 {
@@ -1279,7 +1301,7 @@ CGameObject* CPlayer::Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarg
 	//반복문돌면서 모든 오브젝트그룹 순회하기
 	for (auto& obj : vecObj)
 	{
-		if (obj->IsDelete())//해당오브젝트가 삭제될예정이면 무시
+		if (obj->IsDelete() || obj == nullptr)//해당오브젝트가 삭제될예정이면 무시
 			continue;
 
 		obj->GetTransForm()->Get_Info(INFO_POS, &vTargetPos);
@@ -1323,6 +1345,125 @@ void CPlayer::BillBoard()
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
+}
+
+void CPlayer::Hit_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+
+}
+
+void CPlayer::Eat_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Eat_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Eat_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+}
+
+void CPlayer::Dialog_Sound()
+{
+	int randomvalue = rand() % 6;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Voice_Generic_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_4.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_5.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 5:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_6.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+}
+
+void CPlayer::Rock_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+
+}
+
+void CPlayer::Tree_Sound()
+{
+	int randomvalue = rand() % 5;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+}
+
+void CPlayer::Grass_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
 }
 
 
