@@ -59,6 +59,7 @@ private:
 
 	BOOL m_bIsOff = false;
 
+
 	_uint m_iLightNum;
 };
 

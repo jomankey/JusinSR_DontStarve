@@ -163,6 +163,12 @@ void PlayBGM(TCHAR* pSoundKey, float fVolume)
 	return CSoundMgr::GetInstance()->PlayBGM(pSoundKey, fVolume);
 }
 
+void PlayEffectContinue(TCHAR* pSoundKey, float fVolume, CHANNELID eID)
+{
+	return CSoundMgr::GetInstance()->PlayEffectContinue(pSoundKey, fVolume, eID);
+
+}
+
 void StopSound(CHANNELID eID)
 {
 	return CSoundMgr::GetInstance()->StopSound(eID);

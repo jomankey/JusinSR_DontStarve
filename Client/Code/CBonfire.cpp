@@ -210,6 +210,7 @@ void CBonfire::AddFIre(int _Value)
 	{
 		if (m_pFire->Get_CurState() == 1&& m_pFire->Get_IsOff())
 		{
+			Engine::PlayEffectContinue(L"Obj_Campfire_Lv1.mp3", 1.f, SOUND_EFFECT_CONTINUE_CH1);
 			m_pFire->Set_IsOff(false);
 		}
 
@@ -217,6 +218,8 @@ void CBonfire::AddFIre(int _Value)
 		if (m_fFireWoodCount >= 5)
 		{
 			m_pFire->Set_NextLevel();
+			//
+			Engine::PlaySound_W(L"Obj_Campfire_Addfuel.mp3", SOUND_EFFECT, 1.0f);
 			m_fFireWoodCount = 0;
 
 		}

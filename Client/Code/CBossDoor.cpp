@@ -155,16 +155,22 @@ void CBossDoor::Check_FrameState()
 		{
 		case CBossDoor::BOSSDOOR_OPEN:
 		{
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			Engine::PlaySound_W(L"Obj_Teleport_Activate.mp3", SOUND_EFFECT, 1.0f);
 			m_fFrameEnd = 19.f;
 			break;
 		}
 		case CBossDoor::BOSSDOOR_CLOSE:
 		{
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			Engine::PlaySound_W(L"Obj_Teleport_Deactivate.mp3", SOUND_EFFECT, 1.0f);
+
 			m_fFrameEnd = 10.f;
 			break;
 		}
 		case CBossDoor::BOSSDOOR_IDLE:
 		{
+			Engine::PlayEffectContinue(L"Obj_Teleport_Idle.mp3", 2.f, SOUND_EFFECT_CONTINUE_CH1);
 			m_fFrameEnd = 8.f;
 			break;
 		}
@@ -260,6 +266,8 @@ void CBossDoor::ChangeScenePlayer(_float _fDistance)
 	{
 		if (KEY_TAP(DIK_C))
 		{
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			Engine::PlaySound_W(L"Obj_Teleport_MoveTeleport.mp3", SOUND_EFFECT, 1.0f);
 			ChangeScene(CLoadingScene::Create(m_pGraphicDev, CLoading::LOADING_BOSS));
 		}
 	}
