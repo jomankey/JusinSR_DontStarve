@@ -429,6 +429,5 @@ CItem* CItemTool::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _ve
 
 void CItemTool::Free()
 {
-	m_bColl = false;
 	__super::Free();
 }

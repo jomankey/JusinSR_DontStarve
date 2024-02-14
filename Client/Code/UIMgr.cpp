@@ -104,7 +104,7 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.strName = L"텐트";
 	tInfo.strInfo = L"안전하게 잠을\n잘 수 있다.";
 	tInfo.iInfoCount = 3;
-	tInfo.tItemInfo[0].strItemName = L"Twigs";
+	tInfo.tItemInfo[0].strItemName = L"Silk";
 	tInfo.tItemInfo[0].iCount = 6;
 	tInfo.tItemInfo[1].strItemName = L"Twigs";
 	tInfo.tItemInfo[1].iCount = 4;
@@ -121,8 +121,8 @@ void CUIMgr::Ready_CreateInfo()
 	tInfo.tItemInfo[0].iCount = 2;
 	tInfo.tItemInfo[1].strItemName = L"FireSton";
 	tInfo.tItemInfo[1].iCount = 1;
-	tInfo.tItemInfo[1].strItemName = L"Rope";
-	tInfo.tItemInfo[1].iCount = 1;
+	tInfo.tItemInfo[2].strItemName = L"Rope";
+	tInfo.tItemInfo[2].iCount = 1;
 	m_vecCreateInfo.push_back(tInfo);
 
 	tInfo.strKeyName = L"Armor";

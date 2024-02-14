@@ -44,7 +44,14 @@ HRESULT CExplainPanel::Ready_GameObject()
 
     for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
     {
-        _vec3 vPos = _vec3(m_fX + 4.f * ((i+1) * (i *4) ), m_fY + 8.f, 0.f);
+        _vec3 vPos = {};
+        if (m_tCreateInfo.iInfoCount == 1)
+            vPos = _vec3(m_fX + 12.f, m_fY + 8.f, 0.f);
+        else if (m_tCreateInfo.iInfoCount == 2)
+            vPos = _vec3(m_fX + 3.f + (30.f * i), m_fY + 8.f, 0.f);
+        else if (m_tCreateInfo.iInfoCount == 3)
+            vPos = _vec3(m_fX - 13.f + (30.f * i), m_fY + 8.f, 0.f);
+
         m_pItem[i] = CInvenSlot::Create(m_pGraphicDev, vPos, i, INVEN);
         CItem* pItem = CItemTool::Create(m_pGraphicDev, m_tCreateInfo.tItemInfo[i].strItemName, vPos, UI_ITEM_CREATE_NEED);
         pItem->Set_ItemCount(m_tCreateInfo.tItemInfo[i].iCount);

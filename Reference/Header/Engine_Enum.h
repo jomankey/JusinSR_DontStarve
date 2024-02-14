@@ -78,12 +78,9 @@ namespace Engine
 		UI,
 		BOSS,
 		EFFECT,
-<<<<<<< HEAD
 		SLIDEBOX,
 		PANEL,
-=======
 		PARTICLE,
->>>>>>> 9023d40f7100b8ece32ba5091da26ddfe71a86e6
 		END = 32,
 	};
 	enum UI_STATE { UI_STATIC, UI_DYNAMIC, UI_NONE };

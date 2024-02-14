@@ -514,10 +514,6 @@ HRESULT CLoading::Loading_Item_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Wetgoop", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/wetgoop.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Meatballs", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/meatballs.png")), E_FAIL);
 
-
-
-
-
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Armor", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Armor.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Cook", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Cook.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Tent", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Item/Tant.png")), E_FAIL);
