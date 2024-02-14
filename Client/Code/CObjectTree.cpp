@@ -39,7 +39,10 @@ HRESULT CObjectTree::Ready_GameObject()
 
 _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fFrame += m_fFrameEnd * fTimeDelta;
+	if (m_eCurState == RES_HIT_1)
+		m_fFrame += m_fFrameEnd * fTimeDelta * 1.5f;
+	else
+		m_fFrame += m_fFrameEnd * fTimeDelta * 0.5f;
 
 	if (m_fFrameEnd < m_fFrame)
 	{

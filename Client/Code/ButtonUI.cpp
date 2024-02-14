@@ -112,7 +112,6 @@ void CButtonUI::Input_Mouse()
             _int iNum = m_tCreateInfo.iInfoCount;
             _bool bCheck(false);
 
-<<<<<<< HEAD
             for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
             {
                 bCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[i].strItemName, m_tCreateInfo.tItemInfo[i].iCount);
@@ -129,28 +128,14 @@ void CButtonUI::Input_Mouse()
 
                 if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
                 {
-=======
-           // if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
-           // {
-           //     CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
-           //     CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
-           //
-           //     if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
-           //     {
->>>>>>> 4a5669a35c31c71380c85b65e15f95d50b7360bc
                     _vec3 vPos;
                     scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPos);
                     CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_tCreateInfo.strKeyName);
                     CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pItem);
                     pItem->GetTransForm()->Set_Pos(vPos);
                     dynamic_cast<CItemBasic*>(pItem)->Pickup_Item(vSlotPos);
-<<<<<<< HEAD
                 }
             }
-=======
-          //      }
-          //  }
->>>>>>> 4a5669a35c31c71380c85b65e15f95d50b7360bc
         }
     }
     else if (m_bColl && m_bFood) // 요리 탭에서 요리 제작, 요리 끝나면 아이템 다 사라지도록 
