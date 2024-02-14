@@ -22,8 +22,6 @@ CObjectTree::~CObjectTree()
 HRESULT CObjectTree::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
-	
 
 	
 
@@ -32,7 +30,7 @@ HRESULT CObjectTree::Ready_GameObject()
 	m_eObject_id = TREE;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 27.f;
-	m_fDiffY = 3.4f;
+	m_fDiffY = 3.0f;
 	Ready_Stat();
 
 	return S_OK;
@@ -138,7 +136,7 @@ HRESULT CObjectTree::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.5f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
 	return S_OK;
 }
@@ -163,7 +161,7 @@ void CObjectTree::Change_Frame_Event()
 	if (m_Stat.bDead)
 	{
 		m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
-		m_pTransForm->Set_Pos(m_vOriginPos.x, 1.0f, m_vOriginPos.z); //
+		m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
 		m_eCurState = RES_FINAL;
 
 	}

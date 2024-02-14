@@ -63,6 +63,7 @@ void CParticle::LateUpdate_GameObject()
 
 void CParticle::Render_GameObject()
 {
+
 	if (!m_ParticleList.empty())
 	{
 		preRender();
@@ -150,7 +151,7 @@ void CParticle::preRender()
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_B, FtoDw(0.f));
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(1.f));
 
-
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 }
 
 void CParticle::postRender()
@@ -193,6 +194,10 @@ HRESULT CParticle::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 
+
+	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 	return S_OK;
 }
 

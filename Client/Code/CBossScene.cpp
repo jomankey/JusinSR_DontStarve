@@ -238,8 +238,7 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 
 
 	///TEST
-
-	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 660, _vec3(-10.f, -10.f, -10.f), _vec3(10.f, 10.f, 10.f));
+	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 660, _vec3(0.f, 0.f, 0.f), _vec3(128.f, 10.f, 128.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
 

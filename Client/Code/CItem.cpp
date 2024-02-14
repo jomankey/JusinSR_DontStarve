@@ -127,6 +127,7 @@ HRESULT CItem::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
+	
 	return S_OK;
 }
 

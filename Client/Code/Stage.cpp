@@ -385,7 +385,6 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CBerryBush::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		vPos.y = 0.5f;
 	}
 	else if (!_tcscmp(L"CutGlass", pName))
 	{
@@ -416,7 +415,6 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CBeefalo::Create(m_pGraphicDev, vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-		vPos.y = 1.5f;
 	}
 	else if (!_tcscmp(L"FireSton", pName))
 	{
