@@ -984,7 +984,6 @@ void CDeerClops::Camera_Shaking(_float _power, _float _time, _bool _dir)
 {
 	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(scenemgr::Get_CurScene()->GetCameraObject());
 	pCamera->SetShakedCamera(_power, _time, _dir);
-	pCamera->ShakeCamera();
 }
 
 void CDeerClops::Adjust_Taunt_Pos()

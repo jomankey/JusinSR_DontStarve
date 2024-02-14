@@ -24,11 +24,11 @@ public:
 	_float		Get_Angle() { return m_fAngle; }
 
 	void ShakeCamera();
-	void SetShakedCamera(_float _fIntensity, _float _fShakeTime,_bool _bLockWidth)
+	void SetShakedCamera(_float _fIntensity, _float _fShakeTime, _bool _bLockWidth)
 	{
 		m_fShakeAccTime = 0.f;
 		m_fIntensity = _fIntensity;
-		m_fShakeAccTime = _fShakeTime;
+		m_fShakeTime = _fShakeTime;
 		m_bLockWidth = _bLockWidth;
 	}
 
