@@ -19,7 +19,7 @@ CItemTool::CItemTool(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, _vec3 v
 	m_vPos(vPos), 
 	m_bClick(false), 
 	m_bColl(false),
-	m_fSpeed(7.f)
+	m_fSpeed(10.f)
 {
 	m_tItemInfo.ItemCount = 1;
 }
@@ -370,12 +370,12 @@ void CItemTool::Coll_ItemBasic(const float& fTimeDelta)
 		
 		if (bSizeUp)
 		{
-			if (m_fSizeX < 19.f)
+			if (m_fSizeX < 20.f)
 				m_fSizeX +=  fTimeDelta * m_fSpeed;
-			if (m_fSizeY < 19.f)
+			if (m_fSizeY < 20.f)
 				m_fSizeY +=  fTimeDelta * m_fSpeed;
 
-			if (m_fSizeX >= 19.f || m_fSizeY >= 19.f)
+			if (m_fSizeX >= 20.f || m_fSizeY >= 20.f)
 				bSizeUp = false;
 		}
 		else
@@ -409,6 +409,7 @@ void CItemTool::Coll_ItemBasic(const float& fTimeDelta)
 		if (Engine::Collision_Mouse(_vec2{m_fX, m_fY}, pItem->Get_fX(), pItem->Get_fY(), pItem->Get_fSizeX(), pItem->Get_fSizeY()))
 		{
 			m_bColl = true;
+			//DeleteObject(pItem);
 			return;
 		}
 	}

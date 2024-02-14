@@ -13,6 +13,7 @@ protected:
 
 public:
 	void Set_Item(CItem* pItem);
+	void Set_StartfX(_float _fX) { m_fX = m_vPos.x - _fX; }
 	
 	_float Get_fX() { return m_fX; }
 	_float Get_fY() { return m_fY; }

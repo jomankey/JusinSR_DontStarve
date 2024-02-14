@@ -38,9 +38,8 @@ HRESULT CSlideBox::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = m_vPos.x;
+	m_fX = m_vPos.x - 100.f;
 	m_fY = m_vPos.y;
-
 	m_fSizeX = 30.f;
 	m_fSizeY = 30.f;
 
@@ -54,7 +53,16 @@ HRESULT CSlideBox::Ready_GameObject()
 
 _int CSlideBox::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_fX != m_vPos.x)
+	{
+		m_fX += 150.f * fTimeDelta;
 
+		if (m_fX > m_vPos.x)
+			m_fX = m_vPos.x;
+
+		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
+	}
+		
 	Input_Mouse();
 
 	if (m_pItem) m_pItem->Update_GameObject(fTimeDelta);
