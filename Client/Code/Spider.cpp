@@ -39,7 +39,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     
     if (!m_bFrameStop)
     {
-        m_fFrame += m_fFrameEnd * fTimeDelta;
+        m_fFrame += m_fFrameEnd * fTimeDelta * 0.5f;
     }
     _int iResult = Die_Check();    //죽었는지 검사
     if (!m_Stat.bDead)      //죽지 않았을시 진입
@@ -285,6 +285,13 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == ATTACK)
         {
+            if (dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
+            {
+                m_eCurstate == WALK;
+                return;
+            }
+                
+
             if (6 < m_fFrame && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()))
             {
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
@@ -305,7 +312,8 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == WALK)
         {
-            Player_Chase(fTimeDelta);
+            if (!dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
+                Player_Chase(fTimeDelta);
             Collision_EachOther(fTimeDelta);
         }
     }

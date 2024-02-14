@@ -64,7 +64,8 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	Input_Mouse();
-	
+
+
 
 	return 0;
 }
@@ -178,6 +179,7 @@ void CItemTool::Input_Mouse()
 		}
 
 		m_bClick = false;
+		m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f)); // 클릭을 놓는 순간 스케일값 돌아감
 
 		vector<CSlot*> vecBox = CSlotMgr::GetInstance()->Get_BoxList(INVEN);
 		for (int i = 0; i < INVENCNT; ++i)
@@ -361,6 +363,7 @@ void CItemTool::Move_Pos()
 	m_fY = tPt.y;
 
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+	m_pTransForm->Set_Scale(_vec3(m_fSizeX + 5.f, m_fSizeY + 5.f, 0.f));
 
 }
 

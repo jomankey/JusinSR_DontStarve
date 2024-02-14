@@ -29,6 +29,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_bAttack(false)
 	, m_iLightNum(++CMainApp::g_iLightNum),
 	m_bTent(false)
+	,m_bHit(false)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
@@ -36,6 +37,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	, m_bAttack(false)
 	, m_iLightNum(++CMainApp::g_iLightNum),
 	m_bTent(false)
+	, m_bHit(false)
 {
 }
 
@@ -103,6 +105,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		{
 			m_KeyLock = false;
 			m_eCurState = IDLE;
+			m_bHit = false;
 		}
 		if (m_vPlayerActing)
 		{
@@ -989,11 +992,12 @@ void CPlayer::Set_Stat()
 
 void CPlayer::Set_Attack(int _Atk)
 {
-	if (!m_Stat.bDead && m_Stat.fHP > 0)
+	if (!m_Stat.bDead && m_Stat.fHP > 0 && !m_bHit)
 	{
 		m_Stat.fHP -= _Atk;
 		m_eCurState = HIT;
 		m_KeyLock = true;
+		m_bHit = true;
 	}
 }
 

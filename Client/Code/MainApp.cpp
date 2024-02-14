@@ -108,6 +108,8 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Panel_Info", 6, 12, FW_NORMAL), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Button_Make", 8, 18, FW_NORMAL), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Button_Cook_Make", 6, 15, FW_NORMAL), E_FAIL);
+
 	//Mouse
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Title", 15, 22, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Sub", 10, 20, FW_HEAVY), E_FAIL);
@@ -144,8 +146,8 @@ void CMainApp::Free()
 	Engine::Safe_Release(m_pDeviceClass);
 	Engine::Safe_Release(m_pManagementClass);
 	Engine::Safe_Release(m_pGraphicDev);
-	CUIMgr::DestroyInstance();
-	CSlotMgr::DestroyInstance();
 	Engine::Release_System();
 	Engine::Release_Utility();
+	CUIMgr::DestroyInstance();
+	CSlotMgr::DestroyInstance();
 }
