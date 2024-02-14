@@ -52,5 +52,8 @@ private:
 
 
 	BOOL m_bReverseFrame = false;
+
+
+	_vec3 m_vOriginPos;
 };
 

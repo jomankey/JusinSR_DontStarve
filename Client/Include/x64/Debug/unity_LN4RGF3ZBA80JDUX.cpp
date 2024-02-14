@@ -51,6 +51,12 @@
 #include "C:\GitHub\JusinSR\Client\Code\Cook.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\CParticle.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\Code\CSnow.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\CSpike.cpp"
 
 
@@ -100,6 +106,9 @@
 
 
 #include "C:\GitHub\JusinSR\Client\Code\Mouse.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\Code\Rebirth.cpp"
 
 
 #include "C:\GitHub\JusinSR\Client\Code\Slot.cpp"

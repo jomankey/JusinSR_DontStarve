@@ -20,8 +20,14 @@ public:
     void Render_GameObject() override;
 
     //오브젝트에 의해 생성된 객체들만 사용할 것
-    void SetCreateByObject( ) { m_bIsCreateByObject = true; }
+    void SetCreateByObject(_int _randomNum ) 
+    {
+        iPos= _randomNum;
+        m_bIsCreateByObject = true;
+    }
     void DropMotion(const _float& fTimeDelta);
+    void CheckSign(int _iSign, int _Dir);
+   
 
 public:
     static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _szName);
@@ -30,9 +36,14 @@ private:
     virtual void Free();
 
 
+    //오브젝트에 의해 생성된 객체들만 사용할 것
     BOOL m_bIsCreateByObject = false;
-
-
+    BOOL m_bHowToDir = false;
+    _int m_iSign = 0;
+    _float fItemSpeed = 0.0f;
+    bool bHowFar = false;
+    int iPos = 0;
+   
 private:
     _bool m_bChangeRander;
 

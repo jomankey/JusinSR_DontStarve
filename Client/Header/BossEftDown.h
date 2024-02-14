@@ -25,7 +25,7 @@ public:
 private:
 	HRESULT					Add_Component();
 	virtual void State_Change()			override;
-	void Check_Collision();
+
 	
 	_int Appear();
 	void Set_Scale();
@@ -40,7 +40,6 @@ private:
 	BE_UPSTATE m_eCurState;
 	BE_UPSTATE m_ePreState;
 
-	_float		m_fDamage;
 
 	_bool		m_bCollision;
 public:

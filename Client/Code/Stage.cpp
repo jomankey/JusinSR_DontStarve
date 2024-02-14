@@ -53,6 +53,7 @@
 #include "CToothTrap.h"
 #include "CTumbleWeed.h"
 
+#include "CSnow.h"
 
 
 //UI

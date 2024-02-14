@@ -9,7 +9,7 @@
 
 IceSpikeR::IceSpikeR(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	:CEffect(pGraphicDev, _vPos), m_eCurState(ONE),
-    m_ePreState(STATE_END)
+    m_ePreState(STATE_END), m_bAttack(false)
 {
 }
 
@@ -27,6 +27,7 @@ HRESULT IceSpikeR::Ready_GameObject()
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
     m_fFrameEnd = 11.f;
+    m_fDamage = 10.f;
     int RandomPattern = rand() % 3;         // 0 1 2 인덱스 중 랜덤 패턴 적용
     m_eCurState = (ICESPIKE)RandomPattern;
     return S_OK;
@@ -143,6 +144,12 @@ _int IceSpikeR::Appear()
         return 0x80000000;
     }
 
+
+    if (!m_bAttack)
+    {
+        Check_Collision();
+        m_bAttack = true;
+    }
     return 0;
 }
 

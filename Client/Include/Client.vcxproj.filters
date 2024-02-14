@@ -262,8 +262,16 @@
     <Filter Include="02. GameObject\06. Effect\07. RebirthAmulet">
       <UniqueIdentifier>{6b245f73-6004-49b5-bed3-967794227638}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="02. GameObject\07. UI\04. Cook">
       <UniqueIdentifier>{283d441e-bad3-4b31-adde-580ea0e06621}</UniqueIdentifier>
+=======
+    <Filter Include="02. GameObject\13. Particle">
+      <UniqueIdentifier>{9dc4b3a7-fc5b-4db4-a0c7-c560f8e7d3e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\13. Particle\Snow">
+      <UniqueIdentifier>{9f306b82-f0be-4ecb-a942-75e8a0df48d2}</UniqueIdentifier>
+>>>>>>> 9023d40f7100b8ece32ba5091da26ddfe71a86e6
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -516,6 +524,12 @@
     <ClInclude Include="..\Header\Rebirth.h">
       <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CParticle.h">
+      <Filter>02. GameObject\13. Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSnow.h">
+      <Filter>02. GameObject\13. Particle\Snow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -757,6 +771,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\Rebirth.cpp">
       <Filter>02. GameObject\06. Effect\07. RebirthAmulet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CParticle.cpp">
+      <Filter>02. GameObject\13. Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSnow.cpp">
+      <Filter>02. GameObject\13. Particle\Snow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,8 @@ namespace Engine
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
 		virtual void		LateUpdate_GameObject();
 		virtual void		Render_GameObject()PURE;
+		_bool		Collision_Transform(CTransform* _Src, CTransform* _Dst);	//AABB함수.
+		//첫번째 인자 자신, 두번째 인자 상대
 
 	protected:
 		explicit CGameObject() = delete;
@@ -40,6 +42,7 @@ namespace Engine
 		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
 		explicit CGameObject(const CGameObject& rhs);
 		virtual ~CGameObject();
+		
 
 		virtual void		Free() override;
 	protected:

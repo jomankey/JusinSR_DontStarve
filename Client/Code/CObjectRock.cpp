@@ -23,7 +23,7 @@ HRESULT CObjectRock::Ready_GameObject()
 
 
 	_vec3 vPos;
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f,2.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
 
@@ -31,7 +31,7 @@ HRESULT CObjectRock::Ready_GameObject()
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
 	m_fFrame = 0;
-	m_fDiffY = 1.2f;
+	m_fDiffY = 4.2f;
 
 	return S_OK;
 }
@@ -116,38 +116,9 @@ void CObjectRock::Change_Frame_Event()
 
 		if (m_Stat.bDead == false)
 		{
-			srand(static_cast<unsigned int>(time(nullptr)));
-			int iItemCount = rand() % 1 + 3;	//아이템 갯수용
-			for (int i = 0; i < iItemCount; ++i)
-			{
-				int signX = (rand() % 2 == 0) ? -1 : 1;
-				int signZ = (rand() % 2 == 0) ? -1 : 1;
-				int iItemPosX = rand() % 3 * signX;
-				int iItemPosZ = rand() % 3 * signZ;
-				_vec3 vPos;
-				m_pTransForm->Get_Info(INFO_POS, &vPos);
-				vPos.x += iItemPosX;
-				vPos.y = 0.8f;
-				vPos.z += iItemPosZ;
-				CGameObject* pGameObj = CItemBasic::Create(m_pGraphicDev, L"Rocks_0");
-				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
-				pGameObj->GetTransForm()->Set_Pos(vPos);
-				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);
+			CreateItem(L"Rocks_0",this, this->m_pGraphicDev);
+			CreateItem(L"Rocks_1",this, this->m_pGraphicDev);
 
-
-
-				/*srand(static_cast<unsigned int>(time(nullptr)));
-				int signtmp = (rand() % 2 == 0) ? -1 : 1;
-				int iItemPostmp = rand() % 3 * signtmp;
-				vPos.x += iItemPostmp;
-				vPos.y = 0.5f;
-				vPos.z += iItemPostmp;
-				pGameObj = CItemBasic::Create(m_pGraphicDev, L"Rocks_1");
-				dynamic_cast<CItemBasic*>(pGameObj)->SetCreateByObject();
-				pGameObj->GetTransForm()->Set_Pos(vPos);
-				scenemgr::Get_CurScene()->AddGameObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pGameObj);*/
-
-			}
 
 		}
 

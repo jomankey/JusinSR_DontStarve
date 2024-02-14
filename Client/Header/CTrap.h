@@ -13,6 +13,7 @@ class CTrap :
 	public CGameObject
 {
 protected:
+	explicit CTrap() = delete;
 	explicit CTrap(LPDIRECT3DDEVICE9 pGraphicDev) = delete;
 	explicit CTrap(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName);
 	explicit CTrap(const CTrap& rhs);

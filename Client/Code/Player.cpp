@@ -12,6 +12,7 @@
 #include "CItem.h"
 #include "Ghost.h"
 #include "Rebirth.h"
+#include "DeerClops.h"
 
 //Manager
 #include "SlotMgr.h"
@@ -72,7 +73,8 @@ HRESULT CPlayer::Ready_GameObject()
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 
-	m_fDiffY = 0.3f;// z버퍼 보정용값 추가
+	m_fDiffY = 0.5f;// z버퍼 보정용값 추가
+
 	Set_Stat();
 	return S_OK;
 }
@@ -345,22 +347,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_side", pComponent });
 
-	//Axe loop
-	/*pComponent = m_pTextureCom[LOOK_DOWN][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_down"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_down", pComponent });
-
-	pComponent = m_pTextureCom[LOOK_UP][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_up"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_up", pComponent });
-
-	pComponent = m_pTextureCom[LOOK_RIGHT][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_side"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });
-
-	pComponent = m_pTextureCom[LOOK_LEFT][AXE_CHOP_LOOP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_axe_side"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_axe_side", pComponent });*/
+	
 
 	//Hammer
 	pComponent = m_pTextureCom[LOOK_DOWN][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_down"));
@@ -657,10 +644,17 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		}
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
 		if (nullptr != findObj && !findObj->IsDelete()
-			&& dynamic_cast<CMonster*>(findObj)->IsTarget_Approach(m_Stat.fATKRange))
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CMonster*>(findObj)->GetTransForm()))
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
 
+		}
+
+		CGameObject* boss = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::BOSS);
+		if (nullptr != boss && !boss->IsDelete()
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(boss)->GetTransForm()))
+		{
+			dynamic_cast<CDeerClops*>(boss)->Set_Attack(m_Stat.fATK);
 		}
 	}
 
@@ -1014,16 +1008,24 @@ void CPlayer::Weapon_Change()
 			m_Stat.fATKRange = 1.f;
 			break;
 		case AXE:
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case TORCH:
 			if (m_eCurState = IDLE)
 			{
 				m_eCurState = TORCH_IDLE;
 			}
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case HAMMER:
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case PICK:
+			m_Stat.fATK = 20;
+			m_Stat.fATKRange = 1.f;
 			break;
 		case SPEAR:
 			m_Stat.fATK = 50;
