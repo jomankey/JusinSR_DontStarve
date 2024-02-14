@@ -420,6 +420,10 @@ void CBeefalo::Set_Scale()
     {
         m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
     }
+    else if (m_ePreState == HIT)
+    {
+        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
+    }
     else
     {
         m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
