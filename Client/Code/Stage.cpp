@@ -163,10 +163,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
-	pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(61.f, 0.f, 64.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
-
 	return S_OK;
 }
 

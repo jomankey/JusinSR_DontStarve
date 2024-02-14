@@ -6,7 +6,7 @@
 class CLoading : public CBase
 {
 public:
-	enum LOADINGID { LOADING_STAGE, LOADING_BOSS, LOADING_END };
+	enum LOADINGID { LOADING_STAGE, LOADING_ROAD, LOADING_BOSS, LOADING_END };
 
 public:
 	explicit CLoading(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -19,7 +19,6 @@ public:
 
 public:
 	HRESULT		Ready_Loading(LOADINGID eID);
-	_uint		Loading_ForStage();
 	HRESULT		Loading_Player_Texture();
 	HRESULT		Loading_Beefalo_Texture();
 	HRESULT		Loading_UI_Texture();
@@ -30,6 +29,12 @@ public:
 	HRESULT		Loading_Boss_Texture();
 	HRESULT		Loading_Anim_Texture();
 	const _tchar*		Get_String() const { return m_szLoading; }
+public:
+
+	_uint		Loading_ForStage();
+	_uint		Loading_ForRoad();
+	_uint		Loading_ForBoss();
+
 
 public:
 	HRESULT SaveLoadingTexture(const _tchar* _key,TEXTUREID _textureTag,const _tchar* _path, int num = 1);

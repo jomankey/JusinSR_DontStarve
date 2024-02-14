@@ -144,12 +144,12 @@ void CParticle::preRender()
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALEENABLE, true);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE, FtoDw(m_fSize));
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE_MIN, FtoDw(0.f));
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE_MIN, FtoDw(0.01f));
 
 	//거리에따른 파티클 크기 제어
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_A, FtoDw(0.f));
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_B, FtoDw(0.f));
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(1.f));
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(0.2f));
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 }
@@ -190,7 +190,7 @@ HRESULT CParticle::Add_Component()
 	CComponent* pComponent = nullptr;
 
 	//TEXTURE
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Rocks_0"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"PARTICLE_SNOW"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 
@@ -198,6 +198,8 @@ HRESULT CParticle::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+
 	return S_OK;
 }
 

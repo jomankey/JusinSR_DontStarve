@@ -8,6 +8,9 @@
 #include "CBossScene.h"
 #include "CRoadScene.h"
 #include "CTestScene.h"
+#include "LoadingScene.h"
+#include "CMainScene.h"
+
 
 #include "Stage.h"
 #include "Layer.h"
@@ -27,7 +30,8 @@
 
 
 CLogo::CLogo(LPDIRECT3DDEVICE9 pGraphicDev)
-	: Engine::CScene(pGraphicDev, L"LOGO"), m_pLoading(nullptr)
+	: Engine::CScene(pGraphicDev, L"LOGO")
+	, m_pLoading(nullptr)
 {
 }
 
@@ -44,11 +48,9 @@ HRESULT CLogo::Ready_Scene()
 	}
 
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
-
-
-
 	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
 
+	//m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_ROAD);
 
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
 
@@ -76,7 +78,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 		{
 			Engine::CScene* pScene = nullptr;
 
-			pScene = CRoadScene::Create(m_pGraphicDev, L"ROAD");
+			pScene = CLoadingScene::Create(m_pGraphicDev, CLoading::LOADING_ROAD);
 			NULL_CHECK_RETURN(pScene, -1);
 
 			FAILED_CHECK_RETURN(scenemgr::Change_CurScene(pScene), E_FAIL);
@@ -87,10 +89,9 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 		else if (KEY_TAP(DIK_E))
 		{
 			Engine::CScene* pScene = nullptr;
-
-			pScene = CBossScene::Create(m_pGraphicDev, L"BOSS");
+			
+			pScene = CLoadingScene::Create(m_pGraphicDev,CLoading::LOADING_BOSS);
 			NULL_CHECK_RETURN(pScene, -1);
-
 			FAILED_CHECK_RETURN(scenemgr::Change_CurScene(pScene), E_FAIL);
 
 			return 0;
@@ -99,10 +100,9 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 		else if (KEY_TAP(DIK_T))
 		{
 			Engine::CScene* pScene = nullptr;
-
-			pScene = CTestScene::Create(m_pGraphicDev, L"TEST");
+			
+			pScene = CMainScene::Create(m_pGraphicDev);
 			NULL_CHECK_RETURN(pScene, -1);
-
 			FAILED_CHECK_RETURN(scenemgr::Change_CurScene(pScene), E_FAIL);
 
 			return 0;
@@ -136,7 +136,6 @@ HRESULT CLogo::Ready_Prototype()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_3_3_1_Tex", CustomizeTex::Create(m_pGraphicDev, 3, 3, 1)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Anim", CAnimator::Create(m_pGraphicDev)), E_FAIL);
-
 	
 	FAILED_CHECK_RETURN(Ready_LoadingObject(), E_FAIL);
 

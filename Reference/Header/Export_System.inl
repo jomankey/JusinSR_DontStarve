@@ -153,9 +153,9 @@ void Ready_Sound()
 	return CSoundMgr::GetInstance()->Ready_Sound();
 }
 
-void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume)
+void PlaySound_W(_tchar* pSoundKey, CHANNELID eID, float fVolume)
 {
-	return CSoundMgr::GetInstance()->PlaySound(pSoundKey, eID, fVolume);
+	return CSoundMgr::GetInstance()->PlaySound_W(pSoundKey, eID, fVolume);
 }
 
 void PlayBGM(TCHAR* pSoundKey, float fVolume)

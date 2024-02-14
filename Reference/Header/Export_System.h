@@ -84,7 +84,7 @@ namespace Engine
 
 	//SoundMgr
 	inline void Ready_Sound();
-	inline void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume);
+	inline void PlaySound_W(_tchar* pSoundKey, CHANNELID eID, float fVolume);
 	inline void PlayBGM(TCHAR* pSoundKey, float fVolume);
 	inline void StopSound(CHANNELID eID);
 	inline void StopAll();

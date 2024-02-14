@@ -3,7 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-#include"ItemBasic.h"
+
 
 CObjectTree::CObjectTree(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -32,6 +32,7 @@ HRESULT CObjectTree::Ready_GameObject()
 	m_fFrameEnd = 27.f;
 	m_fDiffY = 3.0f;
 	Ready_Stat();
+
 
 	return S_OK;
 }

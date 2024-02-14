@@ -33,8 +33,11 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 
 	m_fX = m_vPos.x;
 	m_fY = m_vPos.y;
-	m_fSizeX = 15.f;
-	m_fSizeY = 15.f;
+
+	m_fSizeX = 25.f;
+	m_fSizeY = 25.f;
+	
+
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.0f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	//m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(180.f));
@@ -45,10 +48,24 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 
 HRESULT CItemBasic::Ready_GameObject()
 {
-    FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	Set_ObjState();
-	m_fDiffY = -4.f;
+	m_vUp = { 0,1,0 };
+	int randomValue = rand() % 360;
+	int randomValue2 = rand() % 360;
+	// 부호를 무작위로 선택 (-1 또는 1)
+	int sign = (rand() % 2 == 0) ? 1 : -1;
+	int sign2 = (rand() % 2 == 0) ? 1 : -1;
+
+	// 랜덤값에 부호를 적용
+	int result = randomValue * sign;
+	int result2 = randomValue2 * sign2;
+	m_vDir = { (float)result,0.f,(float)result2 };
+	D3DXVec3Normalize(&m_vDir, &m_vDir);
+
+
+
 
     return S_OK;
 }
@@ -67,7 +84,7 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 			DeleteObject(this);
 			//return 0x80000000;
 		}
-			
+
 		// 아이템 먹엇을때 슬롯쪽으로 이동
 		m_fX += (m_vSlotPos.x - m_fX) * 5.f * fTimeDelta;
 		m_fY += (m_vSlotPos.y - m_fY) * 5.f * fTimeDelta;
@@ -75,7 +92,6 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
 		m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	}
-	else m_pTransForm->BillBoard();
 
 	MousePicking();
 
@@ -92,6 +108,7 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 void CItemBasic::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	__super::Compute_ViewZ(&vPos);
@@ -124,6 +141,7 @@ void CItemBasic::Render_GameObject()
 
 void CItemBasic::DropMotion(const _float& fTimeDelta)
 {
+<<<<<<< HEAD
 	const float gravity = 9.8f;
 	_vec3 vDirUp;
 	_vec3 vDirRight;
@@ -214,37 +232,23 @@ void CItemBasic::DropMotion(const _float& fTimeDelta)
 	//
 
 
+=======
+	const float Gravity = 9.8f;
+	_vec3 vUp;
+	//m_pTransForm->Get_Info(INFO_UP, &vUp);
+>>>>>>> d51dad7016a6a512f22882391b6a04cb4a92f719
 
+	m_pTransForm->Move_Pos(&m_vDir, 0.7f, fTimeDelta);
+	m_pTransForm->Move_Pos(&m_vUp, 10.f, fTimeDelta);
 	
 
+	m_vUp.y-= 2.f * fTimeDelta;
+
+	if (m_pTransForm->Get_Pos().y < 0)
+		m_bIsCreateByObject = false;
 	
-
 }
 
-void CItemBasic::CheckSign(int _iSign, int _Dir)
-{
-	{
-		//부호 예외처리
-		if (_iSign > 1 || _iSign < -1 || _iSign == 0)
-			return;
-		//방향 예외처리
-		if (_Dir > 1 || _Dir < 0)
-			return;
-		if (_iSign == 1)
-			m_iSign = 1;
-		else
-			m_iSign = -1;
-
-		if (_Dir == 0)
-			m_bHowToDir = false;    //x으로 생성
-		else
-			m_bHowToDir = true;	    //z으로 생성
-
-
-
-	}
-
-}
 
 CItem* CItemBasic::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _szName)
 {
@@ -256,7 +260,7 @@ CItem* CItemBasic::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _szName)
 		return nullptr;
 	}
 
-    return pInstance;
+	return pInstance;
 }
 
 void CItemBasic::Free()
