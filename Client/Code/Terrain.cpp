@@ -29,7 +29,7 @@ HRESULT CTerrain::Ready_GameObject()
 
 
 	//Test z¹öÆÛ ¶¥¶Õ¸² Å×½ºÆ®
-	vPos.y = -0.5f;
+	vPos.y = 0.f;
 
 
 	m_pTransForm->Set_Pos(vPos);

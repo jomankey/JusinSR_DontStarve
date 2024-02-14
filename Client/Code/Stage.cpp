@@ -164,11 +164,11 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 0.f, 64.f));
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
-	pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(61.f, 0.7f, 64.f));
+	pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(61.f, 0.f, 64.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
 
@@ -462,7 +462,7 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
-
+	vPos.y = 0.f;
 	if (nullptr != pGameObject)
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 }
