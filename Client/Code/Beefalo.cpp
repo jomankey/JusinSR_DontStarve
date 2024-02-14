@@ -70,7 +70,6 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 void CBeefalo::LateUpdate_GameObject()
 {
     __super::LateUpdate_GameObject();
-
     m_pTransForm->BillBoard();
     _vec3	vPos;
     m_pTransForm->Get_Info(INFO_POS, &vPos);

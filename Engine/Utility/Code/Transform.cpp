@@ -2,13 +2,13 @@
 
 
 CTransform::CTransform(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CComponent(pGraphicDev), m_vAngle(0.f, 0.f, 0.f), m_vScale(1.f,1.f, 1.f)
+	: CComponent(pGraphicDev), m_vAngle(0.f, 0.f, 0.f), m_vScale(1.f, 1.f, 1.f)
 {
 	ZeroMemory(m_vInfo, sizeof(m_vInfo));
 	D3DXMatrixIdentity(&m_matWorld);
 }
 
-CTransform::CTransform(const CTransform & rhs)
+CTransform::CTransform(const CTransform& rhs)
 	: CComponent(rhs), m_vAngle(rhs.m_vAngle), m_vScale(rhs.m_vScale)
 {
 	for (size_t i = 0; i < INFO_END; ++i)
@@ -28,11 +28,11 @@ HRESULT CTransform::Ready_Transform()
 
 	for (_int i = 0; i < INFO_END; ++i)
 		memcpy(&m_vInfo[i], &m_matWorld.m[i][0], sizeof(_vec3));
-	
+
 	return S_OK;
 }
 
-_int CTransform::Update_Component(const _float & fTimeDelta)
+_int CTransform::Update_Component(const _float& fTimeDelta)
 {
 	D3DXMatrixIdentity(&m_matWorld);
 
@@ -67,7 +67,7 @@ _int CTransform::Update_Component(const _float & fTimeDelta)
 	return 0;
 }
 
-void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, const _float & fTimeDelta)
+void CTransform::Chase_Target(const _vec3* pTargetPos, const _float& fSpeed, const _float& fTimeDelta)
 {
 	_vec3		vDir = *pTargetPos - m_vInfo[INFO_POS];
 
@@ -78,7 +78,7 @@ void CTransform::Chase_Target(const _vec3 * pTargetPos, const _float & fSpeed, c
 	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
 	D3DXMatrixTranslation(&matTrans, m_vInfo[INFO_POS].x, m_vInfo[INFO_POS].y, m_vInfo[INFO_POS].z);
 
-	m_matWorld = matScale  * matTrans;
+	m_matWorld = matScale * matTrans;
 
 }
 
@@ -102,7 +102,7 @@ LOOKDIR CTransform::Chase_Target_Monster(const _vec3* pTargetPos, const _float& 
 
 	/*_float RAngle = CalculateAngleBetweenVectors(vDir, right);
 	_float LAngle = CalculateAngleBetweenVectors(vDir, look);*/
-	
+
 	if (fabs(lookDot) > fabs(rightDot)) {
 		if (lookDot > 0.0f) {
 			eDir = LOOK_UP;
@@ -181,7 +181,7 @@ LOOKDIR Engine::CTransform::Patroll_LookChange(const _vec3* _vDir, const _float&
 LOOKDIR Engine::CTransform::For_Player_Direction(const _vec3* _vDir, const _float& fSpeed, const _float& fTimeDelta)
 {
 	LOOKDIR		eDir;
-	_vec3		right,  look ,vDir;
+	_vec3		right, look, vDir;
 	vDir = *_vDir;
 	Get_Info(INFO_RIGHT, &right);
 	Get_Info(INFO_LOOK, &look);
@@ -189,7 +189,7 @@ LOOKDIR Engine::CTransform::For_Player_Direction(const _vec3* _vDir, const _floa
 	D3DXVec3Normalize(&vDir, &vDir);
 	D3DXVec3Normalize(&right, &right);
 	D3DXVec3Normalize(&look, &look);
-	
+
 
 	float lookDot = D3DXVec3Dot(&vDir, &look);
 	float rightDot = D3DXVec3Dot(&vDir, &right);
@@ -210,7 +210,7 @@ LOOKDIR Engine::CTransform::For_Player_Direction(const _vec3* _vDir, const _floa
 			eDir = LOOK_LEFT;
 		}
 	}
-	
+
 	m_vInfo[INFO_POS] += vDir * fSpeed * fTimeDelta;
 
 	return eDir;
@@ -220,7 +220,7 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 {
 	_vec3	vDir = *pTargetPos - m_vInfo[INFO_POS];
 
-	
+
 
 	_vec3	vAxis, vUp;
 	_matrix matRot;
@@ -228,13 +228,12 @@ const _matrix* Engine::CTransform::Compute_LookAtTarget(const _vec3* pTargetPos)
 	return D3DXMatrixRotationAxis(&matRot,
 		D3DXVec3Cross(&vAxis, &m_vInfo[INFO_UP], &vDir),
 		acos(D3DXVec3Dot(D3DXVec3Normalize(&vDir, &vDir),
-						 D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
+			D3DXVec3Normalize(&vUp, &m_vInfo[INFO_UP]))));
 }
 
 void Engine::CTransform::BillBoard()
 {
 	_matrix	matWorld, matView, matBill;
-
 	Get_WorldMatrix(&matWorld);
 	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
 	D3DXMatrixIdentity(&matBill);
@@ -246,13 +245,24 @@ void Engine::CTransform::BillBoard()
 
 	matBill._23 = matView._23;
 	matBill._32 = matView._32;
-
 	matBill._12 = matView._12;
 	matBill._21 = matView._21;
 
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
-
 	Set_WorldMatrix(&(matBill * matWorld));
+
+
+
+	/*_matrix matView;
+
+	_vec3 vPos;
+	vPos = Get_Pos();
+	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&matView, NULL, &matView);
+	matView._41 = vPos.x;
+	matView._42 = vPos.y;
+	matView._43 = vPos.z;
+	Set_WorldMatrix(&(matView));*/
 }
 
 float Engine::CTransform::CalculateAngleBetweenVectors(const D3DXVECTOR3& vec1, const D3DXVECTOR3& vec2)
@@ -273,9 +283,9 @@ float Engine::CTransform::CalculateAngleBetweenVectors(const D3DXVECTOR3& vec1, 
 	return angleDeg;
 }
 
-CTransform * CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTransform* CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CTransform *	pInstance = new CTransform(pGraphicDev);
+	CTransform* pInstance = new CTransform(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Transform()))
 	{
@@ -287,7 +297,7 @@ CTransform * CTransform::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-CComponent * CTransform::Clone()
+CComponent* CTransform::Clone()
 {
 	return new CTransform(*this);
 }

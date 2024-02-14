@@ -33,6 +33,7 @@ HRESULT CObjectTree::Ready_GameObject()
 	m_fDiffY = 3.0f;
 	Ready_Stat();
 
+
 	return S_OK;
 }
 
