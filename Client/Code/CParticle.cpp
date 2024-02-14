@@ -190,7 +190,7 @@ HRESULT CParticle::Add_Component()
 	CComponent* pComponent = nullptr;
 
 	//TEXTURE
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Rocks_0"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"PARTICLE_SNOW"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 
@@ -198,6 +198,8 @@ HRESULT CParticle::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
+
+
 	return S_OK;
 }
 

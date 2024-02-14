@@ -54,7 +54,7 @@ protected:
 		attribute->m_vPos.y = m_vMaxBox.y;
 		
 		attribute->m_vVelocity.x = GetRandomFloat(0.0f, 1.0f) * -5.0f;
-		attribute->m_vVelocity.y = GetRandomFloat(0.0f, 1.0f) *-20.0f;
+		attribute->m_vVelocity.y = GetRandomFloat(0.0f, 1.0f) * -5.0f;
 		attribute->m_vVelocity.z = 0.0f;
 	}
 
@@ -75,9 +75,6 @@ private:
 	virtual void Free()override;
 protected:
 	CTexture* m_pTextureCom; 
-	CTransform* m_pTransForm;
-	;
-
 	//CPtcTex* m_pPtcTexCom;
 	_vec3	m_vOrigin;	// 원본위치
 	_float	m_fSize;	//파티클 크기
