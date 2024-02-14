@@ -144,12 +144,12 @@ void CParticle::preRender()
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALEENABLE, true);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE, FtoDw(m_fSize));
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE_MIN, FtoDw(0.f));
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE_MIN, FtoDw(0.01f));
 
 	//거리에따른 파티클 크기 제어
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_A, FtoDw(0.f));
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_B, FtoDw(0.f));
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(1.f));
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(0.2f));
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 }
