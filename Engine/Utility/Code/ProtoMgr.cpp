@@ -42,9 +42,8 @@ HRESULT CProtoMgr::Ready_ProtoAnim(const _tchar* pProtoAnimTag, CAnimation* pAni
 
 	if (nullptr != pInstance)
 	{
-
-		assert(false && L"Animation Already exists");
-		return E_FAIL;
+		Safe_Release(pAnim);
+		return S_OK;
 	}
 
 	m_mapProtoAnim.insert({ pProtoAnimTag, pAnim });
