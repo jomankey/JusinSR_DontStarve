@@ -19,13 +19,15 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp()
 {
+	Engine::Ready_Sound();
 	FAILED_CHECK_RETURN(SetUp_Setting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
-	//Engine::Ready_Sound();
+	
+	//Engine::PlaySound_W(L"Start.mp3", SOUND_BGM, 1.f);
+
 	//Engine::PlayBGM(L"Start.mp3", 10.f);
-	//01:23
-	//test
+
 	return S_OK;
 }
 
@@ -96,18 +98,22 @@ HRESULT CMainApp::SetUp_Setting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_Key1", 10, 22, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_Key2", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_BOSS", 10, 22, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"³ª´®°íµñÄÚµù", L"Loading_ROAD", 10, 22, FW_HEAVY), E_FAIL);
 
 	//owner Ui 
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®¹Ù¸¥ÄÚµù", L"Font_Count", 7, 7, FW_THIN), E_FAIL);
 
 	//UI
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù",  L"Panel_Title", 10, 22, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Panel_Info",  5, 12, FW_THIN), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Button_Make", 8, 12, FW_THIN), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"Mapo¹è³¶¿©Çà",  L"Panel_Title", 22, 32, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Panel_Info", 6, 12, FW_NORMAL), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Button_Make", 8, 18, FW_NORMAL), E_FAIL);
+
+	FAILED_CHECK_RETURN(Engine::Ready_Font(m_pGraphicDev, L"³ª´®°íµñÄÚµù", L"Button_Cook_Make", 6, 15, FW_NORMAL), E_FAIL);
 
 	//Mouse
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Title", 15, 22, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Sub", 6, 20, FW_HEAVY), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Mapo¹è³¶¿©Çà", L"Mouse_Sub", 10, 20, FW_HEAVY), E_FAIL);
 
 	// Dinput
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
@@ -141,8 +147,8 @@ void CMainApp::Free()
 	Engine::Safe_Release(m_pDeviceClass);
 	Engine::Safe_Release(m_pManagementClass);
 	Engine::Safe_Release(m_pGraphicDev);
-	CUIMgr::DestroyInstance();
-	CSlotMgr::DestroyInstance();
 	Engine::Release_System();
 	Engine::Release_Utility();
+	CUIMgr::DestroyInstance();
+	CSlotMgr::DestroyInstance();
 }

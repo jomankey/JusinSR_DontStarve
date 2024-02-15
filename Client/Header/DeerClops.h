@@ -29,6 +29,8 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 
+
+
 public:
 	void			Set_WakeUp();				//1페이즈 시작 트리거
 	void			Set_Phase(_bool _first, _bool _second, _bool _third, _bool _fourth,_bool fifth, _bool sixth) {
@@ -68,12 +70,15 @@ private:
 	void			Generate_Roaring(_int _iCount);				// 포효 지르기 이펙트 생성 함수
 	void			Getnerate_SnowSplash();
 
+	void			Camera_Shaking(_float _power, _float _time, _bool _dir);
 
-	void			Adjust_Pos_Taunt();
-	void			Adjust_Pos_Taunt_Back();
 
-	void			Adjust_Pos_Attack();
-	void			Adjust_Pos_Attack_Back();
+	void			Adjust_Taunt_Pos();
+	void			Adjust_Taunt_Pos_Back();
+	void			Adjust_Attack_Up_Pos();
+	void			Adjust_Attack_Up_Pos_Back();
+
+	void			Awake_Tallbird();
 
 public:
 	static CDeerClops* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
@@ -99,7 +104,8 @@ private:
 
 	_vec3		m_vAttackPos;
 	_vec3		m_vTauntPos;
-	_bool		m_Test;
+
+	_bool		m_AttackPos;
 
 };
 

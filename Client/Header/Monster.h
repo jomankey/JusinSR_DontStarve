@@ -14,6 +14,7 @@ public:
 
 public:
 	OBJSTAT Get_Monster_Stat() { return m_Stat; }
+	_tchar* Get_Name() { return m_Stat.strObjName; }
 	_bool		IsTarget_Approach(float _fDistance);	//플레이어와의 거리를 계산하기 위한 함수.
 														//매개변수로 받은 float 값과 거리벡터를 비교한다
 protected:
@@ -52,7 +53,7 @@ protected:
 	_int				m_fFrameChange = 0;		//프레임이 바뀌어야 하는 경우에 사용함.
 	_bool				m_bFrameStop;			//프레임을 멈춰야 할 때 true로 바꿔줘
 	_bool				m_bAttackCooltime;
-
+	_float				m_fFrameSpeed;
 	
 };
 

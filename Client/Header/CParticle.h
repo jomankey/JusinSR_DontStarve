@@ -2,9 +2,6 @@
 #include "GameObject.h"
 
 
-
-
-
 namespace Engine
 {
 	class CTexture;
@@ -30,12 +27,13 @@ public:
 	virtual _int			Update_GameObject(const _float& fTimeDelta)override;
 	virtual void			LateUpdate_GameObject();
 	void Render_GameObject() override;
+	DWORD	FtoDw(float f) { return *((DWORD*)&f); }
 
 
 protected:
 	void	preRender();
 	void postRender();
-	void AddParticle()
+	virtual void AddParticle()
 	{
 		Attribute attribute;
 		resetParticle(&attribute);
@@ -43,19 +41,7 @@ protected:
 	}
 
 	void Reset();
-	void resetParticle(Attribute* attribute)
-	{
-
-		attribute->m_bAlive = true;
-
-		GetRendomVector(&attribute->m_vPos, &m_vMinBox, &m_vMaxBox);
-
-		attribute->m_vPos.y = m_vMaxBox.y;
-
-		attribute->m_vVelocity.x = GetRandomFloat(0.0f, 1.0f) * -5.0f;
-		attribute->m_vVelocity.y = GetRandomFloat(0.0f, 1.0f) *-20.0f;
-		attribute->m_vVelocity.z = 0.0f;
-	}
+	virtual void resetParticle(Attribute* attribute) {}
 
 
 	float	GetRandomFloat(_float fLowBound, _float fHighBound);
@@ -74,8 +60,6 @@ private:
 	virtual void Free()override;
 protected:
 	CTexture* m_pTextureCom;
-	//CPtcTex* m_pPtcTexCom;
-	_vec3	m_vOrigin;	// 원본위치
 	_float	m_fSize;	//파티클 크기
 	_float	m_fEmitRate;// 초당파티클 수
 	_int					m_iMaxParticle;

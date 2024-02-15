@@ -17,6 +17,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_bHit(false)
 	, m_bAttacking(false)
 	, m_bAttackCooltime(false)
+	, m_fFrameSpeed(0.f)
 {
 }
 
@@ -33,6 +34,7 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_bHit(rhs.m_bHit)
 	, m_bAttacking(rhs.m_bAttacking)
 	, m_bAttackCooltime(rhs.m_bAttackCooltime)
+	, m_fFrameSpeed(rhs.m_fFrameSpeed)
 {
 }
 
@@ -71,6 +73,8 @@ void CMonster::Collision_EachOther(const _float& fTimeDelta)
 	auto iter = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
 	for (auto find : iter)
 	{
+		if (find == nullptr || find->IsDelete())
+			continue;
 		Collision_Transform(m_pTransForm, find->GetTransForm(), fTimeDelta, m_Stat.fSpeed);
 	}
 }
@@ -105,7 +109,7 @@ _bool CMonster::Collision_Transform(CTransform* _Src, CTransform* _Dst, const _f
 		_Src->Move_Pos(&vRDir, fSpeed, fTimeDelta);
 		return true;
 	}
-		
+	
 }
 
 void CMonster::Player_Chase(const _float& fTimeDelta)

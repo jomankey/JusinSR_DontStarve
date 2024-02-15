@@ -29,7 +29,7 @@ HRESULT CTerrain::Ready_GameObject()
 
 
 	//Test z¹öÆÛ ¶¥¶Õ¸² Å×½ºÆ®
-	vPos.y = -0.5f;
+	vPos.y = 0.f;
 
 
 	m_pTransForm->Set_Pos(vPos);
@@ -85,23 +85,6 @@ HRESULT CTerrain::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-
-	return S_OK;
-}
-
-HRESULT CTerrain::SetUp_Material()
-{
-	D3DMATERIAL9			tMtrl;
-	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-
-	tMtrl.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tMtrl.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.f);
-	tMtrl.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-
-	tMtrl.Emissive = D3DXCOLOR(0.f, 0.f, 0.f, 0.f);
-	tMtrl.Power = 0.f;
-
-	m_pGraphicDev->SetMaterial(&tMtrl);
 
 	return S_OK;
 }

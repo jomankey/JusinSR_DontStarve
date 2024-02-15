@@ -1,5 +1,5 @@
 #pragma once
-#include "CUI.h"
+#include "UI.h"
 #include "StateUI.h"
 class CHpUI : public CStateUI
 {

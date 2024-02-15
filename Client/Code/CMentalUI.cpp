@@ -48,6 +48,12 @@ void CMentalUI::LateUpdate_GameObject()
 void CMentalUI::Render_GameObject()
 {
 	__super::Render_GameObject();
+
+	_tchar strMental[32];
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject());
+	_itow_s(pPlayer->Get_PlayerMental(), strMental, 10);
+
+	Engine::Render_Font(L"Mouse_Sub", strMental, &_vec2(m_fX - 11.f, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 }
 
 HRESULT CMentalUI::Add_Component()

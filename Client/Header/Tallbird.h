@@ -27,7 +27,9 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
-
+	void		Set_Tallbird_WakeUp() {
+		if(!m_bWakeUp)
+			m_bWakeUp = true; }
 private:
 	HRESULT					Add_Component();
 	virtual void			State_Change();
@@ -49,7 +51,7 @@ private:
 	TALLBIRD m_eCurstate;
 	TALLBIRD m_ePrestate;
 	_bool   m_bStatChange[2];
-	
+	_bool	m_bWakeUp;
 public:
 	static CTallbird* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 

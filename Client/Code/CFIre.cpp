@@ -66,7 +66,14 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 	}
 
 
-	
+
+
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH1,1);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH2,2);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH3,3);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH4,4);
+
+
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -190,7 +197,7 @@ HRESULT CFire::Add_Component()
 
 	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 0.0f, vPos.z);
 
 	return S_OK;
 }
@@ -204,22 +211,35 @@ void CFire::Check_FrameState()
 		{
 		case CFire::FIRE_LEVEL_1:
 			m_pTransForm->Set_Scale(_vec3(0.4f, 0.4f, 0.4f));
-
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH2);
+			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv1.mp3", SOUND_EFFECT_CONTINUE_CH1);
+			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv1.mp3", 1.f, SOUND_EFFECT_CONTINUE_CH1);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
 		case CFire::FIRE_LEVEL_2:
 			m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv2.mp3", SOUND_EFFECT_CONTINUE_CH2);
+			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv2.mp3", 2.f, SOUND_EFFECT_CONTINUE_CH2);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
 		case CFire::FIRE_LEVEL_3:
 			m_pTransForm->Set_Scale(_vec3(0.6f, 0.6f, 0.6f));
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH2);
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH4);
+			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv3.mp3", SOUND_EFFECT_CONTINUE_CH3);
+			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv3.mp3", 3.f, SOUND_EFFECT_CONTINUE_CH3);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
 		case CFire::FIRE_LEVEL_4:
 			m_pTransForm->Set_Scale(_vec3(0.8f, 0.8f, 0.8f));
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
+			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv4.mp3", SOUND_EFFECT_CONTINUE_CH4);
+			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv4.mp3", 4.f, SOUND_EFFECT_CONTINUE_CH4);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
@@ -247,7 +267,7 @@ HRESULT CFire::Ready_Light()
 
 	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tPointLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Attenuation0 = 3.f;
+	tPointLightInfo.Attenuation0 = 0.00001f;
 
 	tPointLightInfo.Range = 5.f;
 	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
@@ -273,7 +293,7 @@ void CFire::Change_Light()
 
 	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-	tPointLightInfo->Attenuation0 = 3.f;
+	tPointLightInfo->Attenuation0 = 0.00001f;
 
 	tPointLightInfo->Range = 10.f;
 
@@ -304,6 +324,7 @@ void CFire::Level_Down()
 	}
 	else if(m_efireCurState== FIRE_LEVEL_1)
 	{
+		Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
 			m_bIsOff = true;
 	}
 

@@ -1,7 +1,7 @@
 #include "CInven.h"
 #include "SlotMgr.h"
 CInven::CInven(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
+	: CUI(pGraphicDev)
 {
 }
 
@@ -9,10 +9,8 @@ CInven::~CInven()
 {
 }
 
-HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
+HRESULT CInven::Ready_GameObject()
 {
-	CSlotMgr::GetInstance()->Add_InvenBoxList(pGraphicDev, INVEN, WIDTH, INVENCNT);
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fX = 420.f;
@@ -22,12 +20,8 @@ HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_fSizeY = 340.f;
 
 	//직교투영
-	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
-	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(90.f));
-
-	D3DXMatrixIdentity(&m_ViewMatrix);
-	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
+	__super::Ready_GameObject();
 
 	return S_OK;
 }
@@ -35,12 +29,8 @@ HRESULT CInven::Ready_GameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 _int CInven::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-	_vec3 vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
 
 	CSlotMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, INVEN);
-
-	renderer::Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
 
@@ -93,7 +83,7 @@ CInven* CInven::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CInven* pInstance = new CInven(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(pGraphicDev)))
+	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
 		return nullptr;

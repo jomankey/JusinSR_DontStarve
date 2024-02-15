@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SlotMgr.h"
 
 #include "Mouse.h"
 #include "player.h"
@@ -57,7 +58,7 @@
 
 
 //UI
-#include "CUI.h"
+#include "UI.h"
 #include"Slot.h"
 #include"SlideUI.h"
 #include"CHpUI.h"
@@ -143,11 +144,6 @@ HRESULT CStage::Ready_Layer_Environment()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::BACK_GROUND, pGameObject), E_FAIL);
 
-	//////////마우스
-	pGameObject = CMouse::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::MOUSE, pGameObject), E_FAIL);
-
 	return S_OK;
 }
 
@@ -156,11 +152,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
-	///TEST
-
-	pGameObject = CSnow::Create(m_pGraphicDev, L"SNOW", 44, _vec3(0.f, 0.f, 0.f), _vec3(1.f, 1.f, 1.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, pGameObject), E_FAIL);
 
 	pGameObject = m_pTerrain = CTerrain::Create(m_pGraphicDev, L"Proto_TerrainTexture");
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -169,21 +160,8 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
-
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 0.f, 64.f));
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
-
-	pGameObject = CSpike::Create(m_pGraphicDev, L"TRAP_SPIKE", _vec3(61.f, 0.7f, 64.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
-
-
-	//pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-	//pGameObject->GetTransForm()->Set_Pos(_vec3(50.f, 1.5f, 50.f));
-
-
 
 	return S_OK;
 }
@@ -195,7 +173,6 @@ HRESULT CStage::Ready_Layer_UI()
 
 	NULL_CHECK_RETURN(uiLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
-
 
 
 	pGameObject = CCreateUI::Create(m_pGraphicDev);
@@ -240,6 +217,11 @@ HRESULT CStage::Ready_Layer_UI()
 	pGameObject = CWorldHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//////////마우스
+	pGameObject = m_pMouse = CMouse::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::MOUSE, pGameObject), E_FAIL);
 
 	return S_OK;
 }
@@ -316,14 +298,16 @@ HRESULT CStage::Load_Data()
 
 	iCount = 0;
 	dwByte = 0;
-
+	vector<_int> vecInt;
 	ReadFile(hPointFile, &iCount, sizeof(_int), &dwByte, nullptr);
-
+	
 	for (int i = 0; i < iCount; ++i)
 	{
 		int iTemp = 0;
 		ReadFile(hPointFile, &iTemp, sizeof(_int), &dwByte, nullptr);
+		vecInt.push_back(iTemp);
 	}
+	dynamic_cast<CTerrain*>(m_pTerrain)->Get_Buffer()->Set_VecPos(vecInt);
 
 	CloseHandle(hPointFile);
 
@@ -371,8 +355,6 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CObjectTree::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		//pGameObject->GetTransForm()->Set_Scale(vScale);
-		vPos.y = 1.f;
 	}
 	else if (!_tcscmp(L"Stone", pName))
 	{
@@ -397,7 +379,6 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CBerryBush::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		vPos.y = 0.5f;
 	}
 	else if (!_tcscmp(L"CutGlass", pName))
 	{
@@ -428,7 +409,6 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CBeefalo::Create(m_pGraphicDev, vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-		vPos.y = 1.5f;
 	}
 	else if (!_tcscmp(L"FireSton", pName))
 	{
@@ -467,7 +447,7 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
 	}
-
+	vPos.y = 0.f;
 	if (nullptr != pGameObject)
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 }
@@ -537,5 +517,7 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 
 void CStage::Free()
 {
+	CSlotMgr::GetInstance()->Box_Release(CREATE);
+	CSlotMgr::GetInstance()->Box_Release(COOK);
 	__super::Free();
 }

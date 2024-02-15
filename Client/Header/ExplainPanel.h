@@ -2,8 +2,9 @@
 #include "Export_Utility.h"
 #include <Slot.h>
 #include <ButtonUI.h>
+#include "UI.h"
 
-class CExplainPanel : public CGameObject
+class CExplainPanel : public CUI
 {
 protected:
 	explicit CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strItemKey);
@@ -20,6 +21,8 @@ public:
 	void Set_Show(bool _bShow) { m_bShow = _bShow; }
 	_bool Get_Show() { return m_bShow; }
 
+	void Set_m_bSlideBoxColl(bool _bColl) { m_bSlideBoxColl = _bColl; }
+
 private:
 	HRESULT			Add_Component();
 
@@ -30,18 +33,14 @@ private:
 	virtual void Free();
 
 private:
+	_vec3 m_vPos;
 	_bool m_bShow = false;
-
-	Engine::CTexture* m_pTextureCom;
-	Engine::CRcTex* m_pBufferCom;
-
-	_matrix				m_ViewMatrix, m_ProjMatrix;
-	_float m_fX, m_fY, m_fSizeX, m_fSizeY;
+	_bool m_bSlideBoxColl;
 
 	CREATEINFO m_tCreateInfo;
 	wstring m_strItemKey;
 
-	CSlot* m_pItem[2];
+	CSlot* m_pItem[3];
 	CButtonUI* m_pButton;
 };
 

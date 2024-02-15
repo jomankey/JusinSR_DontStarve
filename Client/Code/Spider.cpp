@@ -8,6 +8,7 @@
 
 CSpider::CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos), m_bModeChange(false), m_eCurstate(WALK), m_ePrestate(STATE_END)
+    , m_bDetect(false)
 { 
 }
 
@@ -39,12 +40,13 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     
     if (!m_bFrameStop)
     {
-        m_fFrame += m_fFrameEnd * fTimeDelta;
+        m_fFrame += m_fFrameSpeed * fTimeDelta;
     }
     _int iResult = Die_Check();    //죽었는지 검사
     if (!m_Stat.bDead)      //죽지 않았을시 진입
     {
-        if (IsTarget_Approach(m_Stat.fAggroRange) == true)     //플레이어와의 거리가 5보다 작으면 진입
+        Detect_Player();
+        if (m_bDetect)     //플레이어와의 거리가 5보다 작으면 진입
         {
             Attacking(fTimeDelta);
         }
@@ -52,14 +54,9 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
         {
             Patroll(fTimeDelta);
         }
+        Collision_EachOther(fTimeDelta);
     }
-    else
-    {
-        //아이템 드랍 메소드 추가
    
-
-
-    }
     
     State_Change();
     Look_Change();
@@ -221,24 +218,29 @@ void CSpider::State_Change()
         case IDLE:
             break;
         case WALK:
+            m_fFrameSpeed = 7.f;
             m_fFrameEnd = 6.f;
             break;
         case ATTACK:
+            m_fFrameSpeed = 10.f;
             m_fFrameEnd = 11.f;
             break;
         case SLEEP:
             break;
         case HIT:
             m_fFrameEnd = 6;
+            m_fFrameSpeed = 11.f;
             if (m_eCurLook != LOOK_LEFT)
             {
                 m_eCurLook = LOOK_DOWN;
             }
             break;
         case DEAD:
+            m_fFrameSpeed = 9.f;
             m_fFrameEnd = 9.f;
             break;
         case ERASE:
+            m_fFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             m_eCurLook = LOOK_DOWN;
             break;
@@ -285,7 +287,14 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == ATTACK)
         {
-            if (6 < m_fFrame && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()))
+            if (dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
+            {
+                m_eCurstate == WALK;
+                return;
+            }
+            if (6 < m_fFrame &&
+                CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm())
+                && !m_bAttacking)
             {
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
@@ -305,8 +314,10 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == WALK)
         {
-            Player_Chase(fTimeDelta);
-            Collision_EachOther(fTimeDelta);
+            if (!dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
+                Player_Chase(fTimeDelta);
+            else
+                m_bDetect = false;
         }
     }
     else
@@ -318,13 +329,17 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
     }
     if (m_fFrameEnd < m_fFrame)
+    {
         m_fFrame = 0.f;
-  
+        if (m_bAttacking)
+            m_bAttacking = false;
+    }
 }
 
 void CSpider::Patroll(const _float& fTimeDelta)
 {
-
+    auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
+    CTerrainTex* pTerrainTex = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
     if (m_bModeChange)
     {
         m_bModeChange = false;
@@ -351,7 +366,11 @@ void CSpider::Patroll(const _float& fTimeDelta)
     }
     else
     {
-        m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+        _vec3 vCurPos = m_pTransForm->Get_Pos();
+        if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+            m_vDir *= -1;
+        else
+            m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
     }
     if (m_fFrameEnd < m_fFrame)
         m_fFrame = 0.f;

@@ -1,15 +1,7 @@
 #include "StateUI.h"
 
 CStateUI::CStateUI(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev), 
-	m_fSizeX(0.f), 
-	m_fSizeY(0.f), 
-	m_fX(0.f), 
-	m_fY(0.f),
-	m_frame(0.f),
-	m_frameEnd(0.f),
-	m_PreFrame(0.f),
-	m_bFrameStop(true)
+	: CUI(pGraphicDev)
 {
 }
 
@@ -19,11 +11,7 @@ CStateUI::~CStateUI()
 
 HRESULT CStateUI::Ready_GameObject()
 {
-	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
-	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
-
-	D3DXMatrixIdentity(&m_ViewMatrix);
-	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
+	__super::Ready_GameObject();
 
 	return S_OK;
 }
@@ -31,8 +19,6 @@ HRESULT CStateUI::Ready_GameObject()
 _int CStateUI::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-
-	renderer::Add_RenderGroup(RENDER_UI, this);
 
 	return 0;
 }

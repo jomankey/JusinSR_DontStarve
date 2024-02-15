@@ -27,6 +27,7 @@ HRESULT CParticle::Ready_GameObject()
 
 	m_dwFVF = FVF_PARTICLE;
 	m_dwVtxSize = sizeof(VTXPARTICLE);
+
 	FAILED_CHECK_RETURN(m_pGraphicDev->CreateVertexBuffer
 	(m_vbSize * m_dwVtxSize,	// 생성할 버텍스 버퍼의 크기
 		0,			// 버텍스 버퍼의 종류(0인 경우 정적 버퍼, d3dusage_dynamic인 경우 동적 버퍼)
@@ -62,6 +63,7 @@ void CParticle::LateUpdate_GameObject()
 
 void CParticle::Render_GameObject()
 {
+
 	if (!m_ParticleList.empty())
 	{
 		preRender();
@@ -141,14 +143,15 @@ void CParticle::preRender()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
 	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALEENABLE, true);
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE, (DWORD)m_fSize);
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE_MIN, 0.f);
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE, FtoDw(m_fSize));
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSIZE_MIN, FtoDw(0.01f));
 
 	//거리에따른 파티클 크기 제어
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_A, 0.f);
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_B, 0.f);
-	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_C, 1.f);
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_A, FtoDw(0.f));
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_B, FtoDw(0.f));
+	m_pGraphicDev->SetRenderState(D3DRS_POINTSCALE_C, FtoDw(0.2f));
 
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 }
 
 void CParticle::postRender()
@@ -186,14 +189,16 @@ HRESULT CParticle::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
+	//TEXTURE
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(GetObjName().c_str()));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
+
+
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	//TEXTURE
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Rocks_0"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 
 	return S_OK;
 }

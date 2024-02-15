@@ -29,7 +29,7 @@ HRESULT CBeefalo::Ready_GameObject()
     Set_ObjStat();
     Look_Change();
     m_fFrameEnd = 10;
-    m_fDiffY = 2.5f;
+    m_fDiffY =1.f;
     m_fFrameChange = rand() % 5;
 
     //m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
@@ -40,7 +40,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
 
     if (!m_bFrameStop)
-        m_fFrame += m_fFrameEnd * fTimeDelta;
+        m_fFrame += m_fFrameSpeed * fTimeDelta;
     else
     {
         m_fFrame = m_fFrameEnd;
@@ -57,6 +57,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
         {
             Patroll(fTimeDelta);
         }
+        Collision_EachOther(fTimeDelta);
     }           //여기에 else 걸어서 사망 트리거 연결(아이템 드랍 테이블)
     CGameObject::Update_GameObject(fTimeDelta);
     State_Change();
@@ -70,7 +71,6 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 void CBeefalo::LateUpdate_GameObject()
 {
     __super::LateUpdate_GameObject();
-
     m_pTransForm->BillBoard();
     _vec3	vPos;
     m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -100,6 +100,14 @@ void CBeefalo::Render_GameObject()
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
+}
+
+void CBeefalo::Set_Attack_State()
+{
+    if (!m_Attacked)
+    {
+        m_Attacked = true;
+    }
 }
 
 HRESULT CBeefalo::Add_Component()
@@ -227,6 +235,7 @@ void CBeefalo::Set_ObjStat()
     m_Stat.fATK = 20.f;
     m_Stat.bDead = false;
     m_Stat.fATKRange = 1.3f;
+    m_Stat.fAggroRange = 10.f;
 }
 
 void CBeefalo::State_Change()
@@ -237,22 +246,27 @@ void CBeefalo::State_Change()
         {
         case IDLE:
             m_fFrameEnd = 16;
+            m_fFrameSpeed = 16.f;
             if (m_eCurLook != LOOK_LEFT)
             {
                 m_eCurLook = LOOK_DOWN;
             }
             break;
         case GRAZE:
+            m_fFrameSpeed = 12.f;
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10;
             break;
         case WALK:
+            m_fFrameSpeed = 20.f;
             m_fFrameEnd = 20;
             break;
         case ATTACK:
+            m_fFrameSpeed = 10.f;
             m_fFrameEnd = 7;
             break;
         case MADRUN:
+            m_fFrameSpeed = 14.f;
             m_fFrameEnd = 4;
             break;
         case HIT:
@@ -261,15 +275,18 @@ void CBeefalo::State_Change()
                 m_eCurLook = LOOK_RIGHT;
             }
             m_fFrameEnd = 5;
+            m_fFrameSpeed = 11.f;
             break;
         case DEAD:
             m_fFrameEnd = 12;
+            m_fFrameSpeed = 18.f;
             if (m_eCurLook != LOOK_LEFT)
             {
                 m_eCurLook = LOOK_RIGHT;
             }
             break;
         case ERASE:
+            m_fFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             m_eCurLook = LOOK_DOWN;
             break;
@@ -348,7 +365,7 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
 
     }
 
-    if (!IsTarget_Approach(7.f))
+    if (!IsTarget_Approach(10.f) || dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
     {
         m_Attacked = false;
     }
@@ -364,6 +381,8 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
 
 void CBeefalo::Patroll(const _float& fTimeDelta)
 {
+    auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
+    CTerrainTex* pTerrainTex = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
     m_fAcctime += fTimeDelta;
     m_Stat.fSpeed = 1.f;
     if (m_fFrameChange < m_fAcctime)        //엑셀타임 충족 트리거
@@ -391,7 +410,11 @@ void CBeefalo::Patroll(const _float& fTimeDelta)
     else if (m_ePreState == WALK)           //걷기일때 방향으로 이동.
     {
         /*const _vec3* _vDir, const _float& fSpeed, const _float& fTimeDelta*/
-        m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+        _vec3 vCurPos = m_pTransForm->Get_Pos();
+        if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+            m_vDir *= -1;
+        else
+            m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
     }
 
     if (m_fFrameEnd < m_fFrame)
@@ -403,6 +426,25 @@ void CBeefalo::Set_Hit()
 {
     m_eCurState = HIT;
     m_bHit = true;
+
+    _vec3 vThispos;
+    vThispos = m_pTransForm->Get_Pos();
+    auto& vecObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+    for (auto& obj : vecObj)
+    {
+        _vec3  vTargetPos;
+        vTargetPos = obj->GetTransForm()->Get_Pos();
+        if (D3DXVec3Length(&(vTargetPos - vThispos)) <= m_Stat.fAggroRange)
+        {
+            if (obj->IsDelete() || obj == nullptr || dynamic_cast<CMonster*>(obj)->Get_Name() != m_Stat.strObjName)
+                continue;
+            else
+                dynamic_cast<CBeefalo*>(obj)->Set_Attack_State();
+        }
+       
+    }
+
+
 }
 
 void CBeefalo::Set_Scale()
@@ -417,6 +459,10 @@ void CBeefalo::Set_Scale()
         m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
     }
     else if (m_ePreState == DEAD)
+    {
+        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
+    }
+    else if (m_ePreState == HIT)
     {
         m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
     }

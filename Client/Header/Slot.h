@@ -16,8 +16,8 @@ public:
 	CItem* Get_Item() { return m_pItem; }
 	_float Get_fX() { return m_fX; }
 	_float Get_fY() { return m_fY; }
-	_float Get_SizeX() { return m_fSizeX; }
-	_float Get_SizeY() { return m_fSizeY; }
+	_float Get_fSizeX() { return m_fSizeX; }
+	_float Get_fSizeY() { return m_fSizeY; }
 
 public:
 	virtual HRESULT Ready_GameObject()						 override;

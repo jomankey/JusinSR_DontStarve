@@ -179,6 +179,7 @@
     <ClInclude Include="..\Header\BerryBush.h" />
     <ClInclude Include="..\Header\BossEftDown.h" />
     <ClInclude Include="..\Header\CAnimationUI.h" />
+    <ClInclude Include="..\Header\CBGLoading.h" />
     <ClInclude Include="..\header\CBonfire.h" />
     <ClInclude Include="..\Header\CBossScene.h" />
     <ClInclude Include="..\Header\ButtonUI.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="..\Header\CGenerateMap.h" />
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CLoadBackGround.h" />
+    <ClInclude Include="..\Header\CMainScene.h" />
     <ClInclude Include="..\Header\Cook.h" />
     <ClInclude Include="..\Header\CParticle.h" />
     <ClInclude Include="..\Header\CSnow.h" />
@@ -198,6 +200,7 @@
     <ClInclude Include="..\header\CTent.h" />
     <ClInclude Include="..\Header\CToothTrap.h" />
     <ClInclude Include="..\Header\CTrap.h" />
+    <ClInclude Include="..\Header\CDustParticle.h" />
     <ClInclude Include="..\Header\CTumbleWeed.h" />
     <ClInclude Include="..\Header\ExplainPanel.h" />
     <ClInclude Include="..\Header\CHpUI.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="..\Header\IceSpikeL.h" />
     <ClInclude Include="..\Header\IceSpikeR.h" />
     <ClInclude Include="..\Header\InvenSlot.h" />
+    <ClInclude Include="..\Header\LoadingScene.h" />
     <ClInclude Include="..\Header\Mouse.h" />
     <ClInclude Include="..\Header\Rebirth.h" />
     <ClInclude Include="..\Header\Slot.h" />
@@ -230,8 +234,7 @@
     <ClInclude Include="..\Header\SlideUI.h" />
     <ClInclude Include="..\Header\CTestScene.h" />
     <ClInclude Include="..\Header\CTeleporterWorm.h" />
-    <ClInclude Include="..\Header\CToolUI.h" />
-    <ClInclude Include="..\Header\CUI.h" />
+    <ClInclude Include="..\Header\UI.h" />
     <ClInclude Include="..\Header\WorldHand.h" />
     <ClInclude Include="..\Header\WorldUI.h" />
     <ClInclude Include="..\Header\DeerClops.h" />
@@ -265,6 +268,7 @@
     <ClCompile Include="..\Code\Beefalo.cpp" />
     <ClCompile Include="..\Code\BossEftDown.cpp" />
     <ClCompile Include="..\Code\CAnimationUI.cpp" />
+    <ClCompile Include="..\Code\CBGLoading.cpp" />
     <ClCompile Include="..\code\CBonfire.cpp" />
     <ClCompile Include="..\Code\CBossScene.cpp" />
     <ClCompile Include="..\Code\ButtonUI.cpp" />
@@ -277,6 +281,7 @@
     <ClCompile Include="..\Code\CGenerateMap.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CLoadBackGround.cpp" />
+    <ClCompile Include="..\Code\CMainScene.cpp" />
     <ClCompile Include="..\Code\Cook.cpp" />
     <ClCompile Include="..\Code\CParticle.cpp" />
     <ClCompile Include="..\Code\CSnow.cpp" />
@@ -284,6 +289,7 @@
     <ClCompile Include="..\code\CTent.cpp" />
     <ClCompile Include="..\Code\CToothTrap.cpp" />
     <ClCompile Include="..\Code\CTrap.cpp" />
+    <ClCompile Include="..\Code\CDustParticle.cpp" />
     <ClCompile Include="..\Code\CTumbleWeed.cpp" />
     <ClCompile Include="..\Code\ExplainPanel.cpp" />
     <ClCompile Include="..\Code\CHpUI.cpp" />
@@ -296,6 +302,7 @@
     <ClCompile Include="..\Code\IceSpikeL.cpp" />
     <ClCompile Include="..\Code\IceSpikeR.cpp" />
     <ClCompile Include="..\Code\InvenSlot.cpp" />
+    <ClCompile Include="..\Code\LoadingScene.cpp" />
     <ClCompile Include="..\Code\Mouse.cpp" />
     <ClCompile Include="..\Code\Rebirth.cpp" />
     <ClCompile Include="..\Code\Slot.cpp" />
@@ -316,8 +323,7 @@
     <ClCompile Include="..\Code\SlideUI.cpp" />
     <ClCompile Include="..\Code\CTestScene.cpp" />
     <ClCompile Include="..\Code\CTeleporterWorm.cpp" />
-    <ClCompile Include="..\Code\CToolUI.cpp" />
-    <ClCompile Include="..\Code\CUI.cpp" />
+    <ClCompile Include="..\Code\UI.cpp" />
     <ClCompile Include="..\Code\WorldHand.cpp" />
     <ClCompile Include="..\Code\WorldUI.cpp" />
     <ClCompile Include="..\Code\DeerClops.cpp" />

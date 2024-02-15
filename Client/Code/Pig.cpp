@@ -28,7 +28,7 @@ HRESULT CPig::Ready_GameObject()
 	/*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
 	m_fFrameEnd = 7;
 	m_fFrameChange = rand() % 5;
-	m_fDiffY = 3.5f;
+	m_fDiffY = 1.f;
 	Look_Change();
 	return S_OK;
 }
@@ -37,7 +37,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 {
 	
 	if(!m_bFrameStop)
-		m_fFrame += m_fFrameEnd * fTimeDelta;
+		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
 	
 	if (!m_Stat.bDead)      //죽은 상태가 아닐때 진입
@@ -50,6 +50,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 		{
 			Patroll(fTimeDelta);
 		}
+		Collision_EachOther(fTimeDelta);
 	}
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
@@ -253,27 +254,34 @@ void CPig::State_Change()
 		switch (m_eCurState)
 		{
 		case IDLE:
+			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 7;
 			break;
 		case HAPPY:
 			m_fFrameEnd = 17;
+			m_fFrameSpeed = 17.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case ANGRY_IDLE:
 			m_fFrameEnd = 17;
+			m_fFrameSpeed = 17.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WALK:
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 8;
 			break;
 		case EAT:
 			m_fFrameEnd = 16;
+			m_fFrameSpeed = 14.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case RUN:
+			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 6;
 			break;
 		case ATTACK:
+			m_fFrameSpeed = 11.f;
 			m_fFrameEnd = 10;
 			break;
 		case SLEEP:
@@ -285,12 +293,15 @@ void CPig::State_Change()
 				m_eCurLook = LOOK_DOWN;
 			}
 			m_fFrameEnd = 6;
+			m_fFrameSpeed = 12.f;
 			break;
 		case DEAD:
 			m_fFrameEnd = 11;
+			m_fFrameSpeed = 12.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case ERASE:
+			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 5;
 			m_eCurLook = LOOK_DOWN;
 			break;
@@ -376,13 +387,15 @@ void CPig::Attacking(const _float& fTimeDelta)
 
 void CPig::Patroll(const _float& fTimeDelta)
 {
+	auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
+	CTerrainTex* pTerrainTex = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	m_fAcctime += fTimeDelta;
 	m_Stat.fSpeed = 1.f;
 	if (m_fFrameChange < m_fAcctime)
 	{
 		m_fAcctime = 0.f;
 		m_fFrameChange = rand() % 16;
-		int RandomPattern = rand() % 4;
+		int RandomPattern = rand() % 3;
 		m_eCurState = (PiGSTATE)RandomPattern;
 		if (m_eCurState == WALK)
 		{
@@ -400,7 +413,11 @@ void CPig::Patroll(const _float& fTimeDelta)
 	else if (m_ePreState == WALK)           //걷기일때 방향으로 이동.
 	{
 		/*const _vec3* _vDir, const _float& fSpeed, const _float& fTimeDelta*/
-		m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+		_vec3 vCurPos = m_pTransForm->Get_Pos();
+		if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+			m_vDir *= -1;
+		else
+			m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
 	}
 
 	if (m_fFrameEnd < m_fFrame)

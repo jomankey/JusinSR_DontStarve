@@ -1,7 +1,7 @@
 #include "Cook.h"
 #include "SlotMgr.h"
 CCook::CCook(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev), m_bShow(false), pButton(nullptr)
+	: CUI(pGraphicDev), m_bShow(false), pButton(nullptr)
 {
 }
 
@@ -12,7 +12,6 @@ CCook::~CCook()
 HRESULT CCook::Ready_GameObject()
 {
 	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, COOK, HEIGHT, 4);
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fSizeX = 40.f;
@@ -21,11 +20,7 @@ HRESULT CCook::Ready_GameObject()
 	m_fX = 450.f;
 	m_fY = 300.f;
 
-	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
-	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
-
-	D3DXMatrixIdentity(&m_ViewMatrix);
-	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
+	__super::Ready_GameObject();
 
 	pButton = CButtonUI::Create(m_pGraphicDev, _vec3{ m_fX, m_fY + 70.f, 0.f }, _vec2{ 20.f, 10.f });
 
@@ -42,7 +37,6 @@ _int CCook::Update_GameObject(const _float& fTimeDelta)
 
 	CSlotMgr::GetInstance()->Update_InvenBoxMgr(fTimeDelta, COOK);
 	pButton->Update_GameObject(fTimeDelta);
-	renderer::Add_RenderGroup(RENDER_UI, this);
 
 	return 0;
 }
@@ -106,6 +100,7 @@ CCook* CCook::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 		return nullptr;
 	}
+
 	return pInstance;
 }
 

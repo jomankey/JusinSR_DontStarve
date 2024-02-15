@@ -40,6 +40,7 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 {
 
 	Install_Obj();
+	
 
 	//예시 코드
 
@@ -80,7 +81,7 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 	if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) // 플레이어와 상호작용
 	{
 		//auto& vecUI = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
-		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		_vec3 vPos;
 		m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -218,12 +219,14 @@ void CTent::Check_FrameState()
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DESTROY:
+			Engine::PlaySound_W(L"Obj_Tent_Destroy.mp3", SOUND_EFFECT, 10.0f);
 			m_fFrameEnd = 16.0f;
 			break;
 		case CTent::CTENT_BURNT:
 			m_fFrameEnd = 0.0f;
 			break;
 		case CTent::CTENT_PLACE:
+			Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DEFAULT:
@@ -246,6 +249,7 @@ void CTent::Change_Frame_Event()
 	{
 		if (m_eTentCurState == CTENT_DEFAULT)
 		{
+			
 			m_eTentCurState = CTENT_PLACE;
 		}
 
@@ -257,10 +261,12 @@ void CTent::Change_Frame_Event()
 
 		if (m_bIsDestroy)
 		{
+			
+			//Obj_Tent_Destroy.mp3
 			m_eTentCurState = CTENT_DESTROY;
 			if (m_fFrame > m_fFrameEnd)
 			{
-
+				
 				m_bIsFrameStop = true;
 				//회수(파괴)시 다시는 못 지음 새로 텐트를 생성해야함
 				return;
@@ -329,10 +335,10 @@ void CTent::Install_Obj()
 	{
 		m_bInstall = false;
 		m_bIsDrop = true;
-		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
-
+		Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
 		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
 	}
 }

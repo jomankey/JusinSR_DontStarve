@@ -5,6 +5,7 @@
 #include <Mouse.h>
 #include <Cook.h>
 #include <CCookingPot.h>
+#include <ItemBasic.h>
 
 CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec2 vSize, _bool bFood)
     : CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_fX(vPos.x), m_fY(vPos.y), m_bColl(false), m_fSizeX(vSize.x), m_fSizeY(vSize.y), m_bFood(bFood)
@@ -65,7 +66,10 @@ void CButtonUI::Render_GameObject()
 
     m_pBufferCom->Render_Buffer();
 
-    Engine::Render_Font(L"Button_Make", L"제작", &_vec2(m_fX - 20.f, m_fY - 8.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+    if (m_bFood)
+        Engine::Render_Font(L"Button_Cook_Make", L"요리", &_vec2(m_fX - 12.f, m_fY - 8.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+    else
+        Engine::Render_Font(L"Button_Make", L"제작", &_vec2(m_fX - 20.f, m_fY - 8.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
@@ -105,18 +109,33 @@ void CButtonUI::Input_Mouse()
         {
             _vec3 vSlotPos;
             // 생산 로직 구현 
-            _bool bFirstCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
-            _bool bSecondCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
+            _int iNum = m_tCreateInfo.iInfoCount;
+            _bool bCheck(false);
 
-            if (bFirstCheck && bSecondCheck) // 모두 true인 경우에 생성 가능 
+            for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
             {
-                CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[0].strItemName, m_tCreateInfo.tItemInfo[0].iCount);
-                CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[1].strItemName, m_tCreateInfo.tItemInfo[1].iCount);
-                CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
-            }
-                
+                bCheck = CSlotMgr::GetInstance()->Check_InvenItemCount(m_tCreateInfo.tItemInfo[i].strItemName, m_tCreateInfo.tItemInfo[i].iCount);
 
-           CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos);
+                if (!bCheck) break;
+            }
+           
+            if (bCheck) // 모두 true인 경우에 생성 가능 
+            {
+                for (int i= 0; i< m_tCreateInfo.iInfoCount; ++i)
+                {
+                    CSlotMgr::GetInstance()->Remove_CreateItem(m_tCreateInfo.tItemInfo[i].strItemName, m_tCreateInfo.tItemInfo[i].iCount);
+                }
+
+                if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
+                {
+                    _vec3 vPos;
+                    scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPos);
+                    CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_tCreateInfo.strKeyName);
+                    CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pItem);
+                    pItem->GetTransForm()->Set_Pos(vPos);
+                    dynamic_cast<CItemBasic*>(pItem)->Pickup_Item(vSlotPos);
+                }
+            }
         }
     }
     else if (m_bColl && m_bFood) // 요리 탭에서 요리 제작, 요리 끝나면 아이템 다 사라지도록 
@@ -150,7 +169,6 @@ void CButtonUI::Input_Mouse()
             CSlotMgr::GetInstance()->Remove_CookItem();
         }
     }
-
 }
 
 CButtonUI* CButtonUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec2 vSize, _bool bFood)

@@ -31,9 +31,9 @@ public:
 	_uint Get_PlayerMental() { return m_Stat.fMental; }
 	_uint Get_PlayerMaxMental() { return m_Stat.fMaxMental; }
 	
-	void Set_PlayerHp(_int _iHp) { m_Stat.fHP += _iHp; }
-	void Set_PlayerMental(_int _iMental) { m_Stat.fMental += _iMental; }
-	void Set_PlayerHangry(_int _iHangry) { m_Stat.fHungry += _iHangry; }
+	void Set_PlayerHp(_int _iHp) { if (m_Stat.fHP + _iHp >= m_Stat.fMxHP) m_Stat.fHP = m_Stat.fMxHP; else m_Stat.fHP += _iHp; }
+	void Set_PlayerMental(_int _iMental) { if (m_Stat.fMental + _iMental >= m_Stat.fMaxMental) m_Stat.fMental = m_Stat.fMaxMental; else m_Stat.fMental += _iMental; }
+	void Set_PlayerHangry(_int _iHangry) { if (m_Stat.fHungry + _iHangry >= m_Stat.fMaxHungry) m_Stat.fHungry = m_Stat.fMaxHungry; else m_Stat.fHungry += _iHangry; }
 
 	void Set_Tent() { m_bTent = !m_bTent; }
 
@@ -43,6 +43,7 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 	void			Set_Attack(int _Atk);			//공격당했을 때 호출되는 함수
+	
 	_bool			IsPlayer_Dead() { return m_Stat.bDead; }	//외부에서 죽었는지 확인하는 함수
 
 	void		Set_Weapon_Equip(WEAPON _eWeaponType) { m_eCurWeapon = _eWeaponType; }	//무기 넣어줄때 호출
@@ -67,8 +68,15 @@ private:
 	void Update_State(const _float& fTimeDelta);
 
 	CGameObject* Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget);
-
 	void BillBoard();
+
+
+	void Hit_Sound();
+	void Eat_Sound();
+	void Dialog_Sound();
+	void Rock_Sound();
+	void Tree_Sound();
+	void Grass_Sound();
 
 private:
 	Engine::CRcTex* m_pBufferCom;
@@ -91,6 +99,7 @@ private:
 	LOOKDIR				m_ePreLook;
 	_bool				m_Dirchange;			//Look
 	_bool				m_bAttack;
+	_bool m_bHit;
 
 	_bool				m_KeyLock;				//Key Input 함수를 막는 용도	true 면 막힘
 	_bool				m_bFrameLock;			//프레임 축적을 막는 용도 true 면 막힘
@@ -106,6 +115,7 @@ private:
 	_uint m_iLightNum;
 
 	_bool m_bTent;
+	_float		m_fFrameSpeed;
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);

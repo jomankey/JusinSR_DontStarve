@@ -6,6 +6,7 @@
 #include <Mouse.h>
 #include "SlotMgr.h"
 #include <Cook.h>
+#include <ItemBasic.h>
 
 CCookingPot::CCookingPot(LPDIRECT3DDEVICE9 pGraphicDev, _bool bInstall)
 	: CResObject(pGraphicDev), m_bInstall(bInstall)
@@ -39,15 +40,15 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
 
-	//if (GetAsyncKeyState('6')) // 횃불
-	//{
-	//	Set_Cooking(false);
-	//}
+	if (GetAsyncKeyState('6')) // 횃불
+	{
+		Set_Cooking(false);
+	}
 
-	//if (GetAsyncKeyState('7')) // 횃불
-	//{
-	//	Set_Cooking(true);
-	//}
+	if (GetAsyncKeyState('7')) // 횃불
+	{
+		Set_Cooking(true);
+	}
 
 
 
@@ -70,8 +71,6 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 	if (!m_bIsFrameStop)
 	{
 		m_fFrame += m_fFrameEnd * fTimeDelta;
-		
-
 	}
 
 	if (m_bIsCooking)
@@ -83,9 +82,20 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_fTimeChek >= m_MaxfTimeChek)
 	{
+		
 		_vec3 vSlot;
 		//요리끝
-		CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop", &vSlot);
+		if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop", &vSlot))
+		{
+			Engine::PlaySound_W(L"Obj_Cookingpot_Finish.mp3", SOUND_EFFECT, 1.0f);
+			
+			_vec3 vPos;
+			m_pTransForm->Get_Info(INFO_POS, &vPos);
+			CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop");
+			CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pItem);
+			pItem->GetTransForm()->Set_Pos(vPos);
+			dynamic_cast<CItemBasic*>(pItem)->Pickup_Item(vSlot);
+		}
 		
 		m_bIsCooking=false;
 		m_fTimeChek = 0.f;
@@ -100,7 +110,7 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 		auto& vecUI = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI);
 		for (auto& iter : vecUI)
 		{
-			auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+			auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 			CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 			_vec3 vPos;
 			m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -117,7 +127,6 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
 
 	return 0;
 }
@@ -205,9 +214,9 @@ HRESULT CCookingPot::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
+	m_pTransForm->Set_Scale(_vec3(1.2f, 1.2f, 1.2f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -225,12 +234,15 @@ void CCookingPot::Check_FrameState()
 		switch (m_eCookingpotCurState)
 		{
 		case CCookingPot::COOKINGPOT_IDLE_EMPTY:
+
 			m_fFrameEnd = 0.0f;
 			break;
 		case CCookingPot::COOKINGPOT_IDLE_FULL:
 			m_fFrameEnd = 0.0f;
 			break;
 		case CCookingPot::COOKINGPOT_COOKING_LOOP:
+			
+	
 			m_fFrameEnd = 6.0f;
 			break;
 		case CCookingPot::COOKINGPOT_BURNT:
@@ -262,6 +274,7 @@ void CCookingPot::Change_Frame_Event()
 	{
 		if (m_eCookingpotCurState == COOKINGPOT_DEFAULT)
 		{
+			Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 0.5f);
 			m_eCookingpotCurState = COOKINGPOT_PLACE;
 		}
 
@@ -283,6 +296,7 @@ void CCookingPot::Change_Frame_Event()
 		//솥이 떨어지는 모션이 끝나고 그리고 요리가 시작 되었을 때 프레임 반복
 		else if (m_eCookingpotCurState == COOKINGPOT_COOKING_LOOP&& m_bIsCooking)
 		{
+			
 			m_bIsFrameStop= false;
 			if (m_fFrame > m_fFrameEnd)
 			{
@@ -293,6 +307,9 @@ void CCookingPot::Change_Frame_Event()
 		//솥이 떨어지는 모션이 끝나고 요리가 시작되지 않았을 때 Empty로 돌아감
 		else if(m_eCookingpotCurState == COOKINGPOT_COOKING_LOOP && !m_bIsCooking)
 		{
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH2);
+			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
 			m_bIsFrameStop = true;
 			m_eCookingpotCurState = COOKINGPOT_IDLE_EMPTY;
 		}
@@ -301,6 +318,9 @@ void CCookingPot::Change_Frame_Event()
 		//요리를 다시 시작하려 할 때
 		if (m_eCookingpotCurState == COOKINGPOT_IDLE_EMPTY && m_bIsCooking)
 		{
+			Engine::PlayEffectContinue(L"Obj_Cookingpot_Boil.mp3", 0.7f, SOUND_EFFECT_CONTINUE_CH1);
+			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_1.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH2);
+			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_2.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH3);
 			m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
 			
 		}
@@ -366,7 +386,7 @@ void CCookingPot::Install_Obj()
 	{
 		m_bInstall = false;
 		m_bIsDrop= true;
-		auto& vecMouse = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::ENVIRONMENT, eOBJECT_GROUPTYPE::MOUSE)[0];
+		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();;
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
 

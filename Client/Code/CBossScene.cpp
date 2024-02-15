@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SlotMgr.h"
 
 #include "DynamicCamera.h"
 #include "SkyBox.h"
@@ -43,8 +44,12 @@
 #include <BerryBush.h>
 
 
+//Particle
+#include "CSnow.h"
+#include "CDustParticle.h"
+
 //UI
-#include "CUI.h"
+#include "UI.h"
 #include"Slot.h"
 #include"SlideUI.h"
 #include"CHpUI.h"
@@ -60,6 +65,9 @@
 #include <CTeleporterWorm.h>
 #include <CBossDoor.h>
 #include <Tallbird.h>
+#include <Mouse.h>
+#include <CreateUI.h>
+#include "Cook.h"
 
 CBossScene::CBossScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -79,10 +87,10 @@ HRESULT CBossScene::Ready_Scene()
 		m_arrLayer[i] = CLayer::Create();
 	}
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
-	FAILED_CHECK_RETURN(Loading_Boss_Texture(), E_FAIL);
+	//FAILED_CHECK_RETURN(Loading_Boss_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
-	//FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
 	return S_OK;
@@ -98,6 +106,15 @@ Engine::_int CBossScene::Update_Scene(const _float& fTimeDelta)
 		NULL_CHECK_RETURN(pScene, -1);
 		scenemgr::Change_CurScene(pScene);
 	}
+
+	if (KEY_TAP(DIK_2))
+	{
+		//매개변수( 디바이스,텍스처이미지(basic아이템과같음),파티클개수,위치,파티클크기,파티클보이는시간,파티클속도)
+		CGameObject* pGameObject = CDustParticle::Create(m_pGraphicDev, L"PARTICLE_SNOW", 40, m_pPlayer->GetTransForm()->Get_Pos(),10.1f, 1.f, 10.f);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
+	}
+
 
 	return __super::Update_Scene(fTimeDelta);
 }
@@ -138,16 +155,16 @@ HRESULT CBossScene::Loading_Boss_Texture()
 
 	//Effect
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Atk_Effect", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/effect/standard/ice__%03d.png", 11)), E_FAIL);
-	
+
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Circle_Effect", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/circle/circle__%03d.png", 11)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Rock_Effect", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Effect/Boss_Effect/effect/effect__%03d.png", 13)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Snow_Effect", CTexture::Create(m_pGraphicDev, TEX_NORMAL,   L"../Bin/Resource/Texture/Effect/Boss_Effect/snow/snow__%03d.png", 13)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Rock_Effect", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/effect/effect__%03d.png", 13)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Snow_Effect", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/snow/snow__%03d.png", 13)), E_FAIL);
 
 
 	//Ice Missile
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_missile_left", CTexture::Create(m_pGraphicDev, TEX_NORMAL,  L"../Bin/Resource/Texture/Effect/Boss_Effect/Fall_Left.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_missile_left", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/Fall_Left.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_missile_right", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/Fall_Right.png")), E_FAIL);
-	
+
 	//Ice Spike
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_spike_1", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/ice_spike_1/none__%03d.png", 11)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_spike_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/ice_spike_2/none__%03d.png", 11)), E_FAIL);
@@ -155,7 +172,7 @@ HRESULT CBossScene::Loading_Boss_Texture()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_spike_4", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/ice_spike_4/none__%03d.png", 11)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_spike_5", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/ice_spike_5/none__%03d.png", 11)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_spike_6", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/ice_spike_6/none__%03d.png", 11)), E_FAIL);
-	
+
 	//Fall Mark
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_mark_pre", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/Fall_Mark/Pre/Pre__%03d.png", 30)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_Ice_mark_pst", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Boss_Effect/Fall_Mark/Pst/Pst__%03d.png", 5)), E_FAIL);
@@ -220,18 +237,23 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 3.f, 64.f));
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 0.f, 64.f));
 
-	
 
-	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 4.f, 64.f));
+
+	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 0.f, 64.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
 	dynamic_cast<CDeerClops*>(pGameObject)->Set_Phase(true, true, false, false, false, false);
 
-	
+
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
 
+	///TEST
+	pGameObject = CSnow::Create(m_pGraphicDev, L"PARTICLE_SNOW", 660, _vec3(0.f, 0.f, 0.f), _vec3(64.f, 10.f, 64.f));
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
+	pGameObject->GetTransForm()->Set_Pos(_vec3(32.f, 0.f, 32.f));
 
 	return S_OK;
 }
@@ -244,6 +266,18 @@ HRESULT CBossScene::Ready_Layer_UI()
 	NULL_CHECK_RETURN(uiLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
+	pGameObject = CCreateUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//Cook
+	pGameObject = CCook::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	pGameObject = CInven::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev);
@@ -274,6 +308,11 @@ HRESULT CBossScene::Ready_Layer_UI()
 	pGameObject = CWorldHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//////////마우스
+	pGameObject = m_pMouse = CMouse::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::MOUSE, pGameObject), E_FAIL);
 
 	return S_OK;
 }
@@ -504,9 +543,9 @@ HRESULT CBossScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CTallbird::Create(m_pGraphicDev, vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-		vPos.y = 1.4f;
+		/*vPos.y = 1.4f;*/
 	}
-
+	vPos.y = 0.f;
 	if (nullptr != pGameObject)
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 }
@@ -576,5 +615,7 @@ CBossScene* CBossScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneN
 
 void CBossScene::Free()
 {
+	CSlotMgr::GetInstance()->Box_Release(CREATE);
+	CSlotMgr::GetInstance()->Box_Release(COOK);
 	__super::Free();
 }

@@ -22,37 +22,38 @@ CObjectTree::~CObjectTree()
 HRESULT CObjectTree::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	//m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
-	
 
 	
-
-
 	m_eCurState = RES_IDLE;
 	m_eObject_id = TREE;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 27.f;
-	m_fDiffY = 3.4f;
+	m_fDiffY = 3.0f;
 	Ready_Stat();
+
 
 	return S_OK;
 }
 
 _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fFrame += m_fFrameEnd * fTimeDelta;
+	if (m_eCurState == RES_HIT_1)
+		m_fFrame += m_fFrameEnd * fTimeDelta * 1.5f;
+	else
+		m_fFrame += m_fFrameEnd * fTimeDelta * 0.5f;
 
 	if (m_fFrameEnd < m_fFrame)
 	{
 		if (m_eCurState == RES_HIT_1) // 피격 모션이 끝난 후 IDLE로 돌아감
 		{
+			
 			m_eCurState = RES_IDLE;
 			m_bHit = false;
 		}
 
 		else if (m_eCurState == RES_DEAD || m_eCurState == RES_DEAD2)
 		{
-
+			Engine::PlaySound_W(L"Obj_Tree_Destroy.mp3", SOUND_EFFECT, 1.0f);
 			CreateItem(L"Twigs", this, this->m_pGraphicDev);
 			CreateItem(L"Log", this, this->m_pGraphicDev);
 		
@@ -132,13 +133,12 @@ HRESULT CObjectTree::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree_Final", pComponent });
 
 #pragma endregion TEXCOM
-
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
+	m_pTransForm->Set_Scale(_vec3(6.f, 6.f, 6.f));
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.5f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
 	return S_OK;
 }
@@ -149,8 +149,9 @@ void CObjectTree::Change_Frame_Event()
 		return;
 
 	//HIT 시 상태값
-	if (m_bHit)
+	if (m_bHit) {
 		m_eCurState = RES_HIT_1;
+	}
 
 	if (m_Stat.fHP <= 0) // 체력이 0일때
 	{
@@ -162,8 +163,8 @@ void CObjectTree::Change_Frame_Event()
 
 	if (m_Stat.bDead)
 	{
-		m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
-		m_pTransForm->Set_Pos(m_vOriginPos.x, 1.0f, m_vOriginPos.z); //
+		//m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
+		m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
 		m_eCurState = RES_FINAL;
 
 	}
@@ -182,15 +183,17 @@ void CObjectTree::Check_FrameState()
 
 	if (m_eCurState == RES_DEAD) 
 	{
+		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
 		m_fFrameEnd = 13;
-		m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
+		//m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
 		
 		//m_vOriginPos
 	}
 	if (m_eCurState == RES_DEAD2)
 	{
+		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
 		m_fFrameEnd = 13;
-		m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
+		//m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	}
 	if (m_eCurState == RES_FINAL)
 	{
@@ -228,6 +231,33 @@ CResObject* CObjectTree::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CObjectTree::Free()
 {
 	CGameObject::Free();
+}
+
+void CObjectTree::RandomSoundPlay()
+{
+	srand(static_cast<unsigned int>(time(nullptr)));
+	int iRandNum = rand() %4+1 ;
+	switch (iRandNum)
+	{
+	case 1:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	case 5:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 1.0f);
+		break;
+	default:
+		break;
+	}
+
 }
 
 

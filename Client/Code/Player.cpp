@@ -29,6 +29,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_bAttack(false)
 	, m_iLightNum(++CMainApp::g_iLightNum),
 	m_bTent(false)
+	,m_bHit(false)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
@@ -36,6 +37,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	, m_bAttack(false)
 	, m_iLightNum(++CMainApp::g_iLightNum),
 	m_bTent(false)
+	, m_bHit(false)
 {
 }
 
@@ -72,7 +74,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_Ghost = nullptr;
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
-
+	m_fFrameSpeed = 0.f;
 	m_fDiffY = 0.5f;// z버퍼 보정용값 추가
 
 	Set_Stat();
@@ -83,19 +85,12 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Update_State(fTimeDelta); // 플레이어 State 매 프레임마다 업데이트
 
 	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"ROAD" && !m_bIsRoadScene)
-	{
 		m_bIsRoadScene = true;
-	}
 	else if (scenemgr::Get_CurScene()->Get_Scene_Name() != L"ROAD" && m_bIsRoadScene)
-	{
 		m_bIsRoadScene = false;
-	}
-
 
 	if (!m_bFrameLock)      //프레임 락이 걸리면 프레임이 오르지 않음
-	{
-		m_fFrame += m_fFrameEnd * fTimeDelta;
-	}
+		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
 	if (m_fFrameEnd <= m_fFrame)      //프레임이 끝에 다다르면 진입
 	{
@@ -103,47 +98,37 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		{
 			m_KeyLock = false;
 			m_eCurState = IDLE;
+			m_bHit = false;
 		}
 		if (m_vPlayerActing)
-		{
 			m_vPlayerActing = false;
-		}
+		if (m_bAttack)
+			m_bAttack = false;
 		m_fFrame = 0.f;
 	}
 	if (!m_KeyLock && !m_Stat.bDead)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
 		if (!m_bIsRoadScene)
-		{
 			Key_Input(fTimeDelta);
-		}
 		else
-		{
 			Ket_Input_Road(fTimeDelta);
-		}
-		
 	}
 	else if (m_Stat.bDead)
-	{
 		Rebirth();
-	}
+
 	Weapon_Change();
 	Check_State();
 	Look_Change();
 	Set_Scale();
 	Fire_Light(); // 횃불 모션 시 켜짐 / 꺼짐 추가해야함
 	CGameObject::Update_GameObject(fTimeDelta);
-
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
-	/*Engine::IsPermit_Call(L"Unarmed_IDLE", fTimeDelta);*/
 	return 0;
 }
 
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	//Height_OnTerrain();
-
 	_vec3 vPos;
 	BillBoard();
 	m_pTransForm->Get_Info(INFO::INFO_POS, &vPos);
@@ -574,7 +559,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (!GetAsyncKeyState('W') &&              //이동중이지 않을 때 IDLE로 변경
 		!GetAsyncKeyState('S') &&
 		!GetAsyncKeyState('A') &&
-		!GetAsyncKeyState('D'))
+		!GetAsyncKeyState('D') && !m_vPlayerActing)
 	{
 		if (m_ePreWeapon == TORCH)				//횃불을 들고 있을 시에는 횃불모션으로 변경
 		{
@@ -599,7 +584,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_TargetObject = dynamic_cast<CResObject*>(findObj)->Get_Resourse_ID();
 			m_vTargetDir = m_vTargetPos - vPos;
 			m_vTargetDir.y = 0.f;
-			if (D3DXVec3Length(&m_vTargetDir) < 1.5f)
+			if (Collision_Transform(m_pTransForm, findObj->GetTransForm())/*D3DXVec3Length(&m_vTargetDir) < 2.f*/)
 			{
 				ResObj_Mining(m_TargetObject, findObj);
 			}
@@ -617,17 +602,19 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		}
 	}
-	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
+	if (KEY_AWAY(DIK_SPACE))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
 	{
 		//Find_NeerObject: 못찾았을경우 nullptr반환
-		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::ITEM);
+		CGameObject* findObj = Find_NeerObject(m_Stat.fATKRange, eOBJECT_GROUPTYPE::ITEM);
 
 		if (nullptr != findObj)
 		{
 			_vec3 vSlotPos;
 			if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, findObj->GetObjName(), &vSlotPos));
 			{
-				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);
+				m_eCurState = PICKUP;
+				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);		
+				m_vPlayerActing = true;
 			}
 		}
 	}
@@ -644,17 +631,19 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		}
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
 		if (nullptr != findObj && !findObj->IsDelete()
-			&& Collision_Transform(m_pTransForm, dynamic_cast<CMonster*>(findObj)->GetTransForm()))
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CMonster*>(findObj)->GetTransForm()) &&!m_bAttack)
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
+			m_bAttack = true;
 
 		}
 
 		CGameObject* boss = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::BOSS);
 		if (nullptr != boss && !boss->IsDelete()
-			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(findObj)->GetTransForm()))
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(boss)->GetTransForm()) &&!m_bAttack)
 		{
-			dynamic_cast<CMonster*>(boss)->Set_Attack(m_Stat.fATK);
+			dynamic_cast<CDeerClops*>(boss)->Set_Attack(m_Stat.fATK);
+			m_bAttack = true;
 		}
 	}
 
@@ -689,74 +678,74 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 #pragma region PSWTEST
 	//PSW Test---------------------------------------------------------
 
-	if (GetAsyncKeyState('1')) //텐트 입장
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if(object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName==L"텐트")
-			{
+	//if (GetAsyncKeyState('1')) //텐트 입장
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if(object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName==L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Enter();
-				
+	//			dynamic_cast<CTent*>(object)->Set_Enter();
+	//			
 
-			}
+	//		}
 
-		}
-	}
-	if (GetAsyncKeyState('2')) //텐트 파괴
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if (object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName == L"텐트")
-			{
+	//	}
+	//}
+	//if (GetAsyncKeyState('2')) //텐트 파괴
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if (object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName == L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Destroy();
-				//해당 함수 호출하면 다시는 못지음 (Enter모션, Hit모션, Burnt모션 다 불가능)
+	//			dynamic_cast<CTent*>(object)->Set_Destroy();
+	//			//해당 함수 호출하면 다시는 못지음 (Enter모션, Hit모션, Burnt모션 다 불가능)
 
-			}
+	//		}
 
-		}
-	}
-	if (GetAsyncKeyState('3')) //텐트가 맞았을 때, 이거는 다른 곳에서 해도 됨 떄린 객체에게 시켜야 할 듯
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if (object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName == L"텐트")
-			{
+	//	}
+	//}
+	//if (GetAsyncKeyState('3')) //텐트가 맞았을 때, 이거는 다른 곳에서 해도 됨 떄린 객체에게 시켜야 할 듯
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if (object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName == L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Hit();
-				
+	//			dynamic_cast<CTent*>(object)->Set_Hit();
+	//			
 
-			}
+	//		}
 
-		}
-	}
-	if (GetAsyncKeyState('4')) //텐트가 타버렸 을  때,  이거는 텐트가 불 탔다는 스텟을 가졌으면  텐트안에서 처리 가능
-	{
-		decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
-		for (auto& object : Test)
-		{
-			if (object->IsDelete())
-				continue;
-			if (object->Get_State().strObjName == L"텐트")
-			{
+	//	}
+	//}
+	//if (GetAsyncKeyState('4')) //텐트가 타버렸 을  때,  이거는 텐트가 불 탔다는 스텟을 가졌으면  텐트안에서 처리 가능
+	//{
+	//	decltype(auto)	Test = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
+	//	for (auto& object : Test)
+	//	{
+	//		if (object->IsDelete())
+	//			continue;
+	//		if (object->Get_State().strObjName == L"텐트")
+	//		{
 
-				dynamic_cast<CTent*>(object)->Set_Burnt();
-				//해당 함수 호출하면 다시는 못지음 (계속 탄 상태로 남아 있음)
+	//			dynamic_cast<CTent*>(object)->Set_Burnt();
+	//			//해당 함수 호출하면 다시는 못지음 (계속 탄 상태로 남아 있음)
 
-			}
+	//		}
 
-		}
-	}
+	//	}
+	//}
 
 
 
@@ -847,59 +836,91 @@ void CPlayer::Check_State()
 		switch (m_eCurState)
 		{
 		case IDLE:
+			m_fFrameSpeed = 22.f;
 			m_fFrameEnd = 22;
 			break;
 		case HIT:
+			Hit_Sound();
 			m_fFrameEnd = 7;
+			m_fFrameSpeed = 15.f;
 			m_KeyLock = true;
 			break;
 		case BUILD:
+			m_fFrameSpeed = 11.f;
 			m_fFrameEnd = 6;
 			break;
 		case ATTACK:
+			m_fFrameSpeed = 20.f;
 			m_fFrameEnd = 11;
 			m_KeyLock = true;
 			break;
 		case FALLDOWN:
+			m_fFrameSpeed = 15.f;
 			m_fFrameEnd = 8;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WAKEUP:
+			m_fFrameSpeed = 32.f;
 			m_fFrameEnd = 32;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
+		case PICKUP:
+			m_fFrameSpeed = 20.f;
+			m_KeyLock = true;
+			m_fFrameEnd = 6;
+			break;
 		case EAT:
+			Eat_Sound();
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 36;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case MOVE:
+			m_fFrameSpeed = 9.f;
 			m_fFrameEnd = 6;
 			break;
 		case DIALOG:
+			Dialog_Sound();
 			m_eCurLook = LOOK_DOWN;
 			m_fFrameEnd = 17;
+			m_fFrameSpeed = 17.f;
 			break;
 		case TORCH_IDLE:
+			m_fFrameSpeed = 22.f;
 			m_fFrameEnd = 22;
 			break;
 		case TORCH_RUN:
+			m_fFrameSpeed = 7.f;
 			m_fFrameEnd = 6;
 			break;
 		case PICKING_OBJECT:
+			m_fFrameSpeed = 14.f;
 			m_fFrameEnd = 9;
 			break;
 		case AXE_CHOP_PRE:
+			m_fFrameSpeed = 20.f;
 			m_fFrameEnd = 15;
 			break;
+		case HAMMERING:
+			m_fFrameSpeed = 14.f;
+			m_fFrameEnd = 9;
+			break;
+		case SPEAR_ATTACK:
+			m_fFrameSpeed = 20.f;
+			m_fFrameEnd = 8;
+			break;
 		case DEAD:
+			m_fFrameSpeed = 19.f;
+			Engine::PlaySound_W(L"wilson_Vocie_Death.mp3", SOUND_EFFECT, 5.f);
 			m_fFrameEnd = 19;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case REBIRTH:
+			m_fFrameSpeed = 17.f;
 			m_fFrameEnd = 17;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
@@ -975,8 +996,8 @@ void CPlayer::Set_Stat()
 {
 	m_Stat.fHP = 200.f;
 	m_Stat.fMxHP = 200.f;
-	m_Stat.fSpeed = 5.f;
-	m_Stat.fATK = 10.f;
+	m_Stat.fSpeed = 4.f;
+	m_Stat.fATK = 1.f;
 	m_Stat.fATKRange = 1.f;
 	m_Stat.fAggroRange = 5.f;
 	m_Stat.fHungry = 200.f;
@@ -989,11 +1010,12 @@ void CPlayer::Set_Stat()
 
 void CPlayer::Set_Attack(int _Atk)
 {
-	if (!m_Stat.bDead && m_Stat.fHP > 0)
+	if (!m_Stat.bDead && m_Stat.fHP > 0 && !m_bHit)
 	{
 		m_Stat.fHP -= _Atk;
 		m_eCurState = HIT;
 		m_KeyLock = true;
+		m_bHit = true;
 	}
 }
 
@@ -1061,15 +1083,16 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 	{
 	case ROCK:
 
-		if (m_eCurWeapon == PICK)
+		if (m_ePreWeapon == PICK)
 		{
-
-			m_eCurState = PICKING_OBJECT;
 			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 			{
+				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_EFFECT, 5.f);
+				Rock_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				m_vPlayerActing = true;
 			}
+			m_eCurState = PICKING_OBJECT;
 		}
 		else
 		{
@@ -1078,10 +1101,13 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		}
 		break;
 	case TREE:
-		if (m_eCurWeapon == AXE)
+		if (m_ePreWeapon == AXE)
 		{
 			if (7.f < m_fFrame && !m_vPlayerActing)
 			{
+				Engine::PlaySound_W(L"wilson_Gather_Wood_1.mp3", SOUND_EFFECT, 5.f);
+				Engine::PlaySound_W(L"wilson_Gather_Wood_2.mp3", SOUND_EFFECT, 5.f);
+				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
 				m_vPlayerActing = true;
@@ -1095,11 +1121,13 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		}
 		break;
 	case PIG_HOUSE:
-		if (m_eCurWeapon == HAMMER)
+		if (m_ePreWeapon == HAMMER)
 		{
 			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 			{
+				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
 				m_vPlayerActing = true;
 			}
 			m_eCurState = HAMMERING;
@@ -1114,6 +1142,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 		{
 			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			Grass_Sound();
 			m_vPlayerActing = true;
 		}
 		m_eCurState = BUILD;
@@ -1122,6 +1151,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 		{
 			dynamic_cast<CResObject*>(_Obj)->Set_Attack();
+			Grass_Sound();
 			m_vPlayerActing = true;
 		}
 		m_eCurState = BUILD;
@@ -1147,7 +1177,7 @@ _int CPlayer::Die_Check()
 			//여기에 고스트 소환하는 거
 			_vec3 pPlayerPos;
 			m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
-			
+			Engine::PlaySound_W(L"wilson_Ghost_Spawn.mp3", SOUND_EFFECT, 5.f);
 			m_Ghost = CGhost::Create(m_pGraphicDev, pPlayerPos);
 			NULL_CHECK_RETURN(m_Ghost, E_FAIL);
 			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, m_Ghost), E_FAIL);
@@ -1189,8 +1219,8 @@ HRESULT CPlayer::Ready_Light()
 	tPointLightInfo.Type = D3DLIGHT_POINT;
 
 	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Attenuation0 = 0.00000001f;
-	tPointLightInfo.Range = 5.f;
+	tPointLightInfo.Attenuation0 = 0.0000001f;
+	tPointLightInfo.Range = 4.f;
 	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
 
 	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, m_iLightNum), E_FAIL);
@@ -1226,10 +1256,33 @@ void CPlayer::Fire_Light()
 
 void CPlayer::Update_State(const _float& fTimeDelta)
 {
-	m_Stat.fHungry -= fTimeDelta;
-	m_Stat.fMental -= fTimeDelta;
-}
+	if (m_bTent)
+	{
+		//텐트 안에 있을때 플레이어 상태값 변화
 
+		if (m_Stat.fHP + fTimeDelta * 0.4f <= m_Stat.fMxHP)
+			m_Stat.fHP = m_Stat.fMxHP;
+		else
+			m_Stat.fHP += fTimeDelta * 0.4f;
+
+		if (m_Stat.fHungry - fTimeDelta >= 0.f)
+			m_Stat.fHungry = 0.f;
+		else
+			m_Stat.fHungry -= fTimeDelta;
+
+		if (m_Stat.fMental + fTimeDelta * 0.2f <= m_Stat.fMaxMental)
+			m_Stat.fMental = m_Stat.fMaxMental;
+		else
+			m_Stat.fMental += fTimeDelta * 0.2f;
+	}
+	else
+	{
+		//일반 상태값 
+		if (m_Stat.fHungry - (fTimeDelta * 0.3) < 0.f) m_Stat.fHungry = 0.f; else m_Stat.fHungry -= fTimeDelta * 0.3;
+		if (m_Stat.fMental - (fTimeDelta * 0.3) < 0.f) m_Stat.fMental = 0.f; else m_Stat.fMental -= fTimeDelta * 0.1;
+	}
+
+}
 
 //못찾았을경우 nullptr반환
 CGameObject* CPlayer::Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget)
@@ -1251,7 +1304,7 @@ CGameObject* CPlayer::Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarg
 	//반복문돌면서 모든 오브젝트그룹 순회하기
 	for (auto& obj : vecObj)
 	{
-		if (obj->IsDelete())//해당오브젝트가 삭제될예정이면 무시
+		if (obj->IsDelete() || obj == nullptr)//해당오브젝트가 삭제될예정이면 무시
 			continue;
 
 		obj->GetTransForm()->Get_Info(INFO_POS, &vTargetPos);
@@ -1295,6 +1348,125 @@ void CPlayer::BillBoard()
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 
 	m_pTransForm->Set_WorldMatrix(&(matBill * matWorld));
+}
+
+void CPlayer::Hit_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+
+}
+
+void CPlayer::Eat_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Eat_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Eat_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+}
+
+void CPlayer::Dialog_Sound()
+{
+	int randomvalue = rand() % 6;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Voice_Generic_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_4.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_5.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 5:
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_6.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+}
+
+void CPlayer::Rock_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+
+}
+
+void CPlayer::Tree_Sound()
+{
+	int randomvalue = rand() % 5;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
+}
+
+void CPlayer::Grass_Sound()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_1.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_2.mp3", SOUND_EFFECT, 5.f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_3.mp3", SOUND_EFFECT, 5.f);
+		break;
+	}
 }
 
 

@@ -16,7 +16,11 @@ HRESULT CProtoMgr::Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 	CComponent* pInstance = Find_Prototype(pProtoTag);
 
 	if (nullptr != pInstance)
-		return E_FAIL;
+	{
+		//return E_File;
+		Safe_Release(pComponent);
+		return S_OK;
+	}
 
 	m_mapProto.insert({ pProtoTag, pComponent });
 
@@ -39,9 +43,8 @@ HRESULT CProtoMgr::Ready_ProtoAnim(const _tchar* pProtoAnimTag, CAnimation* pAni
 
 	if (nullptr != pInstance)
 	{
-
-		assert(false && L"Animation Already exists");
-		return E_FAIL;
+		Safe_Release(pAnim);
+		return S_OK;
 	}
 
 	m_mapProtoAnim.insert({ pProtoAnimTag, pAnim });

@@ -7,7 +7,7 @@
 #include"ResObject.h"
 
 CTallbird::CTallbird(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
-    :CMonster(pGraphicDev, _vPos), m_eCurstate(SLEEP), m_ePrestate(STATE_END)
+    :CMonster(pGraphicDev, _vPos), m_eCurstate(SLEEP), m_ePrestate(STATE_END), m_bWakeUp(false)
 { 
 }
 
@@ -31,7 +31,7 @@ HRESULT CTallbird::Ready_GameObject()
     m_fFrameEnd = 0;
     m_bFrameStop = true;
     m_fFrameChange = rand() % 3;
-    m_fDiffY = 3.5f;
+    m_fDiffY = 1.f;
     D3DXVec3Normalize(&m_vDir, &m_vDir);
     Look_Change();
     return S_OK;
@@ -42,10 +42,10 @@ _int CTallbird::Update_GameObject(const _float& fTimeDelta)
   
     if (!m_bFrameStop)
     {
-        m_fFrame += m_fFrameEnd * fTimeDelta;
+        m_fFrame += m_fFrameSpeed * fTimeDelta;
     }
 
-    if (IsTarget_Approach(m_Stat.fAggroRange) && !m_bStatChange[0])  //1회 최초진입
+    if (m_bWakeUp)  //1회 최초진입
     {
         m_bStatChange[0] = true;
         m_bFrameStop = false;
@@ -64,6 +64,7 @@ _int CTallbird::Update_GameObject(const _float& fTimeDelta)
             {
                 First_Phase(fTimeDelta);
             }
+            Collision_EachOther(fTimeDelta);
         }
     }
    
@@ -236,26 +237,35 @@ void CTallbird::State_Change()
             {
                 m_eCurLook = LOOK_DOWN;
             }
+            m_fFrameSpeed = 14.f;
             break;
         case WALK:
+            m_fFrameSpeed = 9.f;
             m_fFrameEnd = 8.f;
             break;
         case ATTACK:
+            m_fFrameSpeed = 11.f;
             m_fFrameEnd = 12.f;
             break;
         case SLEEP:
+            m_fFrameSpeed = 1.f;
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 0;
             break;
         case WAKE_UP:
+            m_fFrameSpeed = 14.f;
+            Engine::PlaySound_W(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 16;
             break;
         case TAUNT:
+            m_fFrameSpeed = 14.f;
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 22.f;
             break;
         case HIT:
+            m_fFrameSpeed = 14.f;
+            Engine::PlaySound_W(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT, 5.f);
             m_fFrameEnd = 6;
             if (m_eCurLook != LOOK_LEFT)
             {
@@ -263,10 +273,13 @@ void CTallbird::State_Change()
             }
             break;
         case DEAD:
+            m_fFrameSpeed = 10.f;
+            Engine::PlaySound_W(L"Obj_TallBird_Death.mp3", SOUND_EFFECT, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10.f;
             break;
         case ERASE:
+            m_fFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             m_eCurLook = LOOK_DOWN;
             break;
@@ -361,7 +374,6 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
         else if (m_ePrestate == WALK)
         {
             Player_Chase(fTimeDelta);
-            Collision_EachOther(fTimeDelta);
         }
 
     }

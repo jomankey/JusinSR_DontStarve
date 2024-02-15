@@ -153,14 +153,30 @@ void Ready_Sound()
 	return CSoundMgr::GetInstance()->Ready_Sound();
 }
 
-void PlaySound(_tchar* pSoundKey, CHANNELID eID, float fVolume)
+void PlaySound_W(_tchar* pSoundKey, CHANNELID eID, float fVolume)
 {
-	return CSoundMgr::GetInstance()->PlaySound(pSoundKey, eID, fVolume);
+	return CSoundMgr::GetInstance()->PlaySound_W(pSoundKey, eID, fVolume);
 }
 
 void PlayBGM(TCHAR* pSoundKey, float fVolume)
 {
 	return CSoundMgr::GetInstance()->PlayBGM(pSoundKey, fVolume);
+}
+
+void PlayEffectContinue(TCHAR* pSoundKey, float fVolume, CHANNELID eID)
+{
+	return CSoundMgr::GetInstance()->PlayEffectContinue(pSoundKey, fVolume, eID);
+
+}
+
+void SpatialPlay_Sound(TCHAR* pSoundKey, CHANNELID eID)
+{
+	return CSoundMgr::GetInstance()->SpatialPlay_Sound(pSoundKey, eID);
+}
+
+void Update_Sound(_vec3 _SoundVel, _vec3 _PlayerPos, _vec3 _ObjPos, _vec3 _ObjFoward, _vec3 _ObjUp, CHANNELID eID, float _SoundFower)
+{
+	return CSoundMgr::GetInstance()->Update_Sound(_SoundVel, _PlayerPos, _ObjPos, _ObjFoward, _ObjUp, eID, _SoundFower);
 }
 
 void StopSound(CHANNELID eID)

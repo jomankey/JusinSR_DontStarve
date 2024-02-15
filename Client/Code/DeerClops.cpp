@@ -10,10 +10,14 @@
 #include "FallMark.h"
 #include "Scene.h"
 #include "SnowSplash.h"
+#include "DynamicCamera.h"
+#include "Tallbird.h"
+
+
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	: CMonster(pGraphicDev, _vPos),
 	m_eCurState(SLEEP), m_ePreState(STATE_END),
-	m_fSkill(0.f), m_fSkill2(0.f), m_fAcctime2(0.f)
+	m_fSkill(0.f), m_fSkill2(0.f), m_fAcctime2(0.f), m_AttackPos(false)
 {
 }
 
@@ -29,12 +33,16 @@ CDeerClops::~CDeerClops()
 
 HRESULT CDeerClops::Ready_GameObject()
 {
+
+
+	
+	//true 면 위아래고 , false면 상하좌우
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
 	Set_ObjStat();
 	m_fAcctime = float(rand() % 30);
 	m_bFalldown = false;
-	m_fDiffY = 4.5f;
+	m_fDiffY = 1.f;
 	for (auto i = 0; i < DEER_PHASE::PHASE_END; ++i)
 	{
 		m_bPhase[i] = false;
@@ -49,7 +57,7 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 
 	if (!m_bFrameStop)//
 	{
-		m_fFrame += m_fFrameEnd * fTimeDelta;
+		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	}
 
 
@@ -106,7 +114,6 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 void CDeerClops::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
-
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -273,7 +280,6 @@ HRESULT CDeerClops::Add_Component()
 #pragma endregion TEXCOM
 	
 
-
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
@@ -292,6 +298,7 @@ void CDeerClops::Set_Hit()
 	{
 		if (m_ePreState != ATTACK)
 		{
+			Engine::PlaySound_W(L"Obj_Deerclops_Hurt_5.mp3", SOUND_EFFECT, 5.f);
 			m_eCurState = HIT;
 			m_fFrame = 0.f;
 			m_bHit = true;
@@ -313,6 +320,7 @@ void CDeerClops::Set_Hit()
 		if (!m_bPhase[DIE])
 		{
 			m_bPhase[DIE] = true;
+			Engine::PlaySound_W(L"Obj_Deerclops_Death_1.mp3", SOUND_EFFECT, 5.f);
 			m_eCurState = DEAD;
 			m_Stat.bDead = true;
 		}
@@ -335,69 +343,88 @@ void CDeerClops::Set_ObjStat()
 
 void CDeerClops::State_Change()
 {
+	
 	if (m_ePreState != m_eCurState)
 	{
-		if (m_ePreState == TAUNT)
+		if (m_ePreState == TAUNT || m_ePreState == LONG_TAUNT)
 		{
-			Adjust_Pos_Taunt_Back();
+			Adjust_Taunt_Pos_Back();
 		}
-		else if (m_ePreState == ATTACK)
+		if (m_AttackPos)
 		{
-			Adjust_Pos_Attack_Back();
+			Adjust_Attack_Up_Pos_Back();
 		}
-		//taunt 면 위치조정
+
 		switch (m_eCurState)
 		{
 		case IDLE:
+			m_fFrameSpeed = 19.f;
 			m_fFrameEnd = 19;
 			break;
 		case WALK:
+			m_fFrameSpeed = 16.f;
 			m_fFrameEnd = 16;
 			break;
 		case ATTACK:
-			Adjust_Pos_Attack();
+			m_fFrameSpeed = 18.f;
+			if (m_eCurLook == LOOK_UP)
+			{
+				Adjust_Attack_Up_Pos();
+			}
 			m_fFrameEnd = 20;
 			break;
 		case SLEEP:
+			m_fFrameSpeed = 23.f;
 			m_fFrameEnd = 23;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case SLEEP_PST:
+			m_fFrameSpeed = 18.f;
 			m_fFrameEnd = 18;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case TAUNT:
-			Adjust_Pos_Taunt();
+			m_fFrameSpeed = 17.f;
 			Generate_Roaring(0.9);
+			Adjust_Taunt_Pos();
+			Camera_Shaking(1.f, 2.f, false);
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case LONG_TAUNT:
+			m_fFrameSpeed = 10.f;
+			Camera_Shaking(1.f, 2.f, false);
 			Generate_Roaring(3);
+			Adjust_Taunt_Pos();
 			m_fFrameEnd = 33;
 			m_eCurLook = LOOK_DOWN;
 			break;
-
 		case FALL_DOWN:
+			m_fFrameSpeed = 40.f;
 			m_fFrameEnd = 37;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WAKE_UP:
+			m_fFrameSpeed = 12.f;
 			m_fFrameEnd = 11;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case PATTERN_PRE:
+			m_fFrameSpeed = 13.f;
 			m_fFrameEnd = 12;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case PATTERN_LOOP:
+			m_fFrameSpeed = 13.f;
 			m_fFrameEnd = 13;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case HIT:
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 7;
 			break;
 		case DEAD:
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 24;
 			m_eCurLook = LOOK_DOWN;
 			break;
@@ -417,15 +444,15 @@ void CDeerClops::Set_Scale()
 	{
 		if (m_ePreLook == LOOK_UP )
 		{
-			m_pTransForm->Set_Scale({ 2.6f, 9.f, 2.6f });
+			m_pTransForm->Set_Scale({ 3.0f, 6.f, 3.0f });
 		}
 		else if (m_ePreLook == LOOK_DOWN)
 		{
-			m_pTransForm->Set_Scale({ 3.0, 9.f, 3.0 });
+			m_pTransForm->Set_Scale({ 3.0f, 6.f, 3.0f });
 		}
 		else
 		{
-			m_pTransForm->Set_Scale({ 2.7f, 12.f, 2.7f });
+			m_pTransForm->Set_Scale({ 2.7f, 7.6f, 2.7f });
 		}
 	}
 	else if (m_ePreState == ATTACK)
@@ -436,11 +463,11 @@ void CDeerClops::Set_Scale()
 		}
 		else if (m_ePreLook == LOOK_UP)
 		{
-			m_pTransForm->Set_Scale({ 7.f, 3.f, 7.f });
+			m_pTransForm->Set_Scale({ 7.f, 5.5f, 7.f });
 		}
 		else
 		{
-			m_pTransForm->Set_Scale({ 7.f, 4.f, 7.f });
+			m_pTransForm->Set_Scale({ 7.f, 5.5f, 7.f });
 		}
 		
 	}
@@ -448,7 +475,7 @@ void CDeerClops::Set_Scale()
 	{
 		if (m_ePreLook == LOOK_LEFT || m_ePreLook == LOOK_RIGHT)
 		{
-			m_pTransForm->Set_Scale({ 3.0f, 12.f, 3.0f });
+			m_pTransForm->Set_Scale({ 3.0f, 8.f, 3.0f });
 		}
 		else if(m_ePreLook == LOOK_UP)
 		{
@@ -466,6 +493,10 @@ void CDeerClops::Set_Scale()
 	else if (m_ePreState == WAKE_UP)
 	{
 		m_pTransForm->Set_Scale({ 4.2f, 5.f, 4.2f });
+	}
+	else if (m_ePreState == HIT)
+	{
+		m_pTransForm->Set_Scale({ 3.8f, 4.6, 3.8f });
 	}
 	else
 	{
@@ -553,6 +584,7 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	{
 		if (9 < m_fFrame && !m_bAttacking)
 		{
+			Engine::PlaySound_W(L"Obj_Deerclops_Attack_3.mp3", SOUND_EFFECT, 5.f);
 			m_bAttacking = true;
 		}
 
@@ -586,16 +618,19 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 		{
 	
 			m_pTransForm->Move_Pos(&m_vFallingDir, 60.f, fTimeDelta);
-			if (Get_Pos().y < 4.f)
+			if (Get_Pos().y < 0.1f)
 			{
 				
 				m_pTransForm->Set_Pos(m_vPos);
 				m_bFalldown = true;
 				Generate_Roaring(0.9);
 				Getnerate_SnowSplash();
+				Camera_Shaking(3.f, 1.f, false);
+				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_EFFECT, 7.f);
+				Awake_Tallbird();
 				// 여기에 카메라 쉐이킹
 			}
-			else if (Get_Pos().y < 6.f)
+			else if (Get_Pos().y < 4.f)
 			{
 				m_bFrameStop = false;
 			}
@@ -675,6 +710,7 @@ void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 	{
 		if (9 < m_fFrame && !m_bAttacking)
 		{
+			Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 5.f);
 			m_bAttacking = true;
 		}
 
@@ -872,7 +908,6 @@ void CDeerClops::Generate_Fall_Mark_Ex()
 	for (int i = 0; i < 20; ++i)
 	{
 		_vec3 pPos = Get_Player_Pos();
-		pPos.y = 1.f;
 		int randomValue = rand() % 10;
 		int randomValue2 = rand() % 10;
 		// 부호를 무작위로 선택 (-1 또는 1)
@@ -892,6 +927,7 @@ void CDeerClops::Generate_Fall_Mark_Ex()
 
 void CDeerClops::Generate_Attack_Effect()
 {
+	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 5.f);
 	_vec3 vThisPos, vRight, vLook; // 이펙트 생성 기점.
 	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
 	m_pTransForm->Get_Info(INFO_LOOK, &vLook);
@@ -926,9 +962,12 @@ void CDeerClops::Generate_Attack_Effect()
 
 void CDeerClops::Generate_Roaring(_int _iCount)
 {
-	_vec3 vThisPos;
+	_vec3 vThisPos,vLook;
+	vLook = Get_Look();
+	vLook *= -1;
+	vThisPos += vLook * (m_pTransForm->Get_Scale().y * 0.5);
+
 	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
-	vThisPos.y = 1.f;
 	CGameObject* pGameObject = CCircle::Create(m_pGraphicDev, vThisPos);
 	NULL_CHECK_RETURN(pGameObject, );
 	CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
@@ -941,7 +980,6 @@ void CDeerClops::Getnerate_SnowSplash()
 	for (int i = 0; i < 10; ++i)
 	{
 		_vec3 pPos = Get_Pos();
-		pPos.y = 1.f;
 		int randomValue = rand() % 10;
 		int randomValue2 = rand() % 5;
 		// 부호를 무작위로 선택 (-1 또는 1)
@@ -960,37 +998,63 @@ void CDeerClops::Getnerate_SnowSplash()
 
 }
 
-void CDeerClops::Adjust_Pos_Taunt()
+void CDeerClops::Camera_Shaking(_float _power, _float _time, _bool _dir)
 {
-	_vec3 pos = Get_Pos();
-	m_vTauntPos = Get_Pos();
-	_vec3 look = Get_Look();
-	_vec3 right = Get_Right();
-	right *= -1;
-	pos += (look * 1.3f);
-	pos += (right * 1.3f);
-	m_pTransForm->Set_Pos(pos);
+	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(scenemgr::Get_CurScene()->GetCameraObject());
+	pCamera->SetShakedCamera(_power, _time, _dir);
 }
 
-void CDeerClops::Adjust_Pos_Taunt_Back()
+void CDeerClops::Adjust_Taunt_Pos()
+{
+	_vec3 vPos, vRight, vUp;
+	vPos = Get_Pos();
+	vRight = Get_Right();
+	vUp = Get_Up();
+	m_vTauntPos = Get_Pos();
+	vRight *= -1;
+	vPos += vRight * 0.6f;
+	vPos += vUp * 1.5f;
+	m_pTransForm->Set_Pos(vPos);
+}
+
+void CDeerClops::Adjust_Taunt_Pos_Back()
 {
 	m_pTransForm->Set_Pos(m_vTauntPos);
 }
 
-void CDeerClops::Adjust_Pos_Attack()
+void CDeerClops::Adjust_Attack_Up_Pos()
 {
-	_vec3 pos = Get_Pos();
+	_vec3 vPos, vRight, vLook;
+	vPos = Get_Pos();
+	vRight = Get_Right();
+	vLook = Get_Up();
 	m_vAttackPos = Get_Pos();
-	_vec3 up = Get_Up();
-	
-	pos += (up * 1.6f);
-	m_pTransForm->Set_Pos(pos);
+	vPos += vLook * 2.f;
+	m_pTransForm->Set_Pos(vPos);
+	m_AttackPos = true;
 }
 
-void CDeerClops::Adjust_Pos_Attack_Back()
+void CDeerClops::Adjust_Attack_Up_Pos_Back()
 {
 	m_pTransForm->Set_Pos(m_vAttackPos);
+	if (m_AttackPos)
+		m_AttackPos = false;
 }
+
+void CDeerClops::Awake_Tallbird()
+{
+	_vec3 vThispos;
+	vThispos = m_pTransForm->Get_Pos();
+	auto& vecObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+	for (auto& obj : vecObj)
+	{
+		if (obj->IsDelete() || obj == nullptr || dynamic_cast<CMonster*>(obj)->Get_Name() != L"키다리새")
+			continue;
+		else
+			dynamic_cast<CTallbird*>(obj)->Set_Tallbird_WakeUp();
+	}
+}
+
 
 void CDeerClops::Free()
 {

@@ -29,6 +29,7 @@ public:
     
     vector<CSlot*> Get_BoxList(BOX_TYPE eType) { return m_mapBox.find(eType)->second; }
     CItem* Get_InvenItem(_uint iNum) { return m_pItemArr[iNum]; }
+    CItem* Get_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType) { return m_pArmorArr[eArmorSlotType - 15]; }
     void Get_Inven(CItem** pInvenItem) { memcpy(pInvenItem, m_pItemArr, sizeof(m_pItemArr)); }
     _bool Check_InvenItemCount(wstring strName, _int iNeedNum);
     void Remove_CreateItem(wstring strName, _uint iItemCount);
@@ -36,8 +37,9 @@ public:
     // 아이템 장착 확인
     // 아이템 장착을 안하고 있을 시 L"" 값이 넘어간다.
     void Set_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType, CItem* pItem, _uint _iItemNum);
-    wstring Get_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType) { return m_pArmorArr[eArmorSlotType - 15] != nullptr ? m_pArmorArr[eArmorSlotType - 15]->GetObjName() : L""; }
-    void Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _uint _iItemNum);
+    //wstring Get_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType) { return m_pArmorArr[eArmorSlotType - 15] != nullptr ? m_pArmorArr[eArmorSlotType - 15]->GetObjName() : L""; }
+    void Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _uint _iItemNum, _vec3 vSlotPos);
+    void Remove_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType);
 
     //요리 칸
     void Set_CookItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strKeyName, _vec3 vSlotPos, _uint iSlotNum);
@@ -53,6 +55,7 @@ public:
     _bool	AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos);	//반환값이False면 아이템습득실패(아이템꽉참)
     _bool Check_AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos);
 
+    void Box_Release(BOX_TYPE eType);
 private:
     virtual void Free();
 

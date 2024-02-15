@@ -29,9 +29,10 @@ FallMark::~FallMark()
 HRESULT FallMark::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-    m_vPos.y -= 1.f;
     m_pTransForm->Set_Pos(m_vPos);
     m_fFrameEnd = 30.f;
+
+    
     return S_OK;
 }
 

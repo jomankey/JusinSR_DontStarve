@@ -10,29 +10,22 @@
 #include "InvenSlot.h"
 
 CExplainPanel::CExplainPanel(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, wstring strItemKey)
-    : CGameObject(pGraphicDev), 
-    m_fX(vPos.x), 
-    m_fY(vPos.y), 
+    : CUI(pGraphicDev), 
     m_strItemKey(strItemKey),
-    m_pBufferCom(nullptr),
-    m_pTextureCom(nullptr),
     m_pButton(nullptr),
-    m_fSizeX(0.f),
-    m_fSizeY(0.f)
+    m_vPos(vPos),
+    m_bSlideBoxColl(false)
 {
     ZeroMemory(&m_tCreateInfo, sizeof(m_tCreateInfo));
+
+    for (int i = 0; i < 3; ++i)
+        m_pItem[i] = nullptr;
 }
 
 CExplainPanel::CExplainPanel(const CExplainPanel& rhs)
-    : CGameObject(rhs), 
-    m_fX(rhs.m_fX), 
-    m_fY(rhs.m_fY), 
+    : CUI(rhs),
     m_strItemKey(rhs.m_strItemKey),
-    m_pBufferCom(rhs.m_pBufferCom),
-    m_pTextureCom(rhs.m_pTextureCom),
-    m_pButton(rhs.m_pButton),
-    m_fSizeX(rhs.m_fSizeX),
-    m_fSizeY(rhs.m_fSizeY)
+    m_pButton(rhs.m_pButton)
 {
 }
 
@@ -47,9 +40,19 @@ HRESULT CExplainPanel::Ready_GameObject()
 
     m_tCreateInfo = CUIMgr::GetInstance()->Get_CreateInfo(m_strItemKey);
 
-    for (int i = 0; i < 2; ++i)
+    m_fX = m_vPos.x;
+    m_fY = m_vPos.y;
+
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
     {
-        _vec3 vPos = _vec3(m_fX + 4.f * ((i+1) * (i *4) ), m_fY + 8.f, 0.f);
+        _vec3 vPos = {};
+        if (m_tCreateInfo.iInfoCount == 1)
+            vPos = _vec3(m_fX + 12.f, m_fY + 8.f, 0.f);
+        else if (m_tCreateInfo.iInfoCount == 2)
+            vPos = _vec3(m_fX + 3.f + (30.f * i), m_fY + 8.f, 0.f);
+        else if (m_tCreateInfo.iInfoCount == 3)
+            vPos = _vec3(m_fX - 13.f + (30.f * i), m_fY + 8.f, 0.f);
+
         m_pItem[i] = CInvenSlot::Create(m_pGraphicDev, vPos, i, INVEN);
         CItem* pItem = CItemTool::Create(m_pGraphicDev, m_tCreateInfo.tItemInfo[i].strItemName, vPos, UI_ITEM_CREATE_NEED);
         pItem->Set_ItemCount(m_tCreateInfo.tItemInfo[i].iCount);
@@ -61,18 +64,14 @@ HRESULT CExplainPanel::Ready_GameObject()
     m_fSizeX = 90.f;
     m_fSizeY = 90.f;
 
-    m_pTransForm->Set_Pos(_vec3((m_fX - WINCX * 0.5f), -m_fY + WINCY * 0.5f, 0.1f));
-    m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
-
-    D3DXMatrixIdentity(&m_ViewMatrix);
-    D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
+    __super::Ready_GameObject();
 
     return S_OK;
 }
 
 _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 {
-    if (!m_bShow)
+    if (!m_bShow && !m_bSlideBoxColl)
         return 0;
 
     __super::Update_GameObject(fTimeDelta);
@@ -81,11 +80,15 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
     GetCursorPos(&tPt);
     ScreenToClient(g_hWnd, &tPt);
     _vec2 vMousePos = _vec2(tPt.x, tPt.y);
-
     if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+    {
+        m_bSlideBoxColl = false;
         m_bShow = true;
+    }
+    else
+        m_bShow = false;
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         m_pItem[i]->Update_GameObject(fTimeDelta);
 
     m_pButton->Update_GameObject(fTimeDelta);
@@ -95,10 +98,10 @@ _int CExplainPanel::Update_GameObject(const _float& fTimeDelta)
 
 void CExplainPanel::LateUpdate_GameObject()
 {
-    if (!m_bShow)
+    if (!m_bShow && !m_bSlideBoxColl)
         return;
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         m_pItem[i]->LateUpdate_GameObject();
 
     m_pButton->LateUpdate_GameObject();
@@ -107,7 +110,7 @@ void CExplainPanel::LateUpdate_GameObject()
 
 void CExplainPanel::Render_GameObject()
 {
-    if (!m_bShow)
+    if (!m_bShow && !m_bSlideBoxColl)
 		return;
 
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
@@ -126,29 +129,29 @@ void CExplainPanel::Render_GameObject()
     size_t sNameLen = wStringName.length();
     //띄어쓰기용
     int spacingName =0;
-    if (sNameLen == 3&& sNameLen < 5)
-    {
+    if (sNameLen == 3 || sNameLen == 4)
         spacingName = 10;
-    }
-    else if (sNameLen >=5)
-    {
-        spacingName = 25;
-    }
+    else if (sNameLen == 5)
+        spacingName = 15;
+    else if (sNameLen >5 )
+        spacingName = 22;
     else 
         spacingName = 0;
     //PSW 길이에 맞춰서 띄우기용 -------------------
 
-
-    Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (sNameLen + spacingName), m_fY - 60.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    if (sNameLen == 1)
+        Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX + 6.f, m_fY - 70.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    else
+        Engine::Render_Font(L"Panel_Title", m_tCreateInfo.strName, &_vec2(m_fX- (sNameLen + spacingName), m_fY - 70.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
     //PSW 길이에 맞춰서 띄우기용 -------------------
     wstring wStringInfo(m_tCreateInfo.strInfo);
     size_t sInfoLen = wStringInfo.length();
     //PSW 길이에 맞춰서 띄우기용 -------------------
   
-    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+    Engine::Render_Font(L"Panel_Info", m_tCreateInfo.strInfo, &_vec2(m_fX- (sInfoLen + 10.f), m_fY - 35.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 
-    //아이템 2개 넣기
-    for (int i = 0; i < 2; ++i)
+    //아이템 넣기
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         m_pItem[i]->Render_GameObject();
 
     m_pButton->Render_GameObject();
@@ -191,7 +194,7 @@ HRESULT CExplainPanel::Add_Component()
 
 void CExplainPanel::Free()
 {
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < m_tCreateInfo.iInfoCount; ++i)
         Safe_Release(m_pItem[i]);
     Safe_Release(m_pButton);
 

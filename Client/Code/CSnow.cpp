@@ -1,4 +1,6 @@
 ﻿#include "CSnow.h"
+#include "Export_Utility.h"
+
 
 CSnow::CSnow(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 	:CParticle(pGraphicDev, _strObjName)
@@ -12,6 +14,21 @@ CSnow::CSnow(const CParticle& rhs)
 
 CSnow::~CSnow()
 {
+}
+
+void CSnow::resetParticle(Attribute* attribute)
+{
+	attribute->m_bAlive = true;
+
+
+	//attribute->m_vPos = m_pTransForm->Get_Pos();
+
+	GetRendomVector(&attribute->m_vPos, &m_vMinBox, &m_vMaxBox);
+
+
+	attribute->m_vVelocity.x = GetRandomFloat(0.0f, 1.0f) * -5.0f;
+	attribute->m_vVelocity.y = GetRandomFloat(0.0f, 1.0f) * -5.0f;
+	attribute->m_vVelocity.z = 0.0f;
 }
 
 _int CSnow::Update_GameObject(const _float& fTimeDelta)
@@ -43,7 +60,7 @@ CSnow* CSnow::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, int num
 	CSnow* pInstance = new CSnow(pGraphicDev, _strObjName);
 
 	pInstance->m_vbSize = 2048;
-	pInstance->m_fSize = 1.f;
+	pInstance->m_fSize = 0.3f;
 	pInstance->m_vbOffset = 0;
 	pInstance->m_vbBatchSize = 512;
 	pInstance->m_vMinBox = MinBox;

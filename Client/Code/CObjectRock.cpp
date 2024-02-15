@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CObjectRock.h"
+#include "Export_System.h"
 #include "Export_Utility.h"
 #include "Component.h"
 CObjectRock::CObjectRock(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -21,16 +22,12 @@ HRESULT CObjectRock::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 
-	_vec3 vPos;
-	m_pTransForm->Set_Scale(_vec3(2.f, 2.f,2.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
-
+	m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f,3.5f));
 	Ready_Stat();
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
 	m_fFrame = 0;
-	m_fDiffY = 4.2f;
+	m_fDiffY = 1.f;
 
 	return S_OK;
 }
@@ -93,7 +90,6 @@ HRESULT CObjectRock::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-
 	return S_OK;
 }
 
@@ -101,12 +97,10 @@ void CObjectRock::Change_Frame_Event()
 {
 	if (m_Stat.fHP <= 3.f && m_Stat.fHP != 0)
 	{
-		//m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 		m_fFrame = 1;
 	}
 	if (m_Stat.fHP <= 1)
 	{
-		//m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 		m_fFrame = 2;
 	}
 
@@ -117,7 +111,7 @@ void CObjectRock::Change_Frame_Event()
 		{
 			CreateItem(L"Rocks_0",this, this->m_pGraphicDev);
 			CreateItem(L"Rocks_1",this, this->m_pGraphicDev);
-
+			Engine::PlaySound_W(L"Obj_Rock_Destroy.mp3", SOUND_EFFECT, 1.0f);
 
 		}
 
