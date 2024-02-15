@@ -190,7 +190,7 @@ HRESULT CParticle::Add_Component()
 	CComponent* pComponent = nullptr;
 
 	//TEXTURE
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(L"PARTICLE_SNOW"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(proto::Clone_Proto(GetObjName().c_str()));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ GetObjName().c_str(), pComponent });
 

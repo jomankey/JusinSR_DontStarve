@@ -8,6 +8,9 @@ protected:
 	explicit CSnow(const CParticle& rhs);
 	virtual ~CSnow() override;
 
+public:
+	virtual void resetParticle(Attribute* attribute);
+
 
 public:
 	virtual _int			Update_GameObject(const _float& fTimeDelta)override;
