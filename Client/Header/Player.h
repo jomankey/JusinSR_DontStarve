@@ -77,6 +77,7 @@ private:
 	void Rock_Sound();
 	void Tree_Sound();
 	void Grass_Sound();
+
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
@@ -114,6 +115,7 @@ private:
 	_uint m_iLightNum;
 
 	_bool m_bTent;
+	_float		m_fFrameSpeed;
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
