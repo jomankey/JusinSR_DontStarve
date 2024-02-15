@@ -187,14 +187,15 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 	_matrix			matCamWorld;
 	D3DXMatrixInverse(&matCamWorld, NULL, &m_matView);
 
-	if (KEY_HOLD(DIK_Q))
+	if (KEY_TAP(DIK_Q))
 	{
-		m_fAngle += 0.1f;
+		m_fAngle += 45.f;
+		m_bMove = true;
 	}
-	if (KEY_HOLD(DIK_E))
+	if (KEY_TAP(DIK_E))
 	{
-		m_fAngle -= 0.1f;
-
+		m_fAngle -= 45.f;
+		m_bMove = true;
 	}
 }
 
@@ -234,13 +235,12 @@ void CDynamicCamera::CalDiff(const _float& fTimeDelta)
 
 	D3DXVec3Normalize(&vDir, &(m_vTargetEye - m_vEye));
 	fDistance = D3DXVec3Length(&(m_vEye - m_vTargetEye));
-
-	if (fDistance <= 1.0f)
+	if (fDistance <= 1.f)
 	{
 		m_bMove = false;
 		return;
 	}
-	m_vEye += 10.f * vDir * fTimeDelta;
+	m_vEye += 50.f * vDir * fTimeDelta;
 
 	vDir.y = 0.f;
 }

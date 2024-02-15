@@ -46,7 +46,7 @@ static bool teskey = false;
 _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 {
 	Install_Obj();
-
+	
 	//
 	//Test 외부에서 똑같이 동작확인을 위한 코드 ()
 	if (GetAsyncKeyState('1')& 0x8000) // 횃불
@@ -103,7 +103,7 @@ _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 		m_eBonfireCurState = BONFIRE_IDLE;
 	}
 
-
+	
 	Check_FrameState();
 
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -134,6 +134,7 @@ void CBonfire::LateUpdate_GameObject()
 {
 
 
+	
 
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
@@ -210,6 +211,7 @@ void CBonfire::AddFIre(int _Value)
 	{
 		if (m_pFire->Get_CurState() == 1&& m_pFire->Get_IsOff())
 		{
+			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv1.mp3", SOUND_EFFECT_CONTINUE_CH1);
 			Engine::PlayEffectContinue(L"Obj_Campfire_Lv1.mp3", 1.f, SOUND_EFFECT_CONTINUE_CH1);
 			m_pFire->Set_IsOff(false);
 		}

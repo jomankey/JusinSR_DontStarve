@@ -77,3 +77,24 @@ void CResObject::CreateItem(const _tchar* _itemName, CGameObject* _Type, LPDIREC
 
 
 }
+
+const tuple<_vec3, _vec3, _vec3> CResObject::Get_Info_vec()
+{
+	if(scenemgr::Get_CurScene()->GetPlayerObject() == nullptr)
+		return make_tuple(_vec3(0,0,0), _vec3(0,0,0), _vec3(0,0,0));
+
+	decltype(auto) pPlayer = scenemgr::Get_CurScene()->GetPlayerObject();
+	
+	Engine::CTransform* pPlayerTransformCom = pPlayer->GetTransForm();
+
+	_vec3 PlayerPos;
+	_vec3 thisLook;
+	_vec3 thisUp;
+	this->GetTransForm()->Get_Info(INFO_LOOK, &thisLook);
+	this->GetTransForm()->Get_Info(INFO_UP, &thisUp);
+	pPlayerTransformCom->Get_Info(INFO_POS, &PlayerPos);
+
+
+
+	return make_tuple(PlayerPos, thisLook, thisUp);
+}

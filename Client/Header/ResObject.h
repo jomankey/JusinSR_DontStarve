@@ -25,6 +25,10 @@ public:
     //오브젝트가 아이템을 만들어야할 때 사용하는 함수
    static void CreateItem(const _tchar* _itemName,CGameObject* _Type, LPDIRECT3DDEVICE9 pGraphicDev);
 
+   //1.번째 반환 값: PlyerPos, 2. 번째 반환 값: 자기 자신의 Look벡터, 3. 번째 반환 값: 자기 자신의 Up벡터
+   const tuple<_vec3, _vec3, _vec3> Get_Info_vec();
+  
+
 public:
     virtual HRESULT Ready_GameObject()						 override;
     virtual _int Update_GameObject(const _float& fTimeDelta) override;

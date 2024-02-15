@@ -24,6 +24,10 @@
 #include <MainApp.h>
 //TestPSW---------------------------------------------
 
+//TestParticle
+#include "CDustParticle.h"
+
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bAttack(false)
@@ -1110,6 +1114,10 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
+				//TestÀÓ½Ã
+				CGameObject* pGameObject = CDustParticle::Create(m_pGraphicDev, L"PARTICLE_SNOW", 3, _Obj->GetTransForm()->Get_Pos(), 0.05f, 0.08f, 10.f);
+				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PARTICLE, pGameObject);
+
 				m_vPlayerActing = true;
 			}
 			m_eCurState = AXE_CHOP_PRE;
@@ -1450,6 +1458,7 @@ void CPlayer::Tree_Sound()
 		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 5.f);
 		break;
 	}
+
 }
 
 void CPlayer::Grass_Sound()
