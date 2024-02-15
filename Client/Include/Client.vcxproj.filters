@@ -283,6 +283,9 @@
     <Filter Include="02. GameObject\13. Particle\TreeDust">
       <UniqueIdentifier>{20f206dc-7eb1-4656-8a1e-f025b4522d74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\13. Particle\Smoke">
+      <UniqueIdentifier>{68236bce-7b18-4cf0-9e63-bfb7d8eb941b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -552,6 +555,9 @@
     <ClInclude Include="..\Header\CDustParticle.h">
       <Filter>02. GameObject\13. Particle\TreeDust</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSmoke.h">
+      <Filter>02. GameObject\13. Particle\Smoke</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -811,6 +817,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDustParticle.cpp">
       <Filter>02. GameObject\13. Particle\TreeDust</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSmoke.cpp">
+      <Filter>02. GameObject\13. Particle\Smoke</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

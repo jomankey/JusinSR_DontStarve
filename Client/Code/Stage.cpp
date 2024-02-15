@@ -54,8 +54,9 @@
 #include "CToothTrap.h"
 #include "CTumbleWeed.h"
 
+//Particle
 #include "CSnow.h"
-
+#include "CSmoke.h"
 
 //UI
 #include "UI.h"
@@ -105,6 +106,21 @@ HRESULT CStage::Ready_Scene()
 
 Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 {
+
+	if (KEY_TAP(DIK_2))
+	{
+		//매개변수( 디바이스,텍스처이미지(basic아이템과같음),파티클개수,위치,파티클크기,파티클보이는시간,파티클속도)
+		/*CGameObject* pGameObject = CDustParticle::Create(m_pGraphicDev, L"PARTICLE_SNOW", 40, m_pPlayer->GetTransForm()->Get_Pos(),10.1f, 1.f, 10.f);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);*/
+
+
+		CGameObject* pGameObject = CSmoke::Create(m_pGraphicDev, L"PARTICLE_SNOW", 2, m_pPlayer->GetTransForm()->Get_Pos(), 0.1f, 5.f, 1.f);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
+
+	}
+
 	__super::Update_Scene(fTimeDelta);
 
 	Change_LightInfo(fTimeDelta);

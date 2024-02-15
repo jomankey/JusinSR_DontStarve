@@ -4,6 +4,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include "CDustParticle.h"
 
 CObjectTree::CObjectTree(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CResObject(pGraphicDev)
@@ -23,7 +24,7 @@ HRESULT CObjectTree::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	
+
 	m_eCurState = RES_IDLE;
 	m_eObject_id = TREE;
 	m_fFrame = 0.f;
@@ -46,7 +47,9 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_eCurState == RES_HIT_1) // 피격 모션이 끝난 후 IDLE로 돌아감
 		{
-			
+
+
+
 			m_eCurState = RES_IDLE;
 			m_bHit = false;
 		}
@@ -56,11 +59,11 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 			Engine::PlaySound_W(L"Obj_Tree_Destroy.mp3", SOUND_EFFECT, 1.0f);
 			CreateItem(L"Twigs", this, this->m_pGraphicDev);
 			CreateItem(L"Log", this, this->m_pGraphicDev);
-		
+
 			m_Stat.bDead = true;
 
 		}
-			
+
 		m_fFrame = 0.f;
 	}
 	m_pTransForm->Get_Info(INFO_POS, &m_vOriginPos);
@@ -68,7 +71,7 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 	Change_Frame_Event();
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-	
+
 	return 0;
 }
 
@@ -76,7 +79,7 @@ void CObjectTree::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 	//Height_OnTerrain();
-	
+
 	Check_FrameState();
 	_vec3	vPos;
 	m_pTransForm->BillBoard();
@@ -181,12 +184,12 @@ void CObjectTree::Check_FrameState()
 	if (m_eCurState == RES_HIT_1)
 		m_fFrameEnd = 6;
 
-	if (m_eCurState == RES_DEAD) 
+	if (m_eCurState == RES_DEAD)
 	{
 		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
 		m_fFrameEnd = 13;
 		//m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
-		
+
 		//m_vOriginPos
 	}
 	if (m_eCurState == RES_DEAD2)
@@ -198,7 +201,7 @@ void CObjectTree::Check_FrameState()
 	if (m_eCurState == RES_FINAL)
 	{
 		m_fFrameEnd = 0;
-		
+
 	}
 
 	m_ePreState = m_eCurState;
@@ -236,7 +239,7 @@ void CObjectTree::Free()
 void CObjectTree::RandomSoundPlay()
 {
 	srand(static_cast<unsigned int>(time(nullptr)));
-	int iRandNum = rand() %4+1 ;
+	int iRandNum = rand() % 4 + 1;
 	switch (iRandNum)
 	{
 	case 1:
@@ -257,6 +260,8 @@ void CObjectTree::RandomSoundPlay()
 	default:
 		break;
 	}
+
+
 
 }
 
