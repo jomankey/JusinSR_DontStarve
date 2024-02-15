@@ -30,7 +30,6 @@ _int CSpike::Update_GameObject(const _float& fTimeDelta)
 		{
 			m_pAnimCom->ChangeAnimation(L"GROW");
 			m_pAnimCom->SetLoopAnimator(false);
-			m_pTransForm->Set_Scale(_vec3(0.8f, 0.8f, 0.8f));
 			m_eCurState = eTRAP_STATE::GROW;
 		}
 	}
@@ -48,7 +47,6 @@ _int CSpike::Update_GameObject(const _float& fTimeDelta)
 			{
 				dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Attack(1);
 				m_pAnimCom->ChangeAnimation(L"HIDE");
-				m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
 				m_eCurState = eTRAP_STATE::DEAD;
 			}
 
@@ -133,7 +131,7 @@ HRESULT CSpike::Add_Component()
 	m_eCurState = eTRAP_STATE::HIDE;
 
 
-	m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 
 	return S_OK;
 }
