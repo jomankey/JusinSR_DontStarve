@@ -16,7 +16,7 @@ CCreateUI::~CCreateUI()
 
 HRESULT CCreateUI::Ready_GameObject()
 {
-	
+	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, CREATE, HEIGHT, 4);
 
 	// 고정 아이템 이미지 넣어주기 
 	_vec3 vPos;

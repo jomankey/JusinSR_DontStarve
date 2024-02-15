@@ -55,6 +55,7 @@ public:
     _bool	AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos);	//반환값이False면 아이템습득실패(아이템꽉참)
     _bool Check_AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3* vSlotPos);
 
+    void Box_Release(BOX_TYPE eType);
 private:
     virtual void Free();
 

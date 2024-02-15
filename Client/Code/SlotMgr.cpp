@@ -297,6 +297,13 @@ void CSlotMgr::Render_InvenBoxMgr(BOX_TYPE eType)
 			if (item) item->Render_GameObject();
 	}
 }
+void CSlotMgr::Box_Release(BOX_TYPE eType)
+{
+	for (auto& iter : m_mapBox[eType])
+		Safe_Release(iter);
+
+	m_mapBox.erase(eType);
+}
 
 void CSlotMgr::Free()
 {

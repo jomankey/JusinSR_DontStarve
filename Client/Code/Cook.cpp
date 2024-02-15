@@ -11,6 +11,7 @@ CCook::~CCook()
 
 HRESULT CCook::Ready_GameObject()
 {
+	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, COOK, HEIGHT, 4);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fSizeX = 40.f;

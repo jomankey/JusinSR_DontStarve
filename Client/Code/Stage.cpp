@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SlotMgr.h"
 
 #include "Mouse.h"
 #include "player.h"
@@ -517,5 +518,7 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 
 void CStage::Free()
 {
+	CSlotMgr::GetInstance()->Box_Release(CREATE);
+	CSlotMgr::GetInstance()->Box_Release(COOK);
 	__super::Free();
 }

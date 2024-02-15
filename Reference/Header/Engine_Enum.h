@@ -89,11 +89,8 @@ namespace Engine
 
 	enum TIME_STATE { MORNING, AFTERNOON, NIGHT };
 
-<<<<<<< HEAD
-=======
 
 	//이건 사용안하는중 
->>>>>>> 9abce5f71a74d2ee3d2f595651191b5a94064ac8
 	enum class eCHANNELID
 	{
 		SOUND_EFFECT,
@@ -117,8 +114,6 @@ namespace Engine
 		SOUND_MOUSE,
 		MAXCHANNEL,
 	};
-<<<<<<< HEAD
-=======
 
 	//이걸로 바꿔야할듯
 	/*
@@ -152,7 +147,6 @@ namespace Engine
 		};
 		*/
 
->>>>>>> 9abce5f71a74d2ee3d2f595651191b5a94064ac8
 
 	enum class eEVENT_TYPE
 	{

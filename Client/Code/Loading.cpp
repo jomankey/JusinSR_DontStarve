@@ -63,10 +63,7 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_BurgerCube", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../../Client/Bin/Resource/Texture/Cube/Road.dds")), E_FAIL);
 
 	//½Ì±ÛÅæ ÁØºñ
-	CUIMgr::GetInstance()->Ready_CreateInfo();
 	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, INVEN, WIDTH, INVENCNT);
-	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, CREATE, HEIGHT, 4);
-	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, COOK, HEIGHT, 4);
 
 	m_bFinish = true;
 	lstrcpy(m_szLoading, L" Q : STAGE \n W : ROAD_STAGE  \n E : BOSS_STAGE \n T : TEST_STAGE");

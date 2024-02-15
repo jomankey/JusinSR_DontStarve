@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SlotMgr.h"
 
 #include "DynamicCamera.h"
 #include "SkyBox.h"
@@ -607,5 +608,7 @@ CBossScene* CBossScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneN
 
 void CBossScene::Free()
 {
+	CSlotMgr::GetInstance()->Box_Release(CREATE);
+	CSlotMgr::GetInstance()->Box_Release(COOK);
 	__super::Free();
 }
