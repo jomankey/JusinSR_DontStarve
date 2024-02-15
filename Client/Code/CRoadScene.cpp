@@ -106,7 +106,7 @@ HRESULT CRoadScene::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	//FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
-
+	
 
 	return S_OK;
 }
@@ -186,6 +186,9 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(2.5f, 2.f, 3.5f));
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
 
+	pGameObject = CDeerClops::Create(m_pGraphicDev, { 2.5f ,3.f, 3.5f });
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
 
 	srand(Engine::Get_TimeDelta(L"Timer_FPS60"));
 

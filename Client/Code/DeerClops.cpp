@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "SnowSplash.h"
 #include "DynamicCamera.h"
+#include "Tallbird.h"
 
 
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
@@ -113,7 +114,6 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 void CDeerClops::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
-
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -627,7 +627,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				Getnerate_SnowSplash();
 				Camera_Shaking(3.f, 1.f, false);
 				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_EFFECT, 7.f);
-				
+				Awake_Tallbird();
 				// 여기에 카메라 쉐이킹
 			}
 			else if (Get_Pos().y < 4.f)
@@ -1039,6 +1039,20 @@ void CDeerClops::Adjust_Attack_Up_Pos_Back()
 	m_pTransForm->Set_Pos(m_vAttackPos);
 	if (m_AttackPos)
 		m_AttackPos = false;
+}
+
+void CDeerClops::Awake_Tallbird()
+{
+	_vec3 vThispos;
+	vThispos = m_pTransForm->Get_Pos();
+	auto& vecObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
+	for (auto& obj : vecObj)
+	{
+		if (obj->IsDelete() || obj == nullptr || dynamic_cast<CMonster*>(obj)->Get_Name() != L"키다리새")
+			continue;
+		else
+			dynamic_cast<CTallbird*>(obj)->Set_Tallbird_WakeUp();
+	}
 }
 
 

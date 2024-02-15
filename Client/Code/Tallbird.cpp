@@ -7,7 +7,7 @@
 #include"ResObject.h"
 
 CTallbird::CTallbird(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
-    :CMonster(pGraphicDev, _vPos), m_eCurstate(SLEEP), m_ePrestate(STATE_END)
+    :CMonster(pGraphicDev, _vPos), m_eCurstate(SLEEP), m_ePrestate(STATE_END), m_bWakeUp(false)
 { 
 }
 
@@ -45,7 +45,7 @@ _int CTallbird::Update_GameObject(const _float& fTimeDelta)
         m_fFrame += m_fFrameSpeed * fTimeDelta;
     }
 
-    if (IsTarget_Approach(m_Stat.fAggroRange) && !m_bStatChange[0])  //1회 최초진입
+    if (m_bWakeUp)  //1회 최초진입
     {
         m_bStatChange[0] = true;
         m_bFrameStop = false;
@@ -64,6 +64,7 @@ _int CTallbird::Update_GameObject(const _float& fTimeDelta)
             {
                 First_Phase(fTimeDelta);
             }
+            Collision_EachOther(fTimeDelta);
         }
     }
    
@@ -373,7 +374,6 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
         else if (m_ePrestate == WALK)
         {
             Player_Chase(fTimeDelta);
-            Collision_EachOther(fTimeDelta);
         }
 
     }

@@ -32,12 +32,25 @@ private:
 	virtual void			State_Change();
 	virtual void			Set_ObjStat()					override;
 	virtual void	Set_Scale()						override;
+	
 
 	
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
 	_int			Die_Check();
 	virtual void	Set_Hit()						override;
+	void			Detect_Player() {
+		if (IsTarget_Approach(m_Stat.fAggroRange))
+		{
+			if (!m_bDetect)
+				m_bDetect = true;
+		}
+		else
+		{
+			if (m_bDetect)
+				m_bDetect = false;
+		}
+	}
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
@@ -48,6 +61,7 @@ private:
 	SPIDERSTATE m_eCurstate;
 	SPIDERSTATE m_ePrestate;
 	_bool		m_bModeChange;
+	_bool		m_bDetect;
 	
 public:
 	static CSpider* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);

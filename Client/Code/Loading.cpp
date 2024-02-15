@@ -367,7 +367,7 @@ HRESULT CLoading::Loading_Anim_Texture()
 _uint CLoading::Loading_ForRoad()
 {
 	Loading_Anim_Texture();
-
+	Loading_ForBoss();
 
 	m_bFinish = true;
 	lstrcpy(m_szLoading, L"PRESS SPACE KEY");

@@ -14,6 +14,7 @@ public:
 
 public:
 	OBJSTAT Get_Monster_Stat() { return m_Stat; }
+	_tchar* Get_Name() { return m_Stat.strObjName; }
 	_bool		IsTarget_Approach(float _fDistance);	//플레이어와의 거리를 계산하기 위한 함수.
 														//매개변수로 받은 float 값과 거리벡터를 비교한다
 protected:
