@@ -136,7 +136,7 @@ HRESULT CObjectTree::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(5.f, 5.f, 5.f));
+	m_pTransForm->Set_Scale(_vec3(6.f, 6.f, 6.f));
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
