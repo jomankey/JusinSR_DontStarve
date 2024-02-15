@@ -162,13 +162,15 @@ void CSlotMgr::Remove_CreateItem(wstring strName, _uint iItemCount)
 	}
 }
 
-void CSlotMgr::Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _uint _iItemNum)
+void CSlotMgr::Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _uint _iItemNum, _vec3 vSlotPos)
 {
+	CItem* pMoveItem = m_pArmorArr[eArmorSlotType - 15];
 
-	CItem* pMoveItem = m_pArmorArr[eArmorSlotType];
+	//좌표값 넣어주기
+	pMoveItem->Set_fPrePos(vSlotPos);
 
-	m_pArmorArr[eArmorSlotType] = pItem;
 	m_pItemArr[_iItemNum] = pMoveItem;
+	m_pArmorArr[eArmorSlotType - 15] = pItem;
 	dynamic_cast<CItemTool*>(pMoveItem)->Set_BoxIndex(_iItemNum);
 }
 

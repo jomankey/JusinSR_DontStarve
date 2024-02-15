@@ -28,6 +28,8 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 	m_eID = eID;
 
+	Engine::PlayBGM(L"Music_StartScreen.mp3", 10.f);
+
 	return S_OK;
 }
 
@@ -660,6 +662,7 @@ CLoading* CLoading::Create(LPDIRECT3DDEVICE9 pGraphicDev, LOADINGID eID)
 
 void CLoading::Free()
 {
+	Engine::StopAll();
 	WaitForSingleObject(m_hThread, INFINITE);
 	CloseHandle(m_hThread);
 	DeleteCriticalSection(&m_Crt);

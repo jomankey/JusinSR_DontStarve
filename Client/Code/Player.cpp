@@ -993,7 +993,7 @@ void CPlayer::Set_Stat()
 {
 	m_Stat.fHP = 200.f;
 	m_Stat.fMxHP = 200.f;
-	m_Stat.fSpeed = 5.f;
+	m_Stat.fSpeed = 4.f;
 	m_Stat.fATK = 10.f;
 	m_Stat.fATKRange = 1.f;
 	m_Stat.fAggroRange = 5.f;
@@ -1216,8 +1216,8 @@ HRESULT CPlayer::Ready_Light()
 	tPointLightInfo.Type = D3DLIGHT_POINT;
 
 	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Attenuation0 = 0.00000001f;
-	tPointLightInfo.Range = 5.f;
+	tPointLightInfo.Attenuation0 = 0.0000001f;
+	tPointLightInfo.Range = 4.f;
 	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
 
 	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, m_iLightNum), E_FAIL);
@@ -1276,7 +1276,7 @@ void CPlayer::Update_State(const _float& fTimeDelta)
 	{
 		//일반 상태값 
 		if (m_Stat.fHungry - (fTimeDelta * 0.3) < 0.f) m_Stat.fHungry = 0.f; else m_Stat.fHungry -= fTimeDelta * 0.3;
-		if (m_Stat.fMental - (fTimeDelta * 0.3) < 0.f) m_Stat.fMental = 0.f; else m_Stat.fMental -= fTimeDelta * 0.3;
+		if (m_Stat.fMental - (fTimeDelta * 0.3) < 0.f) m_Stat.fMental = 0.f; else m_Stat.fMental -= fTimeDelta * 0.1;
 	}
 
 }

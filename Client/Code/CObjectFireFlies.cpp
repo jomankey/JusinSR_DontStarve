@@ -80,7 +80,7 @@ void CObjectFireFlies::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pFireFliesTextureCom[m_eFireFliesCurState]->Set_Texture((_uint)m_fFrame);
-	//FAILED_CHECK_RETURN(SetUp_Material(), );
+	FAILED_CHECK_RETURN(SetUp_Material(D3DXCOLOR{1.f, 1.f, 1.f, 1.f}), );
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);

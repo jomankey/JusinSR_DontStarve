@@ -38,7 +38,7 @@ _int CMouse::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	Check_Coll();
-
+	
 	renderer::Add_RenderGroup(RENDER_PRIORITY, this);
 
 	return 0;
@@ -123,6 +123,7 @@ void CMouse::Check_Coll()
 		CSlot* pSlot = vecSlot[i];
 		if (Engine::Collision_Mouse(_vec2(m_vMousePos.x, m_vMousePos.y), pSlot->Get_fX(), pSlot->Get_fY(), pSlot->Get_fSizeX(), pSlot->Get_fSizeY()))
 		{
+			//Engine::PlaySound_W(L"Mouse_Click_Object.mp3", SOUND_MOUSE, 10.f);
 			if (pInven[i]) // 아이템 충돌 시 
 			{
 				m_bColl = true;

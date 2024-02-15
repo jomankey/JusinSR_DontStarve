@@ -256,7 +256,7 @@ HRESULT CFire::Ready_Light()
 
 	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	tPointLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Attenuation0 = 3.f;
+	tPointLightInfo.Attenuation0 = 0.00001f;
 
 	tPointLightInfo.Range = 5.f;
 	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
@@ -282,7 +282,7 @@ void CFire::Change_Light()
 
 	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-	tPointLightInfo->Attenuation0 = 3.f;
+	tPointLightInfo->Attenuation0 = 0.00001f;
 
 	tPointLightInfo->Range = 10.f;
 

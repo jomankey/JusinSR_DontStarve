@@ -19,10 +19,11 @@ CMainApp::~CMainApp()
 
 HRESULT CMainApp::Ready_MainApp()
 {
+	Engine::Ready_Sound();
 	FAILED_CHECK_RETURN(SetUp_Setting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
-	Engine::Ready_Sound();
+	
 	//Engine::PlaySound_W(L"Start.mp3", SOUND_BGM, 1.f);
 
 	//Engine::PlayBGM(L"Start.mp3", 10.f);

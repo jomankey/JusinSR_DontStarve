@@ -49,6 +49,7 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 HRESULT CItemBasic::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	m_pTransForm->Set_Scale(_vec3{ 0.3f, 0.5f, 0.3f });
 
 	Set_ObjState();
 	m_vUp = { 0,1,0 };
