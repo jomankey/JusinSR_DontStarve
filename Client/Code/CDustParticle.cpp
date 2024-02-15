@@ -1,24 +1,25 @@
 ﻿#include "stdafx.h"
-#include "CTreeParticle.h"
+#include "CDustParticle.h"
 #include "Export_Utility.h"
 #include "Export_System.h"
 
 
-CTreeParticle::CTreeParticle(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
+CDustParticle::CDustParticle(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 	:CParticle(pGraphicDev, _strObjName)
+	, m_fAccTime(0.f)
 {
 }
 
-CTreeParticle::CTreeParticle(const CParticle& rhs)
+CDustParticle::CDustParticle(const CParticle& rhs)
 	:CParticle(rhs)
 	, m_fAccTime(0.f)
 {
 }
 
-CTreeParticle::~CTreeParticle()
+CDustParticle::~CDustParticle()
 {
 }
-void CTreeParticle::resetParticle(Attribute* attribute)
+void CDustParticle::resetParticle(Attribute* attribute)
 {
 	attribute->m_bAlive = true;
 	attribute->m_vPos = m_pTransForm->Get_Pos();
@@ -27,18 +28,13 @@ void CTreeParticle::resetParticle(Attribute* attribute)
 	_vec3	max = _vec3(1.f, 1.f, 1.f);
 
 	GetRendomVector(&attribute->m_vVelocity, &min, &max);
-
-
 	D3DXVec3Normalize(&attribute->m_vVelocity, &attribute->m_vVelocity);
 
-
 	attribute->m_vVelocity *= m_Speed;
-
 	attribute->m_fAge = 0.f;
 	attribute->m_fLifeTime = m_fLifeTime;
-
 }
-_int CTreeParticle::Update_GameObject(const _float& fTimeDelta)
+_int CDustParticle::Update_GameObject(const _float& fTimeDelta)
 {
 
 	std::list<Attribute>::iterator i;
@@ -49,7 +45,6 @@ _int CTreeParticle::Update_GameObject(const _float& fTimeDelta)
 		if (i->m_bAlive)
 		{
 			i->m_vPos += i->m_vVelocity * fTimeDelta;
-
 			i->m_fAge += fTimeDelta;
 
 			if (i->m_fAge > i->m_fLifeTime)
@@ -71,18 +66,21 @@ _int CTreeParticle::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-CTreeParticle* CTreeParticle::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, int numparticles, _vec3 _vPos, _float _fLifeTime, _float _fSpeed)
+CDustParticle* CDustParticle::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, int numparticles, _vec3 _vPos, _float _fSize, _float _fLifeTime, _float _fSpeed)
 {
-	CTreeParticle* pInstance = new CTreeParticle(pGraphicDev, _strObjName);
+	CDustParticle* pInstance = new CDustParticle(pGraphicDev, _strObjName);
 
 	pInstance->m_vbSize = 2048;
-	pInstance->m_fSize = 0.1f;
+	pInstance->m_fSize = _fSize;
 	pInstance->m_vbOffset = 0;
 	pInstance->m_vbBatchSize = 512;
 	pInstance->m_vMinBox = _vec3(-1.f, -1.f, -1.f);
 	pInstance->m_vMaxBox = _vec3(1.f, 1.f, 1.f);
 	pInstance->m_fLifeTime = _fLifeTime;
 	pInstance->m_Speed = _fSpeed;
+	_vPos.x *= 0.5f;
+	_vPos.y *= 0.5f;
+	_vPos.z *= 0.5f;
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

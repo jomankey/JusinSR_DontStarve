@@ -45,7 +45,7 @@
 
 //Particle
 #include "CSnow.h"
-#include "CTreeParticle.h"
+#include "CDustParticle.h"
 
 //UI
 #include "UI.h"
@@ -105,10 +105,10 @@ Engine::_int CBossScene::Update_Scene(const _float& fTimeDelta)
 
 	if (KEY_TAP(DIK_2))
 	{
-		CGameObject* pGameObject = CTreeParticle::Create(m_pGraphicDev, L"PARTICLE_SNOW", 40, m_pPlayer->GetTransForm()->Get_Pos(), 1.f, 10.f);
+		//매개변수( 디바이스,텍스처이미지(basic아이템과같음),파티클개수,위치,파티클크기,파티클보이는시간,파티클속도)
+		CGameObject* pGameObject = CDustParticle::Create(m_pGraphicDev, L"PARTICLE_SNOW", 40, m_pPlayer->GetTransForm()->Get_Pos(),10.1f, 1.f, 10.f);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
-
 	}
 
 
@@ -245,16 +245,11 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
 
-
 	///TEST
 	pGameObject = CSnow::Create(m_pGraphicDev, L"PARTICLE_SNOW", 660, _vec3(0.f, 0.f, 0.f), _vec3(64.f, 10.f, 64.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
 	pGameObject->GetTransForm()->Set_Pos(_vec3(32.f, 0.f, 32.f));
-
-	pGameObject = CTreeParticle::Create(m_pGraphicDev, L"PARTICLE_SNOW", 40, _vec3(32.f, 0.f, 32.f), 0.1f, 10.f);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
 
 	return S_OK;
 }

@@ -200,7 +200,7 @@
     <ClInclude Include="..\header\CTent.h" />
     <ClInclude Include="..\Header\CToothTrap.h" />
     <ClInclude Include="..\Header\CTrap.h" />
-    <ClInclude Include="..\Header\CTreeParticle.h" />
+    <ClInclude Include="..\Header\CDustParticle.h" />
     <ClInclude Include="..\Header\CTumbleWeed.h" />
     <ClInclude Include="..\Header\ExplainPanel.h" />
     <ClInclude Include="..\Header\CHpUI.h" />
@@ -289,7 +289,7 @@
     <ClCompile Include="..\code\CTent.cpp" />
     <ClCompile Include="..\Code\CToothTrap.cpp" />
     <ClCompile Include="..\Code\CTrap.cpp" />
-    <ClCompile Include="..\Code\CTreeParticle.cpp" />
+    <ClCompile Include="..\Code\CDustParticle.cpp" />
     <ClCompile Include="..\Code\CTumbleWeed.cpp" />
     <ClCompile Include="..\Code\ExplainPanel.cpp" />
     <ClCompile Include="..\Code\CHpUI.cpp" />

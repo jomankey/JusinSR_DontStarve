@@ -549,7 +549,7 @@
     <ClInclude Include="..\Header\CMainScene.h">
       <Filter>01. Scene\05. MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTreeParticle.h">
+    <ClInclude Include="..\Header\CDustParticle.h">
       <Filter>02. GameObject\13. Particle\TreeDust</Filter>
     </ClInclude>
   </ItemGroup>
@@ -809,7 +809,7 @@
     <ClCompile Include="..\Code\CMainScene.cpp">
       <Filter>01. Scene\05. MainScene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTreeParticle.cpp">
+    <ClCompile Include="..\Code\CDustParticle.cpp">
       <Filter>02. GameObject\13. Particle\TreeDust</Filter>
     </ClCompile>
   </ItemGroup>
