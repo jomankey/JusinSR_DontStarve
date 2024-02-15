@@ -17,6 +17,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_bHit(false)
 	, m_bAttacking(false)
 	, m_bAttackCooltime(false)
+	, m_fFrameSpeed(0.f)
 {
 }
 
@@ -33,6 +34,7 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_bHit(rhs.m_bHit)
 	, m_bAttacking(rhs.m_bAttacking)
 	, m_bAttackCooltime(rhs.m_bAttackCooltime)
+	, m_fFrameSpeed(rhs.m_fFrameSpeed)
 {
 }
 

@@ -42,7 +42,7 @@ _int CTallbird::Update_GameObject(const _float& fTimeDelta)
   
     if (!m_bFrameStop)
     {
-        m_fFrame += m_fFrameEnd * fTimeDelta;
+        m_fFrame += m_fFrameSpeed * fTimeDelta;
     }
 
     if (IsTarget_Approach(m_Stat.fAggroRange) && !m_bStatChange[0])  //1회 최초진입
@@ -236,27 +236,34 @@ void CTallbird::State_Change()
             {
                 m_eCurLook = LOOK_DOWN;
             }
+            m_fFrameSpeed = 14.f;
             break;
         case WALK:
+            m_fFrameSpeed = 9.f;
             m_fFrameEnd = 8.f;
             break;
         case ATTACK:
+            m_fFrameSpeed = 11.f;
             m_fFrameEnd = 12.f;
             break;
         case SLEEP:
+            m_fFrameSpeed = 1.f;
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 0;
             break;
         case WAKE_UP:
+            m_fFrameSpeed = 14.f;
             Engine::PlaySound_W(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 16;
             break;
         case TAUNT:
+            m_fFrameSpeed = 14.f;
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 22.f;
             break;
         case HIT:
+            m_fFrameSpeed = 14.f;
             Engine::PlaySound_W(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT, 5.f);
             m_fFrameEnd = 6;
             if (m_eCurLook != LOOK_LEFT)
@@ -265,11 +272,13 @@ void CTallbird::State_Change()
             }
             break;
         case DEAD:
+            m_fFrameSpeed = 10.f;
             Engine::PlaySound_W(L"Obj_TallBird_Death.mp3", SOUND_EFFECT, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10.f;
             break;
         case ERASE:
+            m_fFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             m_eCurLook = LOOK_DOWN;
             break;
