@@ -17,6 +17,7 @@ HRESULT CProtoMgr::Ready_Proto(const _tchar* pProtoTag, CComponent* pComponent)
 
 	if (nullptr != pInstance)
 	{
+		//return E_File;
 		Safe_Release(pComponent);
 		return S_OK;
 	}

@@ -122,7 +122,7 @@ HRESULT CCataProj::Add_Component()
 	m_pAnimCom->SetLoopAnimator(true);
 	m_eCurState = eTRAP_STATE::MOVE;
 
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
 
 	return S_OK;
 }
