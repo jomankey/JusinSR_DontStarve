@@ -19,6 +19,7 @@ namespace Engine
 		_matrix* Get_ProjectionMatrix() { return &m_matProj; }
 		_matrix* Get_OrthoMatrix() { return &matOrtho; }
 		_matrix* Get_OrthoViewMatrix() { return &matOrthoView; }
+		_vec3	Get_Pos() { return m_vEye; }
 	public://직교투영설정
 		void BeginOrtho();
 		void EndOrtho();

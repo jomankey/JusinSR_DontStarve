@@ -214,9 +214,9 @@ HRESULT CCookingPot::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
+	m_pTransForm->Set_Scale(_vec3(1.2f, 1.2f, 1.2f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

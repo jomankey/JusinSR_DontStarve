@@ -96,6 +96,50 @@ _bool Engine::CGameObject::Collision_Transform(CTransform* _Src, CTransform* _Ds
 	}
 }
 
+_bool Engine::CGameObject::Collision_Circle(CTransform* _Src, CTransform* _Dst)
+{
+
+	_vec3 vSrcpos, vSrcScale, vDstpos, vDstScale, vCamera;
+
+	_vec3 vSrcDir;
+	_vec3 vDstDir;
+
+	_matrix matView;
+	_float fSrcDiff;
+	_float fDstDiff;
+	_float Distance;
+
+	_Src->Get_Info(INFO_POS, &vSrcpos);
+	_Dst->Get_Info(INFO_POS, &vDstpos);
+
+	vSrcScale = _Src->Get_Scale();
+	vDstScale = _Dst->Get_Scale();
+
+	fSrcDiff = vSrcScale.y * 0.5;
+	fDstDiff = vDstScale.y * 0.5;
+	vCamera = scenemgr::Get_CurScene()->GetCameraObject()->Get_Pos();
+	vSrcDir = vCamera - vSrcpos;
+	D3DXVec3Normalize(&vSrcDir, &vSrcDir);
+	vSrcpos += vSrcDir * fSrcDiff;
+
+	vDstDir = vCamera - vSrcpos;
+	D3DXVec3Normalize(&vDstDir, &vDstDir);
+	vDstpos += vDstDir * fDstDiff;
+
+	vSrcpos.y = 0.f;
+	vDstpos.y = 0.f;
+
+	Distance = D3DXVec3Length(&(vDstpos - vSrcpos));
+	if (Distance < fSrcDiff+ fDstDiff)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 
 CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponentTag)
 {

@@ -34,6 +34,7 @@ namespace Engine
 		virtual void		LateUpdate_GameObject();
 		virtual void		Render_GameObject()PURE;
 		_bool		Collision_Transform(CTransform* _Src, CTransform* _Dst);	//AABB함수.
+		_bool		Collision_Circle(CTransform* _Src, CTransform* _Dst);	//원형충돌.
 		//첫번째 인자 자신, 두번째 인자 상대
 
 	protected:

@@ -24,8 +24,6 @@ HRESULT CObjectTree::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	
-
-
 	m_eCurState = RES_IDLE;
 	m_eObject_id = TREE;
 	m_fFrame = 0.f;
@@ -135,11 +133,10 @@ HRESULT CObjectTree::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree_Final", pComponent });
 
 #pragma endregion TEXCOM
-
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
+	m_pTransForm->Set_Scale(_vec3(5.f, 5.f, 5.f));
 	//m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
@@ -166,7 +163,7 @@ void CObjectTree::Change_Frame_Event()
 
 	if (m_Stat.bDead)
 	{
-		m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
+		//m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
 		m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
 		m_eCurState = RES_FINAL;
 
@@ -188,7 +185,7 @@ void CObjectTree::Check_FrameState()
 	{
 		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
 		m_fFrameEnd = 13;
-		m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
+		//m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
 		
 		//m_vOriginPos
 	}
@@ -196,7 +193,7 @@ void CObjectTree::Check_FrameState()
 	{
 		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
 		m_fFrameEnd = 13;
-		m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
+		//m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	}
 	if (m_eCurState == RES_FINAL)
 	{
