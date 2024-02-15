@@ -174,6 +174,12 @@ void CSlotMgr::Change_ArmorItem(CItem* pItem, ARMOR_SLOT_TYPE eArmorSlotType, _u
 	dynamic_cast<CItemTool*>(pMoveItem)->Set_BoxIndex(_iItemNum);
 }
 
+void CSlotMgr::Remove_ArmorItem(ARMOR_SLOT_TYPE eArmorSlotType)
+{
+	Safe_Release(m_pArmorArr[eArmorSlotType - 15]);
+	m_pArmorArr[eArmorSlotType - 15] = nullptr;
+}
+
 void CSlotMgr::Set_CookItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strKeyName, _vec3 vSlotPos, _uint iSlotNum)
 {
 	CItem* pItem = CItemTool::Create(pGraphicDev, strKeyName, vSlotPos, UI_ITEM_COOK);

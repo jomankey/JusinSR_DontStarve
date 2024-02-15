@@ -84,7 +84,7 @@ void CItem::Set_ObjState()
 	else if (m_strObjName == L"Torch")
 	{
 		m_Stat.strObjName = L"È¶ºÒ";
-		m_tItemInfo.ItemCount = 100.f;
+		m_tItemInfo.Durability = 100.f;
 	}
 	else if (m_strObjName == L"BonFire")
 		m_Stat.strObjName = L"¸ð´ÚºÒ";

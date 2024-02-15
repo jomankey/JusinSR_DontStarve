@@ -87,7 +87,6 @@ namespace Engine
 
 	enum TIME_STATE { MORNING, AFTERNOON, NIGHT };
 
-<<<<<<< HEAD
 	enum class eCHANNELID
 	{
 		SOUND_EFFECT,
@@ -111,8 +110,6 @@ namespace Engine
 		SOUND_MOUSE,
 		MAXCHANNEL,
 	};
-=======
->>>>>>> 1c6c32fbae1a092c0040053a5bce62398b70ae7f
 
 	enum class eEVENT_TYPE
 	{

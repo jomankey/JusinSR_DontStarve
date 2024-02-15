@@ -11,8 +11,6 @@ CInven::~CInven()
 
 HRESULT CInven::Ready_GameObject()
 {
-	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, INVEN, WIDTH, INVENCNT);
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_fX = 420.f;
