@@ -161,8 +161,12 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 0.f, 64.f));
-
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
+
+	pGameObject = CCookingPot::Create(m_pGraphicDev,true);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+
 
 	return S_OK;
 }

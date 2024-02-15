@@ -22,7 +22,7 @@ public:
 public:
 	void		SetTarget(CGameObject* _targetObj);
 	_float		Get_Angle() { return m_fAngle; }
-
+	_vec3		Get_Pos() { return m_vEye; }
 	void ShakeCamera();
 	void SetShakedCamera(_float _fIntensity, _float _fShakeTime, _bool _bLockWidth)
 	{

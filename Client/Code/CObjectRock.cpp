@@ -22,11 +22,7 @@ HRESULT CObjectRock::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 
-	_vec3 vPos;
-	m_pTransForm->Set_Scale(_vec3(2.f, 2.f,2.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.1f, vPos.z);
-
+	m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f,3.5f));
 	Ready_Stat();
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
@@ -101,12 +97,10 @@ void CObjectRock::Change_Frame_Event()
 {
 	if (m_Stat.fHP <= 3.f && m_Stat.fHP != 0)
 	{
-		//m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 		m_fFrame = 1;
 	}
 	if (m_Stat.fHP <= 1)
 	{
-		//m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
 		m_fFrame = 2;
 	}
 
