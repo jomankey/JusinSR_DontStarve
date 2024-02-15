@@ -37,7 +37,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 {
 	
 	if(!m_bFrameStop)
-		m_fFrame += m_fFrameEnd * fTimeDelta;
+		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
 	
 	if (!m_Stat.bDead)      //Á×Àº »óÅÂ°¡ ¾Æ´Ò¶§ ÁøÀÔ
@@ -253,27 +253,34 @@ void CPig::State_Change()
 		switch (m_eCurState)
 		{
 		case IDLE:
+			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 7;
 			break;
 		case HAPPY:
 			m_fFrameEnd = 17;
+			m_fFrameSpeed = 17.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case ANGRY_IDLE:
 			m_fFrameEnd = 17;
+			m_fFrameSpeed = 17.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WALK:
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 8;
 			break;
 		case EAT:
 			m_fFrameEnd = 16;
+			m_fFrameSpeed = 14.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case RUN:
+			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 6;
 			break;
 		case ATTACK:
+			m_fFrameSpeed = 11.f;
 			m_fFrameEnd = 10;
 			break;
 		case SLEEP:
@@ -285,12 +292,15 @@ void CPig::State_Change()
 				m_eCurLook = LOOK_DOWN;
 			}
 			m_fFrameEnd = 6;
+			m_fFrameSpeed = 12.f;
 			break;
 		case DEAD:
 			m_fFrameEnd = 11;
+			m_fFrameSpeed = 12.f;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case ERASE:
+			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 5;
 			m_eCurLook = LOOK_DOWN;
 			break;

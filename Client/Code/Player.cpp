@@ -72,7 +72,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_Ghost = nullptr;
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
-
+	m_fFrameSpeed = 0.f;
 	m_fDiffY = 0.5f;// z버퍼 보정용값 추가
 
 	Set_Stat();
@@ -94,7 +94,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	if (!m_bFrameLock)      //프레임 락이 걸리면 프레임이 오르지 않음
 	{
-		m_fFrame += m_fFrameEnd * fTimeDelta;
+		m_fFrame += m_fFrameSpeed *fTimeDelta;
 	}
 	_int iResult = Die_Check();
 	if (m_fFrameEnd <= m_fFrame)      //프레임이 끝에 다다르면 진입
@@ -574,7 +574,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (!GetAsyncKeyState('W') &&              //이동중이지 않을 때 IDLE로 변경
 		!GetAsyncKeyState('S') &&
 		!GetAsyncKeyState('A') &&
-		!GetAsyncKeyState('D'))
+		!GetAsyncKeyState('D') && !m_vPlayerActing)
 	{
 		if (m_ePreWeapon == TORCH)				//횃불을 들고 있을 시에는 횃불모션으로 변경
 		{
@@ -599,7 +599,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_TargetObject = dynamic_cast<CResObject*>(findObj)->Get_Resourse_ID();
 			m_vTargetDir = m_vTargetPos - vPos;
 			m_vTargetDir.y = 0.f;
-			if (D3DXVec3Length(&m_vTargetDir) < 1.5f)
+			if (Collision_Transform(m_pTransForm, findObj->GetTransForm())/*D3DXVec3Length(&m_vTargetDir) < 2.f*/)
 			{
 				ResObj_Mining(m_TargetObject, findObj);
 			}
@@ -617,19 +617,19 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		}
 	}
-	if (KEY_TAP(DIK_X))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
+	if (KEY_AWAY(DIK_SPACE))// KEY_TAP(누르는시점) , KEY_AWAY (키를떼는시점), KEY_NONE(키를안누른상태), KEY_HOLD(키를누르고있는상태)
 	{
 		//Find_NeerObject: 못찾았을경우 nullptr반환
-		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::ITEM);
+		CGameObject* findObj = Find_NeerObject(m_Stat.fATKRange, eOBJECT_GROUPTYPE::ITEM);
 
 		if (nullptr != findObj)
 		{
 			_vec3 vSlotPos;
 			if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, findObj->GetObjName(), &vSlotPos));
 			{
-				
-				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);
 				m_eCurState = PICKUP;
+				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);		
+				m_vPlayerActing = true;
 			}
 		}
 	}
@@ -849,72 +849,91 @@ void CPlayer::Check_State()
 		switch (m_eCurState)
 		{
 		case IDLE:
+			m_fFrameSpeed = 22.f;
 			m_fFrameEnd = 22;
 			break;
 		case HIT:
 			Hit_Sound();
 			m_fFrameEnd = 7;
+			m_fFrameSpeed = 15.f;
 			m_KeyLock = true;
 			break;
 		case BUILD:
+			m_fFrameSpeed = 11.f;
 			m_fFrameEnd = 6;
 			break;
 		case ATTACK:
+			m_fFrameSpeed = 20.f;
 			m_fFrameEnd = 11;
 			m_KeyLock = true;
 			break;
 		case FALLDOWN:
+			m_fFrameSpeed = 15.f;
 			m_fFrameEnd = 8;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WAKEUP:
+			m_fFrameSpeed = 32.f;
 			m_fFrameEnd = 32;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case PICKUP:
+			m_fFrameSpeed = 20.f;
+			m_KeyLock = true;
 			m_fFrameEnd = 6;
 			break;
 		case EAT:
 			Eat_Sound();
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 36;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case MOVE:
+			m_fFrameSpeed = 9.f;
 			m_fFrameEnd = 6;
 			break;
 		case DIALOG:
 			Dialog_Sound();
 			m_eCurLook = LOOK_DOWN;
 			m_fFrameEnd = 17;
+			m_fFrameSpeed = 17.f;
 			break;
 		case TORCH_IDLE:
+			m_fFrameSpeed = 22.f;
 			m_fFrameEnd = 22;
 			break;
 		case TORCH_RUN:
+			m_fFrameSpeed = 7.f;
 			m_fFrameEnd = 6;
 			break;
 		case PICKING_OBJECT:
+			m_fFrameSpeed = 14.f;
 			m_fFrameEnd = 9;
 			break;
 		case AXE_CHOP_PRE:
+			m_fFrameSpeed = 20.f;
 			m_fFrameEnd = 15;
 			break;
 		case HAMMERING:
+			m_fFrameSpeed = 14.f;
 			m_fFrameEnd = 9;
 			break;
 		case SPEAR_ATTACK:
+			m_fFrameSpeed = 20.f;
 			m_fFrameEnd = 8;
 			break;
 		case DEAD:
+			m_fFrameSpeed = 19.f;
 			Engine::PlaySound_W(L"wilson_Vocie_Death.mp3", SOUND_EFFECT, 5.f);
 			m_fFrameEnd = 19;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case REBIRTH:
+			m_fFrameSpeed = 17.f;
 			m_fFrameEnd = 17;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;

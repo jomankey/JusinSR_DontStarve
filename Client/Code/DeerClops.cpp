@@ -56,7 +56,7 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 
 	if (!m_bFrameStop)//
 	{
-		m_fFrame += m_fFrameEnd * fTimeDelta;
+		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	}
 
 
@@ -358,12 +358,15 @@ void CDeerClops::State_Change()
 		switch (m_eCurState)
 		{
 		case IDLE:
+			m_fFrameSpeed = 19.f;
 			m_fFrameEnd = 19;
 			break;
 		case WALK:
+			m_fFrameSpeed = 16.f;
 			m_fFrameEnd = 16;
 			break;
 		case ATTACK:
+			m_fFrameSpeed = 18.f;
 			if (m_eCurLook == LOOK_UP)
 			{
 				Adjust_Attack_Up_Pos();
@@ -371,14 +374,17 @@ void CDeerClops::State_Change()
 			m_fFrameEnd = 20;
 			break;
 		case SLEEP:
+			m_fFrameSpeed = 23.f;
 			m_fFrameEnd = 23;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case SLEEP_PST:
+			m_fFrameSpeed = 18.f;
 			m_fFrameEnd = 18;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case TAUNT:
+			m_fFrameSpeed = 17.f;
 			Generate_Roaring(0.9);
 			Adjust_Taunt_Pos();
 			Camera_Shaking(1.f, 2.f, false);
@@ -386,33 +392,39 @@ void CDeerClops::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case LONG_TAUNT:
+			m_fFrameSpeed = 10.f;
 			Camera_Shaking(1.f, 2.f, false);
 			Generate_Roaring(3);
 			Adjust_Taunt_Pos();
 			m_fFrameEnd = 33;
 			m_eCurLook = LOOK_DOWN;
 			break;
-
 		case FALL_DOWN:
+			m_fFrameSpeed = 40.f;
 			m_fFrameEnd = 37;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WAKE_UP:
+			m_fFrameSpeed = 12.f;
 			m_fFrameEnd = 11;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case PATTERN_PRE:
+			m_fFrameSpeed = 13.f;
 			m_fFrameEnd = 12;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case PATTERN_LOOP:
+			m_fFrameSpeed = 13.f;
 			m_fFrameEnd = 13;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case HIT:
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 7;
 			break;
 		case DEAD:
+			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 24;
 			m_eCurLook = LOOK_DOWN;
 			break;

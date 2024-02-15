@@ -40,7 +40,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
 
     if (!m_bFrameStop)
-        m_fFrame += m_fFrameEnd * fTimeDelta;
+        m_fFrame += m_fFrameSpeed * fTimeDelta;
     else
     {
         m_fFrame = m_fFrameEnd;
@@ -236,22 +236,27 @@ void CBeefalo::State_Change()
         {
         case IDLE:
             m_fFrameEnd = 16;
+            m_fFrameSpeed = 16.f;
             if (m_eCurLook != LOOK_LEFT)
             {
                 m_eCurLook = LOOK_DOWN;
             }
             break;
         case GRAZE:
+            m_fFrameSpeed = 12.f;
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10;
             break;
         case WALK:
+            m_fFrameSpeed = 20.f;
             m_fFrameEnd = 20;
             break;
         case ATTACK:
+            m_fFrameSpeed = 10.f;
             m_fFrameEnd = 7;
             break;
         case MADRUN:
+            m_fFrameSpeed = 14.f;
             m_fFrameEnd = 4;
             break;
         case HIT:
@@ -260,15 +265,18 @@ void CBeefalo::State_Change()
                 m_eCurLook = LOOK_RIGHT;
             }
             m_fFrameEnd = 5;
+            m_fFrameSpeed = 11.f;
             break;
         case DEAD:
             m_fFrameEnd = 12;
+            m_fFrameSpeed = 18.f;
             if (m_eCurLook != LOOK_LEFT)
             {
                 m_eCurLook = LOOK_RIGHT;
             }
             break;
         case ERASE:
+            m_fFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             m_eCurLook = LOOK_DOWN;
             break;

@@ -39,7 +39,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     
     if (!m_bFrameStop)
     {
-        m_fFrame += m_fFrameEnd * fTimeDelta;
+        m_fFrame += m_fFrameSpeed * fTimeDelta;
     }
     _int iResult = Die_Check();    //죽었는지 검사
     if (!m_Stat.bDead)      //죽지 않았을시 진입
@@ -221,24 +221,29 @@ void CSpider::State_Change()
         case IDLE:
             break;
         case WALK:
+            m_fFrameSpeed = 7.f;
             m_fFrameEnd = 6.f;
             break;
         case ATTACK:
+            m_fFrameSpeed = 10.f;
             m_fFrameEnd = 11.f;
             break;
         case SLEEP:
             break;
         case HIT:
             m_fFrameEnd = 6;
+            m_fFrameSpeed = 11.f;
             if (m_eCurLook != LOOK_LEFT)
             {
                 m_eCurLook = LOOK_DOWN;
             }
             break;
         case DEAD:
+            m_fFrameSpeed = 9.f;
             m_fFrameEnd = 9.f;
             break;
         case ERASE:
+            m_fFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             m_eCurLook = LOOK_DOWN;
             break;
