@@ -75,6 +75,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CTrap.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CDustParticle.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CTumbleWeed.cpp"
 
 
