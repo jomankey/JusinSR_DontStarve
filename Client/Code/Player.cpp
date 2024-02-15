@@ -85,19 +85,12 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Update_State(fTimeDelta); // 플레이어 State 매 프레임마다 업데이트
 
 	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"ROAD" && !m_bIsRoadScene)
-	{
 		m_bIsRoadScene = true;
-	}
 	else if (scenemgr::Get_CurScene()->Get_Scene_Name() != L"ROAD" && m_bIsRoadScene)
-	{
 		m_bIsRoadScene = false;
-	}
-
 
 	if (!m_bFrameLock)      //프레임 락이 걸리면 프레임이 오르지 않음
-	{
-		m_fFrame += m_fFrameSpeed *fTimeDelta;
-	}
+		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
 	if (m_fFrameEnd <= m_fFrame)      //프레임이 끝에 다다르면 진입
 	{
@@ -108,45 +101,34 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 			m_bHit = false;
 		}
 		if (m_vPlayerActing)
-		{
 			m_vPlayerActing = false;
-		}
+		if (m_bAttack)
+			m_bAttack = false;
 		m_fFrame = 0.f;
 	}
 	if (!m_KeyLock && !m_Stat.bDead)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
 		if (!m_bIsRoadScene)
-		{
 			Key_Input(fTimeDelta);
-		}
 		else
-		{
 			Ket_Input_Road(fTimeDelta);
-		}
-		
 	}
 	else if (m_Stat.bDead)
-	{
 		Rebirth();
-	}
+
 	Weapon_Change();
 	Check_State();
 	Look_Change();
 	Set_Scale();
 	Fire_Light(); // 횃불 모션 시 켜짐 / 꺼짐 추가해야함
 	CGameObject::Update_GameObject(fTimeDelta);
-
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
-
-	/*Engine::IsPermit_Call(L"Unarmed_IDLE", fTimeDelta);*/
 	return 0;
 }
 
 void CPlayer::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	//Height_OnTerrain();
-
 	_vec3 vPos;
 	BillBoard();
 	m_pTransForm->Get_Info(INFO::INFO_POS, &vPos);
@@ -649,17 +631,19 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		}
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
 		if (nullptr != findObj && !findObj->IsDelete()
-			&& Collision_Transform(m_pTransForm, dynamic_cast<CMonster*>(findObj)->GetTransForm()))
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CMonster*>(findObj)->GetTransForm()) &&!m_bAttack)
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
+			m_bAttack = true;
 
 		}
 
 		CGameObject* boss = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::BOSS);
 		if (nullptr != boss && !boss->IsDelete()
-			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(boss)->GetTransForm()))
+			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(boss)->GetTransForm()) &&!m_bAttack)
 		{
 			dynamic_cast<CDeerClops*>(boss)->Set_Attack(m_Stat.fATK);
+			m_bAttack = true;
 		}
 	}
 
@@ -1013,7 +997,7 @@ void CPlayer::Set_Stat()
 	m_Stat.fHP = 200.f;
 	m_Stat.fMxHP = 200.f;
 	m_Stat.fSpeed = 4.f;
-	m_Stat.fATK = 10.f;
+	m_Stat.fATK = 1.f;
 	m_Stat.fATKRange = 1.f;
 	m_Stat.fAggroRange = 5.f;
 	m_Stat.fHungry = 200.f;

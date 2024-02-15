@@ -23,7 +23,7 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
-
+	void		Set_Attack_State();
 private:
 	HRESULT			Add_Component();
 	virtual void	Set_ObjStat()					override;
@@ -33,6 +33,7 @@ private:
 	void			Patroll(const _float& fTimeDelta);
 	virtual void	Set_Hit()						override;
 	virtual void	Set_Scale()						override;
+	
 	
 private:
 	Engine::CRcTex* m_pBufferCom;

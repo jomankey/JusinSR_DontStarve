@@ -13,7 +13,7 @@ namespace Engine {
 }
 class CPig : public CMonster
 {
-	enum PiGSTATE { IDLE, HAPPY, WALK, EAT, ANGRY_IDLE, RUN, ATTACK, SLEEP, HIT,  DEAD, ERASE, STATE_END };
+	enum PiGSTATE { IDLE, EAT, WALK, HAPPY , ANGRY_IDLE, RUN, ATTACK, SLEEP, HIT,  DEAD, ERASE, STATE_END };
 
 private:
 	explicit CPig(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos);

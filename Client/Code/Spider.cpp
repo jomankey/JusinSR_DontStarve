@@ -8,6 +8,7 @@
 
 CSpider::CSpider(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
     :CMonster(pGraphicDev, _vPos), m_bModeChange(false), m_eCurstate(WALK), m_ePrestate(STATE_END)
+    , m_bDetect(false)
 { 
 }
 
@@ -44,7 +45,8 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     _int iResult = Die_Check();    //죽었는지 검사
     if (!m_Stat.bDead)      //죽지 않았을시 진입
     {
-        if (IsTarget_Approach(m_Stat.fAggroRange) == true)     //플레이어와의 거리가 5보다 작으면 진입
+        Detect_Player();
+        if (m_bDetect)     //플레이어와의 거리가 5보다 작으면 진입
         {
             Attacking(fTimeDelta);
         }
@@ -52,14 +54,9 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
         {
             Patroll(fTimeDelta);
         }
+        Collision_EachOther(fTimeDelta);
     }
-    else
-    {
-        //아이템 드랍 메소드 추가
    
-
-
-    }
     
     State_Change();
     Look_Change();
@@ -278,7 +275,6 @@ void CSpider::Attacking(const _float& fTimeDelta)
 {
     if (!m_bModeChange)
     {
-
         m_bModeChange = true;
         m_Stat.fSpeed = 5.5f;
     }
@@ -320,7 +316,8 @@ void CSpider::Attacking(const _float& fTimeDelta)
         {
             if (!dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
                 Player_Chase(fTimeDelta);
-            Collision_EachOther(fTimeDelta);
+            else
+                m_bDetect = false;
         }
     }
     else
@@ -341,7 +338,8 @@ void CSpider::Attacking(const _float& fTimeDelta)
 
 void CSpider::Patroll(const _float& fTimeDelta)
 {
-
+    auto pTerrain = scenemgr::Get_CurScene()->GetTerrainObject();
+    CTerrainTex* pTerrainTex = dynamic_cast<CTerrainTex*>(pTerrain->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
     if (m_bModeChange)
     {
         m_bModeChange = false;
@@ -368,7 +366,11 @@ void CSpider::Patroll(const _float& fTimeDelta)
     }
     else
     {
-        m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
+        _vec3 vCurPos = m_pTransForm->Get_Pos();
+        if (!m_pCalculatorCom->Check_PlayerMoveIndex(&vCurPos, pTerrainTex->Get_VecPos()))
+            m_vDir *= -1;
+        else
+            m_eCurLook = m_pTransForm->Patroll_LookChange(&m_vDir, m_Stat.fSpeed, fTimeDelta);
     }
     if (m_fFrameEnd < m_fFrame)
         m_fFrame = 0.f;

@@ -73,6 +73,8 @@ void CMonster::Collision_EachOther(const _float& fTimeDelta)
 	auto iter = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER);
 	for (auto find : iter)
 	{
+		if (find == nullptr || find->IsDelete())
+			continue;
 		Collision_Transform(m_pTransForm, find->GetTransForm(), fTimeDelta, m_Stat.fSpeed);
 	}
 }
