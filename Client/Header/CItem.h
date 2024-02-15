@@ -17,6 +17,7 @@ struct ItemInfo
 	_uint Mental;
 	_uint Demage;
 	_bool Equipment;
+	_float Durability;
 };
 
 class CItem :

@@ -65,7 +65,18 @@ _int CItemTool::Update_GameObject(const _float& fTimeDelta)
 
 	Input_Mouse();
 
+	//횃불일 경우
+	if (m_strObjName == L"Torch" && m_iNum == m_eArmorSlotType)
+	{
+		m_tItemInfo.Durability -= fTimeDelta * 0.7f;
 
+		if (m_tItemInfo.Durability < 0.f)
+		{
+			CSlotMgr::GetInstance()->Remove_ArmorItem(m_eArmorSlotType);
+			dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Weapon_Equip(UNARMED);
+			m_eArmorSlotType == ARMOR_SLOT_END;
+		}
+	}
 
 	return 0;
 }
@@ -103,8 +114,8 @@ void CItemTool::Render_GameObject()
 		_tchar strItemCount[32];
 
 		//_stprintf_l(strItemCount, sizeof(strItemCount), L"%d\%", m_tItemInfo.ItemCount);
-		_itow_s(m_tItemInfo.ItemCount, strItemCount, 10);
-		Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX + 5.f, m_fY - 15.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+		_itow_s(m_tItemInfo.Durability, strItemCount, 10);
+		Engine::Render_Font(L"Panel_Info", strItemCount, &_vec2(m_fX - 10.f, m_fY - 15.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -132,7 +143,7 @@ void CItemTool::Input_Mouse()
 
 		if (Coll_Cook(vItemPos)) return;
 		if (Coll_BonFire(vItemPos)) return;
-
+		
 		m_bClick = false;
 		m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f)); // 클릭을 놓는 순간 스케일값 돌아감
 		vector<CSlot*> vecBox = CSlotMgr::GetInstance()->Get_BoxList(INVEN);

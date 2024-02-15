@@ -3,6 +3,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SlotMgr.h"
 
 #include "DynamicCamera.h"
 #include "SkyBox.h"
@@ -64,6 +65,9 @@
 #include <CTeleporterWorm.h>
 #include <CBossDoor.h>
 #include <Tallbird.h>
+#include <Mouse.h>
+#include <CreateUI.h>
+#include "Cook.h"
 
 CBossScene::CBossScene(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneName)
 	: Engine::CScene(pGraphicDev, _strSceneName)
@@ -86,7 +90,7 @@ HRESULT CBossScene::Ready_Scene()
 	//FAILED_CHECK_RETURN(Loading_Boss_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
-	//FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
 	return S_OK;
@@ -262,6 +266,18 @@ HRESULT CBossScene::Ready_Layer_UI()
 	NULL_CHECK_RETURN(uiLayer, E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
 
+	pGameObject = CCreateUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//Cook
+	pGameObject = CCook::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	pGameObject = CInven::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
 
 	//HpUI
 	pGameObject = CHpUI::Create(m_pGraphicDev);
@@ -292,6 +308,11 @@ HRESULT CBossScene::Ready_Layer_UI()
 	pGameObject = CWorldHand::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::UI, pGameObject), E_FAIL);
+
+	//////////마우스
+	pGameObject = m_pMouse = CMouse::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(uiLayer->AddGameObject(eOBJECT_GROUPTYPE::MOUSE, pGameObject), E_FAIL);
 
 	return S_OK;
 }
@@ -594,5 +615,7 @@ CBossScene* CBossScene::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strSceneN
 
 void CBossScene::Free()
 {
+	CSlotMgr::GetInstance()->Box_Release(CREATE);
+	CSlotMgr::GetInstance()->Box_Release(COOK);
 	__super::Free();
 }
