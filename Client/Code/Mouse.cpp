@@ -202,6 +202,9 @@ void CMouse::Check_Coll()
 		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
 		vMonsterScale = iter->GetTransForm()->Get_Scale();
 
+		if (iter->Get_State().strObjName == L"³ª¹«")
+			vMonsterScale = _vec3{ vMonsterScale.x - 3.f, vMonsterScale.y - 3.f, vMonsterScale.z - 3.f };
+
 		if (Engine::Collision_Mouse_Object(m_vRayPos, m_vRayDir, vMonsterPos, vMonsterScale))
 		{
 			m_bColl = true;

@@ -289,6 +289,7 @@ _bool CItemTool::Coll_Cook(_vec2 vItemPos)
 			return true;
 		}
 	}
+	return false;
 }
 
 _bool CItemTool::Coll_BonFire(_vec2 vItemPos)
@@ -333,9 +334,11 @@ _bool CItemTool::Coll_BonFire(_vec2 vItemPos)
 			}
 		}
 	}
+
+	return false;
 }
 
-void CItemTool::Coll_Inven(vector<CSlot*> vecBox, _vec2 vItemPos)
+_bool CItemTool::Coll_Inven(vector<CSlot*> vecBox, _vec2 vItemPos)
 {
 	for (int i = 0; i < INVENCNT; ++i)
 	{
@@ -355,12 +358,14 @@ void CItemTool::Coll_Inven(vector<CSlot*> vecBox, _vec2 vItemPos)
 			CSlotMgr::GetInstance()->Move_InvenItem(this, m_iNum, i);
 			m_iNum = i;
 
-			return;
+			return true;
 		}
 	}
+
+	return false;
 }
 
-void CItemTool::Coll_Armor(vector<CSlot*> vecBox, _vec2 vItemPos)
+_bool CItemTool::Coll_Armor(vector<CSlot*> vecBox, _vec2 vItemPos)
 {
 	for (int i = 15; i < INVENCNT + 3; ++i) // 장착칸에 닿았다면
 	{
@@ -370,12 +375,14 @@ void CItemTool::Coll_Armor(vector<CSlot*> vecBox, _vec2 vItemPos)
 			// 아이템이 장착 아이템이 아니라면 
 			// 충돌한 아이템이 알맞은 장착칸에 들어갔는지 확인
 			if (m_eArmorSlotType == ARMOR_SLOT_END || m_eArmorSlotType != (ARMOR_SLOT_TYPE)i)
-				return;
+				return false;
 
 			Change_Armor();
-			return;
+			return true;
 		}
 	}
+
+	return false;
 }
 
 void CItemTool::Change_Armor()
