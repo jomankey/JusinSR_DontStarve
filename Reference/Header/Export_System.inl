@@ -169,6 +169,16 @@ void PlayEffectContinue(TCHAR* pSoundKey, float fVolume, CHANNELID eID)
 
 }
 
+void SpatialPlay_Sound(TCHAR* pSoundKey, CHANNELID eID)
+{
+	return CSoundMgr::GetInstance()->SpatialPlay_Sound(pSoundKey, eID);
+}
+
+void Update_Sound(_vec3 _SoundVel, _vec3 _PlayerPos, _vec3 _ObjPos, _vec3 _ObjFoward, _vec3 _ObjUp, CHANNELID eID, float _SoundFower)
+{
+	return CSoundMgr::GetInstance()->Update_Sound(_SoundVel, _PlayerPos, _ObjPos, _ObjFoward, _ObjUp, eID, _SoundFower);
+}
+
 void StopSound(CHANNELID eID)
 {
 	return CSoundMgr::GetInstance()->StopSound(eID);

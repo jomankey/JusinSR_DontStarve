@@ -25,6 +25,14 @@ namespace Engine
 		void StopAll();
 		void SetChannelVolume(CHANNELID eID, float fVolume);
 
+
+	//PSW
+	// 
+		void SpatialPlay_Sound(TCHAR* pSoundKey, CHANNELID eID);
+		//공간음향 사용할 객체들만 사용, 계속 업데이트 해줘야함
+		void Update_Sound(_vec3 _SoundVel,_vec3 _PlayerPos, _vec3 _ObjPos,_vec3 _ObjFoward, _vec3 _ObjUp, CHANNELID eID, float _SoundFower=1);
+
+
 	private:
 		void LoadSoundFile();
 
@@ -34,7 +42,7 @@ namespace Engine
 
 		// FMOD_CHANNEL : 재생하고 있는 사운드를 관리할 객체 
 		FMOD_CHANNEL* m_pChannelArr[MAXCHANNEL];
-
+	
 		// 사운드 ,채널 객체 및 장치를 관리하는 객체 
 		FMOD_SYSTEM* m_pSystem;
 
