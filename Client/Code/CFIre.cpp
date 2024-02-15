@@ -68,10 +68,10 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 
 
 
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH1,1);
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH2,2);
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH3,3);
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), this->GetTransForm()->Get_Pos(), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH4,4);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH1, 1);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH2, 2);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH3, 3);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH4, 4);
 
 
 	CGameObject::Update_GameObject(fTimeDelta);

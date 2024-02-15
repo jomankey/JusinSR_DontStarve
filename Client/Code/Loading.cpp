@@ -30,7 +30,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 	m_eID = eID;
 
-	Engine::PlayBGM(L"Music_StartScreen.mp3", 10.f);
+	Engine::PlayBGM(L"Music_StartScreen.mp3", 5.f);
 
 	return S_OK;
 }

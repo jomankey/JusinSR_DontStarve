@@ -68,7 +68,6 @@ void CObjectGrass::LateUpdate_GameObject()
 	Check_FrameState();
 
 	CGameObject::LateUpdate_GameObject();
-
 	m_pTransForm->BillBoard();
 	_vec3	vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
