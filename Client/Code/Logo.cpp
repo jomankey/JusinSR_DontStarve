@@ -46,9 +46,10 @@ HRESULT CLogo::Ready_Scene()
 	{
 		m_arrLayer[i] = CLayer::Create();
 	}
-
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
 	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
+	//Engine::PlayBGM(L"GenerateMap.mp3", 2.f);
+	//Engine::PlaySound_W(L"GenerateMap.mp3",CHANNELID::SOUND_BGM, 5.f);
 
 	//m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_ROAD);
 

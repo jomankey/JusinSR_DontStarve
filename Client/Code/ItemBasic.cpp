@@ -41,7 +41,7 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.0f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	//m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(180.f));
-
+	
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
 }
@@ -58,7 +58,7 @@ HRESULT CItemBasic::Ready_GameObject()
 	// 부호를 무작위로 선택 (-1 또는 1)
 	int sign = (rand() % 2 == 0) ? 1 : -1;
 	int sign2 = (rand() % 2 == 0) ? 1 : -1;
-
+	m_fDiffY = -0.5f;
 	// 랜덤값에 부호를 적용
 	int result = randomValue * sign;
 	int result2 = randomValue2 * sign2;
