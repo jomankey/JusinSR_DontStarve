@@ -65,6 +65,5 @@ void CSlot::LateUpdate_GameObject()
 void CSlot::Free()
 {
 	Safe_Release(m_pItem);
-
 	__super::Free();
 }

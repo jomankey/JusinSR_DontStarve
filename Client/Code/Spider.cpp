@@ -273,6 +273,7 @@ void CSpider::Attacking(const _float& fTimeDelta)
 {
     if (!m_bModeChange)
     {
+
         m_bModeChange = true;
         m_Stat.fSpeed = 5.5f;
     }
@@ -285,7 +286,9 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == ATTACK)
         {
-            if (6 < m_fFrame && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()))
+            if (6 < m_fFrame &&
+                CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm())
+                && !m_bAttacking)
             {
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
@@ -318,8 +321,11 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
     }
     if (m_fFrameEnd < m_fFrame)
+    {
         m_fFrame = 0.f;
-  
+        if (m_bAttacking)
+            m_bAttacking = false;
+    }
 }
 
 void CSpider::Patroll(const _float& fTimeDelta)

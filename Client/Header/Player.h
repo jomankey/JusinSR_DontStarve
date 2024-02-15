@@ -67,9 +67,15 @@ private:
 	void Update_State(const _float& fTimeDelta);
 
 	CGameObject* Find_NeerObject(float _fRange, eOBJECT_GROUPTYPE _findTarget);
-
 	void BillBoard();
 
+
+	void Hit_Sound();
+	void Eat_Sound();
+	void Dialog_Sound();
+	void Rock_Sound();
+	void Tree_Sound();
+	void Grass_Sound();
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;

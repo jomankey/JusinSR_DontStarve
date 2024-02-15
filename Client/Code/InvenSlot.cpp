@@ -44,6 +44,9 @@ void CInvenSlot::Render_GameObject()
 	if (!m_pItem)
 		bFood = CSlotMgr::GetInstance()->Get_InvenItem(m_iInvenIndex) ? dynamic_cast<CItemTool*>(CSlotMgr::GetInstance()->Get_InvenItem(m_iInvenIndex))->Get_FoodItem() : 0;
 
+	if (m_eType == COOK)
+		bFood = false;
+
 	m_pTextureCom->Set_Texture(bFood);
 
 	m_pBufferCom->Render_Buffer();

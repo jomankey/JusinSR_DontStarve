@@ -248,6 +248,7 @@ void CTallbird::State_Change()
             m_fFrameEnd = 0;
             break;
         case WAKE_UP:
+            Engine::PlaySound_W(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 16;
             break;
@@ -256,6 +257,7 @@ void CTallbird::State_Change()
             m_fFrameEnd = 22.f;
             break;
         case HIT:
+            Engine::PlaySound_W(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT, 5.f);
             m_fFrameEnd = 6;
             if (m_eCurLook != LOOK_LEFT)
             {
@@ -263,6 +265,7 @@ void CTallbird::State_Change()
             }
             break;
         case DEAD:
+            Engine::PlaySound_W(L"Obj_TallBird_Death.mp3", SOUND_EFFECT, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10.f;
             break;
