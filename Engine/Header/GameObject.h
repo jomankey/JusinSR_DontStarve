@@ -38,6 +38,8 @@ namespace Engine
 		_bool		Collision_Circle(CTransform* _Src, CTransform* _Dst);	//원형충돌.
 		//첫번째 인자 자신, 두번째 인자 상대
 
+		//1.번째 반환 값: PlyerPos,2. 번째 반환 값: 자기 자신의 위치 벡터 3. 번째 반환 값: 자기 자신의 Look벡터, 4. 번째 반환 값: 자기 자신의 Up벡터
+		const tuple<_vec3, _vec3, _vec3,_vec3> Get_Info_vec();
 	protected:
 		explicit CGameObject() = delete;
 		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev);
