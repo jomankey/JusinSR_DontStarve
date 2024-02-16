@@ -266,9 +266,9 @@ void CSpider::Set_ObjStat()
 void CSpider::Set_Scale()
 {
     if(m_ePrestate == ATTACK)
-        m_pTransForm->m_vScale = { 1.5f, 1.f, 1.5f };
+        m_pTransForm->m_vScale = { 1.1f, 1.1f, 1.1f };
     else if(m_ePrestate == WALK)
-        m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
+        m_pTransForm->m_vScale = { 0.7f, 0.7f, 0.7f };
 }
 
 void CSpider::Attacking(const _float& fTimeDelta)

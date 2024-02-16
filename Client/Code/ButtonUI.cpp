@@ -137,6 +137,20 @@ void CButtonUI::Input_Mouse()
                 }
             }
         }
+        else if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) //치트
+        {
+            _vec3 vSlotPos;
+
+            if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
+            {
+                _vec3 vPos;
+                scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPos);
+                CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_tCreateInfo.strKeyName);
+                CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM, pItem);
+                pItem->GetTransForm()->Set_Pos(vPos);
+                dynamic_cast<CItemBasic*>(pItem)->Pickup_Item(vSlotPos);
+            }
+        }
     }
     else if (m_bColl && m_bFood) // 요리 탭에서 요리 제작, 요리 끝나면 아이템 다 사라지도록 
     {

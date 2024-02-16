@@ -169,7 +169,6 @@ void CObjectTree::Change_Frame_Event()
 		//m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
 		m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
 		m_eCurState = RES_FINAL;
-
 	}
 }
 

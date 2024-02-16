@@ -251,8 +251,6 @@ void Engine::CTransform::BillBoard()
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 	Set_WorldMatrix(&(matBill * matWorld));
 
-
-
 	/*_matrix matView;
 
 	_vec3 vPos;

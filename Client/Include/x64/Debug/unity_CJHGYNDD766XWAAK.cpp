@@ -60,6 +60,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CParticle.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSmoke.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CSnow.cpp"
 
 

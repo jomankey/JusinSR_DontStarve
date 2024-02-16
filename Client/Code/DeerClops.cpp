@@ -343,14 +343,14 @@ void CDeerClops::State_Change()
 	
 	if (m_ePreState != m_eCurState)
 	{
-		if (m_ePreState == TAUNT || m_ePreState == LONG_TAUNT)
+		/*if (m_ePreState == TAUNT || m_ePreState == LONG_TAUNT)
 		{
 			Adjust_Taunt_Pos_Back();
 		}
 		if (m_AttackPos)
 		{
 			Adjust_Attack_Up_Pos_Back();
-		}
+		}*/
 
 		switch (m_eCurState)
 		{
@@ -383,7 +383,7 @@ void CDeerClops::State_Change()
 		case TAUNT:
 			m_fFrameSpeed = 17.f;
 			Generate_Roaring(0.9);
-			Adjust_Taunt_Pos();
+			//Adjust_Taunt_Pos();
 			Camera_Shaking(1.f, 2.f, false);
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
@@ -392,7 +392,7 @@ void CDeerClops::State_Change()
 			m_fFrameSpeed = 10.f;
 			Camera_Shaking(1.f, 2.f, false);
 			Generate_Roaring(3);
-			Adjust_Taunt_Pos();
+			//Adjust_Taunt_Pos();
 			m_fFrameEnd = 33;
 			m_eCurLook = LOOK_DOWN;
 			break;

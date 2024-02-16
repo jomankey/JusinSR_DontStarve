@@ -1,5 +1,5 @@
 #include "..\..\Header\Renderer.h"
-
+#include "Transform.h"
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer()

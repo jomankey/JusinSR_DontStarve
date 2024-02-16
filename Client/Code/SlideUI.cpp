@@ -48,7 +48,6 @@ HRESULT CSlideUI::Ready_GameObject()
 	{
 		vPos = _vec3{ m_vecSlideBox[0]->Get_fX(), m_vecSlideBox[0]->Get_fY() - pHeight , 0.f };
 		pItem = CItemTool::Create(m_pGraphicDev, L"Ax", vPos);
-		CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::SLIDEBOX, pItem);
 		m_vecSlideBox[0]->Set_Item(pItem);
 
 		vPos = _vec3{ m_vecSlideBox[1]->Get_fX(), m_vecSlideBox[1]->Get_fY() - pHeight, 0.f };
