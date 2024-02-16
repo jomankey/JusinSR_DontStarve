@@ -6,18 +6,11 @@
 
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
-	, m_fAngle(-180.f)
-<<<<<<< HEAD
-	, m_fDistance(3.f)
-	, m_fHeight(8.f)
-	, m_fRoadDistance(5.f)
-	, m_fRoadHeight(3.f)
-=======
+	, m_fAngle(180.f)
 	, m_fDistance(6.f)
 	, m_fHeight(4.f)
-	, m_fRoadDistance(6.8f)
-	, m_fRoadHeight(4.2f)
->>>>>>> 773f01728dfd3410f268af0999a02aec506d9fa3
+	, m_fRoadDistance(5.f)
+	, m_fRoadHeight(3.f)
 	, m_bkeyInput(true)
 	, m_fIntensity(3.f)
 	, m_fShakeTime(0.3f)

@@ -283,16 +283,11 @@
     <Filter Include="02. GameObject\13. Particle\Smoke">
       <UniqueIdentifier>{68236bce-7b18-4cf0-9e63-bfb7d8eb941b}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
-    <Filter Include="04. Shader">
-      <UniqueIdentifier>{18e330d0-9377-46e5-a885-1f54e2fb27c6}</UniqueIdentifier>
-=======
     <Filter Include="02. GameObject\06. Effect\08. Sizemic">
       <UniqueIdentifier>{e106cfe6-f7b4-45f8-b5c4-fd51f806149a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\13. Particle\Dust">
       <UniqueIdentifier>{20f206dc-7eb1-4656-8a1e-f025b4522d74}</UniqueIdentifier>
->>>>>>> 773f01728dfd3410f268af0999a02aec506d9fa3
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -854,10 +849,5 @@
     <Image Include="Client.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.hlsl">
-      <Filter>04. Shader</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>
