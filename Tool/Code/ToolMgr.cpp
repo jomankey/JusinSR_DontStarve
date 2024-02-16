@@ -206,6 +206,7 @@ void CToolMgr::Window_Object()
         {
             const char* Items[] = { "Tree", "Rock", "Grass", "Pig_House", 
                 "Pig_House_Dead", "Berry", "FireFlies", "Teleporter", "BossDoor", "TrapSpike", "Capapult"
+                ,"TrapToothHide"
             };
             
             for (int i = 0; i < IM_ARRAYSIZE(Items); ++i)

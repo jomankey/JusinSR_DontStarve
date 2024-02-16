@@ -110,6 +110,16 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 			m_bAttack = false;
 		m_fFrame = 0.f;
 	}
+
+	if (m_eCurState == MOVE || m_eCurState == TORCH_RUN)
+	{
+		if (m_fFrame >= 2.f && m_fFrame < 2.2f)
+			Engine::PlaySound_W(L"Player_Foot.mp3", SOUND_PLAYER, 0.2f);
+		else if (m_fFrame > 5.f && m_fFrame < 5.2f)
+			Engine::PlaySound_W(L"Player_Foot_2.mp3", SOUND_PLAYER, 0.2f);
+	}
+			
+
 	if (!m_KeyLock && !m_Stat.bDead)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
 		if (!m_bIsRoadScene)
@@ -1038,6 +1048,7 @@ void CPlayer::Weapon_Change()
 			m_Stat.fATKRange = 1.f;
 			break;
 		case TORCH:
+			Engine::PlayTorch(L"Torch.mp3",0.2f);
 			if (m_eCurState = IDLE)
 			{
 				m_eCurState = TORCH_IDLE;
@@ -1058,6 +1069,8 @@ void CPlayer::Weapon_Change()
 			m_Stat.fATKRange = 2.f;
 			break;
 		}
+		if (m_ePreWeapon == TORCH) Engine::StopSound(SOUND_TORCH);
+
 		m_ePreWeapon = m_eCurWeapon;
 	}
 
@@ -1242,6 +1255,7 @@ void CPlayer::Fire_Light()
 	if (m_ePreWeapon != TORCH || m_bTent)
 	{
 		light::Get_Light(m_iLightNum)->Close_Light();
+		
 		return;
 	}
 		
@@ -1252,8 +1266,8 @@ void CPlayer::Fire_Light()
 
 	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-	tPointLightInfo->Attenuation0 = 3.f;
-	tPointLightInfo->Range = 5.f;
+	tPointLightInfo->Attenuation0 = 0.0000001f;
+	tPointLightInfo->Range = 3.f;
 
 	_vec3 pPlayerPos;
 	m_pTransForm->Get_Info(INFO_POS, &pPlayerPos); // player pos 값 설정
@@ -1273,7 +1287,7 @@ void CPlayer::Update_State(const _float& fTimeDelta)
 		else
 			m_Stat.fHP += fTimeDelta * 0.4f;
 
-		if (m_Stat.fHungry - fTimeDelta >= 0.f)
+		if (m_Stat.fHungry - fTimeDelta <= 0.f)
 			m_Stat.fHungry = 0.f;
 		else
 			m_Stat.fHungry -= fTimeDelta;

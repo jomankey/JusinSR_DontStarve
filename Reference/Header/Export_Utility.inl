@@ -102,6 +102,11 @@ _int light::Get_Day()
 	return CLightMgr::GetInstance()->Get_Day();
 }
 
+_bool light::IsChangeTime()
+{
+	return CLightMgr::GetInstance()->IsChangeTime();
+}
+
 //eventmgr
 HRESULT	eventmgr::EventUpdate()
 {

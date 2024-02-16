@@ -19,6 +19,8 @@ namespace Engine
 	public:
 		void Ready_Sound();
 		void PlaySound_W(TCHAR* pSoundKey, CHANNELID eID, float fVolume);
+		void PlaySound_NonStop(TCHAR* pSoundKey, CHANNELID eID, float fVolume);
+		void PlayTorch(TCHAR* pSoundKey, float fVolume);
 		void PlayBGM(TCHAR* pSoundKey, float fVolume);
 		void PlayEffectContinue(TCHAR* pSoundKey, float fVolume, CHANNELID eID);
 		void StopSound(CHANNELID eID);

@@ -34,6 +34,8 @@ private:
     _bool Coll_Inven(vector<CSlot*> vecBox, _vec2 vItemPos);
     _bool Coll_Armor(vector<CSlot*> vecBox, _vec2 vItemPos);
     void Change_Armor();
+
+    void Change_Player_Weapon();
    
     void Coll_ItemBasic(const float& fTimeDelta); // 주운 아이템과 인벤 아이템이 충돌하는지 체크
 

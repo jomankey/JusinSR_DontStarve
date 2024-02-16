@@ -77,8 +77,11 @@ HRESULT CSubScene::Ready_Scene()
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Idle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_loop_on/idle_loop_on__000.png")), E_FAIL);
 	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Object_BossDoor_Off", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/BossDoor/idle_off__000.png")), E_FAIL);
 
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"trap_tooth_hide", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Trap/ToothTrap/IDLE/IDLE__000.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"TrapSpike", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Trap/Spike/IDLE/IDLE__000.png")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Capapult", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Catapult/ATK_DOWN/ATK_DOWN__000.png")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"TrapTooth", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../../Client/Bin/Resource/Texture/Build/Trap/ToothTrap/IDLE/IDLE__000.png")), E_FAIL);
+
 
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
@@ -96,6 +99,7 @@ HRESULT CSubScene::Ready_Scene()
 _int CSubScene::Update_Scene(const _float& fTimeDelta)
 {
 	Input_Mouse();
+	Change_LightInfo(fTimeDelta);
 
 	if (CToolMgr::bObjSaveData)
 	{
@@ -212,6 +216,9 @@ HRESULT CSubScene::Input_Mouse()
 				break;
 			case 10:
 				Create_Object(L"Capapult", vPickPos, vScale);
+				break;
+			case 11:
+				Create_Object(L"TrapTooth", vPickPos, vScale);
 				break;
 			default:
 				break;
@@ -574,6 +581,74 @@ HRESULT CSubScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 
 	CToolMgr::m_vecObj.push_back(pGameObject);
 
+	return S_OK;
+}
+
+HRESULT CSubScene::Change_LightInfo(const _float& fTimeDelta)
+{
+	D3DLIGHT9* tLightInfo = light::Get_Light(0)->Get_Light();
+	_float fSpeed = 1;
+	//ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
+
+	tLightInfo->Type = D3DLIGHT_DIRECTIONAL;
+
+	int iIndex = 0;
+	if (CToolMgr::iAUtoTime == 0)
+	{
+		iIndex = light::Change_Light(fTimeDelta, 0);
+	}
+	else
+		iIndex = CToolMgr::iTimeLight;
+
+	// 낮, 오후, 밤 시간 별 조명 값이 다름.
+	// 시간이 변경될 때 마다 조명이 같아질 수 있도록 값을 시간에 따라 변경해줘야 함.
+
+	if (CToolMgr::iAUtoTime == 0)
+	{
+		vLight[0].x += (CToolMgr::m_fDirectionDiffuseColor[iIndex].x - vLight[0].x) * fTimeDelta;
+		vLight[0].y += (CToolMgr::m_fDirectionDiffuseColor[iIndex].y - vLight[0].y) * fTimeDelta;
+		vLight[0].z += (CToolMgr::m_fDirectionDiffuseColor[iIndex].z - vLight[0].z) * fTimeDelta;
+
+		vLight[1].x += (CToolMgr::m_fDirectionAmbientColor[iIndex].x - vLight[1].x) * fTimeDelta;
+		vLight[1].y += (CToolMgr::m_fDirectionAmbientColor[iIndex].y - vLight[1].y) * fTimeDelta;
+		vLight[1].z += (CToolMgr::m_fDirectionAmbientColor[iIndex].z - vLight[1].z) * fTimeDelta;
+
+		vLight[2].x += (CToolMgr::m_fDirectionSpecularColor[iIndex].x - vLight[2].x) * fTimeDelta;
+		vLight[2].y += (CToolMgr::m_fDirectionSpecularColor[iIndex].y - vLight[2].y) * fTimeDelta;
+		vLight[2].z += (CToolMgr::m_fDirectionSpecularColor[iIndex].z - vLight[2].z) * fTimeDelta;
+	}
+	else
+	{
+		vLight[0].x = CToolMgr::m_fDirectionDiffuseColor[iIndex].x;
+		vLight[0].y = CToolMgr::m_fDirectionDiffuseColor[iIndex].y;
+		vLight[0].z = CToolMgr::m_fDirectionDiffuseColor[iIndex].z;
+
+		vLight[1].x = CToolMgr::m_fDirectionAmbientColor[iIndex].x;
+		vLight[1].y = CToolMgr::m_fDirectionAmbientColor[iIndex].y;
+		vLight[1].z = CToolMgr::m_fDirectionAmbientColor[iIndex].z;
+
+		vLight[2].x = CToolMgr::m_fDirectionSpecularColor[iIndex].x;
+		vLight[2].y = CToolMgr::m_fDirectionSpecularColor[iIndex].y;
+		vLight[2].z = CToolMgr::m_fDirectionSpecularColor[iIndex].z;
+	}
+
+	tLightInfo->Diffuse = D3DXCOLOR(vLight[0].x,
+		vLight[0].y,
+		vLight[0].z,
+		1.f);
+	tLightInfo->Specular = D3DXCOLOR(vLight[1].x,
+		vLight[1].y,
+		vLight[1].z,
+		1.f);
+	tLightInfo->Ambient = D3DXCOLOR(vLight[2].x,
+		vLight[2].y,
+		vLight[2].z,
+		1.f);
+
+	tLightInfo->Direction = _vec3(1.f, -1.f, 1.f);
+
+	//FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
+	light::Get_Light(0)->Update_Light();
 	return S_OK;
 }
 

@@ -19,6 +19,7 @@ namespace Engine {
 		TIME_STATE Get_TimeIndex() { return m_eChangeIndex; }
 
 		_int Get_Day() { return m_iDay; }
+		_bool IsChangeTime();
 
 	public:
 		HRESULT		Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,
@@ -31,6 +32,7 @@ namespace Engine {
 		_float m_fPreTime;
 
 		TIME_STATE m_eChangeIndex; // 0 : morning, 1 : afternoon, 2 : night
+		TIME_STATE m_ePreIndex;
 		_int m_iDay;
 
 	private:

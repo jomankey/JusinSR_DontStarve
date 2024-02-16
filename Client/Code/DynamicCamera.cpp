@@ -9,8 +9,8 @@ CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_fAngle(-180.f)
 	, m_fDistance(3.f)
 	, m_fHeight(8.f)
-	, m_fRoadDistance(6.8f)
-	, m_fRoadHeight(4.2f)
+	, m_fRoadDistance(5.f)
+	, m_fRoadHeight(3.f)
 	, m_bkeyInput(true)
 	, m_fIntensity(3.f)
 	, m_fShakeTime(0.3f)
@@ -178,8 +178,6 @@ void CDynamicCamera::ShakeCamera()
 		m_vEye += vRight * offsetX;
 		m_vAt += vRight * offsetX;
 	}
-
-
 }
 
 void CDynamicCamera::Key_Input(const _float& fTimeDelta)
