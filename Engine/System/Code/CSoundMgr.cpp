@@ -159,7 +159,7 @@ void Engine::CSoundMgr::Update_Sound(_vec3 _SoundVel,_vec3 _PlayerPos, _vec3 _Ob
 
 	float Distance = D3DXVec3Length(&(_PlayerPos - _ObjPos));
 	float minDistance = 1.0f; // 사운드의 최소 거리
-	float maxDistance = 3.0f; // 사운드의 최대 거리
+	float maxDistance = 10.0f; // 사운드의 최대 거리
 	float volume = (Distance - minDistance) / (maxDistance - minDistance);
 
 

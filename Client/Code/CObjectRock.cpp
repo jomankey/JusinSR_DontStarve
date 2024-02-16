@@ -110,7 +110,7 @@ void CObjectRock::Change_Frame_Event()
 		if (m_Stat.bDead == false)
 		{
 			CreateItem(L"Rocks_0",this, this->m_pGraphicDev);
-			CreateItem(L"Rocks_1",this, this->m_pGraphicDev);
+			//CreateItem(L"Rocks_1",this, this->m_pGraphicDev);
 			Engine::PlaySound_W(L"Obj_Rock_Destroy.mp3", SOUND_EFFECT, 1.0f);
 
 		}

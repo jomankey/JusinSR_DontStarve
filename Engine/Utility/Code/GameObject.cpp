@@ -139,6 +139,27 @@ _bool Engine::CGameObject::Collision_Circle(CTransform* _Src, CTransform* _Dst)
 		return false;
 	}
 }
+const tuple<_vec3, _vec3, _vec3, _vec3> Engine::CGameObject::Get_Info_vec()
+{
+	if (scenemgr::Get_CurScene()->GetPlayerObject() == nullptr)
+		return make_tuple(_vec3(0, 0, 0), _vec3(0, 0, 0),_vec3(0, 0, 0), _vec3(0, 0, 0));
+
+	decltype(auto) pPlayer = scenemgr::Get_CurScene()->GetPlayerObject();
+
+	Engine::CTransform* pPlayerTransformCom = pPlayer->GetTransForm();
+
+	_vec3 PlayerPos;
+	_vec3 thisLook;
+	_vec3 thisUp;
+	this->GetTransForm()->Get_Info(INFO_LOOK, &thisLook);
+	this->GetTransForm()->Get_Info(INFO_UP, &thisUp);
+	pPlayerTransformCom->Get_Info(INFO_POS, &PlayerPos);
+
+
+
+	return make_tuple(PlayerPos, this->GetTransForm()->Get_Pos(), thisLook, thisUp);
+}
+
 
 
 CComponent* CGameObject::Find_Component(COMPONENTID eID, const _tchar* pComponentTag)
