@@ -26,10 +26,10 @@ HRESULT CBeefalo::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
+    m_pTransForm->m_vScale = { 5.f, 5.f, 5.f };
     Set_ObjStat();
     Look_Change();
     m_fFrameEnd = 10;
-    m_fDiffY =1.f;
     m_fFrameChange = rand() % 5;
 
     //m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
@@ -72,9 +72,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     CGameObject::Update_GameObject(fTimeDelta);
     State_Change();
     Look_Change();
-    Set_Scale();
-
-
+    //Set_Scale();
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     
     return iResult;
@@ -82,8 +80,8 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 
 void CBeefalo::LateUpdate_GameObject()
 {
-    __super::LateUpdate_GameObject();
     m_pTransForm->BillBoard();
+    __super::LateUpdate_GameObject();
     _vec3	vPos;
     m_pTransForm->Get_Info(INFO_POS, &vPos);
     Compute_ViewZ(&vPos);
@@ -229,7 +227,6 @@ HRESULT CBeefalo::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-    m_pTransForm->m_vScale = { 2.f, 2.f, 2.f };
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);

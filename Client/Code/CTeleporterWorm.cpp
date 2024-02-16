@@ -29,7 +29,6 @@ HRESULT CTeleporterWorm::Ready_GameObject()
 	m_eTelporterCurState = TELEPORTER_IDLE;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 6.f;
-	m_fDiffY = 0.f;
 	//Ready_Stat();
 	m_Stat.strObjName = L"¿úÈ¦";
 

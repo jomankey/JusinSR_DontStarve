@@ -12,12 +12,13 @@
 #include "SnowSplash.h"
 #include "DynamicCamera.h"
 #include "Tallbird.h"
-
+#include "SizemicL.h"
+#include "SizemicR.h"
 
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 	: CMonster(pGraphicDev, _vPos),
 	m_eCurState(SLEEP), m_ePreState(STATE_END),
-	m_fSkill(0.f), m_fSkill2(0.f), m_fAcctime2(0.f), m_AttackPos(false)
+	m_fSkill(0.f), m_fSkill2(0.f), m_fAcctime2(0.f), m_AttackPos(false), m_bGimmick(false)
 {
 }
 
@@ -36,10 +37,10 @@ HRESULT CDeerClops::Ready_GameObject()
 	//true 면 위아래고 , false면 상하좌우
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
+	m_pTransForm->Set_Scale({ 10.f, 10.f, 10.f });
 	Set_ObjStat();
 	m_fAcctime = float(rand() % 30);
 	m_bFalldown = false;
-	m_fDiffY = 1.f;
 	for (auto i = 0; i < DEER_PHASE::PHASE_END; ++i)
 	{
 		m_bPhase[i] = false;
@@ -280,7 +281,6 @@ HRESULT CDeerClops::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale({ 10.f, 10.f, 10.f });
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -343,15 +343,6 @@ void CDeerClops::State_Change()
 	
 	if (m_ePreState != m_eCurState)
 	{
-		/*if (m_ePreState == TAUNT || m_ePreState == LONG_TAUNT)
-		{
-			Adjust_Taunt_Pos_Back();
-		}
-		if (m_AttackPos)
-		{
-			Adjust_Attack_Up_Pos_Back();
-		}*/
-
 		switch (m_eCurState)
 		{
 		case IDLE:
@@ -364,10 +355,6 @@ void CDeerClops::State_Change()
 			break;
 		case ATTACK:
 			m_fFrameSpeed = 18.f;
-			if (m_eCurLook == LOOK_UP)
-			{
-				Adjust_Attack_Up_Pos();
-			}
 			m_fFrameEnd = 20;
 			break;
 		case SLEEP:
@@ -383,7 +370,7 @@ void CDeerClops::State_Change()
 		case TAUNT:
 			m_fFrameSpeed = 17.f;
 			Generate_Roaring(0.9);
-			//Adjust_Taunt_Pos();
+			Generate_Sizemic();
 			Camera_Shaking(1.f, 2.f, false);
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
@@ -392,7 +379,6 @@ void CDeerClops::State_Change()
 			m_fFrameSpeed = 10.f;
 			Camera_Shaking(1.f, 2.f, false);
 			Generate_Roaring(3);
-			//Adjust_Taunt_Pos();
 			m_fFrameEnd = 33;
 			m_eCurLook = LOOK_DOWN;
 			break;
@@ -417,7 +403,7 @@ void CDeerClops::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case HIT:
-			m_fFrameSpeed = 10.f;
+			m_fFrameSpeed = 9.f;
 			m_fFrameEnd = 7;
 			break;
 		case DEAD:
@@ -995,48 +981,77 @@ void CDeerClops::Getnerate_SnowSplash()
 
 }
 
+void CDeerClops::Generate_Sizemic()
+{
+	_vec3 vThisPos, vRight,vLeft,vDown, vUp; // 이펙트 생성 기점.
+	_vec3 vDotRD, vDotRU, vDotLD, vDotLU;
+	vThisPos = Get_Pos();
+	vThisPos.y = 0.f;
+	vRight = Get_Right();
+	vUp = Get_Look();
+	vLeft = vRight * -1;
+	vDown = vUp * -1;
+
+	vDotRD = vRight + vDown;
+	vDotRU = vRight + vUp;
+	vDotLD = vLeft + vDown;
+	vDotLU = vLeft + vUp;
+	D3DXVec3Normalize(&vDotRD, &vDotRD);
+	D3DXVec3Normalize(&vDotRU, &vDotRU);
+	D3DXVec3Normalize(&vDotLD, &vDotLD);
+	D3DXVec3Normalize(&vDotLU, &vDotLU);
+
+
+
+	
+
+	for (int i = 0; i < 3; ++i)
+	{
+		//right
+
+		_vec3 rightpos = vThisPos + vRight * ((float)i + 4.f);
+		CGameObject* pGameObjectR = SizemicR::Create(m_pGraphicDev, rightpos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectR);
+		dynamic_cast<SizemicR*>(pGameObjectR)->Set_Number(i);
+
+		_vec3 Rdpos = vThisPos + vDotRD * ((float)i + 4.f);
+		CGameObject* pGameObjectRD = SizemicR::Create(m_pGraphicDev, Rdpos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectRD);
+		dynamic_cast<SizemicR*>(pGameObjectRD)->Set_Number(i);
+
+		_vec3 Rupos = vThisPos + vDotRU * ((float)i + 4.f);
+		CGameObject* pGameObjectRU = SizemicR::Create(m_pGraphicDev, Rupos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectRU);
+		dynamic_cast<SizemicR*>(pGameObjectRU)->Set_Number(i);
+
+
+
+		//left
+		_vec3 leftpos = vThisPos + vLeft * ((float)i + 4.f);
+		CGameObject* pGameObjectL = SizemicR::Create(m_pGraphicDev, leftpos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectL);
+		dynamic_cast<SizemicR*>(pGameObjectL)->Set_Number(i);
+
+		_vec3 Ldpos = vThisPos + vDotLD * ((float)i + 4.f);
+		CGameObject* pGameObjectLD = SizemicL::Create(m_pGraphicDev, Ldpos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectLD);
+		dynamic_cast<SizemicL*>(pGameObjectLD)->Set_Number(i);
+
+		_vec3 Lupos = vThisPos + vDotLU * ((float)i + 4.f);
+		CGameObject* pGameObjectLU = SizemicL::Create(m_pGraphicDev, Lupos);
+		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectLU);
+		dynamic_cast<SizemicL*>(pGameObjectLU)->Set_Number(i);
+	}
+
+}
+
 void CDeerClops::Camera_Shaking(_float _power, _float _time, _bool _dir)
 {
 	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(scenemgr::Get_CurScene()->GetCameraObject());
 	pCamera->SetShakedCamera(_power, _time, _dir);
 }
 
-void CDeerClops::Adjust_Taunt_Pos()
-{
-	_vec3 vPos, vRight, vUp;
-	vPos = Get_Pos();
-	vRight = Get_Right();
-	vUp = Get_Up();
-	m_vTauntPos = Get_Pos();
-	vRight *= -1;
-	vPos += vRight * 0.6f;
-	vPos += vUp * 1.5f;
-	m_pTransForm->Set_Pos(vPos);
-}
 
-void CDeerClops::Adjust_Taunt_Pos_Back()
-{
-	m_pTransForm->Set_Pos(m_vTauntPos);
-}
-
-void CDeerClops::Adjust_Attack_Up_Pos()
-{
-	_vec3 vPos, vRight, vLook;
-	vPos = Get_Pos();
-	vRight = Get_Right();
-	vLook = Get_Up();
-	m_vAttackPos = Get_Pos();
-	vPos += vLook * 2.f;
-	m_pTransForm->Set_Pos(vPos);
-	m_AttackPos = true;
-}
-
-void CDeerClops::Adjust_Attack_Up_Pos_Back()
-{
-	m_pTransForm->Set_Pos(m_vAttackPos);
-	if (m_AttackPos)
-		m_AttackPos = false;
-}
 
 void CDeerClops::Awake_Tallbird()
 {

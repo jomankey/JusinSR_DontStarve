@@ -29,7 +29,6 @@ HRESULT CCookingPot::Ready_GameObject()
 	m_eObject_id = COOKING_POT;
 	m_eCookingpotCurState = COOKINGPOT_DEFAULT;
 	
-	m_fDiffY = 1.f;
 	m_fFrame = 0.0f;
 
 	m_Stat.strObjName = L"¿ä¸® ¼Ü";
@@ -221,7 +220,7 @@ HRESULT CCookingPot::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.2f, 1.2f, 1.2f));
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 

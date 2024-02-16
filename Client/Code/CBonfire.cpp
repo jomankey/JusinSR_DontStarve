@@ -34,7 +34,6 @@ HRESULT CBonfire::Ready_GameObject()
 	m_eObject_id = BON_FIRE;
 	m_eBonfireCurState = BONFIRE_IDLE;
 	m_fFrame = 0.0f;
-	m_fDiffY= 1.2f;
 	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
 
 	m_Stat.strObjName = L"¸ð´ÚºÒ";

@@ -24,15 +24,9 @@ CTerrain::~CTerrain()
 HRESULT CTerrain::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	_vec3 vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-
 
 	//Test z버퍼 땅뚫림 테스트
-	vPos.y = 0.f;
 
-
-	m_pTransForm->Set_Pos(vPos);
 
 	return S_OK;
 }
@@ -44,7 +38,6 @@ Engine::_int CTerrain::Update_GameObject(const _float& fTimeDelta)
 	
 	_vec3 vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_fDiffY = 50.f;
 	Compute_ViewZ(&vPos);
 	//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
@@ -60,14 +53,15 @@ void CTerrain::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	//z버퍼 사용안함 ()
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 	m_pTextureCom->Set_Texture(0);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 	FAILED_CHECK_RETURN(SetUp_Material(), );
 
 	m_pBufferCom->Render_Buffer();
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 HRESULT CTerrain::Add_Component()

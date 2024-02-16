@@ -19,7 +19,6 @@ HRESULT CBerryBush::Ready_GameObject()
 	m_eObject_id = BERRY_BUSH;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 0.f;
-	m_fDiffY = 0.78f;
 	Ready_Stat();
 	return S_OK;
 }
@@ -46,11 +45,13 @@ _int CBerryBush::Update_GameObject(const _float& fTimeDelta)
 
 void CBerryBush::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
 	Change_Frame_Event();
 	Check_FrameState();
 	_vec3 vPos;
 	m_pTransForm->BillBoard();
+
+	__super::LateUpdate_GameObject();
+
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
 }

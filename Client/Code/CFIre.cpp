@@ -27,7 +27,6 @@ HRESULT CFire::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = BON_FIRE;
 	m_efireCurState= FIRE_LEVEL_2;
-	m_fDiffY = 1.0f;
 	m_fFrame = 0.0f;
 	return S_OK;
 }

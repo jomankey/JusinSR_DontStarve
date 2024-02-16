@@ -7,8 +7,8 @@
 CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
 	, m_fAngle(-180.f)
-	, m_fDistance(3.f)
-	, m_fHeight(8.f)
+	, m_fDistance(6.f)
+	, m_fHeight(4.f)
 	, m_fRoadDistance(6.8f)
 	, m_fRoadHeight(4.2f)
 	, m_bkeyInput(true)
@@ -17,6 +17,7 @@ CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_fShakeAccTime(1.f)
 	, m_bRoad(false)
 	, m_bLockWidth(false)
+	, m_fCameraSpeed(20.f)
 {
 
 }
@@ -56,40 +57,21 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 		if (KEY_TAP(DIK_U))
 		{
-			auto pObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::MONSTER)[0];
-			if (nullptr != pObj)
-			{
-				SetTarget(pObj);
-				m_bMove = true;
-
-			}
+			m_fDistance += 0.1f;
 		}
 		if (KEY_TAP(DIK_I))
 		{
-			SetTarget(scenemgr::Get_CurScene()->GetPlayerObject());
+			m_fDistance -= 0.1f;
 		}
 
 		if (m_pTarget != nullptr && !m_pTarget->IsDelete())
 		{
 			_vec3 vTarget;
 			m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
-
 			m_vAt = vTarget;//바라볼곳
-
-			m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fHeight;
-			m_vTargetEye.y = vTarget.y + m_fHeight;
-			m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fHeight;//사실상 목적지
-		}
-
-		if (KEY_TAP(DIK_P))
-		{
-			SetShakedCamera(3.f, 1.f, false);
-			m_fShakeAccTime = 0.f;
-		}
-		if (KEY_TAP(DIK_O))
-		{
-			SetShakedCamera(3.f, 1.f, true);
-			m_fShakeAccTime = 0.f;
+			m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance;
+			m_vTargetEye.y = vTarget.y + m_fDistance;
+			m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance;//사실상 목적지
 		}
 
 		if (m_fShakeTime > m_fShakeAccTime)
@@ -128,7 +110,6 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 		{
 			m_fRoadDistance -= 0.1f;
 		}
-
 
 		if (m_pTarget != nullptr && !m_pTarget->IsDelete())
 		{
@@ -190,11 +171,13 @@ void CDynamicCamera::Key_Input(const _float& fTimeDelta)
 	if (KEY_TAP(DIK_Q))
 	{
 		m_fAngle += 45.f;
+		m_fCameraSpeed = 40.f;
 		m_bMove = true;
 	}
 	if (KEY_TAP(DIK_E))
 	{
 		m_fAngle -= 45.f;
+		m_fCameraSpeed = 40.f;
 		m_bMove = true;
 	}
 }
@@ -213,12 +196,24 @@ void CDynamicCamera::Mouse_Move()
 	{
 		if (dwMouseMove > 0.f)
 		{
-			m_fHeight -= 0.1f;
+			if (m_fDistance >= 3.f)
+			{
+				m_fDistance -= 2.f;
+				m_fCameraSpeed = 10.f;
+				m_bMove = true;
+
+			}
 
 		}
 		else if (dwMouseMove < 0.f)
 		{
-			m_fHeight += 0.1f;
+			if (m_fDistance <= 9.f)
+			{
+				m_fDistance += 2.f;
+				m_fCameraSpeed = 10.f;
+				m_bMove = true;
+			}
+
 
 		}
 	}
@@ -238,11 +233,11 @@ void CDynamicCamera::CalDiff(const _float& fTimeDelta)
 	if (fDistance <= 1.f)
 	{
 		m_bMove = false;
+		m_fCameraSpeed = 20.f;
 		return;
 	}
-	m_vEye += 50.f * vDir * fTimeDelta;
+	m_vEye += m_fCameraSpeed * vDir * fTimeDelta;
 
-	vDir.y = 0.f;
 }
 
 void CDynamicCamera::SetTarget(CGameObject* _targetObj)

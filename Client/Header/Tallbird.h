@@ -38,7 +38,6 @@ private:
 	void					First_Phase(const _float& fTimeDelta);
 	void					Second_Phase(const _float& fTimeDelta);
 
-	
 	_int			Die_Check();
 	virtual void	Set_Hit()						override;
 private:
@@ -46,7 +45,6 @@ private:
 	Engine::CRvRcTex* m_pReverseCom;
 	Engine::CTexture* m_pTextureCom[LOOKDIR::LOOK_END][TALLBIRD::STATE_END];
 	Engine::CCalculator* m_pCalculatorCom;
-
 
 	TALLBIRD m_eCurstate;
 	TALLBIRD m_ePrestate;

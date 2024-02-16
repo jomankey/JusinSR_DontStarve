@@ -151,6 +151,7 @@ _bool CCollisionMgr::Collision_Monster(
 	return true;
 }
 
+//¾È¾¸
 _bool CCollisionMgr::Collision_Item(_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale)
 {
 	_float iDistanceX = fabs(pPlayerPos.x - pItemPos.x);

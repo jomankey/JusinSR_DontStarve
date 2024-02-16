@@ -70,6 +70,7 @@ private:
 	_vec3	m_vTargetEye;	//카메라 목적지
 	_vec3	m_vPrevEye;	//카메라 이전 위치
 	_bool	m_bMove;
+	_float m_fCameraSpeed;
 
 	_bool	m_bRoad; //로드씬일경우 카메라고정
 

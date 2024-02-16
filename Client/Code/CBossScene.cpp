@@ -243,11 +243,11 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 0.f, 64.f));
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 1.f, 64.f));
 
 
 
-	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 0.f, 64.f));
+	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 5.3f, 64.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
 	dynamic_cast<CDeerClops*>(pGameObject)->Set_Phase(true, true, false, false, false, false);
@@ -443,26 +443,28 @@ HRESULT CBossScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 {
 	NULL_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC], E_FAIL);
 	Engine::CGameObject* pGameObject = nullptr;
+	vPos.y = 1.f;
 
 	if (!_tcscmp(L"Tree", pName))
 	{
 		pGameObject = CObjectTree::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		//pGameObject->GetTransForm()->Set_Scale(vScale);
-		vPos.y = 1.f;
+		vPos.y = 2.8f;
 	}
 	else if (!_tcscmp(L"Stone", pName))
 	{
 		pGameObject = CObjectRock::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+		vPos.y = 0.55;
 	}
 	else if (!_tcscmp(L"Grass", pName))
 	{
 		pGameObject = CObjectGrass::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+		vPos.y = 1.15f;
 	}
 	else if (!_tcscmp(L"Pig_House", pName))
 	{
@@ -549,9 +551,8 @@ HRESULT CBossScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CTallbird::Create(m_pGraphicDev, vPos);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-		/*vPos.y = 1.4f;*/
+		vPos.y = 1.4f;
 	}
-	vPos.y = 0.f;
 	if (nullptr != pGameObject)
 		pGameObject->GetTransForm()->Set_Pos(vPos);
 }
