@@ -8,7 +8,7 @@ CDynamicCamera::CDynamicCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
 	, m_fAngle(-180.f)
 	, m_fDistance(6.f)
-	, m_fHeight(4.f)
+	, m_fHeight(0.f)
 	, m_fRoadDistance(6.8f)
 	, m_fRoadHeight(4.2f)
 	, m_bkeyInput(true)
@@ -57,11 +57,11 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 
 		if (KEY_TAP(DIK_U))
 		{
-			m_fDistance += 0.1f;
+			m_fHeight += 0.1f;
 		}
 		if (KEY_TAP(DIK_I))
 		{
-			m_fDistance -= 0.1f;
+			m_fHeight -= 0.1f;
 		}
 
 		if (m_pTarget != nullptr && !m_pTarget->IsDelete())
@@ -70,7 +70,7 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 			m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
 			m_vAt = vTarget;//바라볼곳
 			m_vTargetEye.x = vTarget.x + cosf(m_fAngle) * m_fDistance;
-			m_vTargetEye.y = vTarget.y + m_fDistance;
+			m_vTargetEye.y = vTarget.y + m_fHeight;
 			m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance;//사실상 목적지
 		}
 
