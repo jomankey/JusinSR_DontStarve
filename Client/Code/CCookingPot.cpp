@@ -29,7 +29,6 @@ HRESULT CCookingPot::Ready_GameObject()
 	m_eObject_id = COOKING_POT;
 	m_eCookingpotCurState = COOKINGPOT_DEFAULT;
 	
-	m_fDiffY = 1.f;
 	m_fFrame = 0.0f;
 
 	m_Stat.strObjName = L"¿ä¸® ¼Ü";

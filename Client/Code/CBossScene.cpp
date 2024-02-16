@@ -243,11 +243,11 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 0.f, 64.f));
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 1.f, 64.f));
 
 
 
-	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 0.f, 64.f));
+	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 5.3f, 64.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
 	dynamic_cast<CDeerClops*>(pGameObject)->Set_Phase(true, true, false, false, false, false);

@@ -28,7 +28,6 @@ HRESULT CPig::Ready_GameObject()
 	/*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
 	m_fFrameEnd = 7;
 	m_fFrameChange = rand() % 5;
-	m_fDiffY = 1.f;
 	Look_Change();
 	return S_OK;
 }

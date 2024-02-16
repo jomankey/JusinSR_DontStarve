@@ -33,7 +33,6 @@ HRESULT CObjectGrass::Ready_GameObject()
 	m_eCurState = RES_IDLE;
 	m_eObject_id = GRASS;
 	m_fFrame = 0;
-	m_fDiffY = 0.47f;
 	m_fFrameEnd = 28;
 	return S_OK;
 }

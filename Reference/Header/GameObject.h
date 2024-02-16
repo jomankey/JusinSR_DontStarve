@@ -55,7 +55,6 @@ namespace Engine
 		CTransform* m_pTransForm;
 
 		_float										m_fViewZ;	//z버퍼 소팅
-		_float										m_fDiffY;	//z버퍼계산시 y 보정값
 		_bool										m_bDelete;	//삭제예정일경우 True
 
 		wstring										m_strObjName;

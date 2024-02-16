@@ -31,7 +31,6 @@ HRESULT CTallbird::Ready_GameObject()
     m_fFrameEnd = 0;
     m_bFrameStop = true;
     m_fFrameChange = rand() % 3;
-    m_fDiffY = 1.f;
     D3DXVec3Normalize(&m_vDir, &m_vDir);
     Look_Change();
     return S_OK;

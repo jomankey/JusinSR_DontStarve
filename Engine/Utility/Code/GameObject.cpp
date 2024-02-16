@@ -11,7 +11,6 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_strObjName(L"NONE")
-	, m_fDiffY(0.f)
 	, m_iSlotNum(0)
 {
 	m_pGraphicDev->AddRef();
@@ -25,7 +24,6 @@ Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_strObjName(_strName)
-	, m_fDiffY(0.f)
 	, m_iSlotNum(0)
 {
 	m_pGraphicDev->AddRef();
@@ -39,7 +37,6 @@ CGameObject::CGameObject(const CGameObject& rhs)
 	, m_bDelete(false)
 	, m_Stat(rhs.m_Stat)
 	, m_iSlotNum(rhs.m_iSlotNum)
-	, m_fDiffY(0.f)
 {
 	m_mapComponent[ID_DYNAMIC] = rhs.m_mapComponent[ID_DYNAMIC];
 	m_pGraphicDev->AddRef();
@@ -198,7 +195,6 @@ void Engine::CGameObject::Compute_ViewZ(const _vec3* pPos)
 	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
 	_vec3 vPos = *pPos;
 	vPos.y = 0.f;
-	vPos.y += m_fDiffY;
 
 	_vec3	vCamPos;
 	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));
