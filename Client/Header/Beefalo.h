@@ -34,7 +34,7 @@ private:
 	virtual void	Set_Hit()						override;
 	virtual void	Set_Scale()						override;
 	
-	
+	void FrameCheckSound(const _float& fTimeDelta);
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;
@@ -44,6 +44,10 @@ private:
 	BEEFALOSTATE		m_eCurState;
 	BEEFALOSTATE		m_ePreState;
 	_bool				m_bHit;
+
+
+
+	//float PerFrame = 0.0f;
 public:
 	static CBeefalo* Create(LPDIRECT3DDEVICE9	pGraphicDev, _vec3 _vPos);
 

@@ -67,10 +67,10 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 
 
 	//PSW 공간음향
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH1, 1);
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH2, 2);
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH3, 3);
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH4, 4);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), STEREO_BGM);
+	//Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH2, 2);
+	//Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH3, 3);
+	//Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH4, 4);
 
 
 	CGameObject::Update_GameObject(fTimeDelta);
@@ -210,43 +210,47 @@ void CFire::Check_FrameState()
 		{
 		case CFire::FIRE_LEVEL_1:
 			m_pTransForm->Set_Scale(_vec3(0.4f, 0.4f, 0.4f));
-			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH2);
+			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
 			
 			//공간 음향/ 이걸로 사운드 재생
-			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv1.mp3", SOUND_EFFECT_CONTINUE_CH1);
-			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv1.mp3", 1.f, SOUND_EFFECT_CONTINUE_CH1);
+			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv1.mp3", SOUND_EFFECT_CONTINUE_CH1);
+			Engine::PlayEffectContinue(L"Obj_Campfire_Lv1.mp3", 0.2f, STEREO_BGM);
+			//Engine::PlayBGM(L"Obj_Campfire_Lv1.mp3", 1.f);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
 		case CFire::FIRE_LEVEL_2:
 			m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
-			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
-			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
+			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
 			
 			//공간 음향/ 이걸로 사운드 재생
-			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv2.mp3", SOUND_EFFECT_CONTINUE_CH2);
-			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv2.mp3", 2.f, SOUND_EFFECT_CONTINUE_CH2);
+			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv2.mp3", SOUND_EFFECT_CONTINUE_CH2);
+			Engine::PlayEffectContinue(L"Obj_Campfire_Lv2.mp3", 0.4f, STEREO_BGM);
+			//Engine::PlayBGM(L"Obj_Campfire_Lv2.mp3", 2.f);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
 		case CFire::FIRE_LEVEL_3:
 			m_pTransForm->Set_Scale(_vec3(0.6f, 0.6f, 0.6f));
-			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH2);
-			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH4);
+			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH4);
 			
 			//공간 음향/ 이걸로 사운드 재생
-			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv3.mp3", SOUND_EFFECT_CONTINUE_CH3);
-			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv3.mp3", 3.f, SOUND_EFFECT_CONTINUE_CH3);
+			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv3.mp3", SOUND_EFFECT_CONTINUE_CH3);
+			Engine::PlayEffectContinue(L"Obj_Campfire_Lv3.mp3", 0.5f, STEREO_BGM);
+			//Engine::PlayBGM(L"Obj_Campfire_Lv3.mp3", 3.f);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
 		case CFire::FIRE_LEVEL_4:
 			m_pTransForm->Set_Scale(_vec3(0.8f, 0.8f, 0.8f));
-			Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
+			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
 			
 			//공간 음향/ 이걸로 사운드 재생
-			Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv4.mp3", SOUND_EFFECT_CONTINUE_CH4);
-			//Engine::PlayEffectContinue(L"Obj_Campfire_Lv4.mp3", 4.f, SOUND_EFFECT_CONTINUE_CH4);
+			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv4.mp3", SOUND_EFFECT_CONTINUE_CH4);
+			Engine::PlayEffectContinue(L"Obj_Campfire_Lv4.mp3", 0.6f, STEREO_BGM);
+			//Engine::PlayBGM(L"Obj_Campfire_Lv4.mp3", 4.f);
 			m_bIsOff = false;
 			m_fFrameEnd = 5.f;
 			break;
@@ -331,7 +335,7 @@ void CFire::Level_Down()
 	}
 	else if(m_efireCurState== FIRE_LEVEL_1)
 	{
-		Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
+		Engine::StopSound(STEREO_BGM);
 			m_bIsOff = true;
 	}
 

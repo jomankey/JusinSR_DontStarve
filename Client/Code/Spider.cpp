@@ -56,9 +56,13 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
         Collision_EachOther(fTimeDelta);
     }
    
-    
+
     State_Change();
     Look_Change();
+   // Set_Scale();
+
+
+    //Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), STEREO_EFFECT, 1.f);
     //Set_Scale();
     CGameObject::Update_GameObject(fTimeDelta);
 
@@ -226,6 +230,7 @@ void CSpider::State_Change()
         case SLEEP:
             break;
         case HIT:
+            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_EFFECT, 1.0f);
             m_fFrameEnd = 6;
             m_fFrameSpeed = 11.f;
             if (m_eCurLook != LOOK_LEFT)
@@ -294,6 +299,7 @@ void CSpider::Attacking(const _float& fTimeDelta)
                 CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm())
                 && !m_bAttacking)
             {
+                
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
             }
@@ -304,6 +310,8 @@ void CSpider::Attacking(const _float& fTimeDelta)
             }*/
             else if (m_fFrameEnd < m_fFrame)
             {
+                Engine::PlaySound_W(L"Obj_Spider_Attack_2.mp3", SOUND_EFFECT, 0.9f);
+                Engine::PlaySound_W(L"Obj_Spider_Scream_3.mp3", SOUND_EFFECT, 0.9f);
                 if (!IsTarget_Approach(m_Stat.fATKRange))
                 {
                     m_eCurstate = WALK;
@@ -312,6 +320,7 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == WALK)
         {
+
             if (!dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
                 Player_Chase(fTimeDelta);
             else
@@ -320,8 +329,10 @@ void CSpider::Attacking(const _float& fTimeDelta)
     }
     else
     {
+        
         if (m_fFrameEnd < m_fFrame)
         {
+            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_EFFECT, 1.0f);
             m_bHit = false;
             m_eCurstate = WALK;
         }
@@ -379,6 +390,7 @@ _int CSpider::Die_Check()
 {
     if (m_Stat.fHP <= 0 && m_ePrestate != DEAD && m_ePrestate != ERASE )
     {
+       
         m_eCurstate = DEAD;
         m_eCurLook = LOOK_DOWN;
         m_Stat.bDead = true;
@@ -386,10 +398,12 @@ _int CSpider::Die_Check()
     }
     else if (m_ePrestate == DEAD)
     {
+       
         if (m_fFrameEnd < m_fFrame)
         {
-
-           CResObject::CreateItem(L"Silk", this, m_pGraphicDev);
+            Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_EFFECT, 1.0f);
+           CResObject::CreateItem(L"Silk", this, m_pGraphicDev,2);
+           CResObject::CreateItem(L"Meat_Monster", this, this->m_pGraphicDev);
 
             m_eCurstate = ERASE;
         }
@@ -415,6 +429,12 @@ void CSpider::Set_Hit()
 }
 
 
+
+void CSpider::FrameCheckSound()
+{
+
+
+}
 
 CSpider* CSpider::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {
