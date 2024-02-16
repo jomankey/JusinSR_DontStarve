@@ -125,6 +125,13 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 		}
 	}
 
+
+
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT, 1);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH1, 1);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH2, 1);
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH3, 1);
+
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -274,7 +281,9 @@ void CCookingPot::Change_Frame_Event()
 	{
 		if (m_eCookingpotCurState == COOKINGPOT_DEFAULT)
 		{
-			Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 0.5f);
+			//공간 음향
+			Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT);
+			//Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 0.5f);
 			m_eCookingpotCurState = COOKINGPOT_PLACE;
 		}
 
@@ -318,9 +327,13 @@ void CCookingPot::Change_Frame_Event()
 		//요리를 다시 시작하려 할 때
 		if (m_eCookingpotCurState == COOKINGPOT_IDLE_EMPTY && m_bIsCooking)
 		{
-			Engine::PlayEffectContinue(L"Obj_Cookingpot_Boil.mp3", 0.7f, SOUND_EFFECT_CONTINUE_CH1);
-			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_1.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH2);
-			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_2.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH3);
+			//공간 음향
+			Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Boil.mp3", SOUND_EFFECT_CONTINUE_CH1);
+			Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Rattle_1.mp3", SOUND_EFFECT_CONTINUE_CH2);
+			Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Rattle_2.mp3", SOUND_EFFECT_CONTINUE_CH3);
+			//Engine::PlayEffectContinue(L"Obj_Cookingpot_Boil.mp3", 0.7f, SOUND_EFFECT_CONTINUE_CH1);
+			//Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_1.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH2);
+			//Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_2.mp3", 0.5f, SOUND_EFFECT_CONTINUE_CH3);
 			m_eCookingpotCurState = COOKINGPOT_COOKING_LOOP;
 			
 		}
