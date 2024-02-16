@@ -100,6 +100,7 @@ _bool CMonster::Collision_Transform(CTransform* _Src, CTransform* _Dst, const _f
 	
 	vRDir = vSrc - vDst;
 	D3DXVec3Normalize(&vRDir, &vRDir);
+
 	if (fDistanceZ > fRadCY || iDistanceX > fRadCX)
 	{
 		return false;

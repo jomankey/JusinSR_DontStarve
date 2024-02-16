@@ -51,6 +51,11 @@ private:
 				m_bDetect = false;
 		}
 	}
+
+
+
+	void FrameCheckSound();
+
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;

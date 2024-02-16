@@ -61,7 +61,6 @@ HRESULT CPlayer::Ready_GameObject()
 	FAILED_CHECK_RETURN(Ready_Light(), E_FAIL);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	/*m_pTransForm->m_vScale = { 1.2f, 1.f, 1.f };*/
 	m_eCurState = IDLE;
 	m_ePreState = STATE_END;
 	m_eCurLook = LOOK_DOWN;
@@ -79,7 +78,6 @@ HRESULT CPlayer::Ready_GameObject()
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 	m_fFrameSpeed = 0.f;
-	m_fDiffY = 0.5f;// z버퍼 보정용값 추가
 
 	Set_Stat();
 	return S_OK;
@@ -133,7 +131,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Weapon_Change();
 	Check_State();
 	Look_Change();
-	Set_Scale();
+	//Set_Scale();
 	Fire_Light(); // 횃불 모션 시 켜짐 / 꺼짐 추가해야함
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -142,9 +140,10 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 void CPlayer::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
 	_vec3 vPos;
-	BillBoard();
+	m_pTransForm->BillBoard();
+	__super::LateUpdate_GameObject();
+
 	m_pTransForm->Get_Info(INFO::INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
 }
@@ -432,11 +431,9 @@ HRESULT CPlayer::Add_Component()
 	
 #pragma endregion TEXCOM
 
-
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Pos(0.f, 1.f, 0.f);
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

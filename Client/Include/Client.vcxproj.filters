@@ -280,14 +280,19 @@
     <Filter Include="01. Scene\05. MainScene">
       <UniqueIdentifier>{c3640b9e-bc62-43c5-8618-79434d7c4612}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\13. Particle\TreeDust">
-      <UniqueIdentifier>{20f206dc-7eb1-4656-8a1e-f025b4522d74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\13. Particle\Smoke">
       <UniqueIdentifier>{68236bce-7b18-4cf0-9e63-bfb7d8eb941b}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="04. Shader">
       <UniqueIdentifier>{18e330d0-9377-46e5-a885-1f54e2fb27c6}</UniqueIdentifier>
+=======
+    <Filter Include="02. GameObject\06. Effect\08. Sizemic">
+      <UniqueIdentifier>{e106cfe6-f7b4-45f8-b5c4-fd51f806149a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\13. Particle\Dust">
+      <UniqueIdentifier>{20f206dc-7eb1-4656-8a1e-f025b4522d74}</UniqueIdentifier>
+>>>>>>> 773f01728dfd3410f268af0999a02aec506d9fa3
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -556,10 +561,16 @@
       <Filter>01. Scene\05. MainScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDustParticle.h">
-      <Filter>02. GameObject\13. Particle\TreeDust</Filter>
+      <Filter>02. GameObject\13. Particle\Dust</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSmoke.h">
       <Filter>02. GameObject\13. Particle\Smoke</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SizemicL.h">
+      <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SizemicR.h">
+      <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -819,10 +830,16 @@
       <Filter>01. Scene\05. MainScene</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDustParticle.cpp">
-      <Filter>02. GameObject\13. Particle\TreeDust</Filter>
+      <Filter>02. GameObject\13. Particle\Dust</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSmoke.cpp">
       <Filter>02. GameObject\13. Particle\Smoke</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SizemicL.cpp">
+      <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SizemicR.cpp">
+      <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

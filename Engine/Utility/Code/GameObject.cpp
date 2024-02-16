@@ -11,8 +11,8 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_strObjName(L"NONE")
-	, m_fDiffY(0.f)
 	, m_iSlotNum(0)
+	, m_fCollisionRadius(1.f)
 {
 	m_pGraphicDev->AddRef();
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
@@ -25,8 +25,8 @@ Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName
 	, m_pTransForm(nullptr)
 	, m_bDelete(false)
 	, m_strObjName(_strName)
-	, m_fDiffY(0.f)
 	, m_iSlotNum(0)
+	, m_fCollisionRadius(1.f)
 {
 	m_pGraphicDev->AddRef();
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
@@ -39,7 +39,7 @@ CGameObject::CGameObject(const CGameObject& rhs)
 	, m_bDelete(false)
 	, m_Stat(rhs.m_Stat)
 	, m_iSlotNum(rhs.m_iSlotNum)
-	, m_fDiffY(0.f)
+	, m_fCollisionRadius(rhs.m_fCollisionRadius)
 {
 	m_mapComponent[ID_DYNAMIC] = rhs.m_mapComponent[ID_DYNAMIC];
 	m_pGraphicDev->AddRef();
@@ -96,41 +96,23 @@ _bool Engine::CGameObject::Collision_Transform(CTransform* _Src, CTransform* _Ds
 	}
 }
 
-_bool Engine::CGameObject::Collision_Circle(CTransform* _Src, CTransform* _Dst)
+_bool Engine::CGameObject::Collision_Circle(CGameObject* _pTarget)
 {
+	_vec3 vTargetPos;
+	_vec3 vMyPos;
+	_vec3 vDistance;
 
-	_vec3 vSrcpos, vSrcScale, vDstpos, vDstScale, vCamera;
+	//상대방과 나자신의 크기를 더한다. 이길이보다 작으면 충돌
+	_float fDistance = m_fCollisionRadius + _pTarget->m_fCollisionRadius;
 
-	_vec3 vSrcDir;
-	_vec3 vDstDir;
+	vMyPos = GetTransForm()->Get_Pos();
+	vTargetPos = _pTarget->GetTransForm()->Get_Pos();
 
-	_matrix matView;
-	_float fSrcDiff;
-	_float fDstDiff;
-	_float Distance;
+	vMyPos.y = 0.f;
+	vTargetPos.y = 0.f;
 
-	_Src->Get_Info(INFO_POS, &vSrcpos);
-	_Dst->Get_Info(INFO_POS, &vDstpos);
 
-	vSrcScale = _Src->Get_Scale();
-	vDstScale = _Dst->Get_Scale();
-
-	fSrcDiff = vSrcScale.y * 0.5;
-	fDstDiff = vDstScale.y * 0.5;
-	vCamera = scenemgr::Get_CurScene()->GetCameraObject()->Get_Pos();
-	vSrcDir = vCamera - vSrcpos;
-	D3DXVec3Normalize(&vSrcDir, &vSrcDir);
-	vSrcpos += vSrcDir * fSrcDiff;
-
-	vDstDir = vCamera - vSrcpos;
-	D3DXVec3Normalize(&vDstDir, &vDstDir);
-	vDstpos += vDstDir * fDstDiff;
-
-	vSrcpos.y = 0.f;
-	vDstpos.y = 0.f;
-
-	Distance = D3DXVec3Length(&(vDstpos - vSrcpos));
-	if (Distance < fSrcDiff+ fDstDiff)
+	if (fDistance >= D3DXVec3Length(&(vTargetPos - vMyPos)))
 	{
 		return true;
 	}
@@ -139,10 +121,54 @@ _bool Engine::CGameObject::Collision_Circle(CTransform* _Src, CTransform* _Dst)
 		return false;
 	}
 }
+//
+//_bool Engine::CGameObject::Collision_Circle(CTransform* _Src, CTransform* _Dst)
+//{
+//
+//	_vec3 vSrcpos, vSrcScale, vDstpos, vDstScale, vCamera;
+//
+//	_vec3 vSrcDir;
+//	_vec3 vDstDir;
+//
+//	_matrix matView;
+//	_float fSrcDiff;
+//	_float fDstDiff;
+//	_float Distance;
+//
+//	_Src->Get_Info(INFO_POS, &vSrcpos);
+//	_Dst->Get_Info(INFO_POS, &vDstpos);
+//
+//	vSrcScale = _Src->Get_Scale();
+//	vDstScale = _Dst->Get_Scale();
+//
+//	fSrcDiff = vSrcScale.y * 0.5;
+//	fDstDiff = vDstScale.y * 0.5;
+//	vCamera = scenemgr::Get_CurScene()->GetCameraObject()->Get_Pos();
+//	vSrcDir = vCamera - vSrcpos;
+//	D3DXVec3Normalize(&vSrcDir, &vSrcDir);
+//	vSrcpos += vSrcDir * fSrcDiff;
+//
+//	vDstDir = vCamera - vSrcpos;
+//	D3DXVec3Normalize(&vDstDir, &vDstDir);
+//	vDstpos += vDstDir * fDstDiff;
+//
+//	vSrcpos.y = 0.f;
+//	vDstpos.y = 0.f;
+//
+//	Distance = D3DXVec3Length(&(vDstpos - vSrcpos));
+//	if (Distance < fSrcDiff+ fDstDiff)
+//	{
+//		return true;
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
 const tuple<_vec3, _vec3, _vec3, _vec3> Engine::CGameObject::Get_Info_vec()
 {
 	if (scenemgr::Get_CurScene()->GetPlayerObject() == nullptr)
-		return make_tuple(_vec3(0, 0, 0), _vec3(0, 0, 0),_vec3(0, 0, 0), _vec3(0, 0, 0));
+		return make_tuple(_vec3(0, 0, 0), _vec3(0, 0, 0), _vec3(0, 0, 0), _vec3(0, 0, 0));
 
 	decltype(auto) pPlayer = scenemgr::Get_CurScene()->GetPlayerObject();
 
@@ -198,7 +224,6 @@ void Engine::CGameObject::Compute_ViewZ(const _vec3* pPos)
 	D3DXMatrixInverse(&matCamWorld, NULL, &matCamWorld);
 	_vec3 vPos = *pPos;
 	vPos.y = 0.f;
-	vPos.y += m_fDiffY;
 
 	_vec3	vCamPos;
 	memcpy(&vCamPos, &matCamWorld.m[3][0], sizeof(_vec3));

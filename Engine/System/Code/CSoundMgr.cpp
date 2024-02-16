@@ -168,8 +168,15 @@ void Engine::CSoundMgr::SpatialPlay_Sound(TCHAR* pSoundKey, CHANNELID eID)
 	if (iter == m_mapSound.end())
 		return;
 
-	FMOD_System_PlaySound(m_pSystem, iter->second, nullptr, FALSE, &m_pChannelArr[eID]);
+
+	FMOD_BOOL bPlay = FALSE;
+	if (FMOD_Channel_IsPlaying(m_pChannelArr[eID], &bPlay))
+	{
+		FMOD_System_PlaySound(m_pSystem, iter->second, nullptr, FALSE, &m_pChannelArr[eID]);
+	}
 	FMOD_Channel_SetMode(m_pChannelArr[eID], FMOD_LOOP_NORMAL);
+	FMOD_Channel_SetVolume(m_pChannelArr[eID], 1.0f);
+	FMOD_System_Update(m_pSystem);
 
 }
 

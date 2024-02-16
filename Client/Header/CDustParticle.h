@@ -23,7 +23,5 @@ public:
 	_float m_fAccTime;
 	_float m_Speed;
 
-
-
 };
 

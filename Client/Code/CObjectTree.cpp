@@ -29,7 +29,6 @@ HRESULT CObjectTree::Ready_GameObject()
 	m_eObject_id = TREE;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 27.f;
-	m_fDiffY = 3.0f;
 	Ready_Stat();
 
 
@@ -77,12 +76,10 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 
 void CObjectTree::LateUpdate_GameObject()
 {
+	m_pTransForm->BillBoard();
 	__super::LateUpdate_GameObject();
-	//Height_OnTerrain();
-
 	Check_FrameState();
 	_vec3	vPos;
-	m_pTransForm->BillBoard();
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	Compute_ViewZ(&vPos);
 

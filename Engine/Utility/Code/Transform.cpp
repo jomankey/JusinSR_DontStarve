@@ -243,11 +243,6 @@ void Engine::CTransform::BillBoard()
 	matBill._31 = matView._31;
 	matBill._33 = matView._33;
 
-	matBill._23 = matView._23;
-	matBill._32 = matView._32;
-	matBill._12 = matView._12;
-	matBill._21 = matView._21;
-
 	D3DXMatrixInverse(&matBill, NULL, &matBill);
 	Set_WorldMatrix(&(matBill * matWorld));
 

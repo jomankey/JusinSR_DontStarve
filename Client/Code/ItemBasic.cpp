@@ -58,7 +58,6 @@ HRESULT CItemBasic::Ready_GameObject()
 	// 부호를 무작위로 선택 (-1 또는 1)
 	int sign = (rand() % 2 == 0) ? 1 : -1;
 	int sign2 = (rand() % 2 == 0) ? 1 : -1;
-	m_fDiffY = -5.5f;
 	// 랜덤값에 부호를 적용
 	int result = randomValue * sign;
 	int result2 = randomValue2 * sign2;
