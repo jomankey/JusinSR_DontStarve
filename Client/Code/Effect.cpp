@@ -17,6 +17,7 @@ CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 vPos)
 	, m_eCurLook(LOOK_DOWN)
 	, m_ePreLook(LOOK_END)
 	, m_fDamage(0.f)
+	, m_bFrameSpeed(0.f)
 {
 }
 
@@ -30,6 +31,7 @@ CEffect::CEffect(const CEffect& rhs)
 	, m_eCurLook(rhs.m_eCurLook)
 	, m_ePreLook(rhs.m_ePreLook)
 	, m_fDamage(rhs.m_fDamage)
+	, m_bFrameSpeed(rhs.m_bFrameSpeed)
 {
 
 }

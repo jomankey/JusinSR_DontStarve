@@ -69,14 +69,11 @@ private:
 	void			Generate_Attack_Effect();		//기본 공격 이펙트 생성 함수
 	void			Generate_Roaring(_int _iCount);				// 포효 지르기 이펙트 생성 함수
 	void			Getnerate_SnowSplash();
+	void			Generate_Sizemic();
 
 	void			Camera_Shaking(_float _power, _float _time, _bool _dir);
 
 
-	void			Adjust_Taunt_Pos();
-	void			Adjust_Taunt_Pos_Back();
-	void			Adjust_Attack_Up_Pos();
-	void			Adjust_Attack_Up_Pos_Back();
 
 	void			Awake_Tallbird();
 
@@ -106,6 +103,7 @@ private:
 	_vec3		m_vTauntPos;
 
 	_bool		m_AttackPos;
+	_bool		m_bGimmick;
 
 };
 
