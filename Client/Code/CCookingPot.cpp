@@ -220,7 +220,7 @@ HRESULT CCookingPot::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(1.2f, 1.2f, 1.2f));
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
 	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
@@ -247,8 +247,6 @@ void CCookingPot::Check_FrameState()
 			m_fFrameEnd = 0.0f;
 			break;
 		case CCookingPot::COOKINGPOT_COOKING_LOOP:
-			
-	
 			m_fFrameEnd = 6.0f;
 			break;
 		case CCookingPot::COOKINGPOT_BURNT:

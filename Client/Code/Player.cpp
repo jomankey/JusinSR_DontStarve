@@ -121,7 +121,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Weapon_Change();
 	Check_State();
 	Look_Change();
-	Set_Scale();
+	//Set_Scale();
 	Fire_Light(); // È¶ºÒ ¸ð¼Ç ½Ã ÄÑÁü / ²¨Áü Ãß°¡ÇØ¾ßÇÔ
 	CGameObject::Update_GameObject(fTimeDelta);
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -420,7 +420,6 @@ HRESULT CPlayer::Add_Component()
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_research", pComponent });
 	
 #pragma endregion TEXCOM
-
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

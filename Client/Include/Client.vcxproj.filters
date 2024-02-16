@@ -280,11 +280,11 @@
     <Filter Include="01. Scene\05. MainScene">
       <UniqueIdentifier>{c3640b9e-bc62-43c5-8618-79434d7c4612}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\13. Particle\TreeDust">
-      <UniqueIdentifier>{20f206dc-7eb1-4656-8a1e-f025b4522d74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\13. Particle\Smoke">
       <UniqueIdentifier>{68236bce-7b18-4cf0-9e63-bfb7d8eb941b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\13. Particle\Dust">
+      <UniqueIdentifier>{20f206dc-7eb1-4656-8a1e-f025b4522d74}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -553,7 +553,7 @@
       <Filter>01. Scene\05. MainScene</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDustParticle.h">
-      <Filter>02. GameObject\13. Particle\TreeDust</Filter>
+      <Filter>02. GameObject\13. Particle\Dust</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSmoke.h">
       <Filter>02. GameObject\13. Particle\Smoke</Filter>
@@ -816,7 +816,7 @@
       <Filter>01. Scene\05. MainScene</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDustParticle.cpp">
-      <Filter>02. GameObject\13. Particle\TreeDust</Filter>
+      <Filter>02. GameObject\13. Particle\Dust</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSmoke.cpp">
       <Filter>02. GameObject\13. Particle\Smoke</Filter>

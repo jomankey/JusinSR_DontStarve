@@ -34,18 +34,23 @@ namespace Engine
 		virtual void		LateUpdate_GameObject();
 		virtual void		Render_GameObject()PURE;
 		_bool		Collision_Transform(CTransform* _Src, CTransform* _Dst);	//AABB함수.
-		_bool		Collision_Circle(CTransform* _Src, CTransform* _Dst);	//원형충돌.
+		_bool		Collision_Circle(CGameObject* _pTarget);	//원형충돌.
 		//첫번째 인자 자신, 두번째 인자 상대
 
 		//1.번째 반환 값: PlyerPos,2. 번째 반환 값: 자기 자신의 위치 벡터 3. 번째 반환 값: 자기 자신의 Look벡터, 4. 번째 반환 값: 자기 자신의 Up벡터
-		const tuple<_vec3, _vec3, _vec3,_vec3> Get_Info_vec();
+		const tuple<_vec3, _vec3, _vec3, _vec3> Get_Info_vec();
+
+		void SetCollisionRadius(_float _fColRadius) { m_fCollisionRadius = _fColRadius; }
+		_float GetCollisionRadius() { return m_fCollisionRadius; }
+
+
 	protected:
 		explicit CGameObject() = delete;
 		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev);
 		explicit CGameObject(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
 		explicit CGameObject(const CGameObject& rhs);
 		virtual ~CGameObject();
-		
+
 
 		virtual void		Free() override;
 	protected:
@@ -58,8 +63,8 @@ namespace Engine
 		_bool										m_bDelete;	//삭제예정일경우 True
 
 		wstring										m_strObjName;
-
 		OBJSTAT				m_Stat;
+		_float				m_fCollisionRadius;	// 각자 자신의 원형충돌범위
 
 		_int m_iSlotNum;  // 생성 시 슬롯의 몇번째에 있는지 체크하기 위해서 필요
 	};

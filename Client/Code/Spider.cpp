@@ -25,8 +25,8 @@ HRESULT CSpider::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
+    m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
     Set_ObjStat();
-    /*m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };*/
     m_fFrameEnd = 6;
     m_fFrameChange = rand() % 3;
     D3DXVec3Normalize(&m_vDir, &m_vDir);
@@ -59,7 +59,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     
     State_Change();
     Look_Change();
-    Set_Scale();
+    //Set_Scale();
     CGameObject::Update_GameObject(fTimeDelta);
 
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
@@ -198,7 +198,6 @@ HRESULT CSpider::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-    m_pTransForm->Set_Scale({ 0.7f, 0.5f, 0.7f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);

@@ -27,6 +27,7 @@ HRESULT CTallbird::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
+    m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
     Set_ObjStat();
     m_bStatChange[0] = false;
     m_bStatChange[1] = false;
@@ -219,7 +220,6 @@ HRESULT CTallbird::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-    m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
