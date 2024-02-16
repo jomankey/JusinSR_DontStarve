@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Beefalo.h"
-//#include "Export_System.h"
+#include "Export_System.h"
 #include "Export_Utility.h"
 #include "Player.h"
 #include <ItemBasic.h>
@@ -40,7 +40,10 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
 
     if (!m_bFrameStop)
+    {
         m_fFrame += m_fFrameSpeed * fTimeDelta;
+        FrameCheckSound(fTimeDelta);
+    }
     else
     {
         m_fFrame = m_fFrameEnd;
@@ -59,10 +62,19 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
         }
         Collision_EachOther(fTimeDelta);
     }           //여기에 else 걸어서 사망 트리거 연결(아이템 드랍 테이블)
+
+
+  
+
+
+   //Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT, 5.f);
+   // Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT_CONTINUE_CH1, 5.f);
     CGameObject::Update_GameObject(fTimeDelta);
     State_Change();
     Look_Change();
     Set_Scale();
+
+
     renderer::Add_RenderGroup(RENDER_ALPHA, this);
     
     return iResult;
@@ -245,10 +257,12 @@ void CBeefalo::State_Change()
         switch (m_eCurState)
         {
         case IDLE:
+          
             m_fFrameEnd = 16;
             m_fFrameSpeed = 16.f;
             if (m_eCurLook != LOOK_LEFT)
             {
+            
                 m_eCurLook = LOOK_DOWN;
             }
             break;
@@ -260,12 +274,20 @@ void CBeefalo::State_Change()
         case WALK:
             m_fFrameSpeed = 20.f;
             m_fFrameEnd = 20;
+            
+           // Engine::SpatialPlay_Sound(L"Obj_Beefalo_Chew_Voice_1.mp3", STEREO_EFFECT);
+       
             break;
         case ATTACK:
+            Engine::PlaySound_W(L"Obj_Beefalo_Angry.mp3", SOUND_EFFECT, 3.0f);
+  
+            
             m_fFrameSpeed = 10.f;
             m_fFrameEnd = 7;
             break;
         case MADRUN:
+         
+
             m_fFrameSpeed = 14.f;
             m_fFrameEnd = 4;
             break;
@@ -300,13 +322,16 @@ _int CBeefalo::Die_Check()
 {
     if (m_Stat.fHP <= 0 && m_ePreState != DEAD && m_ePreState != ERASE)
     {
+       
         m_eCurState = DEAD;
         m_Stat.bDead = true;
     }
     else if (m_ePreState == DEAD)
     {
+       
         if (m_fFrameEnd <= m_fFrame)
         {
+            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_EFFECT, 1.0f);
             CResObject::CreateItem(L"RawMeat",this,this->m_pGraphicDev);
            
 
@@ -343,6 +368,8 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
             }
             else if ((3 < m_fFrame) && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()) && !m_bAttacking)
             {
+                Engine::PlaySound_W(L"Obj_Beefalo_Attack.mp3", SOUND_EFFECT, 1.0f);
+                Engine::PlaySound_W(L"Obj_Beefalo_AttackVoice.mp3", SOUND_EFFECT, 1.0f);
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
             }
@@ -360,6 +387,7 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
     {
         if (m_fFrameEnd < m_fFrame)
         {
+            Engine::PlaySound_W(L"Obj_Beefalo_Farting_1.mp3", SOUND_EFFECT, 1.0f);
             m_bHit = false;
         }
 
@@ -394,6 +422,7 @@ void CBeefalo::Patroll(const _float& fTimeDelta)
 
         if (m_eCurState == WALK)            //걷기가 당첨되면 방향 변환
         {
+
             int randomValue = rand() % 360;
             int randomValue2 = rand() % 360;
             // 부호를 무작위로 선택 (-1 또는 1)
@@ -471,6 +500,28 @@ void CBeefalo::Set_Scale()
         m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
     }
 
+}
+
+void CBeefalo::FrameCheckSound(const _float& fTimeDelta)
+{
+    if (m_eCurState == WALK)
+    {
+        if (m_fFrame < 1.0f && m_fFrame < 1.3f)
+        {
+            if(IsTarget_Approach(3.f))
+                  Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_EFFECT, 1.0f);
+            else
+                Engine::StopSound(SOUND_EFFECT);
+        }
+  
+    }
+   //else if (m_eCurState == GRAZE)
+   //{
+   //    if (IsTarget_Approach(3.0f))
+   //    {
+   //        Engine::PlaySound_W(L"Obj_Beefalo_Chew_Voice_1.mp3", SOUND_EFFECT,1.0f);
+   //    }
+   //}
 }
 
 

@@ -57,6 +57,7 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 	Look_Change(); 
 	Set_Scale();
 	
+
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return iResult;
 }
@@ -254,6 +255,7 @@ void CPig::State_Change()
 		switch (m_eCurState)
 		{
 		case IDLE:
+			//Engine::PlayEffectContinue(L"Obj_Pig_Oink_1.mp3", 5.0f, STEREO_EFFECT);
 			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 7;
 			break;
@@ -322,6 +324,8 @@ _int CPig::Die_Check()
 	}
 	else if (m_ePreState == DEAD)
 	{
+		//Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", STEREO_EFFECT, 5.f);
+
 		if (m_fFrameEnd < m_fFrame)
 		{
 			CResObject::CreateItem(L"PigTail", this, m_pGraphicDev);

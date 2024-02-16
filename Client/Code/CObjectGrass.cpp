@@ -46,7 +46,7 @@ _int CObjectGrass::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_eCurState == RES_DEAD)
 		{
-			CreateItem(L"CutGlass", this, this->m_pGraphicDev);
+			CreateItem(L"CutGlass", this, this->m_pGraphicDev,1);
 			DeleteObject(this);//??
 		}
 			
