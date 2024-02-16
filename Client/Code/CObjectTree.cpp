@@ -95,9 +95,30 @@ void CObjectTree::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	m_pTextureCom[m_eCurState]->Set_Texture(m_fFrame);
 	FAILED_CHECK_RETURN(SetUp_Material(), );
+	//m_pTextureCom[m_eCurState]->Set_Texture(m_pShaderCom, "g_Texture", m_fFrame);
+	//_matrix maxView, maxProj;
+	//m_pGraphicDev->GetTransform(D3DTS_VIEW, &maxView);
+	//m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &maxProj);
+
+	m_pTextureCom[m_eCurState]->Set_Texture(m_fFrame);
+
+	//if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", m_pTransForm->Get_WorldMatrix())))
+	//	return;
+	//if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &maxView)))
+	//	return;
+	//if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &maxProj)))
+	//	return;
+
+	//if (FAILED(m_pShaderCom->Begin_Shader(0)))
+	//	return;
+
+	//if (FAILED(m_pShaderCom->End_Shader()))
+	//	return;
+
 	m_pBufferCom->Render_Buffer();
+
+
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -136,6 +157,11 @@ HRESULT CObjectTree::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Obejct_Tree_Final", pComponent });
 
 #pragma endregion TEXCOM
+
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(proto::Clone_Proto(L"Proto_Shader_Rect"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Shader_Rect", pComponent });
+
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });

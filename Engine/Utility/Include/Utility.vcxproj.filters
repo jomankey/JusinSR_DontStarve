@@ -82,6 +82,9 @@
     <Filter Include="04. Component\05. Animator\Animation">
       <UniqueIdentifier>{3bfc2413-533c-4bed-9636-2b6354acf74c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Component\06. Shader">
+      <UniqueIdentifier>{e0973315-7ccb-4753-a140-922b5e682ccd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Header\CSceneMgr.h">
@@ -168,6 +171,9 @@
     <ClInclude Include="..\..\Header\VIBuffer.h">
       <Filter>04. Component\00. VIBuffer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Header\Shader.h">
+      <Filter>04. Component\06. Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CSceneMgr.cpp">
@@ -250,6 +256,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\VIBuffer.cpp">
       <Filter>04. Component\00. VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Shader.cpp">
+      <Filter>04. Component\06. Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

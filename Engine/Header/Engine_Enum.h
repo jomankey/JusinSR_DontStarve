@@ -87,7 +87,6 @@ namespace Engine
 		UI,
 		BOSS,
 		EFFECT,
-		SLIDEBOX,
 		PANEL,
 		PARTICLE,
 		END = 32,

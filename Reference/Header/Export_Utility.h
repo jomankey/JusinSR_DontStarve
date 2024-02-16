@@ -13,6 +13,7 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 #include "CustomTex.h"
+#include "Shader.h"
 
 #include "Texture.h"
 #include "CAnimator.h"
