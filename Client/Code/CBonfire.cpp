@@ -221,7 +221,7 @@ void CBonfire::AddFIre(int _Value)
 		{
 			m_pFire->Set_NextLevel();
 			//
-			Engine::PlaySound_W(L"Obj_Campfire_Addfuel.mp3", STEREO_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Campfire_Addfuel.mp3", SOUND_EFFECT, 3.0f);
 			m_fFireWoodCount = 0;
 
 		}
