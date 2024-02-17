@@ -175,13 +175,13 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	m_pPlayer->GetTransForm()->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
-	pGameObject = CTallbird::Create(m_pGraphicDev, _vec3(64.f, 0.84f, 66.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+	//pGameObject = CTallbird::Create(m_pGraphicDev, _vec3(64.f, 0.84f, 66.f));
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
 
-	pGameObject = CSpider::Create(m_pGraphicDev, _vec3(64.f, 0.16f, 66.f));
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
+	//pGameObject = CSpider::Create(m_pGraphicDev, _vec3(64.f, 0.16f, 66.f));
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
 
 	return S_OK;
 }
@@ -491,10 +491,9 @@ HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
 {
 	D3DLIGHT9* tLightInfo = light::Get_Light(0)->Get_Light();
 
-	static _vec3 vLight[3] = {
-		{m_vDirectionDiffuseColor[0].x, m_vDirectionDiffuseColor[0].y, m_vDirectionDiffuseColor[0].z },
-		{m_vDirectionAmbientColor[0].x, m_vDirectionAmbientColor[0].y, m_vDirectionAmbientColor[0].z },
-		{m_vDirectionSpecularColor[0].x, m_vDirectionSpecularColor[0].y, m_vDirectionSpecularColor[0].z } };
+	m_vLight[0] = { m_vDirectionDiffuseColor[0].x, m_vDirectionDiffuseColor[0].y, m_vDirectionDiffuseColor[0].z };
+	m_vLight[1] = { m_vDirectionAmbientColor[0].x, m_vDirectionAmbientColor[0].y, m_vDirectionAmbientColor[0].z };
+	m_vLight[2] = { m_vDirectionSpecularColor[0].x, m_vDirectionSpecularColor[0].y, m_vDirectionSpecularColor[0].z };
 
 	tLightInfo->Type = D3DLIGHT_DIRECTIONAL;
 	
@@ -512,29 +511,29 @@ HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
 
 	float fSpeed = 0.7;
 
-	vLight[0].x += (m_vDirectionDiffuseColor[iIndex].x - vLight[0].x) * fTimeDelta * fSpeed;
-	vLight[0].y += (m_vDirectionDiffuseColor[iIndex].y - vLight[0].y) * fTimeDelta * fSpeed;
-	vLight[0].z += (m_vDirectionDiffuseColor[iIndex].z - vLight[0].z) * fTimeDelta * fSpeed;
+	m_vLight[0].x += (m_vDirectionDiffuseColor[iIndex].x - m_vLight[0].x) * fTimeDelta * fSpeed;
+	m_vLight[0].y += (m_vDirectionDiffuseColor[iIndex].y - m_vLight[0].y) * fTimeDelta * fSpeed;
+	m_vLight[0].z += (m_vDirectionDiffuseColor[iIndex].z - m_vLight[0].z) * fTimeDelta * fSpeed;
 
-	vLight[1].x += (m_vDirectionAmbientColor[iIndex].x - vLight[1].x) * fTimeDelta * fSpeed;
-	vLight[1].y += (m_vDirectionAmbientColor[iIndex].y - vLight[1].y) * fTimeDelta * fSpeed;
-	vLight[1].z += (m_vDirectionAmbientColor[iIndex].z - vLight[1].z) * fTimeDelta * fSpeed;
+	m_vLight[1].x += (m_vDirectionAmbientColor[iIndex].x - m_vLight[1].x) * fTimeDelta * fSpeed;
+	m_vLight[1].y += (m_vDirectionAmbientColor[iIndex].y - m_vLight[1].y) * fTimeDelta * fSpeed;
+	m_vLight[1].z += (m_vDirectionAmbientColor[iIndex].z - m_vLight[1].z) * fTimeDelta * fSpeed;
 
-	vLight[2].x += (m_vDirectionSpecularColor[iIndex].x - vLight[2].x) * fTimeDelta * fSpeed;
-	vLight[2].y += (m_vDirectionSpecularColor[iIndex].y - vLight[2].y) * fTimeDelta * fSpeed;
-	vLight[2].z += (m_vDirectionSpecularColor[iIndex].z - vLight[2].z) * fTimeDelta * fSpeed;
+	m_vLight[2].x += (m_vDirectionSpecularColor[iIndex].x - m_vLight[2].x) * fTimeDelta * fSpeed;
+	m_vLight[2].y += (m_vDirectionSpecularColor[iIndex].y - m_vLight[2].y) * fTimeDelta * fSpeed;
+	m_vLight[2].z += (m_vDirectionSpecularColor[iIndex].z - m_vLight[2].z) * fTimeDelta * fSpeed;
 
-	tLightInfo->Diffuse = D3DXCOLOR(vLight[0].x,
-		vLight[0].y,
-		vLight[0].z,
+	tLightInfo->Diffuse = D3DXCOLOR(m_vLight[0].x,
+		m_vLight[0].y,
+		m_vLight[0].z,
 		1.f);
-	tLightInfo->Specular = D3DXCOLOR(vLight[1].x,
-		vLight[1].y,
-		vLight[1].z,
+	tLightInfo->Specular = D3DXCOLOR(m_vLight[1].x,
+		m_vLight[1].y,
+		m_vLight[1].z,
 		1.f);
-	tLightInfo->Ambient = D3DXCOLOR(vLight[2].x,
-		vLight[2].y,
-		vLight[2].z,
+	tLightInfo->Ambient = D3DXCOLOR(m_vLight[2].x,
+		m_vLight[2].y,
+		m_vLight[2].z,
 		1.f);
 
 	tLightInfo->Direction = _vec3(1.f, -1.f, 1.f);

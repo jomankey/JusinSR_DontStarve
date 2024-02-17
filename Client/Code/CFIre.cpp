@@ -98,7 +98,6 @@ void CFire::LateUpdate_GameObject()
 void CFire::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -106,10 +105,38 @@ void CFire::Render_GameObject()
 	//불은 이미지가 꺼져도 항상 있어야함 그래서 이미지만 꺼버림
 	if (m_bIsOff==false)
 	{
-		m_pFireTexCom[m_efireCurState]->Set_Texture((_uint)m_fFrame);
-		FAILED_CHECK_RETURN(SetUp_Material(), );
-		m_pBufferCom->Render_Buffer();
+		if (m_bShader)
+		{
+			m_pFireTexCom[m_efireCurState]->Set_Texture(m_pShaderCom, "g_Texture", m_fFrame);
+			_matrix maxView, maxProj;
+			m_pGraphicDev->GetTransform(D3DTS_VIEW, &maxView);
+			m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &maxProj);
+
+			if (FAILED(m_pShaderCom->Bind_Matrix("g_WorldMatrix", m_pTransForm->Get_WorldMatrix())))
+				return;
+			if (FAILED(m_pShaderCom->Bind_Matrix("g_ViewMatrix", &maxView)))
+				return;
+			if (FAILED(m_pShaderCom->Bind_Matrix("g_ProjMatrix", &maxProj)))
+				return;
+
+			if (FAILED(m_pShaderCom->Begin_Shader(0)))
+				return;
+
+			m_pBufferCom->Render_Buffer();
+
+			if (FAILED(m_pShaderCom->End_Shader()))
+				return;
+		}
+		else
+		{
+			m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+			m_pFireTexCom[m_efireCurState]->Set_Texture((_uint)m_fFrame);
+			FAILED_CHECK_RETURN(SetUp_Material(), );
+			m_pBufferCom->Render_Buffer();
+		}
+
 	}
+
 	
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -188,7 +215,9 @@ HRESULT CFire::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-
+	pComponent = m_pShaderCom = dynamic_cast<CShader*>(proto::Clone_Proto(L"Proto_Shader_Rect"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Proto_Shader_Rect", pComponent });
 
 
 

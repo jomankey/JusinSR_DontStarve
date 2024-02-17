@@ -13,7 +13,7 @@ HRESULT CWorldTimeBody::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = 730.f;
+	m_fX = WINCX - 75.f;
 	m_fY = 60.f;
 
 	m_fSizeX = 40.f;

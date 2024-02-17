@@ -58,6 +58,14 @@ HRESULT CShader::Bind_Texture(D3DXHANDLE hParameter, LPDIRECT3DBASETEXTURE9 pTex
 	return m_pEffect->SetTexture(hParameter, pTexture);
 }
 
+HRESULT Engine::CShader::Bind_Vector(D3DXHANDLE hParameter, const _vec4* pVecter)
+{
+	if (nullptr == m_pEffect)
+		return E_FAIL;
+
+	return m_pEffect->SetVector(hParameter, pVecter);
+}
+
 CShader* CShader::Create(LPDIRECT3DDEVICE9 pGraphic_Device, const wstring& strShaderFilePath)
 {
 	CShader* pInstance = new CShader(pGraphic_Device);

@@ -29,6 +29,8 @@ namespace Engine
 
 		void Set_SlotNum(_int iNum) { m_iSlotNum = iNum; }
 
+		void Set_Shader(_bool bShader) { m_bShader = bShader; }
+
 	public:
 		virtual HRESULT		Ready_GameObject();
 		virtual _int		Update_GameObject(const _float& fTimeDelta);
@@ -69,5 +71,7 @@ namespace Engine
 		_float				m_fCollisionRadius;	// 각자 자신의 원형충돌범위
 
 		_int m_iSlotNum;  // 생성 시 슬롯의 몇번째에 있는지 체크하기 위해서 필요
+
+		_bool m_bShader;
 	};
 }

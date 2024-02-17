@@ -32,7 +32,7 @@ HRESULT CButtonUI::Ready_GameObject()
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
     m_pTransForm->Set_Pos(_vec3((m_fX - WINCX * 0.5f), -m_fY + WINCY * 0.5f, 0.f));
-    m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
+    m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.1f));
 
     D3DXMatrixIdentity(&m_ViewMatrix);
     D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
