@@ -126,6 +126,12 @@
 #include "C:\GitHub\JusinSR\Client\Code\Rebirth.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\SizemicL.cpp"
+
+
+#include "C:\GitHub\JusinSR\Client\Code\SizemicR.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\Slot.cpp"
 
 
