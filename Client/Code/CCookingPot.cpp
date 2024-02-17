@@ -285,7 +285,7 @@ void CCookingPot::Change_Frame_Event()
 		{
 			//공간 음향
 			//Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT);
-			Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 4.0f);
 			
 			m_eCookingpotCurState = COOKINGPOT_PLACE;
 		}
