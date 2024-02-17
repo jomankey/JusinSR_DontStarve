@@ -126,6 +126,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\Mouse.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\PlayerMgr.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\Rebirth.cpp"
 
 
