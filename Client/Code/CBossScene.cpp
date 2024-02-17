@@ -13,6 +13,9 @@
 #include "Pig.h"
 #include "BerryBush.h"
 #include "MainApp.h"
+//PlayerMgr
+#include "PlayerMgr.h"
+
 //Scene
 #include "Layer.h"
 
@@ -239,9 +242,17 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 
-	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+	if (CPlayerMgr::GetInstance()->Get_Player_Pointer() == nullptr)
+	{
+		pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+	}
+	else
+	{
+		m_pPlayer = CPlayerMgr::GetInstance()->Get_Player_Pointer();
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, m_pPlayer), E_FAIL);
+	}
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 1.15f, 64.f));
 	m_pPlayer->GetTransForm()->Set_Scale(_vec3(2.f, 2.f, 2.f));
 

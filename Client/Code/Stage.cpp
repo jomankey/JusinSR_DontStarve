@@ -24,6 +24,9 @@
 
 #include "Transform.h"
 
+//PlayerMgr
+#include "PlayerMgr.h"
+
 //Scene
 #include "Layer.h"
 #include "CTestScene.h"
@@ -174,7 +177,7 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 1.15f, 64.f));
 	m_pPlayer->GetTransForm()->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
-
+	CPlayerMgr::GetInstance()->Set_Player_Pointer(m_pPlayer);
 
 	return S_OK;
 }

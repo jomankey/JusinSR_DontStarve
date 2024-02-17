@@ -295,6 +295,9 @@
     <Filter Include="02. GameObject\13. Particle\TreeLeafFall">
       <UniqueIdentifier>{5ffc96d2-a070-4452-81ce-194545ae5813}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Manager\PlayerMgr">
+      <UniqueIdentifier>{f7af329f-3fd7-445e-87cd-f8f2dd7c4f87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -579,6 +582,9 @@
     <ClInclude Include="..\Header\CTreeLeafFall.h">
       <Filter>02. GameObject\13. Particle\TreeLeafFall</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PlayerMgr.h">
+      <Filter>03. Manager\PlayerMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -853,6 +859,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTreeLeafFall.cpp">
       <Filter>02. GameObject\13. Particle\TreeLeafFall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerMgr.cpp">
+      <Filter>03. Manager\PlayerMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

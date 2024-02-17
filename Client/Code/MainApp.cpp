@@ -6,7 +6,7 @@
 #include "UIMgr.h"
 #include "SlotMgr.h"
 #include "Export_System.h"
-
+#include "PlayerMgr.h"
 _uint CMainApp::g_iLightNum = -1;
 
 CMainApp::CMainApp() : m_pDeviceClass(nullptr)
@@ -23,7 +23,7 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(SetUp_Setting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Event(m_pGraphicDev, &m_pEventMgrClass), E_FAIL);
-	
+	CPlayerMgr::GetInstance()->Initailize();
 	//Engine::PlaySound_W(L"Start.mp3", SOUND_BGM, 1.f);
 
 	//Engine::PlayBGM(L"Start.mp3", 10.f);
@@ -152,4 +152,5 @@ void CMainApp::Free()
 	Engine::Release_Utility();
 	CUIMgr::DestroyInstance();
 	CSlotMgr::DestroyInstance();
+	CPlayerMgr::DestroyInstance();
 }

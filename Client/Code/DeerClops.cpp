@@ -579,6 +579,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				m_pTransForm->Set_Pos(m_vPos);
 				m_bFalldown = true;
 				Generate_Roaring(0.9);
+				Generate_Sizemic();
 				Getnerate_SnowSplash();
 				Camera_Shaking(3.f, 1.f, false);
 				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_EFFECT, 0.5f);
@@ -904,7 +905,7 @@ void CDeerClops::Generate_Attack_Effect()
 	switch (m_ePreLook)
 	{
 	case LOOK_DOWN:
-		vThisPos -= vLook * 3;
+		vThisPos -= vLook * 2;
 		vThisPos -= vRight * 3;
 		break;
 	case LOOK_UP:

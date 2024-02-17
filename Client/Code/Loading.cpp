@@ -143,10 +143,12 @@ HRESULT CLoading::Loading_Player_Texture()
 	//별개 동작
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_falldown", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/fall_down/fall_down__%03d.png", 8)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_wakeup", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/wake_up/wake_up__%03d.png", 32)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_eat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/eat/eat__%03d.png", 36)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_eat", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/eat/eat__%03d.png", 35)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_die", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/death/death__%03d.png", 19)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_dialog", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/dial/dial__%03d.png", 17)), E_FAIL);
 
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Player_sleep", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/UnArmed/sleep/sleep__%03d.png", 13)), E_FAIL);
+	
 
 
 	//유령상태

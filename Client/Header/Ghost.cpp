@@ -113,6 +113,7 @@ void CGhost::State_Change()
             m_fFrameEnd = 12.f;
             break;
         case IDLE:
+            Engine::PlaySound_W(L"ghost [11].mp3", SOUND_PLAYER, 0.2f);
             m_fFrameEnd = 26.f;
             break;
         }
@@ -142,7 +143,7 @@ void CGhost::Set_Scale()
     if (m_ePreState == APPEAR)
         m_pTransForm->m_vScale = { 1.5f, 2.5f, 1.5f };
     else if (m_ePreState == IDLE)
-        m_pTransForm->m_vScale = { 1.5f, 2.5f, 1.5f };
+        m_pTransForm->m_vScale = { 1.f, 2.f, 1.f };
 }
 
 CGhost* CGhost::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)

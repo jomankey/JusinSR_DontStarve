@@ -235,9 +235,11 @@ void CItemTool::Input_Mouse()
 void CItemTool::Eat_Food()
 {
 	Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_PLAYER, 1.f);
+	
 	//플레이어 먹기 기능
 	auto& vecPlayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PLAYER)[0];
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(vecPlayer);
+	
 
 	if (m_strObjName == L"Berries")
 	{
@@ -282,6 +284,7 @@ void CItemTool::Eat_Food()
 		pPlayer->Set_PlayerHangry(0.f);
 		pPlayer->Set_PlayerHp(0.f);
 	}
+	pPlayer->Set_Eat();
 	CSlotMgr::GetInstance()->Remove_InvenItem(m_iNum);
 }
 
