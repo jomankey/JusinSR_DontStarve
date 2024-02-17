@@ -359,7 +359,7 @@ void CDeerClops::Set_Hit()
 		if (!m_bPhase[DIE])
 		{
 			m_bPhase[DIE] = true;
-			Engine::PlaySound_W(L"Obj_Deerclops_Death_1.mp3", SOUND_EFFECT, 0.5f);
+			Engine::PlaySound_W(L"Obj_Deerclops_Death_1.mp3", SOUND_DEERCLOPS, 0.5f);
 			m_eCurState = DEAD;
 			m_Stat.bDead = true;
 		}
@@ -410,7 +410,7 @@ void CDeerClops::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case TAUNT:
-			Engine::PlaySound_W(L"Obj_Deerclops_Taunt_2.mp3", SOUND_EFFECT, 0.5f);
+			Engine::PlaySound_W(L"Obj_Deerclops_Taunt_2.mp3", SOUND_DEERCLOPS, 0.5f);
 			m_fFrameSpeed = 17.f;
 			Generate_Roaring(0.9);
 			Camera_Shaking(1.f, 2.f, false);
@@ -582,7 +582,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				Generate_Sizemic();
 				Getnerate_SnowSplash();
 				Camera_Shaking(3.f, 1.f, false);
-				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_EFFECT, 0.5f);
+				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_DEERCLOPS, 0.5f);
 				Awake_Tallbird();
 				// 여기에 카메라 쉐이킹
 			}
@@ -894,7 +894,7 @@ void CDeerClops::Generate_Fall_Mark_Ex()
 
 void CDeerClops::Generate_Attack_Effect()
 {
-	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 0.2f);
+	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_DEERCLOPS, 0.2f);
 	_vec3 vThisPos, vRight, vLook; // 이펙트 생성 기점.
 	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
 	m_pTransForm->Get_Info(INFO_LOOK, &vLook);
@@ -1042,22 +1042,22 @@ void CDeerClops::Hit_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_1.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_1.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_2.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_2.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_3.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_3.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 3:
-		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_4.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_4.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 4:
-		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_5.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_5.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 5:
-		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_6.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_6.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	}
 }
@@ -1068,19 +1068,19 @@ void CDeerClops::Attack_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Deerclops_Attack_1.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_1.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Deerclops_Attack_2.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_2.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"Obj_Deerclops_Attack_3.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_3.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 3:
-		Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	case 4:
-		Engine::PlaySound_W(L"Obj_Deerclops_Attack_5.mp3", SOUND_EFFECT, 0.2f);
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_5.mp3", SOUND_DEERCLOPS, 0.2f);
 		break;
 	}
 }

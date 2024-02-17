@@ -35,11 +35,11 @@ HRESULT CPig::Ready_GameObject()
 
 _int CPig::Update_GameObject(const _float& fTimeDelta)
 {
-	
-	if(!m_bFrameStop)
+
+	if (!m_bFrameStop)
 		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
-	
+
 	if (!m_Stat.bDead)      //죽은 상태가 아닐때 진입
 	{
 		if (m_Attacked)     //공격받았을때 진입
@@ -53,14 +53,15 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 		Collision_EachOther(fTimeDelta);
 	}
 
-	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_PIG);
-
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
 	Look_Change(); 
 	//Set_Scale();
 	
-
+	if (Collision_Circle(this))
+	{
+		//Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_PIG,1.0f);
+	}
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return iResult;
 }
@@ -299,7 +300,7 @@ void CPig::State_Change()
 		{
 		case IDLE:
 			//Engine::PlaySound_W
-			Engine::PlaySound_W(L"Obj_Pig_Oink_1.mp3",  SOUND_PIG,0.2f);
+			//Engine::PlaySound_W(L"Obj_Pig_Oink_1.mp3",  SOUND_PIG,0.2f);
 			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 7;
 			break;
@@ -368,10 +369,11 @@ _int CPig::Die_Check()
 	}
 	else if (m_ePreState == DEAD)
 	{
-		Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", SOUND_PIG, 5.f);
+		
 
 		if (m_fFrameEnd < m_fFrame)
 		{
+			Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", SOUND_PIG, 0.4f);
 			CResObject::CreateItem(L"PigTail", this, m_pGraphicDev);
 
 			m_eCurState = ERASE;
@@ -424,6 +426,7 @@ void CPig::Attacking(const _float& fTimeDelta)
 	{
 		if (m_fFrameEnd < m_fFrame)
 		{
+			Engine::PlaySound_W(L"Obj_Pig_Oink_2.mp3", SOUND_PIG, 0.4f);
 			m_eCurState = RUN;
 			m_bHit = false;
 		}

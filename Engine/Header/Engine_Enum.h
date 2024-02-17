@@ -7,7 +7,8 @@ namespace Engine
 
 	enum CHANNELID { 
 		SOUND_EFFECT,
-		SOUND_BGM, 
+		SOUND_BGM,
+		SOUND_MAIN_BGM,
 		STEREO_EFFECT,
 		STEREO_BGM,					//공간음향 적용중
 		SOUND_EFFECT_CONTINUE_CH1, //공간음향 적용중

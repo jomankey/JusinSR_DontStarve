@@ -93,6 +93,7 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene()
 {
+	Engine::StopAll();
 	srand(unsigned(time(NULL)));
 	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
 	{
@@ -104,7 +105,11 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 
-	Engine::StopAll();
+	
+	//Engine::Update_System();
+	//Engine::PlaySound_NonStop(L"Common_Forest.mp3", SOUND_BGM, 0.8f);		?????
+	//Engine::PlayBGM(L"Common_Forest.mp3", 0.7f);
+
 	//Engine::PlayBGM(L"Common_Wind.mp3", 0.7f);
 	//Engine::PlayBGM(L"Common_Forest.mp3", 0.7f);
 	return S_OK;

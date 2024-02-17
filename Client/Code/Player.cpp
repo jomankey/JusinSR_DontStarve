@@ -1053,7 +1053,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		{
 			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 			{
-				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_ROCK, 5.f);
+				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_ROCK, 0.2f);
 				Rock_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				m_vPlayerActing = true;
