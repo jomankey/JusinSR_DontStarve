@@ -54,6 +54,7 @@ _int CScene::Update_Scene(const _float & fTimeDelta)
 {
 	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
 	{
+		
 		m_arrLayer[i]->UpdateLayer(fTimeDelta);
 	}
 

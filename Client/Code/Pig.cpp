@@ -51,6 +51,9 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 		}
 		Collision_EachOther(fTimeDelta);
 	}
+
+	Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_PIG);
+
 	CGameObject::Update_GameObject(fTimeDelta);
 	State_Change();
 	Look_Change(); 
@@ -253,7 +256,8 @@ void CPig::State_Change()
 		switch (m_eCurState)
 		{
 		case IDLE:
-			//Engine::PlayEffectContinue(L"Obj_Pig_Oink_1.mp3", 5.0f, STEREO_EFFECT);
+			//Engine::PlaySound_W
+			Engine::PlaySound_W(L"Obj_Pig_Oink_1.mp3",  SOUND_PIG,0.2f);
 			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 7;
 			break;
@@ -322,7 +326,7 @@ _int CPig::Die_Check()
 	}
 	else if (m_ePreState == DEAD)
 	{
-		//Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", STEREO_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", SOUND_PIG, 5.f);
 
 		if (m_fFrameEnd < m_fFrame)
 		{

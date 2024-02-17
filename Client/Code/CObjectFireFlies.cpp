@@ -37,7 +37,7 @@ _int CObjectFireFlies::Update_GameObject(const _float& fTimeDelta)
 {
 	
 	if(!m_bIsFrameStop)
-	m_fFrame += m_fFrameEnd * fTimeDelta;
+	m_fFrame += m_fFrameEnd * fTimeDelta*0.5;
 	
 
 

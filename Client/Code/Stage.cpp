@@ -116,7 +116,7 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
 	}
-
+	Engine::Update_System();
 	__super::Update_Scene(fTimeDelta);
 	Change_LightInfo(fTimeDelta);
 

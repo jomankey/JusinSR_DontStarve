@@ -94,7 +94,7 @@ _int CCookingPot::Update_GameObject(const _float& fTimeDelta)
 		//요리끝
 		if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_bSuccess ? L"Meatballs" : L"Wetgoop", &vSlot))
 		{
-			Engine::PlaySound_W(L"Obj_Cookingpot_Finish.mp3", SOUND_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Cookingpot_Finish.mp3", SOUND_EFFECT, 0.3f);
 			
 			_vec3 vPos;
 			m_pTransForm->Get_Info(INFO_POS, &vPos);
@@ -251,9 +251,10 @@ void CCookingPot::Check_FrameState()
 			m_fFrameEnd = 0.0f;
 			break;
 		case CCookingPot::COOKINGPOT_COOKING_LOOP:
-			Engine::PlayEffectContinue(L"Obj_Cookingpot_Boil.mp3",1.0f, SOUND_EFFECT_CONTINUE_CH1);
-			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_1.mp3",1.0f, SOUND_EFFECT_CONTINUE_CH2);
-			Engine::PlayEffectContinue(L"Obj_Cookingpot_Rattle_2.mp3", 1.0f,SOUND_EFFECT_CONTINUE_CH3);
+			//Engine::PlayBGM(L"Obj_Cookingpot_Boil.mp3", SOUND_EFFECT_CONTINUE_CH1);
+			Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Boil.mp3", SOUND_EFFECT_CONTINUE_CH1);
+			Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Rattle_1.mp3", SOUND_EFFECT_CONTINUE_CH2);
+			Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Rattle_2.mp3", SOUND_EFFECT_CONTINUE_CH3);
 	
 			m_fFrameEnd = 6.0f;
 			break;
@@ -289,7 +290,7 @@ void CCookingPot::Change_Frame_Event()
 		{
 			//공간 음향
 			//Engine::SpatialPlay_Sound(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT);
-			Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 4.0f);
+			Engine::PlaySound_W(L"Obj_Cookingpot_Craft.mp3", SOUND_EFFECT, 0.3f);
 			
 			m_eCookingpotCurState = COOKINGPOT_PLACE;
 		}

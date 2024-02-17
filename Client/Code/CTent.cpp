@@ -213,14 +213,14 @@ void CTent::Check_FrameState()
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DESTROY:
-			Engine::PlaySound_W(L"Obj_Tent_Destroy.mp3", SOUND_EFFECT, 10.0f);
+			Engine::PlaySound_W(L"Obj_Tent_Destroy.mp3", SOUND_EFFECT, 0.2f);
 			m_fFrameEnd = 16.0f;
 			break;
 		case CTent::CTENT_BURNT:
 			m_fFrameEnd = 0.0f;
 			break;
 		case CTent::CTENT_PLACE:
-			Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
+			Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 0.2f);
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DEFAULT:
@@ -332,7 +332,7 @@ void CTent::Install_Obj()
 		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
-		Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
+		Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 0.2f);
 		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
 	}
 }

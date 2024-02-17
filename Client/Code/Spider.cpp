@@ -62,7 +62,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
    // Set_Scale();
 
 
-    //Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), STEREO_EFFECT, 1.f);
+    //Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_SPIDER, 1.f);
     //Set_Scale();
     CGameObject::Update_GameObject(fTimeDelta);
 
@@ -230,7 +230,7 @@ void CSpider::State_Change()
         case SLEEP:
             break;
         case HIT:
-            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_EFFECT, 1.0f);
+            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_SPIDER, 0.2f);
             m_fFrameEnd = 6;
             m_fFrameSpeed = 11.f;
             if (m_eCurLook != LOOK_LEFT)
@@ -310,8 +310,8 @@ void CSpider::Attacking(const _float& fTimeDelta)
             }*/
             else if (m_fFrameEnd < m_fFrame)
             {
-                Engine::PlaySound_W(L"Obj_Spider_Attack_2.mp3", SOUND_EFFECT, 0.9f);
-                Engine::PlaySound_W(L"Obj_Spider_Scream_3.mp3", SOUND_EFFECT, 0.9f);
+                Engine::PlaySound_W(L"Obj_Spider_Attack_2.mp3", SOUND_SPIDER, 0.2f);
+                Engine::PlaySound_W(L"Obj_Spider_Scream_3.mp3", SOUND_SPIDER, 0.2f);
                 if (!IsTarget_Approach(m_Stat.fATKRange))
                 {
                     m_eCurstate = WALK;
@@ -332,7 +332,7 @@ void CSpider::Attacking(const _float& fTimeDelta)
         
         if (m_fFrameEnd < m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_EFFECT, 1.0f);
+           // Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_EFFECT, 0.2f);
             m_bHit = false;
             m_eCurstate = WALK;
         }
@@ -401,7 +401,7 @@ _int CSpider::Die_Check()
        
         if (m_fFrameEnd < m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_EFFECT, 1.0f);
+            Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_SPIDER, 0.2f);
            CResObject::CreateItem(L"Silk", this, m_pGraphicDev,2);
            CResObject::CreateItem(L"Meat_Monster", this, this->m_pGraphicDev);
 

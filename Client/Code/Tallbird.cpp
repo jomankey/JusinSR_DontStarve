@@ -260,7 +260,7 @@ void CTallbird::State_Change()
             m_fFrameSpeed = 14.f;
            // Engine::SpatialPlay_Sound(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT);
 
-           Engine::PlaySound_W(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT, 5.f);
+           Engine::PlaySound_W(L"Obj_TallBird_Wakeup.mp3", SOUND_TALLBIRD, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 16;
             break;
@@ -273,7 +273,7 @@ void CTallbird::State_Change()
             m_fFrameSpeed = 14.f;
             //Engine::SpatialPlay_Sound(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT);
 
-            Engine::PlaySound_W(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+            Engine::PlaySound_W(L"Obj_TallBird_Hurt_2.mp3", SOUND_TALLBIRD, 5.f);
             m_fFrameEnd = 6;
             if (m_eCurLook != LOOK_LEFT)
             {
@@ -284,7 +284,7 @@ void CTallbird::State_Change()
             m_fFrameSpeed = 10.f;
             //Engine::SpatialPlay_Sound(L"Obj_TallBird_Death.mp3", SOUND_EFFECT);
 
-            Engine::PlaySound_W(L"Obj_TallBird_Death.mp3", SOUND_EFFECT, 5.f);
+            Engine::PlaySound_W(L"Obj_TallBird_Death.mp3", SOUND_TALLBIRD, 5.f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10.f;
             break;
