@@ -62,6 +62,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Engine\Utility\Code\Scene.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Engine\Utility\Code\Shader.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Engine\Utility\Code\TerrainTex.cpp"
 
 

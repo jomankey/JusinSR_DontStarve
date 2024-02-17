@@ -33,12 +33,13 @@ private:
 	HRESULT Load_LightFile();
 
 	HRESULT Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale);
+	HRESULT Change_LightInfo(const _float& fTimeDelta);
 
 private:
 	CToolCubeTerrain* m_pCubeTerrain;
 	Engine::CCalculator* m_pCalculatorCom;
 
-	//_vec3 vLight[3] = { { 1.f, 1.f, 1.f} };
+	_vec3 vLight[3] = { { 1.f, 1.f, 1.f} };
 
 public:
 	static CSubScene* Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -8,6 +8,7 @@ namespace Engine
 	class CComponent;
 	class CTransform;
 	class CCalculator;
+	class CShader;
 
 	class ENGINE_DLL CGameObject : public CBase
 	{
@@ -58,6 +59,7 @@ namespace Engine
 
 		multimap<const _tchar*, CComponent*>		m_mapComponent[ID_END];
 		CTransform* m_pTransForm;
+		CShader* m_pShaderCom;
 
 		_float										m_fViewZ;	//z버퍼 소팅
 		_bool										m_bDelete;	//삭제예정일경우 True

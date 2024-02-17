@@ -1,5 +1,6 @@
 #include "ItemBasic.h"
 #include "Export_Utility.h"
+#include "Export_System.h"
 #include "stdafx.h"
 #include "SlotMgr.h"
 #include <Terrain.h>
@@ -76,17 +77,19 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bChangeRander)
 	{
-		if (m_vSlotPos.y - m_fY <= 0.5f)
+		if (m_vSlotPos.y - m_fY <= 1.f)
 		{
 			_vec3 vSlotPos = {};
 			CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strObjName, &vSlotPos);
+			//사운드 출력
+			PickUp_Sound();
 			DeleteObject(this);
 			//return 0x80000000;
 		}
 
 		// 아이템 먹엇을때 슬롯쪽으로 이동
-		m_fX += (m_vSlotPos.x - m_fX) * 5.f * fTimeDelta;
-		m_fY += (m_vSlotPos.y - m_fY) * 5.f * fTimeDelta;
+		m_fX += (m_vSlotPos.x - m_fX) * 12.f * fTimeDelta;
+		m_fY += (m_vSlotPos.y - m_fY) * 12.f * fTimeDelta;
 
 		m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.1f));
 		//m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
@@ -153,6 +156,23 @@ void CItemBasic::DropMotion(const _float& fTimeDelta)
 	if (m_pTransForm->Get_Pos().y < 0)
 		m_bIsCreateByObject = false;
 	
+}
+
+void CItemBasic::PickUp_Sound()
+{
+	_tchar* pSoundFileName;
+	if (m_strObjName == L"Log" || m_strObjName == L"Twigs" || m_strObjName == L"Charcoal" || m_strObjName == L"LogSuit")
+		pSoundFileName = L"Pickup_Wood.mp3";
+	else if (m_strObjName == L"CutStone" || m_strObjName == L"Rope")
+		pSoundFileName = L"Pichup_Grass.mp3";
+	else if (m_strObjName == L"Rocks_0" || m_strObjName == L"CutStone")
+		pSoundFileName = L"Pickup_Rock.mp3";
+	else if (m_strObjName == L"FireSton" || m_strObjName == L"Ax" || m_strObjName == L"Lance" || m_strObjName == L"Hammer" || m_strObjName == L"Pickaxe")
+		pSoundFileName = L"Pickup_Metal.mp3";
+	else
+		pSoundFileName = L"Pickup_Gem.mp3";
+		
+	Engine::PlaySound_W(pSoundFileName, SOUND_UI, 1.f);
 }
 
 

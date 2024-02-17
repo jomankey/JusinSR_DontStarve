@@ -133,6 +133,7 @@ void CItemTool::Input_Mouse()
 		{
 			if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
 			{
+				Engine::PlaySound_W(L"UI_Click_Move.mp3", SOUND_MOUSE, 1.f);
 				m_bClick = true;
 			}
 			return;
@@ -144,6 +145,7 @@ void CItemTool::Input_Mouse()
 		if (Coll_BonFire(vItemPos)) return;
 		
 		m_bClick = false;
+		Engine::PlaySound_W(L"UI_Click_Move.mp3", SOUND_MOUSE, 1.f);
 		m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f)); // 클릭을 놓는 순간 스케일값 돌아감
 		vector<CSlot*> vecBox = CSlotMgr::GetInstance()->Get_BoxList(INVEN);
 
@@ -189,6 +191,32 @@ void CItemTool::Input_Mouse()
 				pTent->Set_SlotNum(m_iNum);
 				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT, pTent);
 			}
+			else if (m_iNum >= 15) // 장착 칸이 장비창이면
+			{
+				for (int i = 0; i < INVENCNT; ++i)
+				{
+					CItem* pItem = CSlotMgr::GetInstance()->Get_InvenItem(i);
+					if (pItem != nullptr) 
+						continue;
+
+					if (m_eArmorSlotType == HAND)
+						Change_Player_Weapon();
+
+					vector<CSlot*> vecBox = CSlotMgr::GetInstance()->Get_BoxList(INVEN);
+
+					m_fX = vecBox[i]->Get_fX();
+					m_fY = vecBox[i]->Get_fY();
+					m_fPreX = m_fX;
+					m_fPreY = m_fY;
+
+					m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+					CSlotMgr::GetInstance()->Move_InvenItem(this, m_iNum, i);
+
+					m_iNum = i;
+
+					return;
+				}
+			}
 			else if (m_eArmorSlotType != ARMOR_SLOT_END)
 			{
 				Change_Armor();
@@ -206,6 +234,7 @@ void CItemTool::Input_Mouse()
 
 void CItemTool::Eat_Food()
 {
+	Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_PLAYER, 1.f);
 	//플레이어 먹기 기능
 	auto& vecPlayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PLAYER)[0];
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(vecPlayer);
@@ -392,6 +421,23 @@ void CItemTool::Change_Armor()
 	m_fX = vecBox[m_eArmorSlotType]->Get_fX();
 	m_fY = vecBox[m_eArmorSlotType]->Get_fY();
 
+	Change_Player_Weapon();
+
+	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
+	
+	if (CSlotMgr::GetInstance()->Get_ArmorItem(m_eArmorSlotType) != nullptr) // 충돌한 박스가 null이 아니라면
+		CSlotMgr::GetInstance()->Change_ArmorItem(this, m_eArmorSlotType, m_iNum, _vec3{ m_fPreX , m_fPreY, 0.f });
+	else
+		CSlotMgr::GetInstance()->Set_ArmorItem(m_eArmorSlotType, this, m_iNum);
+
+	m_fPreX = m_fX;
+	m_fPreY = m_fY;
+
+	m_iNum = m_eArmorSlotType;
+}
+
+void CItemTool::Change_Player_Weapon()
+{
 	WEAPON eWeapon = WEAPON_END;
 	if (m_Stat.strObjName == L"도끼")
 		eWeapon = AXE;
@@ -405,18 +451,6 @@ void CItemTool::Change_Armor()
 		eWeapon = TORCH;
 
 	dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Weapon_Equip(eWeapon);
-
-	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
-	
-	if (CSlotMgr::GetInstance()->Get_ArmorItem(m_eArmorSlotType) != nullptr) // 충돌한 박스가 null이 아니라면
-		CSlotMgr::GetInstance()->Change_ArmorItem(this, m_eArmorSlotType, m_iNum, _vec3{ m_fPreX , m_fPreY, 0.f });
-	else
-		CSlotMgr::GetInstance()->Set_ArmorItem(m_eArmorSlotType, this, m_iNum);
-
-	m_fPreX = m_fX;
-	m_fPreY = m_fY;
-
-	m_iNum = m_eArmorSlotType;
 }
 
 void CItemTool::Coll_ItemBasic(const float& fTimeDelta)

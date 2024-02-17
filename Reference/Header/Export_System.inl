@@ -158,6 +158,16 @@ void PlaySound_W(_tchar* pSoundKey, CHANNELID eID, float fVolume)
 	return CSoundMgr::GetInstance()->PlaySound_W(pSoundKey, eID, fVolume);
 }
 
+void PlaySound_NonStop(TCHAR* pSoundKey, CHANNELID eID, float fVolume)
+{
+	return CSoundMgr::GetInstance()->PlaySound_NonStop(pSoundKey, eID, fVolume);
+}
+
+void PlayTorch(TCHAR* pSoundKey, float fVolume)
+{
+	return CSoundMgr::GetInstance()->PlayTorch(pSoundKey, fVolume);
+}
+
 void PlayBGM(TCHAR* pSoundKey, float fVolume)
 {
 	return CSoundMgr::GetInstance()->PlayBGM(pSoundKey, fVolume);

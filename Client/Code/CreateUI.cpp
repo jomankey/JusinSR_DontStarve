@@ -132,6 +132,7 @@ void CCreateUI::Picking_Mouse() // 제작 목록 클릭 시 설정
 			if (!Engine::Collision_Mouse(vMousePos, vecInvenBox[i]->Get_fX(), vecInvenBox[i]->Get_fY(), vecInvenBox[i]->Get_fSizeX(), vecInvenBox[i]->Get_fSizeY()))
 				continue;
 
+			Engine::PlaySound_W(L"UI_Click_Move.mp3", SOUND_MOUSE, 1.f);
 			if (m_vecSlide[i]->Get_Show()) // 누른 목록이 이미 보여지고 있다면
 			{
 				m_vecSlide[i]->Set_Show(false);

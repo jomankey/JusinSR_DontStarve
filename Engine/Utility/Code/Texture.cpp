@@ -1,4 +1,5 @@
 #include "..\..\Header\Texture.h"
+#include "Shader.h"
 
 CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CComponent(pGraphicDev)
@@ -61,6 +62,15 @@ void CTexture::Set_Texture(const _uint & iIndex)
 		return;
 
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
+}
+
+void CTexture::Set_Texture(CShader* pShader, D3DXHANDLE hParameter, const _uint& iIndex)
+{
+
+	if (m_vecTexture.size() < iIndex)
+		return;
+
+	pShader->Bind_Texture(hParameter, m_vecTexture[iIndex]);
 }
 
 void CTexture::Save_Texture_Path(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt)

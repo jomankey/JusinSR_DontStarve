@@ -13,6 +13,7 @@
 #include "TerrainTex.h"
 #include "CubeTex.h"
 #include "CustomTex.h"
+#include "Shader.h"
 
 #include "Texture.h"
 #include "CAnimator.h"
@@ -65,6 +66,7 @@ namespace Engine {
 		inline _int Change_Light(const _float& fTimeDelta, _int _iIndex);
 		inline TIME_STATE Get_TimeIndex();
 		inline _int Get_Day();
+		inline _bool IsChangeTime();
 	}
 
 	namespace eventmgr

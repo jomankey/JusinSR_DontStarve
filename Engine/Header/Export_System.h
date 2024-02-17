@@ -85,6 +85,8 @@ namespace Engine
 	//SoundMgr
 	inline void Ready_Sound();
 	inline void PlaySound_W(_tchar* pSoundKey, CHANNELID eID, float fVolume);
+	inline void PlaySound_NonStop(TCHAR* pSoundKey, CHANNELID eID, float fVolume);
+	inline void PlayTorch(TCHAR* pSoundKey, float fVolume);
 	inline void PlayBGM(TCHAR* pSoundKey, float fVolume);
 	inline void PlayEffectContinue(TCHAR* pSoundKey, float fVolume,  CHANNELID eID);
 	inline void Update_Sound(_vec3 _SoundVel, _vec3 _PlayerPos, _vec3 _ObjPos, _vec3 _ObjFoward, _vec3 _ObjUp, CHANNELID eID, float _SoundFower = 1);

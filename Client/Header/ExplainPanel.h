@@ -22,6 +22,7 @@ public:
 	_bool Get_Show() { return m_bShow; }
 
 	void Set_m_bSlideBoxColl(bool _bColl) { m_bSlideBoxColl = _bColl; }
+	_bool Get_m_bSlideBoxColl() { return m_bSlideBoxColl; }
 
 private:
 	HRESULT			Add_Component();

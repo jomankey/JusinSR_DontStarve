@@ -27,6 +27,8 @@ public:
     void DropMotion(const _float& fTimeDelta);
     void CheckSign(int _iSign, int _Dir);
 
+    void PickUp_Sound();
+
 
 public:
     static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _szName);

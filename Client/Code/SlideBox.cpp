@@ -47,7 +47,6 @@ HRESULT CSlideBox::Ready_GameObject()
 
 	__super::Ready_GameObject();
 
-
 	return S_OK;
 }
 
@@ -157,7 +156,12 @@ void CSlideBox::Input_Mouse()
 	_vec2 vMousePos = _vec2(tPt.x, tPt.y);
 
 	if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
+	{
+		if (!m_pPanel->Get_m_bSlideBoxColl())
+			Engine::PlaySound_W(L"UI_Click_Mouse.mp3", SOUND_MOUSE, 0.1f);
+
 		m_pPanel->Set_m_bSlideBoxColl(true);
+	}
 	else
 	{
 		if (!m_pPanel->Get_Show())

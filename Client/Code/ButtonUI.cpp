@@ -128,6 +128,7 @@ void CButtonUI::Input_Mouse()
 
                 if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
                 {
+                    Engine::PlaySound_W(L"UI_Collect_Res.mp3", SOUND_CREATE, 1.f);
                     _vec3 vPos;
                     scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPos);
                     CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_tCreateInfo.strKeyName);
@@ -143,6 +144,7 @@ void CButtonUI::Input_Mouse()
 
             if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, m_tCreateInfo.strKeyName, &vSlotPos)) // 아이템 제작 시 애니메이션
             {
+                Engine::PlaySound_W(L"UI_Collect_Res.mp3", SOUND_CREATE, 1.f);
                 _vec3 vPos;
                 scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Info(INFO_POS, &vPos);
                 CItem* pItem = CItemBasic::Create(m_pGraphicDev, m_tCreateInfo.strKeyName);

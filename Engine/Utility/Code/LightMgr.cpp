@@ -2,13 +2,22 @@
 
 IMPLEMENT_SINGLETON(CLightMgr)
 
-CLightMgr::CLightMgr() : m_fPreTime(0), m_eChangeIndex(MORNING), m_iDay(0)
+CLightMgr::CLightMgr() : m_fPreTime(0), m_eChangeIndex(MORNING), m_iDay(0), m_ePreIndex(MORNING)
 {
 }
 
 CLightMgr::~CLightMgr()
 {
 	Free();
+}
+
+_bool Engine::CLightMgr::IsChangeTime()
+{
+	if (m_ePreIndex == m_eChangeIndex)
+		return false;
+
+	m_ePreIndex = m_eChangeIndex;
+	return true;
 }
 
 HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 pGraphicDev,

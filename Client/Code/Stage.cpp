@@ -496,10 +496,18 @@ HRESULT CStage::Change_LightInfo(const _float& fTimeDelta)
 		{m_vDirectionSpecularColor[0].x, m_vDirectionSpecularColor[0].y, m_vDirectionSpecularColor[0].z } };
 
 	tLightInfo->Type = D3DLIGHT_DIRECTIONAL;
-
+	
 	int iIndex(0);
 
 	iIndex = light::Change_Light(fTimeDelta, 0);
+
+	if (light::IsChangeTime())
+	{
+		if (iIndex == AFTERNOON)
+			Engine::PlaySound_W(L"Afternoon.mp3", SOUND_BGM, 1.f);
+		else if (iIndex == MORNING)
+			Engine::PlaySound_W(L"music [11].mp3", SOUND_BGM, 1.f);
+	}
 
 	vLight[0].x += (m_vDirectionDiffuseColor[iIndex].x - vLight[0].x) * fTimeDelta;
 	vLight[0].y += (m_vDirectionDiffuseColor[iIndex].y - vLight[0].y) * fTimeDelta;
