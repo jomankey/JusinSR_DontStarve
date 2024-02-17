@@ -42,8 +42,8 @@
 
 #endif // defined(_DEBUG) && !defined(_TOOL)
 
-#define WINCX 800
-#define WINCY 600
+#define WINCX 1080
+#define WINCY 720
 
 extern HWND g_hWnd;
 extern HINSTANCE g_hInst;

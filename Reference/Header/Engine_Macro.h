@@ -9,8 +9,8 @@ namespace Engine
 
 
 
-#define WINCX 800
-#define WINCY 600
+#define WINCX 1080
+#define WINCY 720
 
 #define INVENCNT 15
 

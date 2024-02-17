@@ -37,7 +37,7 @@ HRESULT CDeerClops::Ready_GameObject()
 	//true 면 위아래고 , false면 상하좌우
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
-	m_pTransForm->Set_Scale({ 10.f, 10.f, 10.f });
+	m_pTransForm->Set_Scale({ 4.5f, 4.5f, 4.5f });
 	Set_ObjStat();
 	m_fAcctime = float(rand() % 30);
 	m_bFalldown = false;

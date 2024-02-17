@@ -1002,7 +1002,7 @@ void CPlayer::Set_Scale()
 		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
 	
 	else
-		m_pTransForm->m_vScale = { 0.7f, 0.5f, 0.7f };
+		m_pTransForm->m_vScale = { 2.f, 2.f, 2.f };
 
 }
 
