@@ -175,18 +175,6 @@ HRESULT CStage::Ready_Layer_GameLogic()
 	m_pPlayer->GetTransForm()->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(pGameObject);
 
-<<<<<<< HEAD
-	//pGameObject = CTallbird::Create(m_pGraphicDev, _vec3(64.f, 0.84f, 66.f));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-
-	//pGameObject = CSpider::Create(m_pGraphicDev, _vec3(64.f, 0.16f, 66.f));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::MONSTER, pGameObject), E_FAIL);
-=======
-
-
->>>>>>> 79485600bb7157b8ca27a71046449648a9018144
 
 	return S_OK;
 }

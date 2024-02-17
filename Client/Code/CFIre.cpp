@@ -158,11 +158,6 @@ void CFire::Render_GameObject()
 
 	}
 
-<<<<<<< HEAD
-	
-=======
->>>>>>> 79485600bb7157b8ca27a71046449648a9018144
-
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
