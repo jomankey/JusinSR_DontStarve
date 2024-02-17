@@ -92,13 +92,18 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	Update_State(fTimeDelta); // 플레이어 State 매 프레임마다 업데이트
 
 	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"ROAD" && !m_bIsRoadScene)
+	{
 		m_bIsRoadScene = true;
+	}
 	else if (scenemgr::Get_CurScene()->Get_Scene_Name() != L"ROAD" && m_bIsRoadScene)
 		m_bIsRoadScene = false;
+	
+	
 
 	if (!m_bFrameLock)      //프레임 락이 걸리면 프레임이 오르지 않음
 		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
+
 	if (m_fFrameEnd <= m_fFrame)      //프레임이 끝에 다다르면 진입
 	{
 		if (m_KeyLock == true && !m_Stat.bDead)         //KeyLock을 풀고 IDLE 상태로 만듦
@@ -123,8 +128,8 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		else if (m_fFrame > 5.f && m_fFrame < 5.2f)
 			Engine::PlaySound_W(L"Player_Foot_2.mp3", SOUND_PLAYER, 0.2f);
 	}
-
-
+	
+	
 	if (!m_KeyLock && !m_Stat.bDead)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
 		if (!m_bIsRoadScene)
@@ -134,6 +139,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	}
 	else if (m_Stat.bDead)
 		Rebirth();
+	
 
 	Weapon_Change();
 	Check_State();
@@ -426,6 +432,10 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_dialog", pComponent });
 
+	pComponent = m_pTextureCom[LOOK_DOWN][SLEEP] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_sleep"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_sleep", pComponent });
+
 
 	pComponent = m_pTextureCom[LOOK_DOWN][DEAD] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_die"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -637,7 +647,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		}
 	}
 
-	if (KEY_AWAY('F')) // 공격
+	if (GetAsyncKeyState('F')) // 공격
 	{
 		if (m_ePreWeapon == SPEAR)
 		{
@@ -861,12 +871,6 @@ void CPlayer::Check_State()
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
-		case WAKEUP:
-			m_fFrameSpeed = 32.f;
-			m_fFrameEnd = 32;
-			m_KeyLock = true;
-			m_eCurLook = LOOK_DOWN;
-			break;
 		case PICKUP:
 			m_fFrameSpeed = 20.f;
 			m_KeyLock = true;
@@ -874,8 +878,8 @@ void CPlayer::Check_State()
 			break;
 		case EAT:
 			Eat_Sound();
-			m_fFrameSpeed = 10.f;
-			m_fFrameEnd = 36;
+			m_fFrameSpeed = 14.f;
+			m_fFrameEnd = 35;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
 			break;
@@ -914,6 +918,18 @@ void CPlayer::Check_State()
 			m_KeyLock = true;
 			m_fFrameSpeed = 20.f;
 			m_fFrameEnd = 8;
+			break;
+		case SLEEP:
+			m_KeyLock = true;
+			m_fFrameSpeed = 10.f;
+			m_fFrameEnd = 13;
+			m_eCurLook = LOOK_DOWN;
+			break;
+		case WAKEUP:
+			m_KeyLock = true;
+			m_fFrameSpeed = 8.f;
+			m_fFrameEnd = 32;
+			m_eCurLook = LOOK_DOWN;
 			break;
 		case DEAD:
 			m_fFrameSpeed = 19.f;
@@ -1136,7 +1152,6 @@ _int CPlayer::Die_Check()
 			m_Ghost = CGhost::Create(m_pGraphicDev, pPlayerPos);
 			NULL_CHECK_RETURN(m_Ghost, E_FAIL);
 			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, m_Ghost), E_FAIL);
-
 		}
 	}
 
@@ -1154,7 +1169,8 @@ void CPlayer::Rebirth()
 		CGameObject* amulet = CRebirth::Create(m_pGraphicDev, pPlayerPos);
 		NULL_CHECK_RETURN(amulet, );
 		FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, amulet), );
-
+		Engine::PlaySound_W(L"ghost[6].mp3", SOUND_PLAYER, 0.3f);
+		
 		m_eCurState = REBIRTH;
 		m_bFrameLock = false;
 		m_Stat.bDead = false;
@@ -1164,6 +1180,8 @@ void CPlayer::Rebirth()
 		m_Ghost = nullptr;
 	}
 }
+
+
 
 HRESULT CPlayer::Ready_Light()
 {

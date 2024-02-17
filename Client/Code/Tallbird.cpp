@@ -401,6 +401,11 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
 
     }
    
+    if (m_ePrestate == HIT)
+    {
+        if (m_fFrameEnd < m_fFrame)
+            m_eCurstate = WALK;
+    }
 
     if (m_fFrameEnd < m_fFrame)
     {

@@ -13,6 +13,8 @@
 #include "Pig.h"
 #include "BerryBush.h"
 #include "MainApp.h"
+// PlayerMgr
+#include "PlayerMgr.h"
 
 //Scene
 #include "Layer.h"
@@ -183,15 +185,22 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TILE, pGameObject), E_FAIL);
 
-	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(2.5f, 1.15f, 3.5f));
-	m_pPlayer->GetTransForm()->Set_Scale(_vec3(2.f, 2.f, 2.f));
+	if (CPlayerMgr::GetInstance()->Get_Player_Pointer() == nullptr)
+	{
+		pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+	}
+	else
+	{
+		m_pPlayer = CPlayerMgr::GetInstance()->Get_Player_Pointer();
+		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, m_pPlayer), E_FAIL);
+	}
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(2.5f, 1.6f, 3.5f));
+	m_pPlayer->GetTransForm()->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
 
-	pGameObject = CDeerClops::Create(m_pGraphicDev, { 2.5f ,3.f, 3.5f });
+	pGameObject = CDeerClops::Create(m_pGraphicDev, { 2.5f ,3.3f, 3.5f });
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
 	pGameObject->GetTransForm()->Set_Scale({ 3.5f,3.5f,3.5f });

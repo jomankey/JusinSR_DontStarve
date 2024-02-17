@@ -43,9 +43,12 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 	void			Set_Attack(int _Atk);			//공격당했을 때 호출되는 함수
-	
+		
 	_bool			IsPlayer_Dead() { return m_Stat.bDead; }	//외부에서 죽었는지 확인하는 함수
-
+	void			Set_Eat() {
+		m_eCurState = EAT;
+		m_vPlayerActing = true;
+	}
 	void		Set_Weapon_Equip(WEAPON _eWeaponType) { m_eCurWeapon = _eWeaponType; }	//무기 넣어줄때 호출
 
 private:
@@ -61,6 +64,8 @@ private:
 	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);	//Res오브젝트들을 채굴할 때 사용하는 함수
 	_int			Die_Check();
 	void			Rebirth();
+
+	void			Start();
 
 	HRESULT Ready_Light();
 	void Fire_Light();
@@ -100,11 +105,10 @@ private:
 	_bool				m_Dirchange;			//Look
 	_bool				m_bAttack;
 	_bool				m_bossAttack;
-	_bool m_bHit;
+	_bool				m_bHit;
 
 	_bool				m_KeyLock;				//Key Input 함수를 막는 용도	true 면 막힘
 	_bool				m_bFrameLock;			//프레임 축적을 막는 용도 true 면 막힘
-
 
 	_vec3				m_vTargetPos;			//오브젝트 대상의 위치벡터
 	_vec3				m_vTargetDir;			//이동하는 방향
@@ -112,6 +116,7 @@ private:
 
 	RESOBJID			m_TargetObject;			//Res오브젝트의 종류를 판별
 	_bool				m_bIsRoadScene;			//Road 씬이면 true (임시)
+
 
 	_uint m_iLightNum;
 

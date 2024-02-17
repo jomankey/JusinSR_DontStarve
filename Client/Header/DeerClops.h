@@ -71,11 +71,10 @@ private:
 	void			Getnerate_SnowSplash();
 	void			Generate_Sizemic();
 
-	void			Camera_Shaking(_float _power, _float _time, _bool _dir);
 
+	void			Camera_Shaking(_float _power, _float _time, _bool _dir);
 	void			Hit_Sound();
 	void			Attack_Sound();
-
 	void			Awake_Tallbird();
 
 public:

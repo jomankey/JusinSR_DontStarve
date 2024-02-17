@@ -65,6 +65,7 @@ namespace Engine
 		HAMMERING,
 		AXE_CHOP_PRE,
 		AXE_CHOP_LOOP,
+		SLEEP,
 		DEAD,
 		REBIRTH,
 		STATE_END
