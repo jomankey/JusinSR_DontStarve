@@ -107,6 +107,7 @@ HRESULT CRoadScene::Ready_Scene()
 	{
 		m_arrLayer[i] = CLayer::Create();
 	}
+
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_Environment(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);

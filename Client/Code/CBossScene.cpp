@@ -253,6 +253,7 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 		m_pPlayer = CPlayerMgr::GetInstance()->Get_Player_Pointer();
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, m_pPlayer), E_FAIL);
 	}
+
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 1.15f, 64.f));
 	m_pPlayer->GetTransForm()->Set_Scale(_vec3(2.f, 2.f, 2.f));
 

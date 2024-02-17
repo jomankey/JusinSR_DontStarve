@@ -21,6 +21,10 @@ CPlayerMgr::CPlayerMgr()
 
 CPlayerMgr::~CPlayerMgr()
 {
+	if (m_pPlayer != nullptr)
+	{
+		Safe_Release(m_pPlayer);
+	}
 	Free();
 }
 

@@ -97,7 +97,7 @@ void CLayer::Free()
 {
 	for (size_t i = 0; i < (int)eOBJECT_GROUPTYPE::END; i++)
 	{
-		if (i == (int)eOBJECT_GROUPTYPE::PLAYER)
+		if (i != (int)eOBJECT_GROUPTYPE::PLAYER)
 		{
 
 			for (auto& iter : m_vecObject[i])
