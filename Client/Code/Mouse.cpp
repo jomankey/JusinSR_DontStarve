@@ -194,10 +194,34 @@ void CMouse::Check_Coll()
 		}
 	}
 
-	//지형지물
-	auto& vecObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
+	//설치 오브젝트들
+	auto& vecObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::OBJECT);
 
 	for (auto& iter : vecObj)
+	{
+		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
+		vMonsterScale = iter->GetTransForm()->Get_Scale();
+
+		if (Engine::Collision_Mouse_Object(m_vRayPos, m_vRayDir, vMonsterPos, vMonsterScale))
+		{
+			m_bColl = true;
+			m_eGroupType = eOBJECT_GROUPTYPE::OBJECT;
+			m_eObjState = iter->Get_State();
+			iter->Set_Shader(true);
+			return;
+		}
+		else
+		{
+			m_bColl = false;
+			m_eGroupType = eOBJECT_GROUPTYPE::END;
+			iter->Set_Shader(false);
+		}
+	}
+
+	//지형지물
+	auto& vecResObj = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::RESOURCE_OBJECT);
+
+	for (auto& iter : vecResObj)
 	{
 		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
 		vMonsterScale = iter->GetTransForm()->Get_Scale();

@@ -16,7 +16,7 @@ HRESULT CWorldHand::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = 730.f;
+	m_fX = WINCX - 75.f;
 	m_fY = 60.f;
 
 	m_fSizeX = 10.f;
@@ -33,7 +33,7 @@ _int CWorldHand::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
 
-	m_fWorldTime = 0.00027f;
+	m_fWorldTime = 0.000270f;
 	m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(-(m_fWorldTime / fTimeDelta)));
 
 	return 0;

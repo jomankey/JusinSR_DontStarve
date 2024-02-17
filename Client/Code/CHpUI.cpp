@@ -26,8 +26,8 @@ CHpUI::~CHpUI()
 HRESULT CHpUI::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	m_fX = 680.f;
+	
+	m_fX = WINCX - 120.f;
 	m_fY = 110.f;
 
 	m_fSizeX = 30.f;
@@ -56,6 +56,7 @@ void CHpUI::LateUpdate_GameObject()
 
 void CHpUI::Render_GameObject()
 {
+
 	__super::Render_GameObject();
 	
 	_tchar strHp[32];

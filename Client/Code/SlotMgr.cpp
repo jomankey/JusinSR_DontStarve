@@ -217,9 +217,9 @@ HRESULT CSlotMgr::Add_InvenBoxList(LPDIRECT3DDEVICE9 pGraphicDev, BOX_TYPE eType
 	if (eType == INVEN) // 세로 방향 (인벤)
 	{
 		for (int i = 0; i < _iNum; ++i)
-			pInvenBox.push_back(CInvenSlot::Create(pGraphicDev, _vec3(120.f + (15.f + 20.f) * i, 582.f, 0.f), i, eType));
+			pInvenBox.push_back(CInvenSlot::Create(pGraphicDev, _vec3(WINCX * 0.5f - 300.f + (15.f + 20.f) * i, WINCY - 17.f, 0.f), i, eType));
 		for (int i = INVENCNT; i < _iNum +3; ++i)
-			pInvenBox.push_back(CArmorSlot::Create(pGraphicDev, _vec3(120.f + (15.f + 20.f) * i, 582.f, 0.f), i, (ARMOR_SLOT_TYPE)i));
+			pInvenBox.push_back(CArmorSlot::Create(pGraphicDev, _vec3(WINCX * 0.5f - 300.f + (15.f + 20.f) * i, WINCY - 17.f, 0.f), i, (ARMOR_SLOT_TYPE)i));
 	}
 	if (eType == CREATE) // 가로 방향
 	{

@@ -14,6 +14,7 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_strObjName(L"NONE")
 	, m_iSlotNum(0)
 	, m_fCollisionRadius(1.f)
+	, m_bShader(false)
 {
 	m_pGraphicDev->AddRef();
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
@@ -28,6 +29,7 @@ Engine::CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName
 	, m_strObjName(_strName)
 	, m_iSlotNum(0)
 	, m_fCollisionRadius(1.f)
+	, m_bShader(false)
 {
 	m_pGraphicDev->AddRef();
 	ZeroMemory(&m_Stat, sizeof(OBJSTAT));
@@ -41,6 +43,7 @@ CGameObject::CGameObject(const CGameObject& rhs)
 	, m_Stat(rhs.m_Stat)
 	, m_iSlotNum(rhs.m_iSlotNum)
 	, m_fCollisionRadius(rhs.m_fCollisionRadius)
+	, m_bShader(rhs.m_bShader)
 {
 	m_mapComponent[ID_DYNAMIC] = rhs.m_mapComponent[ID_DYNAMIC];
 	m_pGraphicDev->AddRef();

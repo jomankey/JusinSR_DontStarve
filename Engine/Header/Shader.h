@@ -17,7 +17,7 @@ namespace Engine
 	public:
 		HRESULT Bind_Matrix(D3DXHANDLE hParameter, const _matrix* pMatrix);
 		HRESULT Bind_Texture(D3DXHANDLE hParameter, LPDIRECT3DBASETEXTURE9 pTexture);
-
+		HRESULT Bind_Vector(D3DXHANDLE hParameter, const _vec4* pVecter);
 
 	private:
 		LPD3DXEFFECT				m_pEffect = { nullptr };

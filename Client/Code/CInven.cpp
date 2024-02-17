@@ -13,8 +13,8 @@ HRESULT CInven::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fX = 420.f;
-	m_fY = 580.f;
+	m_fX = WINCX * 0.5;
+	m_fY = WINCY - 20.f;
 
 	m_fSizeX = 20.f;
 	m_fSizeY = 340.f;

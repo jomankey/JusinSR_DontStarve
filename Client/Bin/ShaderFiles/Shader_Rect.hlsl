@@ -5,6 +5,17 @@
 // float2x2, float3x3, float1x3, float4x4 == matrix
 /* 셰이더의 전역변수 == 상수테이블 */
 matrix g_WorldMatrix, g_ViewMatrix, g_ProjMatrix;
+
+//vector AmbientMtrl = { 1.f, 1.f, 1.f, 1.f };
+//vector DiffuseMtrl = { 1.f, 1.f, 1.f, 1.f };
+//vector SpecularMtrl = { 1.f, 1.f, 1.f, 1.f };
+
+//vector LightDirection = { 1.f, -1.f, 1.f, 0.f };
+
+//vector DiffuseLightIntensity;
+//vector AmbientLightIntensity;
+//vector SpecularLightIntensity;
+
 float g_fData = 0.0f;
 texture g_Texture;
 texture g_Texture1;
@@ -27,7 +38,6 @@ sampler DefaultSampler1 = sampler_state
 };
 
 
-
 struct VS_IN
 {
     float3 vPosition : POSITION;
@@ -48,10 +58,19 @@ VS_OUT VS_MAIN(VS_IN In)
 
     vector vPosition = mul(float4(In.vPosition, 1.f), g_WorldMatrix);
     Out.vWorldPos = vPosition;
-
+    
     vPosition = mul(vPosition, g_ViewMatrix);
     vPosition = mul(vPosition, g_ProjMatrix);
+    
+    /*In.vNormal.w = 0.f;
 
+    vector vLightDirection = mul(LightDirection, g_ViewMatrix);
+    In.vNormal = mul(In.vNormal, g_ViewMatrix);
+    
+    float s = max(dot(vLightDirection, In.vNormal), 0);
+    
+    Out.diffuse = (AmbientMtrl * AmbientLightIntensity) + (s * (DiffuseLightIntensity * DiffuseMtrl)) + (SpecularLightIntensity * SpecularMtrl);*/
+    
     Out.vPosition = vPosition;
     Out.vTexcoord = In.vTexcoord;
 
@@ -76,8 +95,7 @@ struct PS_OUT
 
 
 
-/* 픽셀셰이더 : 픽셀의 색을 결정하낟. */
-vector PS_MAIN(PS_IN In) : COLOR0
+vector PS_MAIN(PS_IN In) : COLOR0 // 오브젝트 피킹용
 {
     vector vColor = (vector) 0;
 
@@ -86,44 +104,64 @@ vector PS_MAIN(PS_IN In) : COLOR0
 
     In.vWorldPos.y;
 
-    vColor = vector(vColor.r, vColor.g , vColor.b , vColor.a - 0.1f);
+    float alpha = vColor.a;
+    vColor = (vColor.r + vColor.g + vColor.b ) / 3.f;
+    vColor.a = alpha;
+	//vColor = vector(vColor.r + 0.5f, vColor.g, vColor.b, vColor.a);
 
+    return vColor;
+}
 
+vector PS_MAIN_INSTALL(PS_IN In) : COLOR0 // 설치용
+{
+    vector vColor = (vector) 0;
 
+	
+    vColor = tex2D(DefaultSampler, In.vTexcoord);
+
+    In.vWorldPos.y;
+
+    vColor = vector(vColor.r, vColor.g, vColor.b, vColor.a - 0.3f);
+    
 	// vColor = vector(1.0f, 0.f, 0.f, In.vTexcoord.y);
 
     return vColor;
 }
 
+vector PS_MAIN_ATTACK(PS_IN In) : COLOR0 // 공격 히트용
+{
+    vector vColor = (vector) 0;
+
+	
+    vColor = tex2D(DefaultSampler, In.vTexcoord);
+
+    In.vWorldPos.y;
+
+    vColor = vector(vColor.r + 0.5f, vColor.g, vColor.b, vColor.a);
+
+    return vColor;
+}
 
 
 /* 그래픽 카드에서 지원하는 셰이더 버젼에 따라 다른 방식으로 셰이더를 시작한다. */
 technique DefaultTechnique
 {
-	/* Pass : 셰이더 기능의 캡슐화. */
-	/* 명암 + 노멀맵핑 + 림라이트 + PBR + SSAO */
-    pass DefaultPass
+    pass DefaultPass // 마우스 피킹용
     {
-		// fillmode = wireframe;
-        //AlphaBlendEnable = true;
-        //SrcBlend = SrcAlpha;
-        //DestBlend = InvSrcAlpha;
-        //bLENDoP = aDD;
-
-		/* 위에서 작성한 정점 쉐이더의 버젼을 지정하고 진입점 함수를 지정한다. */
         VertexShader = compile vs_3_0 VS_MAIN();
-		/* 위에서 작성한 픽셀 쉐이더의 버젼을 지정하고 진입점 함수를 지정한다. */
         PixelShader = compile ps_3_0 PS_MAIN();
     }
 
-	/* 림라이트 + 디스토션 + 알파블렌딩 */
-	//pass DefaultPass2
-	//{
-	//	/* 위에서 작성한 정점 쉐이더의 버젼을 지정하고 진입점 함수를 지정한다. */
-	//	VertexShader = compile vs_3_0 VS_MAIN();
-	//	/* 위에서 작성한 픽셀 쉐이더의 버젼을 지정하고 진입점 함수를 지정한다. */
-	//	PixelShader = compile ps_3_0 PS_MAIN();
-	//}
+    pass DefaultPass1 // 오브젝트 설치용
+    {
+        VertexShader = compile vs_3_0 VS_MAIN();
+        PixelShader = compile ps_3_0 PS_MAIN_INSTALL();
+    }
 
+    pass DefaultPass2 // 히트용
+    {
+        VertexShader = compile vs_3_0 VS_MAIN();
+        PixelShader = compile ps_3_0 PS_MAIN_ATTACK();
+    }
 }
 

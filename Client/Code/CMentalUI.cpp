@@ -18,8 +18,8 @@ CMentalUI::~CMentalUI()
 HRESULT CMentalUI::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
-	m_fX = 770.f;
+	
+	m_fX = WINCX - 30.f;
 	m_fY = 110.f;
 
 	m_fSizeX = 30.f;
