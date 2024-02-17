@@ -54,7 +54,7 @@ private:
 	void			Ket_Input_Road(const _float& fTimeDelta);
 	HRESULT			SetUp_Material();
 	void			Check_State();				//상태 변경용 함수
-	void			Set_Scale();				//행동에 따른 스케일을 변경하기 위한 함수
+
 	void			Set_Stat();					
 	void			Weapon_Change();			//무기 변경에 따른 변화에 대한 함수
 	void			Look_Change();				//바라보는 방향을 바꾸기 위한 함수
@@ -99,6 +99,7 @@ private:
 	LOOKDIR				m_ePreLook;
 	_bool				m_Dirchange;			//Look
 	_bool				m_bAttack;
+	_bool				m_bossAttack;
 	_bool m_bHit;
 
 	_bool				m_KeyLock;				//Key Input 함수를 막는 용도	true 면 막힘

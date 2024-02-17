@@ -19,6 +19,7 @@ HRESULT CBerryBush::Ready_GameObject()
 	m_eObject_id = BERRY_BUSH;
 	m_fFrame = 0.f;
 	m_fFrameEnd = 0.f;
+	m_fCollisionRadius = 0.8f;
 	Ready_Stat();
 	return S_OK;
 }

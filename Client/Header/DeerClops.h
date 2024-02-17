@@ -48,7 +48,7 @@ private:
 	virtual void	Set_ObjStat();
 	virtual void	State_Change()				override;
 
-	virtual void Set_Scale()	override;
+
 
 	void			Sleep(const _float& fTimeDelta);		//첫 조우하기 전 자고있음
 	void			First_Phase(const _float& fTimeDelta);		//페이즈 별 패턴
@@ -73,7 +73,8 @@ private:
 
 	void			Camera_Shaking(_float _power, _float _time, _bool _dir);
 
-
+	void			Hit_Sound();
+	void			Attack_Sound();
 
 	void			Awake_Tallbird();
 

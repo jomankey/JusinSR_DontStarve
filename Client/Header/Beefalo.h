@@ -32,7 +32,7 @@ private:
 	void			Attacking(const _float& fTimeDelta);
 	void			Patroll(const _float& fTimeDelta);
 	virtual void	Set_Hit()						override;
-	virtual void	Set_Scale()						override;
+
 	
 	void FrameCheckSound(const _float& fTimeDelta);
 private:
@@ -44,6 +44,7 @@ private:
 	BEEFALOSTATE		m_eCurState;
 	BEEFALOSTATE		m_ePreState;
 	_bool				m_bHit;
+	
 
 
 

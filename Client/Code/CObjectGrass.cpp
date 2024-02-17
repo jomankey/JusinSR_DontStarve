@@ -29,7 +29,7 @@ HRESULT CObjectGrass::Ready_GameObject()
 	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
 	Ready_Stat();
-
+	m_fCollisionRadius = 0.4;
 	m_eCurState = RES_IDLE;
 	m_eObject_id = GRASS;
 	m_fFrame = 0;

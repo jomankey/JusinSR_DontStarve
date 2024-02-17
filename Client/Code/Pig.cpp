@@ -28,6 +28,7 @@ HRESULT CPig::Ready_GameObject()
 	Set_ObjStat();
 	m_fFrameEnd = 7;
 	m_fFrameChange = rand() % 5;
+	m_fCollisionRadius = 0.5f;
 	Look_Change();
 	return S_OK;
 }
@@ -348,26 +349,26 @@ void CPig::Attacking(const _float& fTimeDelta)
 	m_Stat.fSpeed = 5.f;
 	if (!m_bHit)
 	{
-		if (IsTarget_Approach(m_Stat.fATKRange) && m_ePreState != ATTACK)
+		if (Collision_Circle(Get_Player_Pointer()) && m_ePreState != ATTACK)
 		{
 			m_eCurState = ATTACK;
 		}
 		else if (m_ePreState == ATTACK)
 		{
-			if (5 < m_fFrame && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()), !m_bAttacking)
+			if (5 < m_fFrame && Collision_Circle(Get_Player_Pointer()) && !m_bAttacking)
 			{
 				dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
 				m_bAttacking = true;
 			}
-			else if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(m_Stat.fATKRange))
+			else if ((m_fFrameEnd < m_fFrame) && !Collision_Circle(Get_Player_Pointer()))
 			{
 				m_eCurState = RUN;
 			}
 		}
-		else if (m_ePreState == RUN && !IsTarget_Approach(m_Stat.fATKRange))
+		else if (m_ePreState == RUN && !Collision_Circle(Get_Player_Pointer()))
 		{
 			Player_Chase(fTimeDelta);
-			Collision_EachOther(fTimeDelta);
+			
 		}
 		else if (!IsTarget_Approach(m_Stat.fATKRange))
 		{
@@ -384,7 +385,11 @@ void CPig::Attacking(const _float& fTimeDelta)
 	}
 
 	if (m_fFrameEnd < m_fFrame)
+	{
 		m_fFrame = 0.f;
+		if (m_bAttacking)
+			m_bAttacking = false;
+	}
 }
 
 void CPig::Patroll(const _float& fTimeDelta)
@@ -431,10 +436,6 @@ void CPig::Set_Hit()
 {
 	m_eCurState = HIT;
 	m_bHit = true;
-}
-
-void CPig::Set_Scale()
-{
 }
 
 

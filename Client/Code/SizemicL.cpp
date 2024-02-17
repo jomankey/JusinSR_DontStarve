@@ -73,7 +73,6 @@ void SizemicL::Render_GameObject()
     m_pBufferCom->Render_Buffer();
   
 
-
     m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
     m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -129,15 +128,18 @@ void SizemicL::State_Change()
         {
         case ONE:
             m_fFrameEnd = 4.f;
-            m_bFrameSpeed = 11.f;
+            m_bFrameSpeed = 8.f;
+            m_pTransForm->Set_Scale({ 0.7f,0.7f ,0.7f });
             break;
         case TWO:
             m_fFrameEnd = 4.f;
-            m_bFrameSpeed = 11.f;
+            m_bFrameSpeed = 8.f;
+            m_pTransForm->Set_Scale({ 1.f,1.f ,1.f });
             break;
         case THREE:
             m_fFrameEnd = 4.f;
-            m_bFrameSpeed = 11.f;
+            m_bFrameSpeed = 8.f;
+            m_pTransForm->Set_Scale({ 1.3f,1.3f ,1.3f });
             break;
         case ERASE:
             m_bFrameSpeed = 8.f;
