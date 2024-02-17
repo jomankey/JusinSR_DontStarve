@@ -928,7 +928,7 @@ void CPlayer::Check_State()
 			break;
 		case DEAD:
 			m_fFrameSpeed = 19.f;
-			Engine::PlaySound_W(L"wilson_Vocie_Death.mp3", SOUND_EFFECT, 5.f);
+			Engine::PlaySound_W(L"wilson_Vocie_Death.mp3", SOUND_PLAYER_VOICE, 0.3f);
 			m_fFrameEnd = 19;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
@@ -1106,7 +1106,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		{
 			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 			{
-				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_EFFECT, 5.f);
+				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_ROCK, 5.f);
 				Rock_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				m_vPlayerActing = true;
@@ -1126,8 +1126,8 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		{
 			if (7.f < m_fFrame && !m_vPlayerActing)
 			{
-				Engine::PlaySound_W(L"wilson_Gather_Wood_1.mp3", SOUND_EFFECT, 5.f);
-				Engine::PlaySound_W(L"wilson_Gather_Wood_2.mp3", SOUND_EFFECT, 5.f);
+				Engine::PlaySound_W(L"wilson_Gather_Wood_1.mp3", SOUND_TREE, 0.2f);
+				Engine::PlaySound_W(L"wilson_Gather_Wood_2.mp3", SOUND_TREE, 0.2f);
 				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
@@ -1202,7 +1202,7 @@ _int CPlayer::Die_Check()
 			//여기에 고스트 소환하는 거
 			_vec3 pPlayerPos;
 			m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
-			Engine::PlaySound_W(L"wilson_Ghost_Spawn.mp3", SOUND_EFFECT, 5.f);
+			Engine::PlaySound_W(L"wilson_Ghost_Spawn.mp3", SOUND_PLAYER, 0.3f);
 			m_Ghost = CGhost::Create(m_pGraphicDev, pPlayerPos);
 			NULL_CHECK_RETURN(m_Ghost, E_FAIL);
 			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, m_Ghost), E_FAIL);
@@ -1382,13 +1382,13 @@ void CPlayer::Hit_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Voice_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_1.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Voice_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_2.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Voice_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_3.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	}
 
@@ -1400,13 +1400,13 @@ void CPlayer::Eat_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Eat_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Eat_1.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Eat_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Eat_3.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	}
 }
@@ -1417,22 +1417,22 @@ void CPlayer::Dialog_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Voice_Generic_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Generic_1.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_2.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_3.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 3:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_4.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_4.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 4:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_5.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_5.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 5:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_6.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_6.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	}
 }
@@ -1443,13 +1443,13 @@ void CPlayer::Rock_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Rock_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_1.mp3", SOUND_ROCK, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Rock_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_2.mp3", SOUND_ROCK, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"Obj_Rock_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_3.mp3", SOUND_ROCK, 0.2f);
 		break;
 	}
 
@@ -1461,19 +1461,19 @@ void CPlayer::Tree_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 3:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 4:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_TREE, 0.2f);
 		break;
 	}
 
@@ -1485,13 +1485,13 @@ void CPlayer::Grass_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Gather_Reeds_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_1.mp3", SOUND_EFFECT, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Gather_Reeds_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_2.mp3", SOUND_EFFECT, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Gather_Reeds_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_3.mp3", SOUND_EFFECT, 0.2f);
 		break;
 	}
 }

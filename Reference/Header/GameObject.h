@@ -40,6 +40,9 @@ namespace Engine
 
 		//1.번째 반환 값: PlyerPos,2. 번째 반환 값: 자기 자신의 위치 벡터 3. 번째 반환 값: 자기 자신의 Look벡터, 4. 번째 반환 값: 자기 자신의 Up벡터
 		const tuple<_vec3, _vec3, _vec3, _vec3> Get_Info_vec();
+		//_bool IsAroundNear(CGameObject* _Type);
+
+
 
 		void SetCollisionRadius(_float _fColRadius) { m_fCollisionRadius = _fColRadius; }
 		_float GetCollisionRadius() { return m_fCollisionRadius; }

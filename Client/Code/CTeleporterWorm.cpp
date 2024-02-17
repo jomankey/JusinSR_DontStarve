@@ -109,9 +109,9 @@ HRESULT CTeleporterWorm::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.7f, vPos.z);
+	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
 
 	return S_OK;
 }
@@ -190,7 +190,7 @@ void CTeleporterWorm::Check_FrameState()
 		}
 		case TELEPORTER_STATE::TELEPORTER_OPEN:
 		{
-			Engine::PlaySound_W(L"Obj_Worm_Open.mp3", SOUND_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Worm_Open.mp3", SOUND_TELEPORT, 0.5f);
 			//m_pTransForm->Set_Scale(_vec3(5.5f, 5.5f, 5.5f));
 			m_fFrameEnd = 5.0f;
 			break;
@@ -198,7 +198,7 @@ void CTeleporterWorm::Check_FrameState()
 		}
 		case TELEPORTER_STATE::TELEPORTER_CLOSE:
 		{
-			Engine::PlaySound_W(L"Obj_Worm_Close.mp3", SOUND_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Worm_Close.mp3", SOUND_TELEPORT, 0.5f);
 			m_fFrameEnd = 5.0f;
 			break;
 
@@ -297,7 +297,7 @@ void CTeleporterWorm::ChangeScenePlayer(_float _fDistance)
 	{
 		if (KEY_TAP(DIK_C))
 		{
-			Engine::PlaySound_W(L"Obj_Worm_Travel.mp3", SOUND_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Worm_Travel.mp3", SOUND_EFFECT, 0.5f);
 			ChangeScene(CLoadingScene::Create(m_pGraphicDev,CLoading::LOADING_ROAD));
 		}
 	}

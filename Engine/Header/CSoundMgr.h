@@ -33,7 +33,7 @@ namespace Engine
 		void SpatialPlay_Sound(TCHAR* pSoundKey, CHANNELID eID);
 		//공간음향 사용할 객체들만 사용, 계속 업데이트 해줘야함
 		void Update_Sound(_vec3 _SoundVel,_vec3 _PlayerPos, _vec3 _ObjPos,_vec3 _ObjFoward, _vec3 _ObjUp, CHANNELID eID, float _SoundFower=1);
-
+		void Update_System() { FMOD_System_Update(m_pSystem); }
 
 	private:
 		void LoadSoundFile();

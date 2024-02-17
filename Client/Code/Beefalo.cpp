@@ -276,7 +276,7 @@ void CBeefalo::State_Change()
        
             break;
         case ATTACK:
-            Engine::PlaySound_W(L"Obj_Beefalo_Angry.mp3", SOUND_EFFECT, 3.0f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Angry.mp3", SOUND_BEEFALO, 0.2f);
   
             
             m_fFrameSpeed = 10.f;
@@ -328,7 +328,7 @@ _int CBeefalo::Die_Check()
        
         if (m_fFrameEnd <= m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_EFFECT, 1.0f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, 0.2f);
             CResObject::CreateItem(L"RawMeat",this,this->m_pGraphicDev);
            
 
@@ -365,8 +365,8 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
             }
             else if ((3 < m_fFrame) && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()) && !m_bAttacking)
             {
-                Engine::PlaySound_W(L"Obj_Beefalo_Attack.mp3", SOUND_EFFECT, 1.0f);
-                Engine::PlaySound_W(L"Obj_Beefalo_AttackVoice.mp3", SOUND_EFFECT, 1.0f);
+                Engine::PlaySound_W(L"Obj_Beefalo_Attack.mp3", SOUND_BEEFALO, 0.2f);
+                Engine::PlaySound_W(L"Obj_Beefalo_AttackVoice.mp3", SOUND_BEEFALO, 0.2f);
                 dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                 m_bAttacking = true;
             }
@@ -384,7 +384,7 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
     {
         if (m_fFrameEnd < m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Beefalo_Farting_1.mp3", SOUND_EFFECT, 1.0f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Farting_1.mp3", SOUND_BEEFALO,0.2f);
             m_bHit = false;
         }
 
@@ -506,7 +506,7 @@ void CBeefalo::FrameCheckSound(const _float& fTimeDelta)
         if (m_fFrame < 1.0f && m_fFrame < 1.3f)
         {
             if(IsTarget_Approach(3.f))
-                  Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_EFFECT, 1.0f);
+                  Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_BEEFALO, 0.2f);
             else
                 Engine::StopSound(SOUND_EFFECT);
         }
