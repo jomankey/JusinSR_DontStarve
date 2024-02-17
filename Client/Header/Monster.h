@@ -25,7 +25,7 @@ protected:
 	virtual void		Set_ObjStat() PURE;
 	virtual void		State_Change() PURE;
 	virtual void		Set_Hit()PURE;
-	virtual void		Set_Scale()PURE;
+
 
 	void		Collision_EachOther(const _float& fTimeDelta);
 	_bool		Collision_Transform(CTransform* _Src, CTransform* _Dst, const _float& fTimeDelta, const _float& fSpeed);
@@ -43,6 +43,7 @@ protected:
 	_bool		m_bAttacking; //공격 했는지 안햇는지 검사하는 변수
 	_bool		m_bHit;		//맞았을때 확인하는 변수
 
+	_bool				m_bSound;	//소리재생용
 
 
 

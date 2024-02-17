@@ -18,6 +18,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_bAttacking(false)
 	, m_bAttackCooltime(false)
 	, m_fFrameSpeed(0.f)
+	, m_bSound(false)
 {
 }
 
@@ -35,6 +36,7 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_bAttacking(rhs.m_bAttacking)
 	, m_bAttackCooltime(rhs.m_bAttackCooltime)
 	, m_fFrameSpeed(rhs.m_fFrameSpeed)
+	, m_bSound(rhs.m_bSound)
 {
 }
 

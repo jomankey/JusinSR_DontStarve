@@ -31,7 +31,7 @@ private:
 	HRESULT			Add_Component();
 	virtual void			State_Change();
 	virtual void			Set_ObjStat()					override;
-	virtual void	Set_Scale()						override;
+	
 	
 
 	
@@ -39,19 +39,7 @@ private:
 	void			Patroll(const _float& fTimeDelta);
 	_int			Die_Check();
 	virtual void	Set_Hit()						override;
-	void			Detect_Player() {
-		if (IsTarget_Approach(m_Stat.fAggroRange))
-		{
-			if (!m_bDetect)
-				m_bDetect = true;
-		}
-		else
-		{
-			if (m_bDetect)
-				m_bDetect = false;
-		}
-	}
-
+	void			Detect_Player();
 
 
 	void FrameCheckSound();

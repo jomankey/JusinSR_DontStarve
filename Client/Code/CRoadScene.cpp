@@ -194,7 +194,7 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	pGameObject = CDeerClops::Create(m_pGraphicDev, { 2.5f ,3.f, 3.5f });
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
-
+	pGameObject->GetTransForm()->Set_Scale({ 3.5f,3.5f,3.5f });
 	srand(Engine::Get_TimeDelta(L"Timer_FPS60"));
 
 
