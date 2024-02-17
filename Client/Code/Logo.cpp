@@ -48,9 +48,9 @@ HRESULT CLogo::Ready_Scene()
 	}
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
 	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
-	//Engine::PlayBGM(L"GenerateMap.mp3", 2.f);
-	Engine::PlayBGM(L"GenWorld_LP.mp3", 0.5f);
-
+	Engine::PlaySound_NonStop(L"music_Logo.mp3", SOUND_MAIN_BGM, 0.8f);
+	//Engine::PlayBGM(L"music_Logo.mp3", 0.7f);
+	Engine::PlayBGM(L"GenerateMap.mp3", 0.3f);
 	//m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_ROAD);
 
 	NULL_CHECK_RETURN(m_pLoading, E_FAIL);
@@ -67,7 +67,7 @@ Engine::_int CLogo::Update_Scene(const _float& fTimeDelta)
 		if (KEY_TAP(DIK_Q))
 		{
 			Engine::CScene* pScene = nullptr;
-
+			
 			pScene = CStage::Create(m_pGraphicDev, L"STAGE");
 			NULL_CHECK_RETURN(pScene, -1);
 
@@ -126,18 +126,18 @@ void CLogo::Render_Scene()
 
 HRESULT CLogo::Ready_Prototype()
 {
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RvRcTex", CRvRcTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_LogoTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg")), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_3_3_1_Tex", CustomizeTex::Create(m_pGraphicDev, 3, 3, 1)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Anim", CAnimator::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Shader_Rect", CShader::Create(m_pGraphicDev, L"../Bin/ShaderFiles/Shader_Rect.hlsl")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RvRcTex", CRvRcTex::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_LogoTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg")), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_3_3_1_Tex", CustomizeTex::Create(m_pGraphicDev, 3, 3, 1)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Anim", CAnimator::Create(m_pGraphicDev)), E_FAIL);
+	//FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Shader_Rect", CShader::Create(m_pGraphicDev, L"../Bin/ShaderFiles/Shader_Rect.hlsl")), E_FAIL);
 	
 	FAILED_CHECK_RETURN(Ready_LoadingObject(), E_FAIL);
 

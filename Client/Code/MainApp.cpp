@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "..\Header\MainApp.h"
 
+
+#include"CMainScene.h"
 #include "Logo.h"
 #include "Stage.h"
 #include "UIMgr.h"
@@ -63,7 +65,7 @@ HRESULT CMainApp::Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev, Engine::CSceneMgr**
 {
 	Engine::CScene* pScene = nullptr;
 
-	pScene = CLogo::Create(pGraphicDev);
+	pScene = CMainScene::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pScene, E_FAIL);
 
 	//매니지먼트 싱글톤의 주소 받아오기

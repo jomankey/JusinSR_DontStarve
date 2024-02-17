@@ -13,12 +13,16 @@
 
 #include "Stage.h"
 #include "Layer.h"
+#include"Logo.h"
 
 //UI Object
 #include "CGenerateMap.h"
 #include "CGenerateHand.h"
 #include "CLoadBackGround.h"
 
+
+#include "ButtonUI.h"
+#include"WorldUI.h"
 //Camera
 #include "DynamicCamera.h"
 
@@ -46,7 +50,13 @@ HRESULT CMainScene::Ready_Scene()
 
 Engine::_int CMainScene::Update_Scene(const _float& fTimeDelta)
 {
+	if (KEY_TAP(DIK_8))
+	{
+		ChangeScene(CLogo::Create(m_pGraphicDev));
+	}
+
 	_int	iExit = __super::Update_Scene(fTimeDelta);
+
 	return iExit;
 }
 
@@ -61,6 +71,20 @@ void CMainScene::Render_Scene()
 
 HRESULT CMainScene::Ready_Prototype()
 {
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RvRcTex", CRvRcTex::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_LogoTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Logo/IU.jpg")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_TerrainTex", CTerrainTex::Create(m_pGraphicDev, VTXCNTX, VTXCNTZ, VTXITV)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Calculator", CCalculator::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_3_3_1_Tex", CustomizeTex::Create(m_pGraphicDev, 3, 3, 1)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Anim", CAnimator::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Shader_Rect", CShader::Create(m_pGraphicDev, L"../Bin/ShaderFiles/Shader_Rect.hlsl")), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Make_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/UI/Make_Button_%03d.png", 2)), E_FAIL);
+
 	
 	FAILED_CHECK_RETURN(Ready_LoadingObject(), E_FAIL);
 
@@ -77,11 +101,14 @@ HRESULT CMainScene::Ready_LoadingObject()
 	proto::Ready_ProtoAnim(L"BG_MAIN", pAnim);
 
 
+	
 	pInstance = CBGLoading::Create(m_pGraphicDev, L"BG_MAIN", _vec3(WINCX / 2.f, WINCY / 2.f, 0.f), _vec3(WINCX * 0.5f, WINCY * 0.5f, 0.f));
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
+	//pInstance = CButtonUI::Create(m_pGraphicDev, _vec3(300.f, 300.f, 0.f));
+	//AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
-	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
+
 	m_pCamera = nullptr;
 	pInstance = m_pCamera = CDynamicCamera::Create(m_pGraphicDev,
 		&_vec3(64.f, 3.f, 64.f),
@@ -94,6 +121,8 @@ HRESULT CMainScene::Ready_LoadingObject()
 
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pInstance), E_FAIL);
+
+	
 
 
 	return S_OK;
