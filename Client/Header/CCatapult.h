@@ -24,6 +24,9 @@ public:
 private:
 	virtual void Free();
 
+
+	void PlayLaunch();
+
 private:
 	CRcTex* m_pBufferCom;
 	CAnimator* m_pAnimCom;

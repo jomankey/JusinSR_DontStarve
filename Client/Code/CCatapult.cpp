@@ -39,11 +39,23 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 {
 
 
+	if (m_eCurState == eTRAP_STATE::NONE)
+	{
+		_float distance = D3DXVec3Length(&(scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Pos() - m_pTransForm->Get_Pos()));
+
+		if (distance <= 40.f)
+		{
+			m_pAnimCom->ChangeAnimation(L"PLACE");
+			m_pAnimCom->SetLoopAnimator(false);
+			m_eCurState = eTRAP_STATE::PLACE;
+			PlaySound_W(L"CataPultPlace.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH4, 0.2f);
+		}
+	}
+
 	if (m_eCurState == eTRAP_STATE::PLACE && m_pAnimCom->IsFinish(L"PLACE"))
 	{
 		m_eCurState = eTRAP_STATE::IDLE;
 		m_pAnimCom->ChangeAnimation(L"IDLE_DOWN");
-		m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 		m_pAnimCom->SetLoopAnimator(true);
 	}
 
@@ -53,13 +65,12 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 		m_fAccTime += fTimeDelta;
 		_float distance = D3DXVec3Length(&(scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Pos() - m_pTransForm->Get_Pos()));
 
-		if (distance <= 40.f)
+		if (distance <= 30.f)
 		{
 			if (m_fAtkTime <= m_fAccTime)
 			{
 				m_pAnimCom->ChangeAnimation(L"ATK_DOWN");
 				m_pAnimCom->SetLoopAnimator(false);
-				m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 				m_eCurState = eTRAP_STATE::ATK;
 			}
 		}
@@ -74,6 +85,7 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 		auto pGameObject = CCataProj::Create(m_pGraphicDev, L"TRAP_TUMBLE", vPos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::TRAP, pGameObject);
 		m_pAnimCom->SetCurAnimationFrame(L"ATK_DOWN", 16);
+		PlayLaunch();
 	}
 
 	if (m_eCurState == eTRAP_STATE::ATK && m_pAnimCom->IsFinish(L"ATK_DOWN"))//공격끝나면
@@ -142,10 +154,11 @@ HRESULT CCatapult::Add_Component()
 	m_pAnimCom->AddAnimation(L"ATK_DOWN", proto::Clone_ProtoAnim(L"CATAPULT_ATK_DOWN"));
 	m_pAnimCom->AddAnimation(L"PLACE", proto::Clone_ProtoAnim(L"CATAPULT_PLACE"));
 	m_pAnimCom->AddAnimation(L"DEATH", proto::Clone_ProtoAnim(L"CATAPULT_DEATH"));
+	m_pAnimCom->AddAnimation(L"NONE", proto::Clone_ProtoAnim(L"NONE"));
 
 
-	m_pAnimCom->SetCurAnimation(L"PLACE");
-	m_eCurState = eTRAP_STATE::PLACE;
+	m_pAnimCom->SetCurAnimation(L"NONE");
+	m_eCurState = eTRAP_STATE::NONE;
 
 
 	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
@@ -172,6 +185,23 @@ CGameObject* CCatapult::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CCatapult::Free()
 {
 	__super::Free();
+}
+
+void CCatapult::PlayLaunch()
+{
+	int randomvalue = rand() % 3;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"CataPultLaunch_1.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH1, 0.2f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"CataPultLaunch_2.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH2, 0.2f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"CataPultLaunch_3.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH3, 0.2f);
+		break;
+	}
 }
 
 

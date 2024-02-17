@@ -307,6 +307,11 @@ HRESULT CLoading::Loading_Anim_Texture()
 	Engine::CAnimation* pAnim = nullptr;
 
 
+	//NONE
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"NONE", L"../Bin/Resource/Texture/NONE.png", 1, 10.f);
+	proto::Ready_ProtoAnim(L"NONE", pAnim);
+
 	////////
 	//Trap//
 	////////

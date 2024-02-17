@@ -22,6 +22,7 @@ CGenerateHand::~CGenerateHand()
 CGenerateHand* CGenerateHand::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* _strObjName, _vec3 vPos, _vec3 vScale, _bool bFlip)
 {
 	CGenerateHand* pInstance = new CGenerateHand(pGraphicDev, _strObjName);
+	pInstance->m_bFlip = bFlip;
 
 	if (FAILED(pInstance->Ready_GameObject(pGraphicDev)))
 	{
@@ -33,7 +34,6 @@ CGenerateHand* CGenerateHand::Create(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar
 	pInstance->GetTransForm()->Set_Scale(vScale);
 	pInstance->m_fX = vPos.x;
 	pInstance->m_fY = vPos.y;
-	pInstance->m_bFlip = bFlip;
 
 	return pInstance;
 }
@@ -94,10 +94,6 @@ HRESULT CGenerateHand::Add_Component()
 	m_pAnimCom->SetLoopAnimator(true);
 
 
-	if (m_bFlip)
-	{
-		m_pAnimCom->SetCurAnimationFrame(L"GENERATE", 15);
-	}
 
 
 

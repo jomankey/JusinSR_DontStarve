@@ -97,9 +97,13 @@ void CLayer::Free()
 {
 	for (size_t i = 0; i < (int)eOBJECT_GROUPTYPE::END; i++)
 	{
-		for (auto& iter : m_vecObject[i])
+		if (i == (int)eOBJECT_GROUPTYPE::PLAYER)
 		{
-			Safe_Release(iter);
+
+			for (auto& iter : m_vecObject[i])
+			{
+				Safe_Release(iter);
+			}
 		}
 
 		m_vecObject[i].clear();

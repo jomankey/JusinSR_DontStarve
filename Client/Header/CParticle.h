@@ -31,8 +31,8 @@ public:
 
 
 protected:
-	void	preRender();
-	void postRender();
+	virtual void	preRender();
+	virtual void postRender();
 	virtual void AddParticle()
 	{
 		Attribute attribute;

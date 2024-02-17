@@ -170,10 +170,10 @@ HRESULT CLogo::Ready_LoadingObject()
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
 
-	pInstance = CGenerateHand::Create(m_pGraphicDev, L"GENERATE_HAND", _vec3(WINCX - 130.f, WINCY - 100.f, 0.f), _vec3(220.f * 0.7f, 228.f * 0.7f, 0.f), false);
+	pInstance = CGenerateHand::Create(m_pGraphicDev, L"GENERATE_HAND", _vec3(WINCX - 250.f, WINCY - 100.f, 0.f), _vec3(220.f * 0.7f, 228.f * 0.7f, 0.f), false);
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
-	pInstance = CGenerateHand::Create(m_pGraphicDev, L"GENERATE_HAND", _vec3(130.f, WINCY - 100.f, 0.f), _vec3(220.f * 0.7f, 228.f * 0.7f, 0.f), true);
+	pInstance = CGenerateHand::Create(m_pGraphicDev, L"GENERATE_HAND", _vec3(250.f, WINCY - 100.f, 0.f), _vec3(220.f * 0.7f, 228.f * 0.7f, 0.f), true);
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
 	m_pCamera = nullptr;

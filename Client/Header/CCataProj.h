@@ -24,6 +24,7 @@ private:
 	void MovePos(const _float& fTimeDelta);
 protected:
 	HRESULT Add_Component() override;
+	void PlayHitSound();
 private:
 	float m_fSpeed;
 };

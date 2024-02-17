@@ -9,7 +9,9 @@ protected:
 	virtual ~CTreeLeafFall() override;
 
 public:
-	virtual void resetParticle(Attribute* attribute);
+	virtual void resetParticle(Attribute* attribute)override;
+
+	virtual void LateUpdate_GameObject()override;
 
 
 public:

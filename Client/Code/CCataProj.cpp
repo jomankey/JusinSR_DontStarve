@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CCataProj.h"
 #include "Export_Utility.h"
+#include "Export_System.h"
 #include "Player.h"
 
 CCataProj::CCataProj(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
@@ -37,6 +38,7 @@ _int CCataProj::Update_GameObject(const _float& fTimeDelta)
 			dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Attack(1);
 			m_pAnimCom->ChangeAnimation(L"HIT");
 			m_pAnimCom->SetLoopAnimator(false);
+			PlayHitSound();
 		}
 		else//아니면이동
 		{
@@ -131,4 +133,29 @@ HRESULT CCataProj::Add_Component()
 
 
 	return S_OK;
+}
+
+void CCataProj::PlayHitSound()
+{
+	int randomvalue = rand() % 5;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"CataPultRockHit_1.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH1, 0.2f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"CataPultRockHit_2.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH2, 0.2f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"CataPultRockHit_3.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH3, 0.2f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"CataPultRockHit_4.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH4, 0.2f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"CataPultRockHit_5.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH5, 0.2f);
+		break;
+	default:
+		break;
+	}
 }

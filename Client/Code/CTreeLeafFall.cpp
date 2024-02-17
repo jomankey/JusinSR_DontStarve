@@ -28,8 +28,16 @@ void CTreeLeafFall::resetParticle(Attribute* attribute)
 	GetRendomVector(&attribute->m_vPos, &m_vMinBox, &m_vMaxBox);
 
 	attribute->m_vVelocity.x = GetRandomFloat(0.0f, 1.0f) * -1.0f;
-	attribute->m_vVelocity.y = GetRandomFloat(0.0f, 1.0f) * -4.0f;
+	attribute->m_vVelocity.y = GetRandomFloat(0.2f, 1.0f) * -4.0f;
 	attribute->m_vVelocity.z = GetRandomFloat(0.0f, 1.0f) * -1.0f;
+}
+void CTreeLeafFall::LateUpdate_GameObject()
+{
+	__super::LateUpdate_GameObject();
+
+	_vec3 vPos = GetTransForm()->Get_Pos();
+
+	m_fViewZ = 4.5f;
 }
 
 _int CTreeLeafFall::Update_GameObject(const _float& fTimeDelta)
@@ -49,9 +57,7 @@ _int CTreeLeafFall::Update_GameObject(const _float& fTimeDelta)
 		{
 
 			// 포인트가 경계를 벗어났는가?  
-			if (i->m_vPos.x < m_vMinBox.x || i->m_vPos.x > m_vMaxBox.x ||
-				i->m_vPos.y < m_vMinBox.y || i->m_vPos.y > m_vMaxBox.y ||
-				i->m_vPos.z < m_vMinBox.z || i->m_vPos.z > m_vMaxBox.z)
+			if (i->m_vPos.y < m_vMinBox.y || i->m_vPos.y > m_vMaxBox.y)
 			{
 				resetParticle(&(*i));
 				i->m_bAlive = false;
