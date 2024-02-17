@@ -27,13 +27,14 @@ HRESULT CTallbird::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
-    m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
+    m_pTransForm->Set_Scale({ 3.5f, 3.5f, 3.5f });
     Set_ObjStat();
     m_bStatChange[0] = false;
     m_bStatChange[1] = false;
     m_fFrameEnd = 0;
     m_bFrameStop = true;
     m_fFrameChange = rand() % 3;
+    m_fCollisionRadius = 0.7f;
     D3DXVec3Normalize(&m_vDir, &m_vDir);
     Look_Change();
     return S_OK;
@@ -66,7 +67,7 @@ _int CTallbird::Update_GameObject(const _float& fTimeDelta)
             {
                 First_Phase(fTimeDelta);
             }
-            Collision_EachOther(fTimeDelta);
+            
         }
     }
     //Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT, 1.f);
@@ -301,7 +302,7 @@ void CTallbird::State_Change()
             m_fFrameSpeed = 14.f;
            // Engine::SpatialPlay_Sound(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT);
 
-           Engine::PlaySound_W(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT, 5.f);
+           Engine::PlaySound_W(L"Obj_TallBird_Wakeup.mp3", SOUND_EFFECT, 0.2f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 16;
             break;
@@ -314,7 +315,7 @@ void CTallbird::State_Change()
             m_fFrameSpeed = 14.f;
             //Engine::SpatialPlay_Sound(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT);
 
-            Engine::PlaySound_W(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+            Engine::PlaySound_W(L"Obj_TallBird_Hurt_2.mp3", SOUND_EFFECT, 0.2f);
             m_fFrameEnd = 6;
             if (m_eCurLook != LOOK_LEFT)
             {
@@ -324,8 +325,8 @@ void CTallbird::State_Change()
         case DEAD:
             m_fFrameSpeed = 10.f;
             //Engine::SpatialPlay_Sound(L"Obj_TallBird_Death.mp3", SOUND_EFFECT);
-
-            Engine::PlaySound_W(L"Obj_TallBird_Death.mp3", SOUND_EFFECT, 5.f);
+            
+            Engine::PlaySound_W(L"Obj_TallBird_Death.mp3", SOUND_EFFECT, 0.2f);
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10.f;
             break;
@@ -399,25 +400,36 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
 
     if (!m_bHit)
     {
-        if (IsTarget_Approach(m_Stat.fATKRange + 0.5f))
+        if (Collision_Circle(Get_Player_Pointer()))
         {
             m_eCurstate = ATTACK;
         }
         else
         {
-            m_eCurstate = WALK;
+            if (m_ePrestate == ATTACK && m_fFrameEnd < m_fFrame)
+            {
+                m_eCurstate = WALK;
+            }
         }
 
 
 
         if (m_ePrestate == ATTACK)
         {
-            if (m_fFrame > 5.f && !m_bAttacking && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()))
+            if (m_fFrame > 5.f)
             {
-                dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
-                m_bAttacking = true;
+                if (!m_bAttacking && Collision_Circle(Get_Player_Pointer()))
+                {
+                    dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+                    m_bAttacking = true;
+                }
+                if (!m_bSound)
+                {
+                    Engine::PlaySound_W(L"Obj_TallBird_Attack.mp3", SOUND_EFFECT, 0.2f);
+                    m_bSound = true;
+                }
             }
-            else if (m_fFrameEnd < m_fFrame && !IsTarget_Approach(m_Stat.fATKRange + 0.5f))
+            else if (m_fFrameEnd < m_fFrame && !Collision_Circle(Get_Player_Pointer()))
             {
                 m_eCurstate = WALK;
             }
@@ -425,10 +437,11 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
         else if (m_ePrestate == WALK)
         {
             Player_Chase(fTimeDelta);
+            Collision_EachOther(fTimeDelta);
         }
 
     }
-
+   
 
     if (m_fFrameEnd < m_fFrame)
     {
@@ -437,6 +450,8 @@ void CTallbird::Second_Phase(const _float& fTimeDelta)
             m_bAttacking = false;
         if (m_bHit)
             m_bHit = false;
+        if (m_bSound)
+            m_bSound = false;
     }
     
 }

@@ -30,7 +30,7 @@ HRESULT IceSpikeL::Ready_GameObject()
     m_fDamage = 10.f;
     int RandomPattern = rand() % 3;         // 0 1 2 ÀÎµ¦½º Áß ·£´ý ÆÐÅÏ Àû¿ë
     m_eCurState = (ICESPIKE)RandomPattern;
-    Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, 5.f);
+    Spike_Sound();
     
     
    
@@ -138,10 +138,40 @@ void IceSpikeL::State_Change()
     }
 }
 
+void IceSpikeL::Spike_Sound()
+{
+    int randomvalue = rand() % 7;
+    switch (randomvalue)
+    {
+    case 0:
+        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_1.mp3", SOUND_EFFECT, 0.2f);
+        break;
+    case 1:
+        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_2.mp3", SOUND_EFFECT, 0.2f);
+        break;
+    case 2:
+        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_3.mp3", SOUND_EFFECT, 0.2f);
+        break;
+    case 3:
+        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_4.mp3", SOUND_EFFECT, 0.2f);
+        break;
+    case 4:
+        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_5.mp3", SOUND_EFFECT, 0.2f);
+        break;
+    case 5:
+        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_6.mp3", SOUND_EFFECT, 0.2f);
+        break;
+    case 6:
+        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, 0.2f);
+        break;
+    }
+}
+
 _int IceSpikeL::Appear()
 {
     if (m_fFrameEnd-1 < m_fFrame)
     {
+        Check_Collision();
         m_fFrame = m_fFrameEnd - 1;
         m_bFrameStop = true;
         DeleteObject(this);
@@ -149,11 +179,6 @@ _int IceSpikeL::Appear()
     }
 
 
-    if (!m_bAttack)
-    {
-        Check_Collision();
-        m_bAttack = true;
-    }
 
     return 0;
 }

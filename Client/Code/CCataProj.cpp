@@ -5,6 +5,7 @@
 
 CCataProj::CCataProj(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 	:CTrap(pGraphicDev, _strObjName)
+	, m_fSpeed(6.f)
 {
 }
 
@@ -17,14 +18,20 @@ CCataProj::~CCataProj()
 {
 }
 
+HRESULT CCataProj::Ready_GameObject()
+{
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_pTransForm->Set_Scale(_vec3(0.3f, 0.3f, 0.3f));
+	return S_OK;
+}
 
 _int CCataProj::Update_GameObject(const _float& fTimeDelta)
 {
 
 	if (m_eCurState == eTRAP_STATE::MOVE)//움직이는상태면 플레이어체크
 	{
-		if (PlayerHit(1.f))//플레이어 맞았을경우
+		if (PlayerHit(0.3f))//플레이어 맞았을경우
 		{
 			m_eCurState = eTRAP_STATE::DEAD;
 			dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Attack(1);
@@ -86,7 +93,7 @@ void CCataProj::MovePos(const _float& fTimeDelta)
 	_vec3 vPos(-1.f, 0.f, 0.f);
 
 
-	m_pTransForm->Move_Pos(&vPos, 3.f, fTimeDelta);
+	m_pTransForm->Move_Pos(&vPos, m_fSpeed, fTimeDelta);
 
 }
 
@@ -112,7 +119,7 @@ HRESULT CCataProj::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Anim", pComponent });
 
-	
+
 	m_pAnimCom->AddAnimation(L"AIR", proto::Clone_ProtoAnim(L"PROJ_CATAPULT_AIR"));//아래
 
 	m_pAnimCom->AddAnimation(L"HIT", proto::Clone_ProtoAnim(L"PROJ_CATAPULT_HIT"));
@@ -122,7 +129,6 @@ HRESULT CCataProj::Add_Component()
 	m_pAnimCom->SetLoopAnimator(true);
 	m_eCurState = eTRAP_STATE::MOVE;
 
-	m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
 
 	return S_OK;
 }

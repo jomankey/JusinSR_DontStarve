@@ -61,5 +61,8 @@ private:
 
 
 	_uint m_iLightNum;
+
+	_float m_fAccTime;
+
 };
 

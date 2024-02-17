@@ -38,6 +38,8 @@ Engine::_int CTerrain::Update_GameObject(const _float& fTimeDelta)
 	
 	_vec3 vPos;
 	m_pTransForm->Get_Info(INFO_POS, &vPos);
+
+	vPos.y = 60000;
 	Compute_ViewZ(&vPos);
 	//Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 

@@ -24,7 +24,7 @@ _int CTumbleWeed::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_eCurState == eTRAP_STATE::MOVE)//움직이는상태면 플레이어체크
 	{
-		if (PlayerHit(1.f))//플레이어 맞았을경우
+		if (Collision_Circle(scenemgr::Get_CurScene()->GetPlayerObject()))//플레이어 맞았을경우
 		{
 			m_eCurState = eTRAP_STATE::DEAD;
 			dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Attack(1);

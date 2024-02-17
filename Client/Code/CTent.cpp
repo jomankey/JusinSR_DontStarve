@@ -27,8 +27,10 @@ HRESULT CTent::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = RESOBJID::TENT;
 	m_eTentCurState = CTENT_DEFAULT;
-
-
+	_vec3 vPos;
+	m_pTransForm->Set_Scale(_vec3(3.7f, 3.7f, 3.7f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.7f, vPos.z);
 
 	m_Stat.strObjName = L"텐트";
 	m_fFrame = 0.0f;
@@ -165,7 +167,7 @@ void CTent::Render_GameObject()
 HRESULT CTent::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
+
 
 
 
@@ -216,13 +218,6 @@ HRESULT CTent::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Shader_Rect", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(3.f, 3.f, 3.f));
-
-	if (!m_bInstall)
-	{
-		m_pTransForm->Get_Info(INFO_POS, &vPos);
-		m_pTransForm->Set_Pos(vPos.x, 1.7f, vPos.z);
-	}
 
 	return S_OK;
 }
@@ -243,14 +238,14 @@ void CTent::Check_FrameState()
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DESTROY:
-			Engine::PlaySound_W(L"Obj_Tent_Destroy.mp3", SOUND_EFFECT, 10.0f);
+			Engine::PlaySound_W(L"Obj_Tent_Destroy.mp3", SOUND_EFFECT, 0.2f);
 			m_fFrameEnd = 16.0f;
 			break;
 		case CTent::CTENT_BURNT:
 			m_fFrameEnd = 0.0f;
 			break;
 		case CTent::CTENT_PLACE:
-			Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
+			Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 0.2f);
 			m_fFrameEnd = 7.0f;
 			break;
 		case CTent::CTENT_DEFAULT:
@@ -352,7 +347,7 @@ void CTent::Install_Obj()
 	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(scenemgr::Get_CurScene()->GetTerrainObject()->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	_vec3 vPos = m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, vecTerrain->GetTransForm());
 
-	vPos.y = 1.f;
+	vPos.y = 1.7f;
 	m_pTransForm->Set_Pos(vPos);
 
 	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // 설치 완료
@@ -362,7 +357,7 @@ void CTent::Install_Obj()
 		auto vecMouse = scenemgr::Get_CurScene()->GetMouseObject();
 		CMouse* pMouse = dynamic_cast<CMouse*>(vecMouse);
 		pMouse->Set_Install(false);
-		Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 10.0f);
+		Engine::PlaySound_W(L"Obj_Tent_Craft.mp3", SOUND_EFFECT, 0.2f);
 		CSlotMgr::GetInstance()->Remove_InvenItem(m_iSlotNum);
 	}
 }

@@ -72,6 +72,8 @@ _uint CLoading::Loading_ForStage()
 	lstrcpy(m_szLoading, L" Q : STAGE \n W : ROAD_STAGE  \n E : BOSS_STAGE \n T : TEST_STAGE");
 	//test
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"PARTICLE_SNOW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Particle/Snow.png", 1)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"PARTICLE_LEAF", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Particle/leaf_0.png", 2)), E_FAIL);
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"PARTICLE_SMOKE", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Particle/smoke.png", 1)), E_FAIL);
 
 	return S_OK;
 }
@@ -374,6 +376,10 @@ HRESULT CLoading::Loading_Effect_UI()
 	Engine::CAnimation* pAnim = nullptr;
 	pAnim = CAnimation::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", L"../Bin/Resource/Texture/UI/Hit/NomalHit/NomalHit__%03d.png", 21, 0.1f);
 	proto::Ready_ProtoAnim(L"PLAYER_HIT_EFFECT", pAnim);
+
+
+
+
 
 	return S_OK;
 }

@@ -91,6 +91,7 @@ namespace Engine
 	inline void PlayEffectContinue(TCHAR* pSoundKey, float fVolume,  CHANNELID eID);
 	inline void Update_Sound(_vec3 _SoundVel, _vec3 _PlayerPos, _vec3 _ObjPos, _vec3 _ObjFoward, _vec3 _ObjUp, CHANNELID eID, float _SoundFower = 1);
 	inline void SpatialPlay_Sound(TCHAR* pSoundKey, CHANNELID eID);
+	inline void Update_System();
 
 	inline void StopSound(CHANNELID eID);
 	inline void StopAll();

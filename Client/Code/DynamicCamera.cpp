@@ -93,6 +93,13 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 	}
 	else//RoadScene
 	{
+
+		if (m_fShakeTime > m_fShakeAccTime)
+		{
+			m_fShakeAccTime += fTimeDelta;
+			ShakeCamera();
+		}
+
 		if (KEY_TAP(DIK_O))
 		{
 			m_fRoadHeight += 0.1f;

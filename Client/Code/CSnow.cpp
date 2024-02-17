@@ -60,7 +60,7 @@ CSnow* CSnow::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, int num
 	CSnow* pInstance = new CSnow(pGraphicDev, _strObjName);
 
 	pInstance->m_vbSize = 2048;
-	pInstance->m_fSize = 0.1f;
+	pInstance->m_fSize = 0.05f;
 	pInstance->m_vbOffset = 0;
 	pInstance->m_vbBatchSize = 512;
 	pInstance->m_vMinBox = MinBox;
@@ -71,8 +71,6 @@ CSnow* CSnow::Create(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName, int num
 		Safe_Release(pInstance);
 		return nullptr;
 	}
-
-
 
 	for (int i = 0; i < numparticles; i++)
 	{

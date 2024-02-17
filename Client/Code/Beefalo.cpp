@@ -26,12 +26,12 @@ HRESULT CBeefalo::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
-    m_pTransForm->m_vScale = { 5.f, 5.f, 5.f };
+    m_pTransForm->m_vScale = { 3.7f, 3.7f, 3.7f };
     Set_ObjStat();
     Look_Change();
     m_fFrameEnd = 10;
     m_fFrameChange = rand() % 5;
-
+    m_fCollisionRadius = 2.f;
     //m_pTransForm->Set_Scale(_vec3(1.f, 1.f, 1.f));
     return S_OK;
 }
@@ -316,7 +316,7 @@ void CBeefalo::State_Change()
        
             break;
         case ATTACK:
-            Engine::PlaySound_W(L"Obj_Beefalo_Angry.mp3", SOUND_EFFECT, 3.0f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Angry.mp3", SOUND_BEEFALO, 0.2f);
   
             
             m_fFrameSpeed = 10.f;
@@ -368,7 +368,7 @@ _int CBeefalo::Die_Check()
        
         if (m_fFrameEnd <= m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_EFFECT, 1.0f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, 0.2f);
             CResObject::CreateItem(L"RawMeat",this,this->m_pGraphicDev);
            
 
@@ -393,29 +393,37 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
     m_Stat.fSpeed = 5.f;
     if (!m_bHit)
     {
-        if (IsTarget_Approach(1.f) && m_ePreState != ATTACK)
+        if (Collision_Circle(Get_Player_Pointer()) && m_ePreState != ATTACK)
         {
             m_eCurState = ATTACK;
         }
         else if (m_ePreState == ATTACK)
         {
-            if ((m_fFrameEnd < m_fFrame) && !IsTarget_Approach(1.f))
+            if ((m_fFrameEnd < m_fFrame) && !Collision_Circle(Get_Player_Pointer()))
             { 
                 m_eCurState = MADRUN;
             }
-            else if ((3 < m_fFrame) && CGameObject::Collision_Transform(m_pTransForm, scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()) && !m_bAttacking)
+            else if ((3 < m_fFrame) )
             {
-                Engine::PlaySound_W(L"Obj_Beefalo_Attack.mp3", SOUND_EFFECT, 1.0f);
-                Engine::PlaySound_W(L"Obj_Beefalo_AttackVoice.mp3", SOUND_EFFECT, 1.0f);
-                dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
-                m_bAttacking = true;
+                if (!m_bSound)
+                {
+                    Engine::PlaySound_W(L"Obj_Beefalo_AttackVoice.mp3", SOUND_EFFECT, 1.0f);
+                    m_bSound = true;
+                }
+                if (Collision_Circle(Get_Player_Pointer()) && !m_bAttacking)
+                {
+                    Engine::PlaySound_W(L"Obj_Beefalo_Attack.mp3", SOUND_EFFECT, 1.0f);
+                    dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+                    m_bAttacking = true;
+                }
             }
+
         }
-        else if (m_ePreState == MADRUN && !IsTarget_Approach(1.f))
+        else if (m_ePreState == MADRUN && !Collision_Circle(Get_Player_Pointer()))
         {
             Player_Chase(fTimeDelta);
         }
-        else if (!IsTarget_Approach(1.f))
+        else if (!Collision_Circle(Get_Player_Pointer()))
         {
             m_eCurState = MADRUN;
         }
@@ -424,7 +432,7 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
     {
         if (m_fFrameEnd < m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Beefalo_Farting_1.mp3", SOUND_EFFECT, 1.0f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Farting_1.mp3", SOUND_EFFECT, 0.2f);
             m_bHit = false;
         }
 
@@ -441,6 +449,8 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
         m_fFrame = 0.f;
         if(m_bAttacking)
             m_bAttacking = false;
+        if (m_bSound)
+            m_bSound = false;
     }
 }
 
@@ -513,32 +523,6 @@ void CBeefalo::Set_Hit()
 
 }
 
-void CBeefalo::Set_Scale()
-{
-
-    if (m_ePreState == MADRUN)
-    {
-        m_pTransForm->Set_Scale({ 2.2f, 2.2f, 2.2f });
-    }
-    else if (m_ePreState == ATTACK)
-    {
-        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
-    }
-    else if (m_ePreState == DEAD)
-    {
-        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
-    }
-    else if (m_ePreState == HIT)
-    {
-        m_pTransForm->Set_Scale({ 2.5f, 2.5f, 2.5f });
-    }
-    else
-    {
-        m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
-    }
-
-}
-
 void CBeefalo::FrameCheckSound(const _float& fTimeDelta)
 {
     if (m_eCurState == WALK)
@@ -546,7 +530,7 @@ void CBeefalo::FrameCheckSound(const _float& fTimeDelta)
         if (m_fFrame < 1.0f && m_fFrame < 1.3f)
         {
             if(IsTarget_Approach(3.f))
-                  Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_EFFECT, 1.0f);
+                  Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_EFFECT, 0.2f);
             else
                 Engine::StopSound(SOUND_EFFECT);
         }

@@ -3,6 +3,7 @@
 #include "ProtoMgr.h"
 #include "Transform.h"
 #include "Export_Utility.h"
+#include"Export_System.h"
 
 CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -59,6 +60,7 @@ HRESULT CGameObject::Ready_GameObject()
 
 _int CGameObject::Update_GameObject(const _float& fTimeDelta)
 {
+	Engine::Update_System();
 	for (auto& iter : m_mapComponent[ID_DYNAMIC])
 		iter.second->Update_Component(fTimeDelta);
 

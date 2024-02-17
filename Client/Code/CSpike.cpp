@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "CSpike.h"
 #include "Export_Utility.h"
+#include "Export_System.h"
 #include "Player.h"
-
 CSpike::CSpike(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 	:CTrap(pGraphicDev, _strObjName)
 {
@@ -31,6 +31,7 @@ _int CSpike::Update_GameObject(const _float& fTimeDelta)
 			m_pAnimCom->ChangeAnimation(L"GROW");
 			m_pAnimCom->SetLoopAnimator(false);
 			m_eCurState = eTRAP_STATE::GROW;
+			Engine::PlaySound_W(L"TreeGrow.mp3",CHANNELID::SOUND_EFFECT_CONTINUE_CH4, 0.2f);
 		}
 	}
 

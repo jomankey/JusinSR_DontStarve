@@ -189,6 +189,12 @@ void Update_Sound(_vec3 _SoundVel, _vec3 _PlayerPos, _vec3 _ObjPos, _vec3 _ObjFo
 	return CSoundMgr::GetInstance()->Update_Sound(_SoundVel, _PlayerPos, _ObjPos, _ObjFoward, _ObjUp, eID, _SoundFower);
 }
 
+void Update_System()
+{
+	return CSoundMgr::GetInstance()->Update_System();
+}
+
+
 void StopSound(CHANNELID eID)
 {
 	return CSoundMgr::GetInstance()->StopSound(eID);

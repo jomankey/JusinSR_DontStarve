@@ -21,8 +21,7 @@ HRESULT CObjectRock::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-
-	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
+	m_pTransForm->Set_Scale(_vec3(2.8f, 2.8f, 2.8f));
 	Ready_Stat();
 	m_eCurState = RES_IDLE;
 	m_eObject_id = ROCK;
@@ -109,7 +108,7 @@ void CObjectRock::Change_Frame_Event()
 		{
 			CreateItem(L"Rocks_0",this, this->m_pGraphicDev);
 			//CreateItem(L"Rocks_1",this, this->m_pGraphicDev);
-			Engine::PlaySound_W(L"Obj_Rock_Destroy.mp3", SOUND_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Rock_Destroy.mp3", SOUND_ROCK, 1.0f);
 
 		}
 

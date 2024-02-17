@@ -94,8 +94,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../Bin\</OutDir>
-    <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;$(DXSDK_DIR)Include;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\lib\x64\uwp;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;$(DXSDK_DIR)lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\lib\x64\uwp;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64</LibraryPath>
+    <IncludePath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;$(DXSDK_DIR)Include;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\lib\x64\uwp;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;$(DXSDK_DIR)lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64;C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\lib\x64\uwp;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -202,6 +202,7 @@
     <ClInclude Include="..\Header\CToothTrap.h" />
     <ClInclude Include="..\Header\CTrap.h" />
     <ClInclude Include="..\Header\CDustParticle.h" />
+    <ClInclude Include="..\Header\CTreeLeafFall.h" />
     <ClInclude Include="..\Header\CTumbleWeed.h" />
     <ClInclude Include="..\Header\ExplainPanel.h" />
     <ClInclude Include="..\Header\CHpUI.h" />
@@ -295,6 +296,7 @@
     <ClCompile Include="..\Code\CToothTrap.cpp" />
     <ClCompile Include="..\Code\CTrap.cpp" />
     <ClCompile Include="..\Code\CDustParticle.cpp" />
+    <ClCompile Include="..\Code\CTreeLeafFall.cpp" />
     <ClCompile Include="..\Code\CTumbleWeed.cpp" />
     <ClCompile Include="..\Code\ExplainPanel.cpp" />
     <ClCompile Include="..\Code\CHpUI.cpp" />

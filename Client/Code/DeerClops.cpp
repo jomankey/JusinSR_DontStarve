@@ -24,11 +24,11 @@ CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 
 CDeerClops::CDeerClops(const CDeerClops& rhs)
 	:CMonster(rhs)
-{
+{//
 }
 
 CDeerClops::~CDeerClops()
-{
+{//
 
 }
 
@@ -37,10 +37,11 @@ HRESULT CDeerClops::Ready_GameObject()
 	//true 면 위아래고 , false면 상하좌우
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_pTransForm->Set_Pos(m_vPos);
-	m_pTransForm->Set_Scale({ 4.5f, 4.5f, 4.5f });
 	Set_ObjStat();
 	m_fAcctime = float(rand() % 30);
 	m_bFalldown = false;
+	m_fCollisionRadius = 1.f;
+
 	for (auto i = 0; i < DEER_PHASE::PHASE_END; ++i)
 	{
 		m_bPhase[i] = false;
@@ -336,7 +337,7 @@ void CDeerClops::Set_Hit()
 	{
 		if (m_ePreState != ATTACK)
 		{
-			Engine::PlaySound_W(L"Obj_Deerclops_Hurt_5.mp3", SOUND_EFFECT, 5.f);
+			Hit_Sound();
 			m_eCurState = HIT;
 			m_fFrame = 0.f;
 			m_bHit = true;
@@ -358,7 +359,7 @@ void CDeerClops::Set_Hit()
 		if (!m_bPhase[DIE])
 		{
 			m_bPhase[DIE] = true;
-			Engine::PlaySound_W(L"Obj_Deerclops_Death_1.mp3", SOUND_EFFECT, 5.f);
+			Engine::PlaySound_W(L"Obj_Deerclops_Death_1.mp3", SOUND_EFFECT, 0.5f);
 			m_eCurState = DEAD;
 			m_Stat.bDead = true;
 		}
@@ -373,7 +374,7 @@ void CDeerClops::Set_ObjStat()
 	m_Stat.fHP = 100.f;
 	m_Stat.fMxHP = 100.f;
 	m_Stat.fSpeed = 2.f;
-	m_Stat.fATK = 50.f;
+	m_Stat.fATK = 20.f;
 	m_Stat.fATKRange = 3.f;
 	m_Stat.fAggroRange = 10.f;
 	m_Stat.bDead = false;
@@ -409,9 +410,9 @@ void CDeerClops::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case TAUNT:
+			Engine::PlaySound_W(L"Obj_Deerclops_Taunt_2.mp3", SOUND_EFFECT, 0.5f);
 			m_fFrameSpeed = 17.f;
 			Generate_Roaring(0.9);
-			Generate_Sizemic();
 			Camera_Shaking(1.f, 2.f, false);
 			m_fFrameEnd = 17;
 			m_eCurLook = LOOK_DOWN;
@@ -458,80 +459,6 @@ void CDeerClops::State_Change()
 	}
 }
 
-void CDeerClops::Set_Scale()
-{
-	if (m_ePreState == TAUNT || m_ePreState == LONG_TAUNT)
-	{
-		m_pTransForm->Set_Scale({ 6.f, 6.f, 6.f });
-	}
-	else if (m_ePreState == IDLE)
-	{
-		if (m_ePreLook == LOOK_UP )
-		{
-			m_pTransForm->Set_Scale({ 3.0f, 6.f, 3.0f });
-		}
-		else if (m_ePreLook == LOOK_DOWN)
-		{
-			m_pTransForm->Set_Scale({ 3.0f, 6.f, 3.0f });
-		}
-		else
-		{
-			m_pTransForm->Set_Scale({ 2.7f, 7.6f, 2.7f });
-		}
-	}
-	else if (m_ePreState == ATTACK)
-	{
-		if (m_ePreLook == LOOK_DOWN)
-		{
-			m_pTransForm->Set_Scale({ 8.f, 6.f, 8.f });
-		}
-		else if (m_ePreLook == LOOK_UP)
-		{
-			m_pTransForm->Set_Scale({ 7.f, 5.5f, 7.f });
-		}
-		else
-		{
-			m_pTransForm->Set_Scale({ 7.f, 5.5f, 7.f });
-		}
-		
-	}
-	else if (m_ePreState == WALK)
-	{
-		if (m_ePreLook == LOOK_LEFT || m_ePreLook == LOOK_RIGHT)
-		{
-			m_pTransForm->Set_Scale({ 3.0f, 8.f, 3.0f });
-		}
-		else if(m_ePreLook == LOOK_UP)
-		{
-			m_pTransForm->Set_Scale({ 3.5f, 8.f, 3.5f });
-		}
-		else
-		{
-			m_pTransForm->Set_Scale({ 6.f, 6.f, 6.f });
-		}
-	}
-	else if (m_ePreState == SLEEP)
-	{
-		m_pTransForm->Set_Scale({ 4.5f, 4.5f, 4.5f });
-	}
-	else if (m_ePreState == WAKE_UP)
-	{
-		m_pTransForm->Set_Scale({ 4.2f, 5.f, 4.2f });
-	}
-	else if (m_ePreState == HIT)
-	{
-		m_pTransForm->Set_Scale({ 3.8f, 4.6, 3.8f });
-	}
-	else
-	{
-		m_pTransForm->Set_Scale({ 5.f, 5.f, 5.f });
-	}
-
-
-
-
-}
-
 
 void CDeerClops::Sleep(const _float& fTimeDelta)
 {
@@ -568,8 +495,9 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 }
 void CDeerClops::Second_Phase(const _float& fTimeDelta)
 {
+	m_fCollisionRadius = 0.7f;
 	m_fAcctime += fTimeDelta;
-	
+	m_Stat.fSpeed = 2.5f;
 
 	if (3.f < m_fAcctime)
 	{
@@ -578,12 +506,15 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 			m_bAttackCooltime = false;
 	}
 
-	if (IsTarget_Approach(m_Stat.fATKRange) && !m_bAttackCooltime)
+	if (Collision_Circle(Get_Player_Pointer()) &&
+		(m_Stat.fATKRange) &&
+		!m_bAttackCooltime &&
+		!dynamic_cast<CPlayer*>(Get_Player_Pointer())->IsPlayer_Dead())
 	{
 		m_eCurState = ATTACK;
 		m_bAttackCooltime = true;
 	}
-	else if (IsTarget_Approach(m_Stat.fATKRange) && m_bAttackCooltime)
+	else if (Collision_Circle(Get_Player_Pointer()) && m_bAttackCooltime)
 	{
 		if (m_fFrameEnd < m_fFrame)
 		{
@@ -608,7 +539,8 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 	{
 		if (9 < m_fFrame && !m_bAttacking)
 		{
-			Engine::PlaySound_W(L"Obj_Deerclops_Attack_3.mp3", SOUND_EFFECT, 5.f);
+			Attack_Sound();
+			// 플레이어 피격
 			m_bAttacking = true;
 		}
 
@@ -620,7 +552,7 @@ void CDeerClops::Second_Phase(const _float& fTimeDelta)
 			}
 		}
 	}
-	else if(m_ePreState == WALK)
+	else if (m_ePreState == WALK)
 	{
 		Player_Chase(fTimeDelta);
 	}
@@ -640,9 +572,8 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 	{
 		if (!m_bFalldown)
 		{
-	
 			m_pTransForm->Move_Pos(&m_vFallingDir, 60.f, fTimeDelta);
-			if (Get_Pos().y < 0.1f)
+			if (Get_Pos().y < 2.5f)
 			{
 				
 				m_pTransForm->Set_Pos(m_vPos);
@@ -650,11 +581,11 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				Generate_Roaring(0.9);
 				Getnerate_SnowSplash();
 				Camera_Shaking(3.f, 1.f, false);
-				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_EFFECT, 7.f);
+				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_EFFECT, 0.5f);
 				Awake_Tallbird();
 				// 여기에 카메라 쉐이킹
 			}
-			else if (Get_Pos().y < 4.f)
+			else if (Get_Pos().y < 6.f)
 			{
 				m_bFrameStop = false;
 			}
@@ -695,8 +626,11 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 
 void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 {
+	
 	m_fAcctime += fTimeDelta;
 
+	m_Stat.fSpeed = 1.5f;
+	m_fCollisionRadius = 0.7f;
 	if (3.f < m_fAcctime)
 	{
 		m_fAcctime = 0.f;
@@ -704,12 +638,12 @@ void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 			m_bAttackCooltime = false;
 	}
 
-	if (IsTarget_Approach(m_Stat.fATKRange) && !m_bAttackCooltime)
+	if (Collision_Circle(Get_Player_Pointer()) && !m_bAttackCooltime)
 	{
 		m_eCurState = ATTACK;
 		m_bAttackCooltime = true;
 	}
-	else if (IsTarget_Approach(m_Stat.fATKRange) && m_bAttackCooltime)
+	else if (Collision_Circle(Get_Player_Pointer()) && m_bAttackCooltime)
 	{
 		if (m_fFrameEnd < m_fFrame)
 		{
@@ -718,7 +652,7 @@ void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 	}
 	else if (m_ePreState == IDLE)
 	{
-		if (!IsTarget_Approach(m_Stat.fATKRange))
+		if (!Collision_Circle(Get_Player_Pointer()))
 		{
 			m_eCurState = WALK;
 		}
@@ -732,13 +666,17 @@ void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 	}
 	else if (m_ePreState == ATTACK)
 	{
-		if (9 < m_fFrame && !m_bAttacking)
+		if (9 < m_fFrame)
 		{
-			Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 5.f);
-			m_bAttacking = true;
+			Attack_Sound();
+			if (Collision_Circle(Get_Player_Pointer()) && !m_bAttacking)
+			{
+				dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+				m_bAttacking = true;
+			}
 		}
 
-		if (!IsTarget_Approach(m_Stat.fATKRange))
+		if (!Collision_Circle(Get_Player_Pointer()))
 		{
 			if (m_fFrameEnd < m_fFrame)
 			{
@@ -763,7 +701,7 @@ void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//제작한 패턴 나옴
 {
 	m_Stat.fSpeed = 3.5f;
-
+	m_fCollisionRadius = 1.2f;
 	m_fSkill2 += fTimeDelta;
 	m_fAcctime2 += fTimeDelta;
 
@@ -800,26 +738,28 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//제작한 패턴 나옴
 	else if (m_ePreState == WALK)
 	{
 		Player_Chase(fTimeDelta);
-		if (IsTarget_Approach(m_Stat.fATKRange) && !m_bAttackCooltime)
+		if (Collision_Circle(Get_Player_Pointer()) && !m_bAttackCooltime)
 		{
 			m_eCurState = ATTACK;
+			Attack_Sound();
 			m_bAttackCooltime = true;
 		}
-		else if (IsTarget_Approach(m_Stat.fATKRange))
+		else if (Collision_Circle(Get_Player_Pointer()) && m_bAttackCooltime)
 		{
 			m_eCurState = IDLE;
 		}
 	}
 	else if (m_ePreState == IDLE)
 	{
-		if (IsTarget_Approach(m_Stat.fATKRange) && !m_bAttackCooltime)
+		if (Collision_Circle(Get_Player_Pointer()) && !m_bAttackCooltime)
 		{
 			m_eCurState = ATTACK;
 			m_bAttackCooltime = true;
 		}
-		else if (!IsTarget_Approach(m_Stat.fATKRange))
+		else if (!Collision_Circle(Get_Player_Pointer()))
 		{
-			m_eCurState = WALK;
+			if(IsFrameEnd())
+				m_eCurState = WALK;
 		}
 	}
 	else if (m_ePreState == ATTACK)
@@ -920,6 +860,7 @@ _bool CDeerClops::IsFrameEnd()
 void CDeerClops::Generate_Fall_Mark()
 {
 	_vec3 pPos = Get_Player_Pos();
+	pPos.y = 0.1f;
 	CGameObject* pGameObject = FallMark::Create(m_pGraphicDev, pPos);
 	CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObject);
 }
@@ -932,6 +873,7 @@ void CDeerClops::Generate_Fall_Mark_Ex()
 	for (int i = 0; i < 20; ++i)
 	{
 		_vec3 pPos = Get_Player_Pos();
+		pPos.y = 0.1f;
 		int randomValue = rand() % 10;
 		int randomValue2 = rand() % 10;
 		// 부호를 무작위로 선택 (-1 또는 1)
@@ -951,7 +893,7 @@ void CDeerClops::Generate_Fall_Mark_Ex()
 
 void CDeerClops::Generate_Attack_Effect()
 {
-	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 5.f);
+	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 0.2f);
 	_vec3 vThisPos, vRight, vLook; // 이펙트 생성 기점.
 	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
 	m_pTransForm->Get_Info(INFO_LOOK, &vLook);
@@ -962,19 +904,18 @@ void CDeerClops::Generate_Attack_Effect()
 	switch (m_ePreLook)
 	{
 	case LOOK_DOWN:
-		vThisPos -= vLook * 2;
-		vThisPos -= vRight * 4;
+		vThisPos -= vLook * 3;
+		vThisPos -= vRight * 3;
 		break;
 	case LOOK_UP:
-		vThisPos += vLook * 2;
+		vThisPos += vLook * 3;
+		vThisPos += vRight * 3;
 		break;
 	case LOOK_LEFT:
-		vThisPos -= vRight * 4;
-		vThisPos -= vLook * 2;
+		vThisPos -= vRight * 3;
 		break;
 	case LOOK_RIGHT:
-		vThisPos += vRight * 4;
-		vThisPos -= vLook * 2;
+		vThisPos += vRight * 3;
 		break;
 	}
 
@@ -987,6 +928,7 @@ void CDeerClops::Generate_Attack_Effect()
 void CDeerClops::Generate_Roaring(_int _iCount)
 {
 	_vec3 vThisPos,vLook;
+	vThisPos.y = 0.1f;
 	vLook = Get_Look();
 	vLook *= -1;
 	vThisPos += vLook * (m_pTransForm->Get_Scale().y * 0.5);
@@ -1004,6 +946,7 @@ void CDeerClops::Getnerate_SnowSplash()
 	for (int i = 0; i < 10; ++i)
 	{
 		_vec3 pPos = Get_Pos();
+		pPos.y = 0.6f;
 		int randomValue = rand() % 10;
 		int randomValue2 = rand() % 5;
 		// 부호를 무작위로 선택 (-1 또는 1)
@@ -1027,7 +970,7 @@ void CDeerClops::Generate_Sizemic()
 	_vec3 vThisPos, vRight,vLeft,vDown, vUp; // 이펙트 생성 기점.
 	_vec3 vDotRD, vDotRU, vDotLD, vDotLU;
 	vThisPos = Get_Pos();
-	vThisPos.y = 0.f;
+	vThisPos.y = 0.5f;
 	vRight = Get_Right();
 	vUp = Get_Look();
 	vLeft = vRight * -1;
@@ -1043,24 +986,24 @@ void CDeerClops::Generate_Sizemic()
 	D3DXVec3Normalize(&vDotLU, &vDotLU);
 
 
-
-	
-
 	for (int i = 0; i < 3; ++i)
 	{
 		//right
+		_float fDistance = i * 4.f;
+		if (i == 0)
+			fDistance = 4.f;
 
-		_vec3 rightpos = vThisPos + vRight * ((float)i + 4.f);
+		_vec3 rightpos = vThisPos + vRight * fDistance;
 		CGameObject* pGameObjectR = SizemicR::Create(m_pGraphicDev, rightpos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectR);
 		dynamic_cast<SizemicR*>(pGameObjectR)->Set_Number(i);
 
-		_vec3 Rdpos = vThisPos + vDotRD * ((float)i + 4.f);
+		_vec3 Rdpos = vThisPos + vDotRD * fDistance;
 		CGameObject* pGameObjectRD = SizemicR::Create(m_pGraphicDev, Rdpos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectRD);
 		dynamic_cast<SizemicR*>(pGameObjectRD)->Set_Number(i);
 
-		_vec3 Rupos = vThisPos + vDotRU * ((float)i + 4.f);
+		_vec3 Rupos = vThisPos + vDotRU * fDistance;
 		CGameObject* pGameObjectRU = SizemicR::Create(m_pGraphicDev, Rupos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectRU);
 		dynamic_cast<SizemicR*>(pGameObjectRU)->Set_Number(i);
@@ -1068,17 +1011,17 @@ void CDeerClops::Generate_Sizemic()
 
 
 		//left
-		_vec3 leftpos = vThisPos + vLeft * ((float)i + 4.f);
+		_vec3 leftpos = vThisPos + vLeft * fDistance;
 		CGameObject* pGameObjectL = SizemicR::Create(m_pGraphicDev, leftpos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectL);
 		dynamic_cast<SizemicR*>(pGameObjectL)->Set_Number(i);
 
-		_vec3 Ldpos = vThisPos + vDotLD * ((float)i + 4.f);
+		_vec3 Ldpos = vThisPos + vDotLD * fDistance;
 		CGameObject* pGameObjectLD = SizemicL::Create(m_pGraphicDev, Ldpos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectLD);
 		dynamic_cast<SizemicL*>(pGameObjectLD)->Set_Number(i);
 
-		_vec3 Lupos = vThisPos + vDotLU * ((float)i + 4.f);
+		_vec3 Lupos = vThisPos + vDotLU * fDistance;
 		CGameObject* pGameObjectLU = SizemicL::Create(m_pGraphicDev, Lupos);
 		CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::EFFECT, pGameObjectLU);
 		dynamic_cast<SizemicL*>(pGameObjectLU)->Set_Number(i);
@@ -1090,6 +1033,55 @@ void CDeerClops::Camera_Shaking(_float _power, _float _time, _bool _dir)
 {
 	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(scenemgr::Get_CurScene()->GetCameraObject());
 	pCamera->SetShakedCamera(_power, _time, _dir);
+}
+
+void CDeerClops::Hit_Sound()
+{
+	int randomvalue = rand() % 6;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_1.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_2.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_3.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_4.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_5.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 5:
+		Engine::PlaySound_W(L"Obj_Deerclops_Hurt_6.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	}
+}
+
+void CDeerClops::Attack_Sound()
+{
+	int randomvalue = rand() % 5;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_1.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_2.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_3.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"Obj_Deerclops_Attack_5.mp3", SOUND_EFFECT, 0.2f);
+		break;
+	}
 }
 
 

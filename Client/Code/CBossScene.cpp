@@ -198,7 +198,6 @@ HRESULT CBossScene::Loading_Boss_Texture()
 
 
 
-
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Deer_dead", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/new_deerclops/dead/dead__%03d.png", 24)), E_FAIL);
 	return S_OK;
 }
@@ -243,14 +242,15 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 	pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 1.f, 64.f));
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(64.f, 1.15f, 64.f));
+	m_pPlayer->GetTransForm()->Set_Scale(_vec3(2.f, 2.f, 2.f));
 
 
-
-	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 4.f, 64.f));
+	pGameObject = CDeerClops::Create(m_pGraphicDev, _vec3(64.f, 2.5f, 64.f));
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::BOSS, pGameObject), E_FAIL);
 	dynamic_cast<CDeerClops*>(pGameObject)->Set_Phase(true, true, false, false, false, false);
+	pGameObject->GetTransForm()->Set_Scale({ 4.5f,4.5f,4.5f });
 
 
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
@@ -450,14 +450,14 @@ HRESULT CBossScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CObjectTree::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		vPos.y = 2.8f;
+		vPos.y = 2.f;
 	}
 	else if (!_tcscmp(L"Stone", pName))
 	{
 		pGameObject = CObjectRock::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		vPos.y = 0.55;
+		vPos.y = 0.86;
 	}
 	else if (!_tcscmp(L"Grass", pName))
 	{
@@ -471,37 +471,42 @@ HRESULT CBossScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CPigHouse::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
+		vPos.y = 2.f;
 	}
 	else if (!_tcscmp(L"Berry", pName))
 	{
 		pGameObject = CBerryBush::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::RESOURCE_OBJECT, pGameObject), E_FAIL);
-		vPos.y = 0.5f;
+		vPos.y = 0.87;
 	}
 	else if (!_tcscmp(L"CutGlass", pName))
 	{
 		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		vPos.y = 0.f;
 	}
 	else if (!_tcscmp(L"Rocks_0", pName))
 	{
 		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		vPos.y = 0.f;
 	}
 	else if (!_tcscmp(L"Rocks_1", pName))
 	{
 		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		vPos.y = 0.f;
 	}
 	else if (!_tcscmp(L"Twigs", pName))
 	{
 		pGameObject = CItemBasic::Create(m_pGraphicDev, pName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::ITEM, pGameObject), E_FAIL);
+		vPos.y = 0.f;
 	}
 	else if (!_tcscmp(L"Beefalo", pName))
 	{
@@ -545,6 +550,7 @@ HRESULT CBossScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CBossDoor::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 3.f;
 	}
 	else if (!_tcscmp(L"Tallbird", pName))
 	{

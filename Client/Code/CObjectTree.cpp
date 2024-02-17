@@ -47,16 +47,13 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_eCurState == RES_HIT_1) // 피격 모션이 끝난 후 IDLE로 돌아감
 		{
-
-
-
 			m_eCurState = RES_IDLE;
 			m_bHit = false;
 		}
 
 		else if (m_eCurState == RES_DEAD || m_eCurState == RES_DEAD2)
 		{
-			Engine::PlaySound_W(L"Obj_Tree_Destroy.mp3", SOUND_EFFECT, 1.0f);
+			Engine::PlaySound_W(L"Obj_Tree_Destroy.mp3", SOUND_EFFECT, 0.6f);
 			CreateItem(L"Twigs", this, this->m_pGraphicDev,2);
 			CreateItem(L"Log", this, this->m_pGraphicDev,1);
 		
@@ -144,9 +141,7 @@ HRESULT CObjectTree::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(6.f, 6.f, 6.f));
-	//m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
+	m_pTransForm->Set_Scale(_vec3(4.5f, 4.5f, 4.5f));
 
 	return S_OK;
 }
@@ -172,7 +167,7 @@ void CObjectTree::Change_Frame_Event()
 	if (m_Stat.bDead)
 	{
 		//m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
-		m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
+		//m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
 		m_eCurState = RES_FINAL;
 	}
 }
@@ -190,7 +185,7 @@ void CObjectTree::Check_FrameState()
 
 	if (m_eCurState == RES_DEAD)
 	{
-		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
+		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 0.5f);
 		m_fFrameEnd = 13;
 		//m_pTransForm->Set_Scale(_vec3(3.5f, 3.5f, 3.5f));
 
@@ -198,7 +193,7 @@ void CObjectTree::Check_FrameState()
 	}
 	if (m_eCurState == RES_DEAD2)
 	{
-		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 1.0f);
+		Engine::PlaySound_W(L"Obj_Tree_Fall.mp3", SOUND_EFFECT, 0.5f);
 		m_fFrameEnd = 13;
 		//m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
 	}
@@ -247,19 +242,19 @@ void CObjectTree::RandomSoundPlay()
 	switch (iRandNum)
 	{
 	case 1:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 1.0f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 0.5f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 1.0f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 0.5f);
 		break;
 	case 3:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 1.0f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 0.5f);
 		break;
 	case 4:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 1.0f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 0.5f);
 		break;
 	case 5:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 1.0f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 0.5f);
 		break;
 	default:
 		break;

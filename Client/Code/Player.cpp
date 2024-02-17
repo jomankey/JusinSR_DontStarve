@@ -27,16 +27,18 @@
 //TestParticle
 #include "CDustParticle.h"
 #include "CSmoke.h"
+#include "CTreeLeafFall.h"
 
 //EffectAnimationUI
 #include "CPlayerHitEffectUI.h"
 
+
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 	, m_bAttack(false)
-	, m_iLightNum(++CMainApp::g_iLightNum),
-	m_bTent(false)
-	,m_bHit(false)
+	, m_iLightNum(++CMainApp::g_iLightNum)
+	, m_bTent(false)
+	, m_bHit(false)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
@@ -74,14 +76,14 @@ HRESULT CPlayer::Ready_GameObject()
 	m_Dirchange = false;
 	m_KeyLock = false;
 	m_bFrameLock = false;
-
+	m_bossAttack = false;
 	m_vPlayerActing = false;
 	m_bIsRoadScene - false;
 	m_Ghost = nullptr;
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 	m_fFrameSpeed = 0.f;
-
+	m_fCollisionRadius = 0.5f;
 	Set_Stat();
 	return S_OK;
 }
@@ -109,6 +111,8 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 			m_vPlayerActing = false;
 		if (m_bAttack)
 			m_bAttack = false;
+		if (m_bossAttack)
+			m_bossAttack = false;
 		m_fFrame = 0.f;
 	}
 
@@ -119,7 +123,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		else if (m_fFrame > 5.f && m_fFrame < 5.2f)
 			Engine::PlaySound_W(L"Player_Foot_2.mp3", SOUND_PLAYER, 0.2f);
 	}
-			
+
 
 	if (!m_KeyLock && !m_Stat.bDead)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
@@ -348,7 +352,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_preaxe_side", pComponent });
 
-	
+
 
 	//Hammer
 	pComponent = m_pTextureCom[LOOK_DOWN][HAMMERING] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_hammer_down"));
@@ -416,7 +420,7 @@ HRESULT CPlayer::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_eat", pComponent });
 
-	
+
 
 	pComponent = m_pTextureCom[LOOK_DOWN][DIALOG] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_dialog"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -431,7 +435,7 @@ HRESULT CPlayer::Add_Component()
 	pComponent = m_pTextureCom[LOOK_DOWN][REBIRTH] = dynamic_cast<CTexture*>(proto::Clone_Proto(L"Proto_Player_research"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Player_research", pComponent });
-	
+
 #pragma endregion TEXCOM
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
@@ -598,7 +602,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_TargetObject = dynamic_cast<CResObject*>(findObj)->Get_Resourse_ID();
 			m_vTargetDir = m_vTargetPos - vPos;
 			m_vTargetDir.y = 0.f;
-			if (Collision_Transform(m_pTransForm, findObj->GetTransForm())/*D3DXVec3Length(&m_vTargetDir) < 2.f*/)
+			if (Collision_Circle(findObj))
 			{
 				ResObj_Mining(m_TargetObject, findObj);
 			}
@@ -627,13 +631,13 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			if (CSlotMgr::GetInstance()->Check_AddItem(m_pGraphicDev, findObj->GetObjName(), &vSlotPos));
 			{
 				m_eCurState = PICKUP;
-				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);		
+				dynamic_cast<CItemBasic*>(findObj)->Pickup_Item(vSlotPos);
 				m_vPlayerActing = true;
 			}
 		}
 	}
 
-	if (GetAsyncKeyState('F')) // 공격
+	if (KEY_AWAY('F')) // 공격
 	{
 		if (m_ePreWeapon == SPEAR)
 		{
@@ -645,7 +649,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		}
 		CGameObject* findObj = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::MONSTER);
 		if (nullptr != findObj && !findObj->IsDelete()
-			&& Collision_Transform(m_pTransForm, dynamic_cast<CMonster*>(findObj)->GetTransForm()) &&!m_bAttack)
+			&& Collision_Circle(findObj) &&!m_bAttack)
 		{
 			dynamic_cast<CMonster*>(findObj)->Set_Attack(m_Stat.fATK);
 			m_bAttack = true;
@@ -654,40 +658,23 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		CGameObject* boss = Find_NeerObject(m_Stat.fAggroRange, eOBJECT_GROUPTYPE::BOSS);
 		if (nullptr != boss && !boss->IsDelete()
-			&& Collision_Transform(m_pTransForm, dynamic_cast<CDeerClops*>(boss)->GetTransForm()) &&!m_bAttack)
+			&& Collision_Circle(boss) &&!m_bossAttack)
 		{
 			dynamic_cast<CDeerClops*>(boss)->Set_Attack(m_Stat.fATK);
-			m_bAttack = true;
+			m_bossAttack = true;
 		}
+
+
 	}
 
 	if (GetAsyncKeyState('G')) // 횃불
 	{
 		m_eCurWeapon = TORCH;
 		Fire_Light();
-	
+
 	}
 
 
-	if (GetAsyncKeyState('V')) // 줍기
-	{
-		m_eCurState = PICKUP;
-		auto pLayer = scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::ITEM);
-		_vec3 vPlayerPos, vPlayerScale, vItemPos, vItemScale;
-		m_pTransForm->Get_Info(INFO_POS, &vPlayerPos);
-		vPlayerScale = m_pTransForm->Get_Scale();
-
-		for (auto& object : pLayer)
-		{
-			//_vec3 pPlayerPos, _vec3 pItemPos, _vec3 vPlayerScale, _vec3 vItemScale
-			CTransform* pItemTransform = object->GetTransForm();
-			pItemTransform->Get_Info(INFO_POS, &vItemPos);
-			vItemScale = pItemTransform->Get_Scale();
-
-			if (Engine::Collision_Item(vPlayerPos, vItemPos, vPlayerScale, vItemScale))
-				break;
-		}
-	}
 
 #pragma region PSWTEST
 	//PSW Test---------------------------------------------------------
@@ -897,6 +884,7 @@ void CPlayer::Check_State()
 			m_fFrameEnd = 6;
 			break;
 		case DIALOG:
+			m_KeyLock = true;
 			Dialog_Sound();
 			m_eCurLook = LOOK_DOWN;
 			m_fFrameEnd = 17;
@@ -923,12 +911,13 @@ void CPlayer::Check_State()
 			m_fFrameEnd = 9;
 			break;
 		case SPEAR_ATTACK:
+			m_KeyLock = true;
 			m_fFrameSpeed = 20.f;
 			m_fFrameEnd = 8;
 			break;
 		case DEAD:
 			m_fFrameSpeed = 19.f;
-			Engine::PlaySound_W(L"wilson_Vocie_Death.mp3", SOUND_EFFECT, 5.f);
+			Engine::PlaySound_W(L"wilson_Vocie_Death.mp3", SOUND_PLAYER_VOICE, 0.3f);
 			m_fFrameEnd = 19;
 			m_KeyLock = true;
 			m_eCurLook = LOOK_DOWN;
@@ -948,64 +937,6 @@ void CPlayer::Check_State()
 
 }
 
-void CPlayer::Set_Scale()
-{
-	if (m_eCurState == BUILD) //B
-		m_pTransForm->m_vScale = { 0.85f, 0.7f, 0.85f };
-
-	else if ((m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT) && m_eCurState == PICKUP)
-		m_pTransForm->m_vScale = { 1.0f, 0.1f, 1.0f };
-
-	else if (m_eCurState == PICKUP)
-		m_pTransForm->m_vScale = { 0.73f, 0.63f, 0.73f };
-
-	else if ((m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT) && m_eCurState == ATTACK)
-		m_pTransForm->m_vScale = { 1.f, 0.3f, 1.f };
-
-	else if (m_eCurLook == LOOK_UP && m_eCurState == ATTACK)
-		m_pTransForm->m_vScale = { 0.8f, 0.3f, 0.8f };
-
-	else if (m_eCurState == ATTACK)
-		m_pTransForm->m_vScale = { 0.85f, 0.8f, 0.85f };
-
-	else if (m_eCurState == HIT) //H
-		m_pTransForm->m_vScale = { 0.9f, 1.f, 0.9f };
-
-	else if (m_eCurState == FALLDOWN)
-		m_pTransForm->m_vScale = { 1.f, 1.f,1.0f };
-
-	else if (m_eCurState == WAKEUP)
-		m_pTransForm->m_vScale = { 1.1f, 1.f, 1.1f };
-
-	else if (m_eCurState == EAT) // H
-		m_pTransForm->m_vScale = { 1.1f, 0.3f, 1.1f };
-
-	else if (m_eCurState == MOVE && (m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT))
-		m_pTransForm->m_vScale = { 0.9f, 0.6f, 0.8f };
-
-	else if (m_eCurState == MOVE)
-		m_pTransForm->m_vScale = { 0.7f, 1.f, 0.7f };
-
-	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_LEFT || m_eCurLook == LOOK_RIGHT))
-		m_pTransForm->m_vScale = { 1.f,0.5f,1.f };
-
-	else if (m_eCurState == PICKING_OBJECT && (m_eCurLook == LOOK_UP || m_eCurLook == LOOK_DOWN))
-		m_pTransForm->m_vScale = { 1.f,0.5f,1.f };
-
-	else if (m_eCurState == AXE_CHOP_PRE)
-		m_pTransForm->m_vScale = { 1.f, 0.5f, 1.f };
-
-	else if (m_eCurState == DEAD)
-		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
-
-	else if (m_eCurState == REBIRTH)
-		m_pTransForm->m_vScale = { 1.f, 1.f, 1.f };
-	
-	else
-		m_pTransForm->m_vScale = { 2.f, 2.f, 2.f };
-
-}
-
 void CPlayer::Set_Stat()
 {
 	m_Stat.fHP = 200.f;
@@ -1019,7 +950,7 @@ void CPlayer::Set_Stat()
 	m_Stat.fMental = 200.f;
 	m_Stat.fMaxMental = 200.f;
 	m_Stat.bDead = false;
-	
+
 }
 
 void CPlayer::Set_Attack(int _Atk)
@@ -1030,7 +961,7 @@ void CPlayer::Set_Attack(int _Atk)
 		m_eCurState = HIT;
 		m_KeyLock = true;
 		m_bHit = true;
-		CGameObject* pEffectObj =	CPlayerHitEffectUI::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", _vec3(WINCX / 2.f, WINCY / 2.f, 0.f), _vec3(WINCX * 0.5f, WINCY * 0.5f, 0.f));
+		CGameObject* pEffectObj = CPlayerHitEffectUI::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", _vec3(WINCX / 2.f, WINCY / 2.f, 0.f), _vec3(WINCX * 0.5f, WINCY * 0.5f, 0.f));
 		CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::EFFECT, pEffectObj);
 	}
 }
@@ -1050,7 +981,7 @@ void CPlayer::Weapon_Change()
 			m_Stat.fATKRange = 1.f;
 			break;
 		case TORCH:
-			Engine::PlayTorch(L"Torch.mp3",0.2f);
+			Engine::PlayTorch(L"Torch.mp3", 0.2f);
 			if (m_eCurState = IDLE)
 			{
 				m_eCurState = TORCH_IDLE;
@@ -1106,7 +1037,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		{
 			if ((m_fFrameEnd - 1) < m_fFrame && !m_vPlayerActing)
 			{
-				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_EFFECT, 5.f);
+				Engine::PlaySound_W(L"wilson_Hit_Rock_by_Axe.mp3", SOUND_ROCK, 5.f);
 				Rock_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				m_vPlayerActing = true;
@@ -1126,15 +1057,14 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 		{
 			if (7.f < m_fFrame && !m_vPlayerActing)
 			{
-				Engine::PlaySound_W(L"wilson_Gather_Wood_1.mp3", SOUND_EFFECT, 5.f);
-				Engine::PlaySound_W(L"wilson_Gather_Wood_2.mp3", SOUND_EFFECT, 5.f);
+				Engine::PlaySound_W(L"wilson_Gather_Wood_1.mp3", SOUND_TREE, 0.2f);
+				Engine::PlaySound_W(L"wilson_Gather_Wood_2.mp3", SOUND_TREE, 0.2f);
 				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
 				//Test임시
-				CGameObject* pGameObject = CDustParticle::Create(m_pGraphicDev, L"PARTICLE_SNOW", 3, _Obj->GetTransForm()->Get_Pos(), 0.05f, 0.08f, 10.f);
+				CGameObject* pGameObject = CTreeLeafFall::Create(m_pGraphicDev, L"PARTICLE_LEAF", 3, _Obj->GetTransForm()->Get_Pos(),_vec3(-0.7f,-2.f,-0.7f), _vec3(0.7f, 0.8f, 0.7f));
 				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PARTICLE, pGameObject);
-
 				m_vPlayerActing = true;
 			}
 			m_eCurState = AXE_CHOP_PRE;
@@ -1195,18 +1125,18 @@ _int CPlayer::Die_Check()
 	}
 	else if (m_ePreState == DEAD)
 	{
-		if (m_fFrameEnd-1 < m_fFrame)
+		if (m_fFrameEnd - 1 < m_fFrame)
 		{
 			m_fFrame = m_fFrameEnd - 1;
 			m_bFrameLock = true;
 			//여기에 고스트 소환하는 거
 			_vec3 pPlayerPos;
 			m_pTransForm->Get_Info(INFO_POS, &pPlayerPos);
-			Engine::PlaySound_W(L"wilson_Ghost_Spawn.mp3", SOUND_EFFECT, 5.f);
+			Engine::PlaySound_W(L"wilson_Ghost_Spawn.mp3", SOUND_PLAYER, 0.3f);
 			m_Ghost = CGhost::Create(m_pGraphicDev, pPlayerPos);
 			NULL_CHECK_RETURN(m_Ghost, E_FAIL);
 			FAILED_CHECK_RETURN(scenemgr::Get_CurScene()->GetLayer(eLAYER_TYPE::GAME_LOGIC)->AddGameObject(eOBJECT_GROUPTYPE::EFFECT, m_Ghost), E_FAIL);
-				
+
 		}
 	}
 
@@ -1259,10 +1189,10 @@ void CPlayer::Fire_Light()
 	if (m_ePreWeapon != TORCH || m_bTent)
 	{
 		light::Get_Light(m_iLightNum)->Close_Light();
-		
+
 		return;
 	}
-		
+
 
 	D3DLIGHT9* tPointLightInfo = light::Get_Light(m_iLightNum)->Get_Light();
 
@@ -1382,13 +1312,13 @@ void CPlayer::Hit_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Voice_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_1.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Voice_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_2.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Voice_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Hurt_3.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	}
 
@@ -1400,13 +1330,13 @@ void CPlayer::Eat_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Eat_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Eat_1.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Eat_2.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Eat_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Eat_3.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	}
 }
@@ -1417,22 +1347,22 @@ void CPlayer::Dialog_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Voice_Generic_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Voice_Generic_1.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_2.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_3.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 3:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_4.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_4.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 4:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_5.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_5.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	case 5:
-		Engine::PlaySound_W(L"wilson_Vocie_Generic_6.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Vocie_Generic_6.mp3", SOUND_PLAYER_VOICE, 0.2f);
 		break;
 	}
 }
@@ -1443,13 +1373,13 @@ void CPlayer::Rock_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Rock_Hurt_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_1.mp3", SOUND_ROCK, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Rock_Hurt_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_2.mp3", SOUND_ROCK, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"Obj_Rock_Hurt_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Rock_Hurt_3.mp3", SOUND_ROCK, 0.2f);
 		break;
 	}
 
@@ -1461,19 +1391,19 @@ void CPlayer::Tree_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_1.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_2.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_3.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 3:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_4.mp3", SOUND_TREE, 0.2f);
 		break;
 	case 4:
-		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"Obj_Tree_Impact_5.mp3", SOUND_TREE, 0.2f);
 		break;
 	}
 
@@ -1485,13 +1415,13 @@ void CPlayer::Grass_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"wilson_Gather_Reeds_1.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_1.mp3", SOUND_EFFECT, 0.2f);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"wilson_Gather_Reeds_2.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_2.mp3", SOUND_EFFECT, 0.2f);
 		break;
 	case 2:
-		Engine::PlaySound_W(L"wilson_Gather_Reeds_3.mp3", SOUND_EFFECT, 5.f);
+		Engine::PlaySound_W(L"wilson_Gather_Reeds_3.mp3", SOUND_EFFECT, 0.2f);
 		break;
 	}
 }
