@@ -46,9 +46,6 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 	{
 		if (m_eCurState == RES_HIT_1) // 피격 모션이 끝난 후 IDLE로 돌아감
 		{
-
-
-
 			m_eCurState = RES_IDLE;
 			m_bHit = false;
 		}
@@ -188,7 +185,7 @@ void CObjectTree::Change_Frame_Event()
 	if (m_Stat.bDead)
 	{
 		//m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
-		m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
+		//m_pTransForm->Set_Pos(m_vOriginPos.x, 0.f, m_vOriginPos.z); //
 		m_eCurState = RES_FINAL;
 	}
 }

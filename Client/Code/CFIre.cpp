@@ -4,14 +4,19 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include <MainApp.h>
+#include "CSmoke.h"
 
 CFire::CFire(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CResObject(pGraphicDev), m_iLightNum(++CMainApp::g_iLightNum)
+	: CResObject(pGraphicDev)
+	, m_iLightNum(++CMainApp::g_iLightNum)
+	, m_fAccTime(0.f)
 {
 }
 
 CFire::CFire(const CFire& rhs)
 	: CResObject(rhs.m_pGraphicDev)
+	, m_iLightNum(++CMainApp::g_iLightNum)
+	, m_fAccTime(0.f)
 {
 
 }
@@ -26,7 +31,7 @@ HRESULT CFire::Ready_GameObject()
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = BON_FIRE;
-	m_efireCurState= FIRE_LEVEL_2;
+	m_efireCurState = FIRE_LEVEL_2;
 	m_fFrame = 0.0f;
 	return S_OK;
 }
@@ -36,8 +41,8 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 	Change_Light();
 
 	m_fFrame += m_fFrameEnd * fTimeDelta;
-	
-	if (m_fFrame> m_fFrameEnd)
+
+	if (m_fFrame > m_fFrameEnd)
 	{
 		m_fFrame = 0.0f;
 	}
@@ -50,7 +55,7 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 
 
 	//1분이 되고, 불이 켜져있으면 불 단계를 낮추고 시간을 초기화
-	if (m_fDownTime>=60.f&& m_bIsOff==false)
+	if (m_fDownTime >= 60.f && m_bIsOff == false)
 	{
 		Level_Down();
 		m_fDownTime = 0.f;
@@ -58,12 +63,28 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 
 
 	//최대 지속시간이 240초가 넘어가고 불이 1단계일 때 불을 꺼버림 그리고 최대 지속시간은 초기화
-	if (m_MaxfTimeChek<=0&& m_efireCurState== FIRE_LEVEL_1)
+	if (m_MaxfTimeChek <= 0 && m_efireCurState == FIRE_LEVEL_1)
 	{
-		m_bIsOff= true;
+		m_bIsOff = true;
 		m_MaxfTimeChek = 240.f;
 	}
 
+	//JMK
+	//불이 켜져있을때만 시간추가후 1초마다 불뿜기
+	if (!m_bIsOff)
+	{
+		m_fAccTime += fTimeDelta;
+
+		if (m_fAccTime >= 0.09f)
+		{
+			m_fAccTime = 0.f;
+			_vec3 vSmokePos = GetTransForm()->Get_Pos();
+			vSmokePos.y += 0.3f;
+			CGameObject* pGameObject = CSmoke::Create(m_pGraphicDev, L"PARTICLE_SMOKE", 5, vSmokePos, 0.08f, 4.f, 1.6f);
+			CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::PARTICLE, pGameObject);
+		}
+
+	}
 
 
 	//PSW 공간음향
@@ -104,13 +125,13 @@ void CFire::Render_GameObject()
 
 
 	//불은 이미지가 꺼져도 항상 있어야함 그래서 이미지만 꺼버림
-	if (m_bIsOff==false)
+	if (m_bIsOff == false)
 	{
 		m_pFireTexCom[m_efireCurState]->Set_Texture((_uint)m_fFrame);
 		FAILED_CHECK_RETURN(SetUp_Material(), );
 		m_pBufferCom->Render_Buffer();
 	}
-	
+
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -126,11 +147,11 @@ void CFire::Set_NextLevel()
 {
 
 
-	if (m_efireCurState== FIRE_LEVEL_1)
+	if (m_efireCurState == FIRE_LEVEL_1)
 	{
 		m_efireCurState = FIRE_LEVEL_2;
 	}
-	else if (m_efireCurState== FIRE_LEVEL_2)
+	else if (m_efireCurState == FIRE_LEVEL_2)
 	{
 		m_efireCurState = FIRE_LEVEL_3;
 	}
@@ -211,7 +232,7 @@ void CFire::Check_FrameState()
 		case CFire::FIRE_LEVEL_1:
 			m_pTransForm->Set_Scale(_vec3(0.4f, 0.4f, 0.4f));
 			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
-			
+
 			//공간 음향/ 이걸로 사운드 재생
 			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv1.mp3", SOUND_EFFECT_CONTINUE_CH1);
 			Engine::PlayEffectContinue(L"Obj_Campfire_Lv1.mp3", 0.2f, STEREO_BGM);
@@ -223,7 +244,7 @@ void CFire::Check_FrameState()
 			m_pTransForm->Set_Scale(_vec3(0.5f, 0.5f, 0.5f));
 			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH3);
 			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
-			
+
 			//공간 음향/ 이걸로 사운드 재생
 			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv2.mp3", SOUND_EFFECT_CONTINUE_CH2);
 			Engine::PlayEffectContinue(L"Obj_Campfire_Lv2.mp3", 0.4f, STEREO_BGM);
@@ -235,7 +256,7 @@ void CFire::Check_FrameState()
 			m_pTransForm->Set_Scale(_vec3(0.6f, 0.6f, 0.6f));
 			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
 			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH4);
-			
+
 			//공간 음향/ 이걸로 사운드 재생
 			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv3.mp3", SOUND_EFFECT_CONTINUE_CH3);
 			Engine::PlayEffectContinue(L"Obj_Campfire_Lv3.mp3", 0.5f, STEREO_BGM);
@@ -246,7 +267,7 @@ void CFire::Check_FrameState()
 		case CFire::FIRE_LEVEL_4:
 			m_pTransForm->Set_Scale(_vec3(0.8f, 0.8f, 0.8f));
 			//Engine::StopSound(SOUND_EFFECT_CONTINUE_CH1);
-			
+
 			//공간 음향/ 이걸로 사운드 재생
 			//Engine::SpatialPlay_Sound(L"Obj_Campfire_Lv4.mp3", SOUND_EFFECT_CONTINUE_CH4);
 			Engine::PlayEffectContinue(L"Obj_Campfire_Lv4.mp3", 0.6f, STEREO_BGM);
@@ -320,23 +341,23 @@ void CFire::Level_Down()
 {
 
 
-	if (m_efireCurState== FIRE_LEVEL_4)
+	if (m_efireCurState == FIRE_LEVEL_4)
 	{
 		m_efireCurState = FIRE_LEVEL_3;
 
 	}
-	else if (m_efireCurState== FIRE_LEVEL_3)
+	else if (m_efireCurState == FIRE_LEVEL_3)
 	{
 		m_efireCurState = FIRE_LEVEL_2;
 	}
-	else if (m_efireCurState== FIRE_LEVEL_2)
+	else if (m_efireCurState == FIRE_LEVEL_2)
 	{
 		m_efireCurState = FIRE_LEVEL_1;
 	}
-	else if(m_efireCurState== FIRE_LEVEL_1)
+	else if (m_efireCurState == FIRE_LEVEL_1)
 	{
 		Engine::StopSound(STEREO_BGM);
-			m_bIsOff = true;
+		m_bIsOff = true;
 	}
 
 

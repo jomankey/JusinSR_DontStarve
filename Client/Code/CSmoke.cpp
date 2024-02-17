@@ -24,8 +24,8 @@ void CSmoke::resetParticle(Attribute* attribute)
 	attribute->m_bAlive = true;
 	attribute->m_vPos = m_pTransForm->Get_Pos();
 
-	_vec3	min = _vec3(-0.5f, 1.f, -0.5f);
-	_vec3	max = _vec3(0.5f, 1.f, 0.5f);
+	_vec3	min = _vec3(-0.1f, 1.f, -0.1f);
+	_vec3	max = _vec3(0.1f, 1.f, 0.1f);
 
 	GetRendomVector(&attribute->m_vVelocity, &min, &max);
 	D3DXVec3Normalize(&attribute->m_vVelocity, &attribute->m_vVelocity);

@@ -58,6 +58,9 @@ void CParticle::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
+	_vec3 vPos = GetTransForm()->Get_Pos();
+	vPos = vPos * 2.f;
+	Compute_ViewZ(&vPos);
 
 }
 
