@@ -26,7 +26,8 @@
 
 //TestParticle
 #include "CDustParticle.h"
-
+//EffectAnimationUI
+#include "CPlayerHitEffectUI.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -1027,6 +1028,8 @@ void CPlayer::Set_Attack(int _Atk)
 		m_eCurState = HIT;
 		m_KeyLock = true;
 		m_bHit = true;
+		CGameObject* pEffectObj =	CPlayerHitEffectUI::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", _vec3(WINCX / 2.f, WINCY / 2.f, 0.f), _vec3(WINCX * 0.5f, WINCY * 0.5f, 0.f));
+		CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::EFFECT, pEffectObj);
 	}
 }
 

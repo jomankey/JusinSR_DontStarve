@@ -258,6 +258,9 @@
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Header\Ghost.cpp"
 
 
+#include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Include\CPlayerHitEffectUI.cpp"
+
+
 #include "C:\Users\alsrl\Documents\Jusin_SR_Project\JusinSR\Client\Include\Client.cpp"
 
 

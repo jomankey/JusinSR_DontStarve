@@ -46,6 +46,7 @@ _uint CLoading::Loading_ForStage()
 	FAILED_CHECK_RETURN(Loading_Player_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_Beefalo_Texture(), E_FAIL);
 	FAILED_CHECK_RETURN(Loading_TallBird_Texture(), E_FAIL);
+	FAILED_CHECK_RETURN(Loading_Effect_UI(), E_FAIL);
 	//FAILED_CHECK_RETURN(Loading_Anim_Texture(), E_FAIL);
 
 	FAILED_CHECK_RETURN(SaveLoadingTexture(L"Proto_TerrainTexture", TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Terrain.png"), E_FAIL);
@@ -364,6 +365,15 @@ HRESULT CLoading::Loading_Anim_Texture()
 	pAnim = CAnimation::Create(m_pGraphicDev, L"PROJ_CATAPULT_HIT", L"../Bin/Resource/Texture/Projectile/CataProj/HIT/HIT__%03d.png", 48, 0.01f);
 	proto::Ready_ProtoAnim(L"PROJ_CATAPULT_HIT", pAnim);
 
+
+	return S_OK;
+}
+
+HRESULT CLoading::Loading_Effect_UI()
+{
+	Engine::CAnimation* pAnim = nullptr;
+	pAnim = CAnimation::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", L"../Bin/Resource/Texture/UI/Hit/NomalHit/NomalHit__%03d.png", 21, 0.1f);
+	proto::Ready_ProtoAnim(L"PLAYER_HIT_EFFECT", pAnim);
 
 	return S_OK;
 }

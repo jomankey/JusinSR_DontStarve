@@ -28,6 +28,7 @@ public:
 	HRESULT		Loading_TallBird_Texture();
 	HRESULT		Loading_Boss_Texture();
 	HRESULT		Loading_Anim_Texture();
+	HRESULT		Loading_Effect_UI();
 	const _tchar*		Get_String() const { return m_szLoading; }
 public:
 

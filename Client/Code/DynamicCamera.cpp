@@ -73,7 +73,6 @@ Engine::_int CDynamicCamera::Update_GameObject(const _float& fTimeDelta)
 			m_vTargetEye.y = vTarget.y + m_fHeight;
 			m_vTargetEye.z = vTarget.z + sinf(m_fAngle) * m_fDistance;//사실상 목적지
 		}
-
 		if (m_fShakeTime > m_fShakeAccTime)
 		{
 			m_fShakeAccTime += fTimeDelta;
