@@ -26,6 +26,8 @@
 
 //TestParticle
 #include "CDustParticle.h"
+#include "CSmoke.h"
+
 //EffectAnimationUI
 #include "CPlayerHitEffectUI.h"
 
@@ -1108,6 +1110,8 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 				Rock_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				m_vPlayerActing = true;
+				CGameObject* pGameObject = CSmoke::Create(m_pGraphicDev, L"Rocks_0", 4, _Obj->GetTransForm()->Get_Pos(), 0.1f, 0.2f, 10.f);
+				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PARTICLE, pGameObject);
 			}
 			m_eCurState = PICKING_OBJECT;
 		}

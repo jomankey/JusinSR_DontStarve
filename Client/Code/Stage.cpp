@@ -112,7 +112,7 @@ Engine::_int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (KEY_TAP(DIK_2))
 	{
-		CGameObject* pGameObject = CSmoke::Create(m_pGraphicDev, L"PARTICLE_SNOW", 2, m_pPlayer->GetTransForm()->Get_Pos(), 0.1f, 5.f, 1.f);
+		CGameObject* pGameObject = CSmoke::Create(m_pGraphicDev, L"Rocks_0", 2, m_pPlayer->GetTransForm()->Get_Pos(), 0.1f, 0.05f, 26.f);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::PARTICLE, pGameObject), E_FAIL);
 	}
