@@ -26,7 +26,10 @@
 
 //TestParticle
 #include "CDustParticle.h"
+#include "CSmoke.h"
 
+//EffectAnimationUI
+#include "CPlayerHitEffectUI.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -1027,6 +1030,8 @@ void CPlayer::Set_Attack(int _Atk)
 		m_eCurState = HIT;
 		m_KeyLock = true;
 		m_bHit = true;
+		CGameObject* pEffectObj =	CPlayerHitEffectUI::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", _vec3(WINCX / 2.f, WINCY / 2.f, 0.f), _vec3(WINCX * 0.5f, WINCY * 0.5f, 0.f));
+		CreateObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::EFFECT, pEffectObj);
 	}
 }
 
@@ -1105,6 +1110,8 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 				Rock_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				m_vPlayerActing = true;
+				CGameObject* pGameObject = CSmoke::Create(m_pGraphicDev, L"Rocks_0", 4, _Obj->GetTransForm()->Get_Pos(), 0.1f, 0.2f, 10.f);
+				CreateObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::PARTICLE, pGameObject);
 			}
 			m_eCurState = PICKING_OBJECT;
 		}

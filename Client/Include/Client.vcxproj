@@ -260,6 +260,7 @@
     <ClInclude Include="..\Header\Tallbird.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\WorldTimeBody.h" />
+    <ClInclude Include="CPlayerHitEffectUI.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="FuncEvent.h" />
     <ClInclude Include="Resource.h" />
@@ -353,6 +354,7 @@
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\WorldTimeBody.cpp" />
     <ClCompile Include="..\Header\Ghost.cpp" />
+    <ClCompile Include="CPlayerHitEffectUI.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="FuncEvent.cpp" />
     <ClCompile Include="stdafx.cpp">

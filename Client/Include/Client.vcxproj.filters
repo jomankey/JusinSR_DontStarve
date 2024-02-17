@@ -289,6 +289,9 @@
     <Filter Include="02. GameObject\13. Particle\Dust">
       <UniqueIdentifier>{20f206dc-7eb1-4656-8a1e-f025b4522d74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. UI\07. EffectUI">
+      <UniqueIdentifier>{490b1ea5-fe1d-4942-a611-42361fb56141}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -567,6 +570,9 @@
     <ClInclude Include="..\Header\SizemicR.h">
       <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerHitEffectUI.h">
+      <Filter>02. GameObject\07. UI\07. EffectUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -836,6 +842,9 @@
     <ClCompile Include="..\Code\SizemicR.cpp">
       <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
     </ClCompile>
+    <ClCompile Include="CPlayerHitEffectUI.cpp">
+      <Filter>02. GameObject\07. UI\07. EffectUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -849,5 +858,8 @@
     <Image Include="Client.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.hlsl" />
   </ItemGroup>
 </Project>
