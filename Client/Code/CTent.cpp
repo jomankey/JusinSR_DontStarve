@@ -27,8 +27,10 @@ HRESULT CTent::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eObject_id = RESOBJID::TENT;
 	m_eTentCurState = CTENT_DEFAULT;
-
-
+	_vec3 vPos;
+	m_pTransForm->Set_Scale(_vec3(3.7f, 3.7f, 3.7f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.7f, vPos.z);
 
 	m_Stat.strObjName = L"텐트";
 	m_fFrame = 0.0f;
@@ -143,7 +145,7 @@ void CTent::Render_GameObject()
 HRESULT CTent::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
+
 
 
 
@@ -191,13 +193,6 @@ HRESULT CTent::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 
-	m_pTransForm->Set_Scale(_vec3(3.f, 3.f, 3.f));
-
-	if (!m_bInstall)
-	{
-		m_pTransForm->Get_Info(INFO_POS, &vPos);
-		m_pTransForm->Set_Pos(vPos.x, 1.7f, vPos.z);
-	}
 
 	return S_OK;
 }
@@ -327,7 +322,7 @@ void CTent::Install_Obj()
 	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(scenemgr::Get_CurScene()->GetTerrainObject()->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	_vec3 vPos = m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, vecTerrain->GetTransForm());
 
-	vPos.y = 1.f;
+	vPos.y = 1.7f;
 	m_pTransForm->Set_Pos(vPos);
 
 	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // 설치 완료

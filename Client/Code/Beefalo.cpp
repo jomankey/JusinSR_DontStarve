@@ -26,7 +26,7 @@ HRESULT CBeefalo::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
-    m_pTransForm->m_vScale = { 5.f, 5.f, 5.f };
+    m_pTransForm->m_vScale = { 3.7f, 3.7f, 3.7f };
     Set_ObjStat();
     Look_Change();
     m_fFrameEnd = 10;

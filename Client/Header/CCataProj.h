@@ -1,7 +1,7 @@
 #pragma once
 #include "CTrap.h"
 class CCataProj :
-    public CTrap
+	public CTrap
 {
 protected:
 	explicit CCataProj(LPDIRECT3DDEVICE9 pGraphicDev) = delete;
@@ -10,6 +10,9 @@ protected:
 	virtual ~CCataProj();
 
 public:
+	void SetSpeed(_float _speed) { m_fSpeed = _speed; }
+public:
+	virtual HRESULT			Ready_GameObject()override;
 	// CTrap을(를) 통해 상속됨
 	virtual _int			Update_GameObject(const _float& fTimeDelta)override;
 	void Render_GameObject() override;
@@ -21,5 +24,6 @@ private:
 	void MovePos(const _float& fTimeDelta);
 protected:
 	HRESULT Add_Component() override;
-
+private:
+	float m_fSpeed;
 };

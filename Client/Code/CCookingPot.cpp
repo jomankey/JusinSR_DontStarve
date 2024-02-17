@@ -26,6 +26,14 @@ CCookingPot::~CCookingPot()
 HRESULT CCookingPot::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+	_vec3 vPos;
+
+	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 1.f, vPos.z);
+
+
 	m_eObject_id = COOKING_POT;
 	m_eCookingpotCurState = COOKINGPOT_DEFAULT;
 	
@@ -173,8 +181,6 @@ void CCookingPot::Render_GameObject()
 HRESULT CCookingPot::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
-
 
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
@@ -220,9 +226,7 @@ HRESULT CCookingPot::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
 
-	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 0.f, vPos.z);
+
 
 	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

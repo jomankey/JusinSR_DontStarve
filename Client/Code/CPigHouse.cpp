@@ -24,7 +24,7 @@ CPigHouse::~CPigHouse()
 HRESULT CPigHouse::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	m_pTransForm->Set_Pos(_vec3(rand() % 20, 1.5f, rand() % 20));
+	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 
 	m_eCurState = RES_IDLE;
 	m_eObject_id = PIG_HOUSE;
@@ -116,16 +116,6 @@ HRESULT CPigHouse::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
-
-	//m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.f, 1.5f, 1.5f));
-
-	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-	m_pTransForm->Set_Scale(_vec3(2.f, 2.f, 2.f));
-
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	m_pTransForm->Set_Pos(vPos.x, 1.2f, vPos.z);
 
 	return S_OK;
 }

@@ -27,7 +27,7 @@ HRESULT CTallbird::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
     m_pTransForm->Set_Pos(m_vPos);
-    m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
+    m_pTransForm->Set_Scale({ 3.5f, 3.5f, 3.5f });
     Set_ObjStat();
     m_bStatChange[0] = false;
     m_bStatChange[1] = false;

@@ -31,10 +31,16 @@ CBonfire::~CBonfire()
 HRESULT CBonfire::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	_vec3 vPos;
+	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	m_pTransForm->Set_Pos(vPos.x, 0.5f, vPos.z);
+
+
+
 	m_eObject_id = BON_FIRE;
 	m_eBonfireCurState = BONFIRE_IDLE;
 	m_fFrame = 0.0f;
-	m_pTransForm->Set_Scale(_vec3(1.0f, 1.0f, 1.0f));
 
 	m_Stat.strObjName = L"모닥불";
 	return S_OK;
@@ -185,7 +191,7 @@ void CBonfire::Install_Obj() // 설치시 마우스 포인터를 따라옴 (쉐이더 써야함)
 	CTerrainTex* pTerrainBufferCom = dynamic_cast<CTerrainTex*>(scenemgr::Get_CurScene()->GetTerrainObject()->Find_Component(ID_STATIC, L"Proto_TerrainTex"));
 	_vec3 vPos = m_pCalculatorCom->Picking_OnTerrain(g_hWnd, pTerrainBufferCom, vecTerrain->GetTransForm());
 
-	vPos.y = 1.f;
+	vPos.y = 0.5f;
 	m_pTransForm->Set_Pos(vPos);
 
 	if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP) // 설치 완료
@@ -236,7 +242,6 @@ void CBonfire::AddFIre(int _Value)
 HRESULT CBonfire::Add_Component()
 {
 	CComponent* pComponent = nullptr;
-	_vec3 vPos;
 
 	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(proto::Clone_Proto(L"Proto_RcTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -260,8 +265,7 @@ HRESULT CBonfire::Add_Component()
 	m_mapComponent[ID_STATIC].insert({ L"Proto_Calculator", pComponent });
 
 
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	if (!m_bInstall) m_pTransForm->Set_Pos(vPos.x, 1.0f, vPos.z);
+
 
 	return S_OK;
 }
