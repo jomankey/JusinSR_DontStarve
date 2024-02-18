@@ -298,6 +298,12 @@
     <Filter Include="03. Manager\PlayerMgr">
       <UniqueIdentifier>{f7af329f-3fd7-445e-87cd-f8f2dd7c4f87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\13. Particle\CRockSmoke">
+      <UniqueIdentifier>{eba22688-739c-4151-9303-551982edfbbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\04. DynamicCamera\RoadSceneCamera">
+      <UniqueIdentifier>{4029d41a-ce26-4ec4-8d5d-85949beeafae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -377,9 +383,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CPigHouse.h">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
-    </ClInclude>
-    <ClInclude Include="FuncEvent.h">
-      <Filter>03. Manager\Event</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ResObject.h">
       <Filter>02. GameObject\08. ResObjects</Filter>
@@ -576,14 +579,23 @@
     <ClInclude Include="..\Header\SizemicR.h">
       <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerHitEffectUI.h">
-      <Filter>02. GameObject\07. UI\07. EffectUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CTreeLeafFall.h">
       <Filter>02. GameObject\13. Particle\TreeLeafFall</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerMgr.h">
       <Filter>03. Manager\PlayerMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CRockSmoke.h">
+      <Filter>02. GameObject\13. Particle\CRockSmoke</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CRoadSceneCamera.h">
+      <Filter>02. GameObject\04. DynamicCamera\RoadSceneCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FuncEvent.h">
+      <Filter>03. Manager\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPlayerHitEffectUI.h">
+      <Filter>02. GameObject\07. UI\07. EffectUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -655,9 +667,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CPigHouse.cpp">
       <Filter>02. GameObject\08. ResObjects\04. PigHouse</Filter>
-    </ClCompile>
-    <ClCompile Include="FuncEvent.cpp">
-      <Filter>03. Manager\Event</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ResObject.cpp">
       <Filter>02. GameObject\08. ResObjects</Filter>
@@ -854,14 +863,23 @@
     <ClCompile Include="..\Code\SizemicR.cpp">
       <Filter>02. GameObject\06. Effect\08. Sizemic</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerHitEffectUI.cpp">
-      <Filter>02. GameObject\07. UI\07. EffectUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CTreeLeafFall.cpp">
       <Filter>02. GameObject\13. Particle\TreeLeafFall</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerMgr.cpp">
       <Filter>03. Manager\PlayerMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRockSmoke.cpp">
+      <Filter>02. GameObject\13. Particle\CRockSmoke</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerHitEffectUI.cpp">
+      <Filter>02. GameObject\07. UI\07. EffectUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CRoadSceneCamera.cpp">
+      <Filter>02. GameObject\04. DynamicCamera\RoadSceneCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FuncEvent.cpp">
+      <Filter>03. Manager\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
