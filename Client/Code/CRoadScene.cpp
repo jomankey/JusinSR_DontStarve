@@ -114,7 +114,7 @@ HRESULT CRoadScene::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
 	
-
+	Engine::PlayBGM(L"music_stream_SW [5].mp3", 1.f);
 	return S_OK;
 }
 

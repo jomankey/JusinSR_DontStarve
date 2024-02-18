@@ -130,6 +130,8 @@ private:
 	_bool		m_bFirstStart;
 	_bool		m_bWakeupTrig;
 
+	_int m_iLightRange;
+
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev);
