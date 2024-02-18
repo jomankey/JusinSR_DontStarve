@@ -60,6 +60,15 @@
 #include "C:\Git\SR_PortPolio\Client\Code\CParticle.cpp"
 
 
+#include "C:\Git\SR_PortPolio\Client\Code\CPlayerHitEffectUI.cpp"
+
+
+#include "C:\Git\SR_PortPolio\Client\Code\CRoadSceneCamera.cpp"
+
+
+#include "C:\Git\SR_PortPolio\Client\Code\CRockSmoke.cpp"
+
+
 #include "C:\Git\SR_PortPolio\Client\Code\CSmoke.cpp"
 
 
@@ -103,6 +112,9 @@
 
 
 #include "C:\Git\SR_PortPolio\Client\Code\FallMark.cpp"
+
+
+#include "C:\Git\SR_PortPolio\Client\Code\FuncEvent.cpp"
 
 
 #include "C:\Git\SR_PortPolio\Client\Code\IceMissileL.cpp"
@@ -264,11 +276,5 @@
 #include "C:\Git\SR_PortPolio\Client\Header\Ghost.cpp"
 
 
-#include "C:\Git\SR_PortPolio\Client\Include\CPlayerHitEffectUI.cpp"
-
-
 #include "C:\Git\SR_PortPolio\Client\Include\Client.cpp"
-
-
-#include "C:\Git\SR_PortPolio\Client\Include\FuncEvent.cpp"
 

@@ -64,7 +64,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
 
     if (Collision_Circle(this))
     {
-        Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_SPIDER, 1.f);
+      //  Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_SPIDER, 1.f);
     }
 
     //Set_Scale();

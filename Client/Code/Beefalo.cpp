@@ -66,7 +66,7 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 
    if (Collision_Circle(this))
    {
-       Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_BEEFALO);
+      // Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_BEEFALO);
    
    }
 
@@ -374,7 +374,7 @@ _int CBeefalo::Die_Check()
        
         if (m_fFrameEnd <= m_fFrame)
         {
-           // Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, 0.4f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, 0.4f);
             CResObject::CreateItem(L"RawMeat",this,this->m_pGraphicDev);
            
 
@@ -383,7 +383,7 @@ _int CBeefalo::Die_Check()
     }
     else if (m_ePreState == ERASE)
     {
-        Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, 0.4f);
+        //Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, 0.4f);
         if ((m_fFrameEnd - 1) <= m_fFrame)
         {
             m_bFrameStop = true;
@@ -537,7 +537,7 @@ void CBeefalo::FrameCheckSound(const _float& fTimeDelta)
         if (m_fFrame < 1.0f && m_fFrame < 1.2f)
         {
            // if(IsTarget_Approach(3.f))
-                  Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_BEEFALO, 0.2f);
+                 // Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_BEEFALO, 0.2f);
            // else
            //     Engine::StopSound(SOUND_BEEFALO);
         }
