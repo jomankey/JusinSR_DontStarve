@@ -307,6 +307,9 @@
     <Filter Include="02. GameObject\07. UI\08.MainUI">
       <UniqueIdentifier>{eab367bc-d232-449f-9d8a-c29466e0a7b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\10. Trap\04. Geyser">
+      <UniqueIdentifier>{fb62d8f3-1429-4f33-a474-c5d7dbcb1ebc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -603,6 +606,9 @@
     <ClInclude Include="..\header\CMainUI.h">
       <Filter>02. GameObject\07. UI\08.MainUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CGeyserTrap.h">
+      <Filter>02. GameObject\10. Trap\04. Geyser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -889,6 +895,9 @@
     </ClCompile>
     <ClCompile Include="..\code\CMainUI.cpp">
       <Filter>02. GameObject\07. UI\08.MainUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CGeyserTrap.cpp">
+      <Filter>02. GameObject\10. Trap\04. Geyser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
