@@ -62,7 +62,6 @@ _uint CLoading::Loading_ForStage()
 	/*Loading_Boss_Texture();*/
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_SkyBoxTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/SkyBox/Ocean.dds")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_BurgerCube", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../../Client/Bin/Resource/Texture/Cube/Road.dds")), E_FAIL);
-
 	//½Ì±ÛÅæ ÁØºñ
 	CUIMgr::GetInstance()->Ready_CreateInfo();
 	CSlotMgr::GetInstance()->Add_InvenBoxList(m_pGraphicDev, INVEN, WIDTH, INVENCNT);
@@ -310,6 +309,8 @@ HRESULT CLoading::Loading_Anim_Texture()
 
 
 	//NONE
+
+
 
 	pAnim = CAnimation::Create(m_pGraphicDev, L"NONE", L"../Bin/Resource/Texture/NONE.png", 1, 10.f);
 	proto::Ready_ProtoAnim(L"NONE", pAnim);
