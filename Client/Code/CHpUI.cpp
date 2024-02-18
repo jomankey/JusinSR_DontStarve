@@ -42,8 +42,6 @@ HRESULT CHpUI::Ready_GameObject()
 
 _int CHpUI::Update_GameObject(const _float& fTimeDelta)
 {
-	m_pTransForm->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
-	m_pTransForm->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
 	__super::Update_GameObject(fTimeDelta);
 	return 0;
 }
@@ -57,13 +55,24 @@ void CHpUI::LateUpdate_GameObject()
 void CHpUI::Render_GameObject()
 {
 
-	__super::Render_GameObject();
-	
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
+
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	m_pTextureCom->Set_Texture(m_frame);
+
+	m_pBufferCom->Render_Buffer();
+
 	_tchar strHp[32];
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject());
 	_itow_s(pPlayer->Get_PlayerHp(), strHp, 10);
 
 	Engine::Render_Font(L"Mouse_Sub", strHp, &_vec2(m_fX - 11.f, m_fY), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+
+	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 }
 
 HRESULT CHpUI::Add_Component()

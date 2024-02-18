@@ -88,7 +88,7 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9 & pGraphicDev)
 
 	m_RenderGroup[RENDER_UI].sort([](CGameObject* pDst, CGameObject* pSrc)->bool
 		{
-		return pDst->Get_ViewZ() < pSrc->Get_ViewZ();
+		return pDst->Get_ViewZ() > pSrc->Get_ViewZ();
 		});
 
 	//s

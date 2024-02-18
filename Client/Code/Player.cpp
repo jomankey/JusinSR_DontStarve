@@ -39,7 +39,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_iLightNum(++CMainApp::g_iLightNum)
 	, m_bTent(false)
 	, m_bHit(false)
-	, m_iLightRange(6.f)
+	, m_iLightRange(7.f)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
@@ -48,7 +48,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	, m_iLightNum(++CMainApp::g_iLightNum),
 	m_bTent(false)
 	, m_bHit(false)
-	, m_iLightRange(6.f)
+	, m_iLightRange(7.f)
 {
 }
 
