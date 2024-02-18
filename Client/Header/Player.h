@@ -50,6 +50,7 @@ public:
 		m_vPlayerActing = true;
 	}
 	void		Set_Weapon_Equip(WEAPON _eWeaponType) { m_eCurWeapon = _eWeaponType; }	//무기 넣어줄때 호출
+	void Set_Dialog() { m_eCurState = DIALOG; m_vPlayerActing = true; }
 
 private:
 	HRESULT			Add_Component();
