@@ -95,7 +95,7 @@ void CLoadingScene::Render_Scene()
 {
 	if (m_pLoading->Get_Finish())
 	{
-		Engine::Render_Font(L"Loading_BOSS", m_pLoading->Get_String(), &_vec2(315.f, 500.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
+		Engine::Render_Font(L"Loading_BOSS", m_pLoading->Get_String(), &_vec2(WINCX * 0.5f - 80.f, 500.f), D3DXCOLOR(1.f, 1.f, 1.f, 1.f));
 	}
 	else
 	{

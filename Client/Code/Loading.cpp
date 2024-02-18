@@ -68,7 +68,7 @@ _uint CLoading::Loading_ForStage()
 
 	
 	m_bFinish = true;
-	lstrcpy(m_szLoading, L" Q : STAGE \n W : ROAD_STAGE  \n E : BOSS_STAGE \n T : TEST_STAGE");
+	lstrcpy(m_szLoading, L"PRESS SPACE KEY");
 	//test
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"PARTICLE_SNOW", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Particle/Snow.png", 1)), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"PARTICLE_LEAF", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Particle/leaf_0.png", 2)), E_FAIL);

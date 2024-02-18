@@ -494,6 +494,7 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 	{
 		m_eCurState = WALK;
 		m_bPhase[SECOND] = true;
+		Engine::PlayBGM(L"RoadScene.mp3", 0.5f);
 	}
 
 
@@ -598,7 +599,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				Getnerate_SnowSplash();
 				Camera_Shaking(3.f, 1.f, false);
 				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_DEERCLOPS, 0.5f);
-				Engine::PlayBGM(L"music [3].mp3", 0.3f);
+				Engine::PlayBGM(L"music [3].mp3", 0.5f);
 				Awake_Tallbird();
 				// 여기에 카메라 쉐이킹
 			}

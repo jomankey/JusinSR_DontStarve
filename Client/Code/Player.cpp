@@ -937,7 +937,7 @@ void CPlayer::Check_State()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WAKEUP:
-			m_fFrameSpeed = 8.f;
+			m_fFrameSpeed = 12.f;
 			m_fFrameEnd = 32;
 			m_eCurLook = LOOK_DOWN;
 			break;
