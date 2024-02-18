@@ -426,7 +426,8 @@ void CItemTool::Change_Armor()
 	m_fX = vecBox[m_eArmorSlotType]->Get_fX();
 	m_fY = vecBox[m_eArmorSlotType]->Get_fY();
 
-	Change_Player_Weapon();
+	if (m_eArmorSlotType == HAND)
+		Change_Player_Weapon();
 
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.f));
 	
