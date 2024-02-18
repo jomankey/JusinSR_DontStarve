@@ -63,7 +63,7 @@ void CMonster::Set_Attack(_float _fAttack)
 
 void CMonster::Free()
 {
-	__super::Free();
+	__super::Free();//
 }
 
 CGameObject* CMonster::Get_Player_Pointer()
