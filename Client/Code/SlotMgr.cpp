@@ -55,8 +55,8 @@ _bool CSlotMgr::AddItem(LPDIRECT3DDEVICE9 pGraphicDev, wstring strItemKey, _vec3
 			ARMOR_SLOT_TYPE eArmor(ARMOR_SLOT_END);
 			if (strItemKey == L"Ax" || strItemKey == L"Lance" || strItemKey == L"Hammer" || strItemKey == L"Pickaxe" || strItemKey == L"Torch")
 				eArmor = HAND;
-			if (strItemKey == L"Armor")
-				eArmor = HEAD;
+			if (strItemKey == L"Armor" || strItemKey == L"LogSuit")
+				eArmor = ARMOR;
 
 			CItem* pItem = CItemTool::Create(pGraphicDev, strItemKey, vPos, UI_ITEM_INVEN, bFood);
 			if (eArmor != ARMOR_SLOT_END) dynamic_cast<CItemTool*>(pItem)->Set_ArmorSlotType(eArmor);
