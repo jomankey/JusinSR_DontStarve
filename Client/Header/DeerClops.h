@@ -69,12 +69,16 @@ private:
 	void			Generate_Attack_Effect();		//기본 공격 이펙트 생성 함수
 	void			Generate_Roaring(_int _iCount);				// 포효 지르기 이펙트 생성 함수
 	void			Getnerate_SnowSplash();
-	void			Generate_Sizemic();
+	void			Generate_Sizemic();		//2패턴
 
-
+	void			When_Walking();
+	void			When_IDLE();
 	void			Camera_Shaking(_float _power, _float _time, _bool _dir);
 	void			Hit_Sound();
 	void			Attack_Sound();
+	void			Step_Sound();
+	void			IDLE_Sound();
+
 	void			Awake_Tallbird();
 
 public:

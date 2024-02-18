@@ -122,7 +122,7 @@ _int IceMissileL::Appear(const _float& fTimeDelta)
     {
         _vec3 vDir = m_vTargetpos - m_vPos;
         D3DXVec3Normalize(&vDir, &vDir);
-        m_pTransForm->Move_Pos(&vDir, 40.f, fTimeDelta);
+        m_pTransForm->Move_Pos(&vDir, 50.f, fTimeDelta);
 
         if (Collision_Transform(m_pTransForm, m_pTarget->GetTransForm()))
         {

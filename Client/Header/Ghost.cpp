@@ -22,6 +22,7 @@ CGhost::~CGhost()
 HRESULT CGhost::Ready_GameObject()
 {
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+    m_vPos.y += 0.5f;
     m_pTransForm->Set_Pos(m_vPos);
     m_fFrameEnd = 12.f;
     return S_OK;
@@ -141,7 +142,7 @@ void CGhost::Set_Scale()
 {
 
     if (m_ePreState == APPEAR)
-        m_pTransForm->m_vScale = { 1.5f, 2.5f, 1.5f };
+        m_pTransForm->m_vScale = { 1.0, 2.5f, 1.0 };
     else if (m_ePreState == IDLE)
         m_pTransForm->m_vScale = { 1.f, 2.f, 1.f };
 }
