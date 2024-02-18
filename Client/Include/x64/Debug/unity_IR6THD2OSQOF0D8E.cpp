@@ -45,6 +45,9 @@
 #include "C:\GitHub\JusinSR\Client\Code\CGenerateMap.cpp"
 
 
+#include "C:\GitHub\JusinSR\Client\Code\CGeyserTrap.cpp"
+
+
 #include "C:\GitHub\JusinSR\Client\Code\Circle.cpp"
 
 

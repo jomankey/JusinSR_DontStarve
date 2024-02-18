@@ -30,7 +30,7 @@ protected:
 	void		Collision_EachOther(const _float& fTimeDelta);
 	_bool		Collision_Transform(CTransform* _Src, CTransform* _Dst, const _float& fTimeDelta, const _float& fSpeed);
 
-	void				Player_Chase(const _float& fTimeDelta);		//플레이어를 추격함과 동시에 방향도 변경해준다
+	void			Player_Chase(const _float& fTimeDelta);		//플레이어를 추격함과 동시에 방향도 변경해준다
 	void		Look_Change();
 	_vec3		Get_Player_Pos();									//플레이어의 포지션 벡터를 받아오는 함수
 protected:

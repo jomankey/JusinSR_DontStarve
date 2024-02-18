@@ -158,7 +158,6 @@ void CBonfire::LateUpdate_GameObject()
 void CBonfire::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
@@ -186,6 +185,7 @@ void CBonfire::Render_GameObject()
 	}
 	else
 	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 		m_pBonfireTexCom[m_eBonfireCurState]->Set_Texture((_uint)m_fFrame);
 		FAILED_CHECK_RETURN(SetUp_Material(), );
 		m_pBufferCom->Render_Buffer();

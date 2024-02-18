@@ -93,7 +93,7 @@ HRESULT SnowSplash::Add_Component()
     pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-    m_pTransForm->Set_Scale({ 2.f, 3.f, 2.f });
+    m_pTransForm->Set_Scale({ 2.f, 2.f, 2.f });
 
     pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(proto::Clone_Proto(L"Proto_Calculator"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);

@@ -34,6 +34,7 @@ HRESULT SizemicL::Ready_GameObject()
 
 _int SizemicL::Update_GameObject(const _float& fTimeDelta)
 {
+    Volume_Controll();
     if (!m_bFrameStop)
     {
         m_fFrame += m_bFrameSpeed * fTimeDelta;
@@ -142,7 +143,7 @@ void SizemicL::State_Change()
          
             break;
         case ERASE:
-            Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, 0.2f);
+            Spike_Sound();
             m_bFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             break;
@@ -178,7 +179,7 @@ _int SizemicL::Appear()
         }
     }
 
-    if (m_fAcctime > 3.f)
+    if (m_fAcctime > 3.f )
     {
         m_eCurState = ERASE;
         m_bFrameStop = false;

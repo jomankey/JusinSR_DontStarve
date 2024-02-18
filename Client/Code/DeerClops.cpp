@@ -494,6 +494,7 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 	{
 		m_eCurState = WALK;
 		m_bPhase[SECOND] = true;
+		Engine::PlayBGM(L"RoadScene.mp3", 0.5f);
 	}
 
 
@@ -598,6 +599,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				Getnerate_SnowSplash();
 				Camera_Shaking(3.f, 1.f, false);
 				Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_DEERCLOPS, 0.5f);
+				Engine::PlayBGM(L"music [3].mp3", 0.5f);
 				Awake_Tallbird();
 				// 여기에 카메라 쉐이킹
 			}
@@ -639,6 +641,8 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //보스 스테이지에서 등장�
 				m_bSound = false;
 			if (m_bAttacking)
 				m_bAttacking = false;
+			if (m_bHit)
+				m_bHit = false;
 		}
 	}
 
@@ -719,6 +723,8 @@ void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//따라오면서 일반 공격
 			m_bAttacking = false;
 		if (m_bSound)
 			m_bSound = false;
+		if (m_bHit)
+			m_bHit = false;
 	}
 
 }
@@ -785,16 +791,16 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//제작한 패턴 나옴
 		{
 			m_eCurState = PATTERN_LOOP;
 			Camera_Shaking(0.5f, 4.f, false);
-
+			Engine::PlaySound_W(L"earthqu.mp3", SOUND_DEERCLOPS, 0.6f);
 			//지진 소리를 구한다면 여기에 넣어줘
 		}
 	}
 	else if (m_ePreState == PATTERN_LOOP)
 	{
+
 		if (IsFrameEnd())
 		{
-			Generate_Sizemic();
-			Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_1.mp3", SOUND_DEERCLOPS, 0.5f);
+			Generate_Sizemic(); 
 			Camera_Shaking(3.f, 0.5f, false);
 			m_eCurState = WAKE_UP;
 		}
@@ -863,7 +869,8 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//제작한 패턴 나옴
 			m_bAttacking = false;
 		if (m_bSound)
 			m_bSound = false;
-
+		if (m_bHit)
+			m_bHit = false;
 		if (m_ePreState == ATTACK)
 		{
 			m_eCurState = WALK;
@@ -975,7 +982,7 @@ void CDeerClops::Generate_Fall_Mark_Ex()
 
 void CDeerClops::Generate_Attack_Effect()
 {
-	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_DEERCLOPS, 0.2f);
+	Engine::PlaySound_W(L"Obj_Deerclops_Attack_4.mp3", SOUND_DEERCLOPS, 0.3f);
 	_vec3 vThisPos, vRight, vLook; // 이펙트 생성 기점.
 	m_pTransForm->Get_Info(INFO_POS, &vThisPos);
 	m_pTransForm->Get_Info(INFO_LOOK, &vLook);
@@ -1028,7 +1035,7 @@ void CDeerClops::Getnerate_SnowSplash()
 	for (int i = 0; i < 10; ++i)
 	{
 		_vec3 pPos = Get_Pos();
-		pPos.y = 0.6f;
+		pPos.y = 0.2f;
 		int randomValue = rand() % 10;
 		int randomValue2 = rand() % 5;
 		// 부호를 무작위로 선택 (-1 또는 1)

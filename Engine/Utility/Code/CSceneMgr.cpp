@@ -40,11 +40,10 @@ void CSceneMgr::LateUpdate_Scene()
 
 void CSceneMgr::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	renderer::Render_GameObject(pGraphicDev);
-
-	NULL_CHECK(m_pCurScene);
-	//debug¿ë
 	m_pCurScene->Render_Scene();
+	renderer::Render_GameObject(pGraphicDev);
+	NULL_CHECK(m_pCurScene);
+
 	m_pCurScene->Update_Event();
 
 }

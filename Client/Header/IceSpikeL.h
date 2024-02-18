@@ -25,7 +25,7 @@ public:
 private:
 	HRESULT					Add_Component();
 	virtual void State_Change()			override;
-	void Spike_Sound();
+	
 	_int Appear();
 
 

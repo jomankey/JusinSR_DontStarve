@@ -59,10 +59,8 @@ void CPlayerHitEffectUI::Render_GameObject()
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-
 	m_pAnimCom->SetAnimTexture();
 	m_pBufferCom->Render_Buffer();
-
 
 	scenemgr::Get_CurScene()->EndOrtho();
 }

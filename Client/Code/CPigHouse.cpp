@@ -258,7 +258,7 @@ void CPigHouse::Change_Light()
 {
 	//오전을 제외한 모든 시간에 
 	TIME_STATE eTimeState = light::Get_TimeIndex();
-	if (eTimeState == MORNING)
+	if (eTimeState == MORNING|| m_eCurState==DEAD)
 	{
 		light::Get_Light(m_iPointNum)->Close_Light();
 		return;

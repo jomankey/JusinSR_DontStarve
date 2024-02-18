@@ -138,6 +138,7 @@ void CStage::LateUpdate_Scene()
 
 void CStage::Render_Scene()
 {
+
 }
 
 HRESULT CStage::Ready_Layer_Environment()
@@ -475,6 +476,7 @@ HRESULT CStage::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CTeleporterWorm::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::OBJECT, pGameObject), E_FAIL);
+		vPos.y = 0.f;
 	}
 	else if (!_tcscmp(L"BossDoor", pName))
 	{
