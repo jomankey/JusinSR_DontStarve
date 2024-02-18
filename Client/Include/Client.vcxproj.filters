@@ -304,6 +304,9 @@
     <Filter Include="02. GameObject\04. DynamicCamera\RoadSceneCamera">
       <UniqueIdentifier>{4029d41a-ce26-4ec4-8d5d-85949beeafae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\07. UI\08.MainUI">
+      <UniqueIdentifier>{eab367bc-d232-449f-9d8a-c29466e0a7b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -597,6 +600,9 @@
     <ClInclude Include="..\Header\CPlayerHitEffectUI.h">
       <Filter>02. GameObject\07. UI\07. EffectUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\CMainUI.h">
+      <Filter>02. GameObject\07. UI\08.MainUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -880,6 +886,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\FuncEvent.cpp">
       <Filter>03. Manager\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CMainUI.cpp">
+      <Filter>02. GameObject\07. UI\08.MainUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

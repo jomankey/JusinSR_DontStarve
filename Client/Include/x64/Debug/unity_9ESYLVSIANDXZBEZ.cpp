@@ -54,6 +54,9 @@
 #include "C:\Git\SR_PortPolio\Client\Code\CMainScene.cpp"
 
 
+#include "C:\Git\SR_PortPolio\Client\code\CMainUI.cpp"
+
+
 #include "C:\Git\SR_PortPolio\Client\Code\Cook.cpp"
 
 
