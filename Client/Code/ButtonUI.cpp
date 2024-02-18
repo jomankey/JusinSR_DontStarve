@@ -6,6 +6,7 @@
 #include <Cook.h>
 #include <CCookingPot.h>
 #include <ItemBasic.h>
+#include <Player.h>
 
 CButtonUI::CButtonUI(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos, _vec2 vSize, _bool bFood)
     : CGameObject(pGraphicDev), m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_fX(vPos.x), m_fY(vPos.y), m_bColl(false), m_fSizeX(vSize.x), m_fSizeY(vSize.y), m_bFood(bFood)
@@ -136,6 +137,10 @@ void CButtonUI::Input_Mouse()
                     pItem->GetTransForm()->Set_Pos(vPos);
                     dynamic_cast<CItemBasic*>(pItem)->Pickup_Item(vSlotPos);
                 }
+            }
+            else // 제작 실패 시 
+            {
+                dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Dialog();
             }
         }
         else if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) //치트

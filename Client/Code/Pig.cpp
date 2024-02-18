@@ -58,10 +58,6 @@ _int CPig::Update_GameObject(const _float& fTimeDelta)
 	Look_Change(); 
 	//Set_Scale();
 	
-	if (Collision_Circle(this))
-	{
-		//Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_PIG,1.0f);
-	}
 	renderer::Add_RenderGroup(RENDER_ALPHA, this);
 	return iResult;
 }
