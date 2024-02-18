@@ -1235,6 +1235,7 @@ HRESULT CPlayer::Ready_Light()
 	tPointLightInfo.Type = D3DLIGHT_POINT;
 
 	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	tPointLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
 	tPointLightInfo.Attenuation0 = 3.f;
 	tPointLightInfo.Range = m_iLightRange;
@@ -1263,7 +1264,7 @@ void CPlayer::Fire_Light()
 	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
 	tPointLightInfo->Attenuation0 = 3.f;
-	tPointLightInfo->Range = 3.f;
+	tPointLightInfo->Range = m_iLightRange;
 
 	_vec3 pPlayerPos;
 	m_pTransForm->Get_Info(INFO_POS, &pPlayerPos); // player pos °ª ¼³Á¤
