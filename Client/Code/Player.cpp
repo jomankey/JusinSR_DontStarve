@@ -784,7 +784,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 void CPlayer::Ket_Input_Road(const _float& fTimeDelta)
 {
-
+	
 	_vec3		vDir, vRight;
 	m_pTransForm->Get_Info(INFO_LOOK, &vDir);
 	m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
@@ -886,7 +886,6 @@ void CPlayer::Check_State()
 			m_fFrameEnd = 6;
 			break;
 		case EAT:
-			Eat_Sound();
 			m_fFrameSpeed = 14.f;
 			m_fFrameEnd = 35;
 			m_KeyLock = true;

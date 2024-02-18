@@ -19,6 +19,7 @@ CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vPos)
 	, m_bAttackCooltime(false)
 	, m_fFrameSpeed(0.f)
 	, m_bSound(false)
+	, m_fVolume(0.f)
 {
 }
 
@@ -37,6 +38,7 @@ CMonster::CMonster(const CMonster& rhs)
 	, m_bAttackCooltime(rhs.m_bAttackCooltime)
 	, m_fFrameSpeed(rhs.m_fFrameSpeed)
 	, m_bSound(rhs.m_bSound)
+	, m_fVolume(rhs.m_fVolume)
 {
 }
 
@@ -68,6 +70,23 @@ CGameObject* CMonster::Get_Player_Pointer()
 {
 	CGameObject* pPlayer = scenemgr::Get_CurScene()->GetPlayerObject();
 	return pPlayer;
+}
+
+void CMonster::Volume_Controll()
+{
+	if (IsTarget_Approach(15.f))
+		m_fVolume = 0.15;
+	else
+	{
+		m_fVolume = 0.f;
+		return;
+	}
+
+	if (IsTarget_Approach(10.f))
+		m_fVolume = 0.17;
+	//
+	if (!IsTarget_Approach(5.f))
+		m_fVolume = 0.2f;
 }
 
 void CMonster::Collision_EachOther(const _float& fTimeDelta)

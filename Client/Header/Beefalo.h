@@ -45,6 +45,7 @@ private:
 	BEEFALOSTATE		m_ePreState;
 	_bool				m_bHit;
 	
+	_bool				m_bStepSound[2];
 
 
 

@@ -71,12 +71,6 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 
 
 
-
-
-
-
-
-
 	Change_Frame_Event();
 
 	if (Engine::GetMouseState(DIM_RB) == eKEY_STATE::TAP) // 플레이어와 상호작용

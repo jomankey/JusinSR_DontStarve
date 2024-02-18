@@ -35,7 +35,7 @@ HRESULT CPig::Ready_GameObject()
 
 _int CPig::Update_GameObject(const _float& fTimeDelta)
 {
-
+	Volume_Controll();
 	if (!m_bFrameStop)
 		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
@@ -429,7 +429,7 @@ void CPig::Attacking(const _float& fTimeDelta)
 	{
 		if (m_fFrameEnd < m_fFrame)
 		{
-			Engine::PlaySound_W(L"Obj_Pig_Oink_2.mp3", SOUND_PIG, 0.4f);
+			Engine::PlaySound_W(L"Obj_Pig_Oink_2.mp3", SOUND_PIG, m_fVolume);
 			m_eCurState = RUN;
 			m_bHit = false;
 		}
@@ -495,10 +495,10 @@ void CPig::Dead_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Pig_Death_1.mp3", SOUND_PIG, 0.2f);
+		Engine::PlaySound_W(L"Obj_Pig_Death_1.mp3", SOUND_PIG, m_fVolume);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", SOUND_PIG, 0.2f);
+		Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", SOUND_PIG, m_fVolume);
 		break;
 	}
 }
@@ -509,10 +509,10 @@ void CPig::Oink_Sound()
 	switch (randomvalue)
 	{
 	case 0:
-		Engine::PlaySound_W(L"Obj_Pig_Oink_1.mp3", SOUND_PIG, 0.2f);
+		Engine::PlaySound_W(L"Obj_Pig_Oink_1.mp3", SOUND_PIG, m_fVolume);
 		break;
 	case 1:
-		Engine::PlaySound_W(L"Obj_Pig_Oink_2.mp3", SOUND_PIG, 0.2f);
+		Engine::PlaySound_W(L"Obj_Pig_Oink_2.mp3", SOUND_PIG, m_fVolume);
 		break;
 	}
 }
