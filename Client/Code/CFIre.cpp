@@ -46,6 +46,9 @@ _int CFire::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_fFrame = 0.0f;
 	}
+
+
+
 	Engine::Update_Sound(_vec3{ 1,0,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), STEREO_BGM);
 	Check_FrameState();
 

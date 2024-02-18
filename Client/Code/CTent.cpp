@@ -55,11 +55,11 @@ _int CTent::Update_GameObject(const _float& fTimeDelta)
 	//
 	//	Set_Hit();
 	//}
-	//if (GetAsyncKeyState('3')) // È¶ºÒ
-	//{
-	//	Set_Destroy();
-	//
-	//}
+	if (GetAsyncKeyState('3')) // È¶ºÒ
+	{
+		Set_Destroy();
+	
+	}
 	//if (GetAsyncKeyState('4')) // È¶ºÒ
 	//{
 	//	Set_Burnt();
@@ -236,6 +236,7 @@ void CTent::Check_FrameState()
 			break;
 		case CTent::CTENT_ENTER:
 			m_fFrameEnd = 7.0f;
+			Engine::PlaySound_W(L"Obj_Tent_Enter.mp3", SOUND_EFFECT, 0.2f);
 			break;
 		case CTent::CTENT_DESTROY:
 			Engine::PlaySound_W(L"Obj_Tent_Destroy.mp3", SOUND_EFFECT, 0.2f);
