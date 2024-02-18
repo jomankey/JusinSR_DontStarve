@@ -318,7 +318,7 @@ HRESULT CRoadScene::Ready_LightInfo()
 
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
-	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, ++CMainApp::g_iLightNum), E_FAIL);
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 
 	return S_OK;
 }
