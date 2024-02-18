@@ -45,8 +45,11 @@ public:
 	void			Set_Attack(int _Atk);			//공격당했을 때 호출되는 함수
 		
 	_bool			IsPlayer_Dead() { return m_Stat.bDead; }	//외부에서 죽었는지 확인하는 함수
+
 	void			Set_Eat() {
 		m_eCurState = EAT;
+		m_fFrame = 0.f;
+		Eat_Sound();
 		m_vPlayerActing = true;
 	}
 	void		Set_Weapon_Equip(WEAPON _eWeaponType) { m_eCurWeapon = _eWeaponType; }	//무기 넣어줄때 호출
@@ -121,7 +124,7 @@ private:
 
 	_uint m_iLightNum;
 
-	_bool m_bTent;
+	_bool		m_bTent;
 	_float		m_fFrameSpeed;
 
 	_bool		m_bFirstStart;

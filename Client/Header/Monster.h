@@ -20,7 +20,7 @@ public:
 protected:
 	virtual void Free() override;
 	CGameObject* Get_Player_Pointer();								//플레이어의 포인터를 받아오기 위한 함수
-
+	void	Volume_Controll();
 protected:
 	virtual void		Set_ObjStat() PURE;
 	virtual void		State_Change() PURE;
@@ -55,6 +55,10 @@ protected:
 	_bool				m_bFrameStop;			//프레임을 멈춰야 할 때 true로 바꿔줘
 	_bool				m_bAttackCooltime;
 	_float				m_fFrameSpeed;
+
+
+	_float				m_fVolume;
+	
 	
 };
 

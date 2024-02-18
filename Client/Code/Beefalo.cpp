@@ -38,6 +38,7 @@ HRESULT CBeefalo::Ready_GameObject()
 
 _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
 {
+    Volume_Controll();
 
     if (!m_bFrameStop)
     {
@@ -63,12 +64,6 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
         Collision_EachOther(fTimeDelta);
     }           //여기에 else 걸어서 사망 트리거 연결(아이템 드랍 테이블)
 
-
-   //if (Collision_Circle(this))
-   //{
-   //    Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_BEEFALO, 1.f);
-   //
-   //}
 
 
    //Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT, 5.f);
@@ -289,6 +284,8 @@ void CBeefalo::Set_ObjStat()
     m_Stat.bDead = false;
     m_Stat.fATKRange = 1.3f;
     m_Stat.fAggroRange = 10.f;
+    m_bStepSound[0] = false;
+    m_bStepSound[1] = false;
 }
 
 void CBeefalo::State_Change()
@@ -308,7 +305,6 @@ void CBeefalo::State_Change()
             }
             break;
         case GRAZE:
-
             m_fFrameSpeed = 12.f;
             m_eCurLook = LOOK_DOWN;
             m_fFrameEnd = 10;
@@ -321,7 +317,7 @@ void CBeefalo::State_Change()
        
             break;
         case ATTACK:
-            Engine::PlaySound_W(L"Obj_Beefalo_Angry.mp3", SOUND_BEEFALO, 0.2f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Angry.mp3", SOUND_BEEFALO, m_fVolume);
   
             
             m_fFrameSpeed = 10.f;
@@ -373,7 +369,7 @@ _int CBeefalo::Die_Check()
        
         if (m_fFrameEnd <= m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, 0.8f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Yell.mp3", SOUND_BEEFALO, m_fVolume);
             CResObject::CreateItem(L"RawMeat",this,this->m_pGraphicDev);
            
 
@@ -412,12 +408,12 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
             {
                 if (!m_bSound)
                 {
-                    Engine::PlaySound_W(L"Obj_Beefalo_AttackVoice.mp3", SOUND_BEEFALO, 0.2f);
+                    Engine::PlaySound_W(L"Obj_Beefalo_AttackVoice.mp3", SOUND_BEEFALO, m_fVolume);
                     m_bSound = true;
                 }
                 if (Collision_Circle(Get_Player_Pointer()) && !m_bAttacking)
                 {
-                    Engine::PlaySound_W(L"Obj_Beefalo_Attack.mp3", SOUND_BEEFALO, 0.2f);
+                    Engine::PlaySound_W(L"Obj_Beefalo_Attack.mp3", SOUND_BEEFALO, m_fVolume);
                     dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
                     m_bAttacking = true;
                 }
@@ -437,7 +433,7 @@ void CBeefalo::Attacking(const _float& fTimeDelta)
     {
         if (m_fFrameEnd < m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Beefalo_Farting_1.mp3", SOUND_BEEFALO, 0.2f);
+            Engine::PlaySound_W(L"Obj_Beefalo_Farting_1.mp3", SOUND_BEEFALO, m_fVolume);
             m_bHit = false;
         }
 
@@ -532,22 +528,25 @@ void CBeefalo::FrameCheckSound(const _float& fTimeDelta)
 {
     if (m_eCurState == WALK)
     {
-        if (m_fFrame < 1.0f && m_fFrame < 1.2f)
+        if (m_fFrame >3 && !m_bStepSound[0])
         {
-           // if(IsTarget_Approach(3.f))
-                  Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_BEEFALO, 0.2f);
-           // else
-           //     Engine::StopSound(SOUND_BEEFALO);
+             Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_BEEFALO, m_fVolume);
+             m_bStepSound[0] = true;
         }
-  
+        if (m_fFrame > 13 && !m_bStepSound[1])
+        {
+            Engine::PlaySound_W(L"Obj_Beefalo_Walk_1.mp3", SOUND_BEEFALO, m_fVolume);
+            m_bStepSound[1] = true;
+        }
+ 
     }
-   //else if (m_eCurState == GRAZE)
-   //{
-   //    if (IsTarget_Approach(3.0f))
-   //    {
-   //        Engine::PlaySound_W(L"Obj_Beefalo_Chew_Voice_1.mp3", SOUND_EFFECT,1.0f);
-   //    }
-   //}
+
+    if (m_fFrame > m_fFrameEnd)
+    {
+        m_bStepSound[0] = false;
+        m_bStepSound[1] = false;
+    }
+   
 }
 
 

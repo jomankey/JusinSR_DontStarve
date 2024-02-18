@@ -37,7 +37,7 @@ HRESULT CSpider::Ready_GameObject()
 
 _int CSpider::Update_GameObject(const _float& fTimeDelta)
 {
-    
+    Volume_Controll();
     if (!m_bFrameStop)
     {
         m_fFrame += m_fFrameSpeed * fTimeDelta;
@@ -62,10 +62,7 @@ _int CSpider::Update_GameObject(const _float& fTimeDelta)
     Look_Change();
    // Set_Scale();
 
-    //if (Collision_Circle(this))
-    //{
-    //    Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_SPIDER, 1.f);
-    //}
+  
 
     //Set_Scale();
     CGameObject::Update_GameObject(fTimeDelta);
@@ -255,7 +252,7 @@ void CSpider::State_Change()
         case SLEEP:
             break;
         case HIT:
-            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_SPIDER, 0.2f);
+            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_SPIDER, m_fVolume);
             m_fFrameEnd = 6;
             m_fFrameSpeed = 11.f;
             if (m_eCurLook != LOOK_LEFT)
@@ -413,7 +410,7 @@ _int CSpider::Die_Check()
        
         if (m_fFrameEnd < m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_SPIDER, 0.5f);
+            Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_EFFECT, m_fVolume);
            CResObject::CreateItem(L"Silk", this, m_pGraphicDev,2);
            CResObject::CreateItem(L"Meat_Monster", this, this->m_pGraphicDev);
 
@@ -460,25 +457,25 @@ void CSpider::Attack_Sound()
     switch (randomvalue)
     {
     case 0:
-        Engine::PlaySound_W(L"Obj_Spider_Attack_1.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Attack_1.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 1:
-        Engine::PlaySound_W(L"Obj_Spider_Attack_2.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Attack_2.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 2:
-        Engine::PlaySound_W(L"Obj_Spider_Attack_3.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Attack_3.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 3:
-        Engine::PlaySound_W(L"Obj_Spider_Attack_4.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Attack_4.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 4:
-        Engine::PlaySound_W(L"Obj_Spider_Attack_5.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Attack_5.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 5:
-        Engine::PlaySound_W(L"Obj_Spider_Attack_6.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Attack_6.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 6:
-        Engine::PlaySound_W(L"Obj_Spider_Attack_7.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Attack_7.mp3", SOUND_EFFECT, m_fVolume);
         break;
     }
 }
@@ -489,13 +486,13 @@ void CSpider::Dead_Sound()
     switch (randomvalue)
     {
     case 0:
-        Engine::PlaySound_W(L"Obj_Spider_Death_1.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Death_1.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 1:
-        Engine::PlaySound_W(L"Obj_Spider_Death_2.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Death_2.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 2:
-        Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_EFFECT, m_fVolume);
         break;
     }
 }
@@ -506,25 +503,25 @@ void CSpider::Scream_Sound()
     switch (randomvalue)
     {
     case 0:
-        Engine::PlaySound_W(L"Obj_Spider_Scream_1.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Scream_1.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 1:
-        Engine::PlaySound_W(L"Obj_Spider_Scream_2.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Scream_2.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 2:
-        Engine::PlaySound_W(L"Obj_Spider_Scream_3.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Scream_3.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 3:
-        Engine::PlaySound_W(L"Obj_Spider_Scream_4.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Scream_4.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 4:
-        Engine::PlaySound_W(L"Obj_Spider_Scream_5.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Scream_5.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 5:
-        Engine::PlaySound_W(L"Obj_Spider_Scream_6.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Scream_6.mp3", SOUND_EFFECT, m_fVolume);
         break;
     case 6:
-        Engine::PlaySound_W(L"Obj_Spider_Scream_7.mp3", SOUND_SPIDER, 0.2f);
+        Engine::PlaySound_W(L"Obj_Spider_Scream_7.mp3", SOUND_EFFECT, m_fVolume);
         break;
     }
 }
