@@ -13,7 +13,7 @@
 #include "Ghost.h"
 #include "Rebirth.h"
 #include "DeerClops.h"
-
+#include "CPigHouse.h"
 //Manager
 #include "SlotMgr.h"
 #include <ItemBasic.h>
@@ -72,7 +72,7 @@ HRESULT CPlayer::Ready_GameObject()
 
 	m_eCurWeapon = UNARMED;
 	m_ePreWeapon = WEAPON_END;
-
+	m_bFirstStart = false;
 	m_Dirchange = false;
 	m_KeyLock = false;
 	m_bFrameLock = false;
@@ -80,6 +80,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_vPlayerActing = false;
 	m_bIsRoadScene - false;
 	m_Ghost = nullptr;
+	m_bWakeupTrig = false;
 	m_TargetObject = RSOBJ_END;
 	m_fFrameEnd = 22;
 	m_fFrameSpeed = 0.f;
@@ -94,15 +95,22 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"ROAD" && !m_bIsRoadScene)
 	{
 		m_bIsRoadScene = true;
+		m_fCollisionRadius = 0.25f;
 	}
 	else if (scenemgr::Get_CurScene()->Get_Scene_Name() != L"ROAD" && m_bIsRoadScene)
+	{
 		m_bIsRoadScene = false;
+		m_fCollisionRadius = 0.5f;
+	}
 	
-	
+
 
 	if (!m_bFrameLock)      //프레임 락이 걸리면 프레임이 오르지 않음
 		m_fFrame += m_fFrameSpeed * fTimeDelta;
 	_int iResult = Die_Check();
+
+
+	
 
 	if (m_fFrameEnd <= m_fFrame)      //프레임이 끝에 다다르면 진입
 	{
@@ -129,8 +137,9 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 			Engine::PlaySound_W(L"Player_Foot_2.mp3", SOUND_PLAYER, 0.2f);
 	}
 	
+	First_Start();
 	
-	if (!m_KeyLock && !m_Stat.bDead)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
+	if (!m_KeyLock && !m_Stat.bDead && m_bWakeupTrig)         //특정 행동에는 KeyLock 을 걸어서 행동중에 다른 행동을 못하게 함
 	{
 		if (!m_bIsRoadScene)
 			Key_Input(fTimeDelta);
@@ -775,7 +784,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 void CPlayer::Ket_Input_Road(const _float& fTimeDelta)
 {
-	m_eCurWeapon = TORCH;
+
 	_vec3		vDir, vRight;
 	m_pTransForm->Get_Info(INFO_LOOK, &vDir);
 	m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
@@ -920,13 +929,11 @@ void CPlayer::Check_State()
 			m_fFrameEnd = 8;
 			break;
 		case SLEEP:
-			m_KeyLock = true;
 			m_fFrameSpeed = 10.f;
 			m_fFrameEnd = 13;
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case WAKEUP:
-			m_KeyLock = true;
 			m_fFrameSpeed = 8.f;
 			m_fFrameEnd = 32;
 			m_eCurLook = LOOK_DOWN;
@@ -1099,6 +1106,7 @@ void CPlayer::ResObj_Mining(RESOBJID _ObjID, CGameObject* _Obj)
 				Tree_Sound();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack();
 				dynamic_cast<CResObject*>(_Obj)->Set_Attack_State(true);
+				dynamic_cast<CPigHouse*>(_Obj)->Set_Pig_Angry();
 				m_vPlayerActing = true;
 			}
 			m_eCurState = HAMMERING;
@@ -1179,6 +1187,37 @@ void CPlayer::Rebirth()
 		DeleteObject(m_Ghost);
 		m_Ghost = nullptr;
 	}
+}
+
+void CPlayer::First_Start()
+{
+	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"STAGE"
+		&& !m_bFirstStart)
+	{
+		m_eCurState = SLEEP;
+		m_bFirstStart = true;
+	}
+	else if (scenemgr::Get_CurScene()->Get_Scene_Name() != L"STAGE")
+	{
+		m_bWakeupTrig = true;
+	}
+
+	else if (m_ePreState == SLEEP)
+	{
+		if (m_fFrameEnd-1 < m_fFrame)
+		{
+			m_eCurState = WAKEUP;
+		}
+	}
+	else if (m_ePreState == WAKEUP)
+	{
+		if (m_fFrameEnd-1 < m_fFrame)
+		{
+			m_eCurState = IDLE;
+			m_bWakeupTrig = true;
+		}
+	}
+
 }
 
 

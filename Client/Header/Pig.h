@@ -26,6 +26,8 @@ public:
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						 override;
 
+	void Set_AttackState() { m_Attacked = true; }
+
 private:
 	HRESULT			Add_Component();
 	virtual void	Set_ObjStat()					override;
@@ -36,7 +38,8 @@ private:
 	void			Patroll(const _float& fTimeDelta);
 	virtual void	Set_Hit()						override;
 
-
+	void			Dead_Sound();
+	void			Oink_Sound();
 private:
 	Engine::CRcTex* m_pBufferCom;
 	Engine::CRvRcTex* m_pReverseCom;

@@ -255,7 +255,7 @@ void CSpider::State_Change()
         case SLEEP:
             break;
         case HIT:
-           // Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_SPIDER, 0.2f);
+            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_SPIDER, 0.2f);
             m_fFrameEnd = 6;
             m_fFrameSpeed = 11.f;
             if (m_eCurLook != LOOK_LEFT)
@@ -264,6 +264,7 @@ void CSpider::State_Change()
             }
             break;
         case DEAD:
+            Dead_Sound();
             m_fFrameSpeed = 9.f;
             m_fFrameEnd = 9.f;
             break;
@@ -305,25 +306,32 @@ void CSpider::Attacking(const _float& fTimeDelta)
         }
         else if (m_ePrestate == ATTACK)
         {
-            /*if (dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->IsPlayer_Dead())
+            
+            if (6 < m_fFrame )
             {
-                m_eCurstate == WALK;
-                return;
-            }*/
-            if (6 < m_fFrame &&
-                Collision_Circle(Get_Player_Pointer())
-                && !m_bAttacking)
-            {
-                dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
-                m_bAttacking = true;
+                if (!m_bSound)
+                {
+                    Attack_Sound();
+                    m_bSound = true;
+                }
+                
+
+                if (Collision_Circle(Get_Player_Pointer()) && !m_bAttacking)
+                {
+                    dynamic_cast<CPlayer*>(Get_Player_Pointer())->Set_Attack(m_Stat.fATK);
+                    m_bAttacking = true;
+                }
             }
          
             else if (m_fFrameEnd < m_fFrame)
             {
-                Engine::PlaySound_W(L"Obj_Spider_Attack_2.mp3", SOUND_SPIDER, 0.3f);
-                Engine::PlaySound_W(L"Obj_Spider_Scream_3.mp3", SOUND_SPIDER, 0.3f);
                 if (!Collision_Circle(Get_Player_Pointer()))
                 {
+                    if (!m_bSound)
+                    {
+                        Scream_Sound();
+                        m_bSound = true;
+                    }
                     m_eCurstate = WALK;
                 }
             }
@@ -336,7 +344,7 @@ void CSpider::Attacking(const _float& fTimeDelta)
         
         if (m_fFrameEnd < m_fFrame)
         {
-            Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_SPIDER, 0.3f);
+           /* Engine::PlaySound_W(L"Obj_Spider_Hurt.mp3", SOUND_SPIDER, 0.3f);*/
             m_bHit = false;
             m_eCurstate = WALK;
         }
@@ -346,6 +354,8 @@ void CSpider::Attacking(const _float& fTimeDelta)
         m_fFrame = 0.f;
         if (m_bAttacking)
             m_bAttacking = false;
+        if (m_bSound)
+            m_bSound = false;
     }
 }
 
@@ -444,13 +454,82 @@ void CSpider::Detect_Player()
     }
 }
 
-
-
-void CSpider::FrameCheckSound()
+void CSpider::Attack_Sound()
 {
-
-
+    int randomvalue = rand() % 7;
+    switch (randomvalue)
+    {
+    case 0:
+        Engine::PlaySound_W(L"Obj_Spider_Attack_1.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 1:
+        Engine::PlaySound_W(L"Obj_Spider_Attack_2.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 2:
+        Engine::PlaySound_W(L"Obj_Spider_Attack_3.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 3:
+        Engine::PlaySound_W(L"Obj_Spider_Attack_4.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 4:
+        Engine::PlaySound_W(L"Obj_Spider_Attack_5.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 5:
+        Engine::PlaySound_W(L"Obj_Spider_Attack_6.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 6:
+        Engine::PlaySound_W(L"Obj_Spider_Attack_7.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    }
 }
+
+void CSpider::Dead_Sound()
+{
+    int randomvalue = rand() % 3;
+    switch (randomvalue)
+    {
+    case 0:
+        Engine::PlaySound_W(L"Obj_Spider_Death_1.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 1:
+        Engine::PlaySound_W(L"Obj_Spider_Death_2.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 2:
+        Engine::PlaySound_W(L"Obj_Spider_Death_3.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    }
+}
+
+void CSpider::Scream_Sound()
+{
+    int randomvalue = rand() % 7;
+    switch (randomvalue)
+    {
+    case 0:
+        Engine::PlaySound_W(L"Obj_Spider_Scream_1.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 1:
+        Engine::PlaySound_W(L"Obj_Spider_Scream_2.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 2:
+        Engine::PlaySound_W(L"Obj_Spider_Scream_3.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 3:
+        Engine::PlaySound_W(L"Obj_Spider_Scream_4.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 4:
+        Engine::PlaySound_W(L"Obj_Spider_Scream_5.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 5:
+        Engine::PlaySound_W(L"Obj_Spider_Scream_6.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    case 6:
+        Engine::PlaySound_W(L"Obj_Spider_Scream_7.mp3", SOUND_SPIDER, 0.2f);
+        break;
+    }
+}
+
+
 
 CSpider* CSpider::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
 {

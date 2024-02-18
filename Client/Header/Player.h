@@ -64,8 +64,8 @@ private:
 	void			ResObj_Mining(RESOBJID _ObjID , CGameObject* _Obj);	//Res오브젝트들을 채굴할 때 사용하는 함수
 	_int			Die_Check();
 	void			Rebirth();
-
-	void			Start();
+	void			First_Start();
+	
 
 	HRESULT Ready_Light();
 	void Fire_Light();
@@ -122,6 +122,9 @@ private:
 
 	_bool m_bTent;
 	_float		m_fFrameSpeed;
+
+	_bool		m_bFirstStart;
+	_bool		m_bWakeupTrig;
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9	pGraphicDev, wstring _strName);

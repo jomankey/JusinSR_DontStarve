@@ -41,8 +41,11 @@ private:
 	virtual void	Set_Hit()						override;
 	void			Detect_Player();
 
+	void			Attack_Sound();
+	void			Dead_Sound();
+	void			Scream_Sound();
 
-	void FrameCheckSound();
+
 
 private:
 	Engine::CRcTex* m_pBufferCom;
