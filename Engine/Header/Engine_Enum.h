@@ -204,6 +204,7 @@ namespace Engine
 		RUN,
 		TURN,
 		BOSS,
+		BOSS_TAUNT,
 		MOVE_MPA,
 		NONE,
 	};
