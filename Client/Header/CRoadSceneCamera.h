@@ -19,6 +19,8 @@ public:
 
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject() override;
+
+	_bool TurnAngle(const _float& fTimeDelta, _float TargetAngle);
 public:
 	void		SetTarget(CGameObject* _targetObj);
 	_float		Get_Angle() { return m_fAngle; }
@@ -69,6 +71,8 @@ private:
 	_vec3	m_vPrevEye;		//카메라 이전 위치
 	_bool	m_bMove;
 	_float m_fCameraSpeed;
+
+	_float m_fAccTime;
 
 	eROAD_CAMERA_STATE	m_eCurState;
 
