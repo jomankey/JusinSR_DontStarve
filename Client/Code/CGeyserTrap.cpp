@@ -2,12 +2,13 @@
 #include "CGeyserTrap.h"
 #include "Export_Utility.h"
 #include "Player.h"
+#include "Export_System.h"
 
 CGeyserTrap::CGeyserTrap(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 	:CTrap(pGraphicDev, _strObjName)
 	, m_fAccTime(0.f)
 	, m_fOpenTime(2.f)
-	, m_fLoopTime(5.f)
+	, m_fLoopTime(3.8f)
 	, m_fPlayerHit(0.f)
 {
 }
@@ -29,17 +30,30 @@ CGeyserTrap::~CGeyserTrap()
 _int CGeyserTrap::Update_GameObject(const _float& fTimeDelta)
 {
 
-	if (m_eCurState == eTRAP_STATE::IDLE && m_pAnimCom->IsFinish(L"IDLE"))
+	if (m_eCurState == eTRAP_STATE::IDLE)
 	{
+
 		m_pAnimCom->ChangeAnimation(L"OPEN");
+
 		m_pAnimCom->SetLoopAnimator(false);
 		m_eCurState = eTRAP_STATE::OPEN;
 	}
+
+
+
+
+	if (m_eCurState == eTRAP_STATE::OPEN && m_pAnimCom->GetAnimFrame(L"OPEN") == 20)
+	{
+		//Engine::PlayEffectContinue(L"GeyserOpen_1.mp3", 0.1f, CHANNELID::SOUND_EFFECT_CONTINUE_CH2);
+	}
+
 
 	if (m_eCurState == eTRAP_STATE::OPEN && m_pAnimCom->IsFinish(L"OPEN"))
 	{
 		m_eCurState = eTRAP_STATE::LOOP;
 		m_pAnimCom->ChangeAnimation(L"LOOP");
+		Engine::PlaySound_W(L"FlameGeyser_1.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH2, 0.1f);
+
 		m_pAnimCom->SetLoopAnimator(true);
 	}
 
@@ -52,19 +66,20 @@ _int CGeyserTrap::Update_GameObject(const _float& fTimeDelta)
 			dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Attack(1);
 		}
 
-
 		if (m_fLoopTime <= m_fAccTime)
 		{
 			m_fAccTime = 0.f;
+			Engine::PlaySound_W(L"GeyserOut.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH2, 0.1f);
 			m_pAnimCom->ChangeAnimation(L"CLOSE");
 			m_pAnimCom->SetLoopAnimator(false);
 			m_eCurState = eTRAP_STATE::DEAD;
 		}
 	}
 
-	if (m_eCurState == eTRAP_STATE::DEAD&& m_pAnimCom->IsFinish(L"CLOSE"))
+	if (m_eCurState == eTRAP_STATE::DEAD && m_pAnimCom->IsFinish(L"CLOSE"))
 	{
 		m_pAnimCom->ChangeAnimation(L"IDLE");
+
 		m_eCurState = eTRAP_STATE::IDLE;
 	}
 
