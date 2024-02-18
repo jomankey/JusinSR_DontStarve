@@ -45,6 +45,7 @@ HRESULT CMainScene::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
 
+	Engine::PlayBGM(L"music_Logo.mp3", 1.f);
 	return S_OK;
 }
 
@@ -85,6 +86,7 @@ HRESULT CMainScene::Ready_Prototype()
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_Shader_Rect", CShader::Create(m_pGraphicDev, L"../Bin/ShaderFiles/Shader_Rect.hlsl")), E_FAIL);
 	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Make_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/UI/Make_Button_%03d.png", 2)), E_FAIL);
 
+	FAILED_CHECK_RETURN(proto::Ready_Proto(L"Proto_UI_Main_Button", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Main/MainButton_%d.png", 2)), E_FAIL);
 	
 	FAILED_CHECK_RETURN(Ready_LoadingObject(), E_FAIL);
 
@@ -105,7 +107,7 @@ HRESULT CMainScene::Ready_LoadingObject()
 	pInstance = CBGLoading::Create(m_pGraphicDev, L"BG_MAIN", _vec3(WINCX / 2.f, WINCY / 2.f, 0.f), _vec3(WINCX * 0.5f, WINCY * 0.5f, 0.f));
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
-	pInstance = CMainUI::Create(m_pGraphicDev,UI_STATIC, _vec3(540.f,600.f,0.f), _vec3(100.f,20.f,0.f),L"Proto_UI_Make_Button");
+	pInstance = CMainUI::Create(m_pGraphicDev,UI_STATIC, _vec3(540.f,600.f,0.f), _vec3(100.f, 30.f,0.f),L"Proto_UI_Main_Button");
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
 

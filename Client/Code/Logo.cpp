@@ -41,14 +41,14 @@ CLogo::~CLogo()
 
 HRESULT CLogo::Ready_Scene()
 {
-
+	Engine::StopAll();
 	for (size_t i = 0; i < (int)eLAYER_TYPE::END; i++)
 	{
 		m_arrLayer[i] = CLayer::Create();
 	}
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
 	m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
-	Engine::PlaySound_NonStop(L"music_Logo.mp3", SOUND_MAIN_BGM, 0.8f);
+	//Engine::PlaySound_NonStop(L"music_Logo.mp3", SOUND_MAIN_BGM, 0.8f);
 	//Engine::PlayBGM(L"music_Logo.mp3", 0.7f);
 	Engine::PlayBGM(L"GenerateMap.mp3", 0.3f);
 	//m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_ROAD);
