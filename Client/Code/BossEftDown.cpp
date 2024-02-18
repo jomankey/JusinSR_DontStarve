@@ -30,7 +30,7 @@ HRESULT CBossEftDown::Ready_GameObject()
     m_pTransForm->Set_Pos(m_vPos);
     m_fFrameEnd = 11.f;
     m_fDamage = 30.f;
-    Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_2.mp3", SOUND_EFFECT, 5.f);
+    Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_2.mp3", SOUND_DEERCLOPS, 0.2f);
     return S_OK;
 }
 

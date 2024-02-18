@@ -247,6 +247,7 @@ HRESULT CBossScene::Ready_Layer_GameLogic()
 		pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+		CPlayerMgr::GetInstance()->Set_Player_Pointer(m_pPlayer);
 	}
 	else
 	{

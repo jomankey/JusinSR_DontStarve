@@ -144,12 +144,15 @@ _int FallMark::Appear()
     uniform_int_distribution<int> distribution(0, 1);
     int randomNumber = distribution(eng);
 
-    _vec3 vrDir, vlDir, vUp, vRight;
+    _vec3 vrDir, vlDir, vUp, vRight, vLook;
     m_pTransForm->Get_Info(INFO_UP, &vUp);
+    m_pTransForm->Get_Info(INFO_LOOK, &vLook);
     m_pTransForm->Get_Info(INFO_RIGHT, &vRight);
     vrDir = vUp + vRight;
     vRight *= -1;
     vlDir = vUp + vRight;
+    vrDir += vLook;
+    vlDir += vLook;
     D3DXVec3Normalize(&vrDir, &vrDir);
     D3DXVec3Normalize(&vlDir, &vlDir);
 

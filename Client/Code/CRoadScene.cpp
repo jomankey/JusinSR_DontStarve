@@ -156,7 +156,7 @@ HRESULT CRoadScene::Ready_Layer_Environment()
 		&_vec3(0.f, 1.f, 0.f),
 		D3DXToRadian(60.f),
 		(_float)WINCX / WINCY,
-		0.1f,
+		1.f,
 		1000.f);
 
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
@@ -191,13 +191,14 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 		pGameObject = m_pPlayer = CPlayer::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, pGameObject), E_FAIL);
+		CPlayerMgr::GetInstance()->Set_Player_Pointer(m_pPlayer);
 	}
 	else
 	{
 		m_pPlayer = CPlayerMgr::GetInstance()->Get_Player_Pointer();
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::PLAYER, m_pPlayer), E_FAIL);
 	}
-	m_pPlayer->GetTransForm()->Set_Pos(_vec3(2.5f, 1.6f, 3.5f));
+	m_pPlayer->GetTransForm()->Set_Pos(_vec3(10.f, 1.6f, 3.5f));
 	m_pPlayer->GetTransForm()->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
 
@@ -317,7 +318,7 @@ HRESULT CRoadScene::Ready_LightInfo()
 
 	tLightInfo.Direction = _vec3(1.f, -1.f, 1.f);
 
-	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, ++CMainApp::g_iLightNum), E_FAIL);
+	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);
 
 	return S_OK;
 }

@@ -328,6 +328,7 @@ void CPig::State_Change()
 			m_fFrameEnd = 6;
 			break;
 		case ATTACK:
+			Oink_Sound();
 			m_fFrameSpeed = 11.f;
 			m_fFrameEnd = 10;
 			break;
@@ -335,6 +336,7 @@ void CPig::State_Change()
 			m_eCurLook = LOOK_DOWN;
 			break;
 		case HIT:
+			Oink_Sound();
 			if (m_eCurLook != LOOK_LEFT)
 			{
 				m_eCurLook = LOOK_DOWN;
@@ -343,6 +345,7 @@ void CPig::State_Change()
 			m_fFrameSpeed = 12.f;
 			break;
 		case DEAD:
+			Dead_Sound();
 			m_fFrameEnd = 11;
 			m_fFrameSpeed = 12.f;
 			m_eCurLook = LOOK_DOWN;
@@ -373,7 +376,7 @@ _int CPig::Die_Check()
 
 		if (m_fFrameEnd < m_fFrame)
 		{
-			Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", SOUND_PIG, 0.4f);
+			
 			CResObject::CreateItem(L"PigTail", this, m_pGraphicDev);
 
 			m_eCurState = ERASE;
@@ -484,6 +487,34 @@ void CPig::Set_Hit()
 {
 	m_eCurState = HIT;
 	m_bHit = true;
+}
+
+void CPig::Dead_Sound()
+{
+	int randomvalue = rand() % 2;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Pig_Death_1.mp3", SOUND_PIG, 0.2f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Pig_Death_2.mp3", SOUND_PIG, 0.2f);
+		break;
+	}
+}
+
+void CPig::Oink_Sound()
+{
+	int randomvalue = rand() % 2;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Pig_Oink_1.mp3", SOUND_PIG, 0.2f);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Pig_Oink_2.mp3", SOUND_PIG, 0.2f);
+		break;
+	}
 }
 
 

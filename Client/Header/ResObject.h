@@ -52,6 +52,7 @@ protected:
     RESOBJID            m_eObject_id;
     _float				m_fFrame = 0.f;
     _float				m_fFrameEnd;
+    _float              m_fFrameSpeed;
     _bool m_bHit;
 
 protected:

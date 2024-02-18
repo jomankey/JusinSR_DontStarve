@@ -17,6 +17,7 @@ public:
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject()					 override;
 	virtual void Render_GameObject()						override;
+	void Set_Pig_Angry();
 
 private:
 	HRESULT	Add_Component() override;

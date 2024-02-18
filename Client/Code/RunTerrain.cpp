@@ -20,11 +20,11 @@ HRESULT CRunTerrain::Ready_GameObject()
 	{
 		for (int i = 0; i < 5; ++i)
 		{
-			if (y > 0 && i != 0 && i != 4)
-				continue;
-
 			for (int j = 0; j < VTXCNTX; ++j)
 			{
+				if (y > 0 && i != 0 && i != 4 && j != 0 && j != VTXCNTX - 1)
+					continue;
+
 				//iIndex = i * VTXCNTX + j + (y * 5 * VTXCNTX);
 				CGameObject* pTile = Engine::CTile::Create(m_pGraphicDev);
 

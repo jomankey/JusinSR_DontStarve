@@ -8,7 +8,8 @@ CResObject::CResObject(LPDIRECT3DDEVICE9 pGraphicDev)
 	m_bHit(false),
 	m_fFrame(0),
 	m_fFrameEnd(0),
-	m_ePlayerLook(LOOK_END)
+	m_ePlayerLook(LOOK_END),
+	m_fFrameSpeed(0.f)
 {
 }
 
@@ -19,7 +20,8 @@ CResObject::CResObject(const CResObject& rhs)
 	m_bHit(false),
 	m_fFrame(rhs.m_fFrame),
 	m_fFrameEnd(rhs.m_fFrameEnd),
-	m_ePlayerLook(rhs.m_ePlayerLook)
+	m_ePlayerLook(rhs.m_ePlayerLook),
+	m_fFrameSpeed(rhs.m_fFrameSpeed)
 {
 }
 

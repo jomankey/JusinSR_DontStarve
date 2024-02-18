@@ -130,19 +130,20 @@ void SizemicR::State_Change()
         case ONE:
             m_fFrameEnd = 4.f;
             m_bFrameSpeed = 8.f;
-            m_pTransForm->Set_Scale({ 0.7f,0.7f ,0.7f });
+       
             break;
         case TWO:
             m_fFrameEnd = 4.f;
             m_bFrameSpeed = 8.f;
-            m_pTransForm->Set_Scale({ 1.f,1.f ,1.f });
+       
             break;
         case THREE:
             m_fFrameEnd = 4.f;
             m_bFrameSpeed = 8.f;
-            m_pTransForm->Set_Scale({ 1.3f,1.3f ,1.3f });
+     
             break;
         case ERASE:
+            Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, 0.2f);
             m_bFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             break;
