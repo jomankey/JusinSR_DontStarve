@@ -39,6 +39,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_iLightNum(++CMainApp::g_iLightNum)
 	, m_bTent(false)
 	, m_bHit(false)
+	, m_iLightRange(6.f)
 {
 }
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
@@ -47,6 +48,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strName)
 	, m_iLightNum(++CMainApp::g_iLightNum),
 	m_bTent(false)
 	, m_bHit(false)
+	, m_iLightRange(6.f)
 {
 }
 
@@ -784,6 +786,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 void CPlayer::Ket_Input_Road(const _float& fTimeDelta)
 {
+	m_eCurWeapon = TORCH;
+	m_iLightRange = 3.f;
 
 	_vec3		vDir, vRight;
 	m_pTransForm->Get_Info(INFO_LOOK, &vDir);
@@ -1231,10 +1235,9 @@ HRESULT CPlayer::Ready_Light()
 	tPointLightInfo.Type = D3DLIGHT_POINT;
 
 	tPointLightInfo.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-	tPointLightInfo.Specular = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
 	tPointLightInfo.Attenuation0 = 3.f;
-	tPointLightInfo.Range = 4.f;
+	tPointLightInfo.Range = m_iLightRange;
 	tPointLightInfo.Position = { 0.f, 0.f, 0.f };
 
 	FAILED_CHECK_RETURN(light::Ready_Light(m_pGraphicDev, &tPointLightInfo, m_iLightNum), E_FAIL);
@@ -1260,7 +1263,7 @@ void CPlayer::Fire_Light()
 	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
 	tPointLightInfo->Attenuation0 = 3.f;
-	tPointLightInfo->Range = 6.f;
+	tPointLightInfo->Range = 3.f;
 
 	_vec3 pPlayerPos;
 	m_pTransForm->Get_Info(INFO_POS, &pPlayerPos); // player pos °ª ¼³Á¤
