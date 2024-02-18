@@ -110,7 +110,6 @@ BOOL CMainUI::UI_Collision()
 			Engine::PlaySound_W(L"UI_Click_Move.mp3", SOUND_MOUSE, 0.5f);
 			return true;
 		}
-			
 	}
 	else
 	{
@@ -127,8 +126,6 @@ void CMainUI::Change_Scene()
 	{
 		ChangeScene(CLogo::Create(m_pGraphicDev));
 	}
-
-
 }
 
 
@@ -149,9 +146,6 @@ HRESULT CMainUI::Add_Component()
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].insert({ L"Proto_Transform", pComponent });
-
-
-
 
 	return S_OK;
 }

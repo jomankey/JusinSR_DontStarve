@@ -190,6 +190,7 @@
     <ClInclude Include="..\header\CFIre.h" />
     <ClInclude Include="..\Header\CGenerateHand.h" />
     <ClInclude Include="..\Header\CGenerateMap.h" />
+    <ClInclude Include="..\Header\CGeyserTrap.h" />
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CLoadBackGround.h" />
     <ClInclude Include="..\Header\CMainScene.h" />
@@ -288,6 +289,7 @@
     <ClCompile Include="..\code\CFIre.cpp" />
     <ClCompile Include="..\Code\CGenerateHand.cpp" />
     <ClCompile Include="..\Code\CGenerateMap.cpp" />
+    <ClCompile Include="..\Code\CGeyserTrap.cpp" />
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CLoadBackGround.cpp" />
     <ClCompile Include="..\Code\CMainScene.cpp" />

@@ -41,6 +41,8 @@ void CItemBasic::Pickup_Item(_vec3 vSlotPos)
 	m_pTransForm->Set_Pos(_vec3(m_fX - WINCX * 0.5f, -m_fY + WINCY * 0.5f, 0.0f));
 	m_pTransForm->Set_Scale(_vec3(m_fSizeX, m_fSizeY, 0.f));
 	//m_pTransForm->Rotation(Engine::ROT_Z, D3DXToRadian(180.f));
+
+	m_fViewZ = -1.f;
 	
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 1.f);
@@ -110,10 +112,13 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 void CItemBasic::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-	if (!m_bChangeRander) m_pTransForm->BillBoard();
-	_vec3	vPos;
-	m_pTransForm->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	if (!m_bChangeRander)
+	{
+		m_pTransForm->BillBoard();
+		_vec3	vPos;
+		m_pTransForm->Get_Info(INFO_POS, &vPos);
+		__super::Compute_ViewZ(&vPos);
+	}
 }
 
 void CItemBasic::Render_GameObject()

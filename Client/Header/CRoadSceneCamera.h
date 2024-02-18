@@ -74,6 +74,8 @@ private:
 
 	_float m_fAccTime;
 
+	_bool	m_bWake;
+
 	eROAD_CAMERA_STATE	m_eCurState;
 
 

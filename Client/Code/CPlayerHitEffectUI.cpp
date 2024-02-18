@@ -31,6 +31,8 @@ CPlayerHitEffectUI* CPlayerHitEffectUI::Create(LPDIRECT3DDEVICE9 pGraphicDev, co
 	pInstance->GetTransForm()->Set_Scale(vScale);
 	pInstance->m_fX = vPos.x;
 	pInstance->m_fY = vPos.y;
+
+	pInstance->m_fViewZ = 0.f;
 	
 	return pInstance;
 }
@@ -48,7 +50,6 @@ _int CPlayerHitEffectUI::Update_GameObject(const _float& fTimeDelta)
 
 	m_pTransForm->Get_WorldMatrix()->_41 = m_fX - (WINCX >> 1);
 	m_pTransForm->Get_WorldMatrix()->_42 = -m_fY + (WINCY >> 1);
-	m_pTransForm->Get_WorldMatrix()->_43 = 0.0f;
 	renderer::Add_RenderGroup(RENDER_UI, this);
 	return 0;
 }
@@ -58,10 +59,8 @@ void CPlayerHitEffectUI::Render_GameObject()
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
-
 	m_pAnimCom->SetAnimTexture();
 	m_pBufferCom->Render_Buffer();
-
 
 	scenemgr::Get_CurScene()->EndOrtho();
 }

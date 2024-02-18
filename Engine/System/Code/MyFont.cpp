@@ -25,7 +25,7 @@ HRESULT CMyFont::Ready_Font(const _tchar * pFontType, const _uint & iWidth, cons
 	Font_Desc.Weight = iWeight;
 
 	Font_Desc.OutputPrecision = OUT_RASTER_PRECIS;
-	Font_Desc.Quality= DEFAULT_QUALITY;
+	Font_Desc.Quality= PROOF_QUALITY;
 
 	//Font_Desc.
 	if (FAILED(D3DXCreateFontIndirect(m_pGraphicDev, &Font_Desc, &m_pFont)))

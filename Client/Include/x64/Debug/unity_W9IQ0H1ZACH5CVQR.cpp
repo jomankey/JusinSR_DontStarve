@@ -45,6 +45,9 @@
 #include "D:\20240218\Client\Code\CGenerateMap.cpp"
 
 
+#include "D:\20240218\Client\Code\CGeyserTrap.cpp"
+
+
 #include "D:\20240218\Client\Code\Circle.cpp"
 
 

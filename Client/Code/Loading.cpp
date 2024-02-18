@@ -367,13 +367,27 @@ HRESULT CLoading::Loading_Anim_Texture()
 	pAnim = CAnimation::Create(m_pGraphicDev, L"CATAPULT_PLACE", L"../Bin/Resource/Texture/Build/Catapult/PLACE/PLACE__%03d.png", 31, 0.05f);
 	proto::Ready_ProtoAnim(L"CATAPULT_PLACE", pAnim);
 
-	//CatapultProjectile
 
+	//CatapultProjectile
 	pAnim = CAnimation::Create(m_pGraphicDev, L"PROJ_CATAPULT_AIR", L"../Bin/Resource/Texture/Projectile/CataProj/AIR/AIR__%03d.png", 63, 0.01f);
 	proto::Ready_ProtoAnim(L"PROJ_CATAPULT_AIR", pAnim);
 
 	pAnim = CAnimation::Create(m_pGraphicDev, L"PROJ_CATAPULT_HIT", L"../Bin/Resource/Texture/Projectile/CataProj/HIT/HIT__%03d.png", 48, 0.01f);
 	proto::Ready_ProtoAnim(L"PROJ_CATAPULT_HIT", pAnim);
+
+	//Geyser
+	pAnim = CAnimation::Create(m_pGraphicDev, L"GEYSER_IDLE", L"../Bin/Resource/Texture/Build/Trap/Geyser/idle/idle__%03d.png", 77, 0.05f);
+	proto::Ready_ProtoAnim(L"GEYSER_IDLE", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"GEYSER_LOOP", L"../Bin/Resource/Texture/Build/Trap/Geyser/loop/active_loop__%03d.png", 61, 0.05f);
+	proto::Ready_ProtoAnim(L"GEYSER_LOOP", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"GEYSER_OPEN", L"../Bin/Resource/Texture/Build/Trap/Geyser/pre/active_pre__%03d.png", 43, 0.08f);
+	proto::Ready_ProtoAnim(L"GEYSER_OPEN", pAnim);
+
+	pAnim = CAnimation::Create(m_pGraphicDev, L"GEYSER_CLOSE", L"../Bin/Resource/Texture/Build/Trap/Geyser/pst/active_pst__%03d.png", 118, 0.02f);
+	proto::Ready_ProtoAnim(L"GEYSER_CLOSE", pAnim);
+
 
 
 	return S_OK;
@@ -382,7 +396,7 @@ HRESULT CLoading::Loading_Anim_Texture()
 HRESULT CLoading::Loading_Effect_UI()
 {
 	Engine::CAnimation* pAnim = nullptr;
-	pAnim = CAnimation::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", L"../Bin/Resource/Texture/UI/Hit/NomalHit/NomalHit__%03d.png", 21, 0.1f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", L"../Bin/Resource/Texture/UI/Hit/NomalHit/NomalHit__%03d.png", 21, 0.05f);
 	proto::Ready_ProtoAnim(L"PLAYER_HIT_EFFECT", pAnim);
 
 

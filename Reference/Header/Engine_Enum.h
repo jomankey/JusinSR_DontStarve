@@ -102,9 +102,9 @@ namespace Engine
 		PLAYER,
 		OBJECT,
 		TRAP,
+		EFFECT,
 		UI,
 		BOSS,
-		EFFECT,
 		PANEL,
 		PARTICLE,
 		END = 32,
@@ -192,6 +192,8 @@ namespace Engine
 		PLACE,	//생성중인상태
 		ATK,	//공격중인상태
 		GROW,	//나오고있는상태
+		OPEN, //나오고있는상태
+		LOOP,	//반복상태
 		MOVE,	//움직이고있는상태
 		IDLE,	//나온상태
 		HIT,	//부딫힌상태
