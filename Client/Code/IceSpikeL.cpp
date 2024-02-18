@@ -30,15 +30,14 @@ HRESULT IceSpikeL::Ready_GameObject()
     m_fDamage = 10.f;
     int RandomPattern = rand() % 3;         // 0 1 2 ÀÎµ¦½º Áß ·£´ı ÆĞÅÏ Àû¿ë
     m_eCurState = (ICESPIKE)RandomPattern;
-    Spike_Sound();
-    
-    
    
+    
     return S_OK;
 }
 
 _int IceSpikeL::Update_GameObject(const _float& fTimeDelta)
 {
+    Volume_Controll();
     if (!m_bFrameStop)
     {
         m_fFrame += m_fFrameEnd * fTimeDelta;
@@ -138,34 +137,6 @@ void IceSpikeL::State_Change()
     }
 }
 
-void IceSpikeL::Spike_Sound()
-{
-    int randomvalue = rand() % 7;
-    switch (randomvalue)
-    {
-    case 0:
-        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_1.mp3", SOUND_EFFECT, 0.2f);
-        break;
-    case 1:
-        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_2.mp3", SOUND_EFFECT, 0.2f);
-        break;
-    case 2:
-        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_3.mp3", SOUND_EFFECT, 0.2f);
-        break;
-    case 3:
-        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_4.mp3", SOUND_EFFECT, 0.2f);
-        break;
-    case 4:
-        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_5.mp3", SOUND_EFFECT, 0.2f);
-        break;
-    case 5:
-        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_6.mp3", SOUND_EFFECT, 0.2f);
-        break;
-    case 6:
-        Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, 0.2f);
-        break;
-    }
-}
 
 _int IceSpikeL::Appear()
 {
@@ -178,6 +149,12 @@ _int IceSpikeL::Appear()
         return 0x80000000;
     }
 
+    if (m_fFrame > 3 && !m_bSound)
+    {
+        
+        Spike_Sound();
+        m_bSound = true;
+    }
 
 
     return 0;

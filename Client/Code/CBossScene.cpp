@@ -95,7 +95,8 @@ HRESULT CBossScene::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_UI(), E_FAIL);
 	FAILED_CHECK_RETURN(Load_Data(), E_FAIL);
-
+	Engine::StopAll();
+	
 	return S_OK;
 }
 

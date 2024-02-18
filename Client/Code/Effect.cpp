@@ -18,6 +18,8 @@ CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 vPos)
 	, m_ePreLook(LOOK_END)
 	, m_fDamage(0.f)
 	, m_bFrameSpeed(0.f)
+	, m_fVolume(0.f)
+	, m_bSound(false)
 {
 }
 
@@ -32,6 +34,8 @@ CEffect::CEffect(const CEffect& rhs)
 	, m_ePreLook(rhs.m_ePreLook)
 	, m_fDamage(rhs.m_fDamage)
 	, m_bFrameSpeed(rhs.m_bFrameSpeed)
+	, m_fVolume(rhs.m_fVolume)
+	, m_bSound(rhs.m_bSound)
 {
 
 }
@@ -90,6 +94,69 @@ void CEffect::Check_Collision()
 		{
 			dynamic_cast<CPlayer*>(player)->Set_Attack((int)m_fDamage);
 		}
+	}
+}
+
+_bool CEffect::IsTarget_Approach(float _fDistance)
+{
+	_vec3 vTargetPos, vPos, vDir;
+	vTargetPos = scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Pos();
+	m_pTransForm->Get_Info(INFO_POS, &vPos);
+	vTargetPos.y = 0.f;
+	vPos.y = 0.f;
+	if (D3DXVec3Length(&(vTargetPos - vPos)) < _fDistance)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void CEffect::Volume_Controll()
+{
+	if (IsTarget_Approach(15.f))
+		m_fVolume = 0.08f;
+	else
+	{
+		m_fVolume = 0.f;
+		return;
+	}
+
+	if (IsTarget_Approach(10.f))
+		m_fVolume = 0.09f;
+	//
+	if (!IsTarget_Approach(5.f))
+		m_fVolume = 0.1f;
+}
+
+void CEffect::Spike_Sound()
+{
+	int randomvalue = rand() % 7;
+	switch (randomvalue)
+	{
+	case 0:
+		Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_1.mp3", SOUND_EFFECT, m_fVolume);
+		break;
+	case 1:
+		Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_2.mp3", SOUND_EFFECT, m_fVolume);
+		break;
+	case 2:
+		Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_3.mp3", SOUND_EFFECT, m_fVolume);
+		break;
+	case 3:
+		Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_4.mp3", SOUND_EFFECT, m_fVolume);
+		break;
+	case 4:
+		Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_5.mp3", SOUND_EFFECT, m_fVolume);
+		break;
+	case 5:
+		Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_6.mp3", SOUND_EFFECT, m_fVolume);
+		break;
+	case 6:
+		Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, m_fVolume);
+		break;
 	}
 }
 

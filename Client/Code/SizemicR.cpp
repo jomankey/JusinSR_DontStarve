@@ -34,6 +34,7 @@ HRESULT SizemicR::Ready_GameObject()
 
 _int SizemicR::Update_GameObject(const _float& fTimeDelta)
 {
+    Volume_Controll();
     if (!m_bFrameStop)
     {
         m_fFrame += m_bFrameSpeed * fTimeDelta;
@@ -143,7 +144,7 @@ void SizemicR::State_Change()
      
             break;
         case ERASE:
-            Engine::PlaySound_W(L"Obj_Deerclops_Iceattack_7.mp3", SOUND_EFFECT, 0.2f);
+            Spike_Sound();
             m_bFrameSpeed = 8.f;
             m_fFrameEnd = 5;
             break;

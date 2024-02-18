@@ -30,12 +30,14 @@ HRESULT CBossEftDown::Ready_GameObject()
     m_pTransForm->Set_Pos(m_vPos);
     m_fFrameEnd = 11.f;
     m_fDamage = 30.f;
-    Engine::PlaySound_W(L"Obj_Deerclops_IceattackRand_2.mp3", SOUND_DEERCLOPS, 0.2f);
+    m_fVolume = 0.2f;
+    
     return S_OK;
 }
 
 _int CBossEftDown::Update_GameObject(const _float& fTimeDelta)
 {
+    
     if (!m_bFrameStop)
     {
         m_fFrame += m_fFrameEnd * fTimeDelta;
@@ -140,6 +142,7 @@ _int CBossEftDown::Appear()
         {
             //충돌로직
             Check_Collision();
+            Spike_Sound();
             m_bCollision = true;
         }
 

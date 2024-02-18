@@ -14,6 +14,10 @@ protected:
 	virtual void	State_Change()	PURE;
 	virtual void	Look_Change();
 	void Check_Collision();
+	_bool		IsTarget_Approach(float _fDistance);
+	void	Volume_Controll();
+
+	void Spike_Sound();
 protected:
 	_vec3 m_vPos;
 
@@ -29,6 +33,8 @@ protected:
 	_bool				m_Dirchange;
 
 	_float				m_fDamage;
+	_float				m_fVolume;
+	_bool				m_bSound;
 protected:
 	virtual void Free() override;
 
