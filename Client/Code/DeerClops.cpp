@@ -16,9 +16,14 @@
 #include "SizemicR.h"
 
 CDeerClops::CDeerClops(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _vPos)
-	: CMonster(pGraphicDev, _vPos),
-	m_eCurState(SLEEP), m_ePreState(STATE_END),
-	m_fSkill(0.f), m_fSkill2(0.f), m_fAcctime2(0.f), m_AttackPos(false), m_bGimmick(false)
+	: CMonster(pGraphicDev, _vPos)
+	, m_eCurState(SLEEP)
+	, m_ePreState(STATE_END)
+	, m_fSkill(0.f)
+	, m_fSkill2(0.f)
+	, m_fAcctime2(0.f)
+	, m_AttackPos(false)
+	, m_bGimmick(false)
 {
 }
 
@@ -90,7 +95,7 @@ _int CDeerClops::Update_GameObject(const _float& fTimeDelta)
 	}
 	else
 		Sleep(fTimeDelta);
-	
+
 	if (KEY_TAP(DIK_9)) // 9¹ø ´©¸£¸é ±ú¿ò
 	{
 		Set_WakeUp();
@@ -313,7 +318,7 @@ HRESULT CDeerClops::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].insert({ L"Deer_dead", pComponent });
 #pragma endregion TEXCOM
-	
+
 
 	pComponent = m_pTransForm = dynamic_cast<CTransform*>(proto::Clone_Proto(L"Proto_Transform"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -342,8 +347,8 @@ void CDeerClops::Set_Hit()
 			m_fFrame = 0.f;
 			m_bHit = true;
 		}
-		
-		if (m_Stat.fHP < 100.f && !m_bPhase[FIFTH])
+
+		if (m_Stat.fHP < 800.f && !m_bPhase[FIFTH])
 		{
 			m_bPhase[FIFTH] = true;
 			m_eCurState = LONG_TAUNT;
@@ -375,8 +380,8 @@ void CDeerClops::Set_Hit()
 void CDeerClops::Set_ObjStat()
 {
 	m_Stat.strObjName = L"¿Ü´«»ç½¿";
-	m_Stat.fHP = 200.f;
-	m_Stat.fMxHP = 200.f;
+	m_Stat.fHP = 1500.f;
+	m_Stat.fMxHP = 1500.f;
 	m_Stat.fSpeed = 2.f;
 	m_Stat.fATK = 20.f;
 	m_Stat.fATKRange = 3.f;
@@ -386,7 +391,7 @@ void CDeerClops::Set_ObjStat()
 
 void CDeerClops::State_Change()
 {
-	
+
 	if (m_ePreState != m_eCurState)
 	{
 		switch (m_eCurState)
@@ -474,7 +479,7 @@ void CDeerClops::Sleep(const _float& fTimeDelta)
 
 void CDeerClops::First_Phase(const _float& fTimeDelta)
 {
-	
+
 	if (m_ePreState == SLEEP_PST && m_fFrameEnd < m_fFrame)
 	{
 		m_eCurState = IDLE;
@@ -482,7 +487,7 @@ void CDeerClops::First_Phase(const _float& fTimeDelta)
 	else if (m_ePreState == IDLE && m_fFrameEnd < m_fFrame)	//Æ÷È¿ Áö¸£±â
 	{
 		m_eCurState = TAUNT;		//¿©±â¼­ Ä«¸Þ¶ó ½¦ÀÌÅ·
-		
+
 	}
 	else if (m_ePreState == TAUNT && m_fFrameEnd < m_fFrame)
 	{
@@ -585,7 +590,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //º¸½º ½ºÅ×ÀÌÁö¿¡¼­ µîÀå¾
 			m_pTransForm->Move_Pos(&m_vFallingDir, 60.f, fTimeDelta);
 			if (Get_Pos().y < 2.5f)
 			{
-				
+
 				m_pTransForm->Set_Pos(m_vPos);
 				m_bFalldown = true;
 				Generate_Roaring(0.9);
@@ -605,7 +610,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //º¸½º ½ºÅ×ÀÌÁö¿¡¼­ µîÀå¾
 		{
 			m_eCurState = WAKE_UP;
 		}
-		
+
 	}
 	else if (m_ePreState == WAKE_UP)
 	{
@@ -640,7 +645,7 @@ void CDeerClops::Third_Phase(const _float& fTimeDelta) //º¸½º ½ºÅ×ÀÌÁö¿¡¼­ µîÀå¾
 
 void CDeerClops::Fourth_Phase(const _float& fTimeDelta)		//µû¶ó¿À¸é¼­ ÀÏ¹Ý °ø°Ý
 {
-	
+
 	m_fAcctime += fTimeDelta;
 
 	m_Stat.fSpeed = 1.5f;
@@ -721,7 +726,7 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//Á¦ÀÛÇÑ ÆÐÅÏ ³ª¿È
 {
 	m_Stat.fSpeed = 3.5f;
 	m_fCollisionRadius = 1.2f;
-	m_fSkill2   += fTimeDelta;
+	m_fSkill2 += fTimeDelta;
 	m_fAcctime2 += fTimeDelta;
 
 	if (20.f < m_fSkill2 && !m_bGimmick)
@@ -736,7 +741,7 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//Á¦ÀÛÇÑ ÆÐÅÏ ³ª¿È
 		case 1:
 			m_eCurState = PATTERN_PRE;
 			break;
-			
+
 		}
 		m_fSkill2 = 0.f;
 	}
@@ -748,7 +753,7 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//Á¦ÀÛÇÑ ÆÐÅÏ ³ª¿È
 	}
 
 
-	
+
 
 
 
@@ -766,7 +771,7 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//Á¦ÀÛÇÑ ÆÐÅÏ ³ª¿È
 		if (5 < m_fAcctime)
 		{
 			Generate_Fall_Mark_Ex();
-			if(m_bGimmick)
+			if (m_bGimmick)
 				m_bGimmick = false;
 
 			m_eCurState = WALK;
@@ -827,7 +832,7 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//Á¦ÀÛÇÑ ÆÐÅÏ ³ª¿È
 		}
 		else if (!Collision_Circle(Get_Player_Pointer()))
 		{
-			if(IsFrameEnd())
+			if (IsFrameEnd())
 				m_eCurState = WALK;
 		}
 	}
@@ -838,7 +843,7 @@ void CDeerClops::Fifth_Phase(const _float& fTimeDelta)		//Á¦ÀÛÇÑ ÆÐÅÏ ³ª¿È
 			Generate_Attack_Effect();
 			m_bAttacking = true;
 		}
-		
+
 	}
 	else if (m_ePreState == HIT)
 	{
@@ -883,8 +888,8 @@ void CDeerClops::IsBossStage()
 	{
 		m_bPhase[THIRD] = true;
 		_vec3 vPos = m_vPos;
-		_vec3 vUp = {0,1,0};
-		vPos += vUp*100.f;
+		_vec3 vUp = { 0,1,0 };
+		vPos += vUp * 100.f;
 		m_vFallingDir = m_vPos - vPos;
 		D3DXVec3Normalize(&m_vFallingDir, &m_vFallingDir);
 		m_pTransForm->Set_Pos(vPos);
@@ -930,7 +935,7 @@ _bool CDeerClops::IsFrameEnd()
 		return true;
 	else
 		return false;
-	
+
 }
 
 void CDeerClops::Generate_Fall_Mark()
@@ -1003,7 +1008,7 @@ void CDeerClops::Generate_Attack_Effect()
 
 void CDeerClops::Generate_Roaring(_int _iCount)
 {
-	_vec3 vThisPos,vLook;
+	_vec3 vThisPos, vLook;
 	vThisPos.y = 0.1f;
 	vLook = Get_Look();
 	vLook *= -1;
@@ -1043,7 +1048,7 @@ void CDeerClops::Getnerate_SnowSplash()
 
 void CDeerClops::Generate_Sizemic()
 {
-	_vec3 vThisPos, vRight,vLeft,vDown, vUp; // ÀÌÆåÆ® »ý¼º ±âÁ¡.
+	_vec3 vThisPos, vRight, vLeft, vDown, vUp; // ÀÌÆåÆ® »ý¼º ±âÁ¡.
 	_vec3 vDotRD, vDotRU, vDotLD, vDotLU;
 	vThisPos = Get_Pos();
 	vThisPos.y = 1.f;
