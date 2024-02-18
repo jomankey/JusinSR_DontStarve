@@ -382,7 +382,7 @@ HRESULT CLoading::Loading_Anim_Texture()
 HRESULT CLoading::Loading_Effect_UI()
 {
 	Engine::CAnimation* pAnim = nullptr;
-	pAnim = CAnimation::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", L"../Bin/Resource/Texture/UI/Hit/NomalHit/NomalHit__%03d.png", 21, 0.1f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"PLAYER_HIT_EFFECT", L"../Bin/Resource/Texture/UI/Hit/NomalHit/NomalHit__%03d.png", 21, 0.05f);
 	proto::Ready_ProtoAnim(L"PLAYER_HIT_EFFECT", pAnim);
 
 

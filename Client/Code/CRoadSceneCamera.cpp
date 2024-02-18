@@ -3,6 +3,8 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "DeerClops.h"
+
 
 CRoadSceneCamera::CRoadSceneCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CCamera(pGraphicDev)
@@ -17,6 +19,7 @@ CRoadSceneCamera::CRoadSceneCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_fCameraSpeed(20.f)
 	, m_eCurState(eROAD_CAMERA_STATE::NONE)
 	, m_fAccTime(0.f)
+	, m_bWake(true)
 {
 
 }
@@ -48,7 +51,7 @@ HRESULT CRoadSceneCamera::Ready_GameObject(const _vec3* pEye,
 }
 
 // 회전에 필요한 변수 설정
-float totalTime = 3.f; // 회전하는 총 시간
+float totalTime = 2.f; // 회전하는 총 시간
 float currentAngle = 0.0f; // 현재 회전된 각도
 float diff = 5.f;
 
@@ -68,8 +71,8 @@ Engine::_int CRoadSceneCamera::Update_GameObject(const _float& fTimeDelta)
 
 		//카메라위치
 		m_vTargetEye.x = m_vAt.x + -diff;//4.2 ~4.3
+		
 	}
-
 
 
 	if (m_eCurState == eROAD_CAMERA_STATE::BOSS)
@@ -81,7 +84,7 @@ Engine::_int CRoadSceneCamera::Update_GameObject(const _float& fTimeDelta)
 			{
 				SetTarget((*boss));
 				m_eCurState = eROAD_CAMERA_STATE::BOSS_TAUNT;
-				totalTime = 0.2f;
+				totalTime = 0.1f;
 			}
 		}
 	}
@@ -92,13 +95,18 @@ Engine::_int CRoadSceneCamera::Update_GameObject(const _float& fTimeDelta)
 		_vec3 vTarget;
 		_float fDistance;
 		m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
+		if (m_bWake)
+		{
+			dynamic_cast<CDeerClops*>(m_pTarget)->Set_WakeUp();
+			m_bWake = false;
+		}
 
 		fDistance = m_vTargetEye.x - vTarget.x;
 		//카메라위치
 		diff = -fDistance;
 	}
 
-	if (1.5f <= m_fAccTime)
+	if (3.f <= m_fAccTime)
 	{
 		if (TurnAngle(fTimeDelta, 180.f))
 		{
