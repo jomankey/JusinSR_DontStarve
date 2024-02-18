@@ -15,6 +15,7 @@ CRoadSceneCamera::CRoadSceneCamera(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_fShakeAccTime(1.f)
 	, m_bLockWidth(false)
 	, m_fCameraSpeed(20.f)
+	, m_eCurState(eROAD_CAMERA_STATE::NONE)
 {
 
 }
@@ -30,6 +31,7 @@ HRESULT CRoadSceneCamera::Ready_GameObject(const _vec3* pEye,
 	const _float& fNear, const _float& fFar)
 {
 	m_vEye = *pEye;
+	m_vTargetEye = *pEye;
 	m_vAt = *pAt;
 	m_vUp = *pUp;
 
@@ -43,14 +45,16 @@ HRESULT CRoadSceneCamera::Ready_GameObject(const _vec3* pEye,
 	return S_OK;
 }
 
+// 회전에 필요한 변수 설정
+float totalTime = 3.0f; // 회전하는 총 시간
+float currentAngle = 0.0f; // 현재 회전된 각도
+float targetAngle = 180.0f; // 목표 회전 각도
+float rotationSpeed = targetAngle / totalTime; // 초당 회전 속도
+float diff = 5.f;
+
 Engine::_int CRoadSceneCamera::Update_GameObject(const _float& fTimeDelta)
 {
 
-	if (m_fShakeTime > m_fShakeAccTime)
-	{
-		m_fShakeAccTime += fTimeDelta;
-		ShakeCamera();
-	}
 
 
 	if (m_pTarget != nullptr && !m_pTarget->IsDelete())
@@ -58,19 +62,65 @@ Engine::_int CRoadSceneCamera::Update_GameObject(const _float& fTimeDelta)
 		_vec3 vTarget;
 		m_pTarget->GetTransForm()->Get_Info(INFO::INFO_POS, &vTarget);
 
-		m_vAt = vTarget;//바라볼곳
+		m_vAt.x = vTarget.x;
+		m_vAt.y = vTarget.y;
+		m_vAt.z = 3.56f;
 
 		//카메라위치
-		m_vTargetEye.x = vTarget.x;//4.2 ~4.3
-		m_vTargetEye.y = vTarget.y;//2.4 ~ 4.8
-		m_vTargetEye.z = m_vAt.z;
+		m_vTargetEye.x = m_vAt.x + -diff;//4.2 ~4.3
+		m_vEye = m_vTargetEye;
+		m_eCurState = eROAD_CAMERA_STATE::TURN;
 	}
-	m_vEye = m_vTargetEye;
+
+	if (m_eCurState == eROAD_CAMERA_STATE::TURN)
+	{
+		// 회전할 각도 계산
+		float rotateAmount = rotationSpeed * fTimeDelta;
+
+		// 현재 회전 각도 업데이트
+		currentAngle += rotateAmount;
+
+		// 180도 회전이 완료되었는지 확인
+		if (currentAngle >= targetAngle)
+		{
+			// 회전 완료 시 처리
+			currentAngle = targetAngle; // 목표 각도로 설정
+			// 회전 완료 후 추가 작업 수행 가능
+			m_eCurState = eROAD_CAMERA_STATE::BOSS;
+
+		}
+
+		_vec3		vUp = { 0.f, 1.f, 0.f };
+		_vec3	vLook = m_vAt - m_vTargetEye;
+
+		_matrix		matRot;
+		D3DXMatrixRotationAxis(&matRot, &vUp, D3DXToRadian(currentAngle));
+		D3DXVec3TransformNormal(&vLook, &vLook, &matRot);
+		m_vAt = m_vTargetEye + vLook;
+	}
+
+
+	if (m_eCurState == eROAD_CAMERA_STATE::BOSS)
+	{
+		auto& boss = (scenemgr::Get_CurScene()->GetGroupObject(eLAYER_TYPE::GAME_LOGIC, eOBJECT_GROUPTYPE::BOSS).begin());
+		if (nullptr != (*boss) && !(*boss)->IsDelete())
+		{
+			_vec3 vBossPos;
+
+			SetTarget((*boss));
+			diff *= 1.f;
+			m_eCurState = eROAD_CAMERA_STATE::NONE;
+		}
+	}
+
+	if (m_fShakeTime > m_fShakeAccTime)
+	{
+		m_fShakeAccTime += fTimeDelta;
+		ShakeCamera();
+	}
 
 	D3DXMatrixLookAtLH(&m_matView, &m_vEye, &m_vAt, &m_vUp);
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-
-
 
 	return 0;
 }

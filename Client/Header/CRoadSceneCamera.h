@@ -70,5 +70,8 @@ private:
 	_bool	m_bMove;
 	_float m_fCameraSpeed;
 
+	eROAD_CAMERA_STATE	m_eCurState;
+
+
 };
 

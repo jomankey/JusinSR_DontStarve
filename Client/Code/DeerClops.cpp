@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "SnowSplash.h"
 #include "DynamicCamera.h"
+#include "CRoadSceneCamera.h"
 #include "Tallbird.h"
 #include "SizemicL.h"
 #include "SizemicR.h"
@@ -1140,8 +1141,16 @@ void CDeerClops::When_IDLE()
 
 void CDeerClops::Camera_Shaking(_float _power, _float _time, _bool _dir)
 {
-	CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(scenemgr::Get_CurScene()->GetCameraObject());
-	pCamera->SetShakedCamera(_power, _time, _dir);
+	if (scenemgr::Get_CurScene()->Get_Scene_Name() == L"BOSS")
+	{
+		CDynamicCamera* pCamera = dynamic_cast<CDynamicCamera*>(scenemgr::Get_CurScene()->GetCameraObject());
+		pCamera->SetShakedCamera(_power, _time, _dir);
+	}
+	else
+	{
+		CRoadSceneCamera* pCamera = dynamic_cast<CRoadSceneCamera*>(scenemgr::Get_CurScene()->GetCameraObject());
+		pCamera->SetShakedCamera(_power, _time, _dir);
+	}
 }
 
 void CDeerClops::Hit_Sound()

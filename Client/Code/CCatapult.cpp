@@ -12,7 +12,7 @@ CCatapult::CCatapult(LPDIRECT3DDEVICE9 pGraphicDev)
 	, m_pAnimCom(nullptr)
 	, m_eCurState(eTRAP_STATE::NONE)
 	, m_fAccTime(0.f)
-	, m_fAtkTime(4.f)
+	, m_fAtkTime(1.f)
 {
 }
 
@@ -30,6 +30,10 @@ CCatapult::~CCatapult()
 HRESULT CCatapult::Ready_GameObject()
 {
 	Add_Component();
+
+
+	m_pTransForm->Set_Scale(_vec3(1.5f, 1.5f, 1.5f));
+
 	m_Stat.strObjName = L"Åõ¼®±â";
 
 	return S_OK;
@@ -43,7 +47,7 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 	{
 		_float distance = D3DXVec3Length(&(scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Pos() - m_pTransForm->Get_Pos()));
 
-		if (distance <= 40.f)
+		if (distance <= 30.f)
 		{
 			m_pAnimCom->ChangeAnimation(L"PLACE");
 			m_pAnimCom->SetLoopAnimator(false);
@@ -57,6 +61,7 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 		m_eCurState = eTRAP_STATE::IDLE;
 		m_pAnimCom->ChangeAnimation(L"IDLE_DOWN");
 		m_pAnimCom->SetLoopAnimator(true);
+		m_fAccTime = m_fAtkTime;
 	}
 
 	if (m_eCurState == eTRAP_STATE::IDLE)
@@ -65,7 +70,7 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 		m_fAccTime += fTimeDelta;
 		_float distance = D3DXVec3Length(&(scenemgr::Get_CurScene()->GetPlayerObject()->GetTransForm()->Get_Pos() - m_pTransForm->Get_Pos()));
 
-		if (distance <= 30.f)
+		if (distance <= 29.f)
 		{
 			if (m_fAtkTime <= m_fAccTime)
 			{
@@ -93,7 +98,6 @@ _int CCatapult::Update_GameObject(const _float& fTimeDelta)
 		m_pAnimCom->ChangeAnimation(L"IDLE_DOWN");
 		m_pAnimCom->SetLoopAnimator(true);
 		m_fAccTime = 0.f;
-		m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 		m_eCurState = eTRAP_STATE::IDLE;
 	}
 
@@ -161,7 +165,6 @@ HRESULT CCatapult::Add_Component()
 	m_eCurState = eTRAP_STATE::NONE;
 
 
-	m_pTransForm->Set_Scale(_vec3(2.5f, 2.5f, 2.5f));
 
 	return S_OK;
 }

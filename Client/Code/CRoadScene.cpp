@@ -5,7 +5,7 @@
 #include "Export_Utility.h"
 #include "SlotMgr.h"
 
-#include "DynamicCamera.h"
+#include "CRoadSceneCamera.h"
 #include "SkyBox.h"
 #include "Effect.h"
 #include "CInven.h"
@@ -150,9 +150,9 @@ HRESULT CRoadScene::Ready_Layer_Environment()
 
 	//////카메라
 	m_pCamera = nullptr;
-	pGameObject = m_pCamera = CDynamicCamera::Create(m_pGraphicDev,
-		&_vec3(64.f, 3.f, 64.f),
-		&_vec3(0.f, 0.f, 1.f),
+	pGameObject = m_pCamera = CRoadSceneCamera::Create(m_pGraphicDev,
+		&_vec3(10.f, 5.f, 3.5f),
+		&_vec3(10.f, 1.6f, 3.5f),
 		&_vec3(0.f, 1.f, 0.f),
 		D3DXToRadian(60.f),
 		(_float)WINCX / WINCY,
@@ -161,7 +161,6 @@ HRESULT CRoadScene::Ready_Layer_Environment()
 
 	NULL_CHECK_RETURN(m_pCamera, E_FAIL);
 	FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::ENVIRONMENT]->AddGameObject(eOBJECT_GROUPTYPE::CAMERA, pGameObject), E_FAIL);
-	static_cast<CDynamicCamera*>(m_pCamera)->SetRoadScene(true);
 
 
 
@@ -200,7 +199,7 @@ HRESULT CRoadScene::Ready_Layer_GameLogic()
 	}
 	m_pPlayer->GetTransForm()->Set_Pos(_vec3(10.f, 1.6f, 3.5f));
 	m_pPlayer->GetTransForm()->Set_Scale(_vec3(1.f, 1.f, 1.f));
-	dynamic_cast<CDynamicCamera*>(m_pCamera)->SetTarget(m_pPlayer);
+	dynamic_cast<CRoadSceneCamera*>(m_pCamera)->SetTarget(m_pPlayer);
 
 	pGameObject = CDeerClops::Create(m_pGraphicDev, { 2.5f ,3.3f, 3.5f });
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -553,7 +552,7 @@ HRESULT CRoadScene::Create_Object(const _tchar* pName, _vec3 vPos, _vec3 vScale)
 		pGameObject = CCatapult::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_arrLayer[(int)eLAYER_TYPE::GAME_LOGIC]->AddGameObject(eOBJECT_GROUPTYPE::TRAP, pGameObject), E_FAIL);
-		vPos.y = 2.4f;
+		vPos.y = 1.8f;
 	}
 	else if (!_tcscmp(L"TrapTooth", pName))
 	{

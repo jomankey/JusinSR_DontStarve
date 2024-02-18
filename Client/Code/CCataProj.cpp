@@ -6,7 +6,7 @@
 
 CCataProj::CCataProj(LPDIRECT3DDEVICE9 pGraphicDev, wstring _strObjName)
 	:CTrap(pGraphicDev, _strObjName)
-	, m_fSpeed(6.f)
+	, m_fSpeed(8.f)
 {
 }
 
@@ -23,6 +23,12 @@ HRESULT CCataProj::Ready_GameObject()
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	_vec3 vPos;
+	vPos = m_pTransForm->Get_Pos();
+
+	vPos.y -= 0.5f;
+	m_pTransForm->Set_Pos(vPos);
+
 	m_pTransForm->Set_Scale(_vec3(0.3f, 0.3f, 0.3f));
 	return S_OK;
 }
@@ -32,7 +38,7 @@ _int CCataProj::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_eCurState == eTRAP_STATE::MOVE)//움직이는상태면 플레이어체크
 	{
-		if (PlayerHit(0.3f))//플레이어 맞았을경우
+		if (PlayerHit(0.5f))//플레이어 맞았을경우
 		{
 			m_eCurState = eTRAP_STATE::DEAD;
 			dynamic_cast<CPlayer*>(scenemgr::Get_CurScene()->GetPlayerObject())->Set_Attack(1);
