@@ -14,6 +14,7 @@ CMainUI::CMainUI(LPDIRECT3DDEVICE9 pGraphicDev, UI_STATE _State, const _tchar* _
 	, m_bItemChek(false)
 	, m_pTextureCom(nullptr)
 	, m_pBufferCom(nullptr)
+	, m_bColl(false)
 
 {
 
@@ -71,8 +72,8 @@ void CMainUI::Render_GameObject()
 	scenemgr::Get_CurScene()->BeginOrtho();
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pTextureCom->Set_Texture(0);
-	Engine::Render_Font(L"Button_Make", L"게임 시작", &_vec2(m_fX - 20.f, m_fY - 8.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
+	m_pTextureCom->Set_Texture(m_bColl);
+	//Engine::Render_Font(L"Button_Make", L"게임 시작", &_vec2(m_fX - 20.f, m_fY - 8.f), D3DXCOLOR(0.f, 0.f, 0.f, 1.f));
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransForm->Get_WorldMatrix());
 	//m_pTransForm->Set_Pos(m_fX - (WINCX >> 1), -m_fY + (WINCY >> 1), 0.f);
 	//m_pTransForm->Set_Scale(_vec3{ m_fSizeX, m_fSizeY, 1.f });
@@ -95,17 +96,28 @@ BOOL CMainUI::UI_Collision()
 	GetCursorPos(&m_MousePoint);
 	ScreenToClient(g_hWnd, &m_MousePoint);
 
-	if (m_fX - (m_fSizeX) < m_MousePoint.x && m_MousePoint.x < m_fX + (m_fSizeX))
-		if (m_fY - (m_fSizeY) < m_MousePoint.y && m_MousePoint.y < m_fY + (m_fSizeY))
+	if (Engine::Collision_Mouse(_vec2{ (_float)m_MousePoint.x, (_float)m_MousePoint.y }, m_fX, m_fY, m_fSizeX, m_fSizeY))
+	{
+		if (!m_bSoundStart)
 		{
-			if(Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
-				return true;
+			Engine::PlaySound_W(L"UI_Click_Mouse.mp3", SOUND_MOUSE, 0.5f);
+			m_bSoundStart = true;
 		}
-		else
-			return false;
+			
+		m_bColl = true;
+		if (Engine::GetMouseState(DIM_LB) == eKEY_STATE::TAP)
+		{
+			Engine::PlaySound_W(L"UI_Click_Move.mp3", SOUND_MOUSE, 0.5f);
+			return true;
+		}
+			
+	}
 	else
+	{
+		m_bSoundStart = false;
+		m_bColl = false;
 		return false;
-
+	}
 
 }
 

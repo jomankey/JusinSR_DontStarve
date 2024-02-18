@@ -54,6 +54,9 @@
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\CMainScene.cpp"
 
 
+#include "C:\Users\yeeun\source\repos\JusinSR\Client\code\CMainUI.cpp"
+
+
 #include "C:\Users\yeeun\source\repos\JusinSR\Client\Code\Cook.cpp"
 
 

@@ -54,8 +54,11 @@ protected:
 	_float m_fSizeY;
 	_float m_fAngle;
 
+	_bool m_bColl;
+	_bool m_bSoundStart = false;
 	POINT m_MousePoint;
 	BOOL m_bItemChek;
+
 public:
 	static CMainUI* Create(LPDIRECT3DDEVICE9	pGraphicDev, UI_STATE _State, _vec3 _pos, _vec3 _size, const _tchar* _UI_Name, float _Angle = 0.f);
 
