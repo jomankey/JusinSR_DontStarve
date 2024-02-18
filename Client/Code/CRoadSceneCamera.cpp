@@ -81,7 +81,7 @@ Engine::_int CRoadSceneCamera::Update_GameObject(const _float& fTimeDelta)
 			{
 				SetTarget((*boss));
 				m_eCurState = eROAD_CAMERA_STATE::BOSS_TAUNT;
-				totalTime = 0.5f;
+				totalTime = 0.2f;
 			}
 		}
 	}
