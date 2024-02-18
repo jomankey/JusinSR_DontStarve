@@ -44,7 +44,25 @@ _int CGeyserTrap::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_eCurState == eTRAP_STATE::OPEN && m_pAnimCom->GetAnimFrame(L"OPEN") == 20)
 	{
-		//Engine::PlayEffectContinue(L"GeyserOpen_1.mp3", 0.1f, CHANNELID::SOUND_EFFECT_CONTINUE_CH2);
+		if (PlayerHit(20.f))
+		{
+			int randomvalue = rand() % 3;
+
+
+			switch (randomvalue)
+			{
+			case 0:
+				Engine::PlaySound_W(L"GeyserOpen_1.mp3", SOUND_EFFECT_CONTINUE_CH1, 0.05f);
+				break;
+			case 1:
+				Engine::PlaySound_W(L"GeyserOpen_2.mp3", SOUND_EFFECT_CONTINUE_CH2, 0.05f);
+				break;
+			case 2:
+				Engine::PlaySound_W(L"GeyserOpen_3.mp3", SOUND_EFFECT_CONTINUE_CH3, 0.05f);
+				break;
+			}
+		}
+
 	}
 
 
@@ -52,8 +70,24 @@ _int CGeyserTrap::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_eCurState = eTRAP_STATE::LOOP;
 		m_pAnimCom->ChangeAnimation(L"LOOP");
-		Engine::PlaySound_W(L"FlameGeyser_1.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH2, 0.1f);
 
+		if (PlayerHit(20.f))
+		{
+			int randomvalue = rand() % 3;
+			switch (randomvalue)
+			{
+			case 0:
+				Engine::PlaySound_W(L"FlameGeyser_1.mp3", SOUND_EFFECT_CONTINUE_CH3, 0.05f);
+				break;
+			case 1:
+				Engine::PlaySound_W(L"FlameGeyser_2.mp3", SOUND_EFFECT_CONTINUE_CH1, 0.05f);
+				break;
+			case 2:
+				Engine::PlaySound_W(L"FlameGeyser_3.mp3", SOUND_EFFECT_CONTINUE_CH2, 0.05f);
+				break;
+			}
+
+		}
 		m_pAnimCom->SetLoopAnimator(true);
 	}
 
@@ -69,7 +103,8 @@ _int CGeyserTrap::Update_GameObject(const _float& fTimeDelta)
 		if (m_fLoopTime <= m_fAccTime)
 		{
 			m_fAccTime = 0.f;
-			Engine::PlaySound_W(L"GeyserOut.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH2, 0.1f);
+			if (PlayerHit(40.f))
+				Engine::PlaySound_W(L"GeyserOut.mp3", CHANNELID::SOUND_EFFECT_CONTINUE_CH3, 0.1f);
 			m_pAnimCom->ChangeAnimation(L"CLOSE");
 			m_pAnimCom->SetLoopAnimator(false);
 			m_eCurState = eTRAP_STATE::DEAD;
