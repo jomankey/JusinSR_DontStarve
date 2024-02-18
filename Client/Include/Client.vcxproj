@@ -193,6 +193,7 @@
     <ClInclude Include="..\Header\Circle.h" />
     <ClInclude Include="..\Header\CLoadBackGround.h" />
     <ClInclude Include="..\Header\CMainScene.h" />
+    <ClInclude Include="..\header\CMainUI.h" />
     <ClInclude Include="..\Header\Cook.h" />
     <ClInclude Include="..\Header\CParticle.h" />
     <ClInclude Include="..\Header\CPlayerHitEffectUI.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="..\Code\Circle.cpp" />
     <ClCompile Include="..\Code\CLoadBackGround.cpp" />
     <ClCompile Include="..\Code\CMainScene.cpp" />
+    <ClCompile Include="..\code\CMainUI.cpp" />
     <ClCompile Include="..\Code\Cook.cpp" />
     <ClCompile Include="..\Code\CParticle.cpp" />
     <ClCompile Include="..\Code\CPlayerHitEffectUI.cpp" />

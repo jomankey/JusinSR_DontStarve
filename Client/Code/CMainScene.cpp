@@ -21,7 +21,7 @@
 #include "CLoadBackGround.h"
 
 
-#include "ButtonUI.h"
+#include"CMainUI.h"
 #include"WorldUI.h"
 //Camera
 #include "DynamicCamera.h"
@@ -105,8 +105,8 @@ HRESULT CMainScene::Ready_LoadingObject()
 	pInstance = CBGLoading::Create(m_pGraphicDev, L"BG_MAIN", _vec3(WINCX / 2.f, WINCY / 2.f, 0.f), _vec3(WINCX * 0.5f, WINCY * 0.5f, 0.f));
 	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
-	//pInstance = CButtonUI::Create(m_pGraphicDev, _vec3(300.f, 300.f, 0.f));
-	//AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
+	pInstance = CMainUI::Create(m_pGraphicDev,UI_STATIC, _vec3(540.f,600.f,0.f), _vec3(100.f,20.f,0.f),L"Proto_UI_Make_Button");
+	AddGameObject(eLAYER_TYPE::FORE_GROUND, eOBJECT_GROUPTYPE::UI, pInstance);
 
 
 	m_pCamera = nullptr;
