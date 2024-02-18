@@ -64,11 +64,11 @@ _int CBeefalo::Update_GameObject(const _float& fTimeDelta)
     }           //여기에 else 걸어서 사망 트리거 연결(아이템 드랍 테이블)
 
 
-   if (Collision_Circle(this))
-   {
-       Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_BEEFALO, 1.f);
-   
-   }
+   //if (Collision_Circle(this))
+   //{
+   //    Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_BEEFALO, 1.f);
+   //
+   //}
 
 
    //Engine::Update_Sound(_vec3{ 1,1,1 }, get<0>(Get_Info_vec()), get<1>(Get_Info_vec()), get<2>(Get_Info_vec()), get<3>(Get_Info_vec()), SOUND_EFFECT, 5.f);

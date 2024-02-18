@@ -156,6 +156,8 @@ void CItemTool::Input_Mouse()
 	{
 		if (Engine::Collision_Mouse(vMousePos, m_fX, m_fY, m_fSizeX, m_fSizeY))
 		{
+			Engine::PlaySound_W(L"UI_Click_Move.mp3", SOUND_MOUSE, 1.f);
+
 			if (m_bFood) // 음식이먼 먹기 가능
 			{
 				Eat_Food();

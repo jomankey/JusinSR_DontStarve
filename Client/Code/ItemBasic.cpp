@@ -77,7 +77,7 @@ _int CItemBasic::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bChangeRander)
 	{
-		if (m_vSlotPos.y - m_fY <= 1.f)
+		if (m_vSlotPos.y - m_fY <= 2.f)
 		{
 			_vec3 vSlotPos = {};
 			CSlotMgr::GetInstance()->AddItem(m_pGraphicDev, m_strObjName, &vSlotPos);

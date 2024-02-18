@@ -202,7 +202,9 @@ void CMouse::Check_Coll()
 		iter->GetTransForm()->Get_Info(INFO_POS, &vMonsterPos);
 		vMonsterScale = iter->GetTransForm()->Get_Scale();
 
-		if (Engine::Collision_Mouse_Object(m_vRayPos, m_vRayDir, vMonsterPos, vMonsterScale))
+		vMonsterScale = _vec3{ vMonsterScale.x - 1.f, vMonsterScale.y - 1.f, vMonsterScale.z - 1.f };
+
+		if (Engine::Collision_Mouse_Object(m_vRayPos, m_vRayDir, vMonsterPos, vMonsterScale) && iter->GetObjName() != L"FireFlies")
 		{
 			m_bColl = true;
 			m_eGroupType = eOBJECT_GROUPTYPE::OBJECT;

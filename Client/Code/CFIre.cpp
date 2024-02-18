@@ -354,7 +354,7 @@ void CFire::Change_Light()
 
 	tPointLightInfo->Ambient = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 
-	tPointLightInfo->Attenuation0 = 0.00001f;
+	tPointLightInfo->Attenuation0 = 0.1f;
 
 	tPointLightInfo->Range = 10.f;
 
