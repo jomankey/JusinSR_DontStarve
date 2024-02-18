@@ -55,7 +55,7 @@ _int CObjectTree::Update_GameObject(const _float& fTimeDelta)
 		{
 			Engine::PlaySound_W(L"Obj_Tree_Destroy.mp3", SOUND_EFFECT, 0.6f);
 			CreateItem(L"Twigs", this, this->m_pGraphicDev,2);
-			CreateItem(L"Log", this, this->m_pGraphicDev,1);
+			CreateItem(L"Log", this, this->m_pGraphicDev,4);
 		
 			m_Stat.bDead = true;
 

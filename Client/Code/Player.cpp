@@ -688,15 +688,6 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	}
 
-	if (GetAsyncKeyState('G')) // 횃불
-	{
-		m_eCurWeapon = TORCH;
-		Fire_Light();
-
-	}
-
-
-
 #pragma region PSWTEST
 	//PSW Test---------------------------------------------------------
 
@@ -1278,7 +1269,7 @@ void CPlayer::Update_State(const _float& fTimeDelta)
 	{
 		//텐트 안에 있을때 플레이어 상태값 변화
 
-		if (m_Stat.fHP + fTimeDelta * 0.4f <= m_Stat.fMxHP)
+		if (m_Stat.fHP + fTimeDelta * 0.4f >= m_Stat.fMxHP)
 			m_Stat.fHP = m_Stat.fMxHP;
 		else
 			m_Stat.fHP += fTimeDelta * 0.4f;
@@ -1288,7 +1279,7 @@ void CPlayer::Update_State(const _float& fTimeDelta)
 		else
 			m_Stat.fHungry -= fTimeDelta;
 
-		if (m_Stat.fMental + fTimeDelta * 0.2f <= m_Stat.fMaxMental)
+		if (m_Stat.fMental + fTimeDelta * 0.2f >= m_Stat.fMaxMental)
 			m_Stat.fMental = m_Stat.fMaxMental;
 		else
 			m_Stat.fMental += fTimeDelta * 0.2f;
