@@ -54,23 +54,23 @@ _int CBonfire::Update_GameObject(const _float& fTimeDelta)
 	
 	//
 	//Test 외부에서 똑같이 동작확인을 위한 코드 ()
-	if (GetAsyncKeyState('1')& 0x8000) // 횃불
-	{
-		if (!teskey)
-		{
-			teskey = true;
-		}
-	}
-	else
-	{
-		if (teskey)
-		{
-			AddFIre(1);
-
-			teskey = false;
-		}
-			
-	}
+	//if (GetAsyncKeyState('1')& 0x8000) // 횃불
+	//{
+	//	if (!teskey)
+	//	{
+	//		teskey = true;
+	//	}
+	//}
+	//else
+	//{
+	//	if (teskey)
+	//	{
+	//		AddFIre(1);
+	//
+	//		teskey = false;
+	//	}
+	//		
+	//}
 	
 	if (m_eBonfireCurState == BONFIRE_DROP)
 		{
