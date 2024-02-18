@@ -97,7 +97,7 @@ HRESULT CMainScene::Ready_LoadingObject()
 	CGameObject* pInstance = nullptr;
 
 
-	pAnim = CAnimation::Create(m_pGraphicDev, L"BG_MAIN", L"../Bin/Resource/Texture/UI/BG_Loading/BG_Main.png", 1, 11.f);
+	pAnim = CAnimation::Create(m_pGraphicDev, L"BG_MAIN", L"../Bin/Resource/Texture/UI/BG_Loading/Logo_Don't_Starve.png", 1, 11.f);
 	proto::Ready_ProtoAnim(L"BG_MAIN", pAnim);
 
 
